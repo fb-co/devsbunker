@@ -1,1 +1,0 @@
-dynamic server, JSON-API
