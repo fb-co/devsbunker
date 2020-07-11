@@ -12,9 +12,19 @@
     "url": "git+https://github.com/fb-co/devsBunker.git"
   },
   "author": "fb.co",
-  "license": "ISC",
+  "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/fb-co/devsBunker/issues"
   },
-  "homepage": "https://github.com/fb-co/devsBunker#readme"
+  "homepage": "https://github.com/fb-co/devsBunker#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4"
+  }
 }
