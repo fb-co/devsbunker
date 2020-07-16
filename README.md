@@ -12,9 +12,9 @@
 
 Make a .env file inside server/ with the following values
 
-
-| HOST         | your host IP (localhost, 192.168.1.X)                   |
+| key          | value                                                   |
 |--------------|---------------------------------------------------------|
-| PORT         | your port                      |
+| HOST         | your host IP                                            |
+| PORT         | port number                                             |
 | DB_URI       | mongodb address (mongodb://localhost/YOUR-DB-NAME-HERE) |
 | LOGIN_SECRET | a key for signing JWT tokens                            |
