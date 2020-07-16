@@ -4,7 +4,7 @@
   "description": "devsBunker API",
   "main": "server.js",
   "scripts": {
-    "prod": "node server.js",
+    "start": "node server.js",
     "dev": "nodemon server.js"
   },
   "repository": {

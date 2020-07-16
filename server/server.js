@@ -41,14 +41,12 @@ db.once('open', () => console.log(`Connected to database [${mongoURI}]`));
 // imports
 const home = require('./components/home/home.route');
 const about = require('./components/about/about.route');
-const login = require('./components/login/login.route');
-const signup = require('./components/signup/signup.route');
+const user = require('./components/user/user.route');
 
 // route handling
 app.use('/', home);
 app.use('/about', about);
-app.use('/login', login);
-app.use('/signup', signup);
+app.use('/user', user);
 
 /* HANDLING 404 ERRORS */
 app.use((req, res) => {

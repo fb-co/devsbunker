@@ -1,4 +1,4 @@
-exports.loginPage = (req, res) => {
+exports.getLogin = (req, res) => {
     res.json({
         message: 'DevsBunker Login Page',
     });

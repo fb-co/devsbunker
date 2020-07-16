@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const Token = require('../tokens/tokenHandler');
 const User = require('../user/user.model');
 
-exports.signupPage = (req, res) => {
+exports.getSignup = (req, res) => {
     res.json({
         message: 'DevsBunker Signup Page, make a post request with your credentials.',
     });
