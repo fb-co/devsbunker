@@ -6,10 +6,9 @@ require('dotenv').config();
 const morgan = require('morgan');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
 // Middlewares
@@ -18,6 +17,10 @@ app.use(helmet()); // secure headers
 app.use(methodOverride('_method')); // query string in order to make a delete req
 app.use(cors());
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json())
 
 // Mongo URI
 mongoose.set('useNewUrlParser', true);
@@ -25,20 +28,41 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 const mongoURI = process.env.DB_URI;
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 const db = mongoose.connection;
 db.on('error', error => console.error(error));
 db.once('open', () => console.log(`Connected to database [${mongoURI}]`));
 
-app.use('/', (req, res) => {
-    res.send("api working");
-});
+// imports
+const home = require('./components/home/home.route');
+const about = require('./components/about/about.route');
+const login = require('./components/login/login.route');
+const signup = require('./components/signup/signup.route');
+
+// route handling
+app.use('/', home);
+app.use('/about', about);
+app.use('/login', login);
+app.use('/signup', signup);
 
 /* HANDLING 404 ERRORS */
 app.use((req, res) => {
     res.status(404);
     res.send('404 Not found.');
+});
+
+/* HANDLING OTHER ERRORS */
+app.use((err, req, res) => {
+    res.status(res.statusCode);
+    res.json({
+        message: err.message,
+        error: err
+    });
 });
 
 const host = process.env.HOST || "localhost";
