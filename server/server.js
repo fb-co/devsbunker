@@ -51,15 +51,17 @@ app.use('/user', user);
 /* HANDLING 404 ERRORS */
 app.use((req, res) => {
     res.status(404);
-    res.send('404 Not found.');
+    res.json({
+        err: '404 Not found'
+    });
 });
 
 /* HANDLING OTHER ERRORS */
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
     res.status(res.statusCode);
     res.json({
         message: err.message,
-        error: err
+        stack: err.stack // this displays the actual error (useful for debugging)
     });
 });
 

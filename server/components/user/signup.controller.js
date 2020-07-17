@@ -14,6 +14,12 @@ function validateCreds(cred) {
         cred.password && cred.password.toString().trim() !== '' && cred.password.length > 8;
 }
 
+function failedSignup(res, next, msg) {
+    res.status(422);
+    const error = new Error(msg)
+    next(error);
+}
+
 exports.signupUser = async (req, res, next) => {
     if (validateCreds(req.body)) {
         const hashedPass = await bcrypt.hash(req.body.password, 10);
@@ -34,22 +40,14 @@ exports.signupUser = async (req, res, next) => {
                     token: loginToken
                 });
             } else {
-                res.json({
-                    err: "Internal server error",
-                    message: "Unable to create token"
-                });
+                failedSignup(res, next, 'Unable to create token');
             }
 
-        } catch (e) {
-            res.json({
-                err: e,
-                message: "Unable to signup. Credentials may be already taken."
-            });
+        } catch (err) {
+            failedSignup(res, next, 'Unable to signup.');
         }
 
     } else {
-        res.status(422);
-        const error = new Error('Invalid credentials found.');
-        next(error);
+        failedSignup(res, next, 'Invalid credentials found.');
     }
 };
