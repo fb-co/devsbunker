@@ -10,6 +10,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const methodOverride = require('method-override');
 
+const tokenHandler = require('./components/tokens/tokenHandler');
+
 // Middlewares
 app.use(morgan('dev')); // change to common for production
 app.use(helmet()); // secure headers
@@ -20,6 +22,8 @@ app.use(express.urlencoded({
     extended: true
 }));
 app.use(express.json())
+
+app.use(tokenHandler.checkHeaderToken); // checking token on every request
 
 // Mongo URI
 mongoose.set('useNewUrlParser', true);
