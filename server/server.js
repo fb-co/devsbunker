@@ -8,7 +8,6 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
 // Middlewares
@@ -17,10 +16,10 @@ app.use(helmet()); // secure headers
 app.use(methodOverride('_method')); // query string in order to make a delete req
 app.use(cors());
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
     extended: true
 }));
-app.use(bodyParser.json())
+app.use(express.json())
 
 // Mongo URI
 mongoose.set('useNewUrlParser', true);
