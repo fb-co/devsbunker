@@ -3,7 +3,9 @@
 Backend
 
 - [ ] send confirmation email for signup
-- [ ] implement login system
+- [x] implement login system
+    - [x] better error handling for both login and signup
+- [ ] implement the auth route
 - [ ] add more informations to the about and home page
 - [ ] make Schema for posts
 - [ ] make Schema for bunkers
