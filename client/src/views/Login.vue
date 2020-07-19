@@ -41,7 +41,7 @@ export default {
             fetchAPI({
                 email: this.email,
                 password: this.password
-            });
+            }).catch(err => console.error(err));
         }
     }
 };
