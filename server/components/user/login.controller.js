@@ -48,29 +48,16 @@ exports.getLogin = (req, res) => {
 exports.loginUser = async (req, res, next) => {
     const userID = req.body.userID;
 
-    if (userID.includes('@')) {
-        const emailCheck = await User.findOne({
-            email: userID
-        }).then(userByEmail => {
-            if (userByEmail) {
-                loginValidUser(req, res, next, userByEmail);
-            } else {
-                failedLogin(res, next, 'Unable to login.');
-            }
-        }).catch(err => {
-            next(err); // db internal error
-        });
-    } else {
-        const usernameCheck = User.findOne({
-            username: userID
-        }).then(userByUsername => {
-            if (userByUsername) {
-                loginValidUser(req, res, next, userByUsername);
-            } else {
-                failedLogin(res, next, 'Unable to login.');
-            }
-        }).catch(err => {
-            next(err); // db internal error    
-        });
-    }
+    // will search the db for a valid username or email
+    const userCheck = await User.findOne({
+        $or: [{ email: userID }, { username: userID }]
+    }).then(user => {
+        if(user){
+            loginValidUser(req, res, next, user);
+        }else{
+            failedLogin(res, next, 'Unable to login');
+        }
+    }).catch(err => {
+        next(err); //db internal error
+    });
 }
