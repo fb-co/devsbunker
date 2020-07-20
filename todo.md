@@ -14,7 +14,8 @@ Frontend
 
 - [ ] home page
 - [ ] about page
-- [ ] login page
-- [ ] signup page
+- [x] login page
+- [x] signup page
 - [ ] profile page
 - [ ] make a post page
+- [ ] use .env
