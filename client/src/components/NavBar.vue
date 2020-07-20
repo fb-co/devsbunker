@@ -10,6 +10,13 @@
         <router-link to="/" class="menu-logo">
             <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" />
         </router-link>
+        
+        <!-- Header Text -->
+        <div class = "header_text">
+            <div class = "vertical_center horizontal_center">
+                <h1>{{ headerText }}</h1>
+            </div>
+        </div>
 
         <!-- menu items -->
         <div class="menu">
@@ -28,7 +35,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+    props: {
+        headerText: String
+    }
+};
 </script>
 
 <style scoped>
@@ -130,6 +141,13 @@ body {
 .menu li {
     padding: 10px 0;
     font-size: 18px;
+}
+
+.header_text{
+    margin: -20px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 /* mobile styles */

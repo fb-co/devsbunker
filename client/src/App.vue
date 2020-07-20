@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <NavBar />
+        <!--<NavBar />-->
         <router-view />
     </div>
 </template>
@@ -37,14 +37,27 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
 }
+
+/* Class Styles */
+.horizontal_center{
+    width: 100%;
+    text-align: center;
+}
+.vertical_center{
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
 </style>
 
 <script>
-import NavBar from "@/components/NavBar";
+//import NavBar from "@/components/NavBar";
 
 export default {
     components: {
-        NavBar
+        //NavBar
     }
 };
 </script>

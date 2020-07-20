@@ -1,6 +1,8 @@
 <template>
     <div class="login">
-        <h1 style="margin-top: 50px;">Login Page</h1>
+        <NavBar headerText = "Login"></NavBar>
+
+        <!--<h1 style="margin-top: 50px;">Login Page</h1>-->
 
         <div id="error">{{ errMessage }}</div>
 
@@ -26,6 +28,7 @@
 
 <script>
 import UserService from "../services/user.service";
+import NavBar from "@/components/NavBar";
 
 export default {
     data() {
@@ -35,7 +38,9 @@ export default {
             errMessage: ""
         };
     },
-
+    components: {
+        NavBar
+    },
     methods: {
         async submitForm() {
             const result = await UserService.login(this.userID, this.password);
