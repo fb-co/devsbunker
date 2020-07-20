@@ -40,8 +40,8 @@ export default {
         async submitForm() {
             const result = await UserService.login(this.userID, this.password);
 
-            if (/Unable/.test(result.message)) {
-                this.errMessage = "Unable to login. Check your credentials.";
+            if (/Incorrect/.test(result.message)) {
+                this.errMessage = "Incorrect credentials.";
             } else {
                 this.errMessage = "";
                 localStorage.setItem("token", result.token);

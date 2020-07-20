@@ -29,7 +29,7 @@ function loginValidUser(req, res, next, user) {
 
 
         } else {
-            failedLogin(res, next, 'Unable to login.');
+            failedLogin(res, next, 'Incorrect credentials.');
         }
     }).catch(err => {
         console.log(err);
@@ -50,12 +50,16 @@ exports.loginUser = async (req, res, next) => {
 
     // will search the db for a valid username or email
     const userCheck = await User.findOne({
-        $or: [{ email: userID }, { username: userID }]
+        $or: [{
+            email: userID
+        }, {
+            username: userID
+        }]
     }).then(user => {
-        if(user){
+        if (user) {
             loginValidUser(req, res, next, user);
-        }else{
-            failedLogin(res, next, 'Unable to login');
+        } else {
+            failedLogin(res, next, 'Incorrect credentials.');
         }
     }).catch(err => {
         next(err); //db internal error

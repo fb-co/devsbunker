@@ -8,10 +8,10 @@ exports.getSignup = (req, res) => {
     });
 }
 
-function validateCreds(cred) {
-    return cred.username && cred.username.toString().trim() !== '' && /^[a-zA-Z0-9_-]+$/.test(cred.username) &&
-        cred.email && cred.email.toString().trim() !== '' && /\S+@\S+\.\S+/.test(cred.email) &&
-        cred.password && cred.password.toString().trim() !== '' && cred.password.length > 8;
+function validateCreds(creds) {
+    return creds.username && creds.username.toString().trim() !== '' && /^[a-zA-Z0-9_-]+$/.test(creds.username) &&
+        creds.email && creds.email.toString().trim() !== '' && /\S+@\S+\.\S+/.test(creds.email) &&
+        creds.password && creds.password.toString().trim() !== '' && creds.password.length > 8;
 }
 
 function failedSignup(res, next, msg) {
@@ -23,6 +23,7 @@ function failedSignup(res, next, msg) {
 exports.signupUser = async (req, res, next) => {
     if (validateCreds(req.body)) {
         const hashedPass = await bcrypt.hash(req.body.password, 10);
+
         const user = new User({
             username: req.body.username,
             email: req.body.email,
