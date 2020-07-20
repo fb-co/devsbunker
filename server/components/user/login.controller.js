@@ -12,7 +12,7 @@ function failedLogin(res, next, msg) {
 /*
     This function takes a request and user as a parameter (assumes that the user is a valid user in the database) and will check to make sure the password is correct    
 */
-function loginValidUser(req, res, user){
+function loginValidUser(req, res, next, user) {
     bcrypt.compare(req.body.password, user.password).then((result) => {
         if (result) {
             // set the JWT token (payload = userByEmail id and username) 
@@ -34,7 +34,7 @@ function loginValidUser(req, res, user){
     }).catch(err => {
         console.log(err);
         next(err); // this is an internal error (bcrypt error, if it cant match the hash then it just returns undefined, if we get here something has gone wrong)
-    })        
+    })
 }
 
 
@@ -46,25 +46,31 @@ exports.getLogin = (req, res) => {
 }
 
 exports.loginUser = async (req, res, next) => {
-    const emailCheck = await User.findOne({
-        email: req.body.email
-    }).then(userByEmail => {
-        if (userByEmail) {
-            loginValidUser(req, res, userByEmail);
-        } else {
-            const usernameCheck = User.findOne({
-                username: req.body.username    
-            }).then(userByUsername => {
-                if(userByUsername){
-                    loginValidUser(req, res, userByUsername);        
-                }else{
-                    failedLogin(res, next, 'Your Username or Email is Incorrect');
-                }
-            }).catch(err => {
-                        next(err); // db internal error    
-            });
-        }
-    }).catch(err => {
-        next(err); // db internal error
-    });
-};
+    const userID = req.body.userID;
+
+    if (userID.includes('@')) {
+        const emailCheck = await User.findOne({
+            email: userID
+        }).then(userByEmail => {
+            if (userByEmail) {
+                loginValidUser(req, res, next, userByEmail);
+            } else {
+                failedLogin(res, next, 'Unable to login.');
+            }
+        }).catch(err => {
+            next(err); // db internal error
+        });
+    } else {
+        const usernameCheck = User.findOne({
+            username: userID
+        }).then(userByUsername => {
+            if (userByUsername) {
+                loginValidUser(req, res, next, userByUsername);
+            } else {
+                failedLogin(res, next, 'Unable to login.');
+            }
+        }).catch(err => {
+            next(err); // db internal error    
+        });
+    }
+}
