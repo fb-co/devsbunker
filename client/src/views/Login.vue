@@ -2,13 +2,13 @@
     <div class="login">
         <h1 style="margin-top: 50px;">Login Page</h1>
 
-        <div id="error"></div>
+        <div id="error">{{ errMessage }}</div>
 
         <div class="loginForm">
-            <form name="login" v-on:submit.prevent="login">
+            <form name="login" v-on:submit.prevent="submitForm">
 
-                <label class="textLabel" for="email">Email</label>
-                <input type="email" id="email" name="email" v-model="email" required>
+                <label class="textLabel" for="userID">Username or Email</label>
+                <input id="userID" name="userID" v-model="userID" autocapitalize="off" required>
 
                 <label class="textLabel" for="password">Password</label>
                 <input type="password" id="password" name="password" v-model="password" required>
@@ -25,23 +25,29 @@
 
 
 <script>
-// reusable module to fetch credentials (login + signup)
-import fetchAPI from "../../public/javascript/sendCredsToAPI";
+import UserService from "../services/user.service";
 
 export default {
     data() {
         return {
-            email: "",
-            password: ""
+            userID: "",
+            password: "",
+            errMessage: ""
         };
     },
 
     methods: {
-        login() {
-            fetchAPI({
-                email: this.email,
-                password: this.password
-            }).catch(err => console.error(err));
+        async submitForm() {
+            const result = await UserService.login(this.userID, this.password);
+
+            if (/Unable/.test(result.message)) {
+                this.errMessage = "Unable to login. Check your credentials.";
+            } else {
+                this.errMessage = "";
+                localStorage.setItem("token", result.token);
+                // [!] redirect to profile [!]
+                alert("Successfully logged in!");
+            }
         }
     }
 };
