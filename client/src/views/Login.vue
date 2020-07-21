@@ -1,18 +1,20 @@
 <template>
     <div class="login">
-        <NavBar headerText = "Login"></NavBar>
+        <NavBar headerText="Login"></NavBar>
 
-        <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" class = "large_logo"/>
+        <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" class="large_logo" />
 
         <div id="error">{{ errMessage }}</div>
 
         <div class="loginForm">
             <form name="login" v-on:submit.prevent="submitForm">
 
-                <label class="textLabel" for="userID">Username or Email</label><p class = "required_symbol">*</p>
+                <label class="textLabel" for="userID">Username or Email</label>
+                <p class="required_symbol">*</p>
                 <input id="userID" name="userID" v-model="userID" autocapitalize="off" required>
 
-                <label class="textLabel" for="password">Password</label><p class = "required_symbol">*</p>
+                <label class="textLabel" for="password">Password</label>
+                <p class="required_symbol">*</p>
                 <input type="password" id="password" name="password" v-model="password" required>
 
                 <input type="submit" value="Login">
@@ -49,9 +51,8 @@ export default {
             } else {
                 this.errMessage = "";
                 localStorage.setItem("token", result.token);
-                
-                // [!] redirect to profile [!]
-                alert("Successfully logged in!");
+
+                this.$router.push("/profile");
             }
         }
     }

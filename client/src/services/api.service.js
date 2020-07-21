@@ -6,6 +6,7 @@
 // TODO: use .env file
 const LOGIN_API_URL = 'http://192.168.1.51:5000/user/login';
 const SIGNUP_API_URL = 'http://192.168.1.51:5000/user/signup';
+const AUTH_API_URL = 'http://192.168.1.51:5000/user/auth';
 
 const ApiService = {
   sendCredsToAPI: async function (creds) {
@@ -23,6 +24,16 @@ const ApiService = {
         'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify(creds)
+    });
+
+    return response.json();
+  },
+
+  isAuthenticated: async function (token) {
+    const response = await fetch(AUTH_API_URL, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
     });
 
     return response.json();

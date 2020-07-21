@@ -12,7 +12,7 @@ const UserService = {
       password && password.toString().trim() !== '' && password.length > 8;
   },
 
-  login: async function (id, password) {
+  login: function (id, password) {
     const creds = {
       userID: id,
       password: password
@@ -21,16 +21,23 @@ const UserService = {
     return ApiService.sendCredsToAPI(creds);
   },
 
-  signup: async function (username, email, password) {
+  signup: function (username, email, password) {
     const creds = {
       username: username,
       email: email,
       password: password
     };
 
-    console.log("credentials", creds);
-
     return ApiService.sendCredsToAPI(creds);
+  },
+
+  getAuthToken: function () {
+    return localStorage.getItem('token');
+  },
+
+  isLoggedIn: async function () {
+    const token = this.getAuthToken();
+    return await ApiService.isAuthenticated(token);
   }
 };
 
