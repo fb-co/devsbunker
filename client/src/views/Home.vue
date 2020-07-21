@@ -1,10 +1,17 @@
 <template>
     <div class="home">
-        <h1>Home</h1>
+        <NavBar headerText="Home" />
     </div>
 </template>
 
 <script>
+import NavBar from "@/components/NavBar";
+
+export default {
+    components: {
+        NavBar
+    }
+};
 </script>
 
 <style scoped>

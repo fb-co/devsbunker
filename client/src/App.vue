@@ -62,7 +62,6 @@ body {
     margin-left: 10px;
     float: left;
 }
-
 </style>
 
 <script>
