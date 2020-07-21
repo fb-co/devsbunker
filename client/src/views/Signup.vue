@@ -1,23 +1,29 @@
 <template>
     <div class="signup">
-        <h1 style="margin-top: 50px;">Signup Page</h1>
+        <NavBar headerText = "Sign-Up"></NavBar>
+
+        <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" class = "large_logo"/>
 
         <div id="error">{{ errMessage }}</div>
 
         <div class="signupForm">
             <form name="signup" v-on:submit.prevent="submitForm">
 
-                <label class="textLabel" for="username">Username</label>
+                <label class="textLabel" for="username">Username</label><p class = "required_symbol">*</p>
                 <input type="text" id="username" name="username" v-model="username" autocapitalize="off" required>
 
-                <label class="textLabel" for="email">Email</label>
+                <label class="textLabel" for="email">Email</label><p class = "required_symbol">*</p>
                 <input type="email" id="email" name="email" v-model="email" autocapitalize="off" required>
 
-                <label class="textLabel" for="password">Password</label>
+                <label class="textLabel" for="password">Password</label><p class = "required_symbol">*</p>
+                <input type="password" id="password" name="password" v-model="password" required>
+
+                <label class="textLabel" for="password">Confirm Password</label><p class = "required_symbol">*</p>
                 <input type="password" id="password" name="password" v-model="password" required>
 
                 <input type="submit" value="Sign-up">
-
+            
+                <router-link class="bigRoute" to="/signup">Already Have an Account? Login Here.</router-link>
             </form>
         </div>
     </div>
@@ -25,6 +31,7 @@
 
 <script>
 import UserService from "../services/user.service";
+import NavBar from "@/components/NavBar";
 
 export default {
     data() {
@@ -35,7 +42,9 @@ export default {
             errMessage: ""
         };
     },
-
+    components: {
+        NavBar
+    },
     methods: {
         async submitForm() {
             // we validate even client-side (same thing as server-side)
@@ -56,7 +65,7 @@ export default {
                 } else if (/Invalid/.test(result.message)) {
                     // we are going to do this even here just to add another layer of security
                     this.errMessage =
-                        "Invalid credentials found. Please follow the rules.";
+                        "Invalid credentials. Please follow the rules.";
                 } else {
                     this.errMessage = "";
                     localStorage.setItem("token", result.token);
@@ -64,8 +73,7 @@ export default {
                     alert("Successfully signed up!");
                 }
             } else {
-                this.errMessage =
-                    "Invalid credentials found. Please follow the rules.";
+                this.errMessage = "Invalid credentials. Please follow the rules.";
             }
         }
     }
@@ -73,6 +81,7 @@ export default {
 </script>
 
 <style scoped>
+
 .signupForm {
     padding: 20px;
     width: 60%;
@@ -97,17 +106,17 @@ textarea {
 
 .textLabel {
     color: var(--main-font-color);
-    float: left;
     font-weight: 400;
+    float: left;
 }
 
 input[type="submit"] {
-    width: 100px;
-    margin-top: 10px;
+    width: 150px;
+    font-size: 1.3rem;
     background-color: var(--main-color);
     border: 1px solid var(--vue-green);
     color: var(--vue-green);
-    padding: 12px 20px;
+    padding: 0px 0px;
     cursor: pointer;
     transition: 0.6s;
     height: 40px;
@@ -138,6 +147,7 @@ input[type="submit"]:hover {
 .bigRoute {
     color: var(--link-color);
     text-decoration: none;
+    display: block;
 }
 
 .bigRoute:hover {

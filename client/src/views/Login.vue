@@ -2,26 +2,25 @@
     <div class="login">
         <NavBar headerText = "Login"></NavBar>
 
-        <!--<h1 style="margin-top: 50px;">Login Page</h1>-->
+        <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" class = "large_logo"/>
 
         <div id="error">{{ errMessage }}</div>
 
         <div class="loginForm">
             <form name="login" v-on:submit.prevent="submitForm">
 
-                <label class="textLabel" for="userID">Username or Email</label>
+                <label class="textLabel" for="userID">Username or Email</label><p class = "required_symbol">*</p>
                 <input id="userID" name="userID" v-model="userID" autocapitalize="off" required>
 
-                <label class="textLabel" for="password">Password</label>
+                <label class="textLabel" for="password">Password</label><p class = "required_symbol">*</p>
                 <input type="password" id="password" name="password" v-model="password" required>
 
                 <input type="submit" value="Login">
-
             </form>
 
         </div>
 
-        <router-link class="bigRoute" to="/signup">Don't have an account? Sign-up here.</router-link>
+        <router-link class="bigRoute" to="/signup">Don't have an account? Create one here.</router-link>
     </div>
 </template>
 
@@ -50,6 +49,7 @@ export default {
             } else {
                 this.errMessage = "";
                 localStorage.setItem("token", result.token);
+                
                 // [!] redirect to profile [!]
                 alert("Successfully logged in!");
             }
@@ -88,12 +88,14 @@ textarea {
 }
 
 input[type="submit"] {
-    width: 100px;
+    width: 150px;
     margin-top: 10px;
+    font-size: 1.3rem;
+    text-align: center;
     background-color: var(--main-color);
     border: 1px solid var(--vue-green);
     color: var(--vue-green);
-    padding: 12px 20px;
+    padding: 0px 0px;
     cursor: pointer;
     transition: 0.6s;
     height: 40px;
