@@ -38,17 +38,19 @@ const router = new VueRouter({
 });
 
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    const result = await UserService.isLoggedIn();
-
-    if (result.user) {
-      next();
-    } else {
-      next({
-        name: 'Login'
-      });
-    }
+    UserService.isLoggedIn().then(result => {
+      if (result.user) {
+        next();
+      } else {
+        next({
+          name: 'Login'
+        });
+      }
+    }).catch(err => {
+      console.error(err);
+    });
   } else {
     next();
   }
