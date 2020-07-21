@@ -39,15 +39,28 @@ body {
 }
 
 /* Class Styles */
-.horizontal_center{
+.horizontal_center {
     width: 100%;
     text-align: center;
 }
-.vertical_center{
+.vertical_center {
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+}
+.mainHeader {
+    font-size: 2rem;
+}
+.large_logo {
+    margin-top: 40px;
+    width: 200px;
+    height: auto;
+}
+.required_symbol {
+    color: red;
+    margin-left: 10px;
+    float: left;
 }
 
 </style>
