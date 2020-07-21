@@ -5,18 +5,18 @@
         <span></span>
         <span></span>
         <span></span>
-
-        <!-- logo -->
-        <router-link to="/" class="menu-logo">
-            <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" />
-        </router-link>
         
         <!-- Header Text -->
         <div class = "header_text">
             <div class = "vertical_center horizontal_center">
-                <h1>{{ headerText }}</h1>
+                <h1 class = "mainHeader">{{ headerText }}</h1>
             </div>
         </div>
+
+        <!-- logo -->
+        <router-link to="/" class="menu-logo">
+            <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo"/>
+        </router-link>
 
         <!-- menu items -->
         <div class="menu">
@@ -66,6 +66,7 @@ body {
 .menu-logo {
     line-height: 0;
     margin: 0 20px;
+    z-index: 1;
 }
 
 .menu-logo img {
@@ -139,7 +140,7 @@ body {
 }
 
 .menu li {
-    padding: 10px 0;
+    padding: 18px 0;
     font-size: 18px;
 }
 
