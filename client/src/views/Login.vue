@@ -29,9 +29,22 @@
 
 <script>
 import UserService from "../services/user.service";
+import SharedMethods from "../shared";
+
 import NavBar from "@/components/NavBar";
 
 export default {
+    created() {
+        SharedMethods.checkIfLoggedIn()
+            .then(result => {
+                if (result) {
+                    this.$router.push("/profile");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    },
     data() {
         return {
             userID: "",

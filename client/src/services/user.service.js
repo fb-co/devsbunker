@@ -31,8 +31,16 @@ const UserService = {
     return ApiService.sendCredsToAPI(creds);
   },
 
+  logout: function () {
+    this.deleteAuthToken();
+  },
+
   getAuthToken: function () {
     return localStorage.getItem('token');
+  },
+
+  deleteAuthToken: function () {
+    localStorage.removeItem('token');
   },
 
   isLoggedIn: async function () {
