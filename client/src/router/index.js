@@ -28,6 +28,13 @@ const routes = [{
     meta: {
       requiresAuth: true
     }
+  },
+
+  // important to leave this as the last element
+  {
+    path: '*',
+    name: '404',
+    component: () => import('../views/404.vue')
   }
 ]
 
