@@ -3,10 +3,9 @@
   communicate with the API.
 */
 
-// TODO: use .env file
-const LOGIN_API_URL = 'http://192.168.1.51:5000/user/login';
-const SIGNUP_API_URL = 'http://192.168.1.51:5000/user/signup';
-const AUTH_API_URL = 'http://192.168.1.51:5000/user/auth';
+const LOGIN_API_URL = process.env.VUE_APP_LOGIN_API_URL;
+const SIGNUP_API_URL = process.env.VUE_APP_SIGNUP_API_URL;
+const AUTH_API_URL = process.env.VUE_APP_AUTH_API_URL;
 
 const ApiService = {
   sendCredsToAPI: async function (creds) {
