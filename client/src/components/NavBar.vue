@@ -5,17 +5,17 @@
         <span></span>
         <span></span>
         <span></span>
-        
+
         <!-- Header Text -->
-        <div class = "header_text">
-            <div class = "vertical_center horizontal_center">
-                <h1 class = "mainHeader">{{ headerText }}</h1>
+        <div class="header_text">
+            <div class="vertical_center horizontal_center">
+                <h1 class="mainHeader">{{ headerText }}</h1>
             </div>
         </div>
 
         <!-- logo -->
         <router-link to="/" class="menu-logo">
-            <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo"/>
+            <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" />
         </router-link>
 
         <!-- menu items -->
@@ -54,8 +54,8 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    background: #2e2e2e;
-    color: #f2f2f2;
+    background: var(--secondary-color);
+    color: var(--main-font-color);
     padding: 20px;
     z-index: 1;
     -webkit-user-select: none;
@@ -77,7 +77,7 @@ body {
 
 .menu-container a {
     text-decoration: none;
-    color: #2e2e2e;
+    color: var(--secondary-color);
     transition: color 0.3s ease;
 }
 
@@ -123,7 +123,7 @@ body {
 .menu-container input:checked ~ span {
     opacity: 1;
     transform: rotate(45deg) translate(3px, -1px);
-    background: #2e2e2e;
+    background: var(--secondary-color);
 }
 
 .menu-container input:checked ~ span:nth-child(4) {
@@ -150,7 +150,7 @@ body {
     box-sizing: border-box;
 }
 
-.header_text{
+.header_text {
     margin: -20px;
     position: absolute;
     width: 100%;
@@ -183,7 +183,7 @@ body {
         top: 0;
         margin: -20px;
         padding: 75px 50px 50px;
-        background: #f2f2f2;
+        background: var(--main-font-color);
         -webkit-font-smoothing: antialiased;
         /* to stop flickering of text in safari */
         transform-origin: 0% 0%;
