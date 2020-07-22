@@ -1,35 +1,40 @@
 <template>
     <div class="signup">
-        <NavBar headerText="Sign-Up"></NavBar>
+        <div class = "content_container">
+            <div class = "content_subContainer">
+                <NavBar headerText="Sign-Up"></NavBar>
 
-        <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" class="large_logo" />
+                <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" class="large_logo" />
 
-        <div id="error">{{ errMessage }}</div>
+                <div id="error">{{ errMessage }}</div>
 
-        <div class="signupForm">
-            <form name="signup" v-on:submit.prevent="submitForm">
+                <div class="signupForm">
+                    <form name="signup" v-on:submit.prevent="submitForm">
 
-                <label class="textLabel" for="username">Username</label>
-                <p class="required_symbol">*</p>
-                <input type="text" id="username" name="username" v-model="username" autocapitalize="off" required>
+                        <label class="textLabel" for="username">Username</label>
+                        <p class="required_symbol">*</p>
+                        <input type="text" id="username" name="username" v-model="username" autocapitalize="off" required>
 
-                <label class="textLabel" for="email">Email</label>
-                <p class="required_symbol">*</p>
-                <input type="email" id="email" name="email" v-model="email" autocapitalize="off" required>
+                        <label class="textLabel" for="email">Email</label>
+                        <p class="required_symbol">*</p>
+                        <input type="email" id="email" name="email" v-model="email" autocapitalize="off" required>
 
-                <label class="textLabel" for="password">Password</label>
-                <p class="required_symbol">*</p>
-                <input type="password" id="password" name="password" v-model="password" required>
+                        <label class="textLabel" for="password">Password</label>
+                        <p class="required_symbol">*</p>
+                        <input type="password" id="password" name="password" v-model="password" required>
 
-                <label class="textLabel" for="password">Confirm Password</label>
-                <p class="required_symbol">*</p>
-                <input type="password" id="password" name="password" v-model="password" required>
+                        <label class="textLabel" for="password">Confirm Password</label>
+                        <p class="required_symbol">*</p>
+                        <input type="password" id="password" name="password" v-model="password" required>
 
-                <input type="submit" value="Sign-up">
+                        <input type="submit" value="Sign-up">
 
-                <router-link class="bigRoute" to="/login">Already Have an Account? Login Here.</router-link>
-            </form>
+                        <router-link class="bigRoute" to="/login">Already Have an Account? Login Here.</router-link>
+                    </form>
+                </div>
+            </div>
         </div>
+        <Footer class = "mainFooter"></Footer>
     </div>
 </template>
 
@@ -38,6 +43,7 @@ import UserService from "../services/user.service";
 import SharedMethods from "../shared";
 
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 
 export default {
     created() {
@@ -61,7 +67,8 @@ export default {
         };
     },
     components: {
-        NavBar
+        NavBar,
+        Footer
     },
     methods: {
         async submitForm() {

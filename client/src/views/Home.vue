@@ -1,15 +1,23 @@
 <template>
     <div class="home">
-        <NavBar headerText="Home" />
+        <div class = "content_container">
+            <div class = "content_subContainer">
+                <NavBar headerText="Home" />
+            </div>
+        </div>
+        <Footer class = "mainFooter"></Footer>
     </div>
 </template>
 
 <script>
 import NavBar from "@/components/NavBar";
 
+import Footer from "@/components/Footer";
+
 export default {
     components: {
-        NavBar
+        NavBar,
+        Footer
     }
 };
 </script>
