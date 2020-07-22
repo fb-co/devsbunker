@@ -19,6 +19,7 @@ Frontend
 - [x] profile page
     - [x] redirect here from login/signup in case of already present valid token
     - [x] make a delete token method (logout)
+- [x] handle 404 errors
 - [ ] make a post page
 - [ ] use .env
 - [ ] fix mobile view scrolling bug
