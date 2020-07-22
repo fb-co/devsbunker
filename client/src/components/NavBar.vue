@@ -15,7 +15,8 @@
 
         <!-- logo -->
         <router-link to="/" class="menu-logo">
-            <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" />
+            <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
+            <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" style = "background-color: var(--secondary-color);"/>
         </router-link>
 
         <!-- menu items -->
@@ -47,6 +48,10 @@ body {
     overflow-x: hidden;
     font-family: Sans-Serif;
     margin: 0;
+}
+
+.router-link-exact-active {
+    background-color: var(--accent);
 }
 
 .menu-container {
@@ -142,6 +147,9 @@ body {
 .menu li {
     font-size: 18px;
     margin: -20px 0px -20px 0px;
+}
+.menu li:last-child {
+    margin: -20px -20px -20px 0px;
 }
 
 .main_link {
