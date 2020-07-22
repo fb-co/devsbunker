@@ -21,5 +21,5 @@ Frontend
     - [x] make a delete token method (logout)
 - [x] handle 404 errors
 - [ ] make a post page
-- [ ] use .env
+- [x] use .env
 - [ ] fix mobile view scrolling bug
