@@ -1,38 +1,47 @@
 <template>
-    <div class = "footer_container">
-        <div class = "content_placeholder">
-
-        </div>
-        <footer class = "footer_main"></footer>
+    <div class = "component_container">
+        <footer id = "main_footer">
+            <ul>
+                <li>
+                    <router-link to="/" class = "nav_link">Home</router-link>
+                </li>
+                <li>
+                    <router-link to="/about" class = "nav_link">About</router-link>
+                </li>
+                <li>
+                    <router-link to="/about" class = "nav_link">Contact Us</router-link>
+                </li>
+            </ul>
+        </footer>
     </div>
 </template>
 
 <script>
     export default {
-
+        
     }
 </script>
 
 <style scoped>
-    * {
-        box-sizing: border-box;
-    }
 
-    .footer_container {
-        position: absolute;
-        top: 0px;
+    .component_container {
+        background-color: #2e2e2e;
+    }
+    .nav_link {
+        color: #f2f2f2;
+    }
+    #main_footer {
         width: 100%;
-        min-height: 100vh;
+        height: 100%;
     }
-    .content_placeholder {
-        padding-bottom: 100px;
+    #main_footer ul {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        list-style: none;
     }
-    .footer_main {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 100px;
-        background-color: red;
+    #main_footer li {
+        padding: 0 30px;
+        color: white;
     }
-    
 </style>

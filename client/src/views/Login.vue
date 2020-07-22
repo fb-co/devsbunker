@@ -1,28 +1,34 @@
 <template>
     <div class="login">
-        <NavBar headerText="Login"></NavBar>
+        <div class="content_container">
+            <div class="content_subContainer">
 
-        <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" class="large_logo" />
+                <NavBar headerText="Login"></NavBar>
+                
+                <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" class="large_logo" />
 
-        <div id="error">{{ errMessage }}</div>
+                <div id="error">{{ errMessage }}</div>
 
-        <div class="loginForm">
-            <form name="login" v-on:submit.prevent="submitForm">
+                <div class="loginForm">
+                    <form name="login" v-on:submit.prevent="submitForm">
 
-                <label class="textLabel" for="userID">Username or Email</label>
-                <p class="required_symbol">*</p>
-                <input id="userID" name="userID" v-model="userID" autocapitalize="off" required>
+                        <label class="textLabel" for="userID">Username or Email</label>
+                        <p class="required_symbol">*</p>
+                        <input id="userID" name="userID" v-model="userID" autocapitalize="off" required>
 
-                <label class="textLabel" for="password">Password</label>
-                <p class="required_symbol">*</p>
-                <input type="password" id="password" name="password" v-model="password" required>
+                        <label class="textLabel" for="password">Password</label>
+                        <p class="required_symbol">*</p>
+                        <input type="password" id="password" name="password" v-model="password" required>
 
-                <input type="submit" value="Login">
-            </form>
+                        <input type="submit" value="Login">
+                    </form>
 
+                </div>
+                <router-link class="bigRoute" to="/signup">Don't have an account? Create one here.</router-link>
+
+            </div>
         </div>
-
-        <router-link class="bigRoute" to="/signup">Don't have an account? Create one here.</router-link>
+        <Footer class = "mainFooter"></Footer>
     </div>
 </template>
 
@@ -32,6 +38,7 @@ import UserService from "../services/user.service";
 import SharedMethods from "../shared";
 
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 
 export default {
     created() {
@@ -53,7 +60,8 @@ export default {
         };
     },
     components: {
-        NavBar
+        NavBar,
+        Footer
     },
     methods: {
         async submitForm() {
@@ -73,6 +81,7 @@ export default {
 </script>
 
 <style scoped>
+
 .loginForm {
     padding: 20px;
     width: 60%;

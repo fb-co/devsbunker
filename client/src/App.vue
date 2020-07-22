@@ -21,6 +21,12 @@
     box-sizing: border-box;
 }
 
+/* CSS Vars */
+
+:root {
+    --footer-size: 60px;
+}
+
 ::selection {
     background: var(--selection);
     color: var(--main-color);
@@ -61,6 +67,21 @@ body {
     color: red;
     margin-left: 10px;
     float: left;
+}
+/* the content_containter and content_subContainer classes allows you to pack all the items in a page into two more nested divs mainly to incorperate footers */
+.content_container {
+    min-height: 100vh;
+}
+.content_subContainer {
+    overflow: auto;
+    padding-bottom: 75px;
+}
+.mainFooter {
+    position: relative;
+    top: 0px;
+    height: var(--footer-size);
+    margin-top: calc(var(--footer-size) * -1);
+    clear: both;
 }
 </style>
 
