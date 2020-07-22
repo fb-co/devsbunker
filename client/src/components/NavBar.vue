@@ -24,10 +24,10 @@
             </ul>
             <ul>
                 <li>
-                    <router-link to="/signup">Sign-up</router-link>
+                    <router-link to="/signup" class="main_link">Sign-up</router-link>
                 </li>
                 <li>
-                    <router-link to="/login">Login</router-link>
+                    <router-link to="/login" class="main_link">Login</router-link>
                 </li>
             </ul>
         </div>
@@ -140,8 +140,14 @@ body {
 }
 
 .menu li {
-    padding: 18px 0;
     font-size: 18px;
+    margin: -20px 0px -20px 0px;
+}
+
+.main_link {
+    display: inline-block;
+    padding: 30px;
+    box-sizing: border-box;
 }
 
 .header_text{
@@ -217,12 +223,8 @@ body {
     }
 
     .menu ul {
-        display: flex;
         padding: 0;
-    }
-
-    .menu li {
-        padding: 0 20px;
+        display: flex;
     }
 }
 </style>
