@@ -10,15 +10,17 @@
 
                 <label class="textLabel" for="userID">Username or Email</label>
                 <p class="required_symbol">*</p>
-                <input id="userID" name="userID" v-model="userID" autocapitalize="off" required>
+                <input id="userID" name="userID" v-model="userID" autocapitalize="off" class = "form_field" required>
 
                 <label class="textLabel" for="password">Password</label>
                 <p class="required_symbol">*</p>
-                <input type="password" id="password" name="password" v-model="password" required>
+                <input type="password" id="password" name="password" v-model="password" class = "form_field" required>
 
                 <input type="submit" value="Login">
             </form>
         </div>
+        <button v-on:click="changeTheTheme()">Dark Theme</button>
+        <button v-on:click="changeTheThemeLight()">Light Theme</button>
         <!--<router-link class="bigRoute" to="/signup">Don't have an account? Create one here.</router-link>-->
     </div>
 </template>
@@ -29,6 +31,11 @@ import UserService from "../services/user.service";
 import SharedMethods from "../shared";
 
 import NavBar from "@/components/NavBar";
+
+
+window.onload = function() {
+    SharedMethods.initTheme();    
+}
 
 export default {
     created() {
@@ -64,12 +71,25 @@ export default {
 
                 this.$router.push("/profile");
             }
+        },
+        changeTheTheme() {
+            SharedMethods.changeTheme('dark-theme');
+        },
+        changeTheThemeLight(){
+            SharedMethods.changeTheme('light-theme');    
         }
     }
 };
 </script>
 
 <style scoped>
+
+.form_field {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid white;
+}
 
 .loginForm {
     padding: 20px;
