@@ -1,7 +1,7 @@
 <template>
     <div class="signup">
-        <div class = "content_container">
-            <div class = "content_subContainer">
+        <div class="content_container">
+            <div class="content_subContainer">
                 <NavBar headerText="Sign-Up"></NavBar>
 
                 <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" class="large_logo" />
@@ -25,7 +25,7 @@
 
                         <label class="textLabel" for="password">Confirm Password</label>
                         <p class="required_symbol">*</p>
-                        <input type="password" id="password" name="password" v-model="password" required>
+                        <input type="password" id="password" name="password" v-model="confirmedPassword" required>
 
                         <input type="submit" value="Sign-up">
 
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <Footer class = "mainFooter"></Footer>
+        <Footer class="mainFooter"></Footer>
     </div>
 </template>
 
@@ -48,12 +48,12 @@ import Footer from "@/components/Footer";
 export default {
     created() {
         SharedMethods.checkIfLoggedIn()
-            .then(result => {
+            .then((result) => {
                 if (result) {
                     this.$router.push("/profile");
                 }
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error(err);
             });
     },
@@ -63,45 +63,50 @@ export default {
             username: "",
             email: "",
             password: "",
-            errMessage: ""
+            confirmedPassword: "",
+            errMessage: "",
         };
     },
     components: {
         NavBar,
-        Footer
+        Footer,
     },
     methods: {
         async submitForm() {
-            // we validate even client-side (same thing as server-side)
-            const valid = UserService.validateCreds(
-                this.username,
-                this.email,
-                this.password
-            );
-            if (valid) {
-                const result = await UserService.signup(
+            if (this.password != this.confirmedPassword) {
+                this.errMessage = "Passwords don't match!";
+            } else {
+                // we validate even client-side (same thing as server-side)
+                const valid = UserService.validateCreds(
                     this.username,
                     this.email,
                     this.password
                 );
+                if (valid) {
+                    const result = await UserService.signup(
+                        this.username,
+                        this.email,
+                        this.password
+                    );
 
-                if (/Unable/.test(result.message)) {
-                    this.errMessage = "Credentials are already taken.";
-                } else if (/Invalid/.test(result.message)) {
-                    // we are going to do this even here just to add another layer of security
+                    if (/Unable/.test(result.message)) {
+                        this.errMessage = "Credentials are already taken.";
+                    } else if (/Invalid/.test(result.message)) {
+                        // we are going to do this even here just to add another layer of security
+                        this.errMessage =
+                            "Invalid credentials. Please follow the rules.";
+                    } else {
+                        this.errMessage = "";
+                        localStorage.setItem("token", result.token);
+                        this.$router.push("/profile");
+                    }
+                } else {
                     this.errMessage =
                         "Invalid credentials. Please follow the rules.";
-                } else {
-                    this.errMessage = "";
-                    localStorage.setItem("token", result.token);
-                    this.$router.push("/profile");
                 }
-            } else {
-                this.errMessage =
-                    "Invalid credentials. Please follow the rules.";
             }
-        }
-    }
+        },
+    },
 };
 </script>
 
