@@ -15,9 +15,8 @@
                     <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                 </svg>
 
-                <input id="userID" name="userID" v-model="userID" autocapitalize="off" placeholder="Username or Email" required>
+                <input id="userID" class = "form_field" name="userID" v-model="userID" autocapitalize="off" placeholder="Username or Email" autocomplete="off" required>
                 <div id="bottomLine-1"></div>
-
                 <!-- <label class="textLabel" for="password">Password</label> -->
 
                 <svg id="passIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -26,9 +25,11 @@
                     <circle cx="12" cy="16" r="1" />
                     <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
                 </svg>
-
-                <input type="password" id="password" name="password" v-model="password" placeholder="Password" required>
+                
+                <input type="password" id="password" class = "form_field" name="password" v-model="password" placeholder="Password" required>
                 <div id="bottomLine-2"></div>
+                
+                <router-link to='/' id='forgot_link'>Forgot Password?</router-link>
 
                 <input type="submit" value="Login">
 
@@ -131,7 +132,7 @@ export default {
     width: 450px;
     max-width: 800px;
     height: 600px;
-    background-color: #0d0d0d;
+    background-color: var(--secondary-color);
     border-radius: 10px;
     margin: 0;
     position: absolute;
@@ -152,12 +153,13 @@ textarea {
     border: 0;
     width: 80%;
     padding: 12px;
-    background-color: #171717;
+    background-color: var(--secondary-color);
     color: var(--main-font-color);
     box-sizing: border-box;
     margin-top: 30px;
     margin-bottom: 50px;
     height: 30px;
+    font-size: 18px;
 }
 
 input::placeholder {
@@ -173,6 +175,34 @@ input::placeholder {
     margin-bottom: 7px;
 }
 
+@keyframes form_field_animation {
+    from { width: 80%; margin-left: 0px; }
+    to { width: 85%; margin-left: -10px; }
+}
+
+.form_field {
+    width: 75%;
+    padding-top: 12px; 
+}
+.form_field::-webkit-input-placeholder {
+    opacity: 0.5;   
+}
+
+.form_field:focus + #bottomLine-1 {
+    border-bottom: 2px solid var(--main-font-color); 
+    animation-name: form_field_animation;  
+    animation-duration: 1s; 
+    width: 85%;
+    margin-left: -10px;
+}
+.form_field:focus + #bottomLine-2 {
+    border-bottom: 2px solid var(--main-font-color);    
+    animation-name: form_field_animation; 
+    animation-duration: 1s; 
+    width: 85%;
+    margin-left: -10px;
+}
+
 input[type="submit"] {
     width: 93%;
     font-size: 1rem;
@@ -186,7 +216,6 @@ input[type="submit"] {
     cursor: pointer;
     transition: 0.6s;
     height: 45px;
-    margin-top: 10px;
 }
 
 input[type="submit"]:hover {
@@ -219,20 +248,30 @@ input[type="submit"]:hover {
     }
 }
 
+#forgot_link {
+    display: block;
+    margin-top: -20px;
+    width: 93%;
+    text-align: right;
+    font-weight: 100;
+    font-size: 14px;
+    color: var(--link-color);
+}
+
 #bottomLine-1 {
     border-bottom: 1px solid var(--main-font-color);
-    width: 85%;
+    width: 80%;
     position: absolute;
     top: 197px;
-    left: 35px;
+    left: calc(50% - (80%/2));
 }
 
 #bottomLine-2 {
     border-bottom: 1px solid var(--main-font-color);
-    width: 85%;
+    width: 80%;
     position: absolute;
     top: 305px;
-    left: 35px;
+    left: calc(50% - (80%/2));
 }
 
 #userIcon {
