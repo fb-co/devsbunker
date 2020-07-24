@@ -23,3 +23,9 @@ Frontend
 - [ ] make a post page
 - [x] use .env
 - [ ] fix mobile view scrolling bug
+
+Glitches
+
+- [ ] Fix Hamburger Menu
+- [ ] Random scroll space on bottom of login/signup cards on mobile
+- [ ] Cant scroll to the top when resizing vertically
