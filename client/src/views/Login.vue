@@ -6,7 +6,7 @@
 
         <div class="loginForm">
             <p class="cardTitle">Login</p>
-            <form name="login" v-on:submit.prevent="submitForm">
+            <form name="login" v-on:submit.prevent="submitForm"> 
 
                 <!-- <label class="textLabel" for="userID">Username or Email</label> -->
                 <svg id="userIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -26,8 +26,15 @@
                     <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
                 </svg>
 
-                <input type="password" id="password" class="form_field" name="password" v-model="password" placeholder="Password" required>
+                <input type="password" id="password" class="form_field" name="password" style = "margin-left: 25px;" v-model="password" placeholder="Password" required>
                 <div id="bottomLine-2"></div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye selectable_icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" v-on:click="togglePassword()">
+                    <path stroke="none" d="M0 0h24v24H0z"/>
+                    <circle cx="12" cy="12" r="2" />
+                    <path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2" />
+                    <path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2" />
+                </svg>
 
                 <router-link to='/profile/reset-password' id='forgot_link'>Forgot Password?</router-link>
 
@@ -110,6 +117,15 @@ export default {
                 this.$router.push("/profile");
             }
         },
+        togglePassword() {
+            let element = document.getElementById('password');
+            
+            if (element.type === 'password') {
+                element.type = 'text';
+            }else{
+                element.type = 'password';
+            }
+        },
         changeTheTheme() {
             SharedMethods.changeTheme("dark-theme");
         },
@@ -121,6 +137,19 @@ export default {
 </script>
 
 <style scoped>
+
+/* Animations */
+@keyframes form_field_animation {
+    from {
+        width: 80%;
+        margin-left: 0%;
+    }
+    to {
+        width: 85%;
+        margin-left: -2%;
+    }
+}
+
 .cardTitle {
     font-size: 30px;
     font-weight: 700;
@@ -175,17 +204,6 @@ input::placeholder {
     margin-bottom: 7px;
 }
 
-@keyframes form_field_animation {
-    from {
-        width: 80%;
-        margin-left: 0%;
-    }
-    to {
-        width: 85%;
-        margin-left: -2%;
-    }
-}
-
 .form_field {
     width: 75%;
     padding-top: 12px;
@@ -196,15 +214,13 @@ input::placeholder {
 
 .form_field:focus + #bottomLine-1 {
     border-bottom: 2px solid var(--main-font-color);
-    animation-name: form_field_animation;
-    animation-duration: 1s;
+    animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
 .form_field:focus + #bottomLine-2 {
     border-bottom: 2px solid var(--main-font-color);
-    animation-name: form_field_animation;
-    animation-duration: 1s;
+    animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
@@ -225,6 +241,14 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background: linear-gradient(250deg, #8743ff 0%, #4136f1 60%);
+}
+
+.selectable_icon {
+    position: relative;
+    top: 5px;
+}
+.selectable_icon:hover {
+    background-color: blue;
 }
 
 #error {
