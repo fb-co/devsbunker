@@ -91,6 +91,6 @@ body {
 export default {
     components: {
         //NavBar
-    }
+    },
 };
 </script>
