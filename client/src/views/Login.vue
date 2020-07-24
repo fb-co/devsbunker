@@ -176,8 +176,8 @@ input::placeholder {
 }
 
 @keyframes form_field_animation {
-    from { width: 80%;  }
-    to { width: 85%; }
+    from { width: 80%; margin-left: 0%; }
+    to { width: 85%; margin-left: -2%; }
 }
 
 .form_field {
@@ -192,11 +192,15 @@ input::placeholder {
     border-bottom: 2px solid var(--main-font-color); 
     animation-name: form_field_animation;  
     animation-duration: 1s; 
+    width: 85%;
+    margin-left: -2%;
 }
 .form_field:focus + #bottomLine-2 {
     border-bottom: 2px solid var(--main-font-color);    
     animation-name: form_field_animation; 
     animation-duration: 1s; 
+    width: 85%;
+    margin-left: -2%;
 }
 
 input[type="submit"] {
