@@ -150,6 +150,7 @@ export default {
     }
 }
 
+
 .cardTitle {
     font-size: 30px;
     font-weight: 700;
@@ -248,7 +249,7 @@ input[type="submit"]:hover {
     top: 5px;
 }
 .selectable_icon:hover {
-    background-color: blue;
+    stroke-width: 3px;
 }
 
 #error {
