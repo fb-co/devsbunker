@@ -261,12 +261,12 @@ input[type="submit"]:hover {
     #error {
         width: 100%;
     }
-    .loginForm {
+    .signupForm {
         width: 60%;
     }
 }
 @media only screen and (max-width: 530px) {
-    .loginForm {
+    .signupForm {
         width: 100%;
         background: var(--color-primary);
     }
