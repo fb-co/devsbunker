@@ -15,7 +15,7 @@
                     <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                 </svg>
 
-                <input id="userID" class = "form_field" name="userID" v-model="userID" autocapitalize="off" placeholder="Username or Email" autocomplete="off" required>
+                <input id="userID" class="form_field" name="userID" v-model="userID" autocapitalize="off" placeholder="Username or Email" autocomplete="off" required>
                 <div id="bottomLine-1"></div>
                 <!-- <label class="textLabel" for="password">Password</label> -->
 
@@ -25,11 +25,11 @@
                     <circle cx="12" cy="16" r="1" />
                     <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
                 </svg>
-                
-                <input type="password" id="password" class = "form_field" name="password" v-model="password" placeholder="Password" required>
+
+                <input type="password" id="password" class="form_field" name="password" v-model="password" placeholder="Password" required>
                 <div id="bottomLine-2"></div>
-                
-                <router-link to='/' id='forgot_link'>Forgot Password?</router-link>
+
+                <router-link to='/profile/reset-password' id='forgot_link'>Forgot Password?</router-link>
 
                 <input type="submit" value="Login">
 
@@ -38,22 +38,24 @@
             <div class="otherOption">
                 <p class="otherOption">Or login with</p>
 
-                <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" id="svg4073" width="48" height="48">
-                    <metadata id="metadata4079">
-                        <rdf:RDF>
-                            <cc:Work rdf:about="">
-                                <dc:format>image/svg+xml</dc:format>
-                                <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-                            </cc:Work>
-                        </rdf:RDF>
-                    </metadata>
-                    <defs id="defs4077" />
-                    <sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="640" inkscape:window-height="480" id="namedview4075" />
-                    <inkscape:clipboard style="font-variant-east_asian:normal;opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke-width:1.3333333;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stroke:none" min="181.7604,182.3607" max="225.19906,224.72719" />
-                    <g transform="matrix(1.3333333,0,0,-1.3333333,21.717333,0)" id="g196">
-                        <path inkscape:connector-curvature="0" id="path198" style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" d="m 0,0 c -8.995,0 -16.288,-7.293 -16.288,-16.29 0,-7.197 4.667,-13.302 11.14,-15.457 0.815,-0.149 1.112,0.354 1.112,0.786 0,0.386 -0.014,1.411 -0.022,2.77 -4.531,-0.984 -5.487,2.184 -5.487,2.184 -0.741,1.882 -1.809,2.383 -1.809,2.383 -1.479,1.01 0.112,0.99 0.112,0.99 1.635,-0.115 2.495,-1.679 2.495,-1.679 1.453,-2.489 3.813,-1.77 4.741,-1.353 0.148,1.052 0.568,1.77 1.034,2.177 -3.617,0.411 -7.42,1.809 -7.42,8.051 0,1.778 0.635,3.232 1.677,4.371 -0.168,0.412 -0.727,2.068 0.159,4.311 0,0 1.368,0.438 4.48,-1.67 1.299,0.362 2.693,0.542 4.078,0.548 1.383,-0.006 2.777,-0.186 4.078,-0.548 3.11,2.108 4.475,1.67 4.475,1.67 0.889,-2.243 0.33,-3.899 0.162,-4.311 1.044,-1.139 1.675,-2.593 1.675,-4.371 0,-6.258 -3.809,-7.635 -7.438,-8.038 0.585,-0.503 1.106,-1.497 1.106,-3.017 0,-2.177 -0.02,-3.934 -0.02,-4.468 0,-0.436 0.293,-0.943 1.12,-0.784 6.468,2.159 11.131,8.26 11.131,15.455 C 16.291,-7.293 8.997,0 0,0" />
-                    </g>
-                </svg>
+                <router-link to='/'>
+                    <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" id="svg4073" width="48" height="48">
+                        <metadata id="metadata4079">
+                            <rdf:RDF>
+                                <cc:Work rdf:about="">
+                                    <dc:format>image/svg+xml</dc:format>
+                                    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+                                </cc:Work>
+                            </rdf:RDF>
+                        </metadata>
+                        <defs id="defs4077" />
+                        <sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="640" inkscape:window-height="480" id="namedview4075" />
+                        <inkscape:clipboard style="font-variant-east_asian:normal;opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke-width:1.3333333;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stroke:none" min="181.7604,182.3607" max="225.19906,224.72719" />
+                        <g transform="matrix(1.3333333,0,0,-1.3333333,21.717333,0)" id="g196">
+                            <path inkscape:connector-curvature="0" id="path198" style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" d="m 0,0 c -8.995,0 -16.288,-7.293 -16.288,-16.29 0,-7.197 4.667,-13.302 11.14,-15.457 0.815,-0.149 1.112,0.354 1.112,0.786 0,0.386 -0.014,1.411 -0.022,2.77 -4.531,-0.984 -5.487,2.184 -5.487,2.184 -0.741,1.882 -1.809,2.383 -1.809,2.383 -1.479,1.01 0.112,0.99 0.112,0.99 1.635,-0.115 2.495,-1.679 2.495,-1.679 1.453,-2.489 3.813,-1.77 4.741,-1.353 0.148,1.052 0.568,1.77 1.034,2.177 -3.617,0.411 -7.42,1.809 -7.42,8.051 0,1.778 0.635,3.232 1.677,4.371 -0.168,0.412 -0.727,2.068 0.159,4.311 0,0 1.368,0.438 4.48,-1.67 1.299,0.362 2.693,0.542 4.078,0.548 1.383,-0.006 2.777,-0.186 4.078,-0.548 3.11,2.108 4.475,1.67 4.475,1.67 0.889,-2.243 0.33,-3.899 0.162,-4.311 1.044,-1.139 1.675,-2.593 1.675,-4.371 0,-6.258 -3.809,-7.635 -7.438,-8.038 0.585,-0.503 1.106,-1.497 1.106,-3.017 0,-2.177 -0.02,-3.934 -0.02,-4.468 0,-0.436 0.293,-0.943 1.12,-0.784 6.468,2.159 11.131,8.26 11.131,15.455 C 16.291,-7.293 8.997,0 0,0" />
+                        </g>
+                    </svg>
+                </router-link>
 
             </div>
 
@@ -71,10 +73,6 @@ import SharedMethods from "../shared";
 
 import NavBar from "@/components/NavBar";
 
-window.onload = function () {
-    SharedMethods.initTheme();
-};
-
 export default {
     created() {
         SharedMethods.checkIfLoggedIn()
@@ -86,6 +84,8 @@ export default {
             .catch((err) => {
                 console.error(err);
             });
+
+        SharedMethods.initTheme();
     },
     data() {
         return {
@@ -176,29 +176,35 @@ input::placeholder {
 }
 
 @keyframes form_field_animation {
-    from { width: 80%; margin-left: 0%; }
-    to { width: 85%; margin-left: -2%; }
+    from {
+        width: 80%;
+        margin-left: 0%;
+    }
+    to {
+        width: 85%;
+        margin-left: -2%;
+    }
 }
 
 .form_field {
     width: 75%;
-    padding-top: 12px; 
+    padding-top: 12px;
 }
 .form_field::-webkit-input-placeholder {
-    opacity: 0.5;   
+    opacity: 0.5;
 }
 
 .form_field:focus + #bottomLine-1 {
-    border-bottom: 2px solid var(--main-font-color); 
-    animation-name: form_field_animation;  
-    animation-duration: 1s; 
+    border-bottom: 2px solid var(--main-font-color);
+    animation-name: form_field_animation;
+    animation-duration: 1s;
     width: 85%;
     margin-left: -2%;
 }
 .form_field:focus + #bottomLine-2 {
-    border-bottom: 2px solid var(--main-font-color);    
-    animation-name: form_field_animation; 
-    animation-duration: 1s; 
+    border-bottom: 2px solid var(--main-font-color);
+    animation-name: form_field_animation;
+    animation-duration: 1s;
     width: 85%;
     margin-left: -2%;
 }
@@ -214,13 +220,11 @@ input[type="submit"] {
     border-radius: 16px;
     padding: 0px 0px;
     cursor: pointer;
-    transition: 0.6s;
     height: 45px;
 }
 
 input[type="submit"]:hover {
-    color: var(--main-font-color);
-    border-color: var(--main-font-color);
+    background: linear-gradient(250deg, #8743ff 0%, #4136f1 60%);
 }
 
 #error {
@@ -263,7 +267,7 @@ input[type="submit"]:hover {
     width: 80%;
     position: absolute;
     top: 197px;
-    left: calc(50% - (80%/2));
+    left: calc(50% - (80% / 2));
 }
 
 #bottomLine-2 {
@@ -271,7 +275,7 @@ input[type="submit"]:hover {
     width: 80%;
     position: absolute;
     top: 305px;
-    left: calc(50% - (80%/2));
+    left: calc(50% - (80% / 2));
 }
 
 #userIcon {
