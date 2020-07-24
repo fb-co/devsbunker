@@ -29,14 +29,14 @@
                 <input type="password" id="password" class="form_field" name="password" style="margin-left: 25px;" v-model="password" placeholder="Password" required>
                 <div id="bottomLine-2"></div>
 
-                <svg v-if="!hidePassword" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye selectable_icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" v-on:click="togglePassword()">
+                <svg v-if="hidePassword" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye selectable_icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" v-on:click="togglePassword()">
                     <path stroke="none" d="M0 0h24v24H0z" />
                     <circle cx="12" cy="12" r="2" />
                     <path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2" />
                     <path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2" />
                 </svg>
 
-                <svg v-if="hidePassword" @click="togglePassword()" class="selectable_icon" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" id="svg4828" width="24.25" height="24.25">
+                <svg v-if="!hidePassword" @click="togglePassword()" class="selectable_icon" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" id="svg4828" width="24.25" height="24.25">
                     <metadata id="metadata4834">
                         <rdf:RDF>
                             <cc:Work rdf:about="">
