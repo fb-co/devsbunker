@@ -246,9 +246,14 @@ input[type="submit"]:hover {
         width: 60%;
     }
 }
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 530px) {
     .loginForm {
-        display: none;
+        width: 100%;
+        background: var(--color-primary);
+    }
+
+    input {
+        background: var(--color-primary);
     }
 }
 
