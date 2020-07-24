@@ -6,7 +6,7 @@
 
         <div class="loginForm">
             <p class="cardTitle">Login</p>
-            <form name="login" v-on:submit.prevent="submitForm"> 
+            <form name="login" v-on:submit.prevent="submitForm">
 
                 <!-- <label class="textLabel" for="userID">Username or Email</label> -->
                 <svg id="userIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -26,14 +26,41 @@
                     <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
                 </svg>
 
-                <input type="password" id="password" class="form_field" name="password" style = "margin-left: 25px;" v-model="password" placeholder="Password" required>
+                <input type="password" id="password" class="form_field" name="password" style="margin-left: 25px;" v-model="password" placeholder="Password" required>
                 <div id="bottomLine-2"></div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye selectable_icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" v-on:click="togglePassword()">
-                    <path stroke="none" d="M0 0h24v24H0z"/>
+                <svg v-if="!hidePassword" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye selectable_icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" v-on:click="togglePassword()">
+                    <path stroke="none" d="M0 0h24v24H0z" />
                     <circle cx="12" cy="12" r="2" />
                     <path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2" />
                     <path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2" />
+                </svg>
+
+                <svg v-if="hidePassword" @click="togglePassword()" class="selectable_icon" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" id="svg4828" width="24.25" height="24.25">
+                    <metadata id="metadata4834">
+                        <rdf:RDF>
+                            <cc:Work rdf:about="">
+                                <dc:format>image/svg+xml</dc:format>
+                                <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+                            </cc:Work>
+                        </rdf:RDF>
+                    </metadata>
+                    <defs id="defs4832" />
+                    <sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="640" inkscape:window-height="480" id="namedview4830" />
+                    <inkscape:clipboard style="font-variant-east_asian:normal;opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;stroke-width:0.75781249;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" min="3.3750003,2.8125006" max="27.624999,27.0625" />
+                    <g transform="matrix(0.75781249,0,0,0.75781249,0.85253882,1.3735348)" id="g4792">
+                        <g id="g4782">
+                            <g id="g4773">
+                                <g id="g4763" transform="matrix(1.3333333,0,0,1.3333333,-1.1249997,-1.8124996)">
+                                    <path id="path4743" d="M 0,0 H 24 V 24 H 0 Z" inkscape:connector-curvature="0" style="stroke:none" />
+                                    <circle id="circle4745" r="2" cy="12" cx="12" />
+                                    <path id="path4747" d="m 2,12 1.5,2 a 11,11 0 0 0 17,0 L 22,12" inkscape:connector-curvature="0" />
+                                    <path id="path4749" d="m 2,12 1.5,-2 a 11,11 0 0 1 17,0 l 1.5,2" inkscape:connector-curvature="0" />
+                                </g>
+                                <rect id="rect4765" width="3.9325533" height="28.838724" x="18.673452" y="-12.410653" transform="rotate(39.048251)" />
+                            </g>
+                        </g>
+                    </g>
                 </svg>
 
                 <router-link to='/profile/reset-password' id='forgot_link'>Forgot Password?</router-link>
@@ -99,6 +126,7 @@ export default {
             userID: "",
             password: "",
             errMessage: "",
+            hidePassword: false,
         };
     },
     components: {
@@ -118,12 +146,14 @@ export default {
             }
         },
         togglePassword() {
-            let element = document.getElementById('password');
-            
-            if (element.type === 'password') {
-                element.type = 'text';
-            }else{
-                element.type = 'password';
+            let element = document.getElementById("password");
+
+            if (element.type === "password") {
+                element.type = "text";
+                this.hidePassword = true;
+            } else {
+                element.type = "password";
+                this.hidePassword = false;
             }
         },
         changeTheTheme() {
@@ -137,7 +167,6 @@ export default {
 </script>
 
 <style scoped>
-
 /* Animations */
 @keyframes form_field_animation {
     from {
@@ -149,7 +178,6 @@ export default {
         margin-left: -2%;
     }
 }
-
 
 .cardTitle {
     font-size: 30px;
@@ -246,10 +274,11 @@ input[type="submit"]:hover {
 
 .selectable_icon {
     position: relative;
-    top: 5px;
+    top: 8px;
+    stroke: var(--main-font-color);
 }
 .selectable_icon:hover {
-    stroke-width: 3px;
+    stroke-width: 2.5px;
 }
 
 #error {
@@ -324,5 +353,28 @@ input[type="submit"]:hover {
     margin-bottom: 30px;
     font-weight: 100;
     color: rgba(242, 242, 242, 0.5);
+}
+
+/* closed eyes svg properties, needed to do this because there are subelements in the svg tag */
+#g4763 {
+    fill: none;
+    stroke: var(--main-font-color);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+#g4763:hover {
+    stroke-width: 2.5px;
+}
+
+#rect4765 {
+    fill: var(--main-font-color);
+    fill-opacity: 1;
+    stroke: var(--main-font-color);
+    stroke-width: 1.5;
+    stroke-miterlimit: 4;
+    stroke-dasharray: none;
+    stroke-opacity: 0;
 }
 </style>
