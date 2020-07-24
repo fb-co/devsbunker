@@ -12,7 +12,7 @@
                     <circle cx="12" cy="7" r="4" />
                     <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                 </svg>
-                <input class="form_field" type="text" id="username" name="username" v-model="username" autocapitalize="off" placeholder="Username" required>
+                <input class="form_field" type="text" id="username" name="username" v-model="username" autocapitalize="off" autocomplete="off" placeholder="Username" required>
 
                 <div id="bottomLine-1"></div>
 
@@ -21,7 +21,7 @@
                     <rect x="3" y="5" width="18" height="14" rx="2" />
                     <polyline points="3 7 12 13 21 7" />
                 </svg>
-                <input class="form_field" type="email" id="email" name="email" v-model="email" autocapitalize="off" placeholder="Email" required>
+                <input class="form_field" type="email" id="email" name="email" v-model="email" autocapitalize="off" autocomplete="off" placeholder="Email" required>
                 <div id="bottomLine-2"></div>
 
                 <svg id="passIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -32,7 +32,7 @@
                 </svg>
                 <input class="form_field" type="password" id="password" name="password" v-model="password" placeholder="Password" required>
 
-                <div id="bottomLine-4"></div>
+                <div id="bottomLine-3"></div>
 
                 <svg id="passIcon2" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
@@ -42,7 +42,7 @@
                 </svg>
                 <input class="form_field" type="password" id="password" name="password" v-model="confirmedPassword" placeholder="Confirm password" required>
 
-                <div id="bottomLine-3"></div>
+                <div id="bottomLine-4"></div>
 
                 <input type="submit" value="Sign-up">
 
@@ -215,15 +215,25 @@ input::placeholder {
 
 .form_field:focus + #bottomLine-1 {
     border-bottom: 2px solid var(--main-font-color);
-    animation-name: form_field_animation;
-    animation-duration: 1s;
+    animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
 .form_field:focus + #bottomLine-2 {
     border-bottom: 2px solid var(--main-font-color);
-    animation-name: form_field_animation;
-    animation-duration: 1s;
+    animation: form_field_animation 1s;
+    width: 85%;
+    margin-left: -2%;
+}
+.form_field:focus + #bottomLine-3 {
+    border-bottom: 2px solid var(--main-font-color);
+    animation: form_field_animation 1s;
+    width: 85%;
+    margin-left: -2%;
+}
+.form_field:focus + #bottomLine-4 {
+    border-bottom: 2px solid var(--main-font-color);
+    animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
