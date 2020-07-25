@@ -2,22 +2,20 @@
     <div class="login">
         <NavBar headerText=""></NavBar>
 
-        <div id="error">{{ errMessage }}</div>
-
         <div class="loginForm">
-            <p class="cardTitle">Login</p>
+            <p v-if="!errMessage" class="cardTitle">Login</p>
+            <p v-if="errMessage" class="cardTitle err">{{ errMessage}}</p>
+
             <form name="login" v-on:submit.prevent="submitForm">
 
-                <!-- <label class="textLabel" for="userID">Username or Email</label> -->
                 <svg id="userIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
                     <circle cx="12" cy="7" r="4" />
                     <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                 </svg>
 
-                <input id="userID" class="form_field" name="userID" v-model="userID" autocapitalize="off" placeholder="Username or Email" autocomplete="off" required>
-                <div id="bottomLine-1"></div>
-                <!-- <label class="textLabel" for="password">Password</label> -->
+                <input @click="errMessage ? errMessage = '' : _" id="userID" class="form_field" name="userID" v-model="userID" autocapitalize="off" placeholder="Username or Email" autocomplete="off" required>
+                <div v-bind:class="{errLine: errMessage}" class="bottomLine-1"></div>
 
                 <svg id="passIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
@@ -26,8 +24,8 @@
                     <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
                 </svg>
 
-                <input type="password" id="password" class="form_field" name="password" style="margin-left: 25px;" v-model="password" placeholder="Password" required>
-                <div id="bottomLine-2"></div>
+                <input @click="errMessage ? errMessage = '' : _" type="password" id="password" class="form_field" name="password" style="margin-left: 25px;" v-model="password" placeholder="Password" required>
+                <div v-bind:class="{errLine: errMessage}" class="bottomLine-2"></div>
 
                 <svg v-if="hidePassword" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye selectable_icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" v-on:click="togglePassword()">
                     <path stroke="none" d="M0 0h24v24H0z" />
@@ -94,8 +92,8 @@
             </div>
 
         </div>
-        <button v-on:click="changeTheTheme()">Dark Theme</button>
-        <button v-on:click="changeTheThemeLight()">Light Theme</button>
+        <!-- <button v-on:click="changeTheTheme()">Dark Theme</button>
+        <button v-on:click="changeTheThemeLight()">Light Theme</button> -->
         <!--<router-link class="bigRoute" to="/signup">Don't have an account? Create one here.</router-link>-->
     </div>
 </template>
@@ -126,7 +124,7 @@ export default {
             userID: "",
             password: "",
             errMessage: "",
-            hidePassword: false,
+            hidePassword: "",
         };
     },
     components: {
@@ -180,11 +178,17 @@ export default {
 }
 
 .cardTitle {
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 700;
-    margin-top: 25px;
+    margin-top: 30px;
     color: var(--main-font-color);
 }
+
+.err {
+    color: var(--error-red);
+    text-align: center;
+}
+
 .loginForm {
     padding: 20px;
     width: 450px;
@@ -225,14 +229,6 @@ input::placeholder {
     color: rgba(242, 242, 242, 0.8);
 }
 
-.textLabel {
-    color: var(--main-font-color);
-    float: left;
-    font-weight: 400;
-    margin-left: 25px;
-    margin-bottom: 7px;
-}
-
 .form_field {
     width: 75%;
     padding-top: 12px;
@@ -241,13 +237,13 @@ input::placeholder {
     opacity: 0.5;
 }
 
-.form_field:focus + #bottomLine-1 {
+.form_field:focus + .bottomLine-1 {
     border-bottom: 2px solid var(--main-font-color);
     animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
-.form_field:focus + #bottomLine-2 {
+.form_field:focus + .bottomLine-2 {
     border-bottom: 2px solid var(--main-font-color);
     animation: form_field_animation 1s;
     width: 85%;
@@ -281,21 +277,7 @@ input[type="submit"]:hover {
     stroke-width: 2.5px;
 }
 
-#error {
-    width: 25%;
-    max-width: 230px;
-    margin: auto;
-    margin-top: 40px;
-    color: var(--error-red);
-    font-weight: 600;
-    font-size: 20px;
-    text-align: center;
-}
-
 @media only screen and (max-width: 800px) {
-    #error {
-        width: 100%;
-    }
     .loginForm {
         width: 60%;
     }
@@ -321,7 +303,7 @@ input[type="submit"]:hover {
     color: var(--link-color);
 }
 
-#bottomLine-1 {
+.bottomLine-1 {
     border-bottom: 1px solid var(--main-font-color);
     width: 80%;
     position: absolute;
@@ -329,12 +311,16 @@ input[type="submit"]:hover {
     left: calc(50% - (80% / 2));
 }
 
-#bottomLine-2 {
+.bottomLine-2 {
     border-bottom: 1px solid var(--main-font-color);
     width: 80%;
     position: absolute;
     top: 305px;
     left: calc(50% - (80% / 2));
+}
+
+.errLine {
+    border-bottom: 1px solid #f33;
 }
 
 #userIcon {
