@@ -2,27 +2,28 @@
     <div class="signup">
         <NavBar headerText=""></NavBar>
 
-        <div id="error">{{ errMessage }}</div>
-
         <div class="signupForm">
-            <p class="cardTitle">Sign-up</p>
+            <p v-if="!errMessage" class="cardTitle">Sign-up</p>
+            <p v-if="errMessage" class="cardTitle err">{{ errMessage}}</p>
+
             <form name="signup" v-on:submit.prevent="submitForm">
                 <svg id="userIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
                     <circle cx="12" cy="7" r="4" />
                     <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                 </svg>
-                <input class="form_field" type="text" id="username" name="username" v-model="username" autocapitalize="off" autocomplete="off" placeholder="Username" required>
+                <input @click="errMessage ? errMessage = '' : _" class="form_field" type="text" id="username" name="username" v-model="username" autocapitalize="off" autocomplete="off" placeholder="Username" required>
 
-                <div id="bottomLine-1"></div>
+                <div v-bind:class="{errLine: !/match/.test(errMessage) && errMessage}" class="bottomLine-1"></div>
 
                 <svg id="emailIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="30" height="30" viewBox="0 0 24 24" stroke-width="1" stroke="#F2F2F2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
                     <rect x="3" y="5" width="18" height="14" rx="2" />
                     <polyline points="3 7 12 13 21 7" />
                 </svg>
-                <input class="form_field" type="email" id="email" name="email" v-model="email" autocapitalize="off" autocomplete="off" placeholder="Email" required>
-                <div id="bottomLine-2"></div>
+
+                <input @click="errMessage ? errMessage = '' : _" class="form_field" type="email" id="email" name="email" v-model="email" autocapitalize="off" autocomplete="off" placeholder="Email" required>
+                <div v-bind:class="{errLine: !/match/.test(errMessage) && errMessage}" class="bottomLine-2"></div>
 
                 <svg id="passIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
@@ -30,9 +31,10 @@
                     <circle cx="12" cy="16" r="1" />
                     <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
                 </svg>
-                <input class="form_field" type="password" id="password" name="password" v-model="password" placeholder="Password" required>
 
-                <div id="bottomLine-3"></div>
+                <input @click="errMessage ? errMessage = '' : _" class="form_field" type="password" id="password" name="password" v-model="password" placeholder="Password" required>
+
+                <div v-bind:class="{errLine: errMessage}" class="bottomLine-3"></div>
 
                 <svg id="passIcon2" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
@@ -40,9 +42,10 @@
                     <circle cx="12" cy="16" r="1" />
                     <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
                 </svg>
-                <input class="form_field" type="password" id="password" name="password" v-model="confirmedPassword" placeholder="Confirm password" required>
 
-                <div id="bottomLine-4"></div>
+                <input @click="errMessage ? errMessage = '' : _" class="form_field" type="password" id="password" name="password" v-model="confirmedPassword" placeholder="Confirm password" required>
+
+                <div v-bind:class="{errLine: errMessage}" class="bottomLine-4"></div>
 
                 <input type="submit" value="Sign-up">
 
@@ -129,16 +132,14 @@ export default {
                         this.errMessage = "Credentials are already taken.";
                     } else if (/Invalid/.test(result.message)) {
                         // we are going to do this even here just to add another layer of security
-                        this.errMessage =
-                            "Invalid credentials. Please follow the rules.";
+                        this.errMessage = "Invalid credentials.";
                     } else {
                         this.errMessage = "";
                         localStorage.setItem("token", result.token);
                         this.$router.push("/profile");
                     }
                 } else {
-                    this.errMessage =
-                        "Invalid credentials. Please follow the rules.";
+                    this.errMessage = "Invalid credentials";
                 }
             }
         },
@@ -148,11 +149,30 @@ export default {
 
 <style scoped>
 .cardTitle {
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 700;
-    margin-top: 25px;
+    margin-top: 30px;
     color: var(--main-font-color);
 }
+.err {
+    color: var(--error-red);
+    text-align: center;
+}
+
+@media only screen and (max-width: 305px) {
+    .cardTitle {
+        font-size: 20px;
+        margin-top: 35px;
+    }
+}
+
+@media only screen and (max-width: 250px) {
+    .cardTitle {
+        font-size: 15px;
+        margin-top: 42px;
+    }
+}
+
 .signupForm {
     padding: 20px;
     width: 450px;
@@ -166,7 +186,7 @@ export default {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    margin-top: 55px;
+    margin-top: 50px;
 }
 
 form {
@@ -213,25 +233,25 @@ input::placeholder {
     opacity: 0.5;
 }
 
-.form_field:focus + #bottomLine-1 {
+.form_field:focus + .bottomLine-1 {
     border-bottom: 2px solid var(--main-font-color);
     animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
-.form_field:focus + #bottomLine-2 {
+.form_field:focus + .bottomLine-2 {
     border-bottom: 2px solid var(--main-font-color);
     animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
-.form_field:focus + #bottomLine-3 {
+.form_field:focus + .bottomLine-3 {
     border-bottom: 2px solid var(--main-font-color);
     animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
-.form_field:focus + #bottomLine-4 {
+.form_field:focus + .bottomLine-4 {
     border-bottom: 2px solid var(--main-font-color);
     animation: form_field_animation 1s;
     width: 85%;
@@ -256,23 +276,19 @@ input[type="submit"]:hover {
     background: linear-gradient(250deg, #8743ff 0%, #4136f1 60%);
 }
 
-#error {
-    width: 25%;
-    max-width: 230px;
-    margin: auto;
-    margin-top: 40px;
-    color: var(--error-red);
-    font-weight: 600;
-    font-size: 20px;
-    text-align: center;
-}
-
 @media only screen and (max-width: 800px) {
-    #error {
-        width: 100%;
-    }
     .signupForm {
         width: 60%;
+    }
+}
+@media only screen and (max-height: 900px) {
+    .signupForm {
+        width: 100%;
+        background: var(--color-primary);
+        margin-top: 100px;
+    }
+    input {
+        background: var(--color-primary);
     }
 }
 @media only screen and (max-width: 530px) {
@@ -286,7 +302,7 @@ input[type="submit"]:hover {
     }
 }
 
-#bottomLine-1 {
+.bottomLine-1 {
     border-bottom: 1px solid var(--main-font-color);
     width: 80%;
     position: absolute;
@@ -294,7 +310,7 @@ input[type="submit"]:hover {
     left: calc(50% - (80% / 2));
 }
 
-#bottomLine-2 {
+.bottomLine-2 {
     border-bottom: 1px solid var(--main-font-color);
     width: 80%;
     position: absolute;
@@ -302,7 +318,7 @@ input[type="submit"]:hover {
     left: calc(50% - (80% / 2));
 }
 
-#bottomLine-3 {
+.bottomLine-3 {
     border-bottom: 1px solid var(--main-font-color);
     width: 80%;
     position: absolute;
@@ -310,12 +326,16 @@ input[type="submit"]:hover {
     left: calc(50% - (80% / 2));
 }
 
-#bottomLine-4 {
+.bottomLine-4 {
     border-bottom: 1px solid var(--main-font-color);
     width: 80%;
     position: absolute;
     top: 525px;
     left: calc(50% - (80% / 2));
+}
+
+.errLine {
+    border-bottom: 1px solid #f33;
 }
 
 #userIcon {
