@@ -189,6 +189,20 @@ export default {
     text-align: center;
 }
 
+@media only screen and (max-width: 305px) {
+    .cardTitle {
+        font-size: 20px;
+        margin-top: 35px;
+    }
+}
+
+@media only screen and (max-width: 250px) {
+    .cardTitle {
+        font-size: 15px;
+        margin-top: 42px;
+    }
+}
+
 .loginForm {
     padding: 20px;
     width: 450px;
