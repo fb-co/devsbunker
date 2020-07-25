@@ -14,7 +14,7 @@
                 </svg>
                 <input @click="errMessage ? errMessage = '' : _" class="form_field" type="text" id="username" name="username" v-model="username" autocapitalize="off" autocomplete="off" placeholder="Username" required>
 
-                <div v-bind:class="{errLine: !/match/.test(errMessage) && errMessage}" class="bottomLine-1"></div>
+                <div v-bind:class="{errLine: !/match/.test(errMessage) && errMessage}" class="bottomLine-1 form_field_line"></div>
 
                 <svg id="emailIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="30" height="30" viewBox="0 0 24 24" stroke-width="1" stroke="#F2F2F2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
@@ -23,7 +23,7 @@
                 </svg>
 
                 <input @click="errMessage ? errMessage = '' : _" class="form_field" type="email" id="email" name="email" v-model="email" autocapitalize="off" autocomplete="off" placeholder="Email" required>
-                <div v-bind:class="{errLine: !/match/.test(errMessage) && errMessage}" class="bottomLine-2"></div>
+                <div v-bind:class="{errLine: !/match/.test(errMessage) && errMessage}" class="bottomLine-2 form_field_line"></div>
 
                 <svg id="passIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
@@ -34,7 +34,7 @@
 
                 <input @click="errMessage ? errMessage = '' : _" class="form_field" type="password" id="password" name="password" v-model="password" placeholder="Password" required>
 
-                <div v-bind:class="{errLine: errMessage}" class="bottomLine-3"></div>
+                <div v-bind:class="{errLine: errMessage}" class="bottomLine-3 form_field_line"></div>
 
                 <svg id="passIcon2" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
@@ -45,7 +45,7 @@
 
                 <input @click="errMessage ? errMessage = '' : _" class="form_field" type="password" id="password" name="password" v-model="confirmedPassword" placeholder="Confirm password" required>
 
-                <div v-bind:class="{errLine: errMessage}" class="bottomLine-4"></div>
+                <div v-bind:class="{errLine: errMessage}" class="bottomLine-4 form_field_line"></div>
 
                 <input type="submit" value="Sign-up">
 
@@ -234,25 +234,25 @@ input::placeholder {
 }
 
 .form_field:focus + .bottomLine-1 {
-    border-bottom: 2px solid var(--main-font-color);
+    height: 2px;
     animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
 .form_field:focus + .bottomLine-2 {
-    border-bottom: 2px solid var(--main-font-color);
+    height: 2px;
     animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
 .form_field:focus + .bottomLine-3 {
-    border-bottom: 2px solid var(--main-font-color);
+    height: 2px;
     animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
 .form_field:focus + .bottomLine-4 {
-    border-bottom: 2px solid var(--main-font-color);
+    height: 2px;
     animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
@@ -303,7 +303,8 @@ input[type="submit"]:hover {
 }
 
 .bottomLine-1 {
-    border-bottom: 1px solid var(--main-font-color);
+    /*border-bottom: 1px solid var(--main-font-color);*/
+    height: 1px;
     width: 80%;
     position: absolute;
     top: 197px;
@@ -311,7 +312,8 @@ input[type="submit"]:hover {
 }
 
 .bottomLine-2 {
-    border-bottom: 1px solid var(--main-font-color);
+    /*border-bottom: 1px solid var(--main-font-color);*/
+    height: 1px;
     width: 80%;
     position: absolute;
     top: 305px;
@@ -319,7 +321,8 @@ input[type="submit"]:hover {
 }
 
 .bottomLine-3 {
-    border-bottom: 1px solid var(--main-font-color);
+    /*border-bottom: 1px solid var(--main-font-color);*/
+    height: 1px;
     width: 80%;
     position: absolute;
     top: 415px;
@@ -327,7 +330,8 @@ input[type="submit"]:hover {
 }
 
 .bottomLine-4 {
-    border-bottom: 1px solid var(--main-font-color);
+    /*border-bottom: 1px solid var(--main-font-color);*/
+    height: 1px;
     width: 80%;
     position: absolute;
     top: 525px;

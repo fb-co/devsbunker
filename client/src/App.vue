@@ -83,6 +83,11 @@ body {
     margin-top: calc(var(--footer-size) * -1);
     clear: both;
 }
+
+/* Form Things */
+.form_field_line {
+    background-image: linear-gradient(to right, var(--secondary-color) 0%, var(--main-font-color) 2%, var(--main-font-color) 98%, var(--secondary-color) 100%);
+}
 </style>
 
 <script>

@@ -15,7 +15,7 @@
                 </svg>
 
                 <input @click="errMessage ? errMessage = '' : _" id="userID" class="form_field" name="userID" v-model="userID" autocapitalize="off" placeholder="Username or Email" autocomplete="off" required>
-                <div v-bind:class="{errLine: errMessage}" class="bottomLine-1"></div>
+                <div v-bind:class="{errLine: errMessage}" class="bottomLine-1 form_field_line"></div>
 
                 <svg id="passIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c4c4c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
@@ -25,7 +25,7 @@
                 </svg>
 
                 <input @click="errMessage ? errMessage = '' : _" type="password" id="password" class="form_field" name="password" style="margin-left: 25px;" v-model="password" placeholder="Password" required>
-                <div v-bind:class="{errLine: errMessage}" class="bottomLine-2"></div>
+                <div v-bind:class="{errLine: errMessage}" class="bottomLine-2 form_field_line"></div>
 
                 <svg v-if="hidePassword" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye selectable_icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" v-on:click="togglePassword()">
                     <path stroke="none" d="M0 0h24v24H0z" />
@@ -253,13 +253,13 @@ input::placeholder {
 }
 
 .form_field:focus + .bottomLine-1 {
-    border-bottom: 2px solid var(--main-font-color);
+    height: 2px;
     animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
 }
 .form_field:focus + .bottomLine-2 {
-    border-bottom: 2px solid var(--main-font-color);
+    height: 2px;
     animation: form_field_animation 1s;
     width: 85%;
     margin-left: -2%;
@@ -320,7 +320,7 @@ input[type="submit"]:hover {
 }
 
 .bottomLine-1 {
-    border-bottom: 1px solid var(--main-font-color);
+    height: 1px;
     width: 80%;
     position: absolute;
     top: 197px;
@@ -328,7 +328,7 @@ input[type="submit"]:hover {
 }
 
 .bottomLine-2 {
-    border-bottom: 1px solid var(--main-font-color);
+    height: 1px;
     width: 80%;
     position: absolute;
     top: 305px;
