@@ -92,8 +92,8 @@
             </div>
 
         </div>
-        <!-- <button v-on:click="changeTheTheme()">Dark Theme</button>
-        <button v-on:click="changeTheThemeLight()">Light Theme</button> -->
+         <button v-on:click="changeTheTheme()">Dark Theme</button>
+        <button v-on:click="changeTheThemeLight()">Light Theme</button> 
         <!--<router-link class="bigRoute" to="/signup">Don't have an account? Create one here.</router-link>-->
     </div>
 </template>
@@ -240,7 +240,8 @@ textarea {
 
 input::placeholder {
     font-size: 18px;
-    color: rgba(242, 242, 242, 0.8);
+    color: var(--main-font-color);
+    /*color: rgba(242, 242, 242, 0.8);*/
 }
 
 .form_field {
@@ -269,6 +270,7 @@ input[type="submit"] {
     font-size: 1rem;
     font-weight: 900;
     text-align: center;
+    color: var(--main-font-color);
     background: linear-gradient(270deg, #8743ff 0%, #4136f1 100%);
     box-shadow: 0px 15px 30px rgba(20, 102, 204, 0.16);
     filter: drop-shadow(0px 24px 48px rgba(99, 60, 247, 0.15));
@@ -355,7 +357,7 @@ input[type="submit"]:hover {
     color: rgba(242, 242, 242, 0.5);
 }
 
-/* closed eyes svg properties, needed to do this because there are subelements in the svg tag */
+/* closed eyes svg properties, needed to do this because there are sub-elements in the svg tag */
 #g4763 {
     fill: none;
     stroke: var(--main-font-color);

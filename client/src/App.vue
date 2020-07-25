@@ -7,15 +7,6 @@
 
 <style>
 * {
-    --main-color: #212020;
-    --secondary-color: #2e2e2e;
-    --main-font-color: #f2f2f2;
-    --error-red: #c50000;
-    --accent: #2c6975;
-    --vue-green: #42b983;
-    --link-color: #6096fd;
-    --selection: #f2f2f2;
-
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -25,6 +16,15 @@
 
 :root {
     --footer-size: 60px;
+
+    --main-color: #212020;
+    --secondary-color: #2e2e2e;
+    --main-font-color: #f2f2f2;
+    --error-red: #c50000;
+    --accent: #2c6975;
+    --vue-green: #42b983;
+    --link-color: #6096fd;
+    --selection: #f2f2f2;
 }
 
 ::selection {

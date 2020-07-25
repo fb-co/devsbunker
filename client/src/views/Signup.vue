@@ -211,7 +211,7 @@ textarea {
 
 input::placeholder {
     font-size: 18px;
-    color: rgba(242, 242, 242, 0.8);
+    color: var(--main-font-color);
 }
 
 @keyframes form_field_animation {
