@@ -270,7 +270,7 @@ input[type="submit"] {
     font-size: 1rem;
     font-weight: 900;
     text-align: center;
-    color: var(--main-font-color);
+    color: #f2f2f2;
     background: linear-gradient(270deg, #8743ff 0%, #4136f1 100%);
     box-shadow: 0px 15px 30px rgba(20, 102, 204, 0.16);
     filter: drop-shadow(0px 24px 48px rgba(99, 60, 247, 0.15));
