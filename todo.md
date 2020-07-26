@@ -7,8 +7,8 @@ Backend
     - [x] better error handling for both login and signup
 - [x] implement the auth route
 - [ ] add more informations to the about and home page
-- [ ] make Schema for posts
-- [ ] make Schema for bunkers
+- [x] make Schema for posts
+- [x] make Schema for bunkers
 
 Frontend
 
