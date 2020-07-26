@@ -25,6 +25,7 @@
     --vue-green: #42b983;
     --link-color: #6096fd;
     --selection: #f2f2f2;
+    --soft-text: rgba(242, 242, 242, 0.5);
 }
 
 ::selection {
@@ -86,7 +87,13 @@ body {
 
 /* Form Things */
 .form_field_line {
-    background-image: linear-gradient(to right, var(--secondary-color) 0%, var(--main-font-color) 2%, var(--main-font-color) 98%, var(--secondary-color) 100%);
+    background-image: linear-gradient(
+        to right,
+        var(--secondary-color) 0%,
+        var(--main-font-color) 2%,
+        var(--main-font-color) 98%,
+        var(--secondary-color) 100%
+    );
     opacity: 0.5;
 }
 </style>

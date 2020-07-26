@@ -16,7 +16,7 @@
         <!-- logo -->
         <router-link to="/" class="menu-logo">
             <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
-            <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" style = "background-color: var(--secondary-color);"/>
+            <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" style="background-color: var(--secondary-color);" />
         </router-link>
 
         <!-- menu items -->
@@ -38,8 +38,8 @@
 <script>
 export default {
     props: {
-        headerText: String
-    }
+        headerText: String,
+    },
 };
 </script>
 
@@ -211,7 +211,7 @@ body {
     }
 
     .menu-container a {
-        color: #f2f2f2;
+        color: var(--main-font-color);
     }
 
     .menu-container input {

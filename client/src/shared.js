@@ -9,9 +9,10 @@ const Themes = {
     accent: '#2c6975',
     vueGreen: '#42b983',
     linkColor: '#6096fd',
-    selection: '#0D0D0D'
+    selection: '#0D0D0D',
+    softText: 'rgba(0, 0, 0, 0.5)'
   },
-  dark: { 
+  dark: {
     mainColor: '#171717',
     secondaryColor: '#2E2E2E',
     mainFontColor: '#f2f2f2',
@@ -19,12 +20,13 @@ const Themes = {
     accent: '#2c6975',
     vueGreen: '#42b983',
     linkColor: '#6096fd',
-    selection: '#f2f2f2'
+    selection: '#f2f2f2',
+    softText: 'rgba(242, 242, 242, 0.5)'
   },
-  getTheme: function(themeString) {
-    if(themeString === 'dark-theme') {
+  getTheme: function (themeString) {
+    if (themeString === 'dark-theme') {
       return this.dark;
-    }else{
+    } else {
       return this.light;
     }
   }
@@ -36,7 +38,7 @@ const SharedMethods = {
 
     return !!response.user;
   },
-  initTheme: function() {
+  initTheme: function () {
     const currentTheme = localStorage.getItem('theme');
 
     if (currentTheme === null) {
@@ -44,7 +46,7 @@ const SharedMethods = {
     }
     this.setTheme(currentTheme);
   },
-  setTheme: function(theme) {
+  setTheme: function (theme) {
     const themeObj = Themes.getTheme(theme);
 
     document.body.style.setProperty("--main-color", themeObj.mainColor);
@@ -55,17 +57,18 @@ const SharedMethods = {
     document.body.style.setProperty("--vue-green", themeObj.vueGreen);
     document.body.style.setProperty("--link-color", themeObj.linkColor);
     document.body.style.setProperty("--selection", themeObj.selection);
+    document.body.style.setProperty("--soft-text", themeObj.softText);
   },
-  changeTheme: function(theme) {
+  changeTheme: function (theme) {
     localStorage.setItem('theme', theme);
     this.setTheme(theme);
   },
-  toggleTheme: function() {
+  toggleTheme: function () {
     const currentTheme = localStorage.getItem('theme');
 
-    if(currentTheme == 'light-theme') {
+    if (currentTheme == 'light-theme') {
       this.changeTheme('dark-theme');
-    }else{
+    } else {
       this.changeTheme('light-theme');
     }
   }

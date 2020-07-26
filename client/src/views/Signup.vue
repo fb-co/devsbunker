@@ -16,7 +16,7 @@
 
                 <div v-bind:class="{errLine: !/match/.test(errMessage) && errMessage}" class="bottomLine-1 form_field_line"></div>
 
-                <svg id="emailIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="30" height="30" viewBox="0 0 24 24" stroke-width="1" stroke="#F2F2F2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg id="emailIcon" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F2F2F2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
                     <rect x="3" y="5" width="18" height="14" rx="2" />
                     <polyline points="3 7 12 13 21 7" />
@@ -283,7 +283,7 @@ input[type="submit"] {
     font-size: 1rem;
     font-weight: 900;
     text-align: center;
-    color: #f2f2f2;
+    color: #fff;
     background: linear-gradient(270deg, #8743ff 0%, #4136f1 100%);
     box-shadow: 0px 15px 30px rgba(20, 102, 204, 0.16);
     filter: drop-shadow(0px 24px 48px rgba(99, 60, 247, 0.15));
@@ -367,29 +367,33 @@ input[type="submit"]:hover {
     position: absolute;
     left: 37px;
     top: 150px;
+    stroke: var(--main-font-color);
 }
 
 #passIcon {
     position: absolute;
     left: 37px;
     top: 370px;
+    stroke: var(--main-font-color);
 }
 
 #passIcon2 {
     position: absolute;
     left: 37px;
     top: 479px;
+    stroke: var(--main-font-color);
 }
 
 #emailIcon {
     position: absolute;
     left: 37px;
     top: 259px;
+    stroke: var(--main-font-color);
 }
 
 .otherOption {
     margin-bottom: 30px;
     font-weight: 100;
-    color: rgba(242, 242, 242, 0.5);
+    color: var(--soft-text);
 }
 </style>

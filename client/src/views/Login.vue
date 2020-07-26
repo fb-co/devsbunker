@@ -280,7 +280,7 @@ input[type="submit"] {
     font-size: 1rem;
     font-weight: 900;
     text-align: center;
-    color: #f2f2f2;
+    color: #fff;
     background: linear-gradient(270deg, #8743ff 0%, #4136f1 100%);
     box-shadow: 0px 15px 30px rgba(20, 102, 204, 0.16);
     filter: drop-shadow(0px 24px 48px rgba(99, 60, 247, 0.15));
@@ -353,18 +353,20 @@ input[type="submit"]:hover {
     position: absolute;
     left: 37px;
     top: 150px;
+    stroke: var(--main-font-color);
 }
 
 #passIcon {
     position: absolute;
     left: 37px;
     top: 259px;
+    stroke: var(--main-font-color);
 }
 
 .otherOption {
     margin-bottom: 30px;
     font-weight: 100;
-    color: rgba(242, 242, 242, 0.5);
+    color: var(--soft-text);
 }
 
 /* closed eyes svg properties, needed to do this because there are sub-elements in the svg tag */
