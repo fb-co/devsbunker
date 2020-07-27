@@ -19,6 +19,9 @@ import Footer from "@/components/Footer";
 import SharedMethods from "../shared";
 
 export default {
+    created() {
+        SharedMethods.loadPage();
+    },
     components: {
         NavBar,
         Footer,

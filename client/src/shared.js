@@ -36,7 +36,7 @@ const SharedMethods = {
   checkIfLoggedIn: async function () {
     const response = await UserService.isLoggedIn();
 
-    return !!response.user;
+    return !!response.user; /* Shouldnt this just be response.user since !! cancels out? **/
   },
   initTheme: function () {
     const currentTheme = localStorage.getItem('theme');
@@ -71,6 +71,10 @@ const SharedMethods = {
     } else {
       this.changeTheme('light-theme');
     }
+  },
+  // Call this function when loading any page
+  loadPage: function() {
+    this.initTheme();
   }
 };
 

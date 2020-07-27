@@ -131,7 +131,7 @@ export default {
                 console.error(err);
             });
 
-        SharedMethods.initTheme();
+        SharedMethods.loadPage();
     },
     mixins: [GeneralProperties],
 

@@ -112,6 +112,8 @@ export default {
             .catch((err) => {
                 console.error(err);
             });
+            
+        SharedMethods.loadPage();
     },
 
     mixins: [GeneralProperties],
