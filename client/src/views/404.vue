@@ -5,18 +5,25 @@
                 <h1><span>4</span><span>0</span><span>4</span></h1>
             </div>
             <h2>Oops! Page not found!</h2>
-            <button class="btn" @click="redirectToHome">Home</button>
+            <div class="draw-border">
+                <button class="btn" @click="redirectToHome">Home</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import SharedMethods from "../shared";
+
 export default {
+    created() {
+        SharedMethods.loadPage();
+    },
     methods: {
         redirectToHome() {
             this.$router.push("/");
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -109,22 +116,58 @@ body {
     }
 }
 
-.btn {
-    width: 150px;
-    margin-top: 10px;
-    font-size: 1.3rem;
-    text-align: center;
-    background-color: var(--main-color);
-    border: 1px solid var(--vue-green);
-    color: var(--vue-green);
-    padding: 0px 0px;
-    cursor: pointer;
-    transition: 0.6s;
-    height: 40px;
+.draw-border {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.btn:hover {
-    color: var(--main-font-color);
-    border-color: var(--main-font-color);
+.btn {
+    border: 0;
+    background: none;
+    text-transform: uppercase;
+    color: var(--link-color);
+    font-weight: bold;
+    font-size: 17px;
+    position: relative;
+    outline: none;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.btn::before,
+.btn::after {
+    box-sizing: inherit;
+    position: absolute;
+    content: "";
+    border: 2px solid transparent;
+    width: 0;
+    height: 0;
+}
+.btn::after {
+    bottom: 0;
+    right: 0;
+}
+
+.btn::before {
+    top: 0;
+    left: 0;
+}
+.btn:hover::before,
+.btn:hover::after {
+    width: 100%;
+    height: 100%;
+}
+.btn:hover::before {
+    border-top-color: var(--link-color);
+    border-right-color: var(--link-color);
+    transition: width 0.3s ease-out, height 0.3s ease-out 0.3s;
+}
+
+.btn:hover::after {
+    border-bottom-color: var(--link-color);
+    border-left-color: var(--link-color);
+    transition: border-color 0s ease-out 0.6s, width 0.3s ease-out 0.6s,
+        height 0.3s ease-out 1s;
 }
 </style>
