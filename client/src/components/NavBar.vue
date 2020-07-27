@@ -25,6 +25,9 @@
             </ul>
             <ul>
                 <li>
+                    <router-link to="/" class="main_link">Home</router-link>
+                </li>
+                <li>
                     <router-link to="/signup" class="main_link">Sign-up</router-link>
                 </li>
                 <li>
@@ -102,7 +105,7 @@ body {
     height: 4px;
     margin-bottom: 5px;
     position: relative;
-    background: #f2f2f2;
+    background: var(--main-font-color);
     border-radius: 3px;
     z-index: 1;
     transform-origin: 4px 0px;
