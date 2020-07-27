@@ -29,4 +29,5 @@ Glitches
 - [ ] Fix Hamburger Menu
 - [ ] Random scroll space on bottom of login/signup cards on mobile
 - [ ] Cant scroll to the top when resizing vertically
-- [ ] if page gets refreshed the theme switches back to Dark
+- [x] if page gets refreshed the theme switches back to Dark
+- [ ] Both password field and confirm password field both have id of 'password'
