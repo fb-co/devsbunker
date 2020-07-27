@@ -39,7 +39,7 @@
 export default {
     props: {
         headerText: String,
-    },
+    }
 };
 </script>
 
@@ -47,7 +47,7 @@ export default {
 body {
     overflow-x: hidden;
     font-family: Sans-Serif;
-    margin: 0;
+
 }
 .router-link-exact-active {
     background-color: var(--accent);
@@ -109,6 +109,8 @@ body {
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
         background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
 }
+
+/* Burger Menu Spans */
 .menu-container span:first-child {
     transform-origin: 0% 0%;
 }
@@ -127,15 +129,10 @@ body {
 .menu-container input:checked ~ span:nth-child(3) {
     transform: rotate(-45deg) translate(-5px, 11px);
 }
+
+/* Nav Links */
 .menu ul {
     list-style: none;
-}
-.menu li {
-    font-size: 18px;
-    margin: -20px 0px -20px 0px;
-}
-.menu li:last-child {
-    margin: -20px -20px -20px 0px;
 }
 
 .main_link {
@@ -148,6 +145,14 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+}
+@keyframes burger_animation {
+    from {
+        width: 0px;
+    }
+    to {
+        width: 250px;
+    }
 }
 /* mobile styles */
 @media only screen and (max-width: 767px) {
@@ -164,30 +169,29 @@ body {
     .menu-logo img {
         max-height: 30px;
     }
-    .menu {
-        position: absolute;
-        box-sizing: border-box;
-        width: 300px;
-        right: -300px;
-        top: 0;
-        margin: -20px;
-        padding: 75px 50px 50px;
-        background: var(--main-font-color);
-        -webkit-font-smoothing: antialiased;
-        /* to stop flickering of text in safari */
-        transform-origin: 0% 0%;
-        transform: translateX(0%);
-        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-    }
+
     .menu-container input:checked ~ .menu {
-        transform: translateX(-100%);
-    }
-    /*
+        box-sizing: border-box;
+        position: absolute;
+        overflow-x: hidden;
+        top: 0;
+        right: 0;
+        background-color: var(--main-font-color);
+        width: 250px;
+        height: 100vh;
+        animation: burger_animation 0.5s;
+    } 
     .menu-container input:not(:checked) ~ .menu {
-        
-        
+        display: none;    
     }
-    */
+    .menu ul {
+        width: 100%;
+        margin-top: 60px;
+    }
+    .menu a {
+        width: 100%;
+        height: 75px;
+    }
 }
 /* desktop styles */
 @media only screen and (min-width: 768px) {
@@ -213,6 +217,13 @@ body {
     .menu ul {
         padding: 0;
         display: flex;
+    }
+    .menu li {
+        font-size: 18px;
+        margin: -20px 0px -20px 0px;
+    }
+    .menu li:last-child {
+        margin: -20px -20px -20px 0px;
     }
 }
 </style>
