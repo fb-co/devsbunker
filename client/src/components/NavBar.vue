@@ -14,9 +14,9 @@
         </div>
 
         <!-- logo -->
-        <router-link to="/" class="menu-logo">
+        <router-link to="/" class="menu-logo" style="background-color: var(--secondary-color);">
             <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
-            <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" style="background-color: var(--secondary-color);" />
+            <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" />
         </router-link>
 
         <!-- menu items -->
@@ -24,13 +24,19 @@
             <ul>
             </ul>
             <ul>
-                <li>
+                <li id = "home_link">
                     <router-link to="/" class="main_link">Home</router-link>
                 </li>
-                <li>
+                <li id = "projects_link">
+                    <router-link to="/projects" class="main_link">Projects</router-link>
+                </li>
+                <li id = "about_link">
+                    <router-link to="/about" class="main_link">About</router-link>
+                </li>
+                <li id = "signin_link">
                     <router-link to="/signup" class="main_link">Sign-up</router-link>
                 </li>
-                <li>
+                <li id = "login_link">
                     <router-link to="/login" class="main_link">Login</router-link>
                 </li>
             </ul>
@@ -47,13 +53,20 @@ export default {
 </script>
 
 <style scoped>
+/* Animations */
+@keyframes burger_animation {
+    from {
+        width: 0px;
+    }
+    to {
+        width: 250px;
+    }
+}
+
 body {
     overflow-x: hidden;
     font-family: Sans-Serif;
 
-}
-.router-link-exact-active {
-    background-color: var(--accent);
 }
 .menu-container {
     position: relative;
@@ -70,7 +83,7 @@ body {
 }
 .menu-logo {
     line-height: 0;
-    margin: 0 20px;
+    margin-left: 25px;
     z-index: 1;
 }
 .menu-logo img {
@@ -79,12 +92,13 @@ body {
     flex-shrink: 0;
 }
 .menu-container a {
+    width: 150px;
     text-decoration: none;
     color: var(--secondary-color);
     transition: color 0.3s ease;
 }
 .menu-container a:hover {
-    color: #2c6975;
+    font-weight: bold;
 }
 .menu-container input {
     display: block;
@@ -149,14 +163,9 @@ body {
     width: 100%;
     height: 100%;
 }
-@keyframes burger_animation {
-    from {
-        width: 0px;
-    }
-    to {
-        width: 250px;
-    }
-}
+
+/* MEDIA QUERIES */
+
 /* mobile styles */
 @media only screen and (max-width: 767px) {
     .menu-container {
@@ -195,6 +204,9 @@ body {
         width: 100%;
         height: 75px;
     }
+    .router-link-exact-active {
+        background-color: var(--accent);
+    }
 }
 /* desktop styles */
 @media only screen and (min-width: 768px) {
@@ -226,7 +238,27 @@ body {
         margin: -20px 0px -20px 0px;
     }
     .menu li:last-child {
-        margin: -20px -20px -20px 0px;
+        margin: -20px 5px -20px 0px;
+    }
+    .router-link-exact-active {
+        font-weight: bold;
+    }
+
+    /* Media Queries for Subtle Page Resizing */
+    @media only screen and (max-width: 1300px) {
+        #login_link {
+            display: none;
+        }
+    }
+    @media only screen and (max-width: 1150px) {
+        #signin_link {
+            display: none;
+        }
+    }
+    @media only screen and (max-width: 1000px) {
+        #about_link {
+            display: none;
+        }
     }
 }
 </style>

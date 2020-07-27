@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <NavBar headerText="Home" />
+        <NavBar headerText="" />
         <button v-on:click="changeTheTheme()">Dark Theme</button>
         <button v-on:click="changeTheThemeLight()">Light Theme</button>
     </div>
@@ -31,3 +31,4 @@ export default {
 
 <style scoped>
 </style>
+ 
