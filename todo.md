@@ -26,7 +26,7 @@ Frontend
 
 Glitches
 
-- [ ] Fix Hamburger Menu
+- [x] Fix Hamburger Menu
 - [ ] Random scroll space on bottom of login/signup cards on mobile
 - [ ] Cant scroll to the top when resizing vertically
 - [x] if page gets refreshed the theme switches back to Dark
