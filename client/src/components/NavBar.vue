@@ -1,11 +1,5 @@
 <template>
     <nav class="menu-container">
-        <!-- burger menu -->
-        <input type="checkbox" aria-label="Toggle menu" />
-        <span></span>
-        <span></span>
-        <span></span>
-
         <!-- Header Text -->
         <div class="header_text">
             <div class="vertical_center horizontal_center">
@@ -31,6 +25,12 @@
                     <router-link to="/login" class="main_link">Login</router-link>
                 </li>
             </ul>
+            <!-- burger menu -->
+            <div id = "burger_menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 </template>
@@ -90,18 +90,6 @@ body {
     color: #2c6975;
 }
 
-.menu-container input {
-    display: block;
-    width: 35px;
-    height: 25px;
-    margin: 0;
-    position: absolute;
-    cursor: pointer;
-    opacity: 0; /* hide this */
-    z-index: 2; /* and place it over the hamburger */
-    -webkit-touch-callout: none;
-}
-
 /* Burger menu */
 .menu-container span {
     display: block;
@@ -109,47 +97,12 @@ body {
     height: 4px;
     margin-bottom: 5px;
     position: relative;
-    background: #f2f2f2;
+    background: var(--main-font-color);
     border-radius: 3px;
     z-index: 1;
     transform-origin: 4px 0px;
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
         background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
-}
-
-.menu-container span:first-child {
-    transform-origin: 0% 0%;
-}
-
-.menu-container span:nth-child(3) {
-    transform-origin: 0% 100%;
-}
-
-.menu-container input:checked ~ span {
-    opacity: 1;
-    transform: rotate(45deg) translate(3px, -1px);
-    background: var(--secondary-color);
-}
-
-.menu-container input:checked ~ span:nth-child(4) {
-    opacity: 0;
-    transform: rotate(0deg) scale(0.2, 0.2);
-}
-
-.menu-container input:checked ~ span:nth-child(3) {
-    transform: rotate(-45deg) translate(-5px, 11px);
-}
-
-.menu ul {
-    list-style: none;
-}
-
-.menu li {
-    font-size: 18px;
-    margin: -20px 0px -20px 0px;
-}
-.menu li:last-child {
-    margin: -20px -20px -20px 0px;
 }
 
 .main_link {
@@ -183,24 +136,17 @@ body {
         max-height: 30px;
     }
 
-    .menu {
-        position: absolute;
-        box-sizing: border-box;
-        width: 300px;
-        right: -300px;
-        top: 0;
-        margin: -20px;
-        padding: 75px 50px 50px;
-        background: var(--main-font-color);
-        -webkit-font-smoothing: antialiased;
-        /* to stop flickering of text in safari */
-        transform-origin: 0% 0%;
-        transform: translateX(0%);
-        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    /* Burger Menu */
+    #burger_menu {
+        position: relative;
+        top: 5px;
+        display: inline-block;
     }
-
-    .menu-container input:checked ~ .menu {
-        transform: translateX(-100%);
+    #burger_menu:hover {
+        background-color: green;
+    }
+    .menu ul {
+        display: none;
     }
 }
 
@@ -218,21 +164,29 @@ body {
         display: none;
     }
 
-    /* Burger menu */
-    .menu-container span {
+    /* Burger Menu */
+    #burger_menu {
         display: none;
     }
 
+    /* Show the inline nav links */
     .menu {
         position: relative;
         width: 100%;
         display: flex;
         justify-content: space-between;
     }
-
     .menu ul {
+        list-style: none;
         padding: 0;
         display: flex;
+    }
+    .menu li {
+        font-size: 18px;
+        margin: -20px 0px -20px 0px;
+    }
+    .menu li:last-child {
+        margin: -20px -20px -20px 0px;
     }
 }
 </style>
