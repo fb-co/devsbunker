@@ -39,6 +39,10 @@
                 <li id = "login_link">
                     <router-link to="/login" class="main_link">Login</router-link>
                 </li>
+                <li id = "more_link">
+                    <p class="main_link">More</p>
+                </li>
+                <div id = "more_dropdown"></div>
             </ul>
         </div>
     </nav>
@@ -80,6 +84,7 @@ body {
     -webkit-user-select: none;
     user-select: none;
     box-sizing: border-box;
+    height: 80px;
 }
 .menu-logo {
     line-height: 0;
@@ -95,6 +100,12 @@ body {
     width: 150px;
     text-decoration: none;
     color: var(--secondary-color);
+    transition: color 0.3s ease;
+}
+.menu-container p {
+    width: 150px;
+    text-decoration: none;
+    color: var(--main-font-color);
     transition: color 0.3s ease;
 }
 .menu-container a:hover {
@@ -163,6 +174,31 @@ body {
     width: 100%;
     height: 100%;
 }
+
+/* More dropdown */
+#more_link {
+    display: none;
+}
+#more_link:hover {
+    font-weight: bold;
+}
+
+#more_dropdown {
+    display: none;
+    background-color: var(--secondary-color);
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 200px;
+    height: 200px;
+}
+#more_link:hover + #more_dropdown {
+    display: inline-block;
+}
+#more_dropdown:hover {
+    display: inline-block;
+}
+
 
 /* MEDIA QUERIES */
 
@@ -249,16 +285,17 @@ body {
         #login_link {
             display: none;
         }
-    }
-    @media only screen and (max-width: 1150px) {
         #signin_link {
             display: none;
         }
+        #more_link {
+            display: inline-block;
+        }
     }
-    @media only screen and (max-width: 1000px) {
+    @media only screen and (max-width: 1150px) {
         #about_link {
             display: none;
-        }
+        }    
     }
 }
 </style>
