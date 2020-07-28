@@ -203,12 +203,12 @@ export default {
     background-color: var(--secondary-color);
     border-radius: 10px;
     margin: 0;
+    margin-bottom: 20px;
     position: absolute;
-    top: 50%;
+    top: 150px;
     left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    margin-top: 50px;
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
 }
 
 form {
@@ -305,11 +305,6 @@ input[type="submit"]:hover {
     }
 }
 @media only screen and (max-height: 900px) {
-    .signupForm {
-        width: 100%;
-        background: var(--color-primary);
-        margin-top: 100px;
-    }
     input {
         background: var(--color-primary);
     }

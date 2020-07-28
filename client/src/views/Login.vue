@@ -221,11 +221,12 @@ export default {
     background-color: var(--secondary-color);
     border-radius: 10px;
     margin: 0;
+    margin-bottom: 20px;
     position: absolute;
-    top: 50%;
+    top: 150px;
     left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
 }
 
 form {
