@@ -199,20 +199,6 @@ export default {
     text-align: center;
 }
 
-@media only screen and (max-width: 305px) {
-    .cardTitle {
-        font-size: 20px;
-        margin-top: 35px;
-    }
-}
-
-@media only screen and (max-width: 250px) {
-    .cardTitle {
-        font-size: 15px;
-        margin-top: 42px;
-    }
-}
-
 .loginForm {
     padding: 20px;
     width: 450px;
@@ -304,22 +290,6 @@ input[type="submit"]:hover {
     stroke-width: 2.5px;
 }
 
-@media only screen and (max-width: 800px) {
-    .loginForm {
-        width: 60%;
-    }
-}
-@media only screen and (max-width: 530px) {
-    .loginForm {
-        width: 100%;
-        background: var(--color-primary);
-    }
-
-    input {
-        background: var(--color-primary);
-    }
-}
-
 #forgot_link {
     display: block;
     margin-top: -20px;
@@ -391,5 +361,39 @@ input[type="submit"]:hover {
     stroke-miterlimit: 4;
     stroke-dasharray: none;
     stroke-opacity: 0;
+}
+
+@media only screen and (max-width: 800px) {
+    .loginForm {
+        width: 60%;
+    }
+}
+@media only screen and (max-width: 530px) {
+    .loginForm {
+        top: 80px;
+        width: 100%;
+        background: var(--color-primary);
+    }
+
+    input {
+        background: var(--color-primary);
+    }
+}
+@media only screen and (max-width: 305px) {
+    .loginForm {
+        top: 80px;
+    }
+    .cardTitle {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 250px) {
+    .loginForm {
+        top: 80px;
+    }
+    .cardTitle {
+        font-size: 15px;
+    }
 }
 </style>
