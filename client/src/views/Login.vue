@@ -162,7 +162,7 @@ export default {
         togglePassword() {
             let element = document.getElementById("password");
 
-            if (element.type === "password") {
+            if (element.type === "password" && element.value.length > 0) {
                 element.type = "text";
                 this.hidePassword = true;
             } else {

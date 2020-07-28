@@ -200,7 +200,7 @@ body {
     background-color: var(--secondary-color);
     position: absolute;
     top: 60px;
-    right: 0;
+    right: -10px;
     width: 200px;
     height: auto;
 
