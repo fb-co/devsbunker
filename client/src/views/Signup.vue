@@ -112,7 +112,7 @@ export default {
             .catch((err) => {
                 console.error(err);
             });
-            
+
         SharedMethods.loadPage();
     },
 
@@ -189,9 +189,9 @@ export default {
     background-color: var(--secondary-color);
     border-radius: 10px;
     margin: 0;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     position: absolute;
-    top: 150px;
+    top: 110px;
     left: 50%;
     -ms-transform: translate(-50%, 0%);
     transform: translate(-50%, 0%);
@@ -397,5 +397,4 @@ input[type="submit"]:hover {
         top: 80px;
     }
 }
-
 </style>
