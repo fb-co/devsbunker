@@ -24,25 +24,29 @@
             <ul>
             </ul>
             <ul>
-                <li id = "home_link">
+                <li id = "home_link" class = "navBarLink">
                     <router-link to="/" class="main_link">Home</router-link>
                 </li>
-                <li id = "projects_link">
+                <li id = "projects_link" class = "navBarLink">
                     <router-link to="/projects" class="main_link">Projects</router-link>
                 </li>
-                <li id = "about_link">
+                <li id = "about_link" class = "navBarLink">
                     <router-link to="/about" class="main_link">About</router-link>
                 </li>
-                <li id = "signin_link">
+                <li id = "signin_link" class = "navBarLink">
                     <router-link to="/signup" class="main_link">Sign-up</router-link>
                 </li>
-                <li id = "login_link">
+                <li id = "login_link" class = "navBarLink">
                     <router-link to="/login" class="main_link">Login</router-link>
                 </li>
                 <li id = "more_link">
                     <p class="main_link">More</p>
                 </li>
-                <div id = "more_dropdown"></div>
+                <div id = "more_dropdown">
+                    <router-link to="/about" class="dropdown_link" id="about_in_dropdown">About</router-link>
+                    <router-link to="/signup" class="dropdown_link" id="signin_in_dropdown">Sign-up</router-link>
+                    <router-link to="/login" class="dropdown_link" id="login_in_dropdown">Login</router-link>
+                </div>
             </ul>
         </div>
     </nav>
@@ -57,6 +61,7 @@ export default {
 </script>
 
 <style scoped>
+
 /* Animations */
 @keyframes burger_animation {
     from {
@@ -70,7 +75,6 @@ export default {
 body {
     overflow-x: hidden;
     font-family: Sans-Serif;
-
 }
 .menu-container {
     position: relative;
@@ -96,7 +100,7 @@ body {
     max-width: 100px;
     flex-shrink: 0;
 }
-.menu-container a {
+.main_link {
     width: 150px;
     text-decoration: none;
     color: var(--secondary-color);
@@ -176,21 +180,30 @@ body {
 }
 
 /* More dropdown */
+.dropdown_link {
+    text-decoration: none;
+    display: none;
+    height: 50px;
+    width: 100%;
+}
 #more_link {
     display: none;
 }
 #more_link:hover {
     font-weight: bold;
+    cursor: pointer;
 }
 
 #more_dropdown {
+    padding-top: 20px;
     display: none;
     background-color: var(--secondary-color);
     position: absolute;
     top: 60px;
     right: 0;
     width: 200px;
-    height: 200px;
+    height: auto;
+
 }
 #more_link:hover + #more_dropdown {
     display: inline-block;
@@ -291,11 +304,20 @@ body {
         #more_link {
             display: inline-block;
         }
+        #login_in_dropdown {
+            display: block;
+        }
+        #signin_in_dropdown {
+            display: block;
+        }
     }
     @media only screen and (max-width: 1150px) {
         #about_link {
             display: none;
-        }    
+        }   
+        #about_in_dropdown {
+            display: block;
+        } 
     }
 }
 </style>
