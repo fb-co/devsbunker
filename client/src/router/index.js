@@ -29,6 +29,11 @@ const routes = [{
       requiresAuth: true
     }
   },
+  {
+    path: '/about',
+    name: 'About',
+    component: () => import('../views/About.vue')
+  },
 
   // important to leave this as the last element
   {

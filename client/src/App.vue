@@ -84,6 +84,12 @@ body {
     margin-top: calc(var(--footer-size) * -1);
     clear: both;
 }
+/* General Container for pages (goes in template tags) */
+.pageContainer {
+    width: 100%;
+    height: 100vh;
+}
+
 
 /* Form Things */
 .form_field_line {

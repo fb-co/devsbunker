@@ -33,6 +33,9 @@
                 <li id = "about_link" class = "navBarLink">
                     <router-link to="/about" class="main_link">About</router-link>
                 </li>
+                <li id = "profile_link" class = "navBarLink">
+                    <router-link to="/profile" class="main_link">Profile</router-link>
+                </li>
                 <li id = "signin_link" class = "navBarLink">
                     <router-link to="/signup" class="main_link">Sign-up</router-link>
                 </li>
