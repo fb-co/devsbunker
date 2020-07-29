@@ -12,9 +12,9 @@ export default {
     methods: {
         logout() {
             UserService.logout();
-            this.$router.push("/login");
-        }
-    }
+            window.location = "/"; // had to do this oterwise the navbar links won't change
+        },
+    },
 };
 </script>
 

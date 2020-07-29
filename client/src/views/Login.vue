@@ -155,8 +155,7 @@ export default {
             } else {
                 this.errMessage = "";
                 localStorage.setItem("token", result.token);
-
-                this.$router.push("/profile");
+                this.$router.push("/");
             }
         },
         togglePassword() {

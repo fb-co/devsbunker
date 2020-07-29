@@ -24,28 +24,15 @@
             <ul>
             </ul>
             <ul>
-                <li id = "home_link" class = "navBarLink">
-                    <router-link to="/" class="main_link">Home</router-link>
+                <!-- displaying links with for loop to keep the template element clean -->
+                <li v-for="link in links" :key="link" :id="link.id">
+                    <router-link v-if="link.show" :to="link.to" class="main_link">{{link.name}}</router-link>
                 </li>
-                <li id = "projects_link" class = "navBarLink">
-                    <router-link to="/projects" class="main_link">Projects</router-link>
-                </li>
-                <li id = "about_link" class = "navBarLink">
-                    <router-link to="/about" class="main_link">About</router-link>
-                </li>
-                <li id = "profile_link" class = "navBarLink">
-                    <router-link to="/profile" class="main_link">Profile</router-link>
-                </li>
-                <li id = "signin_link" class = "navBarLink">
-                    <router-link to="/signup" class="main_link">Sign-up</router-link>
-                </li>
-                <li id = "login_link" class = "navBarLink">
-                    <router-link to="/login" class="main_link">Login</router-link>
-                </li>
-                <li id = "more_link">
+
+                <li id="more_link">
                     <p class="main_link">More</p>
                 </li>
-                <div id = "more_dropdown">
+                <div id="more_dropdown">
                     <!--
                     <router-link to="/about" class="dropdown_link">About</router-link>
                     <router-link to="/signup" class="dropdown_link">Sign-up</router-link>
@@ -58,8 +45,11 @@
 </template>
 
 <script>
+import initLinks from "../NavbarLinks";
+
 export default {
     created() {
+        this.links = initLinks(); // initialize navbar links
         window.addEventListener("resize", this.resizeHandler);
     },
     destroyed() {
@@ -68,31 +58,45 @@ export default {
     props: {
         headerText: String,
     },
+    data() {
+        return {
+            // navbar links
+            links: [],
+        };
+    },
     methods: {
         resizeHandler() {
-            const navElements = document.getElementsByClassName('navBarLink');
+            const navElements = document.getElementsByClassName("navBarLink");
             const navBarShrinkMin = 1650; //screen width (px) where the navbar should shart shrinking
 
             //set all elements back to visible so that they will re-appear when the page is expanded
-            for(let i = 0; i < navElements.length; i++){
+            for (let i = 0; i < navElements.length; i++) {
                 navElements[i].children[0].style.display = "inline-block";
             }
 
             if (window.innerWidth < navBarShrinkMin) {
-                const screenUnits = Math.floor((navBarShrinkMin-window.innerWidth)/150); // Gets the amount of links it should remove
-                const amount = (screenUnits < navElements.length-2) ? screenUnits : navElements.length - 2; // gets the amount of links it can remove (leaves two)
-                
-                for (let i = navElements.length-1; i > (navElements.length-1)-amount; i--) {
+                const screenUnits = Math.floor(
+                    (navBarShrinkMin - window.innerWidth) / 150
+                ); // Gets the amount of links it should remove
+                const amount =
+                    screenUnits < navElements.length - 2
+                        ? screenUnits
+                        : navElements.length - 2; // gets the amount of links it can remove (leaves two)
+
+                for (
+                    let i = navElements.length - 1;
+                    i > navElements.length - 1 - amount;
+                    i--
+                ) {
                     navElements[i].children[0].style.display = "none";
                 }
             }
-        }
-    }
+        },
+    },
 };
 </script>
 
 <style scoped>
-
 /* Animations */
 @keyframes burger_animation {
     from {
@@ -234,7 +238,6 @@ body {
     right: -10px;
     width: 200px;
     height: auto;
-
 }
 #more_link:hover + #more_dropdown {
     display: inline-block;
@@ -242,7 +245,6 @@ body {
 #more_dropdown:hover {
     display: inline-block;
 }
-
 
 /* MEDIA QUERIES */
 
@@ -272,9 +274,9 @@ body {
         width: 250px;
         height: 100vh;
         animation: burger_animation 0.5s;
-    } 
+    }
     .menu-container input:not(:checked) ~ .menu {
-        display: none;    
+        display: none;
     }
     .menu ul {
         width: 100%;
@@ -323,6 +325,5 @@ body {
     .router-link-exact-active {
         font-weight: bold;
     }
-
 }
 </style>
