@@ -1,5 +1,6 @@
 /* Navbar Links, default config is user not logged in */
-const Links = [{
+const Links = [
+    {
         id: "home_link",
         to: "/",
         name: "Home",
@@ -18,6 +19,12 @@ const Links = [{
         show: true
     },
     {
+        id: "profile_link",
+        to: "/profile",
+        name: "Profile",
+        show: false,
+    },
+    {
         id: "signin_link",
         to: "/signup",
         name: "Sign-up",
@@ -28,13 +35,7 @@ const Links = [{
         to: "/login",
         name: "Login",
         show: true
-    },
-    {
-        id: "profile_link",
-        to: "/profile",
-        name: "Profile",
-        show: false,
-    },
+    }
 ];
 
 export default Links;

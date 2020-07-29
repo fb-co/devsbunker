@@ -33,11 +33,11 @@
                     <p class="main_link">More</p>
                 </li>
                 <div id="more_dropdown">
-                    <!--
-                    <router-link to="/about" class="dropdown_link">About</router-link>
-                    <router-link to="/signup" class="dropdown_link">Sign-up</router-link>
-                    <router-link to="/login" class="dropdown_link">Login</router-link>
-                    -->
+                    <ul>
+                        <li v-for="moreLink in moreLinks" :key="moreLink.id" class="dropdown_link">
+                            <router-link v-if="moreLink.show" :to="moreLink.to">{{moreLink.name}}</router-link>
+                        </li>
+                    </ul>
                 </div>
             </ul>
         </div>
@@ -56,6 +56,7 @@ export default {
         return {
             // navbar links
             links: Links,
+            moreLinks: []
         };
     },
     created() {
@@ -95,19 +96,30 @@ export default {
     methods: {
         resizeHandler() {
             const navElements = this.links;
-            const navBarShrinkMin = 1650; //screen width (px) where the navbar should shart shrinking
+            const navBarShrinkMin = 1800; //screen width (px) where the navbar should shart shrinking
 
             //set all elements back to visible so that they will re-appear when the page is expanded
+            this.moreLinks = [];
             for (let i = 0; i < navElements.length; i++) {
                 navElements[i].show = true;
             }
-
             if (window.innerWidth < navBarShrinkMin) {
                 const screenUnits = Math.floor((navBarShrinkMin - window.innerWidth) / 150); // Gets the amount of links it should remove
                 const amount = screenUnits < navElements.length - 2 ? screenUnits : navElements.length - 2; // gets the amount of links it can remove (leaves two)
 
-                for (let i = navElements.length - 1; i > (navElements.length - 1) - amount; i--) {
-                    navElements[i].show = false;
+                //only show the more menu, when its possible to remove two links
+                if(amount >= 2){ 
+                    // show the more menu
+                    document.getElementById("more_link").style.display = "inline-block";
+
+                    for (let i = navElements.length - 1; i > (navElements.length - 1) - amount; i--) {
+                        // add the hidden link to the moreLinks array (important to assign the object so you dont just have a refrence)
+                        this.moreLinks.unshift(Object.assign({}, navElements[i]));
+                        navElements[i].show = false;
+                    }
+                }else{
+                    // hide the more menu
+                    document.getElementById("more_link").style.display = "none";
                 }
             }
         },
@@ -234,11 +246,12 @@ body {
 }
 
 /* More dropdown */
-.dropdown_link {
+.dropdown_link a{
+    display: block;
     text-decoration: none;
-    display: none;
-    height: 50px;
     width: 100%;
+    height: 50px;
+    background-color: blue;
 }
 #more_link {
     display: none;
