@@ -35,3 +35,4 @@ Glitches
 - [ ] Tapping or clicking outside burger menu on small screens should close it
 - [ ] For a very small horizontal resize range, there are no Nav links or burger menu
 - [ ] If burger menu not closed when page is expanded, when you shrink the page again it instantly opens the burger menu again
+- [ ] You have to strictly hover over the toggle show password icon for it to change
