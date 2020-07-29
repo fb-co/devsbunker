@@ -94,29 +94,20 @@ export default {
     },
     methods: {
         resizeHandler() {
-            const navElements = document.getElementsByClassName("navBarLink");
+            const navElements = this.links;
             const navBarShrinkMin = 1650; //screen width (px) where the navbar should shart shrinking
 
             //set all elements back to visible so that they will re-appear when the page is expanded
             for (let i = 0; i < navElements.length; i++) {
-                navElements[i].children[0].style.display = "inline-block";
+                navElements[i].show = true;
             }
 
             if (window.innerWidth < navBarShrinkMin) {
-                const screenUnits = Math.floor(
-                    (navBarShrinkMin - window.innerWidth) / 150
-                ); // Gets the amount of links it should remove
-                const amount =
-                    screenUnits < navElements.length - 2
-                        ? screenUnits
-                        : navElements.length - 2; // gets the amount of links it can remove (leaves two)
+                const screenUnits = Math.floor((navBarShrinkMin - window.innerWidth) / 150); // Gets the amount of links it should remove
+                const amount = screenUnits < navElements.length - 2 ? screenUnits : navElements.length - 2; // gets the amount of links it can remove (leaves two)
 
-                for (
-                    let i = navElements.length - 1;
-                    i > navElements.length - 1 - amount;
-                    i--
-                ) {
-                    navElements[i].children[0].style.display = "none";
+                for (let i = navElements.length - 1; i > (navElements.length - 1) - amount; i--) {
+                    navElements[i].show = false;
                 }
             }
         },
