@@ -33,11 +33,9 @@
                     <p class="main_link">More</p>
                 </li>
                 <div id="more_dropdown">
-                    <ul>
-                        <li v-for="moreLink in moreLinks" :key="moreLink.id" class="dropdown_link">
-                            <router-link v-if="moreLink.show" :to="moreLink.to">{{moreLink.name}}</router-link>
-                        </li>
-                    </ul>
+                    <li v-for="moreLink in moreLinks" :key="moreLink.id" class="dropdown_link">
+                        <router-link v-if="moreLink.show" :to="moreLink.to">{{moreLink.name}}</router-link>
+                    </li>
                 </div>
             </ul>
         </div>
@@ -251,7 +249,10 @@ body {
     text-decoration: none;
     width: 100%;
     height: 50px;
-    background-color: blue;
+}
+.dropdown_link{
+    padding-top: 15px;
+    background-color: var(--secondary-color);
 }
 #more_link {
     display: none;
@@ -264,7 +265,6 @@ body {
 #more_dropdown {
     padding-top: 20px;
     display: none;
-    background-color: var(--secondary-color);
     position: absolute;
     top: 60px;
     right: -10px;
@@ -350,9 +350,6 @@ body {
     .menu li {
         font-size: 18px;
         margin: -20px 0px -20px 0px;
-    }
-    .menu li:last-child {
-        margin: -20px 5px -20px 0px;
     }
     .router-link-exact-active {
         font-weight: bold;
