@@ -31,4 +31,3 @@ Glitches
 - [x] Cant scroll to the top when resizing vertically
 - [x] if page gets refreshed the theme switches back to Dark
 - [ ] Both password field and confirm password field both have id of 'password'
-- [ ] Profile link gets displayed even if logged out after changes to the more option
