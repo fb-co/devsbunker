@@ -18,8 +18,7 @@
 
 <script>
 import NavBar from "@/components/NavBar";
-
-import SharedMethods from "../shared";
+import SharedMethods from "../utils/shared";
 
 export default {
     created() {

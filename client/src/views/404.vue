@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import SharedMethods from "../shared";
+import SharedMethods from "../utils/shared";
 
 export default {
     created() {

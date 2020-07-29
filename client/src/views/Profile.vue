@@ -7,12 +7,14 @@
 
 <script>
 import UserService from "../services/user.service";
+import EventBus from "../utils/EventBus";
 
 export default {
     methods: {
         logout() {
             UserService.logout();
-            window.location = "/"; // had to do this oterwise the navbar links won't change
+            EventBus.broadcastLoginState(false); // broadcasting that the user just logged out
+            this.$router.push("/");
         },
     },
 };

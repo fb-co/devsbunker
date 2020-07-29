@@ -1,11 +1,11 @@
 <template>
-    <div class = "pageContainer">
+    <div class="pageContainer">
         <NavBar></NavBar>
     </div>
 </template>
 
 <script>
-import SharedMethods from '../shared';
+import SharedMethods from "../utils/shared";
 import NavBar from "@/components/NavBar";
 
 export default {
@@ -13,11 +13,10 @@ export default {
         SharedMethods.loadPage();
     },
     components: {
-        NavBar
-    }
-}
+        NavBar,
+    },
+};
 </script>
 
 <style scoped>
-
 </style>

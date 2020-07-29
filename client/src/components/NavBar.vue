@@ -25,7 +25,7 @@
             </ul>
             <ul>
                 <!-- displaying links with for loop to keep the template element clean -->
-                <li v-for="link in links" :key="link" :id="link.id">
+                <li v-for="link in links" :key="link.id" :id="link.id">
                     <router-link v-if="link.show" :to="link.to" class="main_link">{{link.name}}</router-link>
                 </li>
 
@@ -45,24 +45,52 @@
 </template>
 
 <script>
-import initLinks from "../NavbarLinks";
+import EventBus from "../utils/EventBus";
+import Links from "../templates/NavbarLinks";
 
 export default {
-    created() {
-        this.links = initLinks(); // initialize navbar links
-        window.addEventListener("resize", this.resizeHandler);
-    },
-    destroyed() {
-        window.removeEventListener("resize", this.resizeHandler);
-    },
     props: {
         headerText: String,
     },
     data() {
         return {
             // navbar links
-            links: [],
+            links: Links,
         };
+    },
+    created() {
+        // when we create the navbar we basically create an event listener using the Event Bus
+        EventBus.$on("isLoggedIn", (flag) => {
+            if (flag) {
+                // user is logged in so we modify the links
+                Links.forEach((link) => {
+                    if (link.name === "Profile") {
+                        link.show = true;
+                    } else if (
+                        link.name === "Login" ||
+                        link.name === "Sign-up"
+                    ) {
+                        link.show = false;
+                    }
+                });
+            } else {
+                // user logged out so we switch back to the og links
+                Links.forEach((link) => {
+                    if (link.name === "Profile") {
+                        link.show = false;
+                    } else if (
+                        link.name === "Login" ||
+                        link.name === "Sign-up"
+                    ) {
+                        link.show = true;
+                    }
+                });
+            }
+        });
+        window.addEventListener("resize", this.resizeHandler);
+    },
+    destroyed() {
+        window.removeEventListener("resize", this.resizeHandler);
     },
     methods: {
         resizeHandler() {

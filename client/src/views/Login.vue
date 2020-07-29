@@ -114,8 +114,9 @@
 
 <script>
 import UserService from "../services/user.service";
-import SharedMethods from "../shared";
+import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
+import EventBus from "../utils/EventBus";
 
 import NavBar from "@/components/NavBar";
 
@@ -155,6 +156,7 @@ export default {
             } else {
                 this.errMessage = "";
                 localStorage.setItem("token", result.token);
+                EventBus.broadcastLoginState(true); // emitting the event that the user logged in
                 this.$router.push("/");
             }
         },
