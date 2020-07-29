@@ -46,9 +46,11 @@
                     <p class="main_link">More</p>
                 </li>
                 <div id = "more_dropdown">
-                    <router-link to="/about" class="dropdown_link" id="about_in_dropdown">About</router-link>
-                    <router-link to="/signup" class="dropdown_link" id="signin_in_dropdown">Sign-up</router-link>
-                    <router-link to="/login" class="dropdown_link" id="login_in_dropdown">Login</router-link>
+                    <!--
+                    <router-link to="/about" class="dropdown_link">About</router-link>
+                    <router-link to="/signup" class="dropdown_link">Sign-up</router-link>
+                    <router-link to="/login" class="dropdown_link">Login</router-link>
+                    -->
                 </div>
             </ul>
         </div>
@@ -57,8 +59,34 @@
 
 <script>
 export default {
+    created() {
+        window.addEventListener("resize", this.resizeHandler);
+    },
+    destroyed() {
+        window.removeEventListener("resize", this.resizeHandler);
+    },
     props: {
         headerText: String,
+    },
+    methods: {
+        resizeHandler() {
+            const navElements = document.getElementsByClassName('navBarLink');
+            const navBarShrinkMin = 1650; //screen width (px) where the navbar should shart shrinking
+
+            //set all elements back to visible so that they will re-appear when the page is expanded
+            for(let i = 0; i < navElements.length; i++){
+                navElements[i].children[0].style.display = "inline-block";
+            }
+
+            if (window.innerWidth < navBarShrinkMin) {
+                const screenUnits = Math.floor((navBarShrinkMin-window.innerWidth)/150); // Gets the amount of links it should remove
+                const amount = (screenUnits < navElements.length-2) ? screenUnits : navElements.length - 2; // gets the amount of links it can remove (leaves two)
+                
+                for (let i = navElements.length-1; i > (navElements.length-1)-amount; i--) {
+                    navElements[i].children[0].style.display = "none";
+                }
+            }
+        }
     }
 };
 </script>
@@ -261,7 +289,7 @@ body {
     }
 }
 /* desktop styles */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 767px) {
     .menu-container {
         width: 100%;
     }
@@ -296,31 +324,5 @@ body {
         font-weight: bold;
     }
 
-    /* Media Queries for Subtle Page Resizing */
-    @media only screen and (max-width: 1300px) {
-        #login_link {
-            display: none;
-        }
-        #signin_link {
-            display: none;
-        }
-        #more_link {
-            display: inline-block;
-        }
-        #login_in_dropdown {
-            display: block;
-        }
-        #signin_in_dropdown {
-            display: block;
-        }
-    }
-    @media only screen and (max-width: 1150px) {
-        #about_link {
-            display: none;
-        }   
-        #about_in_dropdown {
-            display: block;
-        } 
-    }
 }
 </style>
