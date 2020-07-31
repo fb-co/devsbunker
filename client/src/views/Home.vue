@@ -19,17 +19,13 @@
 <script>
 import NavBar from "@/components/NavBar";
 import SharedMethods from "../utils/shared";
+import GeneralProperties from '../mixins/general.mixin';
 
 export default {
     created() {
         SharedMethods.loadPage();
     },
-    data() {
-        return {
-            darkTheme:
-                localStorage.getItem("theme") === "light-theme" ? false : true, // if you just set this to false everytime you refresh it changes back to false even tho you may have dark theme
-        };
-    },
+    mixins: [GeneralProperties],
     components: {
         NavBar,
     },
