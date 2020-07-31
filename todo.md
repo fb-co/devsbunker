@@ -23,6 +23,7 @@ Frontend
 - [ ] make a post page
 - [x] use .env
 - [ ] fix mobile view scrolling bug
+- [ ] add delay between form submission and server response (like a loading gif) to slow down potentials brute force attacks to the login and signup page 
 
 Glitches
 
