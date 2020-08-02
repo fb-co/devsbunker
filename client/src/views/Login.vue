@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <NavBar headerText=""></NavBar>
+        <NavBar></NavBar>
 
         <div class="loginForm">
             <p v-if="!errMessage" class="cardTitle">Login</p>

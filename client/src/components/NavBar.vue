@@ -6,13 +6,6 @@
         <span></span>
         <span></span>
 
-        <!-- Header Text -->
-        <div class="header_text">
-            <div class="vertical_center horizontal_center">
-                <h1 class="mainHeader">{{ headerText }}</h1>
-            </div>
-        </div>
-
         <!-- logo -->
         <router-link to="/" class="menu-logo" style="background-color: var(--secondary-color);">
             <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
@@ -24,35 +17,38 @@
             <ul>
             </ul>
             <ul id = "navbar_links"> 
-                <li>
+                <li class = "navbarSVG">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z"/>
                         <circle cx="10" cy="10" r="7" />
                         <line x1="21" y1="21" x2="15" y2="15" />
                     </svg>
                 </li>  
-                <li>
+                <li class = "navbarSVG">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-compass" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z"/>
                         <polyline points="8 16 10 10 16 8 14 14 8 16" />
                         <circle cx="12" cy="12" r="9" />
                     </svg>
                 </li>  
-                <li>
+                <li class = "navbarSVG">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z"/>
                         <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                         <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                     </svg>
                 </li>
-                <li>
+                <li class = "navbarP">
                     <p>Login</p>
                 </li>
-                <li>
+                <li class = "navbarP">
                     <p>Sign-up</p>
                 </li>
-                <li>
+                <li class = "navbarP">
                     <p>More</p>
+                    <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="#F2F2F2"/>
+                    </svg>
                 </li>
             </ul>
         </div>
@@ -64,9 +60,6 @@
 //import Links from "../templates/NavbarLinks";
 
 export default {
-    props: {
-        headerText: String,
-    },
     created() {
         // when we create the navbar we basically create an event listener using the Event Bus
         /*
@@ -202,37 +195,45 @@ body {
     list-style: none;
 }
 #navbar_links li {
-    width: 150px;
     height: var(--header-height);
-    text-decoration: none;
     display: inline-block;
     box-sizing: border-box;
-    background-color: red;
 }
 
-/* p tags in the navbar */
-#navbar_links p {
+/* Navbar link with a p tag inside ------------/
+
+/* container for p tag */
+.navbarP {
+    width: 150px;
+}
+/* the p tag */
+.navbarP p { 
     width: 100%;
     line-height: var(--header-height); /* This just centers the link vertically */
 }
-#navbar_links p:hover {
+.navbarP p:hover { 
     font-weight: bold;
     cursor: pointer;
 }
 
-/* svg tags in the navbar */
-#navbar_links svg {
-    background-color :blue;
-}
-#navbar_links svg:hover {
-    cursor: pointer;
-}
+/* svg tags in the navbar -----------------*/
 
-.header_text {
-    margin: -20px;
-    position: absolute;
-    width: 100%;
-    height: 100%;
+/* the container for the svg */
+.navbarSVG { 
+    width: 50px;
+}
+/* The actual svg */
+.navbarSVG svg {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    top: 50%; 
+    transform: translateY(-50%);
+} 
+.navbarSVG svg:hover { 
+    cursor: pointer;
+    color: red;
+    stroke-width: 2;
 }
 
 /* MEDIA QUERIES */
