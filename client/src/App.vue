@@ -16,6 +16,7 @@
 
 :root {
     --footer-size: 60px;
+    --header-height: 80px;
 
     --main-color: #212020;
     --secondary-color: #2e2e2e;

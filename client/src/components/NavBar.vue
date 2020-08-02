@@ -23,42 +23,53 @@
         <div class="menu">
             <ul>
             </ul>
-            <ul>
-                <!-- displaying links with for loop to keep the template element clean -->
-                <li v-for="link in links" :key="link.id" :id="link.id">
-                    <router-link v-if="link.show" :to="link.to" class="main_link">{{link.name}}</router-link>
+            <ul id = "navbar_links"> 
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z"/>
+                        <circle cx="10" cy="10" r="7" />
+                        <line x1="21" y1="21" x2="15" y2="15" />
+                    </svg>
+                </li>  
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-compass" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z"/>
+                        <polyline points="8 16 10 10 16 8 14 14 8 16" />
+                        <circle cx="12" cy="12" r="9" />
+                    </svg>
+                </li>  
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z"/>
+                        <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+                        <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+                    </svg>
                 </li>
-
-                <li id="more_link">
-                    <p class="main_link">More</p>
+                <li>
+                    <p>Login</p>
                 </li>
-                <div id="more_dropdown">
-                    <li v-for="moreLink in moreLinks" :key="moreLink.id" class="dropdown_link">
-                        <router-link v-if="moreLink.show" :to="moreLink.to">{{moreLink.name}}</router-link>
-                    </li>
-                </div>
+                <li>
+                    <p>Sign-up</p>
+                </li>
+                <li>
+                    <p>More</p>
+                </li>
             </ul>
         </div>
     </nav>
 </template>
 
 <script>
-import EventBus from "../utils/EventBus";
-import Links from "../templates/NavbarLinks";
+//import EventBus from "../utils/EventBus";
+//import Links from "../templates/NavbarLinks";
 
 export default {
     props: {
         headerText: String,
     },
-    data() {
-        return {
-            // navbar links
-            links: Links,
-            moreLinks: []
-        };
-    },
     created() {
         // when we create the navbar we basically create an event listener using the Event Bus
+        /*
         EventBus.$on("isLoggedIn", (flag) => {
             if (flag) {
                 // user is logged in so we modify the links
@@ -86,42 +97,14 @@ export default {
                 });
             }
         });
-        window.addEventListener("resize", this.resizeHandler);
-    },
+        */
+        //window.addEventListener("resize", this.resizeHandler);
+    }
+    /*
     destroyed() {
         window.removeEventListener("resize", this.resizeHandler);
     },
-    methods: {
-        resizeHandler() {
-            const navElements = this.links;
-            const navBarShrinkMin = 1800; //screen width (px) where the navbar should shart shrinking
-
-            //set all elements back to visible so that they will re-appear when the page is expanded
-            this.moreLinks = [];
-            for (let i = 0; i < navElements.length; i++) {
-                navElements[i].show = true;
-            }
-            if (window.innerWidth < navBarShrinkMin) {
-                const screenUnits = Math.floor((navBarShrinkMin - window.innerWidth) / 150); // Gets the amount of links it should remove
-                const amount = screenUnits < navElements.length - 2 ? screenUnits : navElements.length - 2; // gets the amount of links it can remove (leaves two)
-
-                //only show the more menu, when its possible to remove two links
-                if(amount >= 2){ 
-                    // show the more menu
-                    document.getElementById("more_link").style.display = "inline-block";
-
-                    for (let i = navElements.length - 1; i > (navElements.length - 1) - amount; i--) {
-                        // add the hidden link to the moreLinks array (important to assign the object so you dont just have a refrence)
-                        this.moreLinks.unshift(Object.assign({}, navElements[i]));
-                        navElements[i].show = false;
-                    }
-                }else{
-                    // hide the more menu
-                    document.getElementById("more_link").style.display = "none";
-                }
-            }
-        },
-    },
+    */
 };
 </script>
 
@@ -152,7 +135,7 @@ body {
     -webkit-user-select: none;
     user-select: none;
     box-sizing: border-box;
-    height: 80px;
+    height: var(--header-height);
 }
 .menu-logo {
     line-height: 0;
@@ -163,18 +146,6 @@ body {
     max-height: 40px;
     max-width: 100px;
     flex-shrink: 0;
-}
-.main_link {
-    width: 150px;
-    text-decoration: none;
-    color: var(--secondary-color);
-    transition: color 0.3s ease;
-}
-.menu-container p {
-    width: 150px;
-    text-decoration: none;
-    color: var(--main-font-color);
-    transition: color 0.3s ease;
 }
 .menu-container a:hover {
     font-weight: bold;
@@ -230,52 +201,38 @@ body {
 .menu ul {
     list-style: none;
 }
-
-.main_link {
+#navbar_links li {
+    width: 150px;
+    height: var(--header-height);
+    text-decoration: none;
     display: inline-block;
-    padding: 30px;
     box-sizing: border-box;
+    background-color: red;
 }
+
+/* p tags in the navbar */
+#navbar_links p {
+    width: 100%;
+    line-height: var(--header-height); /* This just centers the link vertically */
+}
+#navbar_links p:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* svg tags in the navbar */
+#navbar_links svg {
+    background-color :blue;
+}
+#navbar_links svg:hover {
+    cursor: pointer;
+}
+
 .header_text {
     margin: -20px;
     position: absolute;
     width: 100%;
     height: 100%;
-}
-
-/* More dropdown */
-.dropdown_link a{
-    display: block;
-    text-decoration: none;
-    width: 100%;
-    height: 50px;
-}
-.dropdown_link{
-    padding-top: 15px;
-    background-color: var(--secondary-color);
-}
-#more_link {
-    display: none;
-}
-#more_link:hover {
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#more_dropdown {
-    padding-top: 20px;
-    display: none;
-    position: absolute;
-    top: 60px;
-    right: -10px;
-    width: 200px;
-    height: auto;
-}
-#more_link:hover + #more_dropdown {
-    display: inline-block;
-}
-#more_dropdown:hover {
-    display: inline-block;
 }
 
 /* MEDIA QUERIES */
