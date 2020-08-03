@@ -45,10 +45,12 @@
                     <router-link to='/signup'>Sign-up</router-link>
                 </li>
                 <li class = "navbarP">
-                    <p>More</p>
-                    <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="#F2F2F2"/>
-                    </svg>
+                    <p>
+                        More
+                        <svg class = "inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)"/>
+                        </svg>
+                    </p>
                 </li>
             </ul>
         </div>
@@ -140,6 +142,8 @@ body {
     max-width: 100px;
     flex-shrink: 0;
 }
+
+/* menu-container p hover styles are listed below since there may be instances where we dont want to bold the p tags */
 .menu-container a:hover {
     font-weight: bold;
 }
@@ -229,10 +233,6 @@ body {
     text-decoration: none;
     line-height: var(--header-height); /* This just centers the link vertically */
 }
-.navbarP p:hover { 
-    font-weight: bold;
-    cursor: pointer;
-}
 
 /* Navbar link with a p tag inside ------------/
 
@@ -269,6 +269,9 @@ body {
     color: red;
     stroke-width: 2;
 }
+
+
+/* More Dropdown */
 
 /* MEDIA QUERIES */
 

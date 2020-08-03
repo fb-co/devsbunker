@@ -102,7 +102,13 @@ body {
         var(--secondary-color) 100%
     );
     opacity: 0.5;
+}   
+
+/* Apply this to an inline icon to put some space between the text and the icon */
+.inline-icon-spacer {
+    margin-left: 5px;
 }
+
 </style>
 
 <script>
