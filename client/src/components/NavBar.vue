@@ -44,13 +44,17 @@
                 <li class = "navbarLink">
                     <router-link to='/signup'>Sign-up</router-link>
                 </li>
-                <li class = "navbarP">
+                <li class = "navbarP" id = "more_dropdown_container">
                     <p>
                         More
                         <svg class = "inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)"/>
                         </svg>
                     </p>
+                    <div id = "more_dropdown">
+                        <router-link to = '/about'>About</router-link>    
+                        <router-link to = '/'>Example</router-link>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -266,12 +270,37 @@ body {
 } 
 .navbarSVG svg:hover { 
     cursor: pointer;
-    color: red;
     stroke-width: 2;
 }
 
 
 /* More Dropdown */
+
+/* functionality to make the dropdown appear when you hover over the more option */
+#more_dropdown_container:hover > div {
+    display: block;
+}
+
+/* Style for the dropdown container */
+#more_dropdown {
+    display: none;
+    background-color: var(--secondary-color);
+    width: 150px;
+    height: auto;
+}
+
+/* Style for all links in the dropdown */
+#more_dropdown > a {
+    text-decoration: none;
+    display: block;
+    box-sizing: border-box;
+    padding: 15px;
+}
+
+/* Add some extra space at the bottom of the dropdown menu */
+#more_dropdown:last-child {
+    padding-bottom: 10px;
+}
 
 /* MEDIA QUERIES */
 
