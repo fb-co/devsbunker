@@ -38,11 +38,11 @@
                         <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                     </svg>
                 </li>
-                <li class = "navbarP">
-                    <p>Login</p>
+                <li class = "navbarLink">
+                    <router-link to="/login">Login</router-link>
                 </li>
-                <li class = "navbarP">
-                    <p>Sign-up</p>
+                <li class = "navbarLink">
+                    <router-link to='/signup'>Sign-up</router-link>
                 </li>
                 <li class = "navbarP">
                     <p>More</p>
@@ -198,6 +198,40 @@ body {
     height: var(--header-height);
     display: inline-block;
     box-sizing: border-box;
+}
+
+
+/* Navbar link with a p tag inside ------------/
+
+/* container for p tag */
+.navbarP {
+    width: 150px;
+}
+/* the p tag */
+.navbarP p { 
+    width: 100%;
+    line-height: var(--header-height); /* This just centers the link vertically */
+}
+.navbarP p:hover { 
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Navbar link with a router-link/a tag inside ------------/
+
+/* container for a tag */
+.navbarLink {
+    width: 150px;
+}
+
+/* the a tag */
+.navbarLink a { 
+    text-decoration: none;
+    line-height: var(--header-height); /* This just centers the link vertically */
+}
+.navbarP p:hover { 
+    font-weight: bold;
+    cursor: pointer;
 }
 
 /* Navbar link with a p tag inside ------------/
