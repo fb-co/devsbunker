@@ -17,40 +17,40 @@
             <ul>
             </ul>
             <ul id = "navbar_links"> 
-                <li class = "navbarSVG">
+                <li class = "nav_item nav_item_icon">
                     <router-link to='/'>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z"/>
                             <circle cx="10" cy="10" r="7" />
                             <line x1="21" y1="21" x2="15" y2="15" />
                         </svg>
                     </router-link>
                 </li>  
-                <li class = "navbarSVG">
+                <li class = "nav_item nav_item_icon">
                     <router-link to='/'>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-compass" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-compass" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z"/>
                             <polyline points="8 16 10 10 16 8 14 14 8 16" />
                             <circle cx="12" cy="12" r="9" />
                         </svg>
                     </router-link>
                 </li>  
-                <li class = "navbarSVG">
+                <li class = "nav_item nav_item_icon">
                     <router-link to='/'>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z"/>
                             <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                             <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                         </svg>
                     </router-link>
                 </li>
-                <li class = "navbarLink">
+                <li class = "nav_item nav_item_text">
                     <router-link to="/login">Login</router-link>
                 </li>
-                <li class = "navbarLink">
+                <li class = "nav_item nav_item_text">
                     <router-link to='/signup'>Sign-up</router-link>
                 </li>
-                <li class = "navbarP" id = "more_dropdown_container">
+                <li class = "nav_item nav_item_text" id = "more_dropdown_container">
                     <p>
                         More
                         <svg class = "inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -208,77 +208,41 @@ body {
 .menu ul {
     list-style: none;
 }
-#navbar_links li {
-    height: var(--header-height);
+.nav_item {
     display: inline-block;
-    box-sizing: border-box;
+    height: var(--header-height);
+    width: auto;
 }
-
-
-/* Navbar link with a p tag inside ------------/
-
-/* container for p tag */
-.navbarP {
-    width: 150px;
-}
-/* the p tag */
-.navbarP p { 
-    width: 100%;
-    line-height: var(--header-height); /* This just centers the link vertically */
-}
-.navbarP p:hover { 
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* Navbar link with a router-link/a tag inside ------------/
-
-/* container for a tag */
-.navbarLink {
-    width: 150px;
-}
-
-/* the a tag */
-.navbarLink a { 
-    text-decoration: none;
-    line-height: var(--header-height); /* This just centers the link vertically */
-}
-
-/* Navbar link with a p tag inside ------------/
-
-/* container for p tag */
-.navbarP {
-    width: 150px;
-}
-/* the p tag */
-.navbarP p { 
-    width: 100%;
-    line-height: var(--header-height); /* This just centers the link vertically */
-}
-.navbarP p:hover { 
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* svg tags in the navbar -----------------*/
-
-/* the container for the svg */
-.navbarSVG { 
+/* for nav items with an icon in them */
+.nav_item_icon {
     width: 50px;
 }
-/* The actual svg */
-.navbarSVG svg {
+.nav_item_icon a {
+    display: inline-block;
+    position: relative;
+    transform: translateY(-50%);
+    top: 50%;
+    height: 25px;
+}
+.nav_item_icon svg {
     width: 25px;
     height: 25px;
-    position: relative;
-    top: 50%; 
-    transform: translateY(-50%);
-} 
-.navbarSVG svg:hover { 
-    cursor: pointer;
-    stroke-width: 2;
+}
+.nav_item_icon svg:hover {
+    stroke-width: 2px;
 }
 
+/* for nav items with text in them */
+.nav_item_text {
+    width: 150px;
+    line-height: var(--header-height);
+}
+.nav_item_text a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
 
 /* More Dropdown */
 
@@ -293,6 +257,7 @@ body {
     background-color: var(--secondary-color);
     width: 150px;
     height: auto;
+    border-radius: 0 0 10px 10px;
 }
 
 /* Style for all links in the dropdown */
@@ -300,13 +265,13 @@ body {
     text-decoration: none;
     display: block;
     box-sizing: border-box;
-    padding: 15px;
+    line-height: 50px;
 }
-
-/* Add some extra space at the bottom of the dropdown menu */
 #more_dropdown:last-child {
     padding-bottom: 10px;
 }
+
+
 
 /* MEDIA QUERIES */
 
