@@ -16,50 +16,53 @@
         <div class="menu">
             <ul>
             </ul>
-            <ul id = "navbar_links"> 
-                <li class = "nav_item nav_item_icon">
+            <ul id="navbar_links">
+                <li class="nav_item nav_item_icon">
                     <router-link to='/'>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z"/>
+                            <path stroke="none" d="M0 0h24v24H0z" />
                             <circle cx="10" cy="10" r="7" />
                             <line x1="21" y1="21" x2="15" y2="15" />
                         </svg>
                     </router-link>
-                </li>  
-                <li class = "nav_item nav_item_icon">
+                </li>
+                <li class="nav_item nav_item_icon">
                     <router-link to='/'>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-compass" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z"/>
+                            <path stroke="none" d="M0 0h24v24H0z" />
                             <polyline points="8 16 10 10 16 8 14 14 8 16" />
                             <circle cx="12" cy="12" r="9" />
                         </svg>
                     </router-link>
-                </li>  
-                <li class = "nav_item nav_item_icon">
+                </li>
+                <li class="nav_item nav_item_icon">
                     <router-link to='/'>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z"/>
+                            <path stroke="none" d="M0 0h24v24H0z" />
                             <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                             <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                         </svg>
                     </router-link>
                 </li>
-                <li class = "nav_item nav_item_text">
+                <li v-if="!isLoggedIn" class="nav_item nav_item_text">
                     <router-link to="/login">Login</router-link>
                 </li>
-                <li class = "nav_item nav_item_text">
+                <li v-if="!isLoggedIn" class="nav_item nav_item_text">
                     <router-link to='/signup'>Sign-up</router-link>
                 </li>
-                <li class = "nav_item nav_item_text" id = "more_dropdown_container">
+                <li v-else class="nav_item nav_item_text">
+                    <router-link to='/profile'>Profile</router-link>
+                </li>
+                <li class="nav_item nav_item_text" id="more_dropdown_container">
                     <p>
                         More
-                        <svg class = "inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)"/>
+                        <svg class="inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
                         </svg>
                     </p>
-                    <div id = "more_dropdown">
-                        <router-link to = '/about'>About</router-link>    
-                        <router-link to = '/'>Example</router-link>
+                    <div id="more_dropdown">
+                        <router-link to='/about'>About</router-link>
+                        <router-link to='/'>Example</router-link>
                     </div>
                 </li>
             </ul>
@@ -68,43 +71,34 @@
 </template>
 
 <script>
-//import EventBus from "../utils/EventBus";
-//import Links from "../templates/NavbarLinks";
+import EventBus from "../utils/EventBus";
+import SharedMethods from '../utils/shared';
+
+// pro hacker move here (had to replace = cuz stoopid default base64 function)
+let auth = /true/.test(atob(document.cookie.replace(/bGk/g, '').replace(/=/g, ''))) ? true : false;
 
 export default {
+    data() {
+        return {
+            isLoggedIn: auth
+        };
+    },
+    beforeCreate() {
+        SharedMethods.setLoginStateCookie();
+    },
     created() {
-        // when we create the navbar we basically create an event listener using the Event Bus
-        /*
         EventBus.$on("isLoggedIn", (flag) => {
             if (flag) {
-                // user is logged in so we modify the links
-                Links.forEach((link) => {
-                    if (link.name === "Profile") {
-                        link.show = true;
-                    } else if (
-                        link.name === "Login" ||
-                        link.name === "Sign-up"
-                    ) {
-                        link.show = false;
-                    }
-                });
+                auth = true;
             } else {
-                // user logged out so we switch back to the og links
-                Links.forEach((link) => {
-                    if (link.name === "Profile") {
-                        link.show = false;
-                    } else if (
-                        link.name === "Login" ||
-                        link.name === "Sign-up"
-                    ) {
-                        link.show = true;
-                    }
-                });
+                auth = false;
             }
         });
-        */
+
         //window.addEventListener("resize", this.resizeHandler);
     }
+
+
     /*
     destroyed() {
         window.removeEventListener("resize", this.resizeHandler);
@@ -270,8 +264,6 @@ body {
 #more_dropdown:last-child {
     padding-bottom: 10px;
 }
-
-
 
 /* MEDIA QUERIES */
 

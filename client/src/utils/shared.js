@@ -38,6 +38,12 @@ const SharedMethods = {
 
     return !!response.user; /* the !! operator transforms a value into a boolean so if we get a user it will be true otherwise false (undefined -> false) **/
   },
+  setLoginStateCookie: function () {
+    this.checkIfLoggedIn().then(result => {
+      // li stands for 'logged in'
+      document.cookie = btoa('li') + '=' + btoa(result);
+    })
+  },
   initTheme: function () {
     const currentTheme = localStorage.getItem('theme');
 

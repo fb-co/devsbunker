@@ -9,6 +9,8 @@ const EventBus = new Vue({
         // flag here is a boolean
         broadcastLoginState(flag) {
             this.$emit('isLoggedIn', flag);
+            // li stands for 'logged in'
+            document.cookie = btoa('li') + '=' + btoa(flag);
         }
     }
 });
