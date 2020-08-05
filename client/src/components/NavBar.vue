@@ -50,8 +50,10 @@
                 <li v-if="!isLoggedIn" class="nav_item nav_item_text">
                     <router-link to='/signup'>Sign-up</router-link>
                 </li>
-                <li v-else class="nav_item nav_item_text">
-                    <router-link to='/profile'>Profile</router-link>
+                <li v-else class="nav_item" id="profilePicture">
+                    <router-link to='/profile'>
+                        <img src="../assets/profilePlaceholder.png" alt="profile_pic" style = "width: 50px;">
+                    </router-link>
                 </li>
                 <li class="nav_item nav_item_text" id="more_dropdown_container">
                     <p>
@@ -94,11 +96,8 @@ export default {
                 auth = false;
             }
         });
-
         //window.addEventListener("resize", this.resizeHandler);
     }
-
-
     /*
     destroyed() {
         window.removeEventListener("resize", this.resizeHandler);
@@ -151,6 +150,12 @@ body {
 .menu-container a:hover {
     font-weight: bold;
 }
+
+/* Bold the font for p tags in the navlinks container */
+.menu p:hover {
+    font-weight: bold;
+}
+
 .menu-container input {
     display: block;
     width: 35px;
@@ -213,12 +218,12 @@ body {
 }
 .nav_item_icon a {
     display: inline-block;
-    position: relative;
-    transform: translateY(-50%);
-    top: 50%;
-    height: 25px;
+    height: 100%;
 }
 .nav_item_icon svg {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
     width: 25px;
     height: 25px;
 }
@@ -236,6 +241,16 @@ body {
     width: 100%;
     height: 100%;
     text-decoration: none;
+}
+
+/* profile picture */
+#profilePicture {
+    width: 75px;
+}
+#profilePicture img {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* More Dropdown */
