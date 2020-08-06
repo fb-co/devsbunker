@@ -31,7 +31,7 @@ Glitches
 - [ ] Random scroll space on bottom of login/signup cards on mobile
 - [x] Cant scroll to the top when resizing vertically
 - [x] if page gets refreshed the theme switches back to Dark
-- [ ] Both password field and confirm password field both have id of 'password'
+- [x] Both password field and confirm password field both have id of 'password'
 - [ ] Toggling show password icon highlights the 'forgot password' link
 - [ ] Tapping or clicking outside burger menu on small screens should close it
 - [ ] For a very small horizontal resize range, there are no Nav links or burger menu
