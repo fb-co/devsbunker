@@ -52,7 +52,7 @@
                 </li>
                 <li v-else class="nav_item" id="profilePicture">
                     <router-link to='/profile'>
-                        <img src="../assets/profilePlaceholder.png" alt="profile_pic" style = "width: 50px;">
+                        <img src="../assets/profilePlaceholder.png" alt="profile_pic" style="width: 40px;">
                     </router-link>
                 </li>
                 <li class="nav_item nav_item_text" id="more_dropdown_container">
@@ -74,15 +74,25 @@
 
 <script>
 import EventBus from "../utils/EventBus";
-import SharedMethods from '../utils/shared';
+import SharedMethods from "../utils/shared";
 
 // pro hacker move here (had to replace = cuz stoopid default base64 function)
-let auth = /true/.test(atob(document.cookie.replace(/bGk/g, '').replace(/=/g, ''))) ? true : false;
+
+let auth;
+try {
+    auth = /true/.test(
+        atob(document.cookie.replace(/bGk/g, "").replace(/=/g, ""))
+    )
+        ? true
+        : false;
+} catch {
+    auth = false;
+}
 
 export default {
     data() {
         return {
-            isLoggedIn: auth
+            isLoggedIn: auth,
         };
     },
     beforeCreate() {
@@ -97,7 +107,7 @@ export default {
             }
         });
         //window.addEventListener("resize", this.resizeHandler);
-    }
+    },
     /*
     destroyed() {
         window.removeEventListener("resize", this.resizeHandler);
