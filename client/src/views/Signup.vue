@@ -2,7 +2,7 @@
     <div class="signup">
         <NavBar></NavBar>
 
-        <div class="signupForm">
+        <div class="signupForm" v-if="!submitted">
             <p v-if="!errMessage" class="cardTitle">Sign-up</p>
             <p v-if="errMessage" class="cardTitle err">{{ errMessage}}</p>
 
@@ -89,8 +89,8 @@
                 </router-link>
 
             </div>
-
         </div>
+        <Loading v-if="submitted" />
     </div>
 </template>
 
@@ -101,6 +101,7 @@ import GeneralProperties from "../mixins/general.mixin";
 import EventBus from "../utils/EventBus";
 
 import NavBar from "@/components/NavBar";
+import Loading from "@/components/Loading";
 
 export default {
     created() {
@@ -126,12 +127,12 @@ export default {
             password: "",
             confirmedPassword: "",
             errMessage: "",
-            darkTheme:
-                localStorage.getItem("theme") === "dark-theme" ? true : false,
+            submitted: false,
         };
     },
     components: {
         NavBar,
+        Loading,
     },
     methods: {
         async submitForm() {
@@ -145,6 +146,8 @@ export default {
                     this.password
                 );
                 if (valid) {
+                    this.submitted = true;
+
                     const result = await UserService.signup(
                         this.username,
                         this.email,
@@ -153,9 +156,15 @@ export default {
 
                     if (/Unable/.test(result.message)) {
                         this.errMessage = "Credentials are already taken.";
+                        setTimeout(() => {
+                            this.submitted = false;
+                        }, 1500);
                     } else if (/Invalid/.test(result.message)) {
                         // we are going to do this even here just to add another layer of security
                         this.errMessage = "Invalid credentials.";
+                        setTimeout(() => {
+                            this.submitted = false;
+                        }, 1500);
                     } else {
                         this.errMessage = "";
                         localStorage.setItem("token", result.token);
