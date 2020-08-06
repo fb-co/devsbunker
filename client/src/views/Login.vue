@@ -2,7 +2,7 @@
     <div class="login">
         <NavBar></NavBar>
 
-        <div class="loginForm">
+        <div class="loginForm" v-if="!submitted">
             <p v-if="!errMessage" class="cardTitle">Login</p>
             <p v-if="errMessage" class="cardTitle err">{{ errMessage}}</p>
 
@@ -108,6 +108,8 @@
             </div>
 
         </div>
+
+        <Loading v-if="submitted" />
     </div>
 </template>
 
@@ -119,6 +121,7 @@ import GeneralProperties from "../mixins/general.mixin";
 import EventBus from "../utils/EventBus";
 
 import NavBar from "@/components/NavBar";
+import Loading from "@/components/Loading";
 
 export default {
     created() {
@@ -142,17 +145,23 @@ export default {
             password: "",
             errMessage: "",
             hidePassword: "",
+            submitted: false,
         };
     },
     components: {
         NavBar,
+        Loading,
     },
     methods: {
         async submitForm() {
             const result = await UserService.login(this.userID, this.password);
+            this.submitted = true;
 
             if (/Incorrect/.test(result.message)) {
                 this.errMessage = "Incorrect credentials.";
+                setTimeout(() => {
+                    this.submitted = false;
+                }, 1500);
             } else {
                 this.errMessage = "";
                 localStorage.setItem("token", result.token);
