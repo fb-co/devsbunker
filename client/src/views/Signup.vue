@@ -43,7 +43,7 @@
                     <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
                 </svg>
 
-                <input @click="errMessage ? errMessage = '' : {}" class="form_field" type="password" id="password" name="password" v-model="confirmedPassword" placeholder="Confirm password" required>
+                <input @click="errMessage ? errMessage = '' : {}" class="form_field" type="password" id="confirm-password" name="password" v-model="confirmedPassword" placeholder="Confirm password" required>
 
                 <div v-bind:class="{errLine: errMessage}" class="bottomLine-4 form_field_line"></div>
 
