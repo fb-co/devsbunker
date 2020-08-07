@@ -46,6 +46,10 @@ body {
     text-align: center;
 }
 
+.router-link-exact-active {
+    font-weight: bold;
+}
+
 /* Class Styles */
 .horizontal_center {
     width: 100%;

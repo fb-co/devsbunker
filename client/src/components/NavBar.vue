@@ -35,7 +35,7 @@
                         </svg>
                     </router-link>
                 </li>
-                <li class="nav_item nav_item_icon">
+                <li v-if="isLoggedIn" class="nav_item nav_item_icon">
                     <router-link to='/'>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" />
@@ -44,18 +44,27 @@
                         </svg>
                     </router-link>
                 </li>
+                <li v-if="isLoggedIn" class="nav_item" id="profilePicture">
+                    <router-link to='/profile'>
+                        <img src="../assets/profilePlaceholder.png" alt="profile_pic" style="width: 40px;">
+                    </router-link>
+                </li>
                 <li v-if="!isLoggedIn" class="nav_item nav_item_text">
                     <router-link to="/login">Login</router-link>
                 </li>
                 <li v-if="!isLoggedIn" class="nav_item nav_item_text">
                     <router-link to='/signup'>Sign-up</router-link>
                 </li>
-                <li v-else class="nav_item" id="profilePicture">
-                    <router-link to='/profile'>
-                        <img src="../assets/profilePlaceholder.png" alt="profile_pic" style="width: 40px;">
-                    </router-link>
-                </li>
-                <li class="nav_item nav_item_text" id="more_dropdown_container">
+                
+                <li class="nav_item nav_item_text">
+                    <Dropdown
+                        label="More"
+                        height="80px"
+                        spacing="50px"
+                        :links="[{text: 'About', destination: 'about'}, {text: 'Market', destination: '/'}]"
+                    ></Dropdown>
+
+                    <!--
                     <p>
                         More
                         <svg class="inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,8 +73,9 @@
                     </p>
                     <div id="more_dropdown">
                         <router-link to='/about'>About</router-link>
-                        <router-link to='/'>Example</router-link>
+                        <router-link to='/'>Settings</router-link>
                     </div>
+                    -->
                 </li>
             </ul>
         </div>
@@ -75,6 +85,7 @@
 <script>
 import EventBus from "../utils/EventBus";
 import SharedMethods from "../utils/shared";
+import Dropdown from "./Dropdown";
 
 // pro hacker move here (had to replace = cuz stoopid default base64 function)
 
@@ -92,8 +103,11 @@ try {
 export default {
     data() {
         return {
-            isLoggedIn: auth,
+            isLoggedIn: auth
         };
+    },
+    components: {   
+        Dropdown
     },
     beforeCreate() {
         SharedMethods.setLoginStateCookie();
@@ -244,13 +258,13 @@ body {
 /* for nav items with text in them */
 .nav_item_text {
     width: 150px;
-    line-height: var(--header-height);
 }
 .nav_item_text a {
     display: inline-block;
     width: 100%;
     height: 100%;
     text-decoration: none;
+    line-height: var(--header-height);
 }
 
 /* profile picture */
@@ -261,33 +275,6 @@ body {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-}
-
-/* More Dropdown */
-
-/* functionality to make the dropdown appear when you hover over the more option */
-#more_dropdown_container:hover > div {
-    display: block;
-}
-
-/* Style for the dropdown container */
-#more_dropdown {
-    display: none;
-    background-color: var(--secondary-color);
-    width: 150px;
-    height: auto;
-    border-radius: 0 0 10px 10px;
-}
-
-/* Style for all links in the dropdown */
-#more_dropdown > a {
-    text-decoration: none;
-    display: block;
-    box-sizing: border-box;
-    line-height: 50px;
-}
-#more_dropdown:last-child {
-    padding-bottom: 10px;
 }
 
 /* MEDIA QUERIES */
@@ -330,9 +317,6 @@ body {
         width: 100%;
         height: 75px;
     }
-    .router-link-exact-active {
-        background-color: var(--accent);
-    }
 }
 /* desktop styles */
 @media only screen and (min-width: 767px) {
@@ -362,9 +346,6 @@ body {
     .menu li {
         font-size: 18px;
         margin: -20px 0px -20px 0px;
-    }
-    .router-link-exact-active {
-        font-weight: bold;
     }
 }
 </style>
