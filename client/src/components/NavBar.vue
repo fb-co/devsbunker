@@ -46,7 +46,7 @@
                 </li>
                 <li v-if="isLoggedIn" class="nav_item" id="profilePicture">
                     <router-link to='/profile'>
-                        <img src="../assets/profilePlaceholder.png" alt="profile_pic" style="width: 40px;">
+                        <img src="../assets/profilePlaceholder.png" alt="profile_pic" style="width: 50px;">
                     </router-link>
                 </li>
                 <li v-if="!isLoggedIn" class="nav_item nav_item_text">
@@ -59,23 +59,13 @@
                 <li class="nav_item nav_item_text">
                     <Dropdown
                         label="More"
+                        imageSrc=""
                         height="80px"
                         spacing="50px"
-                        :links="[{text: 'About', destination: 'about'}, {text: 'Market', destination: '/'}]"
+                        linkFontSize="18px"
+                        labelFontSize="18px"
+                        :links="[{text: 'About', destination: 'about'}, {text: 'Market', destination: '/'}, {text: 'settings', destination: 'settings'}]"
                     ></Dropdown>
-
-                    <!--
-                    <p>
-                        More
-                        <svg class="inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
-                        </svg>
-                    </p>
-                    <div id="more_dropdown">
-                        <router-link to='/about'>About</router-link>
-                        <router-link to='/'>Settings</router-link>
-                    </div>
-                    -->
                 </li>
             </ul>
         </div>
