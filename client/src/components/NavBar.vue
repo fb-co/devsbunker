@@ -139,7 +139,6 @@ body {
     position: relative;
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
     background: var(--secondary-color);
     color: var(--main-font-color);
     padding: 20px;

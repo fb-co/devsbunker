@@ -89,10 +89,10 @@ body {
     margin-top: calc(var(--footer-size) * -1);
     clear: both;
 }
-/* General Container for pages (goes in template tags) */
+/* General Container for pages (goes in template tags and does not include header) */ 
 .pageContainer {
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - var(--header-height));
 }
 
 
