@@ -13,3 +13,5 @@ const Settings = {
     'Privacy': ['Show followers'],
     'About': ['Version'],
 }
+
+export default Settings;
