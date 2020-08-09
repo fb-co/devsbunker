@@ -7,7 +7,7 @@
                     <input type="text" name="search" class="search-bar" placeholder="Search a setting...">
                     <li class="settings_list_item" v-for="(option, index) in Object.keys(settings)" :key="index">
                         <!-- todo: pull icons from a template like for the Settings -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user option-icon" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.5" stroke="#3F3E3E" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user option-icon" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <circle cx="12" cy="7" r="4" />
                             <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
