@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Settings from "../templates/Settings";
+import Settings from "../../templates/Settings";
 
 export default {
     data() {
@@ -98,7 +98,7 @@ export default {
 .option-icon {
     margin-top: 3px;
     margin-left: 15px;
-    margin-right: 15px;    
+    margin-right: 15px;
 }
 .option_text {
     margin-top: 3px;
@@ -111,11 +111,10 @@ export default {
     display: inline-block;
 }
 
-
 /* Media Queries */
 
 @media only screen and (max-width: 767px) {
-    .pageSubcontainer{
+    .pageSubcontainer {
         width: 100%;
     }
 }
