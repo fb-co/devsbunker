@@ -55,17 +55,9 @@
                 <li v-if="!isLoggedIn" class="nav_item nav_item_text">
                     <router-link to='/signup'>Sign-up</router-link>
                 </li>
-                
+
                 <li class="nav_item nav_item_text">
-                    <Dropdown
-                        label="More"
-                        imageSrc=""
-                        height="80px"
-                        spacing="50px"
-                        linkFontSize="18px"
-                        labelFontSize="18px"
-                        :links="[{text: 'About', destination: 'about'}, {text: 'Market', destination: '/'}, {text: 'settings', destination: 'settings'}]"
-                    ></Dropdown>
+                    <Dropdown label="More" imageSrc="" height="80px" spacing="50px" linkFontSize="18px" labelFontSize="18px" :links="[{text: 'About', destination: 'about'}, {text: 'Market', destination: '/'}, {text: 'Settings', destination: 'settings'}]"></Dropdown>
                 </li>
             </ul>
         </div>
@@ -93,11 +85,11 @@ try {
 export default {
     data() {
         return {
-            isLoggedIn: auth
+            isLoggedIn: auth,
         };
     },
-    components: {   
-        Dropdown
+    components: {
+        Dropdown,
     },
     beforeCreate() {
         SharedMethods.setLoginStateCookie();
