@@ -77,7 +77,8 @@ export default {
     margin: 50px;
 }
 .settings_selection {
-    background-color: var(--secondary-color);
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+    background: var(--settings-mobile-card);
     flex-grow: 1;
     min-width: 500px;
     margin: 50px;
