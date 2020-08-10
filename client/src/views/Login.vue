@@ -382,11 +382,11 @@ input[type="submit"]:hover {
     .loginForm {
         top: 80px;
         width: 100%;
-        background: var(--color-primary);
+        background: var(--main-color);
     }
 
     input {
-        background: var(--color-primary);
+        background: var(--main-color);
     }
 }
 @media only screen and (max-width: 305px) {
