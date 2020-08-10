@@ -1,7 +1,16 @@
 <template>
     <div id="SettingsPage">
         <h1 class="title">Settings</h1>
-        <input type="text" name="search" class="search-bar" placeholder="Search a setting...">
+
+        <CustomInput class="search_input">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" />
+                <circle cx="10" cy="10" r="7" />
+                <line x1="21" y1="21" x2="15" y2="15" />
+            </svg>
+            <input type="text" name="search" placeholder="Search a setting...">
+        </CustomInput>
+        
 
         <div class="profile-banner">
             <img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic">
@@ -14,7 +23,13 @@
 </template>
 
 <script>
-export default {};
+import CustomInput from "@/components/CustomInput";
+
+export default {
+    components: {
+        CustomInput
+    }
+};
 </script>
 
 <style scoped>
@@ -25,21 +40,11 @@ export default {};
 
     margin-top: 30px;
 }
-
-.search-bar {
+.search_input {
     width: 80%;
-    height: 30px;
-
-    padding: 10px;
-
-    background: var(--secondary-color);
-    border: none;
-    border-radius: 7px;
-
-    margin-top: 25px;
-    margin-bottom: 25px;
-
-    color: var(--main-font-color);
+    margin: 0 auto;
+    margin-top: 55px;
+    margin-bottom: 55px;
 }
 
 .search-bar::placeholder {
