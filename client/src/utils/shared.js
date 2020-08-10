@@ -10,7 +10,8 @@ const Themes = {
     vueGreen: '#42b983',
     linkColor: '#6096fd',
     selection: '#0D0D0D',
-    softText: 'rgba(0, 0, 0, 0.5)'
+    softText: 'rgba(0, 0, 0, 0.5)',
+    settingsMobileCard: '#FFFFFF'
   },
   dark: {
     mainColor: '#171717',
@@ -21,7 +22,8 @@ const Themes = {
     vueGreen: '#42b983',
     linkColor: '#6096fd',
     selection: '#f2f2f2',
-    softText: 'rgba(242, 242, 242, 0.5)'
+    softText: 'rgba(242, 242, 242, 0.5)',
+    settingsMobileCard: '#2E2E2E'
   },
   getTheme: function (themeString) {
     if (themeString === 'dark-theme') {
@@ -64,6 +66,7 @@ const SharedMethods = {
     document.body.style.setProperty("--link-color", themeObj.linkColor);
     document.body.style.setProperty("--selection", themeObj.selection);
     document.body.style.setProperty("--soft-text", themeObj.softText);
+    document.body.style.setProperty("--settings-mobile-card", themeObj.settingsMobileCard);
   },
   changeTheme: function (theme) {
     localStorage.setItem('theme', theme);

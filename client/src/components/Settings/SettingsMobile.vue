@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="SettingsPage">
         <h1 class="title">Settings</h1>
         <input type="text" name="search" class="search-bar" placeholder="Search a setting...">
 
@@ -40,6 +40,10 @@ export default {};
     margin-bottom: 25px;
 }
 
+.search-bar::placeholder {
+    color: #bcbcbc;
+}
+
 .profile-banner {
     width: 80%;
     height: 55px;
@@ -54,7 +58,7 @@ export default {};
 }
 
 .user-mail {
-    color: rgba(0, 0, 0, 0.3);
+    color: #a7a7a7;
     text-align: left;
     margin-top: 5px;
 }
@@ -65,7 +69,7 @@ export default {};
 
     margin: auto;
     margin-top: 40px;
-    background: #fff;
+    background: var(--settings-mobile-card);
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 }

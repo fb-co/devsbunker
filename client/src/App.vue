@@ -27,6 +27,7 @@
     --link-color: #6096fd;
     --selection: #f2f2f2;
     --soft-text: rgba(242, 242, 242, 0.5);
+    --settings-mobile-card: #2e2e2e;
 }
 
 ::selection {
@@ -89,12 +90,11 @@ body {
     margin-top: calc(var(--footer-size) * -1);
     clear: both;
 }
-/* General Container for pages (goes in template tags and does not include header) */ 
+/* General Container for pages (goes in template tags and does not include header) */
 .pageContainer {
     width: 100%;
     height: calc(100vh - var(--header-height));
 }
-
 
 /* Form Things */
 .form_field_line {
@@ -106,13 +106,12 @@ body {
         var(--secondary-color) 100%
     );
     opacity: 0.5;
-}   
+}
 
 /* Apply this to an inline icon to put some space between the text and the icon */
 .inline-icon-spacer {
     margin-left: 5px;
 }
-
 </style>
 
 <script>
