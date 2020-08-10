@@ -38,8 +38,16 @@ export default {
     },
     methods: {
         isMobile() {
-            if (screen.width <= 950) {
-                console.log("WHYY");
+            // screen.width in firefox returns a value based on the zoom and not the actual window
+            // screen.width in chrome returns the first value it calculates
+
+            // so heres a dynamic version
+            const screenWidth = Math.max(
+                document.documentElement.clientWidth || 0,
+                window.innerWidth || 0
+            );
+
+            if (screenWidth <= 760) {
                 return true;
             } else {
                 return false;
