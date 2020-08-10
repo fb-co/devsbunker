@@ -10,7 +10,6 @@
             </svg>
             <input type="text" name="search" placeholder="Search a setting...">
         </CustomInput>
-        
 
         <div class="profile-banner">
             <img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic">
@@ -27,8 +26,8 @@ import CustomInput from "@/components/CustomInput";
 
 export default {
     components: {
-        CustomInput
-    }
+        CustomInput,
+    },
 };
 </script>
 
@@ -45,10 +44,6 @@ export default {
     margin: 0 auto;
     margin-top: 55px;
     margin-bottom: 55px;
-}
-
-.search-bar::placeholder {
-    color: #bcbcbc;
 }
 
 .profile-banner {

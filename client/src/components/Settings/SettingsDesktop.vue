@@ -11,7 +11,7 @@
                             <circle cx="10" cy="10" r="7" />
                             <line x1="21" y1="21" x2="15" y2="15" />
                         </svg>
-                        <input type="text" name="search" id="setting_search" placeholder="Search a setting...">    
+                        <input type="text" name="search" id="setting_search" placeholder="Search a setting...">
                     </CustomInput>
                     <li class="settings_list_item" v-for="(option, index) in Object.keys(settings)" :key="index">
                         <!-- todo: pull icons from a template like for the Settings -->
@@ -47,8 +47,8 @@ export default {
         };
     },
     components: {
-        CustomInput
-    }
+        CustomInput,
+    },
 };
 </script>
 
@@ -99,9 +99,6 @@ export default {
     font-weight: bold;
 }
 
-.search-bar::placeholder {
-    color: #bcbcbc;
-}
 .option_icon_container {
     padding-top: 10px;
     padding-bottom: 10px;
