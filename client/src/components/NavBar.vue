@@ -273,7 +273,7 @@ body {
     .menu-container {
         flex-direction: column;
         align-items: flex-end;
-        background-color: var(--primary-color);
+        background-color: var(--main-color);
     }
     .menu-logo {
         position: absolute;
