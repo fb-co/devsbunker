@@ -84,12 +84,12 @@ try {
 
 export default {
     props: {
-        min_width: String
+        min_width: String,
     },
     computed: {
         style() {
             return "min-width: " + this.min_width;
-        }
+        },
     },
     data() {
         return {
@@ -273,6 +273,7 @@ body {
     .menu-container {
         flex-direction: column;
         align-items: flex-end;
+        background-color: var(--primary-color);
     }
     .menu-logo {
         position: absolute;
