@@ -38,6 +38,8 @@ export default {};
 
     margin-top: 25px;
     margin-bottom: 25px;
+
+    color: var(--main-font-color);
 }
 
 .search-bar::placeholder {

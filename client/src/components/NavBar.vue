@@ -7,7 +7,7 @@
         <span></span>
 
         <!-- logo -->
-        <router-link to="/" class="menu-logo" style="background-color: var(--secondary-color);">
+        <router-link to="/" class="menu-logo">
             <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
             <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" />
         </router-link>
@@ -152,6 +152,7 @@ body {
     line-height: 0;
     margin-left: 25px;
     z-index: 1;
+    background-color: var(--secondary-color);
 }
 .menu-logo img {
     max-height: 40px;
@@ -280,6 +281,7 @@ body {
         left: 0;
         top: 50%;
         transform: translateY(-50%);
+        background-color: var(--main-color);
     }
     .menu-logo img {
         max-height: 30px;

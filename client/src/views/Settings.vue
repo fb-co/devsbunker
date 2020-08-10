@@ -47,7 +47,7 @@ export default {
                 window.innerWidth || 0
             );
 
-            if (screenWidth <= 760) {
+            if (screenWidth <= 950) {
                 return true;
             } else {
                 return false;

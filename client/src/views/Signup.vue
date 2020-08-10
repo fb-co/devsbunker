@@ -247,6 +247,7 @@ input::placeholder {
 .form_field {
     width: 75%;
     padding-top: 12px;
+    
 }
 .form_field::-webkit-input-placeholder {
     opacity: 0.5;
@@ -369,26 +370,20 @@ input[type="submit"]:hover {
     font-weight: 100;
     color: var(--soft-text);
 }
-
 @media only screen and (max-width: 800px) {
     .signupForm {
         width: 60%;
     }
 }
-@media only screen and (max-height: 900px) {
-    input {
-        background: var(--main-color);
-    }
-}
+
 @media only screen and (max-width: 530px) {
     .signupForm {
         top: 80px;
         width: 100%;
         background: var(--main-color);
     }
-
     input {
-        background: var(--main-color);
+        background-color: var(--main-color);
     }
 }
 @media only screen and (max-width: 305px) {

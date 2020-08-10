@@ -4,7 +4,22 @@
             <div class="settings_list">
                 <ul>
                     <li class="list_title">Settings</li>
+                    <!--
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <circle cx="10" cy="10" r="7" />
+                        <line x1="21" y1="21" x2="15" y2="15" />
+                    </svg>
                     <input type="text" name="search" class="search-bar" placeholder="Search a setting...">
+                    -->
+                    <CustomInput>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <circle cx="10" cy="10" r="7" />
+                            <line x1="21" y1="21" x2="15" y2="15" />
+                        </svg>
+                        <input type="text" name="search" id="setting_search" placeholder="Search a setting...">    
+                    </CustomInput>
                     <li class="settings_list_item" v-for="(option, index) in Object.keys(settings)" :key="index">
                         <!-- todo: pull icons from a template like for the Settings -->
                         <div class="option_icon_container">
@@ -30,6 +45,7 @@
 
 <script>
 import Settings from "../../templates/Settings";
+import CustomInput from "@/components/CustomInput";
 
 export default {
     data() {
@@ -37,6 +53,9 @@ export default {
             settings: Settings,
         };
     },
+    components: {
+        CustomInput
+    }
 };
 </script>
 
@@ -70,6 +89,7 @@ export default {
     min-width: 500px;
     margin: 50px;
     height: 500px;
+    border-radius: 7px;
 }
 .settings_list_item {
     border-left: 2px solid transparent;
@@ -83,19 +103,6 @@ export default {
     border-left: 2px solid var(--accent);
     cursor: pointer;
     font-weight: bold;
-}
-
-.search-bar {
-    width: 100%;
-    height: 27px;
-
-    padding: 10px;
-
-    background: var(--secondary-color);
-    border: none;
-    border-radius: 5px;
-
-    margin-bottom: 25px;
 }
 
 .search-bar::placeholder {
