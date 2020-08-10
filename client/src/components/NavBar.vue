@@ -1,5 +1,5 @@
 <template>
-    <nav class="menu-container">
+    <nav class="menu-container" :style="style">
         <!-- burger menu -->
         <input type="checkbox" aria-label="Toggle menu" />
         <span></span>
@@ -83,6 +83,14 @@ try {
 }
 
 export default {
+    props: {
+        min_width: String
+    },
+    computed: {
+        style() {
+            return "min-width: " + this.min_width;
+        }
+    },
     data() {
         return {
             isLoggedIn: auth,

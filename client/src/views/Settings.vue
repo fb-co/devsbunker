@@ -38,7 +38,8 @@ export default {
     },
     methods: {
         isMobile() {
-            if (screen.width <= 760) {
+            if (screen.width <= 950) {
+                console.log("WHYY");
                 return true;
             } else {
                 return false;

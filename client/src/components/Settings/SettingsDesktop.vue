@@ -17,9 +17,12 @@
 
                         <p class="option_text">{{ option }}</p>
 
-                        <p class="option-arrow option_text">></p>
+                        <p class="option-arrow option_text" style="font-weight: bold;">></p>
                     </li>
                 </ul>
+            </div>
+            <div class="settings_selection">
+
             </div>
         </div>
     </div>
@@ -60,6 +63,13 @@ export default {
 }
 .settings_list {
     margin: 50px;
+}
+.settings_selection {
+    background-color: var(--secondary-color);
+    flex-grow: 1;
+    min-width: 500px;
+    margin: 50px;
+    height: 500px;
 }
 .settings_list_item {
     border-left: 2px solid transparent;
@@ -113,7 +123,12 @@ export default {
 
 /* Media Queries */
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 1100px) {
+    .pageSubcontainer {
+        width: 90%;
+    }
+}
+@media only screen and (max-width: 1000px) {
     .pageSubcontainer {
         width: 100%;
     }

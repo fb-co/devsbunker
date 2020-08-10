@@ -8,8 +8,8 @@
     subnodes (sub options).
 */
 const Settings = {
-    'Appearance': ['Theme'],
     'Account': ['Activity', 'Switch to premium account'],
+    'Appearance': ['Theme'],
     'Privacy': ['Show followers'],
     'About': ['Version'],
 }
