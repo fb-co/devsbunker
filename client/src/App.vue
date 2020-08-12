@@ -62,6 +62,12 @@ body {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+.relative_vertical_center {
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
 .mainHeader {
     font-size: 2rem;
 }

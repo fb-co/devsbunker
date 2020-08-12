@@ -1,26 +1,19 @@
 <template>
-    <div id="component_container" :style="cssProps"> 
-        <div id = "dropdown_btn">
-            <p v-if="label!=''" id="main_label">{{ label }}
-                <svg class="inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
-                </svg>
-            </p>
-            <div v-if="imageSrc!=''" style="height: var(--height);">
-                <div id="image_container">
-                    <img :src="imageSrc" style="width: 50px;">
-                    <svg class="vertical_center" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
-                    </svg>
-                </div>
+    <div id="component_container" :style='cssProps'> 
+        <div class='button_container'>
+            <div>
+                <p class='relative_vertical_center main_label'>{{ label }}</p>
             </div>
-            <div id="links_container">
-                <ul id="main_list">
-                    <li v-for="link in links" :key="link.destination"> <!-- Not really sure what the :key part is -->
-                        <router-link :to="link.destination" class="list_item">{{ link.text }}</router-link>
-                    </li>
-                </ul>
-            </div>
+            <svg class="inline-icon-spacer relative_vertical_center" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
+            </svg>
+        </div>
+        <div class='dropdown_container'>
+            <ul class='main_list'>
+                <slot>
+
+                </slot>
+            </ul>    
         </div>
     </div>    
 </template>
@@ -29,18 +22,15 @@
 export default {
     props: {
         label: String, // label to be shown
-        imageSrc: String, // src of image, set to empty string if not using image (label should be empty string otherwise because it will override the image)
-        height: String, // I really want to find a way to calculate this within the component, but I cant figure it out (height of menu in px)
-        spacing: String, // spacing in between the links
-        linkFontSize: String, // in pixels decides size of text
-        labelFontSize: String, // size in pixels of the label
-        links: Array // all the links in the dropdown
+        spacing: {     // amount of space between links
+            type: String,
+            default: '10px'
+        }
     },
     computed: {
         cssProps() {
             return {
-                '--height': this.height,
-                '--custom-spacing': this.spacing
+                '--link-spacing': this.spacing
             }
         }
     }
@@ -48,46 +38,47 @@ export default {
 </script>
 
 <style scoped>
-    /* Ids */
-    #main_label {
-        line-height: var(--height);
+    .button_container:hover > div > .main_label {
+        font-weight: bold;    
     }
-    #main_label:hover {
-        font-weight: bold;
-        cursor: pointer;
+    .button_container:hover + .dropdown_container {
+        display: flex;
     }
-    #links_container {
-        display: none;
-        background-color: var(--secondary-color);
-    }
-    #main_list {
-        list-style: none;
-        line-height: var(--custom-spacing);
+    .dropdown_container:hover {
+        display: flex;
     }
 
-    /* image stuff */
-    #image_container {
-        position: relative;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    /* Classes */
-
-    .list_item {
-        display: inline-block;
-        text-decoration: none;
-        color: var(--main-font-color);
+    .button_container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
         width: 100%;
         height: 100%;
     }
-    .list_item:hover {
-        font-weight: bold;
+    .dropdown_container {
+        display: none;
+        flex-direction: row;
+        justify-content: center;
+        background-color: var(--secondary-color);
+        width: 100%;
     }
-
-    /* Functionality */
-    #dropdown_btn:hover > div {
-        cursor: pointer;
-        display: block;    
+    .main_list {
+        display: block;
+        flex-direction: column;
+        list-style: none;
+        width: 100%;
+        height: 100%;
     }
+    .main_list li {
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: var(--link-spacing);
+    }
+    .main_list li a {
+        display: inline-block;
+        text-decoration: none;
+        width: 100%;
+    }
+    
 </style>

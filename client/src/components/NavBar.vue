@@ -57,7 +57,17 @@
                 </li>
 
                 <li class="nav_item nav_item_text">
-                    <Dropdown label="More" imageSrc="" height="80px" spacing="50px" linkFontSize="18px" labelFontSize="18px" :links="[{text: 'About', destination: 'about'}, {text: 'Market', destination: '/'}, {text: 'Settings', destination: 'settings'}]"></Dropdown>
+                    <Dropdown label="More" class='main_dropdown'>
+                        <li>
+                            <router-link to='/market'>Market</router-link>
+                        </li>
+                        <li>
+                            <router-link to='/about'>About</router-link>
+                        </li>
+                        <li>
+                            <router-link to='/settings'>Settings</router-link>
+                        </li>
+                    </Dropdown>
                 </li>
             </ul>
         </div>
@@ -249,12 +259,15 @@ body {
 .nav_item_text {
     width: 150px;
 }
-.nav_item_text a {
+.nav_item_text > a {
     display: inline-block;
     width: 100%;
     height: 100%;
     text-decoration: none;
     line-height: var(--header-height);
+}
+.main_dropdown {
+    height: 100%;
 }
 
 /* profile picture */
@@ -335,7 +348,7 @@ body {
         padding: 0;
         display: flex;
     }
-    .menu li {
+    .nav_item {
         font-size: 18px;
         margin: -20px 0px -20px 0px;
     }
