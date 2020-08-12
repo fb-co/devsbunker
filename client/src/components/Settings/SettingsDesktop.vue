@@ -30,7 +30,7 @@
                 </ul>
             </div>
             <div class="settings_selection">
-
+                
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@ import CustomInput from "@/components/CustomInput";
 export default {
     data() {
         return {
-            settings: Settings,
+            settings: Settings
         };
     },
     components: {

@@ -35,7 +35,7 @@ const routes = [{
     component: () => import('../views/About.vue')
   },
   {
-    path: '/settings',
+    path: '/settings/:section',
     name: 'Settings',
     component: () => import('../views/Settings.vue')
   },

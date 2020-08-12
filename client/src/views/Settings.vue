@@ -15,6 +15,10 @@ import SharedMethods from "../utils/shared";
 
 export default {
     created() {
+        const section = this.$route.params.section;
+        console.log(section);
+
+
         SharedMethods.loadPage();
 
         this.desktop = !this.isMobile();
@@ -34,7 +38,7 @@ export default {
     components: {
         NavBar,
         SettingsDesktop,
-        SettingsMobile,
+        SettingsMobile
     },
     methods: {
         isMobile() {

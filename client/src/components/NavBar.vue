@@ -65,7 +65,7 @@
                             <router-link to='/about'>About</router-link>
                         </li>
                         <li>
-                            <router-link to='/settings'>Settings</router-link>
+                            <router-link to='/settings/account'>Settings</router-link>
                         </li>
                     </Dropdown>
                 </li>
