@@ -23,18 +23,18 @@
                             </svg>
                         </div>
 
-                        <p class="option_text">{{ option }}</p>
+                        <p class="option_text" @click="setActive(option)" :class="{active: isActive(option)}">{{ option }}</p>
 
                         <p class="option-arrow option_text" style="font-weight: bold;">></p>
                     </li>
                 </ul>
             </div>
+
+            <!-- this is (imo) cleaner than hard coding options conditionally-->
             <div class="settings_selection">
-                <Account v-if="current_setting==='account'" />
-                <Appearance v-if="current_setting==='appearance'" />
-                <Privacy v-if="current_setting==='privacy'" />
-                <About v-if="current_setting==='about'" />
+                <component :is="current_setting"></component>
             </div>
+
         </div>
     </div>
 </template>
@@ -42,6 +42,8 @@
 <script>
 import Settings from "../../templates/Settings";
 import CustomInput from "@/components/CustomInput";
+
+// i hope this can be done in a loop
 import Account from "./Account";
 import Appearance from "./Appearance";
 import Privacy from "./Privacy";
@@ -51,7 +53,8 @@ export default {
     data() {
         return {
             settings: Settings,
-            current_setting: this.$route.params.section
+            current_setting: this.$route.params.section, // we need a way to modify the url based on this
+            prevSetting: "",
         };
     },
     components: {
@@ -59,7 +62,21 @@ export default {
         Account,
         Appearance,
         Privacy,
-        About
+        About,
+    },
+
+    methods: {
+        // this method is fired on a click event assigned to every option in the for loop
+        setActive(option) {
+            this.prevSetting = this.current_setting; // we can keep track of the prev selected element like this
+            this.current_setting = option.toLowerCase();
+        },
+
+        // this methods checks dynamically if an elemenent in the list of options is also the active one
+        // if so, it toggles the active class
+        isActive(option) {
+            return this.current_setting === option.toLowerCase();
+        },
     },
 };
 </script>
@@ -142,5 +159,10 @@ export default {
     .pageSubcontainer {
         width: 100%;
     }
+}
+
+/* new */
+.active {
+    font-weight: bold;
 }
 </style>
