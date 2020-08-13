@@ -1,8 +1,13 @@
 <template>
     <div id='section'>
         <div class='setting_labels'>
-            <div class='horizontal_center'>
-                <Dropdown label="Light" spacing='10px' class='theme_dropdown'>
+            <div class='setting_container'>
+                <p class='setting_label'>Theme</p>
+            </div>
+        </div>
+        <div class='settings_cont'>
+            <div class='setting_container'>
+                <Dropdown label="Light" spacing='10px' class='theme_dropdown setting_cont'>
                     <li>
                         <button>Dark</button>
                     </li> 
@@ -11,9 +16,6 @@
                     </li>
                 </Dropdown>
             </div>
-        </div>
-        <div class='setting_cont'>
-            
         </div>
     </div>
 </template>
@@ -30,8 +32,6 @@ export default {
     @import '../stylesheets/settings.css'; /* Import the Settings Component Style-sheet */
 
     .theme_dropdown {
-        margin: 20px;
-        font-weight: bold;
         width: 100px;
         height: 50px;
     }
