@@ -3,7 +3,6 @@
         <NavBar />
         <SettingsDesktop v-if="desktop" />
         <SettingsMobile v-else />
-        <Account />
     </div>
 </template>
 
@@ -18,7 +17,6 @@ export default {
     created() {
         const section = this.$route.params.section;
         console.log(section);
-
 
         SharedMethods.loadPage();
 
@@ -39,7 +37,7 @@ export default {
     components: {
         NavBar,
         SettingsDesktop,
-        SettingsMobile
+        SettingsMobile,
     },
     methods: {
         isMobile() {
