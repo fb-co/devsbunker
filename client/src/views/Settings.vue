@@ -3,6 +3,7 @@
         <NavBar />
         <SettingsDesktop v-if="desktop" />
         <SettingsMobile v-else />
+        <Account />
     </div>
 </template>
 

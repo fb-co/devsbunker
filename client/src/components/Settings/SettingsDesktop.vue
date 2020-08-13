@@ -30,7 +30,10 @@
                 </ul>
             </div>
             <div class="settings_selection">
-                
+                <Account v-if="current_setting==='account'" />
+                <Appearance v-if="current_setting==='appearance'" />
+                <Privacy v-if="current_setting==='privacy'" />
+                <About v-if="current_setting==='about'" />
             </div>
         </div>
     </div>
@@ -39,15 +42,24 @@
 <script>
 import Settings from "../../templates/Settings";
 import CustomInput from "@/components/CustomInput";
+import Account from "./Account";
+import Appearance from "./Appearance";
+import Privacy from "./Privacy";
+import About from "./About";
 
 export default {
     data() {
         return {
-            settings: Settings
+            settings: Settings,
+            current_setting: this.$route.params.section
         };
     },
     components: {
         CustomInput,
+        Account,
+        Appearance,
+        Privacy,
+        About
     },
 };
 </script>
