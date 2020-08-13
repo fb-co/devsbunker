@@ -10,10 +10,22 @@
     flex-direction: column;
     width: 50%;
 }
-.setting_cont {
+.setting_label {
+    margin: 0 auto;
+    font-weight: bold;
+}
+.settings_cont {
     width: 50%;
 }
-.settingItem {
+.setting_cont {
     margin: 0 auto;
 }
+.setting_container {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 
