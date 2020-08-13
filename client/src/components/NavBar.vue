@@ -77,7 +77,7 @@
 <script>
 import EventBus from "../utils/EventBus";
 import SharedMethods from "../utils/shared";
-import GlobalComponents from "./global/GlobalComponents.js";
+import GlobalComponents from "@/components/global/GlobalComponents.js";
 
 // pro hacker move here (had to replace = cuz stoopid default base64 function)
 

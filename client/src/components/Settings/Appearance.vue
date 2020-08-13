@@ -27,23 +27,7 @@ export default {
 }
 </script>
 <style scoped>
-    #section {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height: 100%;
-    }
-    .setting_labels {
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-    }
-    .setting_cont {
-        width: 50%;
-    }
-    .settingItem {
-        margin: 0 auto;
-    }
+    @import '../stylesheets/settings.css'; /* Import the Settings Component Style-sheet */
 
     .theme_dropdown {
         margin: 20px;

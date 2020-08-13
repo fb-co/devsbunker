@@ -13,7 +13,7 @@
                         </svg>
                         <input type="text" name="search" id="setting_search" placeholder="Search a setting...">
                     </CustomInput>
-                    <li class="settings_list_item" v-for="(option, index) in Object.keys(settings)" :key="index">
+                    <li class="settings_list_item" v-for="(option, index) in Object.keys(settings)" :key="index" @click="setActive(option)">
                         <!-- todo: pull icons from a template like for the Settings -->
                         <div class="option_icon_container">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user option-icon" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -23,7 +23,7 @@
                             </svg>
                         </div>
 
-                        <p class="option_text" @click="setActive(option)" :class="{active: isActive(option)}">{{ option }}</p>
+                        <p class="option_text" :class="{active: isActive(option)}">{{ option }}</p>
 
                         <p class="option-arrow option_text" style="font-weight: bold;">></p>
                     </li>
@@ -41,13 +41,8 @@
 
 <script>
 import Settings from "../../templates/Settings";
-import CustomInput from "@/components/CustomInput";
-
-// i hope this can be done in a loop  res-> Yea me too, also find out a way to import it on both desktop and mobile without having to re loop
-import Account from "./Account";
-import Appearance from "./Appearance";
-import Privacy from "./Privacy";
-import About from "./About";
+import GlobalComponents from "@/components/global/GlobalComponents.js";
+import SettingsComponents from "@/components/Settings/ImportSettings.js"; /* Import the different components for the settings tabs */
 
 export default {
     data() {
@@ -58,11 +53,8 @@ export default {
         };
     },
     components: {
-        CustomInput,
-        Account,
-        Appearance,
-        Privacy,
-        About,
+        ...GlobalComponents,
+        ...SettingsComponents
     },
 
     methods: {

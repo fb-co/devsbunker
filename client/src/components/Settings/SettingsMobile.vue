@@ -22,11 +22,13 @@
 </template>
 
 <script>
-import CustomInput from "@/components/CustomInput";
+import GlobalComponents from "@/components/global/GlobalComponents.js";
+import SettingsComponents from "@/components/Settings/ImportSettings"; /* Import the different components for the settings tabs */
 
 export default {
     components: {
-        CustomInput,
+        ...GlobalComponents,
+        ...SettingsComponents
     },
 };
 </script>
