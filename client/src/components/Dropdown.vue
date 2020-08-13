@@ -40,6 +40,7 @@ export default {
 <style scoped>
     .button_container:hover > div > .main_label {
         font-weight: bold;    
+        cursor: pointer;
     }
     .button_container:hover + .dropdown_container {
         display: flex;
@@ -73,12 +74,28 @@ export default {
         display: inline-block;
         width: 100%;
         box-sizing: border-box;
-        padding: var(--link-spacing);
     }
     .main_list li a {
         display: inline-block;
         text-decoration: none;
         width: 100%;
+        padding: var(--link-spacing);
     }
-    
+    .main_list li a:hover {
+        cursor: pointer;
+    }
+    .main_list li button {
+        display: inline-block;
+        text-decoration: none;
+        width: 100%;
+        border: none;
+        padding: var(--link-spacing);
+    }
+    .main_list li button:focus {
+        outline: none;
+    }
+    .main_list li button:hover {
+        cursor: pointer;
+        font-weight: bold;
+    }
 </style>

@@ -53,8 +53,7 @@ body {
 
 /* Class Styles */
 .horizontal_center {
-    width: 100%;
-    text-align: center;
+    margin: 0 auto;
 }
 .vertical_center {
     position: absolute;
