@@ -18,11 +18,11 @@
     </div>
 </template>
 <script>
-import Dropdown from "../Dropdown";
+import GlobalComponents from "@/components/global/GlobalComponents.js";
 
 export default {
     components: {
-        Dropdown
+        ...GlobalComponents
     }
 }
 </script>

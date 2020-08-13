@@ -77,7 +77,7 @@
 <script>
 import EventBus from "../utils/EventBus";
 import SharedMethods from "../utils/shared";
-import Dropdown from "./Dropdown";
+import GlobalComponents from "./global/GlobalComponents.js";
 
 // pro hacker move here (had to replace = cuz stoopid default base64 function)
 
@@ -107,7 +107,7 @@ export default {
         };
     },
     components: {
-        Dropdown,
+        ...GlobalComponents,
     },
     beforeCreate() {
         SharedMethods.setLoginStateCookie();

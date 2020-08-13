@@ -1,5 +1,5 @@
-import Test from "./Test.vue";
+import Dropdown from "./Dropdown.vue";
 
 export default {
-    Test
+    Dropdown
 };

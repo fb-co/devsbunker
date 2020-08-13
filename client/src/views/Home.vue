@@ -1,8 +1,6 @@
 <template>
     <div class="home">
         <NavBar />
-        <!-- this is the global component extracted with the ... operator -->
-        <Test />
 
         <div v-on:click="switchTheme()" id="theme-switcher-container">
             <svg v-if="darkTheme" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun theme-switcher-icon" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -23,7 +21,6 @@ import NavBar from "@/components/NavBar";
 import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
 
-import GlobalComponents from "@/components/global/GlobalComponents.js";
 
 export default {
     created() {
@@ -32,7 +29,6 @@ export default {
     mixins: [GeneralProperties],
     components: {
         NavBar,
-        ...GlobalComponents,
     },
     methods: {
         switchTheme() {
