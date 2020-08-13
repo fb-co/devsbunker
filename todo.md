@@ -24,6 +24,8 @@ Frontend
 - [x] use .env
 - [ ] fix mobile view scrolling bug
 - [x] add delay between form submission and server response (like a loading gif) to slow down potentials brute force attacks to the login and signup page 
+- [ ] error handling for the settings: if we pass a non valid setting like /settings/test it still displays stuff and not a 404
+- [ ] change url dynamically based on selected setting option
 
 Glitches
 
