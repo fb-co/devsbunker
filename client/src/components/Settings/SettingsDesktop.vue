@@ -43,7 +43,7 @@
 import Settings from "../../templates/Settings";
 import CustomInput from "@/components/CustomInput";
 
-// i hope this can be done in a loop
+// i hope this can be done in a loop  res-> Yea me too, also find out a way to import it on both desktop and mobile without having to re loop
 import Account from "./Account";
 import Appearance from "./Appearance";
 import Privacy from "./Privacy";
@@ -70,6 +70,7 @@ export default {
         setActive(option) {
             this.prevSetting = this.current_setting; // we can keep track of the prev selected element like this
             this.current_setting = option.toLowerCase();
+            this.$router.push('/settings/' + option.toLowerCase());
         },
 
         // this methods checks dynamically if an elemenent in the list of options is also the active one
