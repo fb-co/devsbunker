@@ -40,18 +40,19 @@
                 <router-link to="/signup" class='burger_link'>Sign-up</router-link>
             </div>
             <div class="burger_menu_container">
-                <div class='burger_menu_subcontainer' id='burger_menu_icon' @click="toggleBurgerMenu()">
+                <div class='burger_menu_subcontainer' id='burger_menu_icon'>
+                    <input type="checkbox" aria-label="Toggle menu" id='burger_menu_checkbox' />
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
-            </div>
-        </div>
 
-        <div class='burger_menu_cont' id='main_burger_menu'>
-            <div class='burger_cont_links'>
-                <router-link to='/about'>About</router-link>
-                <router-link to='/settings'>Settings</router-link>
+                    <div class='burger_menu_cont' id='main_burger_menu'>
+                        <div class='burger_cont_links'>
+                            <router-link to='/about'>About</router-link>
+                            <router-link to='/settings'>Settings</router-link>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -105,21 +106,6 @@ export default {
                 auth = false;
             }
         });
-    },
-    methods: {
-        toggleBurgerMenu() {
-            //set the display on the burger menu
-            this.burgerMenuOpen = !this.burgerMenuOpen;
-            document.getElementById('main_burger_menu').style.display = this.burgerMenuOpen ? "block" : "none";
-            
-            //change color of the burger menu icon
-            const burgerIconSpans = document.getElementsByTagName('SPAN');
-            const burgerIconColor =  this.burgerMenuOpen ? "var(--secondary-color)" : "var(--main-font-color)";
-
-            for(let i = 0; i < burgerIconSpans.length; i++) {
-                burgerIconSpans[i].style.background = burgerIconColor;
-            }
-        }
     }
 };
 </script>
@@ -222,6 +208,17 @@ body {
     height: 100%;
     margin-right: 20px;
 }
+.burger_menu_container input {
+    display: block;
+    width: 35px;
+    height: 25px;
+    margin: 0;
+    position: absolute;
+    cursor: pointer;
+    opacity: 0; /* hide this */
+    z-index: 2; /* and place it over the hamburger */
+    -webkit-touch-callout: none;
+}
 .burger_menu_subcontainer {
     width: 33px;
     display: inline-block;
@@ -238,6 +235,9 @@ body {
     margin-bottom: 5px;
     border-radius: 3px;
     background: var(--main-font-color);
+    transform-origin: 4px 0px;
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+        background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
 }
 
 /* Open burger menu */
@@ -252,7 +252,10 @@ body {
     height: 100vh;
     width: 300px;
     background-color: var(--main-font-color);
-    z-index: 1;
+    z-index: -1;
+}
+.burger_menu_cont:hover {
+    cursor: default;
 }
 .burger_cont_links {
     margin-top: var(--header-height);
@@ -265,6 +268,7 @@ body {
     flex-direction: column;
     justify-content: center;
     text-decoration: none;
+    font-weight: bold;
     color: var(--secondary-color);
     width: 100%;
     height: 75px;
@@ -273,6 +277,33 @@ body {
     background-color: var(--accent);
 }
 
+
+/* Burger Menu functionality */
+.burger_menu_subcontainer span:first-child {
+    transform-origin: 0% 0%;
+}
+.burger_menu_subcontainer span:nth-child(3) {
+    transform-origin: 0% 100%;
+}
+.burger_menu_subcontainer input:checked ~ span {
+    opacity: 1;
+    transform: rotate(45deg) translate(3px, -1px);
+    background: var(--secondary-color);
+}
+.burger_menu_subcontainer input:checked ~ span:nth-child(4) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+}
+.burger_menu_subcontainer input:checked ~ span:nth-child(3) {
+    transform: rotate(-45deg) translate(-5px, 11px);
+}
+
+.burger_menu_subcontainer input:checked ~ .burger_menu_cont {
+    display: block;   
+}
+.burger_menu_subcontainer input:not(:checked) ~ .burger_menu_cont {
+    display: none;
+}
 
 /* MEDIA QUERIES */
 
