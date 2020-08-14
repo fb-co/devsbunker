@@ -22,5 +22,5 @@ export default {
 };
 </script>
 <style scoped>
-@import "../stylesheets/settings.css"; /* Import the Settings Component Style-sheet */
+@import "../../stylesheets/settings.css"; /* Import the Settings Component Style-sheet */
 </style>

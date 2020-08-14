@@ -42,7 +42,7 @@
 <script>
 import Settings from "../../templates/Settings";
 import GlobalComponents from "@/components/global/GlobalComponents.js";
-import SettingsComponents from "@/components/Settings/ImportSettings.js"; /* Import the different components for the settings tabs */
+import SettingsComponents from "@/components/Settings/desktop/desktop.import.settings.js"; /* Import the different components for the settings tabs */
 
 export default {
     data() {
@@ -54,7 +54,7 @@ export default {
     },
     components: {
         ...GlobalComponents,
-        ...SettingsComponents
+        ...SettingsComponents,
     },
 
     methods: {
@@ -62,7 +62,7 @@ export default {
         setActive(option) {
             this.prevSetting = this.current_setting; // we can keep track of the prev selected element like this
             this.current_setting = option.toLowerCase();
-            this.$router.push('/settings/' + option.toLowerCase());
+            this.$router.push("/settings/" + option.toLowerCase());
         },
 
         // this methods checks dynamically if an elemenent in the list of options is also the active one
