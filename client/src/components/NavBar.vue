@@ -36,8 +36,8 @@
                 </router-link>
             </div>
             <div class='burger_nav_links'>
-                <router-link to="/login" class='burger_link'>Login</router-link>
-                <router-link to="/signup" class='burger_link'>Sign-up</router-link>
+                <router-link to="/login" class='burger_link desktop_only'>Login</router-link>
+                <router-link to="/signup" class='burger_link desktop_only'>Sign-up</router-link>
             </div>
             <div class="burger_menu_container">
                 <div class='burger_menu_subcontainer' id='burger_menu_icon'>
@@ -48,8 +48,11 @@
 
                     <div class='burger_menu_cont' id='main_burger_menu'>
                         <div class='burger_cont_links'>
+                            <router-link to='/market'>Market</router-link>
                             <router-link to='/about'>About</router-link>
-                            <router-link to='/settings'>Settings</router-link>
+                            <router-link to='/settings/account'>Settings</router-link>
+                            <router-link to="/login" class='mobile_only'>Login</router-link>
+                            <router-link to="/signup" class='mobile_only'>Sign-up</router-link>
                         </div>
                     </div>
                 </div>
@@ -125,6 +128,10 @@ body {
     font-family: Sans-Serif;
 }
 
+.burger_cont_links > .router-link-active  {
+    font-weight: bold;
+    background-color: var(--accent);
+}
 .menu_container {
     display: flex;
     flex-direction: row;
@@ -305,14 +312,22 @@ body {
     display: none;
 }
 
+
 /* MEDIA QUERIES */
 
 /* mobile styles */
 @media only screen and (max-width: 767px) {
-    
+    .menu_container {
+        background-color: var(--main-color);
+    }
+    .desktop_only {
+        display: none;
+    }
 }
 /* desktop styles */
 @media only screen and (min-width: 767px) {
-    
+    .mobile_only {
+        display: none !important;
+    }
 }
 </style>
