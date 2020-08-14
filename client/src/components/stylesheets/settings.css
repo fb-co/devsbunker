@@ -10,16 +10,21 @@
     flex-direction: column;
     width: 50%;
 }
+
 .setting_label {
     margin: 0 auto;
     font-weight: bold;
+    font-size: 20px;
 }
+
 .settings_cont {
     width: 50%;
 }
+
 .setting_cont {
     margin: 0 auto;
 }
+
 .setting_container {
     width: 100%;
     height: 100px;
@@ -27,5 +32,3 @@
     flex-direction: column;
     justify-content: center;
 }
-
-
