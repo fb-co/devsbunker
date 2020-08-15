@@ -1,3 +1,11 @@
+<template>
+    <div>
+        <slot></slot>
+    </div>
+</template>
+
+
+<style scoped>
 #section {
     display: flex;
     flex-direction: row;
@@ -8,13 +16,16 @@
 .setting_labels {
     display: flex;
     flex-direction: column;
+
     width: 50%;
 }
 
 .setting_label {
-    margin: 0 auto;
-    font-weight: bold;
-    font-size: 20px;
+    margin: 0px;
+    margin-left: 5px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 16px;
 }
 
 .settings_cont {
@@ -27,13 +38,9 @@
 
 .setting_container {
     width: 100%;
-    height: 100px;
+    height: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-
-/* this class can be used in the mobile version */
-.test {
-    background: red;
-}
+</style>

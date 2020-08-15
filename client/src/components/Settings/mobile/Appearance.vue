@@ -1,30 +1,30 @@
 <template>
-    <div id='section'>
-        <div class='setting_labels'>
-            <div class='setting_container'>
-                <p class='setting_label'>Theme</p>
+    <WrapperMobile>
+        <div id='section'>
+            <div class='setting_labels'>
+                <div class='setting_container'>
+                    <p class='setting_label'>Theme</p>
+                </div>
             </div>
-        </div>
-        <!-- applying test class -->
-        <div class='settings_cont test'>
-            <div class='setting_container'>
-                <ThemeSwitcher width="25" height="25" />
+            <div class='settings_cont'>
+                <div class='setting_container'>
+                    <ThemeSwitcher width="25" height="25" />
+                </div>
             </div>
-        </div>
 
-    </div>
+        </div>
+    </WrapperMobile>
 </template>
 
 <script>
-import ThemeSwitcher from "@/components/global/ThemeSwitcher";
+import GlobalComponents from "@/components/global/GlobalComponents.js";
 
 export default {
     components: {
-        ThemeSwitcher,
+        ...GlobalComponents,
     },
 };
 </script>
 
 <style scoped>
-@import "../../stylesheets/mobile.settings.css"; /* Import the Settings Component Style-sheet */
 </style>

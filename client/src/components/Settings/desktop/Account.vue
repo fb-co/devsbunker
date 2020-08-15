@@ -1,17 +1,24 @@
 <template>
-    <div id='section'>
-        <div class='setting_labels'>
+    <WrapperDesktop>
+        <div id='section'>
+            <div class='setting_labels'>
 
-        </div>
-        <div class='setting_cont'>
+            </div>
+            <div class='setting_cont'>
 
+            </div>
         </div>
-    </div>
+    </WrapperDesktop>
 </template>
 <script>
-export default {};
+import GlobalComponents from "@/components/global/GlobalComponents.js";
+
+export default {
+    components: {
+        ...GlobalComponents,
+    },
+};
 </script>
 
 <style scoped>
-@import "../../stylesheets/settings.css"; /* Import the Settings Component Style-sheet */
 </style>

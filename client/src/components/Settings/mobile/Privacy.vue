@@ -1,10 +1,18 @@
 <template>
-    <p>Privacy</p>
+    <WrapperMobile>
+        <p>Privacy</p>
+    </WrapperMobile>
 </template>
 
 <script>
-export default {};
+import GlobalComponents from "@/components/global/GlobalComponents.js";
+
+export default {
+    components: {
+        ...GlobalComponents,
+    },
+};
 </script>
 
-<style>
+<style scoped>
 </style>
