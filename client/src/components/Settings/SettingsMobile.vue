@@ -11,10 +11,10 @@
             <input type="text" name="search" placeholder="Search a setting...">
         </CustomInput>
 
-        <div class="profile-banner">
+        <div v-if="username" class="profile-banner">
             <img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic">
-            <h2 style="text-align: left">Username</h2>
-            <p class="user-mail">user@mail.com</p>
+            <h2 style="text-align: left">{{ username }}</h2>
+            <p class="user-mail">{{ email }}</p>
         </div>
 
         <div class="settings">
@@ -34,6 +34,8 @@ import GlobalComponents from "@/components/global/GlobalComponents.js";
 import MobileSettingsComponents from "@/components/Settings/mobile/mobile.import.settings";
 import Settings from "../../templates/Settings";
 
+import UserService from "@/services/user.service";
+
 export default {
     components: {
         ...GlobalComponents,
@@ -42,7 +44,18 @@ export default {
     data() {
         return {
             settings: Settings,
+            username: "",
+            email: "TODO: provide also the email",
         };
+    },
+
+    created() {
+        UserService.isLoggedIn().then((result) => {
+            console.log(result);
+            if (result.user) {
+                this.username = result.user.username;
+            }
+        });
     },
 };
 </script>
