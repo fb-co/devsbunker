@@ -101,7 +101,7 @@ export default {
 .setting-label {
     text-align: left;
     color: var(--main-font-color);
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
 
     width: 90%;
@@ -112,7 +112,6 @@ export default {
 }
 
 .setting-content {
-    border: 1px solid red;
     width: 85%;
     height: 150px;
     margin: auto;
