@@ -24,20 +24,20 @@
                         <circle cx="12" cy="12" r="9" />
                     </svg>
                 </router-link>
-                <router-link v-if="isLoggedIn" to='/' class='static_link'>
+                <router-link v-if="isLoggedIn" to='/' class='static_link' id='main_bell'>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" />
                         <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                         <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                     </svg>
                 </router-link>
-                <router-link v-if="isLoggedIn" to='/profile' class='static_link profile_pic'>
+                <router-link v-if="isLoggedIn" to='/profile' class='static_link profile_pic' id='main_profile'>
                     <img src="../assets/profilePlaceholder.png" alt="profile_pic" style="width: 50px;">
                 </router-link>
             </div>
             <div class='burger_nav_links'>
-                <router-link to="/login" class='burger_link desktop_only'>Login</router-link>
-                <router-link to="/signup" class='burger_link desktop_only'>Sign-up</router-link>
+                <router-link v-if="!isLoggedIn" to="/login" class='burger_link desktop_only'>Login</router-link>
+                <router-link v-if="!isLoggedIn" to="/signup" class='burger_link desktop_only'>Sign-up</router-link>
             </div>
             <div class="burger_menu_container">
                 <div class='burger_menu_subcontainer' id='burger_menu_icon'>
@@ -50,9 +50,18 @@
                         <div class='burger_cont_links'>
                             <router-link to='/market'>Market</router-link>
                             <router-link to='/about'>About</router-link>
+
+                            <router-link v-if="isLoggedIn" to='/' class='static_link' id='bell_in_burger'>
+                                <p>Notifications</p>
+                            </router-link>
+                            <router-link v-if="isLoggedIn" to='/profile' class='static_link profile_pic' id='profile_in_burger'>
+                                <p>Profile</p>
+                            </router-link>
+
                             <router-link to='/settings/account'>Settings</router-link>
-                            <router-link to="/login" class='mobile_only'>Login</router-link>
-                            <router-link to="/signup" class='mobile_only'>Sign-up</router-link>
+
+                            <router-link v-if="!isLoggedIn" to="/login" class='mobile_only'>Login</router-link>
+                            <router-link v-if="!isLoggedIn" to="/signup" class='mobile_only'>Sign-up</router-link>
                         </div>
                     </div>
                 </div>
@@ -278,7 +287,7 @@ body {
     font-weight: bold;
     color: var(--secondary-color);
     width: 100%;
-    height: 75px;
+    height: 55px;
 }
 .burger_cont_links a:hover {
     background-color: var(--accent);
@@ -312,6 +321,12 @@ body {
     display: none;
 }
 
+#bell_in_burger {
+    display: none;
+}
+#profile_in_burger {
+    display: none;
+}
 
 /* MEDIA QUERIES */
 
@@ -327,7 +342,25 @@ body {
 /* desktop styles */
 @media only screen and (min-width: 767px) {
     .mobile_only {
-        display: none !important;
+        display: none;
     }
 }
+
+/* Extra Media Queries (for fine tuning of screen resizing) */
+@media only screen and (max-width: 500px) {
+    #main_bell {
+        display: none;
+    }
+    #main_profile {
+        display: none;
+    }
+    #bell_in_burger {
+        display: flex;
+    }
+    #profile_in_burger {
+        display: flex;
+    }
+}
+
+
 </style>
