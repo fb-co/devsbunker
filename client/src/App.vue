@@ -61,6 +61,11 @@ body {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+.vertical_flex_center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .relative_vertical_center {
     position: relative;
     top: 50%;
