@@ -9,6 +9,7 @@ Backend
 - [ ] add more informations to the about and home page
 - [x] make Schema for posts
 - [x] make Schema for bunkers
+- [ ] provide the current user email where needed (?)
 
 Frontend
 
