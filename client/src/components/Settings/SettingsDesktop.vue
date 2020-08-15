@@ -118,7 +118,6 @@ export default {
 .settings_list_item:hover {
     border-left: 2px solid var(--accent);
     cursor: pointer;
-    font-weight: bold;
 }
 
 .option_icon_container {
