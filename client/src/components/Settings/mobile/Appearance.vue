@@ -5,7 +5,8 @@
                 <p class='setting_label'>Theme</p>
             </div>
         </div>
-        <div class='settings_cont'>
+        <!-- applying test class -->
+        <div class='settings_cont test'>
             <div class='setting_container'>
                 <ThemeSwitcher width="25" height="25" />
             </div>
