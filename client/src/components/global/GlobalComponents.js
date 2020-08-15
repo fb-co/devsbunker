@@ -1,5 +1,5 @@
 import Dropdown from "./Dropdown.vue";
-import CustomInput from "@/components/CustomInput";
+import CustomInput from "./CustomInput.vue";
 import ThemeSwitcher from './ThemeSwitcher.vue';
 
 export default {
