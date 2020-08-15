@@ -110,6 +110,7 @@ export default {
     margin: 50px;
     height: 500px;
     border-radius: 7px;
+    max-width: 750px;
 }
 .settings_list_item {
     border-left: 2px solid transparent;

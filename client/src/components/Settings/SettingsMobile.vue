@@ -73,6 +73,7 @@ export default {
     margin: 0 auto;
     margin-top: 55px;
     margin-bottom: 55px;
+    max-width: 450px;
 }
 
 .profile-banner {
@@ -96,6 +97,7 @@ export default {
 
 .settings {
     width: 90%;
+    max-width: 450px;
     height: 100%;
 
     margin: auto;
