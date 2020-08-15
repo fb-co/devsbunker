@@ -26,7 +26,7 @@ Frontend
 - [x] add delay between form submission and server response (like a loading gif) to slow down potentials brute force attacks to the login and signup page 
 - [ ] error handling for the settings: if we pass a non valid setting like /settings/test it still displays stuff and not a 404
 - [x] change url dynamically based on selected setting option
-- [ ] The theme changin icon (sun and moon) should be inverted to denote which theme the user is currently using
+- [x] The theme changin icon (sun and moon) should be inverted to denote which theme the user is currently using
 
 Glitches
 
