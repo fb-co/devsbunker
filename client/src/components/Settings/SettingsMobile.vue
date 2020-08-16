@@ -74,6 +74,7 @@ export default {
     margin-top: 55px;
     margin-bottom: 55px;
     max-width: 450px;
+    opacity: 0.7;
 }
 
 .profile-banner {
@@ -119,15 +120,13 @@ export default {
     font-size: 20px;
     font-weight: bold;
 
-    width: 90%;
-    margin: auto;
     padding-top: 20px;
-    padding-left: 10px;
+    padding-left: 30px;
     padding-bottom: 20px;
 }
 
 .setting-content {
-    width: 85%;
+    padding-left: 25px;
     height: 150px;
     margin: auto;
 }

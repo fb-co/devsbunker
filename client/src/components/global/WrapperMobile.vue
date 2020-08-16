@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='no_select'>
         <slot></slot>
     </div>
 </template>
@@ -24,7 +24,7 @@
     margin: 0px;
     margin-left: 5px;
     text-align: left;
-    font-weight: normal;
+    font-weight: 500;
     font-size: 16px;
 }
 

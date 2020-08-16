@@ -4,7 +4,7 @@
     the wrapper as a slot. In this case the settings components such as Account, Privacy etc
 -->
 <template>
-    <div>
+    <div class='no_select'>
         <slot></slot>
     </div>
 </template>
