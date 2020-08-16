@@ -23,16 +23,17 @@ Frontend
 - [x] handle 404 errors
 - [ ] make a post page
 - [x] use .env
-- [ ] fix mobile view scrolling bug
+- [x] fix mobile view scrolling bug
 - [x] add delay between form submission and server response (like a loading gif) to slow down potentials brute force attacks to the login and signup page 
-- [ ] error handling for the settings: if we pass a non valid setting like /settings/test it still displays stuff and not a 404
+- [x] error handling for the settings: if we pass a non valid setting like /settings/test it still displays stuff and not a 404
 - [x] change url dynamically based on selected setting option
 - [x] The theme changin icon (sun and moon) should be inverted to denote which theme the user is currently using
 
 Glitches
 
+- [ ] Fix browser back arrow button in some pages after 404 
 - [x] Fix Hamburger Menu
-- [ ] Random scroll space on bottom of login/signup cards on mobile
+- [x] Random scroll space on bottom of login/signup cards on mobile
 - [x] Cant scroll to the top when resizing vertically
 - [x] if page gets refreshed the theme switches back to Dark
 - [x] Both password field and confirm password field both have id of 'password'
