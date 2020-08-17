@@ -4,7 +4,7 @@
             <div class='setting_labels'>
 
                 <!-- applying the test class which is inside the Wrapper -->
-                <div class='setting_container test'>
+                <div class='setting_container'>
                     <p class='setting_label'>Theme</p>
                 </div>
             </div>

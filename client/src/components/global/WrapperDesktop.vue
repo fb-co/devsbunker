@@ -46,9 +46,4 @@
     flex-direction: column;
     justify-content: center;
 }
-
-/* this class can be used in the mobile version */
-.test {
-    background: red;
-}
 </style>
