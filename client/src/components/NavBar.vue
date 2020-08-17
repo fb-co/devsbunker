@@ -1,5 +1,5 @@
 <template>
-    <div class="menu_container no_select" :style="style">
+    <div class="menu_container" :style="style">
         <div class='logo_container'>
             <router-link to="/" class="menu_logo">
                 <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->

@@ -86,6 +86,9 @@ export default {
     .main_input:focus {
         outline: none;
     }
+    #search_icon:hover {
+        cursor: pointer;
+    }
     #search_input {
         font-family: "rubik";
     }
