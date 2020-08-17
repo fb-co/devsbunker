@@ -1,5 +1,5 @@
 <template>
-    <div class="menu_container" :style="style">
+    <div class="menu_container no_select" :style="style">
         <div class='logo_container'>
             <router-link to="/" class="menu_logo">
                 <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
@@ -10,6 +10,10 @@
         <!-- Static menu items (dont go into burger menu) -->
         <div class='nav_links_container'>
             <div class='static_nav_links'>
+                <NavBarSearch>
+
+                </NavBarSearch>
+                <!--
                 <router-link to='/' class='static_link'>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" />
@@ -17,6 +21,7 @@
                         <line x1="21" y1="21" x2="15" y2="15" />
                     </svg>
                 </router-link>
+                -->
                 <router-link to='/' class='static_link'>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-compass" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" />
@@ -75,6 +80,7 @@
 import EventBus from "../utils/EventBus";
 import SharedMethods from "../utils/shared";
 import GlobalComponents from "@/components/global/GlobalComponents.js";
+import NavBarSearch from './NavBarSearch.vue';
 
 // pro hacker move here (had to replace = cuz stoopid default base64 function)
 
@@ -106,6 +112,7 @@ export default {
     },
     components: {
         ...GlobalComponents,
+        NavBarSearch
     },
     beforeCreate() {
         SharedMethods.setLoginStateCookie();
