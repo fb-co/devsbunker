@@ -51,7 +51,7 @@
                     <span></span>
 
                     <div class='burger_menu_cont' id='main_burger_menu'>
-                        <div class='burger_cont_links vertical_center'>
+                        <div class='burger_cont_links'>
 
                             <router-link to='/market'>Market</router-link>
                             <router-link to='/market'>Projects</router-link>
@@ -282,11 +282,10 @@ body {
     cursor: default;
 }
 .burger_cont_links {
-    margin-top: var(--header-height);
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin: 0;
+    margin-top: var(--header-height);
 }
 .burger_cont_links a {
     display: flex;
@@ -295,13 +294,13 @@ body {
     text-decoration: none;
     font-weight: 100;
     font-size: 18px;
-    color: hsla(0, 0%, 100%, 0.5);
+    color: var(--burger-textColor);
     width: 100%;
     height: 55px;
     margin-top: 30px;
 }
 .burger_cont_links a:hover {
-    color: rgb(219, 219, 219);
+    font-weight: bold;
 }
 
 .burger_cont_links input {
@@ -331,7 +330,7 @@ body {
 .burger_menu_subcontainer input:checked ~ span {
     opacity: 1;
     transform: rotate(45deg) translate(3px, -1px);
-    background: #f2f2f2;
+    background: var(--secondary-color);
 }
 .burger_menu_subcontainer input:checked ~ span:nth-child(4) {
     opacity: 0;

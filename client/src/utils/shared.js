@@ -12,7 +12,8 @@ const Themes = {
     selection: '#0D0D0D',
     softText: 'rgba(0, 0, 0, 0.5)',
     settingsMobileCard: '#FFFFFF',
-    burgerMenuBG: '#2a2a2a'
+    burgerMenuBG: '#2a2a2a',
+    burgerTextColor: 'hsla(0, 0%, 100%, 0.5)'
   },
   dark: {
     mainColor: '#171717',
@@ -25,7 +26,8 @@ const Themes = {
     selection: '#f2f2f2',
     softText: 'rgba(242, 242, 242, 0.5)',
     settingsMobileCard: '#2E2E2E',
-    burgerMenuBG: '#2a2a2a'
+    burgerMenuBG: '#ededed',
+    burgerTextColor: 'hsla(0, 0%, 5%, 0.7)'
   },
   getTheme: function (themeString) {
     if (themeString === 'dark-theme') {
@@ -70,6 +72,7 @@ const SharedMethods = {
     document.body.style.setProperty("--soft-text", themeObj.softText);
     document.body.style.setProperty("--settings-mobile-card", themeObj.settingsMobileCard);
     document.body.style.setProperty("--burger-menu-bg", themeObj.burgerMenuBG);
+    document.body.style.setProperty("--burger-textColor", themeObj.burgerTextColor);
   },
   changeTheme: function (theme) {
     localStorage.setItem('theme', theme);
