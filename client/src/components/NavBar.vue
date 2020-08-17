@@ -1,5 +1,5 @@
 <template>
-    <div class="menu_container" :style="style">
+    <div class="menu_container no_select" :style="style">
         <div class='logo_container'>
             <router-link to="/" class="menu_logo">
                 <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
@@ -9,10 +9,9 @@
 
         <!-- Static menu items (dont go into burger menu) -->
         <div class='nav_links_container'>
-            <div class='static_nav_links'>
-                <NavBarSearch>
+            <div class='static_nav_links desktop_only'>
+                <NavBarSearch />
 
-                </NavBarSearch>
                 <!--
                 <router-link to='/' class='static_link'>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -29,14 +28,14 @@
                         <circle cx="12" cy="12" r="9" />
                     </svg>
                 </router-link>
-                <router-link v-if="isLoggedIn" to='/' class='static_link' id='main_bell'>
+                <router-link v-if="isLoggedIn" to='/' class='static_link'>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" />
                         <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                         <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                     </svg>
                 </router-link>
-                <router-link v-if="isLoggedIn" to='/profile' class='static_link profile_pic' id='main_profile'>
+                <router-link v-if="isLoggedIn" to='/profile' class='static_link profile_pic'>
                     <img src="../assets/profilePlaceholder.png" alt="profile_pic" style="width: 50px;">
                 </router-link>
             </div>
@@ -53,20 +52,23 @@
 
                     <div class='burger_menu_cont' id='main_burger_menu'>
                         <div class='burger_cont_links'>
+                            <input placeholder='Search...'>
+                            
                             <router-link to='/market'>Market</router-link>
+                            <router-link to='/market'>Projects</router-link>
                             <router-link to='/about'>About</router-link>
 
-                            <router-link v-if="isLoggedIn" to='/' class='static_link' id='bell_in_burger'>
+                            <router-link v-if="isLoggedIn" to='/' class='static_link'>
                                 <p>Notifications</p>
                             </router-link>
-                            <router-link v-if="isLoggedIn" to='/profile' class='static_link profile_pic' id='profile_in_burger'>
+                            <router-link v-if="isLoggedIn" to='/profile' class='static_link profile_pic'>
                                 <p>Profile</p>
                             </router-link>
 
                             <router-link to='/settings/account'>Settings</router-link>
 
-                            <router-link v-if="!isLoggedIn" to="/login" class='mobile_only'>Login</router-link>
-                            <router-link v-if="!isLoggedIn" to="/signup" class='mobile_only'>Sign-up</router-link>
+                            <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
+                            <router-link v-if="!isLoggedIn" to="/signup">Sign-up</router-link>
                         </div>
                     </div>
                 </div>
@@ -231,7 +233,7 @@ body {
     height: 100%;
     margin-right: 20px;
 }
-.burger_menu_container input {
+#burger_menu_checkbox  {
     display: block;
     width: 35px;
     height: 25px;
@@ -300,6 +302,22 @@ body {
     background-color: var(--accent);
 }
 
+.burger_cont_links input {
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #f2f2f2;
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
+    border: none;
+    border-radius: 4px;
+    padding: 5px;
+    width: 90%;
+    height: 30px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+.burger_cont_links input:focus {
+    outline: none;
+}
 
 /* Burger Menu functionality */
 .burger_menu_subcontainer span:first-child {
@@ -328,12 +346,6 @@ body {
     display: none;
 }
 
-#bell_in_burger {
-    display: none;
-}
-#profile_in_burger {
-    display: none;
-}
 
 /* MEDIA QUERIES */
 
@@ -348,26 +360,7 @@ body {
 }
 /* desktop styles */
 @media only screen and (min-width: 767px) {
-    .mobile_only {
-        display: none;
-    }
+    
 }
-
-/* Extra Media Queries (for fine tuning of screen resizing) */
-@media only screen and (max-width: 500px) {
-    #main_bell {
-        display: none;
-    }
-    #main_profile {
-        display: none;
-    }
-    #bell_in_burger {
-        display: flex;
-    }
-    #profile_in_burger {
-        display: flex;
-    }
-}
-
 
 </style>

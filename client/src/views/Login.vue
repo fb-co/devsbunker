@@ -61,7 +61,7 @@
                     </g>
                 </svg>
 
-                <router-link to='/profile/reset-password' id='forgot_link'>Forgot Password?</router-link>
+                <router-link to='/profile/reset-password' id='forgot_link' class='no_select'>Forgot Password?</router-link>
 
                 <input type="submit" value="Login">
 

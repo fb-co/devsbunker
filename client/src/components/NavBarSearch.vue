@@ -21,7 +21,7 @@ export default {
             this.searchIsOpen = true;
             
             mainInput.style.display = "block";
-            mainInput.style.width = "200px";
+            mainInput.style.width = "170px";
             mainInput.focus();
         },
         closeSearch() {
@@ -44,7 +44,7 @@ export default {
             width: 0px;
         }
         to {
-            width: 200px;
+            width: 170px;
         }
     }
 
@@ -74,7 +74,7 @@ export default {
     }
     .main_input {
         display: none;
-        background-color: var(--main-color);
+        background-color: #f2f2f2;
         box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
         width: 0px;
         height: 25px;
@@ -96,7 +96,7 @@ export default {
     /* Keep search open if the input is in focus */
     #search_input:focus {
         display: block;
-        width: 200px;
+        width: 170px;
     }
 
 </style>
