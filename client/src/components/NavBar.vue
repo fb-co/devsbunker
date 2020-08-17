@@ -51,9 +51,8 @@
                     <span></span>
 
                     <div class='burger_menu_cont' id='main_burger_menu'>
-                        <div class='burger_cont_links'>
-                            <input placeholder='Search...'>
-                            
+                        <div class='burger_cont_links vertical_center'>
+
                             <router-link to='/market'>Market</router-link>
                             <router-link to='/market'>Projects</router-link>
                             <router-link to='/about'>About</router-link>
@@ -82,7 +81,7 @@
 import EventBus from "../utils/EventBus";
 import SharedMethods from "../utils/shared";
 import GlobalComponents from "@/components/global/GlobalComponents.js";
-import NavBarSearch from './NavBarSearch.vue';
+import NavBarSearch from "./NavBarSearch.vue";
 
 // pro hacker move here (had to replace = cuz stoopid default base64 function)
 
@@ -109,12 +108,12 @@ export default {
     data() {
         return {
             isLoggedIn: auth,
-            burgerMenuOpen: false
+            burgerMenuOpen: false,
         };
     },
     components: {
         ...GlobalComponents,
-        NavBarSearch
+        NavBarSearch,
     },
     beforeCreate() {
         SharedMethods.setLoginStateCookie();
@@ -127,7 +126,7 @@ export default {
                 auth = false;
             }
         });
-    }
+    },
 };
 </script>
 
@@ -146,7 +145,7 @@ body {
     font-family: Sans-Serif;
 }
 
-.burger_cont_links > .router-link-active  {
+.burger_cont_links > .router-link-active {
     font-weight: bold;
     background-color: var(--accent);
 }
@@ -184,7 +183,7 @@ body {
     display: flex;
     flex-direction: row;
 }
-.static_link { 
+.static_link {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -233,7 +232,7 @@ body {
     height: 100%;
     margin-right: 20px;
 }
-#burger_menu_checkbox  {
+#burger_menu_checkbox {
     display: block;
     width: 35px;
     height: 25px;
@@ -276,7 +275,7 @@ body {
     top: 0;
     height: 100vh;
     width: 300px;
-    background-color: var(--main-font-color);
+    background-color: var(--burger-menu-bg);
     z-index: -1;
 }
 .burger_menu_cont:hover {
@@ -287,19 +286,22 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin: 0;
 }
 .burger_cont_links a {
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-decoration: none;
-    font-weight: bold;
-    color: var(--secondary-color);
+    font-weight: 100;
+    font-size: 18px;
+    color: hsla(0, 0%, 100%, 0.5);
     width: 100%;
     height: 55px;
+    margin-top: 30px;
 }
 .burger_cont_links a:hover {
-    background-color: var(--accent);
+    color: rgb(219, 219, 219);
 }
 
 .burger_cont_links input {
@@ -329,7 +331,7 @@ body {
 .burger_menu_subcontainer input:checked ~ span {
     opacity: 1;
     transform: rotate(45deg) translate(3px, -1px);
-    background: var(--secondary-color);
+    background: #f2f2f2;
 }
 .burger_menu_subcontainer input:checked ~ span:nth-child(4) {
     opacity: 0;
@@ -340,12 +342,11 @@ body {
 }
 
 .burger_menu_subcontainer input:checked ~ .burger_menu_cont {
-    display: block;   
+    display: block;
 }
 .burger_menu_subcontainer input:not(:checked) ~ .burger_menu_cont {
     display: none;
 }
-
 
 /* MEDIA QUERIES */
 
@@ -360,7 +361,5 @@ body {
 }
 /* desktop styles */
 @media only screen and (min-width: 767px) {
-    
 }
-
 </style>

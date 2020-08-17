@@ -28,6 +28,7 @@
     --selection: #f2f2f2;
     --soft-text: rgba(242, 242, 242, 0.5);
     --settings-mobile-card: #2e2e2e;
+    --burger-menu-bg: #2a2a2a;
 }
 
 ::selection {
@@ -132,7 +133,6 @@ body {
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
 }
-
 </style>
 
 <script>
