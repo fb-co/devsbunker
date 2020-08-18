@@ -52,6 +52,7 @@
 
                     <div class='burger_menu_cont' id='main_burger_menu'>
                         <div class='burger_cont_links'>
+                            <input placeholder='Search...'>
 
                             <router-link to='/market'>Market</router-link>
                             <router-link to='/market'>Projects</router-link>
@@ -305,8 +306,7 @@ body {
 
 .burger_cont_links input {
     text-decoration: none;
-    font-weight: bold;
-    background-color: #f2f2f2;
+    font-family: Rubik;
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
     border: none;
     border-radius: 4px;
@@ -314,7 +314,7 @@ body {
     width: 90%;
     height: 30px;
     margin: 0 auto;
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
 .burger_cont_links input:focus {
     outline: none;

@@ -16,6 +16,12 @@
                     <li class="settings_list_item" v-for="(option, index) in Object.keys(settings)" :key="index" @click="setActive(option)">
                         <!-- todo: pull icons from a template like for the Settings -->
                         <div class="option_icon_container">
+                            <!--
+                            <svg v-bind:style="{ 'background-image': 'url(' + settings[option].icon + ')' }" class='option-icon'>
+
+                            </svg>
+                            -->
+
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user option-icon" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" />
                                 <circle cx="12" cy="7" r="4" />
@@ -72,6 +78,7 @@ export default {
         // this methods checks dynamically if an elemenent in the list of options is also the active one
         // if so, it toggles the active class
         isActive(option) {
+            console.log(option);
             return this.current_setting === option.toLowerCase();
         },
     },
@@ -82,6 +89,7 @@ export default {
 * {
     list-style: none;
 }
+
 .pageSubcontainer {
     padding-top: 20px;
     margin-right: auto;
@@ -130,6 +138,7 @@ export default {
     padding-bottom: 10px;
 }
 .option-icon {
+    background-repeat: no-repeat;
     margin-top: 3px;
     margin-left: 15px;
     margin-right: 15px;
