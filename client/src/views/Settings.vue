@@ -12,13 +12,9 @@ import SettingsDesktop from "@/components/Settings/SettingsDesktop";
 import SettingsMobile from "@/components/Settings/SettingsMobile";
 
 import SharedMethods from "../utils/shared";
-import Settings from "../templates/Settings";
 
 export default {
     created() {
-        if (!this.checkValidSettingURL(Object.keys(Settings)))
-            this.$router.push("/404");
-
         SharedMethods.loadPage();
 
         this.desktop = !this.isMobile();
@@ -56,17 +52,6 @@ export default {
             } else {
                 return false;
             }
-        },
-
-        checkValidSettingURL(settingsList) {
-            let settings = [];
-            const section = this.$route.params.section;
-
-            for (let setting of settingsList) {
-                settings.push(setting.toLowerCase());
-            }
-
-            return !!settings.includes(section);
         },
     },
 };

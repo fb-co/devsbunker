@@ -13,69 +13,56 @@
                         </svg>
                         <input type="text" name="search" id="setting_search" placeholder="Search a setting...">
                     </CustomInput>
-                    <li class="settings_list_item" v-for="(option, index) in Object.keys(settings)" :key="index" @click="setActive(option)">
-                        <!-- todo: pull icons from a template like for the Settings -->
-                        <div class="option_icon_container">
-                            <img 
-                                :src="settings[option].icon"
-                                height="23"
-                                width="23" 
-                                class='option-icon'
-                            />
-                        </div>
 
-                        <p class="option_text" :class="{active: isActive(option)}">{{ option }}</p>
+                    <SettingListItem label="Account">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <rect x="5" y="11" width="14" height="10" rx="2" />
+                            <circle cx="12" cy="16" r="1" />
+                            <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
+                        </svg>
+                    </SettingListItem>
 
-                        <p class="option-arrow option_text" style="font-weight: bold;">></p>
-                    </li>
+                    <SettingListItem label="Appearance">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <line x1="15" y1="8" x2="15.01" y2="8" />
+                            <rect x="4" y="4" width="16" height="16" rx="3" />
+                            <path d="M4 15l4 -4a3 5 0 0 1 3 0l 5 5" />
+                            <path d="M14 14l1 -1a3 5 0 0 1 3 0l 2 2" />
+                        </svg>
+                    </SettingListItem>
+
+                    <SettingListItem label="Privacy">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <rect x="5" y="11" width="14" height="10" rx="2" />
+                            <circle cx="12" cy="16" r="1" />
+                            <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
+                        </svg>
+                    </SettingListItem>
                 </ul>
             </div>
 
-            <!-- this is (imo) cleaner than hard coding options conditionally-->
             <div class="settings_selection">
-                <component :is="current_setting"></component>
+                <component :is="$route.params.section"></component>
             </div>
 
         </div>
-        <!-- <WrapperDesktop>
-            <div style="width: 100px; height: 100px;" class="test"></div>
-        </WrapperDesktop> -->
 
     </div>
 </template>
 
 <script>
-import Settings from "../../templates/Settings";
 import GlobalComponents from "@/components/global/GlobalComponents.js";
-import SettingsComponents from "@/components/Settings/desktop/desktop.import.settings.js"; /* Import the different components for the settings tabs */
+import SettingsComponents from "./desktop/SettingSections/desktop.import.settings.js"; /* Import the different components for the settings tabs */
+import SettingListItem from "./desktop/SettingListItem";
 
 export default {
-    data() {
-        return {
-            settings: Settings,
-            current_setting: this.$route.params.section, // we need a way to modify the url based on this
-            prevSetting: "",
-        };
-    },
     components: {
         ...GlobalComponents,
         ...SettingsComponents,
-    },
-
-    methods: {
-        // this method is fired on a click event assigned to every option in the for loop
-        setActive(option) {
-            this.prevSetting = this.current_setting; // we can keep track of the prev selected element like this
-            this.current_setting = option.toLowerCase();
-            this.$router.push("/settings/" + option.toLowerCase());
-        },
-
-        // this methods checks dynamically if an elemenent in the list of options is also the active one
-        // if so, it toggles the active class
-        isActive(option) {
-            console.log(option);
-            return this.current_setting === option.toLowerCase();
-        },
+        SettingListItem,
     },
 };
 </script>
@@ -115,39 +102,6 @@ export default {
     border-radius: 7px;
     max-width: 750px;
 }
-.settings_list_item {
-    border-left: 2px solid transparent;
-    width: 250px;
-    display: flex;
-    flex-direction: row;
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-.settings_list_item:hover {
-    border-left: 2px solid var(--accent);
-    cursor: pointer;
-}
-
-.option_icon_container {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-.option-icon {
-    background-repeat: no-repeat;
-    margin-top: 3px;
-    margin-left: 15px;
-    margin-right: 15px;
-}
-.option_text {
-    margin-top: 3px;
-    display: inline-block;
-    line-height: 47px;
-}
-.option-arrow {
-    flex-grow: 1;
-    text-align: right;
-    display: inline-block;
-}
 
 /* Media Queries */
 
@@ -160,10 +114,5 @@ export default {
     .pageSubcontainer {
         width: 100%;
     }
-}
-
-/* new */
-.active {
-    font-weight: bold;
 }
 </style>

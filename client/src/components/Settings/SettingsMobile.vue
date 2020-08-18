@@ -32,7 +32,6 @@
 <script>
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import MobileSettingsComponents from "@/components/Settings/mobile/mobile.import.settings";
-import Settings from "../../templates/Settings";
 
 import UserService from "@/services/user.service";
 
@@ -43,7 +42,6 @@ export default {
     },
     data() {
         return {
-            settings: Settings,
             username: "",
             email: "TODO: provide also the email",
         };
