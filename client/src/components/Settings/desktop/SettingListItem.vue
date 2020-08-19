@@ -1,5 +1,5 @@
 <template>
-    <li class="settings_list_item no_select" @click="setActive()">
+    <li class="settings_list_item no_select" @click="navigateTo()">
         <div class="option_icon_container">
             <slot></slot>
         </div>
@@ -11,35 +11,10 @@
 
 <script>
 export default {
-    props: ["label"],
+    props: ["label", "isActive"],
 
-    data() {
-        return {
-            isActive: false,
-        };
-    },
-
-    created() {
-        if (this.$route.params.section === this.label.toLowerCase()) {
-            this.isActive = true;
-        }
-    },
-
-    watch: {
-        // p1: max priority
-        // p5: i will probably never fix this cuz im lazy
-
-        // p5: THIS GETS CALLED 3 TIMES - TODO? OPTIMIZE THIS???
-        $route(to) {
-            if (to.path.includes(this.label.toLowerCase())) {
-                this.isActive = true;
-            } else {
-                this.isActive = false;
-            }
-        },
-    },
     methods: {
-        setActive() {
+        navigateTo() {
             if (this.$route.params.section != this.label.toLowerCase())
                 this.$router.push("/settings/" + this.label.toLowerCase());
         },
