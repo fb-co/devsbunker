@@ -12,15 +12,6 @@
             <div class='static_nav_links desktop_only'>
                 <NavBarSearch />
 
-                <!--
-                <router-link to='/' class='static_link'>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" />
-                        <circle cx="10" cy="10" r="7" />
-                        <line x1="21" y1="21" x2="15" y2="15" />
-                    </svg>
-                </router-link>
-                -->
                 <router-link to='/' class='static_link'>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-compass" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" />
@@ -28,7 +19,7 @@
                         <circle cx="12" cy="12" r="9" />
                     </svg>
                 </router-link>
-                <router-link v-if="isLoggedIn" to='/' class='static_link'>
+                <router-link v-if="isLoggedIn" to='/notifications' class='static_link'>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" />
                         <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
@@ -58,7 +49,7 @@
                             <router-link to='/market'>Projects</router-link>
                             <router-link to='/about'>About</router-link>
 
-                            <router-link v-if="isLoggedIn" to='/' class='static_link'>
+                            <router-link v-if="isLoggedIn" to='/notifications' class='static_link'>
                                 <p>Notifications</p>
                             </router-link>
                             <router-link v-if="isLoggedIn" to='/profile' class='static_link profile_pic'>
@@ -69,6 +60,8 @@
 
                             <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
                             <router-link v-if="!isLoggedIn" to="/signup">Sign-up</router-link>
+
+                            <button v-if="isLoggedIn" class="logout_btn" @click="logout()">Logout</button>
                         </div>
                     </div>
                 </div>
@@ -83,6 +76,7 @@ import EventBus from "../utils/EventBus";
 import SharedMethods from "../utils/shared";
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import NavBarSearch from "./NavBarSearch.vue";
+import UserService from "../services/user.service";
 
 // pro hacker move here (had to replace = cuz stoopid default base64 function)
 
@@ -128,6 +122,13 @@ export default {
             }
         });
     },
+    methods: {
+        logout() {
+            UserService.logout();
+            EventBus.broadcastLoginState(false); // broadcasting that the user just logged out
+            this.$router.push("/");
+        },
+    }
 };
 </script>
 
@@ -345,6 +346,27 @@ body {
 }
 .burger_menu_subcontainer input:not(:checked) ~ .burger_menu_cont {
     display: none;
+}
+
+/* Other */
+.logout_btn {
+    text-decoration: none;
+    font-weight: 100;
+    font-size: 18px;
+    color: var(--error-red);
+    width: 100%;
+    height: 55px;
+    margin-top: 30px;
+    border: none;
+    background-color: var(--burger-menu-bg);
+    font-family: rubik;
+}
+.logout_btn:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+.logout_btn:focus {
+    outline: none;
 }
 
 /* MEDIA QUERIES */

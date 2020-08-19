@@ -1,29 +1,25 @@
 <template>
     <div class="profile">
+        <NavBar />
         <h1>Profile</h1>
-        <button class="btn" @click="logout">Logout</button>
     </div>
 </template>
 
 <script>
-import UserService from "../services/user.service";
-import EventBus from "../utils/EventBus";
+import NavBar from "@/components/NavBar";
+import SharedMethods from '../utils/shared';
 
 export default {
-    methods: {
-        logout() {
-            UserService.logout();
-            EventBus.broadcastLoginState(false); // broadcasting that the user just logged out
-            this.$router.push("/");
-        },
+    created() {
+        SharedMethods.loadPage();
     },
+    components: {
+        NavBar
+    }
 };
 </script>
 
 <style scoped>
-.profile {
-    margin-top: 30px;
-}
 .btn {
     width: 150px;
     margin-top: 10px;
