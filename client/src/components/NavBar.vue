@@ -69,6 +69,8 @@
             </div>
         </div>
 
+        <div class="invisible-area"></div>
+
     </div>
 </template>
 
@@ -139,6 +141,12 @@ export default {
 </script>
 
 <style scoped>
+.invisible-area {
+    position: absolute;
+    opacity: 0;
+    width: calc(100% - 300px);
+    height: 100%;
+}
 /* Animations */
 @keyframes burger_animation {
     from {
