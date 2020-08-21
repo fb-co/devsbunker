@@ -41,7 +41,8 @@
                     <span></span>
                     <span></span>
 
-                    <div class='burger_menu_cont' id='main_burger_menu' v-click-outside="hideBurgerMenu"> <!-- make sure not to make that function have '()' because I not giving the directive the return value! -->
+                    <div class='burger_menu_cont' id='main_burger_menu' v-click-outside="hideBurgerMenu">
+                        <!-- make sure not to make that function have '()' because I not giving the directive the return value! -->
                         <div class='burger_cont_links'>
                             <input placeholder='Search...' class='light_input_selection'>
 
@@ -77,9 +78,8 @@ import SharedMethods from "../utils/shared";
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import NavBarSearch from "./NavBarSearch.vue";
 import UserService from "../services/user.service";
-import OutsideClick from "../directives/click_outside.js";
 
-// pro hacker move here (had to replace = cuz stoopid default base64 function)
+import ClickOutside from "../directives/ClickOutside";
 
 let auth;
 try {
@@ -93,9 +93,6 @@ try {
 }
 
 export default {
-    directives: {
-        OutsideClick
-    },
     props: {
         min_width: String,
     },
@@ -131,10 +128,11 @@ export default {
             EventBus.broadcastLoginState(false); // broadcasting that the user just logged out
             this.$router.push("/");
         },
-        hideBurgerMenu() {
-            
-        }
-    }
+        hideBurgerMenu() {},
+    },
+    directives: {
+        "click-outside": ClickOutside,
+    },
 };
 </script>
 
