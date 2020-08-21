@@ -43,4 +43,4 @@ Glitches
 - [x] If burger menu not closed when page is expanded, when you shrink the page again it instantly opens the burger menu again
 - [ ] You have to strictly hover over the toggle show password icon for it to change
 - [ ] Cant use the back arrow at profile page (sometimes)
-- [ ] Cant Highlight text inside navbar and burger menu search inputs only on dark theme
+- [x] Cant Highlight text inside navbar and burger menu search inputs only on dark theme
