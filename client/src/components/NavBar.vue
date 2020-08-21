@@ -34,14 +34,14 @@
                 <router-link v-if="!isLoggedIn" to="/login" class='burger_link desktop_only'>Login</router-link>
                 <router-link v-if="!isLoggedIn" to="/signup" class='burger_link desktop_only'>Sign-up</router-link>
             </div>
-            <div class="burger_menu_container">
+            <div class="burger_menu_container" v-click-outside="hideBurgerMenu">
                 <div class='burger_menu_subcontainer' id='burger_menu_icon'>
                     <input type="checkbox" aria-label="Toggle menu" id='burger_menu_checkbox' />
                     <span></span>
                     <span></span>
                     <span></span>
 
-                    <div class='burger_menu_cont' id='main_burger_menu' v-click-outside="hideBurgerMenu">
+                    <div class='burger_menu_cont' id='main_burger_menu'>
                         <!-- make sure not to make that function have '()' because I not giving the directive the return value! -->
                         <div class='burger_cont_links'>
                             <input placeholder='Search...' class='light_input_selection'>
@@ -128,7 +128,9 @@ export default {
             EventBus.broadcastLoginState(false); // broadcasting that the user just logged out
             this.$router.push("/");
         },
-        hideBurgerMenu() {},
+        hideBurgerMenu() {
+            console.log("clicked outside of burger menu BUT on navbar");
+        },
     },
     directives: {
         "click-outside": ClickOutside,
