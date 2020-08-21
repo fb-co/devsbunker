@@ -131,7 +131,7 @@ export default {
             this.$router.push("/");
         },
         hideBurgerMenu() {
-            console.log("clicked outside of burger menu BUT on navbar");
+            document.getElementById("burger_menu_checkbox").click();
         },
     },
     directives: {
