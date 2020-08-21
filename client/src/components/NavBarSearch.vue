@@ -1,7 +1,7 @@
 <template>
     <div class='main_container'>
         <div class='input_container'>
-            <input class='main_input' id='search_input' v-on:blur="closeSearch()">
+            <input class='main_input light_input_selection' id='search_input' v-on:blur="closeSearch()">
         </div>
         <div class='icon_container'>
             <svg @click="openSearch()" xmlns="http://www.w3.org/2000/svg" id='search_icon' class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">

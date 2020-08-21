@@ -40,6 +40,11 @@ body {
     background-color: var(--main-color);
     color: var(--main-font-color);
 }
+ /* Handles for inputs with light backgrounds despite the theme */
+.light_input_selection::selection {
+    background: #0D0D0D;
+    color: #FFFFFF;
+}
 
 #app {
     font-family: "Rubik", sans-serif;

@@ -43,7 +43,7 @@
 
                     <div class='burger_menu_cont' id='main_burger_menu'>
                         <div class='burger_cont_links'>
-                            <input placeholder='Search...'>
+                            <input placeholder='Search...' class='light_input_selection'>
 
                             <router-link to='/market'>Market</router-link>
                             <router-link to='/market'>Projects</router-link>
