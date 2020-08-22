@@ -1,28 +1,27 @@
 <template>
     <div>
-        <!-- Account -->
-        <SettingListItem label="Account">
-            <div class="setting-content"></div>
-        </SettingListItem>
-
-        <!-- Appearance -->
-        <SettingListItem label="Appearance">
-            <div class="setting-content"></div>
-        </SettingListItem>
-
-        <!-- Privacy -->
-        <SettingListItem label="Privacy">
-            <div class="setting-content"></div>
+        <SettingListItem v-for="(item, index) in items" :key="index" :label="item">
+            <div class="setting-content">
+                <component :is="item"></component>
+            </div>
         </SettingListItem>
     </div>
 </template>
 
 <script>
 import SettingListItem from "./SettingListItem";
+import SettingsComponents from "./SettingSections/mobile.import.settings";
 
 export default {
     components: {
         SettingListItem,
+        ...SettingsComponents,
+    },
+
+    data() {
+        return {
+            items: ["Account", "Appearance", "Privacy"],
+        };
     },
 };
 </script>
@@ -33,6 +32,5 @@ export default {
     height: 150px;
     width: 80%;
     margin: auto;
-    background: red;
 }
 </style>
