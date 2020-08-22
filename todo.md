@@ -38,9 +38,8 @@ Glitches
 - [x] if page gets refreshed the theme switches back to Dark
 - [x] Both password field and confirm password field both have id of 'password'
 - [x] Toggling show password icon highlights the 'forgot password' link
-- [ ] Tapping or clicking outside burger menu on small screens should close it
+- [x] Tapping or clicking outside burger menu on small screens should close it
 - [x] For a very small horizontal resize range, there are no Nav links or burger menu
 - [x] If burger menu not closed when page is expanded, when you shrink the page again it instantly opens the burger menu again
-- [ ] You have to strictly hover over the toggle show password icon for it to change
 - [ ] Cant use the back arrow at profile page (sometimes)
 - [x] Cant Highlight text inside navbar and burger menu search inputs only on dark theme
