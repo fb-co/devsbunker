@@ -223,6 +223,7 @@ export default {
     left: 50%;
     -ms-transform: translate(-50%, 0%);
     transform: translate(-50%, 0%);
+    z-index: -1;
 }
 
 form {
