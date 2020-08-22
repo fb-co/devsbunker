@@ -19,19 +19,15 @@
 
         <div class="settings">
             <div class="margin-top"></div>
-            <div v-for="(option, index) in Object.keys(settings)" :key="index">
-                <p class="setting-label">{{ option }}</p>
-                <div class="setting-content">
-                    <component :is="option"></component>
-                </div>
-            </div>
+            <SettingList />
         </div>
     </div>
 </template>
 
 <script>
 import GlobalComponents from "@/components/global/GlobalComponents.js";
-import MobileSettingsComponents from "@/components/Settings/mobile/mobile.import.settings";
+import MobileSettingsComponents from "@/components/Settings/mobile/SettingSections/mobile.import.settings";
+import SettingList from "./mobile/SettingList";
 
 import UserService from "@/services/user.service";
 
@@ -39,6 +35,7 @@ export default {
     components: {
         ...GlobalComponents,
         ...MobileSettingsComponents,
+        SettingList,
     },
     data() {
         return {
@@ -59,13 +56,6 @@ export default {
 </script>
 
 <style scoped>
-.title {
-    font-weight: bold;
-    font-size: 24px;
-    color: var(--main-font-color);
-
-    margin-top: 30px;
-}
 .search_input {
     width: 80%;
     margin: 0 auto;
@@ -73,6 +63,14 @@ export default {
     margin-bottom: 55px;
     max-width: 450px;
     opacity: 0.7;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 24px;
+    color: var(--main-font-color);
+
+    margin-top: 30px;
 }
 
 .profile-banner {
@@ -110,17 +108,6 @@ export default {
 .margin-top {
     width: 100%;
     height: 20px;
-}
-
-.setting-label {
-    text-align: left;
-    color: var(--main-font-color);
-    font-size: 20px;
-    font-weight: bold;
-
-    padding-top: 20px;
-    padding-left: 30px;
-    padding-bottom: 20px;
 }
 
 .setting-content {
