@@ -1,7 +1,7 @@
 <template>
     <div id="SettingsPage">
         <h1 class="title">Settings</h1>
-
+        
         <CustomInput class="search_input">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" />
@@ -10,6 +10,7 @@
             </svg>
             <input type="text" name="search" placeholder="Search a setting...">
         </CustomInput>
+        
 
         <div v-if="username" class="profile-banner">
             <img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic">
@@ -56,13 +57,13 @@ export default {
 </script>
 
 <style scoped>
+
 .search_input {
     width: 80%;
     margin: 0 auto;
     margin-top: 55px;
     margin-bottom: 55px;
     max-width: 450px;
-    opacity: 0.7;
 }
 
 .title {
