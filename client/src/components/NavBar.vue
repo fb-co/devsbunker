@@ -34,7 +34,7 @@
                 <router-link v-if="!isLoggedIn" to="/login" class='burger_link desktop_only'>Login</router-link>
                 <router-link v-if="!isLoggedIn" to="/signup" class='burger_link desktop_only'>Sign-up</router-link>
             </div>
-            <div class="burger_menu_container" v-click-outside="hideBurgerMenu">
+            <div class="burger_menu_container">
                 <div class='burger_menu_subcontainer' id='burger_menu_icon'>
                     <input type="checkbox" aria-label="Toggle menu" id='burger_menu_checkbox' />
                     <span></span>
@@ -68,9 +68,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="invisible-area"></div>
-
     </div>
 </template>
 
@@ -81,7 +78,6 @@ import GlobalComponents from "@/components/global/GlobalComponents.js";
 import NavBarSearch from "./NavBarSearch.vue";
 import UserService from "../services/user.service";
 
-import ClickOutside from "../directives/ClickOutside";
 
 let auth;
 try {
@@ -130,23 +126,22 @@ export default {
             EventBus.broadcastLoginState(false); // broadcasting that the user just logged out
             this.$router.push("/");
         },
-        hideBurgerMenu() {
-            document.getElementById("burger_menu_checkbox").click();
+        /*
+        hideBurgerMenu(event) {
+            let checkbox = document.getElementById("burger_menu_checkbox");
+            let burger = document.getElementById('main_burger_menu');
+
+            if (checkbox.checked && event.target!=checkbox && event.target!=burger) {
+                document.getElementById("burger_menu_checkbox").checked = false;
+                burger.style.display = false;                
+            }
         },
-    },
-    directives: {
-        "click-outside": ClickOutside,
+        */
     },
 };
 </script>
 
 <style scoped>
-.invisible-area {
-    position: absolute;
-    opacity: 0;
-    width: calc(100% - 300px);
-    height: 100%;
-}
 /* Animations */
 @keyframes burger_animation {
     from {
