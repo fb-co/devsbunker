@@ -1,12 +1,13 @@
 <template>
     <div class="menu_container no_select" :style="style">
+        <div class='burger_blur' id="burger_menu_blur" @click="hideBurgerMenu()"></div> <!-- Darkens the screen for the burger menu -->
+
         <div class='logo_container'>
             <router-link to="/" class="menu_logo">
                 <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
                 <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" />
             </router-link>
         </div>
-
         <!-- Static menu items (dont go into burger menu) -->
         <div class='nav_links_container'>
             <div class='static_nav_links desktop_only'>
@@ -130,6 +131,14 @@ export default {
         toggleMenu() {
             // No idea if they are called grandparents, but its the parent of the parent
             const checkBoxGrandparent = document.getElementById("burger_menu_checkbox").parentElement.parentElement
+            const screenBlur = document.getElementById("burger_menu_blur");
+
+            // toggle burger menu screen blur
+            if (window.getComputedStyle(screenBlur).display === 'none') {
+                document.getElementById("burger_menu_blur").style.display = 'block';
+            }else {
+                document.getElementById("burger_menu_blur").style.display = 'none';
+            }
 
             if (document.getElementById("burger_menu_checkbox").checked) {
                 document.getElementById("burger_icon_placeholder").style.display = "flex";
@@ -140,18 +149,10 @@ export default {
                 checkBoxGrandparent.style.position = 'static';
                 checkBoxGrandparent.style.height = '100%';
             }
-        }
-        /*
-        hideBurgerMenu(event) {
-            let checkbox = document.getElementById("burger_menu_checkbox");
-            let burger = document.getElementById('main_burger_menu');
-
-            if (checkbox.checked && event.target!=checkbox && event.target!=burger) {
-                document.getElementById("burger_menu_checkbox").checked = false;
-                burger.style.display = false;                
-            }
         },
-        */ 
+        hideBurgerMenu() {
+            document.getElementById("burger_menu_checkbox").click();
+        }
     },
 };
 </script>
@@ -166,6 +167,16 @@ export default {
         width: 300px;
     }
 }
+@keyframes opacityFader {
+    from {
+        background-color:rgba(0, 0, 0, 0);
+    }
+    to {
+        background-color:rgba(0, 0, 0, 0.5);
+    }
+}
+
+
 body {
     overflow-x: hidden;
     font-family: Sans-Serif;
@@ -247,6 +258,15 @@ body {
 }
 .burger_link:hover {
     font-weight: bold;
+}
+.burger_blur {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color:rgba(0, 0, 0, 0.5);
 }
 
 /* Burger Menu Styling */
