@@ -34,9 +34,10 @@
                 <router-link v-if="!isLoggedIn" to="/login" class='burger_link desktop_only'>Login</router-link>
                 <router-link v-if="!isLoggedIn" to="/signup" class='burger_link desktop_only'>Sign-up</router-link>
             </div>
+            <div id="burger_icon_placeholder"></div> <!-- fills in the space of the actual burger icon when the burger menu is opened and is given a fixed pos -->
             <div class="burger_menu_container">
                 <div class='burger_menu_subcontainer' id='burger_menu_icon'>
-                    <input type="checkbox" aria-label="Toggle menu" id='burger_menu_checkbox' />
+                    <input type="checkbox" aria-label="Toggle menu" id='burger_menu_checkbox' @click='toggleMenu()' />
                     <span></span>
                     <span></span>
                     <span></span>
@@ -126,6 +127,20 @@ export default {
             EventBus.broadcastLoginState(false); // broadcasting that the user just logged out
             this.$router.push("/");
         },
+        toggleMenu() {
+            // No idea if they are called grandparents, but its the parent of the parent
+            const checkBoxGrandparent = document.getElementById("burger_menu_checkbox").parentElement.parentElement
+
+            if (document.getElementById("burger_menu_checkbox").checked) {
+                document.getElementById("burger_icon_placeholder").style.display = "flex";
+                checkBoxGrandparent.style.position = 'fixed'; 
+                checkBoxGrandparent.style.height = 'var(--header-height)';     
+            }else{
+                document.getElementById("burger_icon_placeholder").style.display = "none";
+                checkBoxGrandparent.style.position = 'static';
+                checkBoxGrandparent.style.height = '100%';
+            }
+        }
         /*
         hideBurgerMenu(event) {
             let checkbox = document.getElementById("burger_menu_checkbox");
@@ -243,6 +258,14 @@ body {
     height: 100%;
     margin-right: 20px;
 }
+#burger_icon_placeholder {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    width: 75px;
+    height: 100%;
+    margin-right: 20px;
+}
 #burger_menu_checkbox {
     display: block;
     width: 35px;
@@ -281,7 +304,7 @@ body {
     overflow-x: hidden;
     display: none;
     animation: burger_animation 0.5s;
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     height: 100vh;
