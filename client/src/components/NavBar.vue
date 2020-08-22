@@ -136,7 +136,7 @@ export default {
                 burger.style.display = false;                
             }
         },
-        */
+        */ 
     },
 };
 </script>
