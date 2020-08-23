@@ -7,7 +7,7 @@
                 <p class='card_desc'>Founder of devsBunker® and co-founder of Folgoni Borsa Company .inc</p>
                 <form>
                     <!-- Not sure if this is nessacary, but I assume you need a form to get data to the server -->
-                    <input type="submit" value="Follow">
+                    <input type="submit" value="Edit">
                 </form>
                 <div class='follower_container'>
                     <div class="follow_count">

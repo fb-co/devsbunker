@@ -79,6 +79,7 @@ export default {
     height: 55px;
     margin: auto;
     margin-top: 20px;
+    max-width: 450px;
 }
 
 .profile-pic {
