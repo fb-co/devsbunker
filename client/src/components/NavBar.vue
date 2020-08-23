@@ -267,16 +267,19 @@ body {
     width: 100vw;
     height: 100vh;
     background-color:rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 
 /* Burger Menu Styling */
 .burger_menu_container {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 75px;
     height: 100%;
     margin-right: 20px;
+    z-index: 10;
 }
 #burger_icon_placeholder {
     display: none;
@@ -294,14 +297,13 @@ body {
     position: absolute;
     cursor: pointer;
     opacity: 0; /* hide this */
-    z-index: 2; /* and place it over the hamburger */
+    z-index: 11; /* and place it over the hamburger */
     -webkit-touch-callout: none;
 }
 .burger_menu_subcontainer {
     width: 33px;
     display: inline-block;
     margin: 0 auto;
-    z-index: 2;
 }
 .burger_menu_subcontainer:hover {
     cursor: pointer;
