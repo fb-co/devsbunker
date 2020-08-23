@@ -29,6 +29,7 @@
     --soft-text: rgba(242, 242, 242, 0.5);
     --settings-mobile-card: #2e2e2e;
     --burger-menu-bg: #2a2a2a;
+    --main-btn-color: #49CCE5;
 }
 
 ::selection {
