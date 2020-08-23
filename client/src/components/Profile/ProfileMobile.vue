@@ -4,9 +4,10 @@
         <div class="profile_card">
             <div class='card_container'>
                 <p class='card_name'>The_Jack</p>
-                <p class='card_desc'>Founder of devsBunker®  and co-founder of Folgoni Borsa Company .inc</p>
-                <form> <!-- Not sure if this is nessacary, but I assume you need a form to get data to the server -->
-                    <input type="submit" value="Follow"> 
+                <p class='card_desc'>Founder of devsBunker® and co-founder of Folgoni Borsa Company .inc</p>
+                <form>
+                    <!-- Not sure if this is nessacary, but I assume you need a form to get data to the server -->
+                    <input type="submit" value="Follow">
                 </form>
                 <div class='follower_container'>
                     <div class="follow_count">
@@ -32,9 +33,7 @@
 </template>
 
 <script>
-export default {
-    
-}
+export default {};
 </script>
 
 <style scoped>
@@ -121,7 +120,6 @@ export default {
     font-size: 11px;
 }
 
-
 input[type="submit"] {
     width: 200px;
     font-size: 1rem;
@@ -129,7 +127,6 @@ input[type="submit"] {
     text-align: center;
     color: #fff;
     background-color: var(--main-btn-color);
-    box-shadow: 0px 15px 30px rgba(20, 102, 204, 0.16);
     border-radius: 16px;
     padding: 0px 0px;
     cursor: pointer;
