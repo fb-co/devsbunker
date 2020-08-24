@@ -45,6 +45,12 @@ const routes = [{
     component: () => import('../views/Notifications.vue')
   },
 
+  {
+    path: '/user/:username',
+    name: 'User',
+    component: () => import('../views/User.vue')
+  },
+
   // important to leave this as the last element
   {
     path: '*',
