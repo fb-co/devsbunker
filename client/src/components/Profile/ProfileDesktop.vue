@@ -4,92 +4,212 @@
             <div class="row1">
                 <div class='profile_pic_container row_item'>
                     <img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic" width="100px">
-                    <p style="margin-top: 20px;">The_Jack</p>
+
+                    <!-- not all users will have the verified tag, this is temp -->
+                    <p class="username">THE_JACK <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-check-fll" fill="#3C93D2" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984a.5.5 0 0 0-.708-.708L7 8.793 5.854 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                        </svg></p>
+
                 </div>
                 <div class='main_links_container row_item'>
-                    <router-link to='/profile/revenue' class='link_item'>Revenue</router-link>
-                    <router-link to='/profile/purchases' class='link_item'>My purchases</router-link>
-                    <router-link to='/profile/purchases' class='link_item'>My projects</router-link>
+
+                    <div class="option-wrapper link_item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-dollar" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+                            <path d="M12 3v3m0 12v3" />
+                        </svg>
+
+                        <router-link to='/profile/revenue'>My Revenue</router-link>
+                    </div>
+
+                    <div class="option-wrapper link_item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cash" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <rect x="7" y="9" width="14" height="10" rx="2" />
+                            <circle cx="14" cy="14" r="2" />
+                            <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" />
+                        </svg>
+
+                        <router-link to='/profile/purchases'>My purchases</router-link>
+                    </div>
+
+                    <div class="option-wrapper link_item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-code" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <polyline points="7 8 3 12 7 16" />
+                            <polyline points="17 8 21 12 17 16" />
+                            <line x1="14" y1="4" x2="10" y2="20" />
+                        </svg>
+
+                        <router-link to='/profile/projects'>My projects</router-link>
+                    </div>
+
                 </div>
                 <div class='other_links_container row_item'>
-                    <router-link to='/profile/revenue' class='link_item'>Personal Information</router-link>
-                    <router-link to='/profile/purchases' class='link_item'>Saved Projects</router-link>
-                    <router-link to='/profile/purchases' class='link_item'>Download Data</router-link>
-                    <router-link to='/profile/purchases' class='link_item'>Logout</router-link>
+
+                    <div class="option-wrapper link_item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <circle cx="12" cy="12" r="9" />
+                            <line x1="12" y1="8" x2="12.01" y2="8" />
+                            <polyline points="11 12 12 12 12 16 13 16" />
+                        </svg>
+
+                        <router-link to='/profile/info'>Personal Information</router-link>
+                    </div>
+
+                    <div class="option-wrapper link_item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <path d="M9 4h6a2 2 0 0 1 2 2v14l-5-3l-5 3v-14a2 2 0 0 1 2 -2" />
+                        </svg>
+
+                        <router-link to='/profile/saved'>Saved Projects</router-link>
+                    </div>
+
+                    <div class="option-wrapper link_item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                            <polyline points="7 11 12 16 17 11" />
+                            <line x1="12" y1="4" x2="12" y2="16" />
+                        </svg>
+
+                        <router-link to='/profile/download'>Download Data</router-link>
+                    </div>
+
+                    <div class="option-wrapper special_link_item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <circle cx="12" cy="12" r="9" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+
+                        <router-link to='/profile/logout'>Logout</router-link>
+                    </div>
                 </div>
             </div>
-            <div class="content_box">
-                
-            </div>
+            <div class="content_box"></div>
         </div>
     </div>
 </template>
 
 <script>
-export default {
-    
-}
+export default {};
 </script>
 
 <style scoped>
-    .main_container {
-        display: flex;
-        flex-direction: row;
-        width: 90%;
-        height: auto;
-        margin: 100px auto 0px auto;
-    }
-    .row1 {
-        display: flex;
-        flex-direction: column;
-        width: 300px;
-    }
-    .row_item {
-        background-color: var(--general-card);
-        width: 100%;
-        border-radius: 5px;
-        box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
-    }
-    .row_item:first-child {
-        margin-bottom: 15px;
-    }
-    .row_item:last-child {
-        margin-top: 15px;
-    }
-    .main_links_container {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
-    .other_links_container {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
-    .link_item {
-        display: block;
-        width: 100%;
-        text-decoration: none;
-        color: var(--main-font-color);
-        padding: 10px 0px 10px 10px;
-        font-size: 15px;
-        text-align: left;
-        border-left: 3px solid transparent;
-    }
-    .link_item:hover {
-        border-left: 3px solid var(--main-btn-color);
-        font-weight: bold;
-        background: linear-gradient(90deg, rgba(255,255,255,1) 3%, rgba(1,135,175,0) 100%);
-    }
-    .profile_pic_container {
-        padding: 40px;
-    }
-    .profile_pic {
-        width: 50px;
-    }
-    .content_box {
-        border-radius: 5px;
-        flex-grow: 1;
-        background-color: var(--main-color);
-        margin: 0px 15px 0px 15px;
-        box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
-    }
+.main_container {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: auto;
+    margin: 100px auto 0px auto;
+}
+.row1 {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+.row_item {
+    background-color: var(--general-card);
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+}
+.row_item:first-child {
+    margin-bottom: 15px;
+}
+.row_item:last-child {
+    margin-top: 15px;
+}
+.main_links_container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.other_links_container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.option-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.link_item {
+    width: 100%;
+    padding: 10px 0px 10px 10px;
+    border-left: 3px solid transparent;
+}
+.link_item a {
+    text-decoration: none;
+    color: var(--profile-option-color);
+    font-size: 15px;
+    text-align: left;
+    font-weight: 600;
+
+    margin-left: 15px;
+}
+
+.link_item:hover {
+    border-left: 3px solid var(--main-btn-color);
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 1) 3%,
+        rgba(1, 135, 175, 0) 100%
+    );
+}
+
+.link_item:hover a {
+    color: var(--main-font-color);
+    font-weight: 600;
+}
+
+.link_item:hover svg {
+    stroke: var(--main-btn-color);
+}
+
+.special_link_item {
+    width: 100%;
+    padding: 10px 0px 10px 10px;
+    border-left: 3px solid transparent;
+}
+
+.special_link_item a {
+    text-decoration: none;
+    color: #db5454;
+    font-size: 15px;
+    text-align: left;
+    font-weight: 600;
+
+    margin-left: 15px;
+}
+
+.special_link_item svg {
+    stroke: #db5454;
+}
+
+.profile_pic_container {
+    padding: 40px;
+}
+.profile_pic {
+    width: 50px;
+}
+.content_box {
+    border-radius: 5px;
+    flex-grow: 1;
+    background-color: var(--main-color);
+    margin: 0px 15px 0px 15px;
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+}
+
+.username {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 18px;
+}
 </style>

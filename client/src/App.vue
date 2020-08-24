@@ -29,7 +29,10 @@
     --soft-text: rgba(242, 242, 242, 0.5);
     --settings-mobile-card: #2e2e2e;
     --burger-menu-bg: #2a2a2a;
-    --main-btn-color: #49CCE5;
+    --main-btn-color: #49cce5;
+
+    /* profile page */
+    --profile-option-color: #656565;
 }
 
 ::selection {
@@ -41,10 +44,10 @@ body {
     background-color: var(--main-color);
     color: var(--main-font-color);
 }
- /* Handles for inputs with light backgrounds despite the theme */
+/* Handles for inputs with light backgrounds despite the theme */
 .light_input_selection::selection {
-    background: #0D0D0D;
-    color: #FFFFFF;
+    background: #0d0d0d;
+    color: #ffffff;
 }
 
 #app {
