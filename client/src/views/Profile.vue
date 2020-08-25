@@ -1,6 +1,8 @@
 <template>
     <div class="profile">
-        <NavBar />
+        <NavBar v-if="isMobile" min_width="930px" />
+        <NavBar v-else />
+
         <ProfileMobile v-if="mobile" />
         <ProfileDesktop v-else />
     </div>
@@ -35,7 +37,7 @@ export default {
     },
     methods: {
         isMobile() {
-            return ScreenType.isMobile(450);
+            return ScreenType.isMobile(600);
         }
     }
 };

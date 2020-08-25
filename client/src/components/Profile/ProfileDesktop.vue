@@ -1,15 +1,28 @@
 <template>
     <div class="profileDesktop">
-        <div class='main_container'>
+        <div class='main_container' style="margin-left: 25px;">
             <div class="row1">
                 <div class='profile_pic_container row_item'>
                     <img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic" width="100px">
 
                     <!-- not all users will have the verified tag, this is temp -->
                     <p class="username">THE_JACK <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-check-fll" fill="#3C93D2" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984a.5.5 0 0 0-.708-.708L7 8.793 5.854 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
-                        </svg></p>
+                        <path fill-rule="evenodd" d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984a.5.5 0 0 0-.708-.708L7 8.793 5.854 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                    </svg></p>
 
+                    <div class="follow_container">
+                        <div class="follow_cont">
+                            <p class="follow_label">Followers</p>
+                            <p id="follower_amt">8183</p>
+                        </div>
+                        <div class="follow_cont">
+                            <p class="follow_label">Following</p>
+                            <p id="following_amt">74</p>
+                        </div>
+                    </div>
+                    <div class="edit_link_container">
+                        <router-link to="/settings/account">Edit</router-link>
+                    </div>
                 </div>
                 <div class='main_links_container row_item'>
 
@@ -20,7 +33,7 @@
                             <path d="M12 3v3m0 12v3" />
                         </svg>
 
-                        <router-link to='/profile/revenue'>My Revenue</router-link>
+                        <router-link to='/profile/revenue' class='profile_link'>Revenue</router-link>
                     </div>
 
                     <div class="option-wrapper link_item">
@@ -31,7 +44,7 @@
                             <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" />
                         </svg>
 
-                        <router-link to='/profile/purchases'>My purchases</router-link>
+                        <router-link to='/profile/purchases' class='profile_link'>Purchases</router-link>
                     </div>
 
                     <div class="option-wrapper link_item">
@@ -42,7 +55,7 @@
                             <line x1="14" y1="4" x2="10" y2="20" />
                         </svg>
 
-                        <router-link to='/profile/projects'>My projects</router-link>
+                        <router-link to='/profile/projects' class='profile_link'>Projects</router-link>
                     </div>
 
                 </div>
@@ -56,7 +69,7 @@
                             <polyline points="11 12 12 12 12 16 13 16" />
                         </svg>
 
-                        <router-link to='/profile/info'>Personal Information</router-link>
+                        <router-link to='/profile/info' class='profile_link'>Personal Information</router-link>
                     </div>
 
                     <div class="option-wrapper link_item">
@@ -65,7 +78,7 @@
                             <path d="M9 4h6a2 2 0 0 1 2 2v14l-5-3l-5 3v-14a2 2 0 0 1 2 -2" />
                         </svg>
 
-                        <router-link to='/profile/saved'>Saved Projects</router-link>
+                        <router-link to='/profile/saved' class='profile_link'>Saved Projects</router-link>
                     </div>
 
                     <div class="option-wrapper link_item">
@@ -76,7 +89,7 @@
                             <line x1="12" y1="4" x2="12" y2="16" />
                         </svg>
 
-                        <router-link to='/profile/download'>Download Data</router-link>
+                        <router-link to='/profile/download' class='profile_link'>Download Data</router-link>
                     </div>
 
                     <div class="option-wrapper special_link_item">
@@ -87,7 +100,7 @@
                             <line x1="12" y1="16" x2="12.01" y2="16" />
                         </svg>
 
-                        <router-link to='/profile/logout'>Logout</router-link>
+                        <router-link to='/profile/logout' class='profile_link'>Logout</router-link>
                     </div>
                 </div>
             </div>
@@ -104,9 +117,11 @@ export default {};
 .main_container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     width: 90%;
     height: auto;
-    margin: 100px auto 0px auto;
+    margin: 100px auto 25px auto;
+    min-width: 900px;
 }
 .row1 {
     display: flex;
@@ -194,10 +209,14 @@ export default {};
 }
 
 .profile_pic_container {
-    padding: 40px;
+    padding: 40px 40px 10px 40px;
 }
 .profile_pic {
     width: 50px;
+}
+.profile_link {
+    width: 100%;
+    height: 100%;
 }
 .content_box {
     border-radius: 5px;
@@ -205,6 +224,7 @@ export default {};
     background-color: var(--main-color);
     margin: 0px 15px 0px 15px;
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
 }
 
 .username {
@@ -212,4 +232,34 @@ export default {};
     font-weight: bold;
     font-size: 18px;
 }
+
+.follow_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 90%;
+    padding-top: 30px;
+    margin: 0 auto;
+}
+.follow_cont {
+    margin: 0 auto;
+}
+.follow_label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.edit_link_container {
+    padding-top: 25px;
+    padding-bottom: 5px;
+}
+.edit_link_container a {
+    display: inline-block;
+    text-decoration: none;
+    color:#fff;
+    background-color: var(--main-btn-color);
+    padding: 5px 20px 5px 20px;
+    border-radius: 20px;
+}
+
 </style>
