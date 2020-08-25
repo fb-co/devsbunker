@@ -125,15 +125,11 @@ import Loading from "@/components/Loading";
 
 export default {
     created() {
-        SharedMethods.checkIfLoggedIn()
-            .then((result) => {
-                if (result) {
-                    this.$router.push("/profile");
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        UserService.isLoggedIn().then((result) => {
+            if (result) {
+                this.$router.push("/user/" + result.user.username);
+            }
+        });
 
         SharedMethods.loadPage();
     },

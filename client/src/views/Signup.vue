@@ -105,15 +105,11 @@ import Loading from "@/components/Loading";
 
 export default {
     created() {
-        SharedMethods.checkIfLoggedIn()
-            .then((result) => {
-                if (result) {
-                    this.$router.push("/profile");
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        UserService.isLoggedIn().then((result) => {
+            if (result) {
+                this.$router.push("/user/" + result.user.username);
+            }
+        });
 
         SharedMethods.loadPage();
     },
@@ -248,7 +244,6 @@ input::placeholder {
 .form_field {
     width: 75%;
     padding-top: 12px;
-    
 }
 .form_field::-webkit-input-placeholder {
     opacity: 0.5;
