@@ -27,7 +27,7 @@
                         <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                     </svg>
                 </router-link>
-                <router-link v-if="isLoggedIn" to='/profile' class='static_link profile_pic'>
+                <router-link v-if="isLoggedIn" :to="userRoute" class='static_link profile_pic'>
                     <img src="../assets/profilePlaceholder.png" alt="profile_pic" style="width: 50px;">
                 </router-link>
             </div>
@@ -55,7 +55,7 @@
                             <router-link v-if="isLoggedIn" to='/notifications' class='static_link'>
                                 <p>Notifications</p>
                             </router-link>
-                            <router-link v-if="isLoggedIn" to='/profile' class='static_link profile_pic'>
+                            <router-link v-if="isLoggedIn" :to='userRoute' class='static_link profile_pic'>
                                 <p>Profile</p>
                             </router-link>
 
@@ -80,7 +80,6 @@ import GlobalComponents from "@/components/global/GlobalComponents.js";
 import NavBarSearch from "./NavBarSearch.vue";
 import UserService from "../services/user.service";
 
-
 let auth;
 try {
     auth = /true/.test(
@@ -104,6 +103,8 @@ export default {
     data() {
         return {
             isLoggedIn: auth,
+            username: "",
+            userRoute: "",
         };
     },
     components: {
@@ -114,6 +115,11 @@ export default {
         SharedMethods.setLoginStateCookie();
     },
     created() {
+        UserService.isLoggedIn().then((result) => {
+            this.username = result.user.username;
+            this.userRoute = "/user/" + this.username;
+        });
+
         EventBus.$on("isLoggedIn", (flag) => {
             if (flag) {
                 auth = true;
@@ -130,29 +136,37 @@ export default {
         },
         toggleMenu() {
             // No idea if they are called grandparents, but its the parent of the parent
-            const checkBoxGrandparent = document.getElementById("burger_menu_checkbox").parentElement.parentElement
+            const checkBoxGrandparent = document.getElementById(
+                "burger_menu_checkbox"
+            ).parentElement.parentElement;
             const screenBlur = document.getElementById("burger_menu_blur");
 
             // toggle burger menu screen blur
-            if (window.getComputedStyle(screenBlur).display === 'none') {
-                document.getElementById("burger_menu_blur").style.display = 'block';
-            }else {
-                document.getElementById("burger_menu_blur").style.display = 'none';
+            if (window.getComputedStyle(screenBlur).display === "none") {
+                document.getElementById("burger_menu_blur").style.display =
+                    "block";
+            } else {
+                document.getElementById("burger_menu_blur").style.display =
+                    "none";
             }
 
             if (document.getElementById("burger_menu_checkbox").checked) {
-                document.getElementById("burger_icon_placeholder").style.display = "flex";
-                checkBoxGrandparent.style.position = 'fixed'; 
-                checkBoxGrandparent.style.height = 'var(--header-height)';     
-            }else{
-                document.getElementById("burger_icon_placeholder").style.display = "none";
-                checkBoxGrandparent.style.position = 'static';
-                checkBoxGrandparent.style.height = '100%';
+                document.getElementById(
+                    "burger_icon_placeholder"
+                ).style.display = "flex";
+                checkBoxGrandparent.style.position = "fixed";
+                checkBoxGrandparent.style.height = "var(--header-height)";
+            } else {
+                document.getElementById(
+                    "burger_icon_placeholder"
+                ).style.display = "none";
+                checkBoxGrandparent.style.position = "static";
+                checkBoxGrandparent.style.height = "100%";
             }
         },
         hideBurgerMenu() {
             document.getElementById("burger_menu_checkbox").click();
-        }
+        },
     },
 };
 </script>
@@ -169,13 +183,12 @@ export default {
 }
 @keyframes opacityFader {
     from {
-        background-color:rgba(0, 0, 0, 0);
+        background-color: rgba(0, 0, 0, 0);
     }
     to {
-        background-color:rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.5);
     }
 }
-
 
 body {
     overflow-x: hidden;
@@ -266,7 +279,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color:rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 10;
 }
 
