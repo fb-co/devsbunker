@@ -9,8 +9,8 @@
 <script>
 import NavBar from "@/components/NavBar";
 import SharedMethods from "@/utils/shared";
-import ProfileMobile from "../Profile/ProfileMobile.vue";
-import ProfileDesktop from "../Profile/ProfileDesktop.vue";
+import ProfileMobile from "./mobile/ProfileOwner.vue";
+import ProfileDesktop from "./desktop/ProfileOwner.vue";
 import ScreenType from "@/utils/screenType.js";
 
 export default {
