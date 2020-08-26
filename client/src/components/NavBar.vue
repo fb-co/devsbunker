@@ -75,21 +75,10 @@
 
 <script>
 import EventBus from "../utils/EventBus";
-import SharedMethods from "../utils/shared";
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import NavBarSearch from "./NavBarSearch.vue";
 import UserService from "../services/user.service";
-
-let auth;
-try {
-    auth = /true/.test(
-        atob(document.cookie.replace(/bGk/g, "").replace(/=/g, ""))
-    )
-        ? true
-        : false;
-} catch {
-    auth = false;
-}
+import CookiesService from "../services/cookies.service";
 
 export default {
     props: {
@@ -102,7 +91,7 @@ export default {
     },
     data() {
         return {
-            isLoggedIn: auth,
+            isLoggedIn: undefined,
             username: "",
             userRoute: "",
         };
@@ -111,20 +100,27 @@ export default {
         ...GlobalComponents,
         NavBarSearch,
     },
-    beforeCreate() {
-        SharedMethods.setLoginStateCookie();
-    },
+
     created() {
+        let cookie = CookiesService.getCookie(this.$cookies, "li");
+
+        if (cookie.li === "true") {
+            this.isLoggedIn = true;
+        } else {
+            this.isLoggedIn = false;
+        }
         UserService.isLoggedIn().then((result) => {
-            this.username = result.user.username;
-            this.userRoute = "/user/" + this.username;
+            if (result.user) {
+                this.username = result.user.username;
+                this.userRoute = "/user/" + this.username;
+            }
         });
 
         EventBus.$on("isLoggedIn", (flag) => {
             if (flag) {
-                auth = true;
+                this.isLoggedIn = true;
             } else {
-                auth = false;
+                this.isLoggedIn = false;
             }
         });
     },

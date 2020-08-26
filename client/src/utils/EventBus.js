@@ -3,6 +3,8 @@
     broadcast data, in this case events, between components (parent to child, child to parent and child to child).
 */
 import Vue from 'vue';
+import CookiesService from "../services/cookies.service";
+
 
 const EventBus = new Vue({
     methods: {
@@ -10,7 +12,7 @@ const EventBus = new Vue({
         broadcastLoginState(flag) {
             this.$emit('isLoggedIn', flag);
             // li stands for 'logged in'
-            document.cookie = btoa('li') + '=' + btoa(flag);
+            CookiesService.setCookie(this.$cookies, 'li', flag);
         }
     }
 });
