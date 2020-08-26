@@ -7,8 +7,8 @@
 
                     <!-- not all users will have the verified tag, this is temp -->
                     <p class="username">THE_JACK <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-check-fll" fill="#3C93D2" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984a.5.5 0 0 0-.708-.708L7 8.793 5.854 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
-                    </svg></p>
+                            <path fill-rule="evenodd" d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984a.5.5 0 0 0-.708-.708L7 8.793 5.854 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                        </svg></p>
 
                     <div class="follow_container">
                         <div class="follow_cont">
@@ -104,13 +104,26 @@
                     </div>
                 </div>
             </div>
-            <div class="content_box"></div>
+            <div class="content_box">
+                <button @click="logout">Logout</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-export default {};
+import UserService from "@/services/user.service";
+import EventBus from "@/utils/EventBus";
+
+export default {
+    methods: {
+        logout() {
+            UserService.logout();
+            EventBus.broadcastLoginState(false); // broadcasting that the user just logged out
+            this.$router.push("/");
+        },
+    },
+};
 </script>
 
 <style scoped>
@@ -233,7 +246,7 @@ export default {};
     font-size: 18px;
 }
 
-.follow_container{
+.follow_container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -256,10 +269,9 @@ export default {};
 .edit_link_container a {
     display: inline-block;
     text-decoration: none;
-    color:#fff;
+    color: #fff;
     background-color: var(--main-btn-color);
     padding: 5px 20px 5px 20px;
     border-radius: 20px;
 }
-
 </style>
