@@ -116,6 +116,7 @@
 
 <script>
 import UserService from "../services/user.service";
+
 import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
 import EventBus from "../utils/EventBus";
@@ -126,7 +127,7 @@ import Loading from "@/components/Loading";
 export default {
     created() {
         UserService.isLoggedIn().then((result) => {
-            if (result) {
+            if (result.user) {
                 this.$router.push("/user/" + result.user.username);
             }
         });

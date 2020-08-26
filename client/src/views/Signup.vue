@@ -106,7 +106,7 @@ import Loading from "@/components/Loading";
 export default {
     created() {
         UserService.isLoggedIn().then((result) => {
-            if (result) {
+            if (result.user) {
                 this.$router.push("/user/" + result.user.username);
             }
         });
