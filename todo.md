@@ -32,7 +32,7 @@ Frontend
 Glitches
 
 
-- [ ] if a logged in user refreshes the page the profile link in the navbar and in the burger disappears, Login and Signup take its place (like if the user was not logged in)
+- [x] if a logged in user refreshes the page the profile link in the navbar and in the burger disappears, Login and Signup take its place (like if the user was not logged in)
 - [ ] Fix browser back arrow button in some pages after 404 
 - [x] Fix Hamburger Menu
 - [x] Random scroll space on bottom of login/signup cards on mobile
