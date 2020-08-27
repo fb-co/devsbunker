@@ -130,7 +130,7 @@ body {
 
 /* Apply this to an inline icon to put some space between the text and the icon */
 .inline-icon-spacer {
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 /* disable highlight text for some text */
