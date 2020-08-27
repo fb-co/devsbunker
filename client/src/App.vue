@@ -33,6 +33,7 @@
 
     /* profile page */
     --profile-option-color: #656565;
+    --hover-effect: linear-gradient(90deg, black 3%, #2e2e2e 100%);
 }
 
 ::selection {

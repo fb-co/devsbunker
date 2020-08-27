@@ -185,11 +185,7 @@ export default {
 
 .link_item:hover {
     border-left: 3px solid var(--main-btn-color);
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 1) 3%,
-        rgba(1, 135, 175, 0) 100%
-    );
+    background: var(--hover-effect);
 }
 
 .link_item:hover a {
