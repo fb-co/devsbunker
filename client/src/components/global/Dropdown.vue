@@ -1,19 +1,16 @@
+<!-- As of now the content box cannot contain any p tags -->
 <template>
     <div id="component_container" :style='cssProps'> 
-        <div class='button_container'>
-            <div>
-                <p class='relative_vertical_center main_label'>{{ label }}</p>
-            </div>
+        <div class="label_container">
+            <p class="label">{{ label }}</p>
             <svg class="inline-icon-spacer relative_vertical_center" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
             </svg>
         </div>
-        <div class='dropdown_container'>
-            <ul class='main_list'>
-                <slot>
+        <div class="content">
+            <slot>
 
-                </slot>
-            </ul>    
+            </slot>
         </div>
     </div>    
 </template>
@@ -38,64 +35,56 @@ export default {
 </script>
 
 <style scoped>
-    .button_container:hover > div > .main_label {
-        font-weight: bold;    
-        cursor: pointer;
-    }
-    .button_container:hover + .dropdown_container {
+    .label_container {
         display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 4px;
     }
-    .dropdown_container:hover {
+    .label {
         display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .content {
+        display: none;
+        box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.5);
+        position: relative;
+        z-index: 1;
     }
 
-    .button_container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-    }
-    .dropdown_container {
-        display: none;
-        flex-direction: row;
-        justify-content: center;
-        background-color: var(--secondary-color);
-        width: 100%;
-    }
-    .main_list {
+    /* Functionality */
+
+    .content:hover{
         display: block;
-        flex-direction: column;
-        list-style: none;
-        width: 100%;
-        height: 100%;
     }
-    .main_list li {
-        display: inline-block;
-        width: 100%;
-        box-sizing: border-box;
+    .label_container:hover + .content {
+        display: block;
     }
-    .main_list li a {
-        display: inline-block;
-        text-decoration: none;
-        width: 100%;
-        padding: var(--link-spacing);
+    .label_container:hover {
+        font-weight: bold;
     }
-    .main_list li a:hover {
-        cursor: pointer;
-    }
-    .main_list li button {
-        display: inline-block;
-        text-decoration: none;
+    
+
+    .content > * {
+        height: var(--link-spacing);
         width: 100%;
         border: none;
-        padding: var(--link-spacing);
+        text-align: center;
+        font-size: 15px;
+        font-family: rubik;
+        background-color: transparent;
+        color: var(--main-font-color);
     }
-    .main_list li button:focus {
-        outline: none;
-    }
-    .main_list li button:hover {
-        cursor: pointer;
+    .content > *:hover {
         font-weight: bold;
+        cursor: pointer;
+    }
+
+    #component_container:hover {
+        font-weight: bold;
+        cursor: pointer;
     }
 </style>
