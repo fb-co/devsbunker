@@ -56,7 +56,7 @@ export default {
     position: relative;
     z-index: 1;
 
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
 /* Functionality */
@@ -84,6 +84,9 @@ export default {
 .content > *:hover {
     color: var(--main-font-color);
     cursor: pointer;
+}
+.content > *:focus {
+    outline: none;
 }
 
 #component_container:hover {
