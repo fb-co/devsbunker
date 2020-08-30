@@ -4,6 +4,9 @@
 */
 
 import ApiService from './api.service';
+import {
+  store
+} from '../store/store';
 
 const UserService = {
   validateCreds: function (username, email, password) {
@@ -33,6 +36,8 @@ const UserService = {
 
   logout: function () {
     this.deleteAuthToken();
+    store.commit('change', false);
+
   },
 
   getAuthToken: function () {

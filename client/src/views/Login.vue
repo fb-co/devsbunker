@@ -118,7 +118,6 @@ import UserService from "../services/user.service";
 
 import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
-import EventBus from "../utils/EventBus";
 
 import NavBar from "@/components/NavBar";
 import Loading from "@/components/Loading";
@@ -161,7 +160,6 @@ export default {
             } else {
                 this.errMessage = "";
                 localStorage.setItem("token", result.token);
-                EventBus.broadcastLoginState(true); // emitting the event that the user logged in
                 this.$router.push("/");
             }
         },
@@ -175,7 +173,7 @@ export default {
                 element.type = "password";
                 this.hidePassword = false;
             }
-        }
+        },
     },
 };
 </script>

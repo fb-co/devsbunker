@@ -1,7 +1,7 @@
 <template>
     <div class="menu_container no_select" :style="style">
-        <div class='burger_blur' id="burger_menu_blur" @click="hideBurgerMenu()"></div> <!-- Darkens the screen for the burger menu -->
 
+        <div class='burger_blur' id="burger_menu_blur" @click="hideBurgerMenu()"></div> <!-- Darkens the screen for the burger menu -->
         <div class='logo_container'>
             <router-link to="/" class="menu_logo">
                 <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
@@ -74,11 +74,9 @@
 </template>
 
 <script>
-import EventBus from "../utils/EventBus";
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import NavBarSearch from "./NavBarSearch.vue";
 import UserService from "../services/user.service";
-import CookiesService from "../services/cookies.service";
 
 export default {
     props: {
@@ -91,7 +89,6 @@ export default {
     },
     data() {
         return {
-            isLoggedIn: undefined,
             username: "",
             userRoute: "",
         };
@@ -102,33 +99,21 @@ export default {
     },
 
     created() {
-        let cookie = CookiesService.getCookie(this.$cookies, "li");
-
-        if (cookie.li === "true") {
-            this.isLoggedIn = true;
-        } else {
-            this.isLoggedIn = false;
-        }
         UserService.isLoggedIn().then((result) => {
             if (result.user) {
                 this.username = result.user.username;
                 this.userRoute = "/user/" + this.username;
             }
         });
-
-        EventBus.$on("isLoggedIn", (flag) => {
-            if (flag) {
-                this.isLoggedIn = true;
-            } else {
-                this.isLoggedIn = false;
-            }
-        });
     },
     methods: {
         logout() {
             UserService.logout();
-            EventBus.broadcastLoginState(false); // broadcasting that the user just logged out
-            this.$router.push("/");
+            if (this.$route.path != "/") {
+                this.$router.push("/");
+            } else {
+                this.hideBurgerMenu();
+            }
         },
         toggleMenu() {
             // No idea if they are called grandparents, but its the parent of the parent

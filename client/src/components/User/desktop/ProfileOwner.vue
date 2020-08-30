@@ -113,13 +113,11 @@
 
 <script>
 import UserService from "@/services/user.service";
-import EventBus from "@/utils/EventBus";
 
 export default {
     methods: {
         logout() {
             UserService.logout();
-            EventBus.broadcastLoginState(false); // broadcasting that the user just logged out
             this.$router.push("/");
         },
     },
