@@ -9,7 +9,7 @@ import UserProfile from "@/components/User/UserProfile.vue";
 import MyUserProfile from "@/components/User/MyUserProfile.vue";
 import Loading from "@/components/Loading.vue";
 
-import UserService from "@/services/user.service";
+import UserService from "../services/user.service";
 
 export default {
     // mapping components to a value
@@ -24,8 +24,9 @@ export default {
             isLoggedInUser: "c_0", // starts at loading state
         };
     },
+    async created() {
+        this.$store.dispatch('setUsername');  
 
-    created() {
         UserService.isLoggedIn().then((result) => {
             if (result.user) {
                 const username = result.user.username;
@@ -36,7 +37,7 @@ export default {
                     this.isLoggedInUser = "c_1"; // the user is visiting someone else
                 }
             } else {
-                this.isLoggedInUser = "c_1"; // the user is not logged in so he/she is visiting someone
+                this.isLoggedInUser = "c_1"; // not logged in and visiting
             }
         });
     },

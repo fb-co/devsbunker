@@ -99,7 +99,7 @@ const SharedMethods = {
   loadPage: function () {
     store.dispatch('setLoggedInState');
     this.initTheme();
-  }
+  },
 };
 
 export default SharedMethods
