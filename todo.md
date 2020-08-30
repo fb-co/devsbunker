@@ -45,3 +45,4 @@ Glitches
 - [x] If burger menu not closed when page is expanded, when you shrink the page again it instantly opens the burger menu again
 - [ ] Cant use the back arrow at profile page (sometimes)
 - [x] Cant Highlight text inside navbar and burger menu search inputs only on dark theme
+- [ ] Profile page mobile support stopped working for some reason
