@@ -20,20 +20,20 @@
                         <circle cx="12" cy="12" r="9" />
                     </svg>
                 </router-link>
-                <router-link v-if="isLoggedIn" to='/notifications' class='static_link'>
+                <router-link v-if="$store.getters.isLoggedIn" to='/notifications' class='static_link'>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" />
                         <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                         <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                     </svg>
                 </router-link>
-                <router-link v-if="isLoggedIn" :to="userRoute" class='static_link profile_pic'>
+                <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class='static_link profile_pic'>
                     <img src="../assets/profilePlaceholder.png" alt="profile_pic" style="width: 50px;">
                 </router-link>
             </div>
             <div class='burger_nav_links'>
-                <router-link v-if="!isLoggedIn" to="/login" class='burger_link desktop_only'>Login</router-link>
-                <router-link v-if="!isLoggedIn" to="/signup" class='burger_link desktop_only'>Sign-up</router-link>
+                <router-link v-if="!$store.getters.isLoggedIn" to="/login" class='burger_link desktop_only'>Login</router-link>
+                <router-link v-if="!$store.getters.isLoggedIn" to="/signup" class='burger_link desktop_only'>Sign-up</router-link>
             </div>
             <div id="burger_icon_placeholder"></div> <!-- fills in the space of the actual burger icon when the burger menu is opened and is given a fixed pos -->
             <div class="burger_menu_container">
@@ -52,19 +52,19 @@
                             <router-link to='/market'>Projects</router-link>
                             <router-link to='/about'>About</router-link>
 
-                            <router-link v-if="isLoggedIn" to='/notifications' class='static_link'>
+                            <router-link v-if="$store.getters.isLoggedIn" to='/notifications' class='static_link'>
                                 <p>Notifications</p>
                             </router-link>
-                            <router-link v-if="isLoggedIn" :to='userRoute' class='static_link profile_pic'>
+                            <router-link v-if="$store.getters.isLoggedIn" :to='userRoute' class='static_link profile_pic'>
                                 <p>Profile</p>
                             </router-link>
 
                             <router-link to='/settings/account'>Settings</router-link>
 
-                            <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
-                            <router-link v-if="!isLoggedIn" to="/signup">Sign-up</router-link>
+                            <router-link v-if="!$store.getters.isLoggedIn" to="/login">Login</router-link>
+                            <router-link v-if="!$store.getters.isLoggedIn" to="/signup">Sign-up</router-link>
 
-                            <button v-if="isLoggedIn" class="logout_btn" @click="logout()">Logout</button>
+                            <button v-if="$store.getters.isLoggedIn" class="logout_btn" @click="logout()">Logout</button>
                         </div>
                     </div>
                 </div>
