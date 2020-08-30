@@ -65,6 +65,8 @@
 
                 <input type="submit" value="Login">
 
+                <button @click="testFunction()">TEST VUEX STATE</button>
+                <p>Vuex Logged In State: {{ $store.getters.isLoggedIn }}</p>
             </form>
 
             <div class="otherOption">
@@ -177,6 +179,9 @@ export default {
                 this.hidePassword = false;
             }
         },
+        testFunction() {
+            this.$store.commit('change', true);
+        }
     },
 };
 </script>
