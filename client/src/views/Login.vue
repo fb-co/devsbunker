@@ -64,9 +64,6 @@
                 <router-link to='/profile/reset-password' id='forgot_link' class='no_select'>Forgot Password?</router-link>
 
                 <input type="submit" value="Login">
-
-                <button @click="testFunction()">TEST VUEX STATE</button>
-                <p>Vuex Logged In State: {{ $store.getters.isLoggedIn }}</p>
             </form>
 
             <div class="otherOption">
@@ -178,9 +175,6 @@ export default {
                 element.type = "password";
                 this.hidePassword = false;
             }
-        },
-        testFunction() {
-            this.$store.commit('change', true);
         }
     },
 };

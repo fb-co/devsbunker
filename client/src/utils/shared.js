@@ -1,4 +1,5 @@
 import UserService from "../services/user.service";
+import { store } from "../store/store.js";
 
 const Themes = {
   light: {
@@ -96,6 +97,7 @@ const SharedMethods = {
   },
   // Call this function when loading any page
   loadPage: function () {
+    store.dispatch('setLoggedInState');
     this.initTheme();
   }
 };

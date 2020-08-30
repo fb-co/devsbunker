@@ -1,6 +1,7 @@
 <template>
     <div class="pageContainer">
         <NavBar></NavBar>
+        <p>Vuex Logged In State: {{ $store.getters.isLoggedIn }}</p>
     </div>
 </template>
 
@@ -14,7 +15,7 @@ export default {
     },
     components: {
         NavBar,
-    },
+    }
 };
 </script>
 

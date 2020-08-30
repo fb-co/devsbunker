@@ -9,7 +9,6 @@ Vue.use(VueCookies);
 Vue.$cookies.config('30d');
 Vue.config.productionTip = false;
 
-
 new Vue({
   router,
   store,
