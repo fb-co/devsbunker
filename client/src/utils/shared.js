@@ -101,10 +101,6 @@ const SharedMethods = {
   loadPage: function () {
     store.dispatch('setLoggedInState');
     this.initTheme();
-  },
-  updateUsername: async function () {
-    await store.dispatch('setUsername');
-    return store.getters.username;
   }
 };
 

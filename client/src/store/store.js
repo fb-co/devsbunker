@@ -32,19 +32,15 @@ export const store = new Vuex.Store({
                 commit('changeLoggedInState', result);
             });
         },
-        async setUsername({
+        setUsername({
             commit
         }) {
-
-            const result = await UserService.isLoggedIn();
-            if (result.user) {
-                commit('changeLoggedInState', result.user.username);
-            } else {
-                commit('changeUsername', undefined);
-            }
+            UserService.isLoggedIn().then((result) => {
+                commit('changeUsername', result.user.username)
+            });
         }
     }
-})
+});
 
 /*
 

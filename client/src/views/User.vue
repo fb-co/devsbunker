@@ -9,7 +9,7 @@ import UserProfile from "@/components/User/UserProfile.vue";
 import MyUserProfile from "@/components/User/MyUserProfile.vue";
 import Loading from "@/components/Loading.vue";
 
-import SharedMethods from "@/utils/shared";
+import UserService from "../services/user.service";
 
 export default {
     // mapping components to a value
@@ -25,17 +25,18 @@ export default {
         };
     },
     async created() {
-        SharedMethods.updateUsername().then((result) => {
-            console.log(result);
-            if (result) {
-                const username = result;
+        this.$store.dispatch("setUsername");
 
+        UserService.isLoggedIn().then((result) => {
+            if (result.user) {
+                const username = result.user.username;
                 if (username === this.$route.params.username) {
                     this.isLoggedInUser = "c_2"; // the user is visiting his account
                 } else {
                     this.isLoggedInUser = "c_1"; // the user is visiting someone else
                 }
             } else {
+                this.isLoggedInUser = "c_1"; // the user is not logged in so he/she is visiting someone
                 this.isLoggedInUser = "c_1"; // not logged in and visiting
             }
         });
