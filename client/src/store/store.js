@@ -24,16 +24,41 @@ export const store = new Vuex.Store({
         username: state => state.username
     },
     actions: {
-        setLoggedInState ({ commit }) {
+        setLoggedInState({
+            commit
+        }) {
             SharedMethods.checkIfLoggedIn().then((result) => {
                 console.log("Logged In: " + result);
                 commit('changeLoggedInState', result);
             });
         },
-        setUsername ({ commit }) {
-            UserService.isLoggedIn().then((result) => {
-                commit('changeUsername', result.user.username)
-            });    
+        async setUsername({
+            commit
+        }) {
+
+            const result = await UserService.isLoggedIn();
+            if (result.user) {
+                commit('changeLoggedInState', result.user.username);
+            } else {
+                commit('changeUsername', undefined);
+            }
         }
     }
 })
+
+/*
+
+note:
+i think we can do something like this instead of having two actions
+
+    const result = await UserService.isLoggedIn();
+
+    if (result.user) {
+        commit('changeUsername', result.user.username);
+        commit('changeLoggedInState', true);
+    } else {
+        commit('changeUsername', undefined);
+        commit('changeLoggedInState', false);
+    }
+
+*/

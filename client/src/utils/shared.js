@@ -1,5 +1,7 @@
 import UserService from "../services/user.service";
-import { store } from "../store/store.js";
+import {
+  store
+} from "../store/store.js";
 
 const Themes = {
   light: {
@@ -100,6 +102,10 @@ const SharedMethods = {
     store.dispatch('setLoggedInState');
     this.initTheme();
   },
+  updateUsername: async function () {
+    await store.dispatch('setUsername');
+    return store.getters.username;
+  }
 };
 
 export default SharedMethods
