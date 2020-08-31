@@ -36,7 +36,7 @@ const UserService = {
 
   logout: function () {
     this.deleteAuthToken();
-    store.commit('change', false);
+    store.commit('changeLoggedInState', false);
 
   },
 
