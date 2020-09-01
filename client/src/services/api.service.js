@@ -6,7 +6,7 @@
 const LOGIN_API_URL = process.env.VUE_APP_LOGIN_API_URL;
 const SIGNUP_API_URL = process.env.VUE_APP_SIGNUP_API_URL;
 const AUTH_API_URL = process.env.VUE_APP_AUTH_API_URL;
-const FETCH_USER_API_URL = process.env.VUE_FETCH_USER_API; // not sure if its overkill to make an entire new env file
+const FETCH_USER_API_URL = process.env.VUE_APP_FETCH_USER_API_URL;
 
 const ApiService = {
   sendCredsToAPI: async function (creds) {
@@ -39,17 +39,10 @@ const ApiService = {
     return response.json();
   },
 
-
-  // DONT KNOW IF I NEED SOME SORT OF HEADERS HERE
-  findUserFromAPI: async function (foreign_username) { 
-    const requestData = {
-      foreign_username: foreign_username
-    }
-    
-    const response = await fetch(FETCH_USER_API_URL, {
-      method: 'POST',
-      body: JSON.stringify(requestData)
-    });
+  findUserDetails: async function (foreign_username) {
+    const response = await fetch(FETCH_USER_API_URL + new URLSearchParams({
+      user: foreign_username
+    }));
 
     return response.json();
   }

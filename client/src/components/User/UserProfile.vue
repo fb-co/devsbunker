@@ -1,32 +1,39 @@
 <template>
     <div>
         <NavBar />
-        <p>you are visiting <span style="color: red">{{ username }}</span> <br>but you are NOT <span style="color: red">{{ username }}</span> </p>
-        <br><br>
-        <p>Eventually we will have to check if <span style="color: red">{{ username }}</span> actually exists</p>
+        <p v-if="username">you are visiting <span style="color: red">{{ username }}</span> <br>but you are NOT <span style="color: red">{{ username }}</span> </p>
+        <p v-else>This user doesn't exists</p>
+
+        <p v-if="username"> <br> this is for you jak :* <br> {{ userObject }}</p>
     </div>
 </template>
 
 <script>
 import NavBar from "@/components/NavBar";
 import SharedMethods from "@/utils/shared";
+import UserService from "@/services/user.service";
 
 export default {
     data() {
         return {
             username: "",
+            userObject: undefined,
         };
     },
     components: {
-        NavBar
+        NavBar,
     },
     created() {
         SharedMethods.loadPage();
-
-        // check if the username requested even exists
-        
-
         this.username = this.$route.params.username;
+
+        UserService.getOtherUserData(this.username).then((response) => {
+            if (!response.user) {
+                this.username = null;
+            } else {
+                this.userObject = response.user;
+            }
+        });
     },
 };
 </script>

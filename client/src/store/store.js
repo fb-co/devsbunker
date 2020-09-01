@@ -36,7 +36,7 @@ export const store = new Vuex.Store({
             commit
         }) {
             UserService.isLoggedIn().then((result) => {
-                commit('changeUsername', result.user.username)
+                if (result.user) commit('changeUsername', result.user.username)
             });
         }
     }

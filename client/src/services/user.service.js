@@ -53,8 +53,8 @@ const UserService = {
     return await ApiService.isAuthenticated(token);
   },
 
-  getOtherUserData: async function() {
-    
+  getOtherUserData: async function (foreign_username) {
+    return await ApiService.findUserDetails(foreign_username);
   }
 };
 
