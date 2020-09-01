@@ -8,7 +8,7 @@ exports.createWebToken = (user) => {
 
     try {
         return jwt.sign(payload, process.env.LOGIN_SECRET, {
-            expiresIn: '2d'
+            expiresIn: '900' // this is 15 minutes in seconds
         });
     } catch {
         return undefined;

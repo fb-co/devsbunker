@@ -45,11 +45,13 @@ db.once('open', () => console.log(`Connected to database [${mongoURI}]`));
 const home = require('./components/home/home.route');
 const about = require('./components/about/about.route');
 const user = require('./components/user/user.route');
+const profile = require('./components/profile/profile.route');
 const settings = require('./components/settings/settings.route');
 
 // route handling
 app.use('/', home);
 app.use('/about', about);
+app.use('/profile', profile);
 app.use('/settings', settings);
 app.use('/user', user);
 
