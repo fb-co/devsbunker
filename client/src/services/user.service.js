@@ -51,6 +51,10 @@ const UserService = {
   isLoggedIn: async function () {
     const token = this.getAuthToken();
     return await ApiService.isAuthenticated(token);
+  },
+
+  getOtherUserData: async function() {
+    
   }
 };
 
