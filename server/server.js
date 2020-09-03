@@ -10,7 +10,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const methodOverride = require('method-override');
 
-const tokenHandler = require('./components/tokens/tokenHandler');
+const TokenHandler = require('./components/tokens/TokenHandler');
+const tokenHandler = new TokenHandler();
 
 // Middlewares
 app.use(morgan('dev')); // change to common for production

@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
-const Token = require('../tokens/tokenHandler');
+const TokenHandler = require('../tokens/TokenHandler');
+const tokenHandler = new TokenHandler();
+
 const User = require('./user.model');
 
 // Local Middleware
@@ -16,7 +18,7 @@ function loginValidUser(req, res, next, user) {
     bcrypt.compare(req.body.password, user.password).then((result) => {
         if (result) {
             // set the JWT token (payload = userByEmail id and username) 
-            const loginToken = Token.createWebToken(user);
+            const loginToken = tokenHandler.createWebToken(user);
 
             if (loginToken) {
                 res.json({

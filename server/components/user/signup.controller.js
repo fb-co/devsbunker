@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
-const Token = require('../tokens/tokenHandler');
+const TokenHandler = require('../tokens/TokenHandler');
+const tokenHandler = new TokenHandler();
+
 const User = require('../user/user.model');
 
 exports.getSignup = (req, res) => {
@@ -33,7 +35,7 @@ exports.signupUser = async (req, res, next) => {
         try {
             const newUser = await user.save();
 
-            const loginToken = Token.createWebToken(user);
+            const loginToken = tokenHandler.createWebToken(user);
 
             if (loginToken) {
                 res.json({
