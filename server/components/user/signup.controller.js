@@ -34,7 +34,7 @@ exports.signupUser = async (req, res, next) => {
         try {
             const newUser = await user.save();
 
-            const loginToken = TokenHandler.createWebToken(user);
+            const loginToken = TokenHandler.createAccessToken(user);
 
             if (loginToken) {
                 res.json({

@@ -17,7 +17,7 @@ function loginValidUser(req, res, next, user) {
     bcrypt.compare(req.body.password, user.password).then((result) => {
         if (result) {
             // set the JWT token (payload = userByEmail id and username) 
-            const loginToken = TokenHandler.createWebToken(user);
+            const loginToken = TokenHandler.createAccessToken(user);
 
             if (loginToken) {
                 res.json({
