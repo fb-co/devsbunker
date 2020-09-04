@@ -11,8 +11,8 @@ router.get('/login', login.getLogin);
 router.get('/signup', signup.getSignup);
 router.get('/auth', auth.isAuthorized);
 router.get('/find', userFinder.findUser);
-router.get('/refresh_token', tokens.getAccessToken);
 
+router.post('/refresh_token', tokens.getAccessToken);
 router.post('/signup', signup.signupUser);
 router.post('/login', login.loginUser);
 
