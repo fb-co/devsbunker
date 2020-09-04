@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const TokenHandler = require('../tokens/TokenHandler');
-const tokenHandler = new TokenHandler();
 
 const User = require('./user.model');
 
@@ -18,7 +17,7 @@ function loginValidUser(req, res, next, user) {
     bcrypt.compare(req.body.password, user.password).then((result) => {
         if (result) {
             // set the JWT token (payload = userByEmail id and username) 
-            const loginToken = tokenHandler.createWebToken(user);
+            const loginToken = TokenHandler.createWebToken(user);
 
             if (loginToken) {
                 res.json({

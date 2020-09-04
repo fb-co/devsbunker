@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 class TokenHandler {
-    createWebToken(user) {
+    static createWebToken(user) {
         const payload = {
             _id: user._id,
             username: user.username
@@ -16,7 +16,7 @@ class TokenHandler {
         }
     }
 
-    checkHeaderToken(req, res, next) {
+    static checkHeaderToken(req, res, next) {
         // checking the token in the req header
         const authHeader = req.get('authorization');
 
@@ -46,7 +46,7 @@ class TokenHandler {
     }
 
     // utility function that will be useful in the future
-    checkTokenDirectly(token) {
+    static checkTokenDirectly(token) {
         let username;
         jwt.verify(token, process.env.LOGIN_SECRET, (err, user) => {
             if (err) {

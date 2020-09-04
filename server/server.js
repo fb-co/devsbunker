@@ -11,7 +11,6 @@ const cors = require('cors');
 const methodOverride = require('method-override');
 
 const TokenHandler = require('./components/tokens/TokenHandler');
-const tokenHandler = new TokenHandler();
 
 // Middlewares
 app.use(morgan('dev')); // change to common for production
@@ -24,7 +23,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json())
 
-app.use(tokenHandler.checkHeaderToken); // checking token on every request
+app.use(TokenHandler.checkHeaderToken); // checking token on every request
 
 // Mongo URI
 mongoose.set('useNewUrlParser', true);
