@@ -7,7 +7,22 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+
 const cors = require('cors');
+const allowedOrigins = [`http://${process.env.HOST}:8080`, 'http://localhost:8080'];
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            console.log("[!] A disawllowed origin has tried to connect. [!]");
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    optionsSuccessStatus: 200,
+};
+
 const methodOverride = require('method-override');
 
 const TokenHandler = require('./components/tokens/TokenHandler');
@@ -16,7 +31,7 @@ const TokenHandler = require('./components/tokens/TokenHandler');
 app.use(morgan('dev')); // change to common for production
 app.use(helmet()); // secure headers
 app.use(methodOverride('_method')); // query string in order to make a delete req
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.urlencoded({
     extended: true
