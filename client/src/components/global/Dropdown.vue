@@ -1,13 +1,13 @@
 <!-- As of now the content box cannot contain any p tags -->
 <template>
-    <div class="component_container" :style='cssProps'>
-        <div class="label_container">
+    <div class="component_container" @mouseleave="show = false" :style='cssProps'>
+        <div class="label_container" @mouseover="show = true">
             <p class="label">{{ label }}</p>
             <svg class="inline-icon-spacer relative_vertical_center" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
             </svg>
         </div>
-        <div class="content">
+        <div class="content" :class="{showContent: show}" @click="show = !show">
             <slot>
 
             </slot>
@@ -32,6 +32,12 @@ export default {
             };
         },
     },
+
+    data() {
+        return {
+            show: false,
+        };
+    },
 };
 </script>
 
@@ -43,11 +49,13 @@ export default {
     width: 100%;
     height: 100%;
     border-radius: 4px;
+    z-index: 3;
 }
 .label {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    z-index: 0;
 }
 .content {
     display: none;
@@ -60,15 +68,12 @@ export default {
 }
 
 /* Functionality */
-
-.content:hover {
-    display: block;
-}
-.label_container:hover + .content {
-    display: block;
-}
 .label_container:hover {
     font-weight: bold;
+}
+
+.showContent {
+    display: block;
 }
 
 .content > * {
@@ -93,8 +98,4 @@ export default {
     font-weight: bold;
     cursor: pointer;
 }
-
-
-
-
 </style>
