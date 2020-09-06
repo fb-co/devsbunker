@@ -34,15 +34,24 @@ exports.signupUser = async (req, res, next) => {
         try {
             const newUser = await user.save();
 
-            const loginToken = TokenHandler.createAccessToken(user);
+            const accessToken = TokenHandler.createAccessToken(user);
+            const refreshToken = TokenHandler.createRefreshToken(user);
 
-            if (loginToken) {
+            if (accessToken && refreshToken) {
+
+                // setting refresh cookie
+                res.cookie('jid', refreshToken, {
+                    httpOnly: true,
+                    path: '/user/refresh_token',
+                    sameSite: 'Lax'
+                });
+
                 res.json({
-                    message: 'Successfully signed up.',
-                    token: loginToken
+                    message: 'Successfully logged in.',
+                    accessToken: accessToken
                 });
             } else {
-                failedSignup(res, next, 'Unable to create token');
+                failedLogin(res, next, 'Unable to create token.');
             }
 
         } catch (err) {
