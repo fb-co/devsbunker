@@ -35,7 +35,7 @@ export default {
     },
     methods: {
         isMobile() {
-            return ScreenType.isMobile(450);
+            return ScreenType.isMobile(950);
         },
     },
 };

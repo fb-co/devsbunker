@@ -62,7 +62,6 @@ export default {
 
     watch: {
         $route() {
-            console.log("called watcher");
             for (const item of Object.keys(this.active)) {
                 if (this.$route.params.section === item) {
                     this.clearActive();

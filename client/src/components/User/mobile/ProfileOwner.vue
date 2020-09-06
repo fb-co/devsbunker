@@ -21,6 +21,17 @@
                 </div>
             </div>
         </div>
+
+        <div class="personal_btn_container">
+            <div class="personal_btn">
+                <p class="personal_btn_link" @click="navigateTo('analytics')">Analytics</p>
+            </div>
+            <div class="personal_btn">
+                <p class="personal_btn_link" @click="navigateTo('projects')">Projects</p>
+            </div>
+        </div>
+
+        <!-- FOR THE VISITING ANOTHER USER PROFILE (KEEPING HERE UNTIL THEN)
         <div class="projects_tab">
             <div class="projects_tab_item">
                 <p id="projects_title">PROJECTS</p>
@@ -29,11 +40,19 @@
                 <router-link to='/' id="view_all_link">VIEW ALL</router-link>
             </div>
         </div>
+        -->
     </div>
 </template>
 
 <script>
-export default {};
+export default {
+    methods: {
+        navigateTo(elem) {
+            this.$router.push(this.$route.path + "/" + elem);
+            console.log(this.$route.path + "/" + elem);
+        }
+    }
+};
 </script>
 
 <style scoped>
@@ -43,12 +62,12 @@ export default {};
     height: 300px;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-    background-color: red;
+    background-color: transparent; /* Changed this to invisible for now because the red is giving me vision problems */
     z-index: 1;
 }
 .profile_card {
     position: relative;
-    top: -100px;
+    top: -200px; /* Change this to -100px when we put the banner back in */
     width: 90%;
     max-width: 500px;
     min-width: 250px;
@@ -91,16 +110,66 @@ export default {};
 .follow_amt {
     font-weight: bold;
 }
-.projects_tab {
-    width: 80%;
+
+.personal_btn_container {
     display: flex;
     flex-direction: row;
+    width: 80%;
+    max-width: 500px;
+    min-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -100px;
+    height: 50px;
+}
+.personal_btn_container div:first-child {
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.personal_btn_container div:last-child {
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.personal_btn {
+    height: 100%;
+    width: 50%;
+    cursor: pointer;
+    border: 1px solid var(--main-btn-color);
+}
+.personal_btn:hover {
+    background-color: var(--main-btn-color);
+    height: 100%;
+    width: 50%;
+}
+.personal_btn_link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
+    /*color: #fff;*/
+    color: var(--main-font-color);
+    height: 100%;
+    width: 100%;
+}
+
+
+/*  THESE SHOULD BE FOR THE VISITING ANOTHER USER PAGE (KEEPING HERE UNTIL I MAKE THAT)
+.projects_tab {
+    width: 80%;
+    max-width: 500px;
+    min-width: 250px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     margin-top: -60px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
 }
 .projects_tab_item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     width: 50%;
 }
 #projects_title {
@@ -119,6 +188,7 @@ export default {};
     padding: 10px;
     font-size: 11px;
 }
+*/
 
 input[type="submit"] {
     width: 200px;
