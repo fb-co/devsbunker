@@ -164,7 +164,7 @@ export default {
                 }, 1500);
             } else {
                 this.errMessage = "";
-                localStorage.setItem("accessToken", result.accessToken); // TO REMOVE
+                localStorage.setItem("accessToken", result.accessToken); // TO-REMOVE
                 this.$store.commit("refreshAccessToken", result.accessToken);
                 this.$router.push("/");
             }

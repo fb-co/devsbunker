@@ -17,7 +17,7 @@ export default {
         const response = await fetch(
             "http://192.168.1.51:5000/user/refresh_token",
             {
-                method: "GET",
+                method: "POST",
                 credentials: "include",
             }
         );
