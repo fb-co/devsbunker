@@ -23,6 +23,10 @@ export default {
         );
 
         console.log(await response.json());
+        console.log(
+            "access token in the store: ",
+            this.$store.getters.accessToken
+        );
     },
     mixins: [GeneralProperties],
     components: {

@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         isLoggedIn: false,
-        username: undefined
+        username: undefined,
+        accessToken: null,
     },
     mutations: {
         changeLoggedInState(state, isLoggedIn) {
@@ -17,11 +18,16 @@ export const store = new Vuex.Store({
         // If we have multiple things like email, description, etc. keep them seperate in case we ever need to update single ones.
         changeUsername(state, username) {
             state.username = username;
+        },
+
+        refreshAccessToken(state, token) {
+            state.accessToken = token;
         }
     },
     getters: {
         isLoggedIn: state => state.isLoggedIn,
-        username: state => state.username
+        username: state => state.username,
+        accessToken: state => state.accessToken,
     },
     actions: {
         setLoggedInState({
