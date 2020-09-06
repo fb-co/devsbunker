@@ -157,9 +157,14 @@ export default {
                 setTimeout(() => {
                     this.submitted = false;
                 }, 1500);
+            } else if (result.message === "Unable to create token.") {
+                this.errMessage = "Internal error. Try again later";
+                setTimeout(() => {
+                    this.submitted = false;
+                }, 1500);
             } else {
                 this.errMessage = "";
-                localStorage.setItem("token", result.token);
+                localStorage.setItem("accessToken", result.accessToken);
                 this.$router.push("/");
             }
         },

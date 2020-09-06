@@ -162,7 +162,7 @@ export default {
                         }, 1500);
                     } else {
                         this.errMessage = "";
-                        localStorage.setItem("token", result.token);
+                        localStorage.setItem("accessToken", result.accessToken);
                         this.$router.push("/");
                     }
                 } else {

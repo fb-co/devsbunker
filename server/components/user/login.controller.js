@@ -16,13 +16,21 @@ function failedLogin(res, next, msg) {
 function loginValidUser(req, res, next, user) {
     bcrypt.compare(req.body.password, user.password).then((result) => {
         if (result) {
-            // set the JWT token (payload = userByEmail id and username) 
-            const loginToken = TokenHandler.createAccessToken(user);
+            const accessToken = TokenHandler.createAccessToken(user);
+            const refreshToken = TokenHandler.createRefreshToken(user);
 
-            if (loginToken) {
+            if (accessToken && refreshToken) {
+
+                // setting refresh cookie
+                res.cookie('jid', refreshToken, {
+                    httpOnly: true,
+                    path: '/user/refresh_token',
+                    sameSite: 'Lax'
+                });
+
                 res.json({
                     message: 'Successfully logged in.',
-                    token: loginToken
+                    accessToken: accessToken
                 });
             } else {
                 failedLogin(res, next, 'Unable to create token.');

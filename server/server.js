@@ -21,6 +21,7 @@ const corsOptions = {
         }
     },
     optionsSuccessStatus: 200,
+    credentials: true
 };
 
 const methodOverride = require('method-override');
