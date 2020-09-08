@@ -23,16 +23,17 @@
         </div>
 
         <div class="personal_btn_container">
-            <div class="personal_btn">
+            <div class="personal_btn" :class="{ active_section: activeSection=='analytics' ? true : false }">
                 <p class="personal_btn_link" @click="navigateTo('analytics')">Analytics</p>
             </div>
-            <div class="personal_btn">
+            <div class="personal_btn" :class="{ active_section: activeSection=='projects' ? true : false }">
                 <p class="personal_btn_link" @click="navigateTo('projects')">Projects</p>
             </div>
         </div>
 
         <div class="dynamic_feed">
-            <ProjectSection />
+            <ProjectSection v-if="activeSection==='projects'" />
+            <AnalyticSection v-if="activeSection==='analytics'" />
         </div>
 
         <!-- FOR THE VISITING ANOTHER USER PROFILE (KEEPING HERE UNTIL THEN)
@@ -52,13 +53,17 @@
 import ProfileSections from './ProfileSections/mobile.profile.imports.js';
 
 export default {
+    data() {
+        return{
+            activeSection: "projects"
+        }
+    },
     components: {
         ...ProfileSections
     },
     methods: {
         navigateTo(elem) {
-            this.$router.push(this.$route.path + "/" + elem);
-            console.log(this.$route.path + "/" + elem);
+            this.activeSection = elem;
         }
     }
 };
@@ -160,7 +165,12 @@ export default {
     height: 100%;
     width: 100%;
 }
-
+.active_section {
+    background-color: var(--main-btn-color);    
+}
+.active_section > p {
+    color: #fff; 
+}
 .dynamic_feed {
     width: 80%;
     max-width: 500px;

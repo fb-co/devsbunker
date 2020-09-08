@@ -105,7 +105,7 @@
                 </div>
             </div>
             <div class="content_box">
-                <button @click="logout">Logout</button>
+                <!--<button @click="logout">Logout</button>-->
             </div>
         </div>
     </div>

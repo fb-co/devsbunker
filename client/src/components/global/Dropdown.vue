@@ -3,9 +3,11 @@
     <div class="component_container" @mouseleave="show = false" :style='cssProps'>
         <div class="label_container" @mouseover="show = true">
             <p class="label">{{ label }}</p>
-            <svg class="inline-icon-spacer relative_vertical_center" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
-            </svg>
+            <div class="vertical_flex_center">
+                <svg class="inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
+                </svg>
+            </div>
         </div>
         <div class="content" :class="{showContent: show}" @click="show = !show">
             <slot>
@@ -22,7 +24,7 @@ export default {
         spacing: {
             // amount of space between links
             type: String,
-            default: "10px",
+            default: "25px",
         },
     },
     computed: {

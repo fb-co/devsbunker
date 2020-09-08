@@ -1,11 +1,22 @@
 <template>
-    <div id="component_container">  
+    <div id="component_container">
+        <div class="dropdown_placeholder">
+            <div class="filter_dropdown_container">
+                <Dropdown label="Sort By" spacing="40px" class="filter_dropdown">
+                    <button>My Projects</button>
+                    <button>Purchases</button>
+                    <button>Downloaded Projects</button>
+                </Dropdown>
+            </div>
+        </div>
+        
         <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" />
     </div>
 </template>
 
 <script>
 import MobileProjectCard from '@/components/MobileProjectCard.vue';
+import GlobalComponents from "@/components/global/GlobalComponents.js";
 
 export default {
     data() {
@@ -43,7 +54,8 @@ export default {
         }
     },
     components: {
-        MobileProjectCard
+        MobileProjectCard,
+        ...GlobalComponents
     }
 }
 </script>
@@ -51,5 +63,19 @@ export default {
 <style scoped>
     #component_container {
         width: 100%;
+    }
+    .filter_dropdown_container {
+        position: absolute;
+        left: 50%;
+        width: 200px;
+        margin: 0 auto;
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+    .filter_dropdown{
+        height: 35px;
+    }
+    .dropdown_placeholder{
+        height: 60px;
     }
 </style>
