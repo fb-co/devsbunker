@@ -12,21 +12,6 @@ import GeneralProperties from "../mixins/general.mixin";
 export default {
     async created() {
         SharedMethods.loadPage();
-
-        // DEBUG
-        const response = await fetch(
-            "http://192.168.1.51:5000/user/refresh_token",
-            {
-                method: "POST",
-                credentials: "include",
-            }
-        );
-
-        console.log(await response.json());
-        console.log(
-            "access token in the store: ",
-            this.$store.getters.accessToken
-        );
     },
     mixins: [GeneralProperties],
     components: {

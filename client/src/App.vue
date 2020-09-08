@@ -1,9 +1,32 @@
 <template>
-    <div id="app">
+    <div id="app" v-if="!isFetching">
         <!--<NavBar />-->
         <router-view />
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            isFetching: true,
+        };
+    },
+
+    async beforeMount() {
+        const response = await fetch(process.env.VUE_APP_REFRESH_TOKEN, {
+            method: "POST",
+            credentials: "include",
+        });
+
+        const { accessToken } = await response.json();
+        this.$store.commit("refreshAccessToken", accessToken);
+        this.isFetching = false;
+
+        console.log("in store: ", this.$store.getters.accessToken);
+    },
+};
+</script>
 
 <style>
 * {
@@ -145,12 +168,4 @@ body {
 }
 </style>
 
-<script>
-//import NavBar from "@/components/NavBar";
 
-export default {
-    components: {
-        //NavBar
-    },
-};
-</script>
