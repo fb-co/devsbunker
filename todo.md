@@ -48,3 +48,4 @@ Glitches
 - [x] Cant Highlight text inside navbar and burger menu search inputs only on dark theme
 - [ ] Profile page mobile support stopped working for some reason
 - [ ] When visiting someone elses profile, and clicking on the profile picture in the navbar, it wont bring you back to your own profile
+- [ ] Logout button in the left sidebar routing does not work
