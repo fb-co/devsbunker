@@ -41,11 +41,11 @@ const UserService = {
   },
 
   getAuthToken: function () {
-    return localStorage.getItem('accessToken');
+    return store.getters.accessToken;
   },
 
   deleteAuthToken: function () {
-    localStorage.removeItem('accessToken');
+    store.commit('refreshAccessToken', null);
   },
 
   isLoggedIn: async function () {
