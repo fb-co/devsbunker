@@ -31,6 +31,10 @@
             </div>
         </div>
 
+        <div class="dynamic_feed">
+            <ProjectSection />
+        </div>
+
         <!-- FOR THE VISITING ANOTHER USER PROFILE (KEEPING HERE UNTIL THEN)
         <div class="projects_tab">
             <div class="projects_tab_item">
@@ -45,7 +49,12 @@
 </template>
 
 <script>
+import ProfileSections from './ProfileSections/mobile.profile.imports.js';
+
 export default {
+    components: {
+        ...ProfileSections
+    },
     methods: {
         navigateTo(elem) {
             this.$router.push(this.$route.path + "/" + elem);
@@ -72,7 +81,7 @@ export default {
     max-width: 500px;
     min-width: 250px;
     height: auto;
-    background-color: var(--main-color);
+    background-color: var(--general-card);
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
     border-radius: 20px;
@@ -150,6 +159,15 @@ export default {
     color: var(--main-font-color);
     height: 100%;
     width: 100%;
+}
+
+.dynamic_feed {
+    width: 80%;
+    max-width: 500px;
+    min-width: 250px;
+    margin-left: auto;
+    margin-right: auto; 
+    margin-top: 35px;
 }
 
 
