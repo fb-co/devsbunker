@@ -117,7 +117,9 @@ import UserService from "@/services/user.service";
 export default {
     methods: {
         logout() {
-            UserService.logout();
+            UserService.logout().then(response => {
+                console.log("logged out: ", response);
+            });
             this.$router.push("/");
         },
     },

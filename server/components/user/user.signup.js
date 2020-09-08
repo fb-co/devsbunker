@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const TokenHandler = require('../tokens/TokenHandler');
 
-const User = require('../user/user.model');
+const User = require('./user.model');
 
 exports.getSignup = (req, res) => {
     res.json({

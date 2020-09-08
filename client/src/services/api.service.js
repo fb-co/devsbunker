@@ -7,6 +7,7 @@ const LOGIN_API_URL = process.env.VUE_APP_LOGIN_API_URL;
 const SIGNUP_API_URL = process.env.VUE_APP_SIGNUP_API_URL;
 const AUTH_API_URL = process.env.VUE_APP_AUTH_API_URL;
 const FETCH_USER_API_URL = process.env.VUE_APP_FETCH_USER_API_URL;
+const LOGOUT_USER_API_URL = process.env.VUE_APP_LOGOUT_USER_API_URL;
 
 const ApiService = {
   sendCredsToAPI: async function (creds) {
@@ -44,6 +45,15 @@ const ApiService = {
     const response = await fetch(FETCH_USER_API_URL + new URLSearchParams({
       user: foreign_username
     }));
+
+    return response.json();
+  },
+
+  logoutUser: async function () {
+    const response = await fetch(LOGOUT_USER_API_URL, {
+      method: 'POST',
+      credentials: 'include'
+    });
 
     return response.json();
   }

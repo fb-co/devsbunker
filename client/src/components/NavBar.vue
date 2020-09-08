@@ -108,7 +108,9 @@ export default {
     },
     methods: {
         logout() {
-            UserService.logout();
+            UserService.logout().then(response => {
+                console.log("logged out: ", response);
+            });
             if (this.$route.path != "/") {
                 this.$router.push("/");
             } else {

@@ -34,10 +34,10 @@ const UserService = {
     return ApiService.sendCredsToAPI(creds);
   },
 
-  logout: function () {
+  logout: async function () {
     this.deleteAuthToken();
     store.commit('changeLoggedInState', false);
-
+    return await ApiService.logoutUser();
   },
 
   getAuthToken: function () {
