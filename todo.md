@@ -28,6 +28,7 @@ Frontend
 - [ ] error handling for the settings: if we pass a non valid setting like /settings/test it still displays stuff and not a 404
 - [x] change url dynamically based on selected setting option
 - [x] The theme changin icon (sun and moon) should be inverted to denote which theme the user is currently using
+- [ ] Make the first field in the login and signup pages be auto focused on when thep age is loaded
 
 Glitches
 
