@@ -2,10 +2,10 @@
     <div id="component_container">
         <div class="dropdown_placeholder">
             <div class="filter_dropdown_container">
-                <Dropdown label="Sort By" spacing="40px" class="filter_dropdown">
+                <Dropdown spacing="40px" class="filter_dropdown">
                     <button>My Projects</button>
                     <button>Purchases</button>
-                    <button>Downloaded Projects</button>
+                    <button>Downloaded</button>
                 </Dropdown>
             </div>
         </div>

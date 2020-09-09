@@ -9,8 +9,8 @@
             <div class='setting_cont'>
                 <div class='setting_container'>
                     <Dropdown spacing="50px" label="Public" class="visibility_dropdown" id='vis_dropdown'>
-                        <button @click="changeAccVisibility('Public')">Public</button>
-                        <button @click="changeAccVisibility('Private')">Private</button>
+                        <button>Public</button>
+                        <button>Private</button>
                     </Dropdown>
                 </div>
             </div>
@@ -23,11 +23,6 @@ import GlobalComponents from "@/components/global/GlobalComponents.js";
 export default {
     components: {
         ...GlobalComponents,
-    },
-    methods: {
-        changeAccVisibility(state) {
-            document.getElementById('vis_dropdown').querySelector('p').innerText = state;
-        }
     }
 };
 </script>

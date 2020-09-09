@@ -1,15 +1,16 @@
 <!-- As of now the content box cannot contain any p tags -->
+<!-- Dont enter a label prop and the component will assume the lable as the innerText of the first element in the dropdown -->
 <template>
     <div class="component_container" @mouseleave="show = false" :style='cssProps'>
         <div class="label_container" @mouseover="show = true">
-            <p class="label">{{ label }}</p>
+            <p class="label" id="main_label">{{ activeLabel }}</p>
             <div class="vertical_flex_center">
                 <svg class="inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
                 </svg>
             </div>
         </div>
-        <div class="content" :class="{showContent: show}" @click="show = !show">
+        <div class="content" id="content_id" :class="{showContent: show}" @click="handleClick">
             <slot>
 
             </slot>
@@ -38,8 +39,22 @@ export default {
     data() {
         return {
             show: false,
+            activeLabel: null // gets assigned in the mounted hook
         };
     },
+
+    mounted() {
+        this.activeLabel = this.label || document.getElementById("content_id").firstChild.innerText;
+    },
+
+    methods: {
+        // changes label based on what you click
+        handleClick(e) {
+            this.show = !this.show;
+
+            document.getElementById('main_label').innerText = e.target.innerText;            
+        }
+    }
 };
 </script>
 
