@@ -10,7 +10,7 @@
             </div>
         </div>
         
-        <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" />
+        <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
     </div>
 </template>
 
@@ -49,7 +49,7 @@ export default {
                     desc: "Will block all spotify ads with an ad blocker",
                     price: 0,
                     likes: 1093
-                }
+                },
             ]
         }
     },

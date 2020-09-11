@@ -86,7 +86,7 @@
                             <line x1="12" y1="4" x2="12" y2="16" />
                         </svg>
 
-                        <router-link to='/'>Donwnload Data</router-link>
+                        <router-link to='/'>Download Data</router-link>
                     </div>
 
                     <div class="option-wrapper special_link_item">
