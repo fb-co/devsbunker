@@ -3,11 +3,11 @@
         <div class="profile_banner"></div>
         <div class="profile_card">
             <div class='card_container'>
-                <p class='card_name'>The_Jack</p>
+                <p class='card_name'>{{ $store.getters.username }}</p>
                 <p class='card_desc'>Founder of devsBunker® and co-founder of Folgoni Borsa Company .inc</p>
                 <form>
                     <!-- Not sure if this is nessacary, but I assume you need a form to get data to the server -->
-                    <input type="submit" value="Edit">
+                    <input type="submit" value="Edit" @click.prevent="$router.push('/settings/account')">
                 </form>
                 <div class='follower_container'>
                     <div class="follow_count">
@@ -50,22 +50,22 @@
 </template>
 
 <script>
-import ProfileSections from './ProfileSections/mobile.profile.imports.js';
+import ProfileSections from "./ProfileSections/mobile.profile.imports.js";
 
 export default {
     data() {
-        return{
-            activeSection: "projects"
-        }
+        return {
+            activeSection: "projects",
+        };
     },
     components: {
-        ...ProfileSections
+        ...ProfileSections,
     },
     methods: {
         navigateTo(elem) {
             this.activeSection = elem;
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -166,20 +166,19 @@ export default {
     width: 100%;
 }
 .active_section {
-    background-color: var(--main-btn-color);    
+    background-color: var(--main-btn-color);
 }
 .active_section > p {
-    color: #fff; 
+    color: #fff;
 }
 .dynamic_feed {
     width: 80%;
     max-width: 500px;
     min-width: 250px;
     margin-left: auto;
-    margin-right: auto; 
+    margin-right: auto;
     margin-top: 35px;
 }
-
 
 /*  THESE SHOULD BE FOR THE VISITING ANOTHER USER PAGE (KEEPING HERE UNTIL I MAKE THAT)
 .projects_tab {
