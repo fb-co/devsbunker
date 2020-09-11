@@ -1,91 +1,127 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
-const routes = [{
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/signup',
-    name: 'Signup',
-    component: () => import('../views/Signup.vue')
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/Login.vue')
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue')
-  },
-  {
-    path: '/settings/:section',
-    name: 'Settings',
-    component: () => import('../views/Settings.vue')
-  },
-  {
-    path: '/notifications',
-    name: 'Notifications',
-    component: () => import('../views/Notifications.vue')
-  },
+const routes = [
+    {
+        path: "/",
+        name: "Home",
+        component: Home,
+    },
+    {
+        path: "/signup",
+        name: "Signup",
+        component: () => import("../views/Signup.vue"),
+    },
+    {
+        path: "/login",
+        name: "Login",
+        component: () => import("../views/Login.vue"),
+    },
+    {
+        path: "/about",
+        name: "About",
+        component: () => import("../views/About.vue"),
+    },
+    {
+        path: "/settings",
+        name: "Settings",
+        component: () => import("../views/Settings.vue"),
+        children: [
+            {
+                path: "account",
+                name: "Account",
+                props: true,
+                component: () =>
+                    import(
+                        "../components/Settings/desktop/SettingSections/Account.vue"
+                    ),
+            },
+            {
+                path: "appearance",
+                name: "Appearance",
+                props: true,
+                component: () =>
+                    import(
+                        "../components/Settings/desktop/SettingSections/Appearance.vue"
+                    ),
+            },
+            {
+                path: "privacy",
+                name: "Privacy",
+                props: true,
+                component: () =>
+                    import(
+                        "../components/Settings/desktop/SettingSections/Privacy.vue"
+                    ),
+            },
+        ],
+    },
+    {
+        path: "/notifications",
+        name: "Notifications",
+        component: () => import("../views/Notifications.vue"),
+    },
 
-  {
-    path: '/user/:username',
-    name: 'User',
-    component: () => import('../views/User.vue'),
-    children: [
-      {
-        path: "projects",
-        name: "userProjects",
-        props: true,
-        component: () => import('../components/User/desktop/Sections/Projects.vue')
-      },
-      {
-        path: "saved",
-        name: "userSavedProjects",
-        props: true,
-        component: () => import('../components/User/desktop/Sections/Saved.vue')
-      },
-      {
-        path: "purchases",
-        name: "userPurchases",
-        props: true,
-        component: () => import('../components/User/desktop/Sections/Purchases.vue')
-      },
-      {
-        path: "revenue",
-        name: "userRevenue",
-        props: true,
-        component: () => import('../components/User/desktop/Sections/Revenue.vue')
-      },
-      {
-        path: "information",
-        name: "userInformation",
-        props: true,
-        component: () => import('../components/User/desktop/Sections/Information.vue')
-      }
-    ]
-  },
+    {
+        path: "/user/:username",
+        name: "User",
+        component: () => import("../views/User.vue"),
+        children: [
+            {
+                path: "projects",
+                name: "userProjects",
+                props: true,
+                component: () =>
+                    import("../components/User/desktop/Sections/Projects.vue"),
+            },
+            {
+                path: "saved",
+                name: "userSavedProjects",
+                props: true,
+                component: () =>
+                    import("../components/User/desktop/Sections/Saved.vue"),
+            },
+            {
+                path: "purchases",
+                name: "userPurchases",
+                props: true,
+                component: () =>
+                    import("../components/User/desktop/Sections/Purchases.vue"),
+            },
+            {
+                path: "revenue",
+                name: "userRevenue",
+                props: true,
+                component: () =>
+                    import("../components/User/desktop/Sections/Revenue.vue"),
+            },
+            {
+                path: "information",
+                name: "userInformation",
+                props: true,
+                component: () =>
+                    import(
+                        "../components/User/desktop/Sections/Information.vue"
+                    ),
+            },
+        ],
+    },
 
-  // important to leave this as the last element
-  {
-    path: '*',
-    name: '404',
-    component: () => import('../views/404.vue')
-  }
-]
+    // important to leave this as the last element
+    {
+        path: "*",
+        name: "404",
+        component: () => import("../views/404.vue"),
+    },
+];
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: "history",
+    base: process.env.BASE_URL,
+    routes,
 });
-
 
 export default router;

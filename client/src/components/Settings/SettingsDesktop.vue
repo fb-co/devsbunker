@@ -20,7 +20,7 @@
             </div>
 
             <div class="settings_selection">
-                <component :is="$route.params.section"></component>
+                <component :is="$route.name"></component>
             </div>
 
         </div>
@@ -38,6 +38,10 @@ export default {
         ...GlobalComponents,
         ...SettingsComponents,
         SettingList,
+    },
+
+    created() {
+        if (this.$route.name === "Settings") this.$router.push("account"); // since latest switch to nested routes the route 'settings' returned a 200 so I did this thing
     },
 };
 </script>

@@ -1,10 +1,12 @@
 <template>
-    <li class="settings_list_item no_select" @click="navigateTo()">
+    <li class="settings_list_item no_select">
         <div class="option_icon_container">
             <slot></slot>
         </div>
 
-        <p class="option_text" :class="{active: isActive}">{{ label }}</p>
+        <router-link :to=label.toLowerCase() class='link'>
+            <p class="option_text" :class="{active: isActive}">{{ label }}</p>
+        </router-link>
         <p class="option-arrow option_text" style="font-weight: bold;">></p>
     </li>
 </template>
@@ -12,13 +14,6 @@
 <script>
 export default {
     props: ["label", "isActive"],
-
-    methods: {
-        navigateTo() {
-            if (this.$route.params.section != this.label.toLowerCase())
-                this.$router.push("/settings/" + this.label.toLowerCase());
-        },
-    },
 };
 </script>
 
@@ -51,6 +46,8 @@ export default {
     margin-top: 3px;
     display: inline-block;
     line-height: 47px;
+    text-decoration: none;
+    color: var(--main-font-color);
 }
 .option-arrow {
     flex-grow: 1;

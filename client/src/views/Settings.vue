@@ -16,9 +16,6 @@ import SharedMethods from "../utils/shared";
 
 export default {
     created() {
-        if (!this.checkValidSettingURL(["Account", "Appearance", "Privacy"]))
-            this.$router.push("/404");
-
         SharedMethods.loadPage();
 
         this.mobile = this.isMobile();
@@ -47,15 +44,6 @@ export default {
     methods: {
         isMobile() {
             return ScreenType.isMobile(950);
-        },
-
-        checkValidSettingURL(settingsList) {
-            let settings = [];
-            const section = this.$route.params.section;
-            for (let setting of settingsList) {
-                settings.push(setting.toLowerCase());
-            }
-            return !!settings.includes(section);
         },
     },
 };
