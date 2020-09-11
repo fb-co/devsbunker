@@ -38,7 +38,39 @@ const routes = [{
   {
     path: '/user/:username',
     name: 'User',
-    component: () => import('../views/User.vue')
+    component: () => import('../views/User.vue'),
+    children: [
+      {
+        path: "projects",
+        name: "userProjects",
+        props: true,
+        component: () => import('../components/User/desktop/Sections/Projects.vue')
+      },
+      {
+        path: "saved",
+        name: "userSavedProjects",
+        props: true,
+        component: () => import('../components/User/desktop/Sections/Saved.vue')
+      },
+      {
+        path: "purchases",
+        name: "userPurchases",
+        props: true,
+        component: () => import('../components/User/desktop/Sections/Purchases.vue')
+      },
+      {
+        path: "revenue",
+        name: "userRevenue",
+        props: true,
+        component: () => import('../components/User/desktop/Sections/Revenue.vue')
+      },
+      {
+        path: "information",
+        name: "userInformation",
+        props: true,
+        component: () => import('../components/User/desktop/Sections/Information.vue')
+      }
+    ]
   },
 
   // important to leave this as the last element

@@ -25,18 +25,27 @@
                     </div>
                 </div>
                 <div class='main_links_container row_item'>
-
-                    <div class="option-wrapper link_item">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-dollar" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('projects') }">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-code" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" />
-                            <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
-                            <path d="M12 3v3m0 12v3" />
+                            <polyline points="7 8 3 12 7 16" />
+                            <polyline points="17 8 21 12 17 16" />
+                            <line x1="14" y1="4" x2="10" y2="20" />
                         </svg>
-
-                        <router-link to='/profile/revenue' class='profile_link'>Revenue</router-link>
+                        
+                        <router-link :to="{ name: 'userProjects' }">Projects</router-link>
                     </div>
 
-                    <div class="option-wrapper link_item">
+                    <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('saved') }">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <path d="M9 4h6a2 2 0 0 1 2 2v14l-5-3l-5 3v-14a2 2 0 0 1 2 -2" />
+                        </svg>
+
+                        <router-link :to="{ name: 'userSavedProjects' }">Saved Projects</router-link>
+                    </div>
+                    
+                    <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('purchases') }"> 
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cash" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <rect x="7" y="9" width="14" height="10" rx="2" />
@@ -44,24 +53,21 @@
                             <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" />
                         </svg>
 
-                        <router-link to='/profile/purchases' class='profile_link'>Purchases</router-link>
+                        <router-link :to="{ name: 'userPurchases' }">Purchases</router-link>
                     </div>
-
-                    <div class="option-wrapper link_item">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-code" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" />
-                            <polyline points="7 8 3 12 7 16" />
-                            <polyline points="17 8 21 12 17 16" />
-                            <line x1="14" y1="4" x2="10" y2="20" />
-                        </svg>
-
-                        <router-link to='/profile/projects' class='profile_link'>Projects</router-link>
-                    </div>
-
                 </div>
                 <div class='other_links_container row_item'>
+                    <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('revenue') }">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-dollar" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+                            <path d="M12 3v3m0 12v3" />
+                        </svg>
 
-                    <div class="option-wrapper link_item">
+                        <router-link :to="{ name: 'userRevenue' }">Revenue</router-link>
+                    </div>
+
+                    <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('information') }">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <circle cx="12" cy="12" r="9" />
@@ -69,16 +75,7 @@
                             <polyline points="11 12 12 12 12 16 13 16" />
                         </svg>
 
-                        <router-link to='/profile/info' class='profile_link'>Personal Information</router-link>
-                    </div>
-
-                    <div class="option-wrapper link_item">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" />
-                            <path d="M9 4h6a2 2 0 0 1 2 2v14l-5-3l-5 3v-14a2 2 0 0 1 2 -2" />
-                        </svg>
-
-                        <router-link to='/profile/saved' class='profile_link'>Saved Projects</router-link>
+                        <router-link :to="{ name: 'userInformation' }">User Information</router-link>
                     </div>
 
                     <div class="option-wrapper link_item">
@@ -89,7 +86,7 @@
                             <line x1="12" y1="4" x2="12" y2="16" />
                         </svg>
 
-                        <router-link to='/profile/download' class='profile_link'>Download Data</router-link>
+                        <router-link to='/'>Donwnload Data</router-link>
                     </div>
 
                     <div class="option-wrapper special_link_item">
@@ -105,7 +102,7 @@
                 </div>
             </div>
             <div class="content_box">
-                <!--<button @click="logout">Logout</button>-->
+                <router-view :key="$route.path" /> <!-- This renders the sub-routes component -->
             </div>
         </div>
     </div>
@@ -115,14 +112,19 @@
 import UserService from "@/services/user.service";
 
 export default {
+    data() {
+        return {
+            active: 'projects'
+        }
+    },
     methods: {
         logout() {
             UserService.logout().then(response => {
                 console.log("logged out: ", response);
             });
             this.$router.push("/");
-        },
-    },
+        }
+    }
 };
 </script>
 
@@ -196,6 +198,10 @@ export default {
 .link_item:hover svg {
     stroke: var(--main-btn-color);
 }
+.active_link {
+    border-left: 3px solid var(--main-btn-color);
+    background: var(--hover-effect);
+}
 
 .special_link_item {
     width: 100%;
@@ -225,7 +231,6 @@ export default {
 }
 .profile_link {
     width: 100%;
-    height: 100%;
 }
 .content_box {
     border-radius: 5px;
