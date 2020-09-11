@@ -56,6 +56,9 @@ export default {
     components: {
         MobileProjectCard,
         ...GlobalComponents
+    },
+    created() {
+        this.$router.push('/user/' + this.$route.params.username + '/projects');
     }
 }
 </script>

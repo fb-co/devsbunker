@@ -102,7 +102,7 @@ export default {
         UserService.isLoggedIn().then((result) => {
             if (result.user) {
                 this.username = result.user.username;
-                this.userRoute = "/user/" + this.username;
+                this.userRoute = "/user/" + this.username + "/projects";
             }
         });
     },
