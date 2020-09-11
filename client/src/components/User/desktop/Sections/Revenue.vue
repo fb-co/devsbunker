@@ -1,12 +1,10 @@
-<template>  
-    <div id="main_container">
-        Saved
-    </div>
+<template>
+    <p>Revenue</p>
 </template>
 
 <script>
 export default {
-    
+
 }
 </script>
 
