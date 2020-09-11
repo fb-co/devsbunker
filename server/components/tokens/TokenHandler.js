@@ -1,16 +1,16 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 class TokenHandler {
     static createAccessToken(user) {
         const payload = {
             _id: user._id,
             username: user.username,
-            type: "access"
+            type: "access",
         };
 
         try {
             return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: '15m'
+                expiresIn: "15m",
             });
         } catch {
             return undefined;
@@ -22,12 +22,12 @@ class TokenHandler {
             _id: user._id,
             username: user.username,
             type: "refresh",
-            tokenVersion: 0
+            tokenVersion: user.tokenVersion,
         };
 
         try {
             return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-                expiresIn: '7d'
+                expiresIn: "7d",
             });
         } catch {
             return undefined;
@@ -36,31 +36,33 @@ class TokenHandler {
 
     static checkHeaderToken(req, res, next) {
         // checking the token in the req header
-        const authHeader = req.get('authorization');
+        const authHeader = req.get("authorization");
 
         if (authHeader) {
-            const token = authHeader.split(' ')[1];
+            const token = authHeader.split(" ")[1];
 
             if (token) {
-                // verify the token 
-                jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-
-                    // this can be avoided but it is more readable 
-                    if (err) {
-                        req.user = undefined;
-                        next();
-                    } else {
-                        req.user = user; // we can access the user in every req
-                        next();
+                // verify the token
+                jwt.verify(
+                    token,
+                    process.env.ACCESS_TOKEN_SECRET,
+                    (err, user) => {
+                        // this can be avoided but it is more readable
+                        if (err) {
+                            req.user = undefined;
+                            next();
+                        } else {
+                            req.user = user; // we can access the user in every req
+                            next();
+                        }
                     }
-                });
+                );
             } else {
                 next();
             }
         } else {
             next();
         }
-
     }
 
     static verifyRefreshToken(token) {
@@ -80,6 +82,6 @@ class TokenHandler {
 
         return decoded;
     }
-};
+}
 
 module.exports = TokenHandler;
