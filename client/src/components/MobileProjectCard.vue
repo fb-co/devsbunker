@@ -1,5 +1,5 @@
 <template>
-    <div id="card_container" class="main_container">
+    <div id="card_container" class="main_container" :style="style">
         <div class="card_text_container">
             <p class="author card_text">{{ projectData.author }}</p>
             <p class="proj_name card_text">{{ projectData.name }}</p>
@@ -26,7 +26,13 @@
 <script>
 export default {
     props: {
-        projectData: Object
+        projectData: Object,
+        width: String
+    },
+    computed: {
+        style() {
+            return "width: " + this.width;
+        }
     }
 }
 </script>

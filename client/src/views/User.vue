@@ -25,6 +25,9 @@ export default {
         };
     },
     async created() {
+        // The problem with this is that when you re-fresh from some route it takes you back to /projects, so im not sure if its a plausible fix 
+        //this.$router.push('/user/' + this.$route.params.username + '/projects'); // Route the user to the projects tab so something shows up in the profile card
+
         this.$store.dispatch("setUsername");
 
         UserService.isLoggedIn().then((result) => {
