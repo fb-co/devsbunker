@@ -1,16 +1,26 @@
 <template>
-    <div id="app" v-if="!isFetching">
-        <!--<NavBar />-->
-        <router-view />
+    <div>
+        <div id="app" v-if="!isFetching">
+            <!--<NavBar />-->
+            <router-view />
+        </div>
+
+        <Loading v-if="isFetching" />
     </div>
 </template>
 
 <script>
+import Loading from "./components/Loading";
+
 export default {
     data() {
         return {
             isFetching: true,
         };
+    },
+
+    components: {
+        Loading,
     },
 
     async beforeMount() {
