@@ -50,3 +50,4 @@ Glitches
 -   [ ] Logout button in the left sidebar routing does not work
 -   [ ] Look at the console when you switch themes in mobile mode :(
 -   [ ] settings sections (account, privacy, etc) are still available in mobile version. This is not a real glitch but we have to decide what to do with it
+-   [ ] avoid refreshing access token if user is not logged in
