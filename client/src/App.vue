@@ -24,16 +24,9 @@ export default {
     },
 
     async beforeMount() {
-        const response = await fetch(process.env.VUE_APP_REFRESH_TOKEN, {
-            method: "POST",
-            credentials: "include",
-        });
+        await this.$store.dispatch("autoRefreshAccessToken");
 
-        const { accessToken } = await response.json();
-        this.$store.commit("refreshAccessToken", accessToken);
         this.isFetching = false;
-
-        console.log("in store: ", this.$store.getters.accessToken);
     },
 };
 </script>
