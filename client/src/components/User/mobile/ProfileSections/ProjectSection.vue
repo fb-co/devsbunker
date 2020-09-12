@@ -7,6 +7,16 @@
                     <button>Purchases</button>
                     <button>Downloaded</button>
                 </Dropdown>
+                <Dropdown spacing="40px" class="filter_dropdown">
+                    <button>Newest</button>
+                    <button>Most Popular</button>
+                    <button>Alphabetical</button>
+                </Dropdown>
+                <Dropdown spacing="40px" class="filter_dropdown">
+                    <button>Bruh</button>
+                    <button>WUT</button>
+                    <button>THE PHUQ</button>
+                </Dropdown>
             </div>
         </div>
         
@@ -16,7 +26,7 @@
 
 <script>
 import MobileProjectCard from '@/components/MobileProjectCard.vue';
-import GlobalComponents from "@/components/global/GlobalComponents.js";
+import Dropdown from "@/components/global/Dropdown.vue";
 
 export default {
     data() {
@@ -55,7 +65,7 @@ export default {
     },
     components: {
         MobileProjectCard,
-        ...GlobalComponents
+        Dropdown
     }
 }
 </script>
@@ -65,15 +75,19 @@ export default {
         width: 100%;
     }
     .filter_dropdown_container {
+        display: flex;
+        flex-direction: row;
         position: absolute;
         left: 50%;
-        width: 200px;
+        width: 80%;
+        max-width: 400px;
         margin: 0 auto;
         -ms-transform: translateX(-50%);
         transform: translateX(-50%);
     }
     .filter_dropdown{
         height: 35px;
+        width: 50%;
     }
     .dropdown_placeholder{
         height: 60px;

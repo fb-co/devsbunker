@@ -52,7 +52,14 @@ export default {
         handleClick(e) {
             this.show = !this.show;
 
-            document.getElementById('main_label').innerText = e.target.innerText;            
+            //READ THESE COMMENTS
+            //So for some reason the components arent individual, the way I had it setup when I get the element by id, it gets the first dropdowns id. 
+            //Not sure why this is happening and its a bit concerning. I tried getting by classname and logging, and I was right, its logging both dropdowns
+            //My work around for now is to get the parents parent on the click target, but this feels kinda jerry rigged and WAY to long. 
+
+            //The other problem is even with this work around when tha page is loaded they dont inherit the first elements text as their label.
+
+            e.target.parentNode.parentNode.children[0].children[0].innerText = e.target.innerText;       
         }
     }
 };
