@@ -10,6 +10,7 @@ Backend
 -   [x] make Schema for posts
 -   [x] make Schema for bunkers
 -   [ ] provide the current user email where needed (?)
+-   [ ] cosnider switching to ES modules
 
 Frontend
 
