@@ -46,7 +46,7 @@ Glitches
 -   [ ] Cant use the back arrow at profile page (sometimes)
 -   [x] Cant Highlight text inside navbar and burger menu search inputs only on dark theme
 -   [ ] Profile page mobile support stopped working for some reason
--   [ ] When visiting someone elses profile, and clicking on the profile picture in the navbar, it wont bring you back to your own profile
+-   [x] When visiting someone elses profile, and clicking on the profile picture in the navbar, it wont bring you back to your own profile
 -   [ ] Logout button in the left sidebar routing does not work
 -   [ ] Look at the console when you switch themes in mobile mode :(
 -   [ ] settings sections (account, privacy, etc) are still available in mobile version. This is not a real glitch but we have to decide what to do with it
