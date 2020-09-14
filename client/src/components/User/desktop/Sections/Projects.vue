@@ -2,7 +2,7 @@
     <div id="main_container">
         <div class="filter_dropdown_container">
             <input class="search_projects" placeholder="Search...">
-            <Dropdown spacing="40px" class="filter_dropdown">
+            <Dropdown label="Newest" fontSize="12px" spacing="40px" class="filter_dropdown">
                 <button>Newest</button>
                 <button>Most Popular</button>
                 <button>Alphabetical</button>
@@ -81,8 +81,9 @@ export default {
     height: 100px;
 }
 .filter_dropdown {
-    height: 40px;
-    width: 200px;
+    font-size: 12px;
+    height: 30px;
+    width: 100px;
     margin: 20px auto 20px auto;
     background-color: var(--secondary-color);
     border-radius: 5px;
@@ -95,7 +96,7 @@ export default {
     padding-right: 10px;
     height: 30px;
     width: 250px;
-    margin: 0 auto;
+    margin: 30px auto 0px auto;
     padding: 5px;
     font-family: rubik;
 }

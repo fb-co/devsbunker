@@ -1,9 +1,9 @@
 <!-- As of now the content box cannot contain any p tags -->
-<!-- Dont enter a label prop and the component will assume the lable as the innerText of the first element in the dropdown -->
+<!-- Label prop is now REQUIRED -->
 <template>
     <div class="component_container" @mouseleave="show = false" :style='cssProps'>
         <div class="label_container" @mouseover="show = true">
-            <p class="label" id="main_label">{{ activeLabel }}</p>
+            <p class="label">{{ activeLabel }}</p>
             <div class="vertical_flex_center">
                 <svg class="inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
@@ -22,16 +22,24 @@
 export default {
     props: {
         label: String, // label to be shown
+        
+        // amount of space between links
         spacing: {
-            // amount of space between links
             type: String,
             default: "25px",
         },
+        
+        // optional prop
+        fontSize: {
+            type: String,
+            default: "15px"
+        }
     },
     computed: {
         cssProps() {
             return {
                 "--link-spacing": this.spacing,
+                "--custom-fontsize": this.fontSize
             };
         },
     },
@@ -39,27 +47,14 @@ export default {
     data() {
         return {
             show: false,
-            activeLabel: null // gets assigned in the mounted hook
+            activeLabel: this.label
         };
     },
-
-    mounted() {
-        this.activeLabel = this.label || document.getElementById("content_id").firstChild.innerText;
-    },
-
     methods: {
         // changes label based on what you click
         handleClick(e) {
             this.show = !this.show;
-
-            //READ THESE COMMENTS
-            //So for some reason the components arent individual, the way I had it setup when I get the element by id, it gets the first dropdowns id. 
-            //Not sure why this is happening and its a bit concerning. I tried getting by classname and logging, and I was right, its logging both dropdowns
-            //My work around for now is to get the parents parent on the click target, but this feels kinda jerry rigged and WAY to long. 
-
-            //The other problem is even with this work around when tha page is loaded they dont inherit the first elements text as their label.
-
-            e.target.parentNode.parentNode.children[0].children[0].innerText = e.target.innerText;       
+            this.activeLabel = e.target.innerText;
         }
     }
 };
@@ -105,7 +100,7 @@ export default {
     width: 100%;
     border: none;
     text-align: center;
-    font-size: 15px;
+    font-size: var(--custom-fontsize);
     font-family: rubik;
     background-color: transparent;
     color: var(--soft-text);

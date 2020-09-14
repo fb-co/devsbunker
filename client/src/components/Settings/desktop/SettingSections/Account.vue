@@ -8,7 +8,7 @@
             </div>
             <div class='setting_cont'>
                 <div class='setting_container'>
-                    <Dropdown spacing="50px" label="Public" class="visibility_dropdown" id='vis_dropdown'>
+                    <Dropdown label="Public" spacing="50px" class="visibility_dropdown" id='vis_dropdown'>
                         <button>Public</button>
                         <button>Private</button>
                     </Dropdown>

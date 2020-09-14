@@ -2,20 +2,15 @@
     <div id="component_container">
         <div class="dropdown_placeholder">
             <div class="filter_dropdown_container">
-                <Dropdown spacing="40px" class="filter_dropdown">
+                <Dropdown label="My Projects" fontSize="12px" spacing="40px" class="filter_dropdown">
                     <button>My Projects</button>
                     <button>Purchases</button>
                     <button>Downloaded</button>
                 </Dropdown>
-                <Dropdown spacing="40px" class="filter_dropdown">
+                <Dropdown label="Newest" fontSize="12px" spacing="40px" class="filter_dropdown">
                     <button>Newest</button>
                     <button>Most Popular</button>
                     <button>Alphabetical</button>
-                </Dropdown>
-                <Dropdown spacing="40px" class="filter_dropdown">
-                    <button>Bruh</button>
-                    <button>WUT</button>
-                    <button>THE PHUQ</button>
                 </Dropdown>
             </div>
         </div>
@@ -85,9 +80,15 @@ export default {
         -ms-transform: translateX(-50%);
         transform: translateX(-50%);
     }
+    .filter_dropdown_container div:first-child {
+        margin-right: 10px;
+    }
     .filter_dropdown{
         height: 35px;
         width: 50%;
+        background-color: var(--secondary-color);
+        border-radius: 5px;
+        font-size: 12px;
     }
     .dropdown_placeholder{
         height: 60px;

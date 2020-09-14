@@ -5,9 +5,16 @@
             <p class="proj_name card_text">{{ projectData.name }}</p>
             <p class="proj_desc card_text">{{ projectData.desc }}</p>
             <div class="likes_container">
-                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.50015 3.11444L7.73831 2.27918C5.95007 0.318521 2.67109 0.995119 1.48743 3.46011C0.931729 4.61951 0.80635 6.29343 1.82107 8.42976C2.7986 10.4868 4.83229 12.9506 8.50015 15.6343C12.168 12.9506 14.2006 10.4868 15.1792 8.42976C16.1939 6.2923 16.0696 4.61951 15.5129 3.46011C14.3292 0.995119 11.0502 0.317387 9.26198 2.27805L8.50015 3.11444ZM8.50015 17C-7.79166 5.5171 3.48393 -3.44527 8.31314 1.29545C8.37689 1.35778 8.43958 1.42238 8.50015 1.48925C8.5601 1.42244 8.62248 1.35817 8.68715 1.29658C13.5153 -3.44753 24.792 5.51597 8.50015 17Z" fill="#FF5A5A"/>
+                <!--Not filled icon -->
+                <svg  v-if="!likeIsActive" width="17" height="17" viewBox="0 0 16 16" class="bi bi-heart" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                 </svg>
+
+                <!-- Filled icon -->
+                <svg @mouseleave="likeIsActive=false" v-else width="17" height="17" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                </svg>
+
                 <div class="vertical_flex_center">
                     <p class="likes card_text">{{ projectData.likes }}</p>
                 </div>
@@ -21,13 +28,18 @@
             <img src="@/assets/project_img_placeholder.png" class="card_img">
         </div>
     </div>
-</template>
+</template>s
 
 <script>
 export default {
     props: {
         projectData: Object,
         width: String
+    },
+    data() {
+        return {
+            likeIsActive: false
+        }
     },
     computed: {
         style() {

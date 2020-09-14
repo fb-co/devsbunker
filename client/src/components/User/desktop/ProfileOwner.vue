@@ -141,7 +141,7 @@ export default {
 .row1 {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    min-width: 300px;
 }
 .row_item {
     background-color: var(--general-card);
