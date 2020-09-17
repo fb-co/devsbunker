@@ -1,5 +1,5 @@
 <template>
-    <div class="settings_list_item no_select" @click="navigateTo()">
+    <div class="settings_list_item no_select">
         <p class="setting-label">{{ label }}</p>
         <slot></slot>
     </div>

@@ -32,7 +32,7 @@
                             <polyline points="17 8 21 12 17 16" />
                             <line x1="14" y1="4" x2="10" y2="20" />
                         </svg>
-                        
+
                         <router-link :to="{ name: 'userProjects' }">Projects</router-link>
                     </div>
 
@@ -44,8 +44,8 @@
 
                         <router-link :to="{ name: 'userSavedProjects' }">Saved Projects</router-link>
                     </div>
-                    
-                    <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('purchases') }"> 
+
+                    <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('purchases') }">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cash" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <rect x="7" y="9" width="14" height="10" rx="2" />
@@ -97,7 +97,7 @@
                             <line x1="12" y1="16" x2="12.01" y2="16" />
                         </svg>
 
-                        <router-link to='/profile/logout' class='profile_link'>Logout</router-link>
+                        <p class='profile_link' @click="logout()">Logout</p>
                     </div>
                 </div>
             </div>
@@ -114,17 +114,17 @@ import UserService from "@/services/user.service";
 export default {
     data() {
         return {
-            active: 'projects'
-        }
+            active: "projects",
+        };
     },
     methods: {
         logout() {
-            UserService.logout().then(response => {
+            UserService.logout().then((response) => {
                 console.log("logged out: ", response);
             });
             this.$router.push("/");
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -209,7 +209,7 @@ export default {
     border-left: 3px solid transparent;
 }
 
-.special_link_item a {
+.special_link_item p {
     text-decoration: none;
     color: #db5454;
     font-size: 15px;
@@ -217,6 +217,7 @@ export default {
     font-weight: 600;
 
     margin-left: 15px;
+    cursor: pointer;
 }
 
 .special_link_item svg {
