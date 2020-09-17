@@ -46,9 +46,9 @@ Glitches
 -   [x] If burger menu not closed when page is expanded, when you shrink the page again it instantly opens the burger menu again
 -   [ ] Cant use the back arrow at profile page (sometimes)
 -   [x] Cant Highlight text inside navbar and burger menu search inputs only on dark theme
--   [ ] Profile page mobile support stopped working for some reason
+-   [x] Profile page mobile support stopped working for some reason
 -   [x] When visiting someone elses profile, and clicking on the profile picture in the navbar, it wont bring you back to your own profile
--   [ ] Logout button in the left sidebar routing does not work
--   [ ] Look at the console when you switch themes in mobile mode :(
+-   [x] Logout button in the left sidebar routing does not work
+-   [x] Look at the console when you switch themes in mobile mode :(
 -   [ ] settings sections (account, privacy, etc) are still available in mobile version. This is not a real glitch but we have to decide what to do with it
--   [ ] avoid refreshing access token if user is not logged in
+-   [x] avoid refreshing access token if user is not logged in (not really possible)
