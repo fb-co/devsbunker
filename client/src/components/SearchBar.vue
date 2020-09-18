@@ -16,7 +16,7 @@ export default {
 <style scoped>
 @keyframes line_animation {
     from {
-        width: 10%;
+        width: 90%;
     }
     to {
         width: 100%;
@@ -29,7 +29,8 @@ export default {
 }
 .main_input {
     border: none;
-    color: #8d8d8d;
+    background-color: transparent;
+    color: var(--main-font-color);
     border-radius: 5px;
     padding-right: 10px;
     height: 30px;
@@ -39,15 +40,16 @@ export default {
     font-family: rubik;
 }
 .input_line{
-    width: 100%;
-    height: 0px;
-    border-bottom: 1px solid var(--secondary-color);
+    width: 90%;
+    height: 1px;
+    background-image: linear-gradient( to right, transparent 0%, var(--secondary-color) 2%, var(--secondary-color) 98%, transparent 100% );
 }
 .main_input:focus {
     outline: none;
 }
 .main_input:focus ~ .input_line {
-    border-bottom: 1px solid black; /* Change this to color to var at some point */
+    animation: line_animation 1s;
     width: 100%;
+    background-image: linear-gradient( to right, var(--secondary-color) 0%, var(--main-font-color) 2%, var(--main-font-color) 98%, var(--secondary-color) 100% );
 }
 </style>

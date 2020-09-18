@@ -1,7 +1,7 @@
 <template>
     <div id="main_container">
         <div class="filter_dropdown_container">
-            <input class="search_projects" placeholder="Search...">
+            <SearchBar placeholder="Search..." class="search_bar" />
         </div>
         <div class="project_list">
             <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="60%" />
@@ -11,6 +11,7 @@
 
 <script>
 import MobileProjectCard from '@/components/MobileProjectCard.vue';
+import SearchBar from '@/components/SearchBar.vue';
 
 export default {
     data() {
@@ -48,7 +49,8 @@ export default {
         }
     },
     components: {
-        MobileProjectCard
+        MobileProjectCard,
+        SearchBar
     }
 }
 </script>
@@ -78,19 +80,8 @@ export default {
     background-color: var(--secondary-color);
     border-radius: 5px;
 }
-.search_projects {
-    border: none;
-    background-color: var(--secondary-color);
-    color: #8d8d8d;
-    border-radius: 5px;
-    padding-right: 10px;
-    height: 30px;
-    width: 250px;
-    margin: 30px auto 0px auto;
-    padding: 5px;
-    font-family: rubik;
-}
-.search_projects:focus {
-    outline: none;
+.search_bar{
+    width: 225px;
+    margin: 0 auto;
 }
 </style>
