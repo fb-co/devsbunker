@@ -81,6 +81,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     height: 100px;
+    margin-top: 25px;
 }
 .filter_dropdown {
     font-size: 12px;

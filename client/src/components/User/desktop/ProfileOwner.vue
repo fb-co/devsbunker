@@ -1,6 +1,6 @@
 <template>
     <div class="profileDesktop">
-        <div class='main_container' style="margin-left: 25px;">
+        <div class='main_container'>
             <div class="row1">
                 <div class='profile_pic_container row_item'>
                     <img src="@/assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic" width="100px">
@@ -172,15 +172,19 @@ export default {
 
 .link_item {
     width: 100%;
-    padding: 10px 0px 10px 10px;
+    padding-left: 10px;
     border-left: 3px solid transparent;
 }
 .link_item a {
+    display: inline-block;
+    width: 100%;
     text-decoration: none;
     color: var(--profile-option-color);
     font-size: 15px;
     text-align: left;
     font-weight: 600;
+    padding-top: 15px;
+    padding-bottom: 15px;
 
     margin-left: 15px;
 }
