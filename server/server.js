@@ -1,5 +1,16 @@
 const express = require("express");
+const { graphqlHTTP } = require("express-graphql");
 const app = express();
+
+const schema = require("./graphql/schema");
+
+app.use(
+    "/graphql",
+    graphqlHTTP({
+        schema,
+        graphiql: true, // dev
+    })
+);
 
 require("dotenv").config();
 
@@ -35,7 +46,12 @@ const TokenHandler = require("./components/tokens/TokenHandler");
 app.use(morgan("dev")); // change to common for production
 app.use(helmet()); // secure headers
 app.use(methodOverride("_method")); // query string in order to make a delete req
-app.use(cors(corsOptions));
+
+if (process.env.PROD === "true") {
+    app.use(cors(corsOptions));
+} else {
+    app.use(cors());
+}
 app.use(cookieParser());
 app.use(
     express.urlencoded({
