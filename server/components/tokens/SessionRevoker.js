@@ -1,5 +1,5 @@
-const User = require("../user/user.model");
-const TokenHandler = require("./TokenHandler");
+import User from "../user/user.model.js";
+import TokenHandler from "./TokenHandler.js";
 
 class SessionRevoker {
     static async revokeRefreshToken(token) {
@@ -24,4 +24,4 @@ class SessionRevoker {
     }
 }
 
-module.exports = SessionRevoker;
+export default SessionRevoker;

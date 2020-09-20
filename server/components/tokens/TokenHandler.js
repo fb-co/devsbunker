@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 class TokenHandler {
     static createAccessToken(user) {
@@ -84,4 +84,4 @@ class TokenHandler {
     }
 }
 
-module.exports = TokenHandler;
+export default TokenHandler;

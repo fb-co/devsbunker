@@ -1,5 +1,5 @@
-exports.aboutPage = (req, res) => {
+export default function aboutPage(req, res) {
     res.json({
-        message: 'DevsBunker About Page',
+        message: "DevsBunker About Page",
     });
 }

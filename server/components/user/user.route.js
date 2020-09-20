@@ -1,22 +1,25 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
-const login = require("./user.login");
-const signup = require("./user.signup");
-const logout = require("./user.logout");
-const auth = require("./isAuthorized");
-const userFinder = require("./user.find");
-const tokens = require("../tokens/tokens.controller");
+import { getLogin, loginUser } from "./user.login.js";
+import { getSignup, signupUser } from "./user.signup.js";
+import logoutUser from "./user.logout.js";
+import isAuthorized from "./isAuthorized.js";
+import findUser from "./user.find.js";
+import {
+    getAccessToken,
+    revokeUserSession,
+} from "../tokens/tokens.controller.js";
 
-router.get("/login", login.getLogin);
-router.get("/signup", signup.getSignup);
-router.get("/auth", auth.isAuthorized);
-router.get("/find", userFinder.findUser);
+router.get("/login", getLogin);
+router.get("/signup", getSignup);
+router.get("/auth", isAuthorized);
+router.get("/find", findUser);
 
-router.post("/refresh_token", tokens.getAccessToken);
-router.post("/revoke_session", tokens.revokeUserSession);
-router.post("/signup", signup.signupUser);
-router.post("/login", login.loginUser);
-router.post("/logout", logout.logoutUser);
+router.post("/refresh_token", getAccessToken);
+router.post("/revoke_session", revokeUserSession);
+router.post("/signup", signupUser);
+router.post("/login", loginUser);
+router.post("/logout", logoutUser);
 
-module.exports = router;
+export default router;

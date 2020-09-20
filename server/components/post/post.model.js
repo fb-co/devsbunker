@@ -1,54 +1,54 @@
-import Languages from '../languages/languages.list';
-const mongoose = require('mongoose');
+import Languages from "../languages/languages.list.js";
+import mongoose from "mongoose";
 
 const requiredString = {
     type: String,
-    required: true
+    required: true,
 };
 
-const postSchema = new mongoose.Schema({
-    author: requiredString,
-    title: requiredString,
-    description: {
-        type: String
+const postSchema = new mongoose.Schema(
+    {
+        author: requiredString,
+        title: requiredString,
+        description: {
+            type: String,
+        },
+        thumbnail: {
+            // [!] check notes [!]
+            type: String,
+        },
+        githubLink: {
+            type: String,
+        },
+        otherLink: {
+            type: String,
+        },
+        bunkerTag: requiredString,
+        clip: {
+            type: String, // [!] check notes [!]
+        },
     },
-    thumbnail: { // [!] check notes [!]
-        type: String
-    },
-    githubLink: {
-        type: String,
-    },
-    otherLink: {
-        type: String
-    },
-    bunkerTag: requiredString,
-    clip: {
-        type: String // [!] check notes [!]
+    {
+        timestamps: true,
     }
-}, {
-    timestamps: true
-});
-
+);
 
 // validating fields
-postSchema.path('githubLink').validate((url) => {
+postSchema.path("githubLink").validate((url) => {
     const regex = /http(s)?:\/\/github.com/;
     return regex.test(url);
-}, 'Invalid GitHub URL.');
+}, "Invalid GitHub URL.");
 
-postSchema.path('otherLink').validate((url) => {
+postSchema.path("otherLink").validate((url) => {
     const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
     return regex.test(url);
-}, 'Invalid URL.');
+}, "Invalid URL.");
 
-postSchema.path('bunkerTag').validate((bunker) => {
-    return Languages.includes(bunker)
-}, 'Invalid Bunker tag.');
+postSchema.path("bunkerTag").validate((bunker) => {
+    return Languages.includes(bunker);
+}, "Invalid Bunker tag.");
 
-
-
-module.exports = mongoose.model('Post', postSchema);
-
+export default mongoose.model("Post", postSchema);
 
 /*
 

@@ -1,5 +1,5 @@
-exports.homePage = (req, res) => {
+export default function homePage(req, res) {
     res.json({
-        message: 'DevsBunker Home Page',
+        message: "DevsBunker Home Page",
     });
 }

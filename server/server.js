@@ -1,8 +1,10 @@
-const express = require("express");
-const { graphqlHTTP } = require("express-graphql");
+import express from "express";
+import express_graphql from "express-graphql";
+const { graphqlHTTP } = express_graphql;
+
 const app = express();
 
-const schema = require("./graphql/schema");
+import schema from "./graphql/schema.js";
 
 app.use(
     "/graphql",
@@ -12,14 +14,16 @@ app.use(
     })
 );
 
-require("dotenv").config();
+import dotenv from "dotenv";
+const { config } = dotenv;
+config();
 
-const morgan = require("morgan");
-const helmet = require("helmet");
-const mongoose = require("mongoose");
-const cookieParser = require("cookie-parser");
+import morgan from "morgan";
+import helmet from "helmet";
+import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
-const cors = require("cors");
+import cors from "cors";
 const allowedOrigins = [
     `http://${process.env.HOST}:8080`,
     "http://localhost:8080",
@@ -38,9 +42,9 @@ const corsOptions = {
     credentials: true,
 };
 
-const methodOverride = require("method-override");
+import methodOverride from "method-override";
 
-const TokenHandler = require("./components/tokens/TokenHandler");
+import TokenHandler from "./components/tokens/TokenHandler.js";
 
 // Middlewares
 app.use(morgan("dev")); // change to common for production
@@ -79,10 +83,10 @@ db.on("error", (error) => console.error(error));
 db.once("open", () => console.log(`Connected to database [${mongoURI}]`));
 
 // imports
-const home = require("./components/home/home.route");
-const about = require("./components/about/about.route");
-const user = require("./components/user/user.route");
-const settings = require("./components/settings/settings.route");
+import home from "./components/home/home.route.js";
+import about from "./components/about/about.route.js";
+import user from "./components/user/user.route.js";
+import settings from "./components/settings/settings.route.js";
 
 // route handling
 app.use("/", home);

@@ -1,15 +1,16 @@
-exports.logoutUser = (req, res, next) => {
+export default function logoutUser(req, res, next) {
     try {
-        res.cookie('jid', '', { // clearing the cookie
+        res.cookie("jid", "", {
+            // clearing the cookie
             httpOnly: true,
-            path: '/user/refresh_token',
-            sameSite: 'Lax'
+            path: "/user/refresh_token",
+            sameSite: "Lax",
         });
 
         res.json({
-            message: 'Successfully logged out'
+            message: "Successfully logged out",
         });
-    } catch(err) {
+    } catch (err) {
         next(err);
     }
 }

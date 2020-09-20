@@ -1,8 +1,8 @@
-const TokenHandler = require("./TokenHandler");
-const User = require("../user/user.model");
-const SessionRevoker = require("./SessionRevoker");
+import TokenHandler from "./TokenHandler.js";
+import User from "../user/user.model.js";
+import SessionRevoker from "./SessionRevoker.js";
 
-exports.getAccessToken = async (req, res, next) => {
+export async function getAccessToken(req, res, next) {
     const token = req.cookies.jid; // jid is an identifier for the refresh token
 
     if (!token) {
@@ -39,9 +39,9 @@ exports.getAccessToken = async (req, res, next) => {
             message: "Invalid token",
         });
     }
-};
+}
 
-exports.revokeUserSession = async (req, res) => {
+export async function revokeUserSession(req, res) {
     const status = await SessionRevoker.revokeRefreshToken(
         req.body.accessToken
     );
@@ -56,4 +56,4 @@ exports.revokeUserSession = async (req, res) => {
             status: status,
         });
     }
-};
+}

@@ -1,4 +1,5 @@
-const { GraphQLSchema, GraphQLObjectType, GraphQLString } = require("graphql");
+import graphql from "graphql";
+const { GraphQLSchema, GraphQLObjectType, GraphQLString } = graphql;
 
 const PersonType = new GraphQLObjectType({
     name: "Person",
@@ -35,6 +36,6 @@ const QueryType = new GraphQLObjectType({
     }),
 });
 
-module.exports = new GraphQLSchema({
+export default new GraphQLSchema({
     query: QueryType,
 });
