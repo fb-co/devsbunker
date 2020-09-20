@@ -55,4 +55,4 @@ Glitches
 
 Deployment
 
--  [ ] Set Prod env variable to false
+-  [ ] Set Prod env variable to true
