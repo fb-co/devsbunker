@@ -6,14 +6,6 @@ const app = express();
 
 import schema from "./graphql/schema.js";
 
-app.use(
-    "/graphql",
-    graphqlHTTP({
-        schema,
-        graphiql: true, // dev
-    })
-);
-
 import dotenv from "dotenv";
 const { config } = dotenv;
 config();
@@ -56,6 +48,15 @@ if (process.env.PROD === "true") {
 } else {
     app.use(cors());
 }
+
+app.use(
+    "/graphql",
+    graphqlHTTP({
+        schema,
+        graphiql: false, // dev
+    })
+);
+
 app.use(cookieParser());
 app.use(
     express.urlencoded({
