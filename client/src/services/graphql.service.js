@@ -1,15 +1,15 @@
 const URL = process.env.VUE_APP_GRAPHQL_API;
 
 const GraphQLService = {
-    fetchUserDetails: function(username) {
+    // fields specify which fields you want to receive
+    fetchUserDetails: function(username, fields) {
         const query = `
             query {
                 person(username: "${username}") {
-                    username
-                    email
-                    tag
+                    ${ fields }
                 }
-            }`;
+            }
+        `;
 
         return fetch(URL, {
             method: "POST",
