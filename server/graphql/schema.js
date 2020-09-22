@@ -6,16 +6,15 @@ const { GraphQLSchema, GraphQLObjectType, GraphQLString } = graphql;
 
 // DB Communication Methods
 
+// gets user document from db with a username parameter, we could also make another for the id if you want
 async function getUserEntry(name) {
-    const userEntry = await User.findOne({ username: name }).then((user) => {
-        if (user) {
-            //console.log(user); // Its finding the user entry just fine, but the promise in the resolver is not receiving it for some reason
-            return user;
-        }
-    }).catch((err) => {
-        console.log(err)
-    });
-    // Not sure how to handle the error since this function isnt really middleware
+    return new Promise(resolve => {
+        User.findOne({ username: name }).then((user) => {
+            resolve(user)
+        }).catch((err) => {
+            console.log(err)
+        });
+    });    
 }
 
 // Graphql Endpoints
@@ -50,31 +49,9 @@ const QueryType = new GraphQLObjectType({
                 username: { type: GraphQLString },
             },
             resolve: (root, args) => {                
-                /*
-                let person = {
-                    username: args.username,
-                    email: undefined,
-                    tag: undefined
-                };
+                /* I think its because before I was returning the result of the promise in 'getUserEntry()' while now I literally return a promise and just call the promise */
 
-                const userFromDb = getUserEntry(args.username).then((user) => {
-                    person.email = "PHUCC THIS";
-                    //person.email = user.email,
-                    //person.tag = user.tag;
-                    console.log(user);
-                }).catch((err) => {
-                    console.log(err);
-                });
-                */
-                
-                // WHY IS USER UNDEFINED ?!?!?!!?!?!?!??! (IV tried putting return statement inside then block)
-                // THIS IS GIVING ME CRIPPLING ANXIETY
-                const result = getUserEntry(args.username).then((user) => {
-                    console.log(result);  
-                }).catch((err) => {
-                    console.log(err);
-                });
-                return result;
+                return getUserEntry(args.username);
             },
         },
     }),
