@@ -5,7 +5,7 @@ const GraphQLService = {
     fetchUserDetails: function(username, fields) {
         const query = `
             query {
-                user(username: "${username}") {
+                fetchUser(username: "${username}") {
                     ${fields}
                 }
             }
