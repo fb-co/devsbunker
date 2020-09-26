@@ -1,44 +1,9 @@
-import User from "../components/user/user.model.js"; // the db
-
 import graphql from "graphql";
 const { GraphQLSchema, GraphQLObjectType, GraphQLString } = graphql;
 
-// DB Communication Methods
+import UserType from "./user/user.type.js";
+import getUserEntry from "./user/getUserEntry.js";
 
-// gets user document from db with a username parameter, we could also make another for the id if you want
-async function getUserEntry(name) {
-    return new Promise((resolve) => {
-        User.findOne({ username: name })
-            .then((user) => {
-                resolve(user);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    });
-}
-
-// Graphql Endpoints
-
-const UserType = new GraphQLObjectType({
-    name: "User",
-    description: "User Type",
-
-    fields: () => ({
-        username: {
-            type: GraphQLString,
-            resolve: (user) => user.username,
-        },
-        email: {
-            type: GraphQLString,
-            resolve: (user) => user.email,
-        },
-        tag: {
-            type: GraphQLString,
-            resolve: (user) => user.tag,
-        },
-    }),
-});
 const QueryType = new GraphQLObjectType({
     name: "Query",
     description: "Root Query",
