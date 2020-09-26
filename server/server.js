@@ -23,11 +23,17 @@ const allowedOrigins = [
 
 const corsOptions = {
     origin: function (origin, callback) {
-        if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
+        if (process.env.PROD === "true") {
+            if (allowedOrigins.indexOf(origin) !== -1) {
+                callback(null, true);
+            } else {
+                console.log(
+                    "[!] A disawllowed origin has tried to connect. [!]"
+                );
+                callback(new Error("Not allowed by CORS"));
+            }
         } else {
-            console.log("[!] A disawllowed origin has tried to connect. [!]");
-            callback(new Error("Not allowed by CORS"));
+            callback(null, true);
         }
     },
     optionsSuccessStatus: 200,
@@ -42,18 +48,13 @@ import TokenHandler from "./components/tokens/TokenHandler.js";
 app.use(morgan("dev")); // change to common for production
 app.use(helmet()); // secure headers
 app.use(methodOverride("_method")); // query string in order to make a delete req
-
-if (process.env.PROD === "true") {
-    app.use(cors(corsOptions));
-} else {
-    app.use(cors());
-}
+app.use(cors(corsOptions));
 
 app.use(
     "/graphql",
     graphqlHTTP({
         schema,
-        graphiql: false, // dev
+        graphiql: true, // dev
     })
 );
 
