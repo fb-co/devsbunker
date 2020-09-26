@@ -1,4 +1,4 @@
-import User from "../../components/user/user.model.js"; // the db
+import User from "../../../components/user/user.model.js"; // the db
 
 // gets user document from db with a username parameter, we could also make another for the id if you want
 export default async function getUserEntry(name) {

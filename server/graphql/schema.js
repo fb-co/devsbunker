@@ -1,28 +1,29 @@
 import graphql from "graphql";
 const { GraphQLSchema, GraphQLObjectType, GraphQLString } = graphql;
 
-import UserType from "./user/user.type.js";
-import getUserEntry from "./user/getUserEntry.js";
+// Fields
+import signup from "./user/fields/signup.js";
+import fetchUser from "./user/fields/fetch.user.js";
 
-const QueryType = new GraphQLObjectType({
+const RootQuery = new GraphQLObjectType({
     name: "Query",
     description: "Root Query",
 
     fields: () => ({
-        user: {
-            type: UserType,
-            args: {
-                username: { type: GraphQLString },
-            },
-            resolve: (root, args) => {
-                /* I think its because before I was returning the result of the promise in 'getUserEntry()' while now I literally return a promise and just call the promise */
+        fetchUser,
+    }),
+});
 
-                return getUserEntry(args.username);
-            },
-        },
+const RootMutation = new GraphQLObjectType({
+    name: "Mutation",
+    description: "Root Mutations",
+
+    fields: () => ({
+        signup,
     }),
 });
 
 export default new GraphQLSchema({
-    query: QueryType,
+    query: RootQuery,
+    mutation: RootMutation,
 });
