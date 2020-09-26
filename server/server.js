@@ -1,7 +1,6 @@
 import express from "express";
 import express_graphql from "express-graphql";
 const { graphqlHTTP } = express_graphql;
-
 const app = express();
 
 import schema from "./graphql/schema.js";
@@ -52,10 +51,11 @@ app.use(cors(corsOptions));
 
 app.use(
     "/graphql",
-    graphqlHTTP({
+    graphqlHTTP((req, res) => ({
         schema,
-        graphiql: true, // dev
-    })
+        graphiql: true,
+        context: { req, res },
+    }))
 );
 
 app.use(cookieParser());
