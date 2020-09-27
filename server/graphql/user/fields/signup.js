@@ -30,11 +30,6 @@ const signup = {
             );
         }
 
-        function failedSignup(res, msg) {
-            res.status(422);
-            return new GraphQLError(msg);
-        }
-
         if (
             validateCreds({
                 username: args.username,
@@ -69,16 +64,27 @@ const signup = {
                         accessToken,
                     };
                 } else {
-                    return failedLogin(res, "Unable to create token.");
+                    res.status(422);
+
+                    return {
+                        message: "Unable to create token.",
+                        accessToken: null,
+                    };
                 }
             } catch {
-                return failedSignup(
-                    res,
-                    "Unable to signup. Credentials are probably already taken."
-                );
+                res.status(401);
+
+                return {
+                    message: "Unable to signup. Credentials are already taken.",
+                    accessToken: null,
+                };
             }
         } else {
-            return failedSignup(res, "Invalid credentials found.");
+            res.status(400);
+            return {
+                message: "Invalid credentials. Please try again.",
+                accessToken: null,
+            };
         }
     },
 };
