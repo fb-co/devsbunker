@@ -33,13 +33,30 @@ export default {
         fontSize: {
             type: String,
             default: "15px"
+        },
+
+        dynamicSwitch: {
+            type: Boolean,
+            default: true
+        },
+
+        justify: {
+            type: String,
+            default: "center"
+        },
+
+        border_radius: {
+            type: String,
+            default: "10px"
         }
     },
     computed: {
         cssProps() {
             return {
                 "--link-spacing": this.spacing,
-                "--custom-fontsize": this.fontSize
+                "--custom-fontsize": this.fontSize,
+                "--justify-label": this.justify,
+                "--radius": this.borderRadius
             };
         },
     },
@@ -47,14 +64,18 @@ export default {
     data() {
         return {
             show: false,
-            activeLabel: this.label
+            activeLabel: this.label,
+            shouldSwitch: this.dynamicSwitch
         };
     },
     methods: {
         // changes label based on what you click
         handleClick(e) {
             this.show = !this.show;
-            this.activeLabel = e.target.innerText;
+
+            if (this.shouldSwitch) {
+                this.activeLabel = e.target.innerText;
+            }
         }
     }
 };
@@ -64,7 +85,7 @@ export default {
 .label_container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: var(--justify-label);
     width: 100%;
     height: 100%;
     border-radius: 4px;
@@ -83,7 +104,7 @@ export default {
     position: relative;
     z-index: 1;
 
-    border-radius: 10px;
+    border-radius: var(--radius);
 }
 
 /* Functionality */

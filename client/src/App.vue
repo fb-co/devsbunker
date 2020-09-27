@@ -31,7 +31,7 @@ export default {
     },
 
     created() {
-        GraphQLService.fetchUserDetails("TESTACCOUNT", ["email", "tag"]).then((data) => { console.log(data); })
+        GraphQLService.fetchUserDetails("TESTACCOUNT", ["username", "email", "tag"]).then((data) => { console.log(data); })
     }
 };
 </script>
