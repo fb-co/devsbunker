@@ -1,14 +1,14 @@
 import graphql from "graphql";
 const { GraphQLString, GraphQLError } = graphql;
 
-import UserType from "../user.type.js";
-import User from "../../../components/user/user.model.js";
+import { SignupResponse } from "../typeDefs.js";
+import User from "../../../components/user/user.model.js"; // TODO: move this inside GraphQL/
 
 import bcrypt from "bcrypt";
-import TokenHandler from "../../../components/tokens/TokenHandler.js";
+import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: move this inside GraphQL/
 
 const signup = {
-    type: UserType,
+    type: SignupResponse,
     args: {
         username: { type: GraphQLString },
         email: { type: GraphQLString },
@@ -64,11 +64,10 @@ const signup = {
                         sameSite: "Lax",
                     });
 
-                    // don't know why I can't just return this instead of doing res.json
-                    res.json({
+                    return {
                         message: "Successfully signed up.",
-                        accessToken: accessToken,
-                    });
+                        accessToken,
+                    };
                 } else {
                     return failedLogin(res, "Unable to create token.");
                 }

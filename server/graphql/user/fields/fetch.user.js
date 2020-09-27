@@ -1,7 +1,7 @@
 import graphql from "graphql";
 const { GraphQLString } = graphql;
 
-import FetchUserType from "../fetch.user.type.js";
+import { FetchUserType } from "../typeDefs.js";
 
 // Utils
 import getUserEntry from "../utils/getUserEntry.js";

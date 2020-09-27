@@ -21,4 +21,20 @@ const FetchUserType = new GraphQLObjectType({
     }),
 });
 
-export default FetchUserType;
+const SignupResponse = new GraphQLObjectType({
+    name: "SignupResponse",
+    description: "What the user will get back once signed up",
+
+    fields: () => ({
+        message: {
+            type: GraphQLString,
+            resolve: (res) => res.message,
+        },
+        accessToken: {
+            type: GraphQLString,
+            resolve: (res) => res.accessToken,
+        },
+    }),
+});
+
+export { FetchUserType, SignupResponse };
