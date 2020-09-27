@@ -7,6 +7,8 @@ import User from "../../../components/user/user.model.js"; // TODO: move this in
 import bcrypt from "bcrypt";
 import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: move this inside GraphQL/
 
+import validateCreds from "../utils/validateCreds.js";
+
 const signup = {
     type: SignupResponse,
     args: {
@@ -16,20 +18,6 @@ const signup = {
     },
 
     resolve: async (_, args, { res }) => {
-        function validateCreds(creds) {
-            return (
-                creds.username &&
-                creds.username.toString().trim() !== "" &&
-                /^[a-zA-Z0-9_-]+$/.test(creds.username) &&
-                creds.email &&
-                creds.email.toString().trim() !== "" &&
-                /\S+@\S+\.\S+/.test(creds.email) &&
-                creds.password &&
-                creds.password.toString().trim() !== "" &&
-                creds.password.length > 8
-            );
-        }
-
         if (
             validateCreds({
                 username: args.username,
