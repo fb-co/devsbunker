@@ -1,25 +1,22 @@
-import express from "express";
-import express_graphql from "express-graphql";
-const { graphqlHTTP } = express_graphql;
-const app = express();
-
-import schema from "./graphql/schema.js";
-
 import dotenv from "dotenv";
 const { config } = dotenv;
 config();
+
+import ApolloServerExpress from "apollo-server-express";
+const { ApolloServer } = ApolloServerExpress;
 
 import morgan from "morgan";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import methodOverride from "method-override";
+import TokenHandler from "./components/tokens/TokenHandler.js";
 
 import cors from "cors";
 const allowedOrigins = [
     `http://${process.env.HOST}:8080`,
     "http://localhost:8080",
 ];
-
 const corsOptions = {
     origin: function (origin, callback) {
         if (process.env.PROD === "true") {
@@ -39,24 +36,14 @@ const corsOptions = {
     credentials: true,
 };
 
-import methodOverride from "method-override";
-
-import TokenHandler from "./components/tokens/TokenHandler.js";
+import express from "express";
+const app = express();
 
 // Middlewares
 app.use(morgan("dev")); // change to common for production
 app.use(helmet()); // secure headers
 app.use(methodOverride("_method")); // query string in order to make a delete req
 app.use(cors(corsOptions));
-
-app.use(
-    "/graphql",
-    graphqlHTTP((req, res) => ({
-        schema,
-        graphiql: true,
-        context: { req, res },
-    }))
-);
 
 app.use(cookieParser());
 app.use(
@@ -67,6 +54,18 @@ app.use(
 app.use(express.json());
 
 app.use(TokenHandler.checkHeaderToken); // checking token on every request
+
+// Apollo Server
+import typeDefs from "./graphql/typeDefs.js";
+import resolvers from "./graphql/resolvers.js";
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: ({ req, res }) => ({ req, res }),
+});
+
+server.applyMiddleware({ app });
 
 // Mongo URI
 mongoose.set("useNewUrlParser", true);
