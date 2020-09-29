@@ -6,8 +6,6 @@ import validateCreds from "../utils/validateCreds.js";
 export default {
     Mutation: {
         signupResponse: async function (_, args, { res }) {
-            console.log("hey");
-
             if (
                 validateCreds({
                     username: args.username,
