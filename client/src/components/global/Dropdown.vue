@@ -101,7 +101,8 @@ export default {
     display: none;
     background: var(--main-color);
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.15);
-    position: relative;
+    position: absolute;
+    width: inherit;
     z-index: 1;
 
     border-radius: var(--radius);
