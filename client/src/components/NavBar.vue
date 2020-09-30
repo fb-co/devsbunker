@@ -164,6 +164,14 @@ export default {
         width: 300px;
     }
 }
+@keyframes burger_animation_mobile {
+    from {
+        width: 0px;
+    }
+    to {
+        width: 225px;
+    }
+}
 @keyframes opacityFader {
     from {
         background-color: rgba(0, 0, 0, 0);
@@ -321,12 +329,10 @@ body {
 .burger_menu_cont {
     overflow-x: hidden;
     display: none;
-    animation: burger_animation 0.5s;
     position: fixed;
     right: 0;
     top: 0;
     height: 100vh;
-    width: 300px;
     background-color: var(--burger-menu-bg);
     z-index: -1;
 }
@@ -429,8 +435,16 @@ body {
     .desktop_only {
         display: none;
     }
+    .burger_menu_cont {
+        width: 225px;
+        animation: burger_animation_mobile 0.5s;
+    }
 }
 /* desktop styles */
 @media only screen and (min-width: 767px) {
+    .burger_menu_cont {
+        width: 300px;
+        animation: burger_animation 0.5s;
+    }
 }
 </style>

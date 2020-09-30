@@ -1,14 +1,15 @@
 <template>
     <div class="main_container">
-        <div class="header_container">
-            <p class="username_welcome">Hello The_Jak!</p>
-            <Dropdown label="New" fontSize="12px" spacing="40px" :dynamicSwitch="false" justify="left" border_radius="0px" class="filter_dropdown">
-                <button>Project</button>
-                <button>Post</button>
-                <button>Review</button>
-            </Dropdown>
-        </div>
         <div class="main_content_container">
+            <div class="header_container">
+                <p class="username_welcome">Hello The_Jak!</p>
+                <Dropdown label="New" fontSize="12px" spacing="40px" :dynamicSwitch="false" justify="left" border_radius="0px" class="filter_dropdown">
+                    <button>Project</button>
+                    <button>Post</button>
+                    <button>Review</button>
+                </Dropdown>
+            </div>
+
             <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
         </div>
     </div>
@@ -77,16 +78,6 @@ export default {
         margin-right: auto;
         height: auto;
     }
-    .header_container {
-        width: 90%;
-        max-width: 550px;
-        min-width: 250px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 35px;
-        text-align: left;
-        font-weight: bold;
-    }
     .filter_dropdown {
         margin-top: 10px;
         margin-bottom: 10px;
@@ -95,6 +86,12 @@ export default {
         font-weight: normal;
     }
     .username_welcome {
+        font-weight: bold;
+        text-align: left;
         font-size: 18px;
+    }
+    .header_container {
+        margin-top: 35px;
+        margin-bottom: 40px;
     }
 </style>

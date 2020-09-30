@@ -54,6 +54,7 @@ export default {
         display: flex;
         flex-direction: row;
         width: 100%;
+        height: auto;
         margin-bottom: 20px;
         box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
