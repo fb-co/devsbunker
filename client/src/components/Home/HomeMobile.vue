@@ -8,6 +8,17 @@
                     <button>Post</button>
                     <button>Review</button>
                 </Dropdown>
+
+                <CustomInput class="main_search">
+                    <input type="text" name="search" id="setting_search" placeholder="Search for a project...">
+                    <div class="submit_search">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <circle cx="10" cy="10" r="7" />
+                            <line x1="21" y1="21" x2="15" y2="15" />
+                        </svg>
+                    </div>
+                </CustomInput>
             </div>
 
             <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
@@ -18,6 +29,7 @@
 <script>
 import MobileProjectCard from '@/components/MobileProjectCard.vue';
 import Dropdown from "@/components/global/Dropdown.vue";
+import CustomInput from "@/components/global/CustomInput.vue"
 
 
 export default {
@@ -60,7 +72,8 @@ export default {
     },
     components: {
         MobileProjectCard,
-        Dropdown
+        Dropdown,
+        CustomInput
     }
 }
 </script>
@@ -88,10 +101,30 @@ export default {
     .username_welcome {
         font-weight: bold;
         text-align: left;
-        font-size: 18px;
+        font-size: 20px;
     }
     .header_container {
         margin-top: 35px;
         margin-bottom: 40px;
+    }
+
+
+    .main_search {
+        border-radius: 15px;
+        height: 35px;
+        margin-top: 40px;
+        margin-bottom: 30px;
+    }
+    .main_search > input {
+        margin-left: 15px;
+        border-radius: 15px;
+        font-size: 14px;
+    }
+    .submit_search {
+        margin-right: 15px;
+        width: 40px;
+    }
+    .submit_search:hover > SVG {
+        stroke-width: 2.5;
     }
 </style>

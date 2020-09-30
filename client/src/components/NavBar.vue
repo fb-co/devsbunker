@@ -428,7 +428,7 @@ body {
 /* MEDIA QUERIES */
 
 /* mobile styles */
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 500px) {
     .menu_container {
         background-color: var(--main-color);
     }
@@ -441,7 +441,7 @@ body {
     }
 }
 /* desktop styles */
-@media only screen and (min-width: 767px) {
+@media only screen and (min-width: 500px) {
     .burger_menu_cont {
         width: 300px;
         animation: burger_animation 0.5s;
