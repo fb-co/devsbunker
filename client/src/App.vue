@@ -97,6 +97,10 @@ body {
 .horizontal_center {
     margin: 0 auto;
 }
+.horizontal_flex_center {
+    display: flex;
+    flex-direction: row;
+}
 .vertical_center {
     position: absolute;
     top: 50%;
