@@ -8,6 +8,7 @@
                         <p class="username_welcome">Hello The_Jak!</p>
 
                         <Dropdown label="Filter" fontSize="12px" spacing="40px" :dynamicSwitch="true" justify="left" border_radius="0px" class="filter_dropdown">
+                            <button>All</button>
                             <button>Javascript</button>
                             <button>Python</button>
                             <button>Java</button>
@@ -17,9 +18,12 @@
                 </div>
 
                 <div class="switcher_container">
-                    <p id="prev_filter" class="prev_filter_class"></p>
-                    <p id="current_filter" class="current_filter_class">All</p>
-                    <p id="next_filter" class="next_filter_class"></p>
+                    <div class="filter_container"><p @click="prevScrollMenuItem()" id="prev_filter" class="prev_filter_class no_select"></p></div>
+                    <div class="current_filter_subcontainer">
+                        <p id="current_filter" class="current_filter_class no_select"></p>
+                        <div class="underline"></div>
+                    </div>
+                    <div class="filter_container"><p @click="nextScrollMenuItem()" id="next_filter" class="next_filter_class no_select"></p></div>
                 </div>
 
                 <CustomInput class="main_search">
@@ -92,9 +96,7 @@ export default {
         }
     },
     mounted() {
-        console.log(document.getElementById("prev_filter").innerText);
-        document.getElementById("prev_filter").innerText = this.getFilterScrollMenuData(this.filter).prev;
-        document.getElementById("next_filter").innerText = this.getFilterScrollMenuData(this.filter).next;
+        this.setScrollMenuData();
     },
     methods: {
         // Returns the data for the current target: I HAVE NO IDEA WHAT IM DOING :')
@@ -102,15 +104,23 @@ export default {
             const index = this.bunkers.indexOf(target || "All");
 
             return {
+                current: this.bunkers[index],
                 prev: this.bunkers[index-1] || this.bunkers[this.bunkers.length-1], // tage the previous of the first index if you already at the start
                 next: this.bunkers[index+1] || this.bunkers[0] // take the next index of the first if you at the end
             }
         },
         prevScrollMenuItem() {
-
+            this.filter = this.getFilterScrollMenuData(this.filter).prev;
+            this.setScrollMenuData();    
         },
         nextScrollMenuItem() {
-            
+            this.filter = this.getFilterScrollMenuData(this.filter).next;
+            this.setScrollMenuData(); 
+        },
+        setScrollMenuData() {
+            document.getElementById("current_filter").innerText = this.getFilterScrollMenuData(this.filter).current;
+            document.getElementById("prev_filter").innerText = this.getFilterScrollMenuData(this.filter).prev;
+            document.getElementById("next_filter").innerText = this.getFilterScrollMenuData(this.filter).next;
         }
     },
     components: {
@@ -124,7 +134,7 @@ export default {
 <style scoped>
     .main_container {
         width: 100%;
-        height: 200px;
+        overflow-x: hidden;
     }
     .main_content_container {
         width: 80%;
@@ -182,36 +192,57 @@ export default {
     }
     .switcher_container {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        flex-direction: row;
+        justify-content: space-between;
         width: 100%;
         height: 50px;
         margin-top: 50px;
         margin-bottom: 50px;
-        text-align: center;
-        background-color: blue;
+    }
+    .filter_container {
+        width: 33.33%;
+    }
+    .underline {
+        width: 25px;
+        height: 4px;
+        background-color: var(--accent);
+        margin: 0 auto;
+    }
+    .switcher_container > div > p {
+        height: 40px;
+    }
+    .switcher_container > p {
+        height: 40px;
     }
 
-
-    /*
-    .next_filter_class {
-        position: absolute;
-        right: 0;
-        -ms-transform: translateX(25%);
-        transform: translateX(25%);
+    .prev_filter_class {
         color: var(--soft-text);
+        text-align: left;
+        position: relative;
+        left: -40%;
     }
-    */
-
+    .next_filter_class {
+        color: var(--soft-text);
+        text-align: right;
+        position: relative;
+        left: 40%;
+    }
     .prev_filter_class:hover {
         font-weight: bold;
+        cursor: pointer;
     }
     .next_filter_class:hover {
         font-weight: bold;
         cursor: pointer;
     }
     .current_filter_class {
-        cursor: normal;
+        font-size: 21px;
+        cursor: default;
+        font-weight: bold;
+        text-align: center;
+    }
+    .current_filter_subcontainer {
+        flex-grow: 1;
     }
 
     /* mobile styles */
