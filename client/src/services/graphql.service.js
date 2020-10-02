@@ -35,6 +35,7 @@ const GraphQLService = {
             const res = await fetch(URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });
             return res.json();
