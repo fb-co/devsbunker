@@ -34,7 +34,11 @@ export default {
         SharedMethods.loadPage();
         this.username = this.$route.params.username;
 
-        this.userObject = await GraphQLService.fetchUserDetails(this.username);
+        this.userObject = await GraphQLService.fetchUserDetails(this.username, [
+            "username",
+            "email",
+            "tag",
+        ]);
     },
 };
 </script>

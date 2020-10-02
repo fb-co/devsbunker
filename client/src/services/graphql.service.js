@@ -5,7 +5,7 @@ const GraphQLService = {
     fetchUserDetails: function(username, fields) {
         const query = `
             query {
-                fetchUser(username: "${username}") {
+                user(username: "${username}") {
                     ${fields}
                 }
             }
@@ -18,6 +18,29 @@ const GraphQLService = {
         })
             .then((res) => res.json())
             .catch(console.error);
+    },
+
+    signupUser: async function(username, email, password) {
+        const mutation = `
+            mutation {
+                signupUser(username: "${username}", email: "${email}", password: "${password}") {
+                    message
+                    accessToken
+                }
+            }
+        `;
+
+        console.log(mutation);
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query: mutation }),
+            });
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
     },
 };
 

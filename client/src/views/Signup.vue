@@ -99,6 +99,8 @@ import UserService from "../services/user.service";
 import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
 
+import GraphQLService from "../services/graphql.service";
+
 import NavBar from "@/components/NavBar";
 import Loading from "@/components/Loading";
 
@@ -140,16 +142,25 @@ export default {
                     this.email,
                     this.password
                 );
+
                 if (valid) {
                     this.submitted = true;
 
-                    const result = await UserService.signup(
+                    const response = await GraphQLService.signupUser(
                         this.username,
                         this.email,
                         this.password
                     );
 
-                    if (/Unable/.test(result.message)) {
+                    const result = response.data.signupUser;
+                    console.log(result);
+
+                    if (!result.message) {
+                        this.errMessage = "Internal error. Try again later";
+                        setTimeout(() => {
+                            this.submitted = false;
+                        }, 1500);
+                    } else if (/Unable/.test(result.message)) {
                         this.errMessage = "Credentials are already taken.";
                         setTimeout(() => {
                             this.submitted = false;
@@ -171,6 +182,7 @@ export default {
                             "refreshAccessToken",
                             result.accessToken
                         );
+
                         this.$router.push("/");
                     }
                 } else {
