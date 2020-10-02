@@ -2,6 +2,7 @@
     <div class="home">
         <NavBar />
         <HomeMobile v-if="mobile" />
+        <HomeDesktop v-if="!mobile" />
     </div>
 </template>
 
@@ -12,6 +13,7 @@ import GeneralProperties from "../mixins/general.mixin";
 import ScreenType from "../utils/screenType.js";
 
 import HomeMobile from "@/components/Home/HomeMobile.vue";
+import HomeDesktop from "@/components/Home/HomeDesktop.vue";
 
 export default {
     data() {
@@ -21,7 +23,6 @@ export default {
     },
     async created() {
         SharedMethods.loadPage();
-
         this.mobile = this.isMobile();
 
         // we also check when the user resizes the window
@@ -37,7 +38,8 @@ export default {
     mixins: [GeneralProperties],
     components: {
         NavBar,
-        HomeMobile
+        HomeMobile,
+        HomeDesktop
     },
     methods: {
         isMobile() {
