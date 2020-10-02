@@ -5,7 +5,7 @@ import validateCreds from "../utils/validateCreds.js";
 
 export default {
     Mutation: {
-        signupResponse: async function (_, args, { res }) {
+        signupUser: async function (_, args, { res }) {
             if (
                 validateCreds({
                     username: args.username,
@@ -28,6 +28,7 @@ export default {
                     const refreshToken = TokenHandler.createRefreshToken(user);
 
                     if (accessToken && refreshToken) {
+                        // TODO: it doesnt set the cookie
                         // setting refresh cookie
                         res.cookie("jid", refreshToken, {
                             httpOnly: true,

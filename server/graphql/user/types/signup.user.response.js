@@ -8,7 +8,7 @@ export default gql`
     }
 
     type Mutation {
-        signupResponse(
+        signupUser(
             username: String!
             email: String!
             password: String!
