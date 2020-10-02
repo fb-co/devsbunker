@@ -11,7 +11,6 @@
 
 <script>
 import Loading from "./components/Loading";
-import GraphQLService from "./services/graphql.service";
 
 export default {
     data() {
@@ -29,10 +28,6 @@ export default {
 
         this.isFetching = false;
     },
-
-    created() {
-        GraphQLService.fetchUserDetails("TESTACCOUNT", ["username", "email", "tag"]).then((data) => { console.log(data); })
-    }
 };
 </script>
 
