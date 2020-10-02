@@ -1,9 +1,11 @@
 import merge from "@graphql-tools/merge";
 const { mergeTypeDefs } = merge;
 
-import user from "./user/types/fetchableUser.js";
-import signup from "./user/types/signupUserResponse.js";
+import user from "./user/types/fetchable.user.js";
+import signup from "./user/types/signup.user.response.js";
 
-const UserTypesArray = [user, signup];
+import about from "./about/types/about.page.js";
+
+const UserTypesArray = [user, signup, about];
 
 export default mergeTypeDefs(UserTypesArray);
