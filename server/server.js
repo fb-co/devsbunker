@@ -65,7 +65,7 @@ const server = new ApolloServer({
     context: ({ req, res }) => ({ req, res }),
 });
 
-server.applyMiddleware({ app });
+server.applyMiddleware({ app, cors: false });
 
 // Mongo URI
 mongoose.set("useNewUrlParser", true);

@@ -28,7 +28,6 @@ export default {
                     const refreshToken = TokenHandler.createRefreshToken(user);
 
                     if (accessToken && refreshToken) {
-                        // TODO: it doesnt set the cookie
                         // setting refresh cookie
                         res.cookie("jid", refreshToken, {
                             httpOnly: true,
