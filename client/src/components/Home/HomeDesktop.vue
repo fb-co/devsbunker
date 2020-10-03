@@ -27,7 +27,7 @@
             </div>
             <p class="discover_label no_select">Discover Projects</p>
             <div class="projects_area">
-
+                <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="70%" class="project_card" />
             </div>
             <div class="projects_footer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_button" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -45,8 +45,49 @@
 </template>
 
 <script>
+import MobileProjectCard from "@/components/MobileProjectCard.vue";
+
 export default {
-    
+    data() {
+        return {
+            projects: [
+                {
+                    name: "The Hungry Wolf",
+                    author: "The_Jak",
+                    desc:
+                        "Make sure you have at least a Geforce RTX 2080 Ti graphics card before launching this game.",
+                    price: 0,
+                    likes: 420,
+                },
+                {
+                    name: "Why Windowz is Stoopid",
+                    author: "f0lg0",
+                    desc:
+                        "Make sure you read this entire post in a bizza accent",
+                    price: 0,
+                    likes: 69,
+                },
+                {
+                    name: "Website Design Templates",
+                    author: "Phil",
+                    desc:
+                        "For less then a dollar you could have some professional website design templates",
+                    price: 0.99,
+                    likes: 792,
+                },
+                {
+                    name: "Spotify Ad Blocker Python",
+                    author: "John",
+                    desc: "Will block all spotify ads with an ad blocker",
+                    price: 0,
+                    likes: 1093,
+                },
+            ],
+        };
+    },
+    components: {   
+        MobileProjectCard
+    }
 }
 </script>
 
@@ -57,12 +98,13 @@ export default {
     width: 100%;
 }
 .left_content {
-    width: 200px;
-    height: 100vh;
-    background-color: blue;
+    width: 300px;
 }
 .center_content {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+    height: calc(100vh - var(--header-height));
 }
 .language_cycler_container {
     display: flex;
@@ -97,7 +139,29 @@ export default {
     flex-direction: column;
     width: 100%;
     height: 200px;
+    flex-grow: 1;
+    overflow-y: scroll;
 }
+.project_card {
+    margin: 0 auto;
+    max-width: 650px;
+    min-width: 500px;
+}
+
+/* SCROLL BAR */
+
+.projects_area::-webkit-scrollbar {
+  width: 4px;
+}
+
+ 
+/* Handle */
+.projects_area::-webkit-scrollbar-thumb {
+  background: var(--soft-text); 
+  border-radius: 10px;
+}
+
+
 .add_button {
     margin-top: 5px;
 }
@@ -109,9 +173,7 @@ export default {
     width: 100%;
 }
 .right_content {
-    width: 350px;
-    height: 100vh;
-    background-color: blue;
+    width: 450px;
 }
 .discover_label {
     font-size: 25px;

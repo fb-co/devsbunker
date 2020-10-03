@@ -4,6 +4,7 @@
             <p class="author card_text">{{ projectData.author }}</p>
             <p class="proj_name card_text">{{ projectData.name }}</p>
             <p class="proj_desc card_text">{{ projectData.desc }}</p>
+            <div style="flex-grow: 1;"></div>
             <div class="likes_container">
                 <!--Not filled icon -->
                 <svg @mouseover="likeIsActive=true" v-if="!likeIsActive" width="17" height="17" viewBox="0 0 16 16" class="bi bi-heart" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
@@ -67,6 +68,8 @@ export default {
         border: 2px solid grey !important;
     }
     .card_text_container{
+        display: flex;
+        flex-direction: column;
         width: 70%;
         height: 100%;
     }
