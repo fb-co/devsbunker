@@ -1,7 +1,7 @@
 <template>
     <div class="main_container">
         <div class="left_content">
-            <p class="username_box">{{ username }}</p>
+            <p class="username_box">{{ $store.getters.username }}</p>
             <router-link to='/settings/account' class="tab_container">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.2" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -165,13 +165,9 @@ export default {
     },
     created() {
         //GraphQLService.fetchUserDetails("jakapoo", ["username", "email"]).then((data) => { this.username = data.data.user.email });
-
-        UserService.isLoggedIn().then((result) => {
-            if (result.user) {
-                this.username = result.user.username;
-                this.userRoute = "/user/" + this.username;
-            }
-        });
+        
+        // refresh the store
+        this.$store.dispatch("setUsername");
     },
     methods: {
         logout() {
