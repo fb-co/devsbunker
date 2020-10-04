@@ -10,11 +10,11 @@ Backend
 -   [x] make Schema for posts
 -   [x] make Schema for bunkers
 -   [ ] provide the current user email where needed (?)
--   [ ] cosnider switching to ES modules
+-   [x] cosnider switching to ES modules
 
 Frontend
 
--   [ ] home page
+-   [x] home page
 -   [ ] about page
 -   [x] login page
 -   [x] signup page
@@ -22,11 +22,11 @@ Frontend
     -   [x] redirect here from login/signup in case of already present valid token
     -   [x] make a delete token method (logout)
 -   [x] handle 404 errors
--   [ ] make a post page
+-   [x] make a post page
 -   [x] use .env
 -   [x] fix mobile view scrolling bug
 -   [x] add delay between form submission and server response (like a loading gif) to slow down potentials brute force attacks to the login and signup page
--   [ ] error handling for the settings: if we pass a non valid setting like /settings/test it still displays stuff and not a 404
+-   [x] error handling for the settings: if we pass a non valid setting like /settings/test it still displays stuff and not a 404
 -   [x] change url dynamically based on selected setting option
 -   [x] The theme changin icon (sun and moon) should be inverted to denote which theme the user is currently using
 -   [ ] Make the first field in the login and signup pages be auto focused on when thep age is loaded
@@ -55,5 +55,5 @@ Glitches
 
 Deployment
 
--  [ ] Set Prod env variable to true
--  [ ] Remove all the console logs, including the one on Logout event
+-   [ ] Set Prod env variable to true
+-   [ ] Remove all the console logs, including the one on Logout event
