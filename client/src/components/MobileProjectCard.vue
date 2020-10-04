@@ -35,7 +35,10 @@
 export default {
     props: {
         projectData: Object,
-        width: String
+        width: {
+            type: String,
+            default: "100%"
+        }
     },
     data() {
         return {

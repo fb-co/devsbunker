@@ -1,0 +1,67 @@
+<template>
+    <div class="main_container" :style="style">
+        <div class="text_container">
+            <p class="title">{{ notificationData.label }}</p>
+            <p class="subtext">{{ notificationData.subtext }}</p>
+        </div>
+        <div class="icon_container">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F44336" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+            </svg>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    props: {
+        notificationData: Object,
+        width: {
+            type: String,
+            default: "100%"
+        }
+    },
+    computed: {
+        style() {
+            return "width: " + this.width;
+        }
+    }
+}
+</script>
+
+<style scoped>
+    .main_container {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 25px;
+        cursor: pointer;
+        padding: 5px;
+    }
+    .main_container:hover {
+        text-decoration: underline;
+    }
+    .text_container {
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        padding-left: 15px;
+        text-align: left;
+    }
+    .title {
+        font-size: 25px;
+        margin-bottom: 5px;
+    }
+    .subtext {
+        margin-bottom: 5px;
+    }
+    .icon_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex-grow: 1;
+    }
+    .icon_container > SVG {
+        margin: 0 auto;
+    }
+</style>

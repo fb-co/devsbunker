@@ -39,15 +39,17 @@ export default {
             type: Boolean,
             default: true
         },
-
         justify: {
             type: String,
             default: "center"
         },
-
-        border_radius: {
+        borderRadius: {
             type: String,
             default: "10px"
+        },
+        spaceBetween: { // The space between label and content
+            type: String,
+            default: "5px"
         }
     },
     computed: {
@@ -56,7 +58,8 @@ export default {
                 "--link-spacing": this.spacing,
                 "--custom-fontsize": this.fontSize,
                 "--justify-label": this.justify,
-                "--radius": this.borderRadius
+                "--radius": this.borderRadius,
+                "--space-between": this.spaceBetween
             };
         },
     },
@@ -90,6 +93,8 @@ export default {
     height: 100%;
     border-radius: 4px;
     z-index: 3;
+    padding-top: var(--space-between);
+    padding-bottom: var(--space-between);
 }
 .label {
     display: flex;

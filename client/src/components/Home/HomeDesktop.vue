@@ -10,7 +10,7 @@
                 </svg>  
                 <p>Settings</p>  
             </router-link>
-            <router-link :to="userRoute" class="tab_container">
+            <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="tab_container">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.2" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
@@ -44,6 +44,13 @@
                 </div>
             </div>
             <p class="discover_label no_select">Discover Projects</p>
+            <div class="filter_dropdown">
+                <Dropdown label="Newest" spacing="40px" space_between="15px">
+                    <button>Newest</button>
+                    <button>Most Popular</button>
+                    <button>Alphabetical</button>
+                </Dropdown>
+            </div>
             <div class="projects_area">
                 <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="70%" class="project_card" />
             </div>
@@ -57,15 +64,17 @@
             </div>
         </div>
         <div class="right_content">
-            
+            <SmallNotificationCard v-for="notification in notifications" :key="notification.label" :notificationData="notification" width="80%" class="home_page_notification" />
         </div>
     </div>
 </template>
 
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
+import SmallNotificationCard from "@/components/SmallNotificationCard.vue";
 //import GraphQLService from "@/services/graphql.service.js";
 import UserService from "@/services/user.service";
+import Dropdown from "@/components/global/Dropdown.vue";
 
 export default {
     data() {
@@ -102,6 +111,56 @@ export default {
                     likes: 1093,
                 },
             ],
+            notifications: [
+                {
+                    label: "Bill Gates",
+                    subtext: "Liked your post!"
+                },
+                {
+                    label: "Elon Musk",
+                    subtext: "Liked your post!"
+                },
+                {
+                    label: "Jeff Bezos",
+                    subtext: "Commented on your post"
+                },
+                {
+                    label: "Bill Gates",
+                    subtext: "Liked your post!"
+                },
+                {
+                    label: "Elon Musk",
+                    subtext: "Liked your post!"
+                },
+                {
+                    label: "Jeff Bezos",
+                    subtext: "Commented on your post"
+                },
+                {
+                    label: "Bill Gates",
+                    subtext: "Liked your post!"
+                },
+                {
+                    label: "Elon Musk",
+                    subtext: "Liked your post!"
+                },
+                {
+                    label: "Jeff Bezos",
+                    subtext: "Commented on your post"
+                },
+                {
+                    label: "Bill Gates",
+                    subtext: "Liked your post!"
+                },
+                {
+                    label: "Elon Musk",
+                    subtext: "Liked your post!"
+                },
+                {
+                    label: "Jeff Bezos",
+                    subtext: "Commented on your post"
+                },
+            ]
         };
     },
     created() {
@@ -119,10 +178,13 @@ export default {
             UserService.logout().then((response) => {
                 console.log("logged out: ", response);
             });
+            location.reload();
         }
     },
     components: {   
-        MobileProjectCard
+        MobileProjectCard,
+        Dropdown,
+        SmallNotificationCard
     }
 }
 </script>
@@ -178,6 +240,14 @@ export default {
     border: 1px solid var(--error-red);
     cursor: pointer;
 }
+.filter_dropdown {
+    width: 200px;
+    margin: 0px auto 40px auto;
+}
+.filter_dropdown > div {
+    width: 200px;
+}
+
 
 /* CENTER CONTENT */
 
@@ -259,10 +329,16 @@ export default {
 
 .right_content {
     width: 425px;
+    padding-top: 15px;
 }
 .discover_label {
     font-size: 25px;
     margin-top: 50px;
     margin-bottom: 40px;
 }
+.home_page_notification {
+    margin: 20px auto 20px auto;
+}
+
+
 </style>

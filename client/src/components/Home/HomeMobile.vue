@@ -8,11 +8,9 @@
                         <p class="username_welcome">Hello The_Jak!</p>
 
                         <Dropdown label="Filter" fontSize="12px" spacing="40px" :dynamicSwitch="true" justify="left" border_radius="0px" class="filter_dropdown">
-                            <button>All</button>
-                            <button>Javascript</button>
-                            <button>Python</button>
-                            <button>Java</button>
-                            <button>C/C++</button>
+                            <button>Newest</button>
+                            <button>Most Popular</button>
+                            <button>Alphabetical</button>
                         </Dropdown>
                     </div>
                 </div>
