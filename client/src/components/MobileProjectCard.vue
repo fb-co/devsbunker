@@ -1,5 +1,5 @@
 <template>
-    <div id="card_container" class="main_container" :style="style">
+    <div id="card_container" class="main_container no_select" :style="style">
         <div class="card_text_container">
             <p class="author card_text">{{ projectData.author }}</p>
             <p class="proj_name card_text">{{ projectData.name }}</p>
@@ -64,7 +64,7 @@ export default {
         cursor: pointer;
         border: 2px solid transparent;
     }
-    .main_container:hover{
+    .main_container:hover {
         border: 2px solid grey !important;
     }
     .card_text_container{

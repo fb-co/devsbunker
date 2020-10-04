@@ -1,7 +1,25 @@
 <template>
     <div class="main_container">
         <div class="left_content">
-
+            <p class="username_box">{{ username }}</p>
+            <router-link to='/settings/account' class="tab_container">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.2" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>  
+                <p>Settings</p>  
+            </router-link>
+            <router-link :to="userRoute" class="tab_container">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.2" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                    <circle cx="12" cy="14" r="2" />
+                    <polyline points="14 4 14 8 8 8 8 4" />
+                </svg>
+                <p>Saved Projects</p>  
+            </router-link>
+            <p v-if="$store.getters.isLoggedIn" @click="logout()" class="logout_button">Logout</p>
         </div>
         <div class="center_content">
             <div class="language_cycler_container">
@@ -14,7 +32,7 @@
                     </svg>
                 </div>
                 <div class="lan_cycler_cont">
-                    <p class="no_select">Javascript * Python * C/C++ * Ruby * All * Javascript * Python * C/C++ * Ruby * All</p>
+                    <p class="no_select">Javascript * Python * C/C++ * All</p>
                 </div>
                 <div class="lan_cycler_arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-right" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -46,32 +64,33 @@
 
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
+//import GraphQLService from "@/services/graphql.service.js";
+import UserService from "@/services/user.service";
 
 export default {
     data() {
         return {
+            username: "",
+            userRoute: "",
             projects: [
                 {
                     name: "The Hungry Wolf",
                     author: "The_Jak",
-                    desc:
-                        "Make sure you have at least a Geforce RTX 2080 Ti graphics card before launching this game.",
+                    desc: "Make sure you have at least a Geforce RTX 2080 Ti graphics card before launching this game.",
                     price: 0,
                     likes: 420,
                 },
                 {
                     name: "Why Windowz is Stoopid",
                     author: "f0lg0",
-                    desc:
-                        "Make sure you read this entire post in a bizza accent",
+                    desc: "Make sure you read this entire post in a bizza accent",
                     price: 0,
                     likes: 69,
                 },
                 {
                     name: "Website Design Templates",
                     author: "Phil",
-                    desc:
-                        "For less then a dollar you could have some professional website design templates",
+                    desc: "For less then a dollar you could have some professional website design templates",
                     price: 0.99,
                     likes: 792,
                 },
@@ -85,6 +104,23 @@ export default {
             ],
         };
     },
+    created() {
+        //GraphQLService.fetchUserDetails("jakapoo", ["username", "email"]).then((data) => { this.username = data.data.user.email });
+
+        UserService.isLoggedIn().then((result) => {
+            if (result.user) {
+                this.username = result.user.username;
+                this.userRoute = "/user/" + this.username;
+            }
+        });
+    },
+    methods: {
+        logout() {
+            UserService.logout().then((response) => {
+                console.log("logged out: ", response);
+            });
+        }
+    },
     components: {   
         MobileProjectCard
     }
@@ -97,9 +133,54 @@ export default {
     flex-direction: row;
     width: 100%;
 }
+
+/* LEFT CONTENT */
 .left_content {
-    width: 300px;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
 }
+.username_box {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: left;
+    padding: 25px 0px 25px 15%;
+}
+.tab_container {
+    display: flex;
+    flex-direction: row;
+    padding-left: 15%;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+.tab_container > p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+    color: var(--main-font-color);
+}
+.tab_container > p:hover {
+    color: var(--soft-text);
+}
+.logout_button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100px;
+    height: 30px;
+    margin-top: 20px;
+    margin-left: 15%;
+    color: var(--error-red);
+    border-radius: 4px;
+    border: 1px solid var(--error-red);
+    cursor: pointer;
+}
+
+/* CENTER CONTENT */
+
 .center_content {
     display: flex;
     flex-direction: column;
@@ -145,7 +226,7 @@ export default {
 .project_card {
     margin: 0 auto;
     max-width: 650px;
-    min-width: 500px;
+    min-width: 400px;
 }
 
 /* SCROLL BAR */
@@ -172,8 +253,12 @@ export default {
 .projects_footer {
     width: 100%;
 }
+
+
+/* RIGHT CONTENT */
+
 .right_content {
-    width: 450px;
+    width: 425px;
 }
 .discover_label {
     font-size: 25px;
