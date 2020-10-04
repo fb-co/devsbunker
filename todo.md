@@ -56,3 +56,4 @@ Glitches
 Deployment
 
 -  [ ] Set Prod env variable to true
+-  [ ] Remove all the console logs, including the one on Logout event
