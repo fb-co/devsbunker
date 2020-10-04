@@ -11,6 +11,7 @@ Backend
 -   [x] make Schema for bunkers
 -   [ ] provide the current user email where needed (?)
 -   [x] cosnider switching to ES modules
+-   [ ] multiple devices logged into once account
 
 Frontend
 
@@ -52,6 +53,7 @@ Glitches
 -   [x] Look at the console when you switch themes in mobile mode :(
 -   [ ] settings sections (account, privacy, etc) are still available in mobile version. This is not a real glitch but we have to decide what to do with it
 -   [x] avoid refreshing access token if user is not logged in (not really possible)
+
 
 Deployment
 
