@@ -2,6 +2,7 @@
     <div class="main_container">
         <div class="left_content">
             <p class="username_box">{{ $store.getters.username }}</p>
+            
             <router-link to='/settings/account' class="tab_container">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.2" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -19,8 +20,17 @@
                 </svg>
                 <p>Saved Projects</p>  
             </router-link>
+            <router-link to='/new' class="new_button">
+                <p>New</p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="25" height="25" viewBox="0 0 24 24" stroke-width="0.7" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+            </router-link>
             <p v-if="$store.getters.isLoggedIn" @click="logout()" class="logout_button">Logout</p>
         </div>
+        <div class="left_placeholder"></div>
         <div class="center_content">
             <div class="language_cycler_container">
                 <div class="lan_cycler_arrow">
@@ -66,6 +76,7 @@
         <div class="right_content">
             <SmallNotificationCard v-for="notification in notifications" :key="notification.label" :notificationData="notification" width="80%" class="home_page_notification" />
         </div>
+        <div class="right_placeholder"></div>
     </div>
 </template>
 
@@ -83,6 +94,33 @@ export default {
             userRoute: "",
             projects: [
                 {
+                    name: "The Hungry Wolf",
+                    author: "The_Jak",
+                    desc: "Make sure you have at least a Geforce RTX 2080 Ti graphics card before launching this game.",
+                    price: 0,
+                    likes: 420,
+                },
+                {
+                    name: "Why Windowz is Stoopid",
+                    author: "f0lg0",
+                    desc: "Make sure you read this entire post in a bizza accent",
+                    price: 0,
+                    likes: 69,
+                },
+                {
+                    name: "Website Design Templates",
+                    author: "Phil",
+                    desc: "For less then a dollar you could have some professional website design templates",
+                    price: 0.99,
+                    likes: 792,
+                },
+                {
+                    name: "Spotify Ad Blocker Python",
+                    author: "John",
+                    desc: "Will block all spotify ads with an ad blocker",
+                    price: 0,
+                    likes: 1093,
+                },{
                     name: "The Hungry Wolf",
                     author: "The_Jak",
                     desc: "Make sure you have at least a Geforce RTX 2080 Ti graphics card before launching this game.",
@@ -194,8 +232,13 @@ export default {
 
 /* LEFT CONTENT */
 .left_content {
+    position: fixed;
+    left: 0;
     display: flex;
     flex-direction: column;
+    width: 400px;
+}
+.left_placeholder {
     width: 400px;
 }
 .username_box {
@@ -243,7 +286,29 @@ export default {
 .filter_dropdown > div {
     width: 200px;
 }
-
+.new_button {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    width: 100px;
+    border-radius: 4px;
+    border: 1px solid var(--main-font-color);
+    margin-left: 15%;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.new_button > p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+    color: var(--main-font-color);
+}
+.new_button > SVG {
+    margin: 0 auto;
+}
 
 /* CENTER CONTENT */
 
@@ -251,7 +316,7 @@ export default {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    height: calc(100vh - var(--header-height));
+    height: auto;
 }
 .language_cycler_container {
     display: flex;
@@ -285,30 +350,13 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 200px;
     flex-grow: 1;
-    overflow-y: scroll;
 }
 .project_card {
     margin: 0 auto;
     max-width: 650px;
     min-width: 400px;
 }
-
-/* SCROLL BAR */
-
-.projects_area::-webkit-scrollbar {
-  width: 4px;
-}
-
- 
-/* Handle */
-.projects_area::-webkit-scrollbar-thumb {
-  background: var(--soft-text); 
-  border-radius: 10px;
-}
-
-
 .add_button {
     margin-top: 5px;
 }
@@ -324,8 +372,15 @@ export default {
 /* RIGHT CONTENT */
 
 .right_content {
-    width: 425px;
+    position: fixed;
+    right: 0;
+    width: 500px;
+    height: calc(100vh - var(--header-height));
+    overflow-y: scroll;
     padding-top: 15px;
+}
+.right_placeholder {
+    width: 500px;
 }
 .discover_label {
     font-size: 25px;
@@ -336,5 +391,16 @@ export default {
     margin: 20px auto 20px auto;
 }
 
+/* SCROLL BAR */
+.right_content::-webkit-scrollbar {
+  width: 4px;
+}
+
+ 
+/* Handle */
+.right_content::-webkit-scrollbar-thumb {
+  background: var(--soft-text); 
+  border-radius: 10px;
+}
 
 </style>
