@@ -1,6 +1,6 @@
 # TODO
 
-Backend
+## Backend
 
 -   [ ] send confirmation email for signup
 -   [x] implement login system
@@ -12,8 +12,10 @@ Backend
 -   [ ] provide the current user email where needed (?)
 -   [x] cosnider switching to ES modules
 -   [ ] multiple devices logged into once account
+-   [ ] delete all REST endpoints
+-   [ ] use AuthErrors in Signup (GraphQL)
 
-Frontend
+## Frontend
 
 -   [x] home page
 -   [ ] about page
@@ -32,7 +34,7 @@ Frontend
 -   [x] The theme changin icon (sun and moon) should be inverted to denote which theme the user is currently using
 -   [ ] Make the first field in the login and signup pages be auto focused on when thep age is loaded
 
-Glitches
+## Glitches
 
 -   [x] if a logged in user refreshes the page the profile link in the navbar and in the burger disappears, Login and Signup take its place (like if the user was not logged in)
 -   [ ] Fix browser back arrow button in some pages after 404
@@ -54,8 +56,8 @@ Glitches
 -   [ ] settings sections (account, privacy, etc) are still available in mobile version. This is not a real glitch but we have to decide what to do with it
 -   [x] avoid refreshing access token if user is not logged in (not really possible)
 
-
-Deployment
+## Deployment
 
 -   [ ] Set Prod env variable to true
 -   [ ] Remove all the console logs, including the one on Logout event
+-   [ ] use a more accurate regex for emails
