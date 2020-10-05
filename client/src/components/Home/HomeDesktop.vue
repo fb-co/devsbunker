@@ -30,7 +30,6 @@
             </router-link>
             <p v-if="$store.getters.isLoggedIn" @click="logout()" class="logout_button">Logout</p>
         </div>
-        <div class="left_placeholder"></div>
         <div class="center_content">
             <div class="language_cycler_container">
                 <div class="lan_cycler_arrow">
@@ -53,30 +52,31 @@
                     </svg>
                 </div>
             </div>
-            <p class="discover_label no_select">Discover Projects</p>
-            <div class="filter_dropdown">
-                <Dropdown label="Newest" spacing="40px" space_between="15px">
-                    <button>Newest</button>
-                    <button>Most Popular</button>
-                    <button>Alphabetical</button>
-                </Dropdown>
-            </div>
-            <div class="projects_area">
-                <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="70%" class="project_card" />
-            </div>
-            <div class="projects_footer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_button" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <rect x="4" y="4" width="16" height="16" rx="2" />
-                    <line x1="9" y1="12" x2="15" y2="12" />
-                    <line x1="12" y1="9" x2="12" y2="15" />
-                </svg>
+            <div class="scrollable_center">
+                <p class="discover_label no_select">Discover Projects</p>
+                <div class="filter_dropdown">
+                    <Dropdown label="Newest" spacing="40px" space_between="15px">
+                        <button>Newest</button>
+                        <button>Most Popular</button>
+                        <button>Alphabetical</button>
+                    </Dropdown>
+                </div>
+                <div class="projects_area">
+                    <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="70%" class="project_card" />
+                </div>
+                <div class="projects_footer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_button" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <rect x="4" y="4" width="16" height="16" rx="2" />
+                        <line x1="9" y1="12" x2="15" y2="12" />
+                        <line x1="12" y1="9" x2="12" y2="15" />
+                    </svg>
+                </div>
             </div>
         </div>
         <div class="right_content">
             <SmallNotificationCard v-for="notification in notifications" :key="notification.label" :notificationData="notification" width="80%" class="home_page_notification" />
         </div>
-        <div class="right_placeholder"></div>
     </div>
 </template>
 
@@ -232,13 +232,8 @@ export default {
 
 /* LEFT CONTENT */
 .left_content {
-    position: fixed;
-    left: 0;
     display: flex;
     flex-direction: column;
-    width: 400px;
-}
-.left_placeholder {
     width: 400px;
 }
 .username_box {
@@ -316,7 +311,10 @@ export default {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    height: auto;
+}
+.scrollable_center {
+    overflow-y: scroll;
+    height: calc(100vh - var(--header-height) - 50px);
 }
 .language_cycler_container {
     display: flex;
@@ -328,7 +326,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 50px;
+    width: var(--carosel-height);
     height: 100%;
 }
 .lan_cycler_arrow > SVG {
@@ -367,20 +365,23 @@ export default {
 .projects_footer {
     width: 100%;
 }
+/* SCROLL BAR */
+.scrollable_center::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollable_center::-webkit-scrollbar-thumb {
+  background: var(--soft-text); 
+  border-radius: 10px;
+}
 
 
 /* RIGHT CONTENT */
 
 .right_content {
-    position: fixed;
-    right: 0;
     width: 500px;
     height: calc(100vh - var(--header-height));
     overflow-y: scroll;
     padding-top: 15px;
-}
-.right_placeholder {
-    width: 500px;
 }
 .discover_label {
     font-size: 25px;
