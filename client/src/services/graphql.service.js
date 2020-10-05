@@ -30,13 +30,49 @@ const GraphQLService = {
             }
         `;
 
-        console.log(mutation);
         try {
             const res = await fetch(URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
+            });
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+
+    loginUser: async function(id, password) {
+        let query;
+
+        if (/\S+@\S+\.\S+/.test(id)) {
+            // testing if the provided identifier is an email or a username
+            query = `
+                query {
+                    loginUser(email: "${id}", password: "${password}") {
+                        message
+                        accessToken
+                    }
+                }
+            `;
+        } else {
+            query = `
+                query {
+                    loginUser(username: "${id}", password: "${password}") {
+                        message
+                        accessToken
+                    }
+                }
+            `;
+        }
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query }),
             });
             return res.json();
         } catch (err) {

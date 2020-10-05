@@ -153,7 +153,6 @@ export default {
                     );
 
                     const result = response.data.signupUser;
-                    console.log(result);
 
                     if (!result.message) {
                         this.errMessage = "Internal error. Try again later";

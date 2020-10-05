@@ -15,6 +15,7 @@ async function loginValidUser(user, password, res) {
             // setting refresh cookie
             res.cookie("jid", refreshToken, {
                 httpOnly: true,
+                expires: new Date(Date.now() + 561600000), // cookie expires after 6.5 days
                 path: "/user/refresh_token",
                 sameSite: "Lax",
             });

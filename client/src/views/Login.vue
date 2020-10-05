@@ -115,6 +115,7 @@
 
 <script>
 import UserService from "../services/user.service";
+import GraphQLService from "../services/graphql.service";
 
 import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
@@ -149,25 +150,34 @@ export default {
     },
     methods: {
         async submitForm() {
-            const result = await UserService.login(this.userID, this.password);
+            const response = await GraphQLService.loginUser(
+                this.userID,
+                this.password
+            );
             this.submitted = true;
 
-            if (/Incorrect/.test(result.message)) {
-                this.errMessage = "Incorrect credentials.";
-                setTimeout(() => {
-                    this.submitted = false;
-                }, 1500);
-            } else if (result.message === "Unable to create token.") {
-                this.errMessage = "Internal error. Try again later";
-                setTimeout(() => {
-                    this.submitted = false;
-                }, 1500);
+            if (response.errors) {
+                const message = response.errors[0].message;
+                if (/Incorrect/.test(message)) {
+                    this.errMessage = "Incorrect credentials.";
+                    setTimeout(() => {
+                        this.submitted = false;
+                    }, 1500);
+                } else {
+                    this.errMessage = "Internal error. Try again later";
+                    setTimeout(() => {
+                        this.submitted = false;
+                    }, 1500);
+                }
             } else {
+                const result = response.data.loginUser;
+
                 this.errMessage = "";
                 this.$store.commit("refreshAccessToken", result.accessToken);
                 this.$router.push("/");
             }
         },
+
         togglePassword() {
             let element = document.getElementById("password");
 

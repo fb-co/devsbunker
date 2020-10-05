@@ -27,6 +27,7 @@ function loginValidUser(req, res, next, user) {
                         httpOnly: true,
                         path: "/user/refresh_token",
                         sameSite: "Lax",
+                        expires: new Date(Date.now() + 561600000), // cookie expires after 6.5 days
                     });
 
                     res.json({
