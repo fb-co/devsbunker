@@ -13,7 +13,7 @@
 -   [x] cosnider switching to ES modules
 -   [ ] multiple devices logged into once account
 -   [ ] delete all REST endpoints
--   [ ] use AuthErrors in Signup (GraphQL)
+-   [x] use AuthErrors in Signup (GraphQL)
 
 ## Frontend
 
