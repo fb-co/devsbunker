@@ -21,25 +21,6 @@ const UserService = {
         );
     },
 
-    login: function(id, password) {
-        const creds = {
-            userID: id,
-            password: password,
-        };
-
-        return ApiService.sendCredsToAPI(creds);
-    },
-
-    signup: function(username, email, password) {
-        const creds = {
-            username: username,
-            email: email,
-            password: password,
-        };
-
-        return ApiService.sendCredsToAPI(creds);
-    },
-
     logout: async function() {
         this.deleteAuthToken();
         store.commit("changeLoggedInState", false);

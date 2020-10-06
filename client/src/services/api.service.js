@@ -3,33 +3,10 @@
   communicate with the API.
 */
 
-const LOGIN_API_URL = process.env.VUE_APP_LOGIN_API_URL;
-const SIGNUP_API_URL = process.env.VUE_APP_SIGNUP_API_URL;
 const AUTH_API_URL = process.env.VUE_APP_AUTH_API_URL;
 const LOGOUT_USER_API_URL = process.env.VUE_APP_LOGOUT_USER_API_URL;
 
 const ApiService = {
-    sendCredsToAPI: async function(creds) {
-        let URL = "";
-
-        if (Object.keys(creds).length < 3) {
-            URL = LOGIN_API_URL;
-        } else {
-            URL = SIGNUP_API_URL;
-        }
-
-        const response = await fetch(URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-            },
-            credentials: "include",
-            body: JSON.stringify(creds),
-        });
-
-        return response.json();
-    },
-
     isAuthenticated: async function(token) {
         const response = await fetch(AUTH_API_URL, {
             headers: {
