@@ -5,6 +5,8 @@
             <p class="title">{{ projectData.name }}</p>
             <p class="desc">{{ projectData.desc }}</p>
 
+            <div style="flex-grow:1;"></div> <!--placeholder so info_container sinks to bottom -->
+
             <div class="info_container">
                 <div class="vertical_flex_center">
                     <!--Not filled icon -->
@@ -56,6 +58,8 @@ export default {
         height: auto;  
     }
     .text_container {
+        display: flex;
+        flex-direction: column;
         min-width: 65%;
         text-align: left;
         padding: 10px;
@@ -81,6 +85,7 @@ export default {
         display: flex;
         flex-direction: row;
         color: var(--soft-text);
+        margin-bottom: 10px;
     }
     .info_container > SVG {
         cursor: pointer;

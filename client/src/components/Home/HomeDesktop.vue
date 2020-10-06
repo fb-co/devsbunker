@@ -328,8 +328,8 @@ export default {
     flex-grow: 1;
 }
 .project_card {
-    margin: 0pc auto 20px auto;
-    max-width: 650px;
+    margin: 0px auto 20px auto;
+    max-width: 750px;
     min-width: 400px;
 }
 .add_button {
