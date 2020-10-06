@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="image_container">
-
+            <img src="@/assets/project_img_placeholder.png" class="card_image">
         </div>
     </div>
 </template>
@@ -56,7 +56,7 @@ export default {
         height: auto;  
     }
     .text_container {
-        width: 65%;
+        min-width: 65%;
         text-align: left;
         padding: 10px;
     }
@@ -86,8 +86,13 @@ export default {
         cursor: pointer;
     }
     .image_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         flex-grow: 1;
-        background-color: var(--accent);
+    }
+    .card_image {
+        width: 100%;
     }
     .spacer {
         padding-right: 10px;

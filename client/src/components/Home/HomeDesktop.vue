@@ -75,7 +75,7 @@
             </div>
         </div>
         <div class="right_content">
-            <SmallNotificationCard v-for="notification in notifications" :key="notification.label" :notificationData="notification" width="80%" class="home_page_notification" />
+            <SmallNotificationCard v-for="notification in notifications" :key="notification.label" :notificationData="notification" class="home_page_notification" />
         </div>
     </div>
 </template>
@@ -105,7 +105,7 @@ export default {
                     name: "Why Windowz is Stoopid",
                     author: "f0lg0",
                     desc: "Make sure you read this entire post in a bizza accent",
-                    category: "?",
+                    category: "",
                     price: 0,
                     likes: 69,
                 },
@@ -211,7 +211,9 @@ export default {
 .left_content {
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 30%;
+    min-width: 250px;
+    max-width: 350px;
 }
 .username_box {
     font-size: 20px;
@@ -353,7 +355,8 @@ export default {
 /* RIGHT CONTENT */
 
 .right_content {
-    width: 500px;
+    max-width: 450px;
+    width: 35%;
     height: calc(100vh - var(--header-height));
     overflow-y: scroll;
     padding-top: 15px;
@@ -364,6 +367,7 @@ export default {
     margin-bottom: 40px;
 }
 .home_page_notification {
+    width: 80%;
     margin: 20px auto 20px auto;
 }
 
@@ -379,4 +383,13 @@ export default {
   border-radius: 10px;
 }
 
+
+/* RESIZING FUNCTIONALITY */
+
+/* mobile styles */
+@media only screen and (max-width: 1060px) {
+    .home_page_notification {
+        width: 100%;
+    }
+}
 </style>
