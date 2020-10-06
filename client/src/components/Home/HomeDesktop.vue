@@ -62,7 +62,7 @@
                     </Dropdown>
                 </div>
                 <div class="projects_area">
-                    <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="70%" class="project_card" />
+                    <DesktopProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="70%" class="project_card" />
                 </div>
                 <div class="projects_footer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_button" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import MobileProjectCard from "@/components/MobileProjectCard.vue";
+import DesktopProjectCard from "@/components/DesktopProjectCard.vue";
 import SmallNotificationCard from "@/components/SmallNotificationCard.vue";
 //import GraphQLService from "@/services/graphql.service.js";
 import UserService from "@/services/user.service";
@@ -97,6 +97,7 @@ export default {
                     name: "The Hungry Wolf",
                     author: "The_Jak",
                     desc: "Make sure you have at least a Geforce RTX 2080 Ti graphics card before launching this game.",
+                    category: "Javascript",
                     price: 0,
                     likes: 420,
                 },
@@ -104,6 +105,7 @@ export default {
                     name: "Why Windowz is Stoopid",
                     author: "f0lg0",
                     desc: "Make sure you read this entire post in a bizza accent",
+                    category: "?",
                     price: 0,
                     likes: 69,
                 },
@@ -111,6 +113,7 @@ export default {
                     name: "Website Design Templates",
                     author: "Phil",
                     desc: "For less then a dollar you could have some professional website design templates",
+                    category: "HTML/CSS",
                     price: 0.99,
                     likes: 792,
                 },
@@ -118,36 +121,10 @@ export default {
                     name: "Spotify Ad Blocker Python",
                     author: "John",
                     desc: "Will block all spotify ads with an ad blocker",
+                    category: "Python",
                     price: 0,
                     likes: 1093,
-                },{
-                    name: "The Hungry Wolf",
-                    author: "The_Jak",
-                    desc: "Make sure you have at least a Geforce RTX 2080 Ti graphics card before launching this game.",
-                    price: 0,
-                    likes: 420,
-                },
-                {
-                    name: "Why Windowz is Stoopid",
-                    author: "f0lg0",
-                    desc: "Make sure you read this entire post in a bizza accent",
-                    price: 0,
-                    likes: 69,
-                },
-                {
-                    name: "Website Design Templates",
-                    author: "Phil",
-                    desc: "For less then a dollar you could have some professional website design templates",
-                    price: 0.99,
-                    likes: 792,
-                },
-                {
-                    name: "Spotify Ad Blocker Python",
-                    author: "John",
-                    desc: "Will block all spotify ads with an ad blocker",
-                    price: 0,
-                    likes: 1093,
-                },
+                }
             ],
             notifications: [
                 {
@@ -216,7 +193,7 @@ export default {
         }
     },
     components: {   
-        MobileProjectCard,
+        DesktopProjectCard,
         Dropdown,
         SmallNotificationCard
     }
@@ -345,13 +322,11 @@ export default {
     font-size: 20px;
 }
 .projects_area {
-    display: flex;
-    flex-direction: column;
     width: 100%;
     flex-grow: 1;
 }
 .project_card {
-    margin: 0 auto;
+    margin: 0pc auto 20px auto;
     max-width: 650px;
     min-width: 400px;
 }
