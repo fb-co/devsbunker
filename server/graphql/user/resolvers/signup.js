@@ -3,6 +3,9 @@ import bcrypt from "bcrypt";
 import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: move this inside GraphQL/
 import validateCreds from "../utils/validateCreds.js";
 
+import ApolloServer from "apollo-server-express";
+const { AuthenticationError } = ApolloServer;
+
 export default {
     Mutation: {
         signupUser: async function (_, args, { res }) {
@@ -43,26 +46,22 @@ export default {
                     } else {
                         res.status(422);
 
-                        return {
-                            message: "Unable to create token.",
-                            accessToken: null,
-                        };
+                        throw new AuthenticationError(
+                            "Unable to create token."
+                        );
                     }
                 } catch {
                     res.status(401);
 
-                    return {
-                        message:
-                            "Unable to signup. Credentials are already taken.",
-                        accessToken: null,
-                    };
+                    throw new AuthenticationError(
+                        "Credentials are already taken."
+                    );
                 }
             } else {
                 res.status(400);
-                return {
-                    message: "Invalid credentials. Please try again.",
-                    accessToken: null,
-                };
+                throw new AuthenticationError(
+                    "Invalid credentials. Try again."
+                );
             }
         },
     },

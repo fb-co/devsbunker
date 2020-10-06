@@ -25,9 +25,13 @@ async function loginValidUser(user, password, res) {
                 accessToken: accessToken,
             };
         } else {
+            res.status(422);
+
             throw new AuthenticationError("Unable to create token.");
         }
     } else {
+        res.status(401);
+
         throw new AuthenticationError("Incorrect credentials.");
     }
 }

@@ -152,37 +152,50 @@ export default {
                         this.password
                     );
 
-                    const result = response.data.signupUser;
+                    if (response.errors) {
+                        const message = response.errors[0].message;
+                        console.log(message);
 
-                    if (!result.message) {
-                        this.errMessage = "Internal error. Try again later";
-                        setTimeout(() => {
-                            this.submitted = false;
-                        }, 1500);
-                    } else if (/Unable/.test(result.message)) {
-                        this.errMessage = "Credentials are already taken.";
-                        setTimeout(() => {
-                            this.submitted = false;
-                        }, 1500);
-                    } else if (/Invalid/.test(result.message)) {
-                        // we are going to do this even here just to add another layer of security
-                        this.errMessage = "Invalid credentials.";
-                        setTimeout(() => {
-                            this.submitted = false;
-                        }, 1500);
-                    } else if (result.message === "Unable to create token.") {
-                        this.errMessage = "Internal error. Try again later";
-                        setTimeout(() => {
-                            this.submitted = false;
-                        }, 1500);
+                        if (/Credentials/.test(message)) {
+                            this.errMessage = "Credentials are already taken.";
+                            setTimeout(() => {
+                                this.submitted = false;
+                            }, 1500);
+                        } else if (/Invalid/.test(message)) {
+                            // we are going to do this even here just to add another layer of security
+                            this.errMessage = "Invalid credentials.";
+                            setTimeout(() => {
+                                this.submitted = false;
+                            }, 1500);
+                        } else if (message === "Unable to create token.") {
+                            this.errMessage = "Internal error. Try again later";
+                            setTimeout(() => {
+                                this.submitted = false;
+                            }, 1500);
+                        } else {
+                            this.errMessage =
+                                "Internal error. Please try again later.";
+                            setTimeout(() => {
+                                this.submitted = false;
+                            }, 1500);
+                        }
                     } else {
-                        this.errMessage = "";
-                        this.$store.commit(
-                            "refreshAccessToken",
-                            result.accessToken
-                        );
+                        const result = response.data.signupUser;
 
-                        this.$router.push("/");
+                        if (!result.message) {
+                            this.errMessage = "Internal error. Try again later";
+                            setTimeout(() => {
+                                this.submitted = false;
+                            }, 1500);
+                        } else {
+                            this.errMessage = "";
+                            this.$store.commit(
+                                "refreshAccessToken",
+                                result.accessToken
+                            );
+
+                            this.$router.push("/");
+                        }
                     }
                 } else {
                     this.errMessage = "Invalid credentials";
