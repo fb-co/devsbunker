@@ -85,10 +85,8 @@ db.once("open", () => console.log(`Connected to database [${mongoURI}]`));
 
 // imports
 import user from "./components/user/user.route.js";
-import settings from "./components/settings/settings.route.js";
 
 // route handling
-app.use("/settings", settings);
 app.use("/user", user);
 
 /* HANDLING 404 ERRORS */
