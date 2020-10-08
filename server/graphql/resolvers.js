@@ -8,9 +8,10 @@ import loginResolvers from "./user/resolvers/login.js";
 
 // miscellaneous
 import aboutResolvers from "./about/resolvers/about.page.js";
+import homeResolvers from "./home/resolvers/home.page.js";
 
 const UserResolversArray = [usersResolvers, signupResolvers, loginResolvers];
-const miscellaneousResolversArray = [aboutResolvers];
+const miscellaneousResolversArray = [aboutResolvers, homeResolvers];
 
 const resolvers = UserResolversArray.concat(miscellaneousResolversArray);
 

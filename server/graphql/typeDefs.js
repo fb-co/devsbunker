@@ -8,8 +8,9 @@ import login from "./user/types/login.user.response.js";
 
 // miscellaneous
 import about from "./about/types/about.page.js";
+import home from "./home/types/home.page.js";
 
-const miscellaneous = [about];
+const miscellaneous = [about, home];
 const UserTypesArray = [user, signup, login];
 
 const types = UserTypesArray.concat(miscellaneous);
