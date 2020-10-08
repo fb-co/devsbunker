@@ -21,18 +21,8 @@ const UserService = {
         );
     },
 
-    logout: async function() {
-        this.deleteAuthToken();
-        store.commit("changeLoggedInState", false);
-        return await ApiService.logoutUser();
-    },
-
     getAuthToken: function() {
         return store.getters.accessToken;
-    },
-
-    deleteAuthToken: function() {
-        store.commit("refreshAccessToken", null);
     },
 
     isLoggedIn: async function() {

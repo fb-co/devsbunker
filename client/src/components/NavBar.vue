@@ -78,6 +78,7 @@
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import NavBarSearch from "./NavBarSearch.vue";
 import UserService from "../services/user.service";
+import GraphQLService from "../services/graphql.service";
 
 export default {
     props: {
@@ -109,7 +110,7 @@ export default {
     },
     methods: {
         logout() {
-            UserService.logout().then((response) => {
+            GraphQLService.logoutUser().then((response) => {
                 console.log("logged out: ", response);
             });
             if (this.$route.path != "/") {

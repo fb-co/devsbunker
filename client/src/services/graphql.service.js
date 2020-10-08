@@ -1,3 +1,5 @@
+import { store } from "../store/store";
+
 const URL = process.env.VUE_APP_GRAPHQL_API;
 
 const GraphQLService = {
@@ -66,6 +68,31 @@ const GraphQLService = {
                 }
             `;
         }
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            });
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+
+    logoutUser: async function() {
+        const query = `
+            query {
+                logoutUser {
+                    message
+                }
+            }
+        `;
+
+        store.commit("refreshAccessToken", null);
+        store.commit("changeLoggedInState", false);
 
         try {
             const res = await fetch(URL, {

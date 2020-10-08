@@ -2,28 +2,28 @@
     <div class="main_container">
         <div class="left_content">
             <p class="username_box">{{ $store.getters.username }}</p>
-            
+
             <router-link to='/settings/account' class="tab_container">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.2" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
                     <circle cx="12" cy="12" r="3" />
-                </svg>  
-                <p>Settings</p>  
+                </svg>
+                <p>Settings</p>
             </router-link>
             <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="tab_container">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.2" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
                     <circle cx="12" cy="14" r="2" />
                     <polyline points="14 4 14 8 8 8 8 4" />
                 </svg>
-                <p>Saved Projects</p>  
+                <p>Saved Projects</p>
             </router-link>
             <router-link to='/new' class="new_button">
                 <p>New</p>
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="25" height="25" viewBox="0 0 24 24" stroke-width="0.7" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <line x1="12" y1="5" x2="12" y2="19" />
                     <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
@@ -34,7 +34,7 @@
             <div class="language_cycler_container">
                 <div class="lan_cycler_arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-left" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <line x1="5" y1="12" x2="19" y2="12" />
                         <line x1="5" y1="12" x2="9" y2="16" />
                         <line x1="5" y1="12" x2="9" y2="8" />
@@ -45,7 +45,7 @@
                 </div>
                 <div class="lan_cycler_arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-right" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <line x1="5" y1="12" x2="19" y2="12" />
                         <line x1="15" y1="16" x2="19" y2="12" />
                         <line x1="15" y1="8" x2="19" y2="12" />
@@ -66,7 +66,7 @@
                 </div>
                 <div class="projects_footer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_button" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <rect x="4" y="4" width="16" height="16" rx="2" />
                         <line x1="9" y1="12" x2="15" y2="12" />
                         <line x1="12" y1="9" x2="12" y2="15" />
@@ -83,8 +83,8 @@
 <script>
 import DesktopProjectCard from "@/components/DesktopProjectCard.vue";
 import SmallNotificationCard from "@/components/SmallNotificationCard.vue";
-//import GraphQLService from "@/services/graphql.service.js";
-import UserService from "@/services/user.service";
+import GraphQLService from "@/services/graphql.service";
+
 import Dropdown from "@/components/global/Dropdown.vue";
 
 export default {
@@ -96,7 +96,8 @@ export default {
                 {
                     name: "The Hungry Wolf",
                     author: "The_Jak",
-                    desc: "Make sure you have at least a Geforce RTX 2080 Ti graphics card before launching this game.",
+                    desc:
+                        "Make sure you have at least a Geforce RTX 2080 Ti graphics card before launching this game.",
                     category: "Javascript",
                     price: 0,
                     likes: 420,
@@ -104,7 +105,8 @@ export default {
                 {
                     name: "Why Windowz is Stoopid",
                     author: "f0lg0",
-                    desc: "Make sure you read this entire post in a bizza accent",
+                    desc:
+                        "Make sure you read this entire post in a bizza accent",
                     category: "",
                     price: 0,
                     likes: 69,
@@ -112,7 +114,8 @@ export default {
                 {
                     name: "Website Design Templates",
                     author: "Phil",
-                    desc: "For less then a dollar you could have some professional website design templates",
+                    desc:
+                        "For less then a dollar you could have some professional website design templates",
                     category: "HTML/CSS",
                     price: 0.99,
                     likes: 792,
@@ -124,80 +127,79 @@ export default {
                     category: "Python",
                     price: 0,
                     likes: 1093,
-                }
+                },
             ],
             notifications: [
                 {
                     label: "Bill Gates",
-                    subtext: "Liked your post!"
+                    subtext: "Liked your post!",
                 },
                 {
                     label: "Elon Musk",
-                    subtext: "Liked your post!"
+                    subtext: "Liked your post!",
                 },
                 {
                     label: "Jeff Bezos",
-                    subtext: "Commented on your post"
+                    subtext: "Commented on your post",
                 },
                 {
                     label: "Bill Gates",
-                    subtext: "Liked your post!"
+                    subtext: "Liked your post!",
                 },
                 {
                     label: "Elon Musk",
-                    subtext: "Liked your post!"
+                    subtext: "Liked your post!",
                 },
                 {
                     label: "Jeff Bezos",
-                    subtext: "Commented on your post"
+                    subtext: "Commented on your post",
                 },
                 {
                     label: "Bill Gates",
-                    subtext: "Liked your post!"
+                    subtext: "Liked your post!",
                 },
                 {
                     label: "Elon Musk",
-                    subtext: "Liked your post!"
+                    subtext: "Liked your post!",
                 },
                 {
                     label: "Jeff Bezos",
-                    subtext: "Commented on your post"
+                    subtext: "Commented on your post",
                 },
                 {
                     label: "Bill Gates",
-                    subtext: "Liked your post!"
+                    subtext: "Liked your post!",
                 },
                 {
                     label: "Elon Musk",
-                    subtext: "Liked your post!"
+                    subtext: "Liked your post!",
                 },
                 {
                     label: "Jeff Bezos",
-                    subtext: "Commented on your post"
+                    subtext: "Commented on your post",
                 },
-            ]
+            ],
         };
     },
     created() {
         //GraphQLService.fetchUserDetails("jakapoo", ["username", "email"]).then((data) => { this.username = data.data.user.email });
-        
+
         // refresh the store
         this.$store.dispatch("setUsername");
     },
     methods: {
         logout() {
-            UserService.logout().then((response) => {
+            GraphQLService.logoutUser().then((response) => {
                 console.log("logged out: ", response);
             });
-            location.reload();
-        }
+        },
     },
-    components: {   
+    components: {
         DesktopProjectCard,
         Dropdown,
-        SmallNotificationCard
-    }
-}
+        SmallNotificationCard,
+    },
+};
 </script>
 
 <style scoped>
@@ -344,13 +346,12 @@ export default {
 }
 /* SCROLL BAR */
 .scrollable_center::-webkit-scrollbar {
-  width: 4px;
+    width: 4px;
 }
 .scrollable_center::-webkit-scrollbar-thumb {
-  background: var(--soft-text); 
-  border-radius: 10px;
+    background: var(--soft-text);
+    border-radius: 10px;
 }
-
 
 /* RIGHT CONTENT */
 
@@ -373,16 +374,14 @@ export default {
 
 /* SCROLL BAR */
 .right_content::-webkit-scrollbar {
-  width: 4px;
+    width: 4px;
 }
 
- 
 /* Handle */
 .right_content::-webkit-scrollbar-thumb {
-  background: var(--soft-text); 
-  border-radius: 10px;
+    background: var(--soft-text);
+    border-radius: 10px;
 }
-
 
 /* RESIZING FUNCTIONALITY */
 

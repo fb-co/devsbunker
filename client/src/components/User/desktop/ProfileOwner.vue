@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import UserService from "@/services/user.service";
+import GraphQLService from "@/services/graphql.service";
 
 export default {
     data() {
@@ -119,7 +119,7 @@ export default {
     },
     methods: {
         logout() {
-            UserService.logout().then((response) => {
+            GraphQLService.logoutUser().then((response) => {
                 console.log("logged out: ", response);
             });
             this.$router.push("/");
