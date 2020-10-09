@@ -300,8 +300,9 @@ export default {
 .language_cycler_container {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 75%;
     height: 50px;
+    margin: 0 auto;
 }
 .lan_cycler_arrow {
     display: flex;
@@ -330,10 +331,17 @@ export default {
     flex-grow: 1;
 }
 .project_card {
-    margin: 0px auto 20px auto;
+    margin: 0px auto 40px auto;
     max-width: 750px;
     min-width: 400px;
+    border: 1px solid transparent;
+    border-radius: 10px;
 }
+.project_card:hover {
+    cursor: pointer;
+    border: 1px solid var(--soft-text);
+}
+
 .add_button {
     margin-top: 5px;
 }
