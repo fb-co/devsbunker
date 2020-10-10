@@ -302,7 +302,7 @@ export default {
     flex-direction: row;
     width: 75%;
     height: 50px;
-    margin: 0 auto;
+    margin: 0 auto;  
 }
 .lan_cycler_arrow {
     display: flex;
