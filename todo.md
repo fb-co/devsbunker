@@ -6,13 +6,14 @@
 -   [x] implement login system
     -   [x] better error handling for both login and signup
 -   [x] implement the auth route
--   [ ] add more informations to the about and home page
+-   [x] add more informations to the about and home page
 -   [x] make Schema for posts
 -   [x] make Schema for bunkers
 -   [ ] provide the current user email where needed (?)
 -   [x] cosnider switching to ES modules
 -   [ ] multiple devices logged into once account
--   [ ] delete all REST endpoints
+-   [x] delete all REST endpoints
+    -   [x] except refresh_token and auth
 -   [x] use AuthErrors in Signup (GraphQL)
 
 ## Frontend
