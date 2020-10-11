@@ -6,6 +6,7 @@ import usersResolvers from "./user/resolvers/users.js";
 import signupResolvers from "./user/resolvers/signup.js";
 import loginResolvers from "./user/resolvers/login.js";
 import logoutResolvers from "./user/resolvers/logout.js";
+import sessionRevoker from "./user/resolvers/revoke.session.js";
 
 // miscellaneous
 import aboutResolvers from "./about/resolvers/about.page.js";
@@ -16,6 +17,7 @@ const UserResolversArray = [
     signupResolvers,
     loginResolvers,
     logoutResolvers,
+    sessionRevoker,
 ];
 const miscellaneousResolversArray = [aboutResolvers, homeResolvers];
 
