@@ -67,18 +67,20 @@ class TokenHandler {
 
     static verifyRefreshToken(token) {
         let decoded = null;
-        jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, payload) => {
-            if (!err) decoded = payload;
-        });
+
+        try {
+            decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+        } catch {}
 
         return decoded;
     }
 
     static verifyAccessToken(token) {
         let decoded = null;
-        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
-            if (!err) decoded = payload;
-        });
+
+        try {
+            decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        } catch {}
 
         return decoded;
     }
