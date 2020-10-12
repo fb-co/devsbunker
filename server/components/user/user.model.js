@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema(
             match: [/\S+@\S+\.\S+/, "is invalid"],
             index: true,
         },
+
+        desc: {  // description
+            type: String,
+            default: "No Description"
+        }, 
+
         password: requiredString,
 
         tag: {

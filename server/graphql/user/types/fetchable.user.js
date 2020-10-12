@@ -5,6 +5,7 @@ export default gql`
     type FetchableUser {
         username: String!
         email: String!
+        desc: String!
         tag: String!
     }
 
