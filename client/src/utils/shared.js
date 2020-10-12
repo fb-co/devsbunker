@@ -27,7 +27,7 @@ const Themes = {
     secondaryColor: '#2E2E2E',
     mainFontColor: '#f2f2f2',
     errorRed: '#c50000',
-    accent: '#2c6975',
+    accent: '#2c6975',   
     vueGreen: '#42b983',
     linkColor: '#6096fd',
     selection: '#f2f2f2',
