@@ -1,11 +1,10 @@
 <template>
     <div id="component_container">
-        <Dropdown class="filter_dropdown" label="My Projects" height="40px" linkHeight="40px" openOn="hover">
+        <Dropdown class="filter_dropdown" style="margin-right: 4%;" label="My Projects" height="40px" linkHeight="40px" openOn="hover">
             <button>My Projects</button>
             <button>Purchases</button>
             <button>Downloaded</button>
         </Dropdown>
-        <span style="width: 10px;" />
         <Dropdown class="filter_dropdown" label="Newest" height="40px" linkHeight="40px" openOn="hover">
             <button>Newest</button>
             <button>Most Popular</button>
@@ -80,7 +79,8 @@ export default {
     }
     .filter_dropdown {
         background-color: var(--secondary-color); 
-        width: 50%;
+        width: 48%;
         margin: 0px auto 40px auto;
+        display: inline-block;
     }
 </style>

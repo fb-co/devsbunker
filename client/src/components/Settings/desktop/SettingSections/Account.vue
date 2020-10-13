@@ -1,35 +1,27 @@
 <template>
     <WrapperDesktop>
-        <div id='section'>
-            <div class='setting_labels'>
-                <div class='setting_container'>
-                    <p class='setting_label'>Account Visibility</p>
-                </div>
-            </div>
-            <div class='setting_cont'>
-                <div class='setting_container'>
-                    <Dropdown label="Public" spacing="50px" class="visibility_dropdown" id='vis_dropdown'>
-                        <button>Public</button>
-                        <button>Private</button>
-                    </Dropdown>
-                </div>
-            </div>
+        <div class="setting_item">
+            <p class='setting_label'>Account Visibility</p>
+            <span class="setting_item_spacer" />
+            <Dropdown class="setting_dropdown" label="Public" linkHeight="50px" height="50px" id='vis_dropdown'>
+                <button>Public</button>
+                <button>Private</button>
+            </Dropdown>
         </div>
     </WrapperDesktop>
 </template>
 <script>
-import GlobalComponents from "@/components/global/GlobalComponents.js";
+import Dropdown from "@/components/global/Dropdown.vue";
+import WrapperDesktop from "@/components/global/WrapperDesktop.vue" 
 
 export default {
     components: {
-        ...GlobalComponents,
+        Dropdown,
+        WrapperDesktop
     }
 };
 </script>
 
 <style scoped>
-.visibility_dropdown {
-    width: 200px;
-    height: 50px;
-}
+
 </style>
