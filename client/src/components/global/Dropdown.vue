@@ -8,7 +8,7 @@
                 </svg>
             </div>
         </div>
-        <div @click="handleClick" class="menu_cont" name="services">
+        <div @click="handleClick" class="menu_cont">
             <slot>
 
             </slot>
@@ -57,14 +57,14 @@ export default {
         openMenu(from) {
             if (from != null) {
                 if (from==="click" && this.openOn==="click" || from==="hover" && this.openOn==="hover") {
-                    document.getElementsByName("services")[0].style.display = "flex";
+                    this.$el.getElementsByClassName('menu_cont')[0].style.display = "flex";
                 }
             }else {
-                document.getElementsByName("services")[0].style.display = "flex";
+                this.$el.getElementsByClassName('menu_cont')[0].style.display = "flex";
             }
         },
         closeMenu() {
-            document.getElementsByName("services")[0].style.display = "none";
+            this.$el.getElementsByClassName('menu_cont')[0].style.display = "none";
         },
         handleClick(e) {
             this.activeLabel = e.target.innerText;

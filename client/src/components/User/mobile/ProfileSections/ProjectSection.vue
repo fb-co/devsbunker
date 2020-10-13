@@ -5,8 +5,12 @@
             <button>Purchases</button>
             <button>Downloaded</button>
         </Dropdown>
-
-
+        <span style="width: 10px;" />
+        <Dropdown class="filter_dropdown" label="Newest" height="40px" linkHeight="40px" openOn="hover">
+            <button>Newest</button>
+            <button>Most Popular</button>
+            <button>Alphabetical</button>
+        </Dropdown>
                 <!--
                 <Dropdown label="My Projects" fontSize="12px" spacing="40px" class="filter_dropdown">
                     <button>My Projects</button>
