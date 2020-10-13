@@ -1,7 +1,13 @@
 <template>
     <div id="component_container">
-        <div class="dropdown_placeholder">
-            <div class="filter_dropdown_container">
+        <Dropdown class="filter_dropdown" label="My Projects" height="40px" linkHeight="40px">
+            <button>My Projects</button>
+            <button>Purchases</button>
+            <button>Downloaded</button>
+        </Dropdown>
+
+
+                <!--
                 <Dropdown label="My Projects" fontSize="12px" spacing="40px" class="filter_dropdown">
                     <button>My Projects</button>
                     <button>Purchases</button>
@@ -13,9 +19,7 @@
                     <button>Most Popular</button>
                     <button>Alphabetical</button>
                 </Dropdown>
-            </div>
-        </div>
-        
+                -->
         <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
     </div>
 </template>
@@ -70,27 +74,9 @@ export default {
     #component_container {
         width: 100%;
     }
-    .filter_dropdown_container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        width: 80%;
-        max-width: 400px;
+    .filter_dropdown {
+        background-color: var(--secondary-color); 
+        width: 50%;
         margin: 0 auto;
-
-        /* Idk WTF bu leave this because or else the dropdown content width wont work proprly */
-        -ms-transform: translateX(0%);
-        transform: translateX(0%);
-
-    }
-    .filter_dropdown{
-        height: 35px;
-        width: 48%; /* This is what fixes that weird offset */
-        background-color: var(--secondary-color);
-        border-radius: 5px;
-        font-size: 12px;
-    }
-    .dropdown_placeholder{
-        height: 60px;
     }
 </style>

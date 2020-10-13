@@ -1,16 +1,10 @@
-<!-- As of now the content box cannot contain any p tags -->
-<!-- Label prop is now REQUIRED -->
 <template>
-    <div class="component_container" @mouseleave="show = false" :style='cssProps'>
-        <div class="label_container" @mouseover="show = true">
-            <p class="label">{{ activeLabel }}</p>
-            <div class="vertical_flex_center">
-                <svg class="inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
-                </svg>
-            </div>
-        </div>
-        <div class="content" id="content_id" :class="{showContent: show}" @click="handleClick">
+    <div @click="openMenu()" class="menu no_select" :style="cssProps">
+        <p>{{ title }}</p>
+        <svg width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
+        </svg>
+        <div class="menu_cont" name="services">
             <slot>
 
             </slot>
@@ -20,128 +14,94 @@
 
 <script>
 export default {
+    data() {
+        return {
+            isOpen: false
+        }
+    },
     props: {
-        label: String, // label to be shown
-        
-        // amount of space between links
-        spacing: {
+        title: {
             type: String,
-            default: "25px",
+            default: "New Dropdown"
         },
-        
-        // optional prop
-        fontSize: {
+        height: {
+            type: String,
+            default: "auto"
+        },
+        openOn: {
+            type: String,
+            default: "click"
+        },
+        linkSize: { /* Refers to text size */
             type: String,
             default: "15px"
         },
-
-        dynamicSwitch: {
-            type: Boolean,
-            default: true
-        },
-        justify: {
+        linkHeight: {
             type: String,
-            default: "center"
+            default: "auto"
         },
         borderRadius: {
             type: String,
-            default: "10px"
-        },
-        spaceBetween: { // The space between label and content
-            type: String,
-            default: "5px"
+            default: "3px"
+        }
+    },
+    methods: {
+        openMenu() {
+            if (!this.isOpen) {
+                document.getElementsByName("services")[0].style.display = "flex";
+            }else {
+                document.getElementsByName("services")[0].style.display = "none";
+            }
+            this.isOpen = !this.isOpen;
         }
     },
     computed: {
         cssProps() {
             return {
-                "--link-spacing": this.spacing,
-                "--custom-fontsize": this.fontSize,
-                "--justify-label": this.justify,
-                "--radius": this.borderRadius,
-                "--space-between": this.spaceBetween
+                "--link-size": this.linkSize,
+                "--border-radius": this.borderRadius,
+                "--main-height": this.height,
+                "--link-spacing": this.linkHeight
             };
         },
     },
-
-    data() {
-        return {
-            show: false,
-            activeLabel: this.label,
-            shouldSwitch: this.dynamicSwitch
-        };
-    },
-    methods: {
-        // changes label based on what you click
-        handleClick(e) {
-            this.show = !this.show;
-
-            if (this.shouldSwitch) {
-                this.activeLabel = e.target.innerText;
-            }
-        }
-    }
-};
+}
 </script>
 
 <style scoped>
-.label_container {
-    display: flex;
-    flex-direction: row;
-    justify-content: var(--justify-label);
-    width: 100%;
-    height: 100%;
-    border-radius: 4px;
-    z-index: 3;
-    padding-top: var(--space-between);
-    padding-bottom: var(--space-between);
+.menu {
+    position: relative;
+    cursor: pointer;
+    border-radius: var(--border-radius);
 }
-.label {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    z-index: 0;
+.menu > p {
+    display: inline-block;
+    height: var(--main-height);
+    line-height: var(--main-height); /* I have bad expereince with line-height, so if your having strange errors, try and remove this */
 }
-.content {
-    display: none;
-    background: var(--main-color);
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.15);
+.menu > p:hover {
+    font-weight: bold;
+}
+.menu svg {
+    width: 10px;
+    margin-left: 10px;
+}
+.menu .menu_cont {
     position: absolute;
-    width: inherit;
-    z-index: 1;
-
-    border-radius: var(--radius);
 }
-
-/* Functionality */
-.label_container:hover {
-    font-weight: bold;
-}
-
-.showContent {
-    display: block;
-}
-
-.content > * {
-    height: var(--link-spacing);
+.menu_cont {
+    display: none;
+    flex-direction: column;
     width: 100%;
+}
+.menu_cont > * {
     border: none;
-    text-align: center;
-    font-size: var(--custom-fontsize);
     font-family: rubik;
-    background-color: transparent;
+    font-size: var(--link-size);
+    height: var(--link-spacing);
+    cursor: pointer;
+}
+.menu_cont > *:hover {
     color: var(--soft-text);
-}
-.content > *:hover {
-    color: var(--main-font-color);
-    cursor: pointer;
-}
-.content > *:focus {
-    outline: none;
-}
-
-.component_container:hover {
-    font-weight: bold;
-    cursor: pointer;
 }
 </style>
