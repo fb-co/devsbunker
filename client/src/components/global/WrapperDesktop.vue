@@ -11,7 +11,7 @@
 
 <style scoped>
 .main_wrapper {
-    padding-top: 20px;
+    padding-top: 25px;
 }
 
 /* GLOBAL SETTINGS STYLES */

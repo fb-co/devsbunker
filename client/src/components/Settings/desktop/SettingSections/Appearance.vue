@@ -1,17 +1,10 @@
 <template>
     <WrapperDesktop>
-        <div id='section'>
-            <div class='setting_labels'>
-
-                <!-- applying the test class which is inside the Wrapper -->
-                <div class='setting_container'>
-                    <p class='setting_label'>Theme</p>
-                </div>
-            </div>
-            <div class='settings_cont'>
-                <div class='setting_container'>
-                    <ThemeSwitcher width="30" height="30" />
-                </div>
+        <div class='setting_item'>
+            <p class='setting_label'>Theme</p>
+            <span class="setting_item_spacer" />
+            <div class='setting_container'>
+                <ThemeSwitcher width="30" height="30" />
             </div>
         </div>
     </WrapperDesktop>
