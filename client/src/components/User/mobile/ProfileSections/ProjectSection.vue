@@ -1,6 +1,6 @@
 <template>
     <div id="component_container">
-        <Dropdown class="filter_dropdown" label="My Projects" height="40px" linkHeight="40px">
+        <Dropdown class="filter_dropdown" label="My Projects" height="40px" linkHeight="40px" openOn="hover">
             <button>My Projects</button>
             <button>Purchases</button>
             <button>Downloaded</button>
@@ -77,6 +77,6 @@ export default {
     .filter_dropdown {
         background-color: var(--secondary-color); 
         width: 50%;
-        margin: 0 auto;
+        margin: 0px auto 40px auto;
     }
 </style>

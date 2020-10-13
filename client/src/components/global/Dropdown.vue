@@ -1,10 +1,14 @@
 <template>
-    <div @click="openMenu()" class="menu no_select" :style="cssProps">
-        <p>{{ title }}</p>
-        <svg width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
-        </svg>
-        <div class="menu_cont" name="services">
+    <div @mouseleave="closeMenu()" class="menu no_select" :style="cssProps">
+        <div @click="openMenu('click')" @mouseover="openMenu('hover')" class="label_wrapper">
+            <p>{{ activeLabel }}</p>
+            <div class="vertical_flex_center">
+                <svg width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
+                </svg>
+            </div>
+        </div>
+        <div @click="handleClick" class="menu_cont" name="services">
             <slot>
 
             </slot>
@@ -16,13 +20,17 @@
 export default {
     data() {
         return {
-            isOpen: false
+            activeLabel: this.label
         }
     },
     props: {
-        title: {
+        label: {
             type: String,
             default: "New Dropdown"
+        },
+        dynamicLabel: {
+            type: Boolean,
+            default: true
         },
         height: {
             type: String,
@@ -32,7 +40,7 @@ export default {
             type: String,
             default: "click"
         },
-        linkSize: { /* Refers to text size */
+        fontSize: { 
             type: String,
             default: "15px"
         },
@@ -46,19 +54,27 @@ export default {
         }
     },
     methods: {
-        openMenu() {
-            if (!this.isOpen) {
-                document.getElementsByName("services")[0].style.display = "flex";
+        openMenu(from) {
+            if (from != null) {
+                if (from==="click" && this.openOn==="click" || from==="hover" && this.openOn==="hover") {
+                    document.getElementsByName("services")[0].style.display = "flex";
+                }
             }else {
-                document.getElementsByName("services")[0].style.display = "none";
+                document.getElementsByName("services")[0].style.display = "flex";
             }
-            this.isOpen = !this.isOpen;
+        },
+        closeMenu() {
+            document.getElementsByName("services")[0].style.display = "none";
+        },
+        handleClick(e) {
+            this.activeLabel = e.target.innerText;
+            this.closeMenu();
         }
     },
     computed: {
         cssProps() {
             return {
-                "--link-size": this.linkSize,
+                "--font-size": this.fontSize,
                 "--border-radius": this.borderRadius,
                 "--main-height": this.height,
                 "--link-spacing": this.linkHeight
@@ -74,12 +90,16 @@ export default {
     cursor: pointer;
     border-radius: var(--border-radius);
 }
-.menu > p {
-    display: inline-block;
+.label_wrapper {
+    display: flex;
+    justify-content: center;
     height: var(--main-height);
     line-height: var(--main-height); /* I have bad expereince with line-height, so if your having strange errors, try and remove this */
 }
-.menu > p:hover {
+.menu > p {
+    display: inline-block;
+}
+.label_wrapper:hover > p {
     font-weight: bold;
 }
 .menu svg {
@@ -97,11 +117,14 @@ export default {
 .menu_cont > * {
     border: none;
     font-family: rubik;
-    font-size: var(--link-size);
+    font-size: var(--font-size);
     height: var(--link-spacing);
     cursor: pointer;
 }
 .menu_cont > *:hover {
     color: var(--soft-text);
+}
+.menu_cont > *:focus {
+    outline: none;
 }
 </style>

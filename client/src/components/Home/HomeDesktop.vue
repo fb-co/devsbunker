@@ -55,7 +55,7 @@
             <div class="scrollable_center">
                 <p class="discover_label no_select">Discover Projects</p>
                 <div class="filter_dropdown">
-                    <Dropdown label="Newest" spacing="40px" space_between="15px">
+                    <Dropdown label="Newest" linkHeight="40px" height="40px">
                         <button>Newest</button>
                         <button>Most Popular</button>
                         <button>Alphabetical</button>
