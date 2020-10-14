@@ -231,6 +231,7 @@ export default {
     cursor: pointer;
     margin-bottom: 10px;
     text-decoration: none;
+    font-weight: normal;
 }
 .tab_container > p {
     display: flex;
@@ -289,6 +290,9 @@ export default {
 /* CENTER CONTENT */
 
 .center_content {
+    -ms-overflow-style: none;  /* IE and Edge (scrollbar hide)*/
+    scrollbar-width: none;  /* Firefox (scrollbar hide)*/
+
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -352,7 +356,8 @@ export default {
 .projects_footer {
     width: 100%;
 }
-/* SCROLL BAR */
+
+/* (center content scrollbar)
 .scrollable_center::-webkit-scrollbar {
     width: 4px;
 }
@@ -360,11 +365,16 @@ export default {
     background: var(--soft-text);
     border-radius: 10px;
 }
+*/
+
+.scrollable_center::-webkit-scrollbar {
+    display: none;
+}
 
 /* RIGHT CONTENT */
 
 .right_content {
-    max-width: 450px;
+    max-width: 350px;
     width: 35%;
     height: calc(100vh - var(--header-height));
     overflow-y: scroll;
@@ -380,16 +390,15 @@ export default {
     margin: 20px auto 20px auto;
 }
 
-/* SCROLL BAR */
+/*Scrollbar stuff*/
 .right_content::-webkit-scrollbar {
     width: 4px;
 }
-
-/* Handle */
 .right_content::-webkit-scrollbar-thumb {
     background: var(--soft-text);
     border-radius: 10px;
 }
+
 
 /* RESIZING FUNCTIONALITY */
 

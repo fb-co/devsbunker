@@ -5,8 +5,8 @@ import {
 
 const Themes = {
   light: {
-    mainColor: '#FFFFFF',
-    secondaryColor: '#f2f2f2',
+    mainColor: '#f7f7f7',
+    secondaryColor: '#efefef',
     mainFontColor: '#0D0D0D',
     errorRed: '#c50000',
     accent: '#2c6975',
