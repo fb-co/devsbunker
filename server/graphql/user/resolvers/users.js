@@ -1,4 +1,5 @@
 import getUserEntry from "../utils/getUserEntry.js";
+import TokenHandler from '../../../components/tokens/TokenHandler.js';
 import User from "../../../components/user/user.model.js"; 
 
 export default {
@@ -10,8 +11,24 @@ export default {
     },
     Mutation: {
         updateUser: async function(_, args, {res}) {
-            // TODO: make this 
-            return {success: true}
+            const {description, token} = args;
+
+            try {
+                const jwtPayload = TokenHandler.verifyAccessToken(token);
+    
+                const user = await User.findOne({
+                    _id: jwtPayload._id
+                });
+    
+                user.desc = description;
+                user.save();
+
+                return {success: true}
+            } catch {
+
+                return {success: false}
+            }
+
         }
     }
 };

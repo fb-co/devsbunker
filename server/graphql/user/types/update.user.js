@@ -8,7 +8,6 @@ export default gql`
 
     type Mutation {
         updateUser(
-            username: String!
             description: String!
             token: String!
         ): UpdateResponse!
