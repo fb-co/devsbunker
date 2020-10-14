@@ -122,7 +122,7 @@ export default {
     cursor: pointer;
 }
 .menu_cont > *:hover {
-    color: var(--soft-text);
+    color: var(--dropdown-hover-color);
 }
 .menu_cont > *:focus {
     outline: none;

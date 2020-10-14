@@ -1,11 +1,11 @@
 <template>
-    <div class="general_container">
+    <div class="general_container" v-if="userObject">
         <p class="label">General</p>
         
         <div class="desc_container">
-            <p @click="editDesc()" v-if="userObject && !is_editing_desc" class="desc">{{ userObject.desc }}</p> <!-- Conditionally render it or else you get errors in console as it tries to return the value before the promise is resolved (it will work fine tho) -->
+            <p @click="editDesc()" v-if="!isEditingDesc" class="desc">{{ userObject.desc }}</p> <!-- Conditionally render it or else you get errors in console as it tries to return the value before the promise is resolved (it will work fine tho) -->
 
-            <textarea :value="userObject.desc" class="edit_desc" v-if="is_editing_desc"></textarea>
+            <textarea @blur="saveDesc()" :value="userObject.desc" class="edit_desc"></textarea>
 
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit desc_edit_icon" width="26" height="26" viewBox="0 0 24 24" stroke-width="0.7" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -38,7 +38,7 @@ export default {
     data() {
         return {
             userObject: undefined,
-            is_editing_desc: false
+            isEditingDesc: false
         }
     },
     created() {
@@ -46,8 +46,18 @@ export default {
     },
     methods: {
         editDesc() {
-            this.is_editing_desc = true;
-        }   
+            this.$el.getElementsByClassName('edit_desc')[0].style.display = "flex";
+            this.$el.getElementsByClassName('desc_edit_icon')[0].style.display = "none";
+            this.$el.getElementsByClassName('edit_desc')[0].focus();
+            this.isEditingDesc = true;
+        },
+        saveDesc() {
+            this.$el.getElementsByClassName('edit_desc')[0].style.display = "none";
+            this.$el.getElementsByClassName('desc_edit_icon')[0].style.display = "inline-block";
+            this.isEditingDesc = false;
+
+            /* query a mutation to the server here (ill do this part)*/
+        }
     }
 }
 </script>
@@ -71,28 +81,31 @@ export default {
     top: -15px;
 }
 .desc_container {
+    cursor: text;
     width: 450px;
     margin: 40px auto 0px auto;
 }
 .edit_desc { 
+    display: none;
+    resize: none;
     border: 1px solid var(--soft-text);
     border-radius: 4px;
     width: 100%;
-    max-width: 100%;
-    max-height: 200px;
+    height: 150px;
     padding: 7px;
     font-size: 15px;
     font-family: rubik;
 }
 .edit_desc:focus { 
     outline: none;
+    border: 2px solid var(--accent);
 }
 .desc {
     display: block;
     color: var(--soft-text);
 }
 
-.desc:hover + .desc_edit_icon {
+.desc_container:hover > .desc_edit_icon {
     display: inline-block;
 }
 .input_container {

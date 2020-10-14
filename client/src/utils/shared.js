@@ -20,7 +20,8 @@ const Themes = {
     mainBtnColor: '#49CCE5',
     generalCard: '#e3e8ef',
     profileOptionColor: '#656565',
-    hoverEffect: 'linear-gradient(90deg, rgba(255, 255, 255, 1) 3%, rgba(1, 135, 175, 0) 100%)'
+    hoverEffect: 'linear-gradient(90deg, rgba(255, 255, 255, 1) 3%, rgba(1, 135, 175, 0) 100%)',
+    dropdownHoverColor: '#7a7a7a'
   },
   dark: {
     mainColor: '#171717',
@@ -38,8 +39,8 @@ const Themes = {
     mainBtnColor: '#04C290',
     generalCard: '#2E2E2E',
     profileOptionColor: '#949494',
-    hoverEffect: 'linear-gradient(90deg, black 3%, #2e2e2e 100%)'
-
+    hoverEffect: 'linear-gradient(90deg, black 3%, #2e2e2e 100%)',
+    dropdownHoverColor: '#7a7a7a'
   },
   getTheme: function (themeString) {
     if (themeString === 'dark-theme') {
@@ -83,6 +84,7 @@ const SharedMethods = {
     document.body.style.setProperty("--general-card", themeObj.generalCard);
     document.body.style.setProperty("--profile-option-color", themeObj.profileOptionColor);
     document.body.style.setProperty("--hover-effect", themeObj.hoverEffect);
+    document.body.style.setProperty("--dropdown-hover-color", themeObj.dropdownHoverColor);
   },
   changeTheme: function (theme) {
     localStorage.setItem('theme', theme);
