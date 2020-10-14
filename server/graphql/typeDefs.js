@@ -1,15 +1,9 @@
 import merge from "@graphql-tools/merge";
-const { mergeTypeDefs } = merge;
+const { mergeTypeDefs } = merge; // keeping merge for future types
 
 // user
-import user from "./user/types/fetchable.user.js";
-import updateUser from "./user/types/update.user.js";
-import signup from "./user/types/signup.user.response.js";
-import login from "./user/types/login.user.response.js";
-import logout from "./user/types/logout.user.response.js";
-import revokeUserSession from "./user/types/revoke.user.session.js";
+import UserAccountTypes from './user/types/user.account.responses.js';
 
+const types = [UserAccountTypes];
 
-const UserTypesArray = [user, signup, login, logout, revokeUserSession, updateUser];
-
-export default mergeTypeDefs(UserTypesArray);
+export default mergeTypeDefs(types);

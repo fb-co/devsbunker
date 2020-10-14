@@ -1,12 +1,70 @@
 import User from "../../../components/user/user.model.js"; // TODO: move this inside GraphQL/
 import bcrypt from "bcrypt";
+import SessionRevoker from "../../../components/tokens/SessionRevoker.js";
 import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: move this inside GraphQL/
+
 import validateCreds from "../utils/validateCreds.js";
+import getUserEntry from "../utils/getUserEntry.js";
+import loginValidUser from '../utils/loginValidUser.js';
 
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
+
+
 export default {
+    Query: {
+        loginUser: async function (_, args, { res }) {
+            let user;
+
+            if (args.email) {
+                user = await User.findOne({
+                    email: args.email,
+                });
+            } else if (args.username) {
+                user = await User.findOne({
+                    username: args.username,
+                });
+            } else {
+                return {
+                    message: "Please provide a valid username or email",
+                    accessToken: null,
+                };
+            }
+
+            if (user) {
+                return loginValidUser(user, args.password, res);
+            } else {
+                throw new AuthenticationError("Incorrect credentials.");
+            }
+        },
+
+        logoutUser: function (_, args, { res }) {
+            try {
+                res.cookie("jid", "", {
+                    // clearing the cookie
+                    httpOnly: true,
+                    path: "/user/refresh_token",
+                    sameSite: "Lax",
+                    expires: "",
+                });
+
+                return {
+                    message: "Successfully logged out",
+                };
+            } catch (err) {
+                return {
+                    message: err.message,
+                };
+            }
+        },
+
+        user: function (_, args, { res }) {
+            return getUserEntry(args.username);
+        },
+
+    },
+
     Mutation: {
         signupUser: async function (_, args, { res }) {
             if (
@@ -64,5 +122,30 @@ export default {
                 );
             }
         },
+
+        updateUserDetails: async function(_, args, {res}) {
+            const {description, token} = args;
+
+            try {
+                const jwtPayload = TokenHandler.verifyAccessToken(token);
+    
+                const user = await User.findOne({
+                    _id: jwtPayload._id
+                });
+    
+                user.desc = description;
+                user.save();
+
+                return {success: true}
+            } catch {
+
+                return {success: false}
+            }
+
+        },
+
+        revokeUserSession: async function (_, args) {
+            return await SessionRevoker.revokeRefreshToken(args.token);
+        },
     },
-};
+}

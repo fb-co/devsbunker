@@ -1,21 +1,11 @@
 import merge from "@graphql-tools/merge";
-const { mergeResolvers } = merge;
+const { mergeResolvers } = merge; // keeping merge for future resolvers
 
 // user
-import usersResolvers from "./user/resolvers/users.js";
-import signupResolvers from "./user/resolvers/signup.js";
-import loginResolvers from "./user/resolvers/login.js";
-import logoutResolvers from "./user/resolvers/logout.js";
-import sessionRevoker from "./user/resolvers/revoke.session.js";
+import userResolvers from './user/resolvers/user.account.js';
 
-
-const UserResolversArray = [
-    usersResolvers,
-    signupResolvers,
-    loginResolvers,
-    logoutResolvers,
-    sessionRevoker,
+const resolvers = [
+    userResolvers
 ];
 
-
-export default mergeResolvers(UserResolversArray);
+export default mergeResolvers(resolvers);
