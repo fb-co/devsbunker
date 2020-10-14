@@ -53,8 +53,6 @@ app.use(
 );
 app.use(express.json());
 
-app.use(TokenHandler.checkHeaderToken); // checking token on every request
-
 // Apollo Server
 import typeDefs from "./graphql/typeDefs.js";
 import resolvers from "./graphql/resolvers.js";
@@ -87,7 +85,7 @@ db.once("open", () => console.log(`Connected to database [${mongoURI}]`));
 import user from "./components/user/user.route.js";
 
 // route handling
-app.use("/user", user);
+app.use("/user", TokenHandler.checkHeaderToken, user);
 
 /* HANDLING 404 ERRORS */
 app.use((_, res) => {
