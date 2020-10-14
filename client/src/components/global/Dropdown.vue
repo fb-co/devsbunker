@@ -1,16 +1,14 @@
-<!-- As of now the content box cannot contain any p tags -->
-<!-- Label prop is now REQUIRED -->
 <template>
-    <div class="component_container" @mouseleave="show = false" :style='cssProps'>
-        <div class="label_container" @mouseover="show = true">
-            <p class="label">{{ activeLabel }}</p>
+    <div @mouseleave="closeMenu()" class="menu no_select" :style="cssProps">
+        <div @click="openMenu('click')" @mouseover="openMenu('hover')" class="label_wrapper">
+            <p>{{ activeLabel }}</p>
             <div class="vertical_flex_center">
-                <svg class="inline-icon-spacer" width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 12L13.9282 0H0.0717969L7 12Z" fill="var(--main-font-color)" />
                 </svg>
             </div>
         </div>
-        <div class="content" id="content_id" :class="{showContent: show}" @click="handleClick">
+        <div @click="handleClick" class="menu_cont">
             <slot>
 
             </slot>
@@ -20,128 +18,119 @@
 
 <script>
 export default {
+    data() {
+        return {
+            activeLabel: this.label
+        }
+    },
     props: {
-        label: String, // label to be shown
-        
-        // amount of space between links
-        spacing: {
+        label: {
             type: String,
-            default: "25px",
+            default: "New Dropdown"
         },
-        
-        // optional prop
-        fontSize: {
-            type: String,
-            default: "15px"
-        },
-
-        dynamicSwitch: {
+        dynamicLabel: {
             type: Boolean,
             default: true
         },
-        justify: {
+        height: {
             type: String,
-            default: "center"
+            default: "auto"
+        },
+        openOn: {
+            type: String,
+            default: "click"
+        },
+        fontSize: { 
+            type: String,
+            default: "15px"
+        },
+        linkHeight: {
+            type: String,
+            default: "auto"
         },
         borderRadius: {
             type: String,
-            default: "10px"
+            default: "3px"
         },
-        spaceBetween: { // The space between label and content
+        justifyLabel: {
             type: String,
-            default: "5px"
+            default: "center"
+        }
+    },
+    methods: {
+        openMenu(from) {
+            if (from != null) {
+                if (from==="click" && this.openOn==="click" || from==="hover" && this.openOn==="hover") {
+                    this.$el.getElementsByClassName('menu_cont')[0].style.display = "flex";
+                }
+            }else {
+                this.$el.getElementsByClassName('menu_cont')[0].style.display = "flex";
+            }
+        },
+        closeMenu() {
+            this.$el.getElementsByClassName('menu_cont')[0].style.display = "none";
+        },
+        handleClick(e) {
+            this.activeLabel = e.target.innerText;
+            this.closeMenu();
         }
     },
     computed: {
         cssProps() {
             return {
-                "--link-spacing": this.spacing,
-                "--custom-fontsize": this.fontSize,
-                "--justify-label": this.justify,
-                "--radius": this.borderRadius,
-                "--space-between": this.spaceBetween
+                "--font-size": this.fontSize,
+                "--border-radius": this.borderRadius,
+                "--main-height": this.height,
+                "--link-spacing": this.linkHeight,
+                "--justify-label": this.justifyLabel
             };
         },
     },
-
-    data() {
-        return {
-            show: false,
-            activeLabel: this.label,
-            shouldSwitch: this.dynamicSwitch
-        };
-    },
-    methods: {
-        // changes label based on what you click
-        handleClick(e) {
-            this.show = !this.show;
-
-            if (this.shouldSwitch) {
-                this.activeLabel = e.target.innerText;
-            }
-        }
-    }
-};
+}
 </script>
 
 <style scoped>
-.label_container {
+.menu {
+    position: relative;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+}
+.label_wrapper {
     display: flex;
-    flex-direction: row;
     justify-content: var(--justify-label);
-    width: 100%;
-    height: 100%;
-    border-radius: 4px;
-    z-index: 3;
-    padding-top: var(--space-between);
-    padding-bottom: var(--space-between);
+    height: var(--main-height);
+    line-height: var(--main-height); /* I have bad expereince with line-height, so if your having strange errors, try and remove this */
 }
-.label {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    z-index: 0;
+.menu > p {
+    display: inline-block;
 }
-.content {
-    display: none;
-    background: var(--main-color);
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.15);
+.label_wrapper:hover > p {
+    font-weight: bold;
+}
+.menu svg {
+    width: 10px;
+    margin-left: 10px;
+}
+.menu .menu_cont {
     position: absolute;
-    width: inherit;
-    z-index: 1;
-
-    border-radius: var(--radius);
+    z-index: 15;
 }
-
-/* Functionality */
-.label_container:hover {
-    font-weight: bold;
-}
-
-.showContent {
-    display: block;
-}
-
-.content > * {
-    height: var(--link-spacing);
+.menu_cont {
+    display: none;
+    flex-direction: column;
     width: 100%;
+}
+.menu_cont > * {
     border: none;
-    text-align: center;
-    font-size: var(--custom-fontsize);
     font-family: rubik;
-    background-color: transparent;
-    color: var(--soft-text);
-}
-.content > *:hover {
-    color: var(--main-font-color);
+    font-size: var(--font-size);
+    height: var(--link-spacing);
     cursor: pointer;
 }
-.content > *:focus {
+.menu_cont > *:hover {
+    color: var(--dropdown-hover-color);
+}
+.menu_cont > *:focus {
     outline: none;
-}
-
-.component_container:hover {
-    font-weight: bold;
-    cursor: pointer;
 }
 </style>

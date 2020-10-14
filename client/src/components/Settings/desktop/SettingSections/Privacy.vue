@@ -1,12 +1,8 @@
 <template>
     <WrapperDesktop>
-        <div id='section'>
-            <div class='setting_labels'>
-
-            </div>
-            <div class='setting_cont'>
-
-            </div>
+        <div class='setting_item'>
+            <p class="setting_label"></p>
+            
         </div>
     </WrapperDesktop>
 </template>

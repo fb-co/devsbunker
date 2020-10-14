@@ -244,10 +244,6 @@ export default {
     margin: 0px 15px 0px 15px;
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
     max-width: 1000px;
-    height: 730px;
-}
-.content_box > div {
-    max-height: inherit;
 }
 
 .username {

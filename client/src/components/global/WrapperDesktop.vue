@@ -4,46 +4,34 @@
     the wrapper as a slot. In this case the settings components such as Account, Privacy etc
 -->
 <template>
-    <div class='no_select'>
+    <div class='main_wrapper no_select'>
         <slot></slot>
     </div>
 </template>
 
 <style scoped>
+.main_wrapper {
+    padding-top: 25px;
+}
+
 /* GLOBAL SETTINGS STYLES */
 
-#section {
+.setting_item {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    height: 100%;
+    justify-content: center;
 }
-
-.setting_labels {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-}
-
 .setting_label {
-    margin: 0 auto;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.settings_cont {
-    width: 50%;
-}
-
-.setting_cont {
-    margin: 0 auto;
-}
-
-.setting_container {
-    width: 100%;
-    height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    font-weight: bold;
+}
+.setting_dropdown {
+    width: 150px;
+}
+.setting_item_spacer {
+    width: 15%;
+    height: 10px;
 }
 </style>

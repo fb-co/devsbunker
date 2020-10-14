@@ -2,7 +2,7 @@
     <div id="main_container">
         <div class="filter_dropdown_container">
             <SearchBar placeholder="Search..." class="search_bar" />
-            <Dropdown label="Newest" fontSize="12px" spacing="40px" class="filter_dropdown">
+            <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown">
                 <button>Newest</button>
                 <button>Most Popular</button>
                 <button>Alphabetical</button>
@@ -85,8 +85,7 @@ export default {
 }
 .filter_dropdown {
     font-size: 12px;
-    height: 30px;
-    width: 100px;
+    width: 150px;
     margin: 20px auto 20px auto;
     background-color: var(--secondary-color);
     border-radius: 5px;

@@ -1,13 +1,23 @@
 <template>
     <div class="main_container">
         <div class="main_content_container">
+            <CustomInput class="main_search">
+                    <input type="text" name="search" id="setting_search" placeholder="Search...">
+                    <div class="submit_search">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <circle cx="10" cy="10" r="7" />
+                            <line x1="21" y1="21" x2="15" y2="15" />
+                        </svg>
+                    </div>
+                </CustomInput>
             <div class="header_container">
                 <div class="horizontal_flex_center">
                     <img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic">
                     <div class="header_right_cont">
                         <p class="username_welcome">Hello The_Jak!</p>
 
-                        <Dropdown label="Filter" fontSize="12px" spacing="40px" :dynamicSwitch="true" justify="left" border_radius="0px" class="filter_dropdown">
+                        <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
                             <button>Newest</button>
                             <button>Most Popular</button>
                             <button>Alphabetical</button>
@@ -23,17 +33,6 @@
                     </div>
                     <div class="filter_container"><p @click="nextScrollMenuItem()" id="next_filter" class="next_filter_class no_select"></p></div>
                 </div>
-
-                <CustomInput class="main_search">
-                    <input type="text" name="search" id="setting_search" placeholder="Search for a project...">
-                    <div class="submit_search">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" />
-                            <circle cx="10" cy="10" r="7" />
-                            <line x1="21" y1="21" x2="15" y2="15" />
-                        </svg>
-                    </div>
-                </CustomInput>
             </div>
 
             <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
@@ -135,7 +134,7 @@ export default {
         overflow-x: hidden;
     }
     .main_content_container {
-        width: 80%;
+        width: 90%;
         max-width: 500px;
         min-width: 250px;
         margin-left: auto;
@@ -145,7 +144,7 @@ export default {
     .filter_dropdown {
         margin-top: 10px;
         margin-bottom: 10px;
-        width: 100px;
+        width: 125px;
         color: var(--soft-text);
         font-weight: normal;
     }
