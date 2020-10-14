@@ -8,9 +8,6 @@ import loginResolvers from "./user/resolvers/login.js";
 import logoutResolvers from "./user/resolvers/logout.js";
 import sessionRevoker from "./user/resolvers/revoke.session.js";
 
-// miscellaneous
-import aboutResolvers from "./about/resolvers/about.page.js";
-import homeResolvers from "./home/resolvers/home.page.js";
 
 const UserResolversArray = [
     usersResolvers,
@@ -19,8 +16,6 @@ const UserResolversArray = [
     logoutResolvers,
     sessionRevoker,
 ];
-const miscellaneousResolversArray = [aboutResolvers, homeResolvers];
 
-const resolvers = UserResolversArray.concat(miscellaneousResolversArray);
 
-export default mergeResolvers(resolvers);
+export default mergeResolvers(UserResolversArray);
