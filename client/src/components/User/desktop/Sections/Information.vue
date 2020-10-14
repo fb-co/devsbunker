@@ -79,7 +79,7 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: inherit;
+    height: 100%;
 }
 .label {
     font-size: 25px;

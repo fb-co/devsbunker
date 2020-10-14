@@ -51,6 +51,10 @@ export default {
         borderRadius: {
             type: String,
             default: "3px"
+        },
+        justifyLabel: {
+            type: String,
+            default: "center"
         }
     },
     methods: {
@@ -77,7 +81,8 @@ export default {
                 "--font-size": this.fontSize,
                 "--border-radius": this.borderRadius,
                 "--main-height": this.height,
-                "--link-spacing": this.linkHeight
+                "--link-spacing": this.linkHeight,
+                "--justify-label": this.justifyLabel
             };
         },
     },
@@ -92,7 +97,7 @@ export default {
 }
 .label_wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: var(--justify-label);
     height: var(--main-height);
     line-height: var(--main-height); /* I have bad expereince with line-height, so if your having strange errors, try and remove this */
 }
@@ -108,6 +113,7 @@ export default {
 }
 .menu .menu_cont {
     position: absolute;
+    z-index: 15;
 }
 .menu_cont {
     display: none;
