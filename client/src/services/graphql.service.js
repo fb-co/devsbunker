@@ -22,6 +22,29 @@ const GraphQLService = {
             .catch(console.error);
     },
 
+    // updates the users db document
+    updateUserDetails: async function(username, fields) {
+        const mutation = `
+            mutation {
+                updateUser(username: "${username}", fields: "${fields}") {
+                    success
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+            return res.json();
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
     signupUser: async function(username, email, password) {
         const mutation = `
             mutation {
