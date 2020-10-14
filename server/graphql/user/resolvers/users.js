@@ -10,7 +10,7 @@ export default {
         },
     },
     Mutation: {
-        updateUserDescription: async function(_, args, {res}) {
+        updateUserDetails: async function(_, args, {res}) {
             const {description, token} = args;
 
             try {

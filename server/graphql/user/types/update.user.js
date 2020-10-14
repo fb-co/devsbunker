@@ -2,14 +2,14 @@ import ApolloServer from "apollo-server-express";
 const { gql } = ApolloServer;
 
 export default gql`
-    type UpdateDescriptionResponse {
+    type UpdateDetailsResponse {
         success: Boolean!
     }
 
     type Mutation {
-        updateUserDescription(
+        updateUserDetails(
             description: String!
             token: String!
-        ): UpdateDescriptionResponse!
+        ): UpdateDetailsResponse!
     }
 `;
