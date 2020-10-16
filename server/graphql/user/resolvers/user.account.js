@@ -5,12 +5,10 @@ import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: 
 
 import validateCreds from "../utils/validateCreds.js";
 import getUserEntry from "../utils/getUserEntry.js";
-import loginValidUser from '../utils/loginValidUser.js';
+import loginValidUser from "../utils/loginValidUser.js";
 
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
-
-
 
 export default {
     Query: {
@@ -62,7 +60,6 @@ export default {
         user: function (_, args, { res }) {
             return getUserEntry(args.username);
         },
-
     },
 
     Mutation: {
@@ -123,33 +120,69 @@ export default {
             }
         },
 
-        updateUserDetails: async function(_, args, {res}) {
+        updateUserDetails: async function (_, args, { res }) {
+            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+
+            if (!jwtPayload)
+                return { success: false, message: "Invalid token" };
+
+            const user = await User.findOne({
+                _id: jwtPayload._id,
+            });
+
+            // if the token is valid then we should def find a user...
+            if (!user) return { success: false, message: "Internal error" };
+
+            const nonMod = [
+                "_id",
+                "id",
+                "tokenVersion",
+                "tag",
+                "createdAt",
+                "updatedAt",
+                "__v",
+                "v",
+            ];
+
             try {
-                const jwtPayload = TokenHandler.verifyAccessToken(args.token);
-    
-                const user = await User.findOne({
-                    _id: jwtPayload._id
-                });
-                
-                /*
                 // loop through all the fields that need to be changed
-                for (let i = 0; i < args.fields.length; i++) {
-                    user[args.fields[i][0]] = args.fields[i][1];
-                }
-                */
-                user.desc = args.fields;
+                args.fields.forEach(async (payload) => {
+                    // checking if the received payload actually exists in the user object (maybe someone miss spells a field)
+                    if (user[payload.field]) {
+                        if (nonMod.includes(payload.field)) {
+                            throw new Error(
+                                `Cannot update field: ${payload.field}`
+                            );
+                        } else {
+                            if (payload.field == "password") {
+                                console.log(payload.field, " is pass");
+                                const newHashedPass = await bcrypt.hash(
+                                    payload.newValue,
+                                    10
+                                );
 
-                user.save();
+                                user[payload.field] = newHashedPass;
+                            } else {
+                                user[payload.field] = payload.newValue;
+                            }
+                        }
+                    } else {
+                        throw new Error(
+                            `Field ${payload.field}: does not exist`
+                        );
+                    }
+                });
 
-                return {success: true}
-            } catch(err) {
-                return {success: false}
+                await user.save();
+            } catch (err) {
+                return { success: false, message: err.message };
             }
 
+            return { success: true };
         },
 
         revokeUserSession: async function (_, args) {
             return await SessionRevoker.revokeRefreshToken(args.token);
         },
     },
-}
+};

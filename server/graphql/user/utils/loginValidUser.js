@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: move this inside GraphQL/
+import ApolloServer from "apollo-server-express";
+const { AuthenticationError } = ApolloServer;
 
 export default async function loginValidUser(user, password, res) {
     const valid = await bcrypt.compare(password, user.password);

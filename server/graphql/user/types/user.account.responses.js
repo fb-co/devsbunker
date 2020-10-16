@@ -20,6 +20,12 @@ export default gql`
 
     type UpdateDetailsResponse {
         success: Boolean!
+        message: String
+    }
+
+    input UpdateUserPayload {
+        field: String!
+        newValue: String!
     }
 
     type Query {
@@ -30,9 +36,8 @@ export default gql`
             email: String
             password: String!
         ): UserAccountAction!
-        
-        logoutUser: LogoutResponse!
 
+        logoutUser: LogoutResponse!
     }
 
     type Mutation {
@@ -46,7 +51,7 @@ export default gql`
 
         updateUserDetails(
             token: String!
-            fields: String!     
+            fields: [UpdateUserPayload!]!
         ): UpdateDetailsResponse!
     }
 `;
