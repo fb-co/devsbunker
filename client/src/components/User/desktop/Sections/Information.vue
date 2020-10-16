@@ -56,19 +56,26 @@ export default {
             textArea.style.display = "none";
             
             // make sure its not empty
-            if (textArea.value != null || textArea.value != "") {
+            if (textArea.value === null || textArea.value === "") {
                 textArea.value = "No Description";
             }
             
             this.userObject.desc = textArea.value; 
             this.isEditingDesc = false;
 
-            /* query a mutation to the server here (ill do this part)*/
-            const response = await GraphQLService.updateUserDetails(
-                this.$store.getters.username,
-                { desc: textArea.value }
-            );
+            /*
+            // update the users description
+            const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [
+                {field: "desc", newValue: textArea.value}
+            ]);
+            */
+            const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, textArea.value);
+
             console.log(response);
+
+            if (response.data.updateUserDetails.success) {
+                this.$el.getElementsByClassName('desc')[0].innerText = textArea.value;
+            } 
         },
     }
 }

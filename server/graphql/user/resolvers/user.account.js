@@ -124,21 +124,25 @@ export default {
         },
 
         updateUserDetails: async function(_, args, {res}) {
-            const {description, token} = args;
-
             try {
-                const jwtPayload = TokenHandler.verifyAccessToken(token);
+                const jwtPayload = TokenHandler.verifyAccessToken(args.token);
     
                 const user = await User.findOne({
                     _id: jwtPayload._id
                 });
-    
-                user.desc = description;
+                
+                /*
+                // loop through all the fields that need to be changed
+                for (let i = 0; i < args.fields.length; i++) {
+                    user[args.fields[i][0]] = args.fields[i][1];
+                }
+                */
+                user.desc = args.fields;
+
                 user.save();
 
                 return {success: true}
-            } catch {
-
+            } catch(err) {
                 return {success: false}
             }
 

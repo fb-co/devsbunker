@@ -23,10 +23,10 @@ const GraphQLService = {
     },
 
     // updates the users db document
-    updateUserDetails: async function(username, fields) {
+    updateUserDetails: async function(token, fields) {
         const mutation = `
             mutation {
-                updateUser(username: "${username}", fields: "${fields}") {
+                updateUserDetails(token: "${token}", fields: "${fields}") {
                     success
                 }
             }

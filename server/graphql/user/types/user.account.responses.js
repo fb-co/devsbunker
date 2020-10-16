@@ -35,7 +35,6 @@ export default gql`
 
     }
 
-
     type Mutation {
         signupUser(
             username: String!
@@ -46,8 +45,8 @@ export default gql`
         revokeUserSession(token: String!): Boolean!
 
         updateUserDetails(
-            description: String!
             token: String!
+            fields: String!     
         ): UpdateDetailsResponse!
     }
 `;
