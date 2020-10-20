@@ -24,6 +24,10 @@ const GraphQLService = {
 
     // updates the users db document
     updateUserDetails: async function(token, fields) {
+        // HERE IS WHERE THE fields ARG SHOULD BE A STRINGIFIED OBJECT
+        // IF YOU WANT TO TRY JSON GO AHEAD BUT DAT SHIT DOES NOT WORK
+        // RIGHT NOW ITS JUST DOING THE BASIC CONVERSION OF OBJECT TO STRING WHICH RETURNS "[object Object]"
+
         const mutation = `
             mutation {
                 updateUserDetails(token: "${token}", fields: "${fields}") {

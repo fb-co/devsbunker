@@ -69,7 +69,7 @@ export default {
                 {field: "desc", newValue: textArea.value}
             ]);
             */
-            const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, textArea.value);
+            const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{field: "desc", newValue: textArea.value}]);
 
             console.log(response);
 
