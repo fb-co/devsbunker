@@ -24,24 +24,29 @@ const GraphQLService = {
 
     // updates the users db document
     updateUserDetails: async function(token, fields) {
-        // HERE IS WHERE THE fields ARG SHOULD BE A STRINGIFIED OBJECT
-        // IF YOU WANT TO TRY JSON GO AHEAD BUT DAT SHIT DOES NOT WORK
-        // RIGHT NOW ITS JUST DOING THE BASIC CONVERSION OF OBJECT TO STRING WHICH RETURNS "[object Object]"
-
+        // solution: we are using a variable (used to pass complex objects as params) of type UpdateUserPayload (same as backend)
         const mutation = `
-            mutation {
-                updateUserDetails(token: "${token}", fields: "${fields}") {
+            mutation Update($fields: [UpdateUserPayload!]!) {
+                updateUserDetails(token: "${token}", fields: $fields) {
                     success
                 }
             }
         `;
+
+        // defining variables which are later added to the request alongside the query
+        const variables = {
+            fields: fields,
+        };
 
         try {
             const res = await fetch(URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify({ query: mutation }),
+                body: JSON.stringify({
+                    query: mutation,
+                    variables: variables, // adding variables
+                }),
             });
             return res.json();
         } catch (err) {
