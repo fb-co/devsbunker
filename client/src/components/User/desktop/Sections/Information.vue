@@ -2,7 +2,11 @@
     <div class="general_container" v-if="userObject">
         <p class="label">General</p>
         
-        <div class="desc_container">
+        <div class="profile_pic_container">
+            <img src="@/assets/profilePlaceholder.png" alt="profile_pic" style="width: 250px;">
+        </div>
+        
+        <div class="desc_container">        
             <p @click="editDesc()" v-if="!isEditingDesc" class="desc">{{ userObject.desc }}</p> <!-- Conditionally render it or else you get errors in console as it tries to return the value before the promise is resolved (it will work fine tho) -->
             
             <!-- Its important that the SVG goes before the textarea -->
@@ -52,30 +56,26 @@ export default {
             this.isEditingDesc = true;
         },
         async saveDesc() {
-            const textArea = this.$el.getElementsByClassName('edit_desc')[0]
+            const textArea = this.$el.getElementsByClassName('edit_desc')[0];
             textArea.style.display = "none";
-            
-            // make sure its not empty
-            if (textArea.value === null || textArea.value === "") {
-                textArea.value = "No Description";
-            }
-            
-            this.userObject.desc = textArea.value; 
             this.isEditingDesc = false;
+            
+            // prevent user queries if the description did not change
+            if (this.userObject.desc != textArea.value) {
+                // make sure its not empty
+                if (textArea.value === null || textArea.value === "") {
+                    textArea.value = "No Description";
+                }
+                
+                this.userObject.desc = textArea.value; 
 
-            /*
-            // update the users description
-            const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [
-                {field: "desc", newValue: textArea.value}
-            ]);
-            */
-            const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{field: "desc", newValue: textArea.value}]);
+                const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{field: "desc", newValue: textArea.value}]);
 
-            console.log(response);
-
-            if (response.data.updateUserDetails.success) {
-                this.$el.getElementsByClassName('desc')[0].innerText = textArea.value;
-            } 
+                if (response.data.updateUserDetails.changedData != "failed") {
+                    const changedValue = JSON.parse(response.data.updateUserDetails.changedData)[0]; // this refrences zero because the updateUserDetails mutation has the possibility of returning more than one change
+                    this.$el.getElementsByClassName('desc')[0].innerText = changedValue.newValue;
+                } 
+            }
         },
     }
 }
@@ -103,6 +103,13 @@ export default {
     cursor: text;
     width: 450px;
     margin: 40px auto 0px auto;
+}
+.profile_pic_container {
+    width: 450px;
+    margin: 35px auto 10px auto;
+}
+.profile_pic_container > img {
+    cursor: pointer;
 }
 .edit_desc { 
     display: none;

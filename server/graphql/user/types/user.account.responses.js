@@ -18,8 +18,13 @@ export default gql`
         message: String!
     }
 
+    type EditedUserDetailsOutput {
+        field: String!
+        newValue: String!
+    }
+    
     type UpdateDetailsResponse {
-        success: Boolean!
+        changedData: String!
         message: String
     }
 

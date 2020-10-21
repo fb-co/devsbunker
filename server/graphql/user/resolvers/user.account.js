@@ -122,6 +122,7 @@ export default {
 
         updateUserDetails: async function (_, args, { res }) {
             const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+            let editedData = [];
 
             if (!jwtPayload)
                 return { success: false, message: "Invalid token" };
@@ -160,9 +161,11 @@ export default {
                                     payload.newValue,
                                     10
                                 );
-
+                                
+                                editedData.push({field: payload.field, newValue: "Changed"}); // the only case that we dont want to return the mutated data is for the password
                                 user[payload.field] = newHashedPass;
                             } else {
+                                editedData.push({field: payload.field, newValue: payload.newValue});
                                 user[payload.field] = payload.newValue;
                             }
                         }
@@ -175,10 +178,10 @@ export default {
 
                 await user.save();
             } catch (err) {
-                return { success: false, message: err.message };
+                return { changedData: "failed", message: err.message };
             }
 
-            return { success: true };
+            return {changedData: JSON.stringify(editedData), message: ""};
         },
 
         revokeUserSession: async function (_, args) {
