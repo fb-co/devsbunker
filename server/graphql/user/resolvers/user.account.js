@@ -147,7 +147,7 @@ export default {
 
             try {
                 // loop through all the fields that need to be changed
-                args.fields.forEach(async (payload) => {
+                for (const payload of args.fields) {
                     // checking if the received payload actually exists in the user object (maybe someone miss spells a field)
                     if (user[payload.field]) {
                         if (nonMod.includes(payload.field)) {
@@ -156,16 +156,21 @@ export default {
                             );
                         } else {
                             if (payload.field == "password") {
-                                console.log(payload.field, " is pass");
                                 const newHashedPass = await bcrypt.hash(
                                     payload.newValue,
                                     10
                                 );
-                                
-                                editedData.push({field: payload.field, newValue: "Changed"}); // the only case that we dont want to return the mutated data is for the password
+
+                                editedData.push({
+                                    field: payload.field,
+                                    newValue: "Changed",
+                                }); // the only case that we dont want to return the mutated data is for the password
                                 user[payload.field] = newHashedPass;
                             } else {
-                                editedData.push({field: payload.field, newValue: payload.newValue});
+                                editedData.push({
+                                    field: payload.field,
+                                    newValue: payload.newValue,
+                                });
                                 user[payload.field] = payload.newValue;
                             }
                         }
@@ -174,14 +179,17 @@ export default {
                             `Field ${payload.field}: does not exist`
                         );
                     }
-                });
+                }
 
                 await user.save();
             } catch (err) {
-                return { changedData: "failed", message: err.message };
+                return { changedData: null, message: err.message };
             }
 
-            return {changedData: JSON.stringify(editedData), message: ""};
+            return {
+                changedData: editedData,
+                message: "Successfully updated user details",
+            };
         },
 
         revokeUserSession: async function (_, args) {

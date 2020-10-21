@@ -22,9 +22,15 @@ export default gql`
         field: String!
         newValue: String!
     }
-    
+
+    # What the user updated
+    type mutatedUserDetails {
+        field: String!
+        newValue: String!
+    }
+
     type UpdateDetailsResponse {
-        changedData: String!
+        changedData: [mutatedUserDetails] # nullable array of updated user data
         message: String
     }
 
