@@ -117,6 +117,12 @@ export default {
             active: "projects",
         };
     },
+    created() {
+        if (this.$route.name === "User") {
+            this.$router.push("information");
+        }
+        console.log(this.$route);
+    },
     methods: {
         logout() {
             GraphQLService.logoutUser().then((response) => {
