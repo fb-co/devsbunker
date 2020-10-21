@@ -28,7 +28,11 @@ const GraphQLService = {
         const mutation = `
             mutation Update($fields: [UpdateUserPayload!]!) {
                 updateUserDetails(token: "${token}", fields: $fields) {
-                    changedData
+                    message
+                    changedData {
+                        field
+                        newValue
+                    }
                 }
             }
         `;
