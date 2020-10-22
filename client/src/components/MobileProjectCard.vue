@@ -115,7 +115,7 @@ export default {
         width: 100%;
     }
 
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 300px) {
         .card_text_container{
             width: 100%;
         }  

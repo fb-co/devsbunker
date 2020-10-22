@@ -121,7 +121,7 @@ export default {
         if (this.$route.name === "User") {
             this.$router.push("information");
         }
-        console.log(this.$route);
+        console.log(this.$r);
     },
     methods: {
         logout() {
