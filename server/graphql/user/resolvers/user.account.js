@@ -60,6 +60,10 @@ export default {
         user: function (_, args, { res }) {
             return getUserEntry(args.username);
         },
+
+        userPost: function(_, args, { res }) {
+            return getUserPost(args.postTitle, args.postAuthor); 
+        }
     },
 
     Mutation: {

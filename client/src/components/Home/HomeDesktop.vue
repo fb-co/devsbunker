@@ -41,7 +41,14 @@
                     </svg>
                 </div>
                 <div class="lan_cycler_cont">
-                    <p class="no_select">Javascript * Python * C/C++ * All</p>
+                    <div class="language_car">
+                        <p>Javascript</p>
+                        <p>Python</p>
+                        <p>All</p>
+                        <p>C/C++</p>
+                        <p>Java</p>
+                    </div>
+                    <!--<p class="no_select">Javascript * Python * C/C++ * All</p>-->
                 </div>
                 <div class="lan_cycler_arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-right" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -340,6 +347,7 @@ export default {
     min-width: 400px;
     border: 1px solid transparent;
     border-radius: 10px;
+    padding: 10px;
 }
 .project_card:hover {
     cursor: pointer;
@@ -355,6 +363,18 @@ export default {
 }
 .projects_footer {
     width: 100%;
+}
+
+.language_car {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.language_car p {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px;
 }
 
 /* (center content scrollbar)

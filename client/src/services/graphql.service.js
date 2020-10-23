@@ -22,6 +22,29 @@ const GraphQLService = {
             .catch(console.error);
     },
 
+    fetchPostByAuthor: function(postTitle, postAuthor) {
+        const query = `
+            query {
+                user(postTitle: "${postTitle}", postAuthor: "${postAuthor}") {
+                    postObj
+                }
+            }
+        `;
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json"},
+                credentials: "include",
+                body: JSON.stringify({ query })
+            })
+                .then((res) => res.json())
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
     // updates the users db document
     updateUserDetails: async function(token, fields) {
         // solution: we are using a variable (used to pass complex objects as params) of type UpdateUserPayload (same as backend)
