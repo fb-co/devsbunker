@@ -14,25 +14,8 @@ export default gql`
         tag: String!
     }
 
-    type FetchablePost {
-        title: String!
-        author: String!
-        description: String!
-        thumbnail: String!
-        githubLink: String!
-        otherLink: String!
-        bunkerTag: String!
-        clip: String!
-    }
-
     type LogoutResponse {
         message: String!
-    }
-
-    # Are we actully using this one? [!]
-    type EditedUserDetailsOutput {
-        field: String!
-        newValue: String!
     }
 
     # What the user updated
@@ -53,11 +36,6 @@ export default gql`
 
     type Query {
         user(username: String!): FetchableUser
-
-        userPost(
-            postTitle: String!
-            postAuthor: String!
-        ): FetchablePost
 
         loginUser(
             username: String
