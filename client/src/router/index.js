@@ -59,6 +59,13 @@ const routes = [
             },
         ],
     },
+
+    {
+        path: "/new",
+        name: "New",
+        component: () => import("../views/NewPost.vue")
+    },
+    
     {
         path: "/notifications",
         name: "Notifications",
