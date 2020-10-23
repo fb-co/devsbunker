@@ -60,10 +60,6 @@ export default {
         user: function (_, args, { res }) {
             return getUserEntry(args.username);
         },
-
-        userPost: function(_, args, { res }) {
-            return getUserPost(args.postTitle, args.postAuthor); 
-        }
     },
 
     Mutation: {
@@ -105,22 +101,16 @@ export default {
                     } else {
                         res.status(422);
 
-                        throw new AuthenticationError(
-                            "Unable to create token."
-                        );
+                        throw new AuthenticationError("Unable to create token.");
                     }
                 } catch {
                     res.status(401);
 
-                    throw new AuthenticationError(
-                        "Credentials are already taken."
-                    );
+                    throw new AuthenticationError("Credentials are already taken.");
                 }
             } else {
                 res.status(400);
-                throw new AuthenticationError(
-                    "Invalid credentials. Try again."
-                );
+                throw new AuthenticationError("Invalid credentials. Try again.");
             }
         },
 
@@ -128,8 +118,7 @@ export default {
             const jwtPayload = TokenHandler.verifyAccessToken(args.token);
             let editedData = [];
 
-            if (!jwtPayload)
-                return { success: false, message: "Invalid token" };
+            if (!jwtPayload) return { success: false, message: "Invalid token" };
 
             const user = await User.findOne({
                 _id: jwtPayload._id,
@@ -138,16 +127,7 @@ export default {
             // if the token is valid then we should def find a user...
             if (!user) return { success: false, message: "Internal error" };
 
-            const nonMod = [
-                "_id",
-                "id",
-                "tokenVersion",
-                "tag",
-                "createdAt",
-                "updatedAt",
-                "__v",
-                "v",
-            ];
+            const nonMod = ["_id", "id", "tokenVersion", "tag", "createdAt", "updatedAt", "__v", "v"];
 
             try {
                 // loop through all the fields that need to be changed
@@ -155,15 +135,10 @@ export default {
                     // checking if the received payload actually exists in the user object (maybe someone miss spells a field)
                     if (user[payload.field]) {
                         if (nonMod.includes(payload.field)) {
-                            throw new Error(
-                                `Cannot update field: ${payload.field}`
-                            );
+                            throw new Error(`Cannot update field: ${payload.field}`);
                         } else {
                             if (payload.field == "password") {
-                                const newHashedPass = await bcrypt.hash(
-                                    payload.newValue,
-                                    10
-                                );
+                                const newHashedPass = await bcrypt.hash(payload.newValue, 10);
 
                                 editedData.push({
                                     field: payload.field,
@@ -179,9 +154,7 @@ export default {
                             }
                         }
                     } else {
-                        throw new Error(
-                            `Field ${payload.field}: does not exist`
-                        );
+                        throw new Error(`Field ${payload.field}: does not exist`);
                     }
                 }
 

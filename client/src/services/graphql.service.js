@@ -22,11 +22,13 @@ const GraphQLService = {
             .catch(console.error);
     },
 
-    fetchPostByAuthor: function(postTitle, postAuthor) {
+    fetchUserPost: function(postId, postAuthor) {
         const query = `
             query {
-                user(postTitle: "${postTitle}", postAuthor: "${postAuthor}") {
-                    postObj
+                userPost(postId: "${postId}", postAuthor: "${postAuthor}") {
+                    title
+                    description
+                    githubLink
                 }
             }
         `;
@@ -34,9 +36,9 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json"},
+                headers: { "content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify({ query })
+                body: JSON.stringify({ query }),
             })
                 .then((res) => res.json())
                 .catch(console.error);
