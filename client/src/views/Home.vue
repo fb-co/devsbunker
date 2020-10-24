@@ -3,6 +3,7 @@
         <NavBar />
         <HomeMobile v-if="mobile" />
         <HomeDesktop v-if="!mobile" />
+        <NewPost ref="newPostMenu" />
     </div>
 </template>
 
@@ -14,11 +15,12 @@ import ScreenType from "../utils/screenType.js";
 
 import HomeMobile from "@/components/Home/HomeMobile.vue";
 import HomeDesktop from "@/components/Home/HomeDesktop.vue";
+import NewPost from "@/components/NewPost/NewPost.vue";
 
 export default {
     data() {
         return {
-            mobile: false,
+            mobile: false
         }
     },
     async created() {
@@ -39,12 +41,19 @@ export default {
     components: {
         NavBar,
         HomeMobile,
-        HomeDesktop
+        HomeDesktop,
+        NewPost
     },
     methods: {
         isMobile() {
             return ScreenType.isMobile(950);
         },
+        openPostMenu() {
+            this.$refs.newPostMenu.open();
+        },
+        closePostMenu() {
+            this.$refs.newPostMenu.close();
+        }
     },
 };
 </script>

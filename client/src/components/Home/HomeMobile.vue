@@ -24,7 +24,7 @@
                         </Dropdown>
                     </div>
                 </div>
-
+                <!--
                 <div class="switcher_container">
                     <div class="filter_container"><p @click="prevScrollMenuItem()" id="prev_filter" class="prev_filter_class no_select"></p></div>
                     <div class="current_filter_subcontainer">
@@ -33,7 +33,15 @@
                     </div>
                     <div class="filter_container"><p @click="nextScrollMenuItem()" id="next_filter" class="next_filter_class no_select"></p></div>
                 </div>
+                -->
             </div>
+
+            <svg @click="makeNewPost()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_button" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <rect x="4" y="4" width="16" height="16" rx="2" />
+                <line x1="9" y1="12" x2="15" y2="12" />
+                <line x1="12" y1="9" x2="12" y2="15" />
+            </svg>
 
             <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
         </div>
@@ -93,9 +101,12 @@ export default {
         }
     },
     mounted() {
+        /* un-comment this if we ever decide to put in the carousel
         this.setScrollMenuData();
+        */
     },
     methods: {
+        /*
         // Returns the data for the current target: I HAVE NO IDEA WHAT IM DOING :')
         getFilterScrollMenuData(target) {
             const index = this.bunkers.indexOf(target || "All");
@@ -119,6 +130,11 @@ export default {
             document.getElementById("prev_filter").innerText = this.getFilterScrollMenuData(this.filter).prev;
             document.getElementById("next_filter").innerText = this.getFilterScrollMenuData(this.filter).next;
         }
+        */
+       makeNewPost() {
+           console.log("bruh");
+           this.$parent.openPostMenu();
+       }
     },
     components: {
         MobileProjectCard,
@@ -156,6 +172,14 @@ export default {
     .header_container {
         margin-top: 60px;
         margin-bottom: 40px;
+    }
+
+    .add_button {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .add_button:hover {
+        stroke-width: 0.7px;
     }
 
 

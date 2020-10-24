@@ -31,6 +31,7 @@
             <p v-if="$store.getters.isLoggedIn" @click="logout()" class="logout_button">Logout</p>
         </div>
         <div class="center_content">
+            <!--
             <div class="language_cycler_container">
                 <div class="lan_cycler_arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-left" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -48,7 +49,6 @@
                         <p>C/C++</p>
                         <p>Java</p>
                     </div>
-                    <!--<p class="no_select">Javascript * Python * C/C++ * All</p>-->
                 </div>
                 <div class="lan_cycler_arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-right" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -59,6 +59,7 @@
                     </svg>
                 </div>
             </div>
+            -->
             <div class="scrollable_center">
                 <p class="discover_label no_select">Discover Projects</p>
                 <div class="filter_dropdown">

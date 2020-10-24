@@ -1,7 +1,7 @@
 <template>
     <div class="new_post_container">
         <div class="header">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <svg @click="close()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -13,7 +13,11 @@
 
 <script>
 export default {
-    
+    methods: {
+        close() {
+            this.$parent.close();
+        }
+    }
 }
 </script>
 
@@ -21,10 +25,10 @@ export default {
     .new_post_container {
         display: flex;
         flex-direction: column;
-        width: 100%;
+        width: 95%;
         height: 100vh;
         border-radius: 25px;
-        margin-top: 35px;
+        margin: 0 auto;
         box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     }
     .header {
