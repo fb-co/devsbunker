@@ -8,7 +8,9 @@
             </svg>
             <p>New Post</p>
         </div>
-        <GeneralInput label="Post Title" />
+        <GeneralInput class="field" label="Post Title" />
+
+        <GeneralInput class="field" label="Post Description" />
     </div>
 </template>
 
@@ -41,6 +43,7 @@ export default {
         display: flex;
         flex-direction: row;
         padding: 35px;
+        margin-bottom: 30px;
     }
     .header > svg:hover {
         stroke-width: 2.5px;
@@ -53,5 +56,8 @@ export default {
         font-weight: bold;
         color: var(--main-font-color);
         transform: translateX(-14px);
+    }
+    .field {
+        margin-bottom: 50px;
     }
 </style>

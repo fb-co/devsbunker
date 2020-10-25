@@ -51,6 +51,7 @@ export default {
         width: 90%;
         margin: 0px auto 10px auto;
         color: var(--soft-text);
+        font-size: 14px;
     }
     .general_input {
         width: 90%;
@@ -59,6 +60,7 @@ export default {
         background-color: var(--main-color);
         margin: 0px auto 5px auto;
         font-family: rubik;
+        color: var(--main-font-color);
     }
     .general_input:focus {
         outline: none;
