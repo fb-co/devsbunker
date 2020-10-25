@@ -8,15 +8,21 @@
             </svg>
             <p>New Post</p>
         </div>
+        <GeneralInput label="Post Title" />
     </div>
 </template>
 
 <script>
+import GeneralInput from "../global/GeneralInput.vue";
+
 export default {
     methods: {
         close() {
             this.$parent.close();
         }
+    },
+    components: {
+        GeneralInput
     }
 }
 </script>

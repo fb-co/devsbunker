@@ -95,6 +95,7 @@ body {
 .horizontal_flex_center {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 .vertical_center {
     position: absolute;
