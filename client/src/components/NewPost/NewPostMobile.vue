@@ -26,10 +26,7 @@
         <div class="tag_container">
             <p>Add Collaborators</p>
             <div class="add_tags">
-                <CreateTag label="Jacopo" />
-                <CreateTag label="Leonardo" />
-                <CreateTag label="Some Scrub" />
-                <CreateTag label="Bob" />
+                <CreateTag v-for="contributer in contributers" :key="contributer" :label="contributer" />
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_tag_symbol" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -43,9 +40,12 @@
         <div class="tag_container">
             <p>Add Tags</p>
             <div class="add_tags">
+                <CreateTag v-for="tag in tags" :key="tag" :label="tag" />
+                <!--
                 <CreateTag label="Javascript" />
                 <CreateTag label="Vuejs" />
                 <CreateTag label="HTML/CSS" />
+                -->
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_tag_symbol" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -74,10 +74,21 @@ import CreateTag from "./CreateTag.vue";
 export default {
     data() {
         return {
-            images: [],
-            contributers: [],
-            tags: [],
-            links: []
+            images: [], // eventully we will have links to images here
+            contributers: [
+                "Jacopo",
+                "Leonardo",
+                "Some Scrub",
+                "Bob"
+            ],
+            tags: [
+                "Javascript",
+                "Vuejs",
+                "HTML/CSS"
+            ],
+            links: [
+                
+            ]
         }
     },
     methods: {

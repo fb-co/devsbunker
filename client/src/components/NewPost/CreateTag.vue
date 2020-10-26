@@ -14,12 +14,7 @@ export default {
     props: {
         label: {
             type: String,
-            required: true
-        },
-        profile_pic: {
-            type: String,
-            required: false //make this true when you make dynamic images
-        },
+        }
     }
 }
 </script>
