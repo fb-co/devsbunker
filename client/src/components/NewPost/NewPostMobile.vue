@@ -59,7 +59,9 @@
         <div class="tag_container">
             <p style="margin-bottom: 25px;">Add Links</p>
             <div class="link">
-                <p>github.com/bruh</p>
+                <LinkBlock link="www.google.com" />
+                <LinkBlock link="https://www.figma.com/file/3PE210hyAyBOdf4c8Yk037/devsBunker?node-id=321%3A0" />
+                <LinkBlock link="https://www.github.com" />
             </div>
         </div>
 
@@ -70,6 +72,7 @@
 <script>
 import GeneralInput from "../global/GeneralInput.vue";
 import CreateTag from "./CreateTag.vue";
+import LinkBlock from "./LinkBlock.vue";
 
 export default {
     data() {
@@ -87,7 +90,7 @@ export default {
                 "HTML/CSS"
             ],
             links: [
-                
+
             ]
         }
     },
@@ -98,7 +101,8 @@ export default {
     },
     components: {
         GeneralInput,
-        CreateTag
+        CreateTag,
+        LinkBlock
     }
 }
 </script>
@@ -170,16 +174,10 @@ export default {
 
     .link {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         width: 100%;
         margin-top: 5px;
         margin-bottom: 5px;
-    }
-    .link > p {
-        text-align: left;
-        font-size: 15px;
-        font-weight: bold;
-        color: var(--main-font-color);
     }
 
     .create_post_button {
