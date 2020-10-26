@@ -1,7 +1,8 @@
 <template>
     <div class="general_input_container" :style="cssProps">
         <p v-if="label!=''">{{ label }}</p>
-        <input class="general_input"> <!-- use $refs to get this value to avoid conflictions --> 
+        <input v-if="!isTextArea" ref="general_input">
+        <div v-else ref="general_input" contenteditable="true" class="general_textarea"></div> <!-- Acts like a text area -->
         <div class="form_line_container">
             <div class="bottom_line"></div>
         </div>
@@ -18,6 +19,10 @@ export default {
         width: {
             type: String,
             default: "100%"
+        },
+        isTextArea: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {
@@ -27,16 +32,24 @@ export default {
             };
         },
     },
+    methods: {
+        getValue() {
+            return this.$refs.general_input.value();
+        },
+        clearValue() {
+            this.$refs.general_input.value = "";
+        }
+    }
 }
 </script>
 
 <style scoped>
     @keyframes form_field_animation {
         from {
-            width: 89%;
+            width: 98%;
         }
         to {
-            width: 93%;
+            width: 100%;
         }
     }
 
@@ -48,23 +61,26 @@ export default {
     }
     .general_input_container > p {
         text-align: left;
-        width: 90%;
+        width: 100%;
         margin: 0px auto 10px auto;
         color: var(--soft-text);
         font-size: 14px;
     }
-    .general_input {
-        width: 90%;
+    .general_input_container input, .general_textarea {
+        width: 100%;
         border: none;
         padding: 3px;
         background-color: var(--main-color);
-        margin: 0px auto 5px auto;
+        margin: 0px auto 5px auto; 
         font-family: rubik;
         color: var(--main-font-color);
+        text-align: left;
+        font-size: 15px;
     }
-    .general_input:focus {
+    .general_input_container input:focus, .general_textarea:focus {
         outline: none;
     }
+
     .form_line_container {
         display: flex;
         flex-direction: row;
@@ -72,14 +88,14 @@ export default {
         width: 100%;
     }
     .form_line_container > div {
-        width: 89%;
+        width: 98%;
         height: 1px;
         background-image: linear-gradient( to right, var(--secondary-color) 0%, var(--main-font-color) 2%, var(--main-font-color) 98%, var(--secondary-color) 100% );
         opacity: 0.3;
     }
-    .general_input:focus + .form_line_container > div {
+    .general_input_container input:focus + .form_line_container > div, .general_textarea:focus + .form_line_container > div {
         animation: form_field_animation 1s;
-        width: 93%;
+        width: 100%;
         height: 1.5px;
     }
 </style>
