@@ -132,7 +132,6 @@ export default {
         }
         */
        makeNewPost() {
-           console.log("bruh");
            this.$parent.openPostMenu();
        }
     },

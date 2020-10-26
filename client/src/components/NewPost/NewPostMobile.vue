@@ -15,21 +15,11 @@
         <div class="tag_container">
             <p>Add Collaborators</p>
             <div class="add_tags">
-                <div class="tag">
+                <CreateTag label="Jacopo" />
+                <CreateTag label="Leonardo" />
+                <CreateTag label="Some Scrub" />
+                <CreateTag label="Bob" />
 
-                </div>   
-                <div class="tag">
-
-                </div> 
-                <div class="tag">
-
-                </div> 
-                <div class="tag">
-
-                </div>  
-                <div class="tag">
-
-                </div> 
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_tag_symbol" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <rect x="4" y="4" width="16" height="16" rx="2" />
@@ -42,21 +32,10 @@
         <div class="tag_container">
             <p>Add Tags</p>
             <div class="add_tags">
-                <div class="tag">
+                <CreateTag label="Javascript" />
+                <CreateTag label="Vuejs" />
+                <CreateTag label="HTML/CSS" />
 
-                </div>   
-                <div class="tag">
-
-                </div> 
-                <div class="tag">
-
-                </div> 
-                <div class="tag">
-
-                </div>  
-                <div class="tag">
-
-                </div> 
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_tag_symbol" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <rect x="4" y="4" width="16" height="16" rx="2" />
@@ -79,6 +58,7 @@
 
 <script>
 import GeneralInput from "../global/GeneralInput.vue";
+import CreateTag from "./CreateTag.vue";
 
 export default {
     methods: {
@@ -87,7 +67,8 @@ export default {
         }
     },
     components: {
-        GeneralInput
+        GeneralInput,
+        CreateTag
     }
 }
 </script>
@@ -101,12 +82,17 @@ export default {
         border-radius: 25px;
         margin: 0px auto 20px auto;
         box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        padding-right: 10px;
+        padding-left: 10px;
     }
     .header {
         display: flex;
         flex-direction: row;
-        padding: 35px;
+        padding-top: 35px;
         margin-bottom: 30px;
+    }
+    .header > svg {
+        margin-left: 5px;
     }
     .header > svg:hover {
         stroke-width: 2.5px;
@@ -136,6 +122,7 @@ export default {
         font-weight: bold;
         text-align: left;
         color: var(--main-font-color);
+        margin-bottom: 20px;
     }
     .add_tags {
         display: flex;
@@ -145,13 +132,12 @@ export default {
     }
     .add_tag_symbol {
         margin: 5px;
+        cursor: pointer;
     }
-    .tag {
-        margin: 5px;
-        width: 75px;
-        height: 75px;
-        background-color: blue;
+    .add_tag_symbol:hover {
+        stroke-width: 0.7px;
     }
+
     .link {
         display: flex;
         flex-direction: row;
