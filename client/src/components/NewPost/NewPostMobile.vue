@@ -28,7 +28,7 @@
             <div class="add_tags">
                 <CreateTag v-for="contributer in contributers" :key="contributer" :label="contributer" />
 
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_tag_symbol" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg @click="$refs.contrib_popup.open()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_tag_symbol" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <rect x="4" y="4" width="16" height="16" rx="2" />
                     <line x1="9" y1="12" x2="15" y2="12" />
@@ -41,11 +41,6 @@
             <p>Add Tags</p>
             <div class="add_tags">
                 <CreateTag v-for="tag in tags" :key="tag" :label="tag" />
-                <!--
-                <CreateTag label="Javascript" />
-                <CreateTag label="Vuejs" />
-                <CreateTag label="HTML/CSS" />
-                -->
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_tag_symbol" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -62,10 +57,19 @@
                 <LinkBlock link="www.google.com" />
                 <LinkBlock link="https://www.figma.com/file/3PE210hyAyBOdf4c8Yk037/devsBunker?node-id=321%3A0" />
                 <LinkBlock link="https://www.github.com" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_symbol" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <line x1="9" y1="12" x2="15" y2="12" />
+                    <line x1="12" y1="9" x2="12" y2="15" />
+                </svg>
             </div>
         </div>
 
         <button class="create_post_button">Post</button>
+
+        <!-- Sub-Popups -->
+        <NewTagPopUp ref="contrib_popup" label="Add Contributers"/>
     </div>  
 </template>
 
@@ -73,6 +77,7 @@
 import GeneralInput from "../global/GeneralInput.vue";
 import CreateTag from "./CreateTag.vue";
 import LinkBlock from "./LinkBlock.vue";
+import NewTagPopUp from "./NewTagPopUp.vue";
 
 export default {
     data() {
@@ -102,7 +107,8 @@ export default {
     components: {
         GeneralInput,
         CreateTag,
-        LinkBlock
+        LinkBlock,
+        NewTagPopUp
     }
 }
 </script>
@@ -166,6 +172,10 @@ export default {
     }
     .add_tag_symbol {
         margin: 5px;
+        cursor: pointer;
+    }
+    .add_symbol:hover {
+        stroke-width: 0.7px;
         cursor: pointer;
     }
     .add_tag_symbol:hover {

@@ -25,7 +25,7 @@ export default {
         cursor: pointer;
     }
     .create_tag_container:hover > .tag_person {
-        border: 1px solid var(--main-font-color);
+        border: 1px solid var(--soft-text);
     }
     .tag_person {
         display: flex;

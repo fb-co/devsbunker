@@ -86,6 +86,7 @@ export default {
         flex-direction: row;
         justify-content: center;
         width: 100%;
+        height: 2px;
     }
     .form_line_container > div {
         width: 98%;
