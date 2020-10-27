@@ -15,6 +15,8 @@
 -   [x] delete all REST endpoints
     -   [x] except refresh_token and auth
 -   [x] use AuthErrors in Signup (GraphQL)
+-   [ ] rate limit making posts
+-   [ ] move the auth middleware to GraphQL
 
 ## Frontend
 
