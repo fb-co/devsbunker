@@ -28,12 +28,14 @@
             <div class="add_tags">
                 <CreateTag v-for="contributer in contributers" :key="contributer" :label="contributer" />
 
-                <svg @click="$refs.contrib_popup.open()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_tag_symbol" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <rect x="4" y="4" width="16" height="16" rx="2" />
-                    <line x1="9" y1="12" x2="15" y2="12" />
-                    <line x1="12" y1="9" x2="12" y2="15" />
-                </svg>
+                <div class="add_icon_container">
+                    <svg @click="$refs.contrib_popup.open()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit add_symbol" width="44" height="44" viewBox="0 0 24 24" stroke-width="0.7" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                        <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                        <line x1="16" y1="5" x2="19" y2="8" />
+                    </svg>
+                </div>
             </div>
         </div>
 
@@ -42,34 +44,42 @@
             <div class="add_tags">
                 <CreateTag v-for="tag in tags" :key="tag" :label="tag" />
 
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_tag_symbol" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <rect x="4" y="4" width="16" height="16" rx="2" />
-                    <line x1="9" y1="12" x2="15" y2="12" />
-                    <line x1="12" y1="9" x2="12" y2="15" />
-                </svg>
+                <div class="add_icon_container">
+                    <svg @click="$refs.tags_popup.open()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit add_symbol" width="44" height="44" viewBox="0 0 24 24" stroke-width="0.7" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                        <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                        <line x1="16" y1="5" x2="19" y2="8" />
+                    </svg>
+                </div>
             </div>
         </div>
 
         <div class="tag_container">
             <p style="margin-bottom: 25px;">Add Links</p>
             <div class="link">
-                <LinkBlock link="www.google.com" />
+                <LinkBlock v-for="link in links" :key="link" :link="link" />
+                <!--
                 <LinkBlock link="https://www.figma.com/file/3PE210hyAyBOdf4c8Yk037/devsBunker?node-id=321%3A0" />
                 <LinkBlock link="https://www.github.com" />
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus add_symbol" width="70" height="70" viewBox="0 0 24 24" stroke-width="0.4" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <rect x="4" y="4" width="16" height="16" rx="2" />
-                    <line x1="9" y1="12" x2="15" y2="12" />
-                    <line x1="12" y1="9" x2="12" y2="15" />
-                </svg>
+                -->
+                <div class="add_icon_container">
+                    <svg @click="$refs.links_popup.open()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit add_symbol" width="44" height="44" viewBox="0 0 24 24" stroke-width="0.7" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                        <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                        <line x1="16" y1="5" x2="19" y2="8" />
+                    </svg>
+                </div>
             </div>
         </div>
 
         <button class="create_post_button">Post</button>
 
         <!-- Sub-Popups -->
-        <NewTagPopUp ref="contrib_popup" label="Add Contributers"/>
+        <NewTagPopup ref="contrib_popup" label="Add Contributers" name="add_contributers" :entries="contributers"/>
+        <NewTagPopup ref="tags_popup" label="Add Tags" name="add_tags" :entries="tags"/>
+        <NewTagPopup ref="links_popup" label="Add Links" name="add_links" :entries="links"/>
     </div>  
 </template>
 
@@ -77,38 +87,42 @@
 import GeneralInput from "../global/GeneralInput.vue";
 import CreateTag from "./CreateTag.vue";
 import LinkBlock from "./LinkBlock.vue";
-import NewTagPopUp from "./NewTagPopUp.vue";
+import NewTagPopup from "./NewTagPopup.vue";
 
 export default {
     data() {
         return {
             images: [], // eventully we will have links to images here
             contributers: [
-                "Jacopo",
-                "Leonardo",
-                "Some Scrub",
-                "Bob"
+                
             ],
             tags: [
-                "Javascript",
-                "Vuejs",
-                "HTML/CSS"
+                
             ],
             links: [
-
+                
             ]
         }
     },
     methods: {
         close() {
             this.$parent.close();
+        },
+        set_contributers(contributers) {
+            this.contributers = contributers;
+        },
+        set_tags(tags) {
+            this.tags = tags;
+        },
+        set_links(links) {
+            this.links = links;
         }
     },
     components: {
         GeneralInput,
         CreateTag,
         LinkBlock,
-        NewTagPopUp
+        NewTagPopup
     }
 }
 </script>
@@ -170,16 +184,14 @@ export default {
         flex-wrap: wrap;
         width: 100%;
     }
-    .add_tag_symbol {
-        margin: 5px;
-        cursor: pointer;
+    .add_icon_container {
+        display: flex;
+        justify-content: left;
+        width: 100%;
     }
     .add_symbol:hover {
-        stroke-width: 0.7px;
+        stroke-width: 1.1px;
         cursor: pointer;
-    }
-    .add_tag_symbol:hover {
-        stroke-width: 0.7px;
     }
 
     .link {
