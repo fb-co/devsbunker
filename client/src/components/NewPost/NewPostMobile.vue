@@ -138,6 +138,8 @@ export default {
         box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
         padding-right: 10px;
         padding-left: 10px;
+        background-color: var(--main-color);
+        margin-top: 20px;
     }
     .header {
         display: flex;
@@ -219,5 +221,24 @@ export default {
     .add_image:hover {
         stroke-width: 2px;
         cursor: pointer;
+    }
+
+    /* mobile styles */
+    @media only screen and (max-width: 950px) {
+        .new_post_container {
+            max-width: 450px;
+        }
+    }
+    /* desktop styles */
+    @media only screen and (min-width: 950px) {
+        .new_post_container {
+            max-width: 600px;
+        }
+        .field {
+            max-width: 550px;
+        }
+        .tag_container {
+            max-width: 550px;
+        }
     }
 </style>

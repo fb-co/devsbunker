@@ -20,14 +20,15 @@
                 </svg>
                 <p>Saved Projects</p>
             </router-link>
-            <router-link to='/new' class="new_button">
+            
+            <button @click="makeNewPost()" class="new_button">
                 <p>New</p>
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="25" height="25" viewBox="0 0 24 24" stroke-width="0.7" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <line x1="12" y1="5" x2="12" y2="19" />
                     <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
-            </router-link>
+            </button>
             <p v-if="$store.getters.isLoggedIn" @click="logout()" class="logout_button">Logout</p>
         </div>
         <div class="center_content">
@@ -201,6 +202,9 @@ export default {
                 console.log("logged out: ", response);
             });
         },
+        makeNewPost() {
+            this.$parent.openPostMenu();
+        }
     },
     components: {
         DesktopProjectCard,
@@ -290,6 +294,8 @@ export default {
     justify-content: center;
     padding-left: 10px;
     color: var(--main-font-color);
+    height: 100%;
+    font-size: 15px;
 }
 .new_button > SVG {
     margin: 0 auto;

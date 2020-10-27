@@ -1,7 +1,8 @@
+<!-- Leaving this component in case we ever want to change to a different post view for desktop versions -->
 <template>
     <div v-if="isOpen" class="main_new_post_container">
-        <NewPostMobile v-if="mobile" />
-        <NewPostDesktop v-else />
+        <NewPostMobile />
+        <!--<NewPostDesktop v-else />-->
     </div>
 </template>
 
@@ -10,7 +11,6 @@ import SharedMethods from "@/utils/shared";
 import ScreenType from "@/utils/screenType.js";
 
 import NewPostMobile from "@/components/NewPost/NewPostMobile.vue";
-import NewPostDesktop from "@/components/NewPost/NewPostDesktop.vue";
 
 export default {
     data() {
@@ -21,7 +21,6 @@ export default {
     },
     components: {
         NewPostMobile,
-        NewPostDesktop
     },
     created() {
         SharedMethods.loadPage();
@@ -55,7 +54,7 @@ export default {
 <style scoped>
     .main_new_post_container {
         position: absolute;
-        top: calc(var(--header-height) + 10px);
+        top: calc(var(--header-height));
         width: 100%;
         z-index: 3;
         background-color: var(--main-color);
