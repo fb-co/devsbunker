@@ -4,7 +4,7 @@
         <div class="profile_card">
             <div class='card_container'>
                 <p class='card_name'>{{ $store.getters.username }}</p>
-                <p class='card_desc'>Founder of devsBunker® and co-founder of Folgoni Borsa Company .inc</p>
+                <p class='card_desc'>{{ userObject.desc }}</p>
                 <form>
                     <!-- Not sure if this is nessacary, but I assume you need a form to get data to the server -->
                     <input type="submit" value="Edit" @click.prevent="$router.push('/settings/account')">
@@ -56,7 +56,11 @@ export default {
     data() {
         return {
             activeSection: "projects",
+            userObject: this.mainUserObject
         };
+    },
+    props: {
+        mainUserObject: Object
     },
     components: {
         ...ProfileSections,

@@ -56,14 +56,9 @@ import GraphQLService from "@/services/graphql.service";
 export default {
     data() {
         return {
-            userObject: undefined,
+            userObject: this.$parent.userObject,
             isEditingDesc: false,
         };
-    },
-    created() {
-        GraphQLService.fetchUserDetails(this.$store.getters.username, ["desc", "email"]).then((user) => {
-            this.userObject = user.data.user;
-        });
     },
     methods: {
         editDesc() {

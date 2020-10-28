@@ -115,7 +115,11 @@ export default {
     data() {
         return {
             active: "projects",
-        };
+            userObject: this.mainUserObject
+        }
+    },
+    props: {
+        mainUserObject: Object
     },
     created() {
         if (this.$route.name === "User") {
