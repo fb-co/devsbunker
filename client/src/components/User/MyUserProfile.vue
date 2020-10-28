@@ -3,8 +3,9 @@
         <NavBar />
 
         <!-- We pass in the user object so we dont have to re-query it from the server on every child component -->
-        <ProfileMobile v-if="mobile" :mainUserObject="userObject" />
-        <ProfileDesktop v-else :mainUserObject="userObject" />
+        <!-- You also need to wait to wait to render the components until you get a response from the server or else they wont lazy load! -->
+        <ProfileMobile v-if="mobile && userObject" :mainUserObject="userObject" />
+        <ProfileDesktop v-if="!mobile && userObject" :mainUserObject="userObject" />
     </div>
 </template>
 
@@ -29,7 +30,7 @@ export default {
         this.mobile = this.isMobile();
         
         // get the user object, will be given to all children to avoid excessive calls to the server
-        GraphQLService.fetchUserDetails(this.$store.getters.username, ["desc", "email"]).then((user) => {
+        GraphQLService.fetchUserDetails(this.$store.getters.username, ["desc", "email", "profile_pic"]).then((user) => {
             this.userObject = user.data.user;
         });
 

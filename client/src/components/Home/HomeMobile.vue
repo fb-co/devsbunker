@@ -15,7 +15,7 @@
                 <div class="horizontal_flex_center">
                     <img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic">
                     <div class="header_right_cont">
-                        <p class="username_welcome">Hello The_Jak!</p>
+                        <p class="username_welcome">{{ "Hello " + $store.getters.username + "!" }}</p>
 
                         <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
                             <button>Newest</button>

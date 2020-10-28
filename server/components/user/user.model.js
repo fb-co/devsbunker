@@ -28,6 +28,11 @@ const userSchema = new mongoose.Schema(
             default: "No Description"
         }, 
 
+        profile_pic: {
+            type: String,
+            default: "profile_pic_placeholder.png"
+        },
+
         password: requiredString,
 
         tag: {

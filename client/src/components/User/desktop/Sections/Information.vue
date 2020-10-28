@@ -3,7 +3,8 @@
         <p class="label">General</p>
 
         <div class="profile_pic_container">
-            <img src="@/assets/profilePlaceholder.png" alt="profile_pic" style="width: 250px;" />
+            <!--<img src="@/assets/profilePlaceholder.png" alt="profile_pic" style="width: 250px;" />-->
+            <img :src="require('@/assets/profile_pictures/' + this.userObject.profile_pic)" alt="profile_pic" style="width: 250px;" />
         </div>
 
         <div class="desc_container">

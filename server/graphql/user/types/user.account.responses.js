@@ -12,6 +12,7 @@ export default gql`
         email: String!
         desc: String!
         tag: String!
+        profile_pic: String!
     }
 
     type LogoutResponse {
