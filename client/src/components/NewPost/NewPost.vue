@@ -16,8 +16,8 @@ export default {
     data() {
         return {
             mobile: false,
-            isOpen: false
-        }
+            isOpen: false,
+        };
     },
     components: {
         NewPostMobile,
@@ -46,17 +46,17 @@ export default {
         },
         open() {
             this.isOpen = true;
-        }
+        },
     },
-}
+};
 </script>
 
 <style scoped>
-    .main_new_post_container {
-        position: absolute;
-        top: calc(var(--header-height));
-        width: 100%;
-        z-index: 3;
-        background-color: var(--main-color);
-    }
+.main_new_post_container {
+    position: absolute;
+    top: calc(var(--header-height));
+    width: 100%;
+    z-index: 3;
+    background-color: var(--main-color);
+}
 </style>
