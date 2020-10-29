@@ -11,7 +11,10 @@
                 <p>{{ label }}</p>
                 <div></div> <!--placeholder-->
             </div>
-            <input ref="tag_search" class="searcher" placeholder="Search for contributers...">
+            <!---->
+            <DynamicInput>
+                <input ref="tag_search" class="searcher" placeholder="Search for contributers...">
+            </DynamicInput>
             <button @click="add_entry()">Add (test btn)</button>
 
             <div v-for="entry in selected_entries" :key="entry" class="contributer">
@@ -28,6 +31,8 @@
 </template>
 
 <script>
+import DynamicInput from "@/components/DynamicInput.vue";
+
 export default {
     data() {
         return {
@@ -69,6 +74,9 @@ export default {
             this.selected_entries.push(this.$refs.tag_search.value);
             this.$refs.tag_search.value = "";
         },
+    },
+    components: {
+        DynamicInput
     }
 }
 </script>
