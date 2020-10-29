@@ -1,5 +1,5 @@
 import UserService from "@/services/user.service";
-import SharedMethods from "@/utils/shared";
+// import SharedMethods from "@/utils/shared";
 
 const state = {
     isLoggedIn: false,
@@ -29,14 +29,10 @@ const getters = {
 
 const actions = {
     setLoggedInState({ commit }) {
-        SharedMethods.checkIfLoggedIn().then((result) => {
-            console.log("Logged In: " + result);
-            commit("changeLoggedInState", result);
-        });
-    },
-    setUsername({ commit }) {
         UserService.isLoggedIn().then((result) => {
-            if (result.user) commit("changeUsername", result.user.username);
+            console.log("Logged In: " + !!result.user);
+            commit("changeLoggedInState", !!result.user);
+            commit("changeUsername", result.user?.username);
         });
     },
 
