@@ -36,6 +36,11 @@
 -   [x] change url dynamically based on selected setting option
 -   [x] The theme changin icon (sun and moon) should be inverted to denote which theme the user is currently using
 -   [ ] Make the first field in the login and signup pages be auto focused on when thep age is loaded
+-   [ ] add the eye button thing to signup card
+
+### Things to optimize
+
+-   [ ] we dispatch the store mutation to check if the user is logged in twice upon refresh (still need to figure out where we do it), we should reduce it to one.
 
 ## Glitches
 
