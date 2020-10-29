@@ -83,6 +83,7 @@ import GraphQLService from "../services/graphql.service";
 export default {
     props: {
         min_width: String,
+        userObject: Object
     },
     computed: {
         style() {
