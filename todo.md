@@ -17,6 +17,7 @@
 -   [x] use AuthErrors in Signup (GraphQL)
 -   [ ] rate limit making posts
 -   [ ] move the auth middleware to GraphQL
+-   [ ] better post validation: errors are not thrown [see](https://mongoosejs.com/docs/api.html#schematype_SchemaType-validate)
 
 ## Frontend
 
