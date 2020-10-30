@@ -47,6 +47,43 @@ const GraphQLService = {
         }
     },
 
+    createNewPost: async function(token, data) {
+        const mutation = `
+            mutation Update($data: makePostInput!) {
+                makePost(token: "${token}", data: $data) {
+                    id
+                    title
+                    author
+                    description
+                    thumbnail
+                    links
+                    collaborators
+                    tags
+                    bunkerTag
+                    clip
+                }
+            }
+        `;
+        const variables = {
+            data: data
+        };
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    query: mutation,
+                    variables: variables
+                })
+            });
+            return res.json();
+        }catch (err) {
+            return console.log(err);
+        }
+    },
+
     // updates the users db document
     updateUserDetails: async function(token, fields) {
         // solution: we are using a variable (used to pass complex objects as params) of type UpdateUserPayload (same as backend)

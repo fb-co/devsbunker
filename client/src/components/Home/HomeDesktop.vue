@@ -126,7 +126,7 @@
                         class="project_card"
                     />
                 </div>
-                <div class="projects_footer">
+                <div @click="makeNewPost()" class="projects_footer">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-square-plus add_button"
@@ -208,42 +208,6 @@ export default {
                 },
             ],
             notifications: [
-                {
-                    label: "Bill Gates",
-                    subtext: "Liked your post!",
-                },
-                {
-                    label: "Elon Musk",
-                    subtext: "Liked your post!",
-                },
-                {
-                    label: "Jeff Bezos",
-                    subtext: "Commented on your post",
-                },
-                {
-                    label: "Bill Gates",
-                    subtext: "Liked your post!",
-                },
-                {
-                    label: "Elon Musk",
-                    subtext: "Liked your post!",
-                },
-                {
-                    label: "Jeff Bezos",
-                    subtext: "Commented on your post",
-                },
-                {
-                    label: "Bill Gates",
-                    subtext: "Liked your post!",
-                },
-                {
-                    label: "Elon Musk",
-                    subtext: "Liked your post!",
-                },
-                {
-                    label: "Jeff Bezos",
-                    subtext: "Commented on your post",
-                },
                 {
                     label: "Bill Gates",
                     subtext: "Liked your post!",

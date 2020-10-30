@@ -33,8 +33,9 @@ export default {
         },
     },
     methods: {
+        // this ternary operator is important because if the input is a textarea (div with contenteditable), it does not have the .value attribute
         getValue() {
-            return this.$refs.general_input.value();
+            return this.isTextArea ? this.$refs.general_input.innerText : this.$refs.general_input.value;
         },
         clearValue() {
             this.$refs.general_input.value = "";

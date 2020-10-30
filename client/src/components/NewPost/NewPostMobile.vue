@@ -20,11 +20,12 @@
             </svg>
             <p>New Post</p>
         </div>
-        <GeneralInput class="field" label="Post Title" />
+        <GeneralInput ref="postTitle" class="field" label="Post Title" />
 
         <GeneralInput
             class="field"
             label="Post Description"
+            ref="postDesc"
             :isTextArea="true"
         />
 
@@ -155,7 +156,7 @@
             </div>
         </div>
 
-        <button class="create_post_button">Post</button>
+        <button @click="createPost()" class="create_post_button">Post</button>
 
         <!-- Sub-Popups -->
         <NewTagPopup
@@ -184,6 +185,7 @@ import GeneralInput from "../global/GeneralInput.vue";
 import CreateTag from "./CreateTag.vue";
 import LinkBlock from "./LinkBlock.vue";
 import NewTagPopup from "./NewTagPopup";
+import GraphQLService from "@/services/graphql.service";
 
 export default {
     data() {
@@ -207,6 +209,23 @@ export default {
         set_links(links) {
             this.links = links;
         },
+        createPost() {
+            const post = {
+                title: this.$refs.postTitle.getValue(),
+                description: this.$refs.postDesc.getValue(),
+                thumbnail: "@/assets/project_img_placeholder.png", // eventully this should be a real image link
+                images: this.images,
+                links: this.links,
+                collaborators: this.collaborators,
+                tags: this.tags,
+                bunkerTag: "DevsBunkerTag",
+                clip: "Du fuq is a clip?"
+            }
+            
+            GraphQLService.createNewPost(this.$store.getters.accessToken, post).then((returnPost) => {
+                console.log(returnPost);
+            });
+        }
     },
     components: {
         GeneralInput,

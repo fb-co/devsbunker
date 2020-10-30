@@ -14,7 +14,7 @@ export default {
 
     Mutation: {
         makePost: async function (_, args, { res }) {
-            const { payload } = args;
+            const payload = args.data;
             const jwtPayload = TokenHandler.verifyAccessToken(args.token);
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
@@ -24,11 +24,15 @@ export default {
                 author: jwtPayload.username,
                 description: payload.description,
                 thumbnail: payload.thumbnail,
-                githubLink: payload.githubLink,
-                otherLink: payload.otherLink,
+                images: payload.images,
+                links: payload.links,
+                collaborators: payload.collaborators,
+                tags: payload.tags,
                 bunkerTag: payload.bunkerTag,
                 clip: payload.clip,
             });
+
+            console.log(post);
 
             try {
                 await post.save();
@@ -39,8 +43,10 @@ export default {
                     author: post.author,
                     description: post.description,
                     thumbnail: post.thumbnail,
-                    githubLink: post.githubLink,
-                    otherLink: post.otherLink,
+                    images: payload.images,
+                    links: post.links,
+                    collaborators: payload.collaborators,
+                    tags: payload.tags,
                     bunkerTag: post.bunkerTag,
                     clip: post.clip,
                 };

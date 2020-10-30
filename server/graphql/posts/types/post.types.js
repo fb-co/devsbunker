@@ -8,8 +8,9 @@ export default gql`
         author: String!
         description: String!
         thumbnail: String
-        githubLink: String
-        otherLink: String
+        links: [String]
+        collaborators: [String]
+        tags: [String]
         bunkerTag: String!
         clip: String
     }
@@ -19,8 +20,10 @@ export default gql`
         title: String!
         description: String!
         thumbnail: String
-        githubLink: String
-        otherLink: String
+        images: [String]
+        links: [String]
+        collaborators: [String]
+        tags: [String]
         bunkerTag: String!
         clip: String
     }
@@ -32,6 +35,6 @@ export default gql`
     }
 
     type Mutation {
-        makePost(token: String!, payload: makePostInput): FetchablePost! # returning that post
+        makePost(token: String!, data: makePostInput): FetchablePost! # returning that post
     }
 `;

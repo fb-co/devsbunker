@@ -8,8 +8,8 @@ const requiredString = {
 
 const postSchema = new mongoose.Schema(
     {
-        author: requiredString,
         title: requiredString,
+        author: requiredString,
         description: {
             type: String,
         },
@@ -17,11 +17,17 @@ const postSchema = new mongoose.Schema(
             // [!] check notes [!]
             type: String,
         },
-        githubLink: {
-            type: String,
+        images: {
+            type: Array,
         },
-        otherLink: {
-            type: String,
+        links: {
+            type: Array,
+        },
+        collaborators: {
+            type: Array,
+        },
+        tags: {
+            type: Array,
         },
         bunkerTag: requiredString,
         clip: {
@@ -34,6 +40,7 @@ const postSchema = new mongoose.Schema(
 );
 
 // validating fields
+/* Im getting rid of these for now because they were causing errors and not letting the post documents get created
 postSchema.path("githubLink").validate((url) => {
     const regex = /http(s)?:\/\/github.com/;
     return regex.test(url);
@@ -47,6 +54,8 @@ postSchema.path("otherLink").validate((url) => {
 postSchema.path("bunkerTag").validate((bunker) => {
     return Languages.includes(bunker);
 }, "Invalid Bunker tag.");
+
+*/
 
 export default mongoose.model("Post", postSchema);
 
