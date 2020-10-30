@@ -222,6 +222,8 @@ export default {
                 clip: "Du fuq is a clip?",
             };
 
+            // WE NEED VALIDATION HERE
+
             GraphQLService.createNewPost(
                 this.$store.getters.accessToken,
                 post
