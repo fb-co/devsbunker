@@ -183,7 +183,7 @@
 import GeneralInput from "../global/GeneralInput.vue";
 import CreateTag from "./CreateTag.vue";
 import LinkBlock from "./LinkBlock.vue";
-import NewTagPopup from "./NewTagPopUp";
+import NewTagPopup from "./NewTagPopup";
 
 export default {
     data() {
