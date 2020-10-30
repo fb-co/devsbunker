@@ -223,7 +223,9 @@ export default {
             }
             
             GraphQLService.createNewPost(this.$store.getters.accessToken, post).then((returnPost) => {
+                console.log("Added Post: ");
                 console.log(returnPost);
+                this.close();
             });
         }
     },
