@@ -186,6 +186,7 @@ import CreateTag from "./CreateTag";
 import LinkBlock from "./LinkBlock";
 import NewTagPopup from "./NewTagPopUp";
 import GraphQLService from "@/services/graphql.service";
+import Languages from "../../templates/Languages";
 
 export default {
     data() {
@@ -209,6 +210,27 @@ export default {
         set_links(links) {
             this.links = links;
         },
+        validatePostPayload(payload) {
+            let valid = true;
+            // I HAD TO REMOVE SOME \+ CUZ VUE WAS COMPLAINING ABOUT THOSE...
+            const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_.~#?&//=]*)/;
+
+            while (valid) {
+                if (payload.title && payload.description && payload.bunkerTag) {
+                    for (const link of payload.links) {
+                        valid = regex.test(link);
+                    }
+
+                    for (const tag of payload.tags) {
+                        valid = Languages.includes(tag);
+                    }
+                }
+
+                break;
+            }
+
+            return valid;
+        },
         createPost() {
             const post = {
                 title: this.$refs.postTitle.getValue(),
@@ -222,18 +244,19 @@ export default {
                 clip: "Du fuq is a clip?",
             };
 
-            // WE NEED VALIDATION HERE
-
-            GraphQLService.createNewPost(
-                this.$store.getters.accessToken,
-                post
-            ).then((returnPost) => {
-                console.log("Added Post: ");
-                console.log(returnPost);
-                this.close();
-            });
-
-            // AND HERE TO SHOW ERROR MESSAGES
+            if (this.validatePostPayload(post)) {
+                GraphQLService.createNewPost(
+                    this.$store.getters.accessToken,
+                    post
+                ).then((returnPost) => {
+                    console.log("Added Post: ");
+                    console.log(returnPost);
+                    this.close();
+                });
+            } else {
+                // SHOW BETTER ERROR MESSAGES
+                console.log("Post is invalid");
+            }
         },
     },
     components: {
