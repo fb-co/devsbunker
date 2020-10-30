@@ -40,22 +40,25 @@ const postSchema = new mongoose.Schema(
 );
 
 // validating fields
-/* Im getting rid of these for now because they were causing errors and not letting the post documents get created
-postSchema.path("githubLink").validate((url) => {
-    const regex = /http(s)?:\/\/github.com/;
-    return regex.test(url);
-}, "Invalid GitHub URL.");
-
-postSchema.path("otherLink").validate((url) => {
+// NOTE: these stops the post from being saved but they don't throw the expected error...
+postSchema.path("links").validate((urls) => {
     const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
-    return regex.test(url);
+    let valid = true;
+
+    urls.forEach((link) => {
+        valid = regex.test(link);
+    });
+
+    return valid;
 }, "Invalid URL.");
 
-postSchema.path("bunkerTag").validate((bunker) => {
-    return Languages.includes(bunker);
+postSchema.path("tags").validate((tags) => {
+    let valid = true;
+    tags.forEach((tag) => {
+        valid = Languages.includes(tag);
+    });
+    return valid;
 }, "Invalid Bunker tag.");
-
-*/
 
 export default mongoose.model("Post", postSchema);
 
