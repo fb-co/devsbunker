@@ -232,6 +232,8 @@ export default {
                 console.log(returnPost);
                 this.close();
             });
+
+            // AND HERE TO SHOW ERROR MESSAGES
         },
     },
     components: {
