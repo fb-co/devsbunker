@@ -181,10 +181,10 @@
 </template>
 
 <script>
-import GeneralInput from "../global/GeneralInput.vue";
-import CreateTag from "./CreateTag.vue";
-import LinkBlock from "./LinkBlock.vue";
-import NewTagPopup from "./NewTagPopup";
+import GeneralInput from "../global/GeneralInput";
+import CreateTag from "./CreateTag";
+import LinkBlock from "./LinkBlock";
+import NewTagPopup from "./NewTagPopUp";
 import GraphQLService from "@/services/graphql.service";
 
 export default {
@@ -219,15 +219,18 @@ export default {
                 collaborators: this.collaborators,
                 tags: this.tags,
                 bunkerTag: "DevsBunkerTag",
-                clip: "Du fuq is a clip?"
-            }
-            
-            GraphQLService.createNewPost(this.$store.getters.accessToken, post).then((returnPost) => {
+                clip: "Du fuq is a clip?",
+            };
+
+            GraphQLService.createNewPost(
+                this.$store.getters.accessToken,
+                post
+            ).then((returnPost) => {
                 console.log("Added Post: ");
                 console.log(returnPost);
                 this.close();
             });
-        }
+        },
     },
     components: {
         GeneralInput,
