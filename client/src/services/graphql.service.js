@@ -47,6 +47,30 @@ const GraphQLService = {
         }
     },
 
+    fetchPosts: function(sortMethod) {
+        const query = `
+            query {
+                getPosts(sortingType: "${sortMethod}") {
+                    title
+                    author
+                }
+            }
+        `; 
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query })
+            })
+                .then((res) => res.json())
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        } 
+    },
+
     createNewPost: async function(token, data) {
         const mutation = `
             mutation Update($data: makePostInput!) {

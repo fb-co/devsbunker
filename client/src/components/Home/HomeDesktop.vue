@@ -117,7 +117,7 @@
                         <button>Alphabetical</button>
                     </Dropdown>
                 </div>
-                <div class="projects_area">
+                <div v-if="projects" class="projects_area">
                     <DesktopProjectCard
                         v-for="project in projects"
                         :key="project.name"
@@ -170,6 +170,8 @@ export default {
         return {
             username: "",
             userRoute: "",
+            projects: [],
+            /*
             projects: [
                 {
                     name: "The Hungry Wolf",
@@ -207,6 +209,7 @@ export default {
                     likes: 1093,
                 },
             ],
+            */
             notifications: [
                 {
                     label: "Bill Gates",
@@ -224,8 +227,6 @@ export default {
         };
     },
     created() {
-        //GraphQLService.fetchUserDetails("jakapoo", ["username", "email"]).then((data) => { this.username = data.data.user.email });
-
         // refresh the store
         this.$store.dispatch("setLoggedInState");
     },
@@ -238,6 +239,9 @@ export default {
         makeNewPost() {
             this.$parent.openPostMenu();
         },
+        loadPosts(posts) {
+            this.projects = posts;
+        }
     },
     components: {
         DesktopProjectCard,

@@ -12,6 +12,7 @@ import NavBar from "@/components/NavBar";
 import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
 import ScreenType from "../utils/screenType.js";
+import GraphQLService from "@/services/graphql.service";
 
 import HomeMobile from "@/components/Home/HomeMobile.vue";
 import HomeDesktop from "@/components/Home/HomeDesktop.vue";
@@ -20,12 +21,19 @@ import NewPost from "@/components/NewPost/NewPost.vue";
 export default {
     data() {
         return {
-            mobile: false
+            mobile: false,
         }
     },
     async created() {
         SharedMethods.loadPage();
         this.mobile = this.isMobile();
+
+        // Get the posts
+        GraphQLService.fetchPosts("newest").then((res) => { 
+            // pass in the new post data to the home page main components
+            console.log(res);
+         });
+
 
         // we also check when the user resizes the window
         window.addEventListener("resize", () => {

@@ -1,4 +1,5 @@
 import getUserPost from "../utils/getUserPost.js";
+import getPostList from "../utils/getPostList.js";
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
@@ -10,6 +11,9 @@ export default {
         userPost: function (_, args, { res }) {
             return getUserPost(args.postTitle, args.postAuthor);
         },
+        getPosts: function(_, args, { res }) {
+            return getPostList(args.sortingType);
+        }
     },
 
     Mutation: {
