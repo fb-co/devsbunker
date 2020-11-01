@@ -170,7 +170,7 @@ export default {
         return {
             username: "",
             userRoute: "",
-            projects: [],
+            projects: this.posts,
             /*
             projects: [
                 {
@@ -229,6 +229,9 @@ export default {
     created() {
         // refresh the store
         this.$store.dispatch("setLoggedInState");
+    },
+    props: {
+        posts: Array
     },
     methods: {
         logout() {

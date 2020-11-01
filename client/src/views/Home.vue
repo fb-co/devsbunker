@@ -1,8 +1,8 @@
 <template>
     <div class="home">
         <NavBar />
-        <HomeMobile v-if="mobile" />
-        <HomeDesktop v-if="!mobile" />
+        <HomeMobile :posts="posts" v-if="mobile" />
+        <HomeDesktop :posts="posts" v-if="!mobile" />
         <NewPost ref="newPostMenu" />
     </div>
 </template>
@@ -22,6 +22,7 @@ export default {
     data() {
         return {
             mobile: false,
+            posts: undefined
         }
     },
     async created() {
@@ -31,7 +32,7 @@ export default {
         // Get the posts
         GraphQLService.fetchPosts("newest").then((res) => { 
             // pass in the new post data to the home page main components
-            console.log(res);
+            this.posts = res.data.getPosts;
          });
 
 
