@@ -29,6 +29,12 @@ const postSchema = new mongoose.Schema(
         tags: {
             type: Array,
         },
+        likes: {
+            type: Array,
+        },
+        price: {
+            type: mongoose.Decimal128,
+        },
         bunkerTag: requiredString,
         clip: {
             type: String, // [!] check notes [!]

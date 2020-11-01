@@ -2,8 +2,8 @@
     <div class="proj_card_main_container">
         <div class="text_container">
             <p class="author">{{ projectData.author }}</p>
-            <p class="title">{{ projectData.name }}</p>
-            <p class="desc">{{ projectData.desc }}</p>
+            <p class="title">{{ projectData.title }}</p>
+            <p class="desc">{{ projectData.description }}</p>
 
             <div style="flex-grow:1;"></div> <!--placeholder so info_container sinks to bottom -->
 
@@ -20,7 +20,7 @@
                     </svg>
                 </div>
                 <div class="vertical_flex_center">
-                    <p class="language">{{ projectData.category }}</p>
+                    <p class="language">{{ projectData.bunkerTag }}</p>
                 </div>
                 <div class="spacer">-</div>
 
@@ -41,7 +41,7 @@ export default {
             likeIsActive: false
         }
     },
-    created() {
+    created(){ 
         console.log(this.projectData);
     },
     props: {

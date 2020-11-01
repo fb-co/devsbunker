@@ -53,6 +53,9 @@ const GraphQLService = {
                 getPosts(sortingType: "${sortMethod}") {
                     title
                     author
+                    description
+                    likes
+                    bunkerTag
                 }
             }
         `; 

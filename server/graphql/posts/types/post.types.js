@@ -11,6 +11,8 @@ export default gql`
         links: [String]
         collaborators: [String]
         tags: [String]
+        likes: [String]!
+        price: Float!
         bunkerTag: String!
         clip: String
     }

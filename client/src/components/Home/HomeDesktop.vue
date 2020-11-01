@@ -170,46 +170,6 @@ export default {
         return {
             username: "",
             userRoute: "",
-            projects: this.posts,
-            /*
-            projects: [
-                {
-                    name: "The Hungry Wolf",
-                    author: "The_Jak",
-                    desc:
-                        "Make sure you have at least a Geforce RTX 2080 Ti graphics card before launching this game.",
-                    category: "Javascript",
-                    price: 0,
-                    likes: 420,
-                },
-                {
-                    name: "Why Windowz is Stoopid",
-                    author: "f0lg0",
-                    desc:
-                        "Make sure you read this entire post in a bizza accent",
-                    category: "",
-                    price: 0,
-                    likes: 69,
-                },
-                {
-                    name: "Website Design Templates",
-                    author: "Phil",
-                    desc:
-                        "For less then a dollar you could have some professional website design templates",
-                    category: "HTML/CSS",
-                    price: 0.99,
-                    likes: 792,
-                },
-                {
-                    name: "Spotify Ad Blocker Python",
-                    author: "John",
-                    desc: "Will block all spotify ads with an ad blocker",
-                    category: "Python",
-                    price: 0,
-                    likes: 1093,
-                },
-            ],
-            */
             notifications: [
                 {
                     label: "Bill Gates",
@@ -231,7 +191,7 @@ export default {
         this.$store.dispatch("setLoggedInState");
     },
     props: {
-        posts: Array
+        projects: Array
     },
     methods: {
         logout() {
@@ -242,9 +202,6 @@ export default {
         makeNewPost() {
             this.$parent.openPostMenu();
         },
-        loadPosts(posts) {
-            this.projects = posts;
-        }
     },
     components: {
         DesktopProjectCard,

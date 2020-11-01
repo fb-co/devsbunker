@@ -32,6 +32,8 @@ export default {
                 links: payload.links,
                 collaborators: payload.collaborators,
                 tags: payload.tags,
+                likes: [],
+                price: 0.0,
                 bunkerTag: payload.bunkerTag,
                 clip: payload.clip,
             });
@@ -51,6 +53,8 @@ export default {
                     links: post.links,
                     collaborators: payload.collaborators,
                     tags: payload.tags,
+                    likes: [],
+                    price: 0.0,
                     bunkerTag: post.bunkerTag,
                     clip: post.clip,
                 };
