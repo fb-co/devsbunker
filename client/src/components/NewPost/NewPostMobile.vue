@@ -1,182 +1,188 @@
 <template>
-    <div class="new_post_container">
-        <div class="header">
-            <svg
-                @click="close()"
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-x"
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="var(--main-font-color)"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-            <p>New Post</p>
-        </div>
-        <GeneralInput ref="postTitle" class="field" label="Post Title" />
+    <div>
+        <div class="new_post_container">
+            <div class="header">
+                <svg
+                    @click="close()"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-x"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="var(--main-font-color)"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+                <p>New Post</p>
+            </div>
+            <GeneralInput ref="postTitle" class="field" label="Post Title" />
 
-        <GeneralInput
-            class="field"
-            label="Post Description"
-            ref="postDesc"
-            :isTextArea="true"
-        />
+            <GeneralInput
+                class="field"
+                label="Post Description"
+                ref="postDesc"
+                :isTextArea="true"
+            />
 
-        <div class="tag_container">
-            <p>Images (0/5)</p>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-camera-plus add_image"
-                width="44"
-                height="44"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="#2c3e50"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <circle cx="12" cy="13" r="3" />
-                <path
-                    d="M5 7h2a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h2m9 7v7a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"
-                />
-                <line x1="15" y1="6" x2="21" y2="6" />
-                <line x1="18" y1="3" x2="18" y2="9" />
-            </svg>
-        </div>
+            <div class="tag_container">
+                <p>Images (0/5)</p>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-camera-plus add_image"
+                    width="44"
+                    height="44"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="#2c3e50"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <circle cx="12" cy="13" r="3" />
+                    <path
+                        d="M5 7h2a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h2m9 7v7a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"
+                    />
+                    <line x1="15" y1="6" x2="21" y2="6" />
+                    <line x1="18" y1="3" x2="18" y2="9" />
+                </svg>
+            </div>
 
-        <div class="tag_container">
-            <p>Add Collaborators</p>
-            <div class="add_tags">
-                <CreateTag
-                    v-for="contributer in contributers"
-                    :key="contributer"
-                    :label="contributer"
-                />
+            <div class="tag_container">
+                <p>Add Collaborators</p>
+                <div class="add_tags">
+                    <CreateTag
+                        v-for="contributer in contributers"
+                        :key="contributer"
+                        :label="contributer"
+                    />
 
-                <div class="add_icon_container">
-                    <svg
-                        @click="$refs.contrib_popup.open()"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon icon-tabler icon-tabler-edit add_symbol"
-                        width="44"
-                        height="44"
-                        viewBox="0 0 24 24"
-                        stroke-width="0.7"
-                        stroke="var(--main-font-color)"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path
-                            d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
-                        />
-                        <path
-                            d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
-                        />
-                        <line x1="16" y1="5" x2="19" y2="8" />
-                    </svg>
+                    <div class="add_icon_container">
+                        <svg
+                            @click="$refs.contrib_popup.open()"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-edit add_symbol"
+                            width="44"
+                            height="44"
+                            viewBox="0 0 24 24"
+                            stroke-width="0.7"
+                            stroke="var(--main-font-color)"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
+                            />
+                            <path
+                                d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
+                            />
+                            <line x1="16" y1="5" x2="19" y2="8" />
+                        </svg>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="tag_container">
-            <p>Add Tags</p>
-            <div class="add_tags">
-                <CreateTag v-for="tag in tags" :key="tag" :label="tag" />
+            <div class="tag_container">
+                <p>Add Tags</p>
+                <div class="add_tags">
+                    <CreateTag v-for="tag in tags" :key="tag" :label="tag" />
 
-                <div class="add_icon_container">
-                    <svg
-                        @click="$refs.tags_popup.open()"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon icon-tabler icon-tabler-edit add_symbol"
-                        width="44"
-                        height="44"
-                        viewBox="0 0 24 24"
-                        stroke-width="0.7"
-                        stroke="var(--main-font-color)"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path
-                            d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
-                        />
-                        <path
-                            d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
-                        />
-                        <line x1="16" y1="5" x2="19" y2="8" />
-                    </svg>
+                    <div class="add_icon_container">
+                        <svg
+                            @click="$refs.tags_popup.open()"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-edit add_symbol"
+                            width="44"
+                            height="44"
+                            viewBox="0 0 24 24"
+                            stroke-width="0.7"
+                            stroke="var(--main-font-color)"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
+                            />
+                            <path
+                                d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
+                            />
+                            <line x1="16" y1="5" x2="19" y2="8" />
+                        </svg>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="tag_container">
-            <p style="margin-bottom: 25px;">Add Links</p>
-            <div class="link">
-                <LinkBlock v-for="link in links" :key="link" :link="link" />
-                <!--
+            <div class="tag_container">
+                <p style="margin-bottom: 25px;">Add Links</p>
+                <div class="link">
+                    <LinkBlock v-for="link in links" :key="link" :link="link" />
+                    <!--
                 <LinkBlock link="https://www.figma.com/file/3PE210hyAyBOdf4c8Yk037/devsBunker?node-id=321%3A0" />
                 <LinkBlock link="https://www.github.com" />
                 -->
-                <div class="add_icon_container">
-                    <svg
-                        @click="$refs.links_popup.open()"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon icon-tabler icon-tabler-edit add_symbol"
-                        width="44"
-                        height="44"
-                        viewBox="0 0 24 24"
-                        stroke-width="0.7"
-                        stroke="var(--main-font-color)"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path
-                            d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
-                        />
-                        <path
-                            d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
-                        />
-                        <line x1="16" y1="5" x2="19" y2="8" />
-                    </svg>
+                    <div class="add_icon_container">
+                        <svg
+                            @click="$refs.links_popup.open()"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-edit add_symbol"
+                            width="44"
+                            height="44"
+                            viewBox="0 0 24 24"
+                            stroke-width="0.7"
+                            stroke="var(--main-font-color)"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
+                            />
+                            <path
+                                d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
+                            />
+                            <line x1="16" y1="5" x2="19" y2="8" />
+                        </svg>
+                    </div>
                 </div>
             </div>
+
+            <button @click="createPost()" class="create_post_button">
+                Post
+            </button>
+
+            <!-- Sub-Popups -->
+            <NewTagPopup
+                ref="contrib_popup"
+                label="Add Contributers"
+                name="add_contributers"
+                :entries="contributers"
+            />
+            <NewTagPopup
+                ref="tags_popup"
+                label="Add Tags"
+                name="add_tags"
+                :entries="tags"
+            />
+            <NewTagPopup
+                ref="links_popup"
+                label="Add Links"
+                name="add_links"
+                :entries="links"
+            />
         </div>
 
-        <button @click="createPost()" class="create_post_button">Post</button>
-
-        <!-- Sub-Popups -->
-        <NewTagPopup
-            ref="contrib_popup"
-            label="Add Contributers"
-            name="add_contributers"
-            :entries="contributers"
-        />
-        <NewTagPopup
-            ref="tags_popup"
-            label="Add Tags"
-            name="add_tags"
-            :entries="tags"
-        />
-        <NewTagPopup
-            ref="links_popup"
-            label="Add Links"
-            name="add_links"
-            :entries="links"
-        />
+        <ErrorPopUp v-if="error" @display-popup="error = $event" />
     </div>
 </template>
 
@@ -187,6 +193,7 @@ import LinkBlock from "./LinkBlock";
 import NewTagPopup from "./NewTagPopUp";
 import GraphQLService from "@/services/graphql.service";
 import Languages from "../../templates/Languages";
+import ErrorPopUp from "../ErrorPopUp";
 
 export default {
     data() {
@@ -195,6 +202,7 @@ export default {
             contributers: [],
             tags: [],
             links: [],
+            error: false,
         };
     },
     methods: {
@@ -255,7 +263,7 @@ export default {
                 });
             } else {
                 // SHOW BETTER ERROR MESSAGES
-                console.log("Post is invalid");
+                this.error = true;
             }
         },
     },
@@ -264,6 +272,7 @@ export default {
         CreateTag,
         LinkBlock,
         NewTagPopup,
+        ErrorPopUp,
     },
 };
 </script>
