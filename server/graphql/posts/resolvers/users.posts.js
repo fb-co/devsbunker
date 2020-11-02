@@ -11,9 +11,9 @@ export default {
         userPost: function (_, args, { res }) {
             return getUserPost(args.postTitle, args.postAuthor);
         },
-        getPosts: function(_, args, { res }) {
+        getPosts: function (_, args, { res }) {
             return getPostList(args.sortingType);
-        }
+        },
     },
 
     Mutation: {
@@ -33,12 +33,10 @@ export default {
                 collaborators: payload.collaborators,
                 tags: payload.tags,
                 likes: [],
-                price: 0.0,
+                price: payload.price,
                 bunkerTag: payload.bunkerTag,
                 clip: payload.clip,
             });
-
-            console.log(post);
 
             try {
                 await post.save();
@@ -54,7 +52,7 @@ export default {
                     collaborators: payload.collaborators,
                     tags: payload.tags,
                     likes: [],
-                    price: 0.0,
+                    price: payload.price,
                     bunkerTag: post.bunkerTag,
                     clip: post.clip,
                 };

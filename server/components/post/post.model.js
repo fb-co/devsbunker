@@ -33,7 +33,7 @@ const postSchema = new mongoose.Schema(
             type: Array,
         },
         price: {
-            type: mongoose.Decimal128,
+            type: Number,
         },
         bunkerTag: requiredString,
         clip: {

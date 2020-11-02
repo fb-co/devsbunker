@@ -12,7 +12,7 @@ export default gql`
         collaborators: [String]
         tags: [String]
         likes: [String]!
-        price: Float!
+        price: Float
         bunkerTag: String!
         clip: String
     }
@@ -28,6 +28,7 @@ export default gql`
         tags: [String]
         bunkerTag: String!
         clip: String
+        price: Float
     }
 
     type Query {
