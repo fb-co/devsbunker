@@ -56,22 +56,23 @@ const GraphQLService = {
                     description
                     likes
                     bunkerTag
+                    price
                 }
             }
-        `; 
+        `;
 
         try {
             return fetch(URL, {
                 method: "POST",
                 headers: { "content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify({ query })
+                body: JSON.stringify({ query }),
             })
                 .then((res) => res.json())
                 .catch(console.error);
         } catch (err) {
             return console.log(err);
-        } 
+        }
     },
 
     createNewPost: async function(token, data) {
@@ -92,7 +93,7 @@ const GraphQLService = {
             }
         `;
         const variables = {
-            data: data
+            data: data,
         };
 
         try {
@@ -102,11 +103,11 @@ const GraphQLService = {
                 credentials: "include",
                 body: JSON.stringify({
                     query: mutation,
-                    variables: variables
-                })
+                    variables: variables,
+                }),
             });
             return res.json();
-        }catch (err) {
+        } catch (err) {
             return console.log(err);
         }
     },

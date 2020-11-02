@@ -191,7 +191,7 @@ export default {
         this.$store.dispatch("setLoggedInState");
     },
     props: {
-        projects: Array
+        projects: Array,
     },
     methods: {
         logout() {
