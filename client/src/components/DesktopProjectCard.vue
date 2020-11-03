@@ -47,12 +47,11 @@
                 <div class="vertical_flex_center">
                     <p class="language">{{ projectData.bunkerTag }}</p>
                 </div>
-                <div class="spacer">-</div>
-
-                <p class="price_text" v-if="projectData.price != 0">
+                
+                <div class="spacer" v-if="projectData.price!=0 && projectData.price!=null">-</div>
+                <p class="price_text" v-if="projectData.price!=0 && projectData.price!=null">
                     ${{ projectData.price }}
                 </p>
-                <p class="price_text" v-else>Free</p>
             </div>
         </div>
         <div class="image_container">
