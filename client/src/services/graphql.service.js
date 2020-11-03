@@ -54,7 +54,7 @@ const GraphQLService = {
                     title
                     author
                     description
-                    likes
+                    likeAmt
                     bunkerTag
                     price
                 }

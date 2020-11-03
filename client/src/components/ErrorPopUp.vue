@@ -1,5 +1,5 @@
 <template>
-    <div id="err" v-if="display">
+    <div ref="error_popup_container" :class="{ error_popup: false}" id="err" v-if="display">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-circle-x"
@@ -42,19 +42,43 @@ export default {
     data() {
         return {
             display: true,
+            life: 5000, // in milliseconds
         };
     },
+    // close the popup after the speficed "life" variable
+    mounted() {
+        // trigger the css animation by setting the width
+        document.getElementById("err").style.right = "20px";
+
+
+        setTimeout(() => { this.$emit('display-popup', false); }, this.life);
+    }
+    
 };
 </script>
 
 <style scoped>
+@keyframes slide {
+    from {
+        right: -400px;
+    }
+    to {
+        right: 20px;
+    }
+}
+
+.error_popup {
+    right: 20px;
+}
+
 #err {
     position: fixed;
     bottom: 20px;
-    right: 20px;
-    width: 350px;
+    right: -400px;
     height: 70px;
-
+    animation: slide 0.2s;
+    width: 90%;
+    max-width: 350px;
     background: var(--main-color);
     box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.25);
 
