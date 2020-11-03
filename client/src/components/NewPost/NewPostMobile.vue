@@ -183,6 +183,7 @@
         </div>
 
         <ErrorPopUp v-if="error" @display-popup="error = $event" />
+        <SuccessPopUp v-if="success" message="Successfully created new post" />
     </div>
 </template>
 
@@ -194,6 +195,7 @@ import NewTagPopup from "./NewTagPopUp";
 import GraphQLService from "@/services/graphql.service";
 import Languages from "../../templates/Languages";
 import ErrorPopUp from "../ErrorPopUp";
+import SuccessPopUp from "../SuccessPopUp";
 
 export default {
     data() {
@@ -203,6 +205,7 @@ export default {
             tags: [],
             links: [],
             error: false,
+            success: false,
         };
     },
     methods: {
@@ -223,20 +226,28 @@ export default {
             // I HAD TO REMOVE SOME \+ CUZ VUE WAS COMPLAINING ABOUT THOSE...
             const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_.~#?&//=]*)/;
 
-            while (valid) {
-                if (payload.title && payload.description && payload.bunkerTag) {
-                    for (const link of payload.links) {
-                        valid = regex.test(link);
-                    }
-
-                    for (const tag of payload.tags) {
-                        valid = Languages.includes(tag);
-                    }
+            // had to break this down because of async pain (i think)
+            if (
+                payload.title &&
+                payload.description &&
+                payload.bunkerTag &&
+                payload.links.length &&
+                payload.tags.length
+            ) {
+                for (const link of payload.links) {
+                    valid = regex.test(link);
                 }
 
-                break;
+                if (valid) {
+                    for (const tag of payload.tags) {
+                        valid = Languages.includes(tag);
+                        console.log("tag", valid);
+                    }
+                }
+            } else {
+                valid = false;
             }
-
+            console.log("final: ", valid);
             return valid;
         },
         createPost() {
@@ -256,13 +267,22 @@ export default {
                 GraphQLService.createNewPost(
                     this.$store.getters.accessToken,
                     post
-                ).then((returnPost) => {
-                    console.log("Added Post: ");
-                    console.log(returnPost);
-                    this.close();
-                });
+                )
+                    .then((returnPost) => {
+                        console.log("Added Post: ");
+                        console.log(returnPost);
+                        this.success = true;
+
+                        setTimeout(() => {
+                            this.close();
+                        }, 2000);
+                    })
+                    .catch(() => {
+                        this.error = true;
+                    });
             } else {
                 // SHOW BETTER ERROR MESSAGES
+                console.log("err");
                 this.error = true;
             }
         },
@@ -273,6 +293,7 @@ export default {
         LinkBlock,
         NewTagPopup,
         ErrorPopUp,
+        SuccessPopUp,
     },
 };
 </script>
