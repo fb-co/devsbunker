@@ -18,9 +18,9 @@
 -   [ ] rate limit making posts
 -   [ ] move the auth middleware to GraphQL
 -   [x] better post validation: errors are not thrown [see](https://mongoosejs.com/docs/api.html#schematype_SchemaType-validate)
--   [ ] add error handling to the like mutation
-    -   [ ] same user cant like twice
-    -   [ ] the mutation response will have an error object (can be null) and a post object (can be null). In case of success errors will be null
+-   [x] add error handling to the like mutation
+    -   [x] same user cant like twice
+    -   [x] (DONE IN A DIFFERENT WAY) the mutation response will have an error object (can be null) and a post object (can be null). In case of success errors will be null
 
 ## Frontend
 
