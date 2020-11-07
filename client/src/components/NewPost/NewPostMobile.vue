@@ -214,11 +214,8 @@ export default {
             tags: [],
             links: [],
             error: false,
-<<<<<<< HEAD
             success: false,
-=======
-            isOnStore: false
->>>>>>> cf4cdedaba3e0e6e39d1dc32a3d009ab7cdbc76b
+            isOnStore: false,
         };
     },
     methods: {
@@ -301,7 +298,7 @@ export default {
         },
         toggleStoreState() {
             this.isOnStore = !this.isOnStore;
-        }
+        },
     },
     components: {
         GeneralInput,
