@@ -72,34 +72,40 @@ export default {
                 const post = await Posts.findOne({ _id: id_payload });
 
                 if (post) {
-                    post.likes.push(jwtPayload.username);
-                    post.likeAmt += 1;
+                    if (post.likes.includes(jwtPayload.username)) {
+                        throw new Error("You have already liked this post");
+                    } else {
+                        post.likes.push(jwtPayload.username);
+                        post.likeAmt += 1;
 
-                    // add error handling (no more than 1 like per user)
+                        await post.save();
 
-                    await post.save();
-
-                    return {
-                        id: post._id,
-                        title: post.title,
-                        author: post.author,
-                        description: post.description,
-                        thumbnail: post.thumbnail,
-                        images: post.images,
-                        links: post.links,
-                        collaborators: post.collaborators,
-                        tags: post.tags,
-                        likes: post.likes,
-                        likeAmt: post.likeAmt,
-                        price: post.price,
-                        bunkerTag: post.bunkerTag,
-                        clip: post.clip,
-                    };
+                        return {
+                            id: post._id,
+                            title: post.title,
+                            author: post.author,
+                            description: post.description,
+                            thumbnail: post.thumbnail,
+                            images: post.images,
+                            links: post.links,
+                            collaborators: post.collaborators,
+                            tags: post.tags,
+                            likes: post.likes,
+                            likeAmt: post.likeAmt,
+                            price: post.price,
+                            bunkerTag: post.bunkerTag,
+                            clip: post.clip,
+                        };
+                    }
                 } else {
                     return null;
                 }
-            } catch {
-                throw new Error("Internal error. Unable to like post");
+            } catch (err) {
+                if (/Cast/.test(err.message))
+                    throw new Error(
+                        "Couldn't find the post you were looking for"
+                    );
+                throw err;
             }
         },
     },
