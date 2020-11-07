@@ -62,20 +62,42 @@ export default {
                 throw new Error("Internal error. Unable to create post");
             }
         },
-        likePost: async function(_, args, { res }) {
-            const id_payload = args.id
+        likePost: async function (_, args, { res }) {
+            const id_payload = args.postId;
             const jwtPayload = TokenHandler.verifyAccessToken(args.token);
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
             try {
-                Posts.updateOne({ _id: id_payload }, { $inc: { likeAmt: 1 }})
-                    .then((post) => {
-                        return post.likeAmt
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
+                const post = await Posts.findOne({ _id: id_payload });
+
+                if (post) {
+                    post.likes.push(jwtPayload.username);
+                    post.likeAmt += 1;
+
+                    // add error handling (no more than 1 like per user)
+
+                    await post.save();
+
+                    return {
+                        id: post._id,
+                        title: post.title,
+                        author: post.author,
+                        description: post.description,
+                        thumbnail: post.thumbnail,
+                        images: post.images,
+                        links: post.links,
+                        collaborators: post.collaborators,
+                        tags: post.tags,
+                        likes: post.likes,
+                        likeAmt: post.likeAmt,
+                        price: post.price,
+                        bunkerTag: post.bunkerTag,
+                        clip: post.clip,
+                    };
+                } else {
+                    return null;
+                }
             } catch {
                 throw new Error("Internal error. Unable to like post");
             }
