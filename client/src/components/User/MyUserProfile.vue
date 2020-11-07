@@ -30,7 +30,7 @@ export default {
         this.mobile = this.isMobile();
         
         // get the user object, will be given to all children to avoid excessive calls to the server
-        GraphQLService.fetchUserDetails(this.$store.getters.username, ["desc", "email", "profile_pic"]).then((user) => {
+        GraphQLService.fetchUserDetails(this.$store.getters.username, ["desc", "email", "profile_pic", "followers", "following"]).then((user) => {
             this.userObject = user.data.user;
         });
 

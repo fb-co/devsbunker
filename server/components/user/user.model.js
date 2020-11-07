@@ -33,6 +33,15 @@ const userSchema = new mongoose.Schema(
             default: "profile_pic_placeholder.png"
         },
 
+        followers: {
+            type: Array,
+            default: []
+        },
+        following: {
+            type: Array,
+            default: []
+        },
+
         password: requiredString,
 
         tag: {

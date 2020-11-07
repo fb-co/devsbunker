@@ -12,6 +12,8 @@ export default gql`
         email: String!
         desc: String!
         tag: String!
+        followers: [String]!
+        following: [String]!
         profile_pic: String!
     }
 

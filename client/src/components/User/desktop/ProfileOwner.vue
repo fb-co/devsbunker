@@ -13,11 +13,11 @@
                     <div class="follow_container">
                         <div class="follow_cont">
                             <p class="follow_label">Followers</p>
-                            <p id="follower_amt">8183</p>
+                            <p id="follower_amt">{{ userObject.followers.length }}</p>
                         </div>
                         <div class="follow_cont">
                             <p class="follow_label">Following</p>
-                            <p id="following_amt">74</p>
+                            <p id="following_amt">{{ userObject.followers.length }}</p>
                         </div>
                     </div>
                     <div class="edit_link_container">
