@@ -47,6 +47,35 @@ const GraphQLService = {
         }
     },
 
+    fetchPostsByAuthor: function(author) {
+        const query = `
+            query {
+                getPostsByAuthor(author: "${author}") {
+                    title
+                    author
+                    description
+                    likeAmt
+                    bunkerTag
+                    price
+                    id
+                }
+            }
+        `;
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => res.json())
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
     fetchPosts: function(sortMethod) {
         const query = `
             query {

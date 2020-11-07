@@ -21,7 +21,8 @@ export default {
     data() {
         return {
             mobile: false,
-            userObject: undefined
+            userObject: undefined,
+            userProjects: undefined,
         };
     },
     created() {
@@ -32,6 +33,10 @@ export default {
         // get the user object, will be given to all children to avoid excessive calls to the server
         GraphQLService.fetchUserDetails(this.$store.getters.username, ["desc", "email", "profile_pic", "followers", "following"]).then((user) => {
             this.userObject = user.data.user;
+        });
+        console.log("Bruh");
+        GraphQLService.fetchPostsByAuthor(this.$store.getters.username).then((posts) => {
+            console.log(posts);
         });
 
         window.addEventListener("resize", () => {

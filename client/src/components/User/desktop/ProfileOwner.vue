@@ -17,7 +17,7 @@
                         </div>
                         <div class="follow_cont">
                             <p class="follow_label">Following</p>
-                            <p id="following_amt">{{ userObject.followers.length }}</p>
+                            <p id="following_amt">{{ userObject.following.length }}</p>
                         </div>
                     </div>
                     <div class="edit_link_container">
@@ -126,7 +126,6 @@ export default {
             this.$router.push("information");
         }
         this.userObject = this.mainUserObject;
-        console.log(this.userObject);
     },
     methods: {
         logout() {

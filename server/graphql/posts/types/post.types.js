@@ -38,6 +38,8 @@ export default gql`
         userPost(postId: String!, postAuthor: String!): FetchablePost
 
         getPosts(sortingType: String!): [FetchablePost]!
+
+        getPostsByAuthor(author: String!): [FetchablePost]!
     }
 
     type Mutation {
