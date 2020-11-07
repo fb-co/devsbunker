@@ -33,7 +33,7 @@ export default {
         GraphQLService.fetchPosts("newest").then((res) => { 
             // pass in the new post data to the home page main components
             this.posts = res.data.getPosts;
-            console.log(res.data.getPosts);
+            console.log(this.posts);
          });
 
 

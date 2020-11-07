@@ -57,6 +57,7 @@ const GraphQLService = {
                     likeAmt
                     bunkerTag
                     price
+                    id
                 }
             }
         `;
@@ -74,6 +75,28 @@ const GraphQLService = {
             return console.log(err);
         }
     },
+
+    likePost: async function(token, postId) { 
+        const mutation = `
+            mutation {
+                likePost(token: "${token}", postId: "${postId}") {
+                    likeAmt
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+            return res.json();
+        } catch (err) {
+            return console.log(err);
+        }
+    }, 
 
     createNewPost: async function(token, data) {
         const mutation = `

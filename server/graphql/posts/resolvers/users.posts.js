@@ -62,5 +62,23 @@ export default {
                 throw new Error("Internal error. Unable to create post");
             }
         },
+        likePost: async function(_, args, { res }) {
+            const id_payload = args.id
+            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+
+            if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+            try {
+                Posts.updateOne({ _id: id_payload }, { $inc: { likeAmt: 1 }})
+                    .then((post) => {
+                        return post.likeAmt
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            } catch {
+                throw new Error("Internal error. Unable to like post");
+            }
+        },
     },
 };

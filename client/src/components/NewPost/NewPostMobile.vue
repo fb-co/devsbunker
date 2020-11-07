@@ -156,6 +156,15 @@
                     </div>
                 </div>
             </div>
+            <!--
+                <div class="add_store_container">
+                    <button v-if="isOnStore" class="add_store_button">Add To Store</button>
+                    <button v-else class="add_store_button">Remove From Store</button>
+                </div>
+                <div id="on_store_options">
+                    
+                </div>
+            -->
 
             <button @click="createPost()" class="create_post_button">
                 Post
@@ -203,6 +212,7 @@ export default {
             tags: [],
             links: [],
             error: false,
+            isOnStore: false
         };
     },
     methods: {
@@ -266,6 +276,9 @@ export default {
                 this.error = true;
             }
         },
+        toggleStoreState() {
+            this.isOnStore = !this.isOnStore;
+        }
     },
     components: {
         GeneralInput,
@@ -278,6 +291,38 @@ export default {
 </script>
 
 <style scoped>
+/*
+#on_store_options {
+    display: none;
+    background-color: var(--secondary-color);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    height: 200px;
+    margin: 20px 20px 60px 20px;
+}
+.add_store_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    padding-left: 10px;
+}
+.add_store_container > button {
+    background-color: var(--main-btn-color);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 150px;
+    height: 40px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0px auto 0px auto;
+    cursor: pointer;
+}
+.add_store_container > button:hover {
+    box-shadow: 0px 4px 20px var(--main-btn-color);
+}
+*/
 .new_post_container {
     display: flex;
     flex-direction: column;
@@ -366,6 +411,9 @@ export default {
     font-weight: bold;
     margin: 0px auto 40px auto;
     cursor: pointer;
+}
+.create_post_button:hover {
+    box-shadow: 0px 4px 20px var(--main-btn-color);
 }
 
 .add_image:hover {
