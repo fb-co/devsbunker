@@ -21,6 +21,7 @@
 -   [x] add error handling to the like mutation
     -   [x] same user cant like twice
     -   [x] (DONE IN A DIFFERENT WAY) the mutation response will have an error object (can be null) and a post object (can be null). In case of success errors will be null
+-   [ ] add dislike mutation
 
 ## Frontend
 
