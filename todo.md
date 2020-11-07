@@ -18,6 +18,9 @@
 -   [ ] rate limit making posts
 -   [ ] move the auth middleware to GraphQL
 -   [x] better post validation: errors are not thrown [see](https://mongoosejs.com/docs/api.html#schematype_SchemaType-validate)
+-   [ ] add error handling to the like mutation
+    -   [ ] same user cant like twice
+    -   [ ] the mutation response will have an error object (can be null) and a post object (can be null). In case of success errors will be null
 
 ## Frontend
 
@@ -38,7 +41,8 @@
 -   [x] The theme changin icon (sun and moon) should be inverted to denote which theme the user is currently using
 -   [ ] Make the first field in the login and signup pages be auto focused on when thep age is loaded
 -   [ ] add the eye button thing to signup card
--   [ ] Error handling and validation for making posts
+-   [x] Error handling and validation for making posts
+-   [ ] make sure that the heart icon is filled even after refresh if user has already liked a post
 
 ### Things to optimize
 
