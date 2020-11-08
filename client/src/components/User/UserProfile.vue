@@ -2,7 +2,7 @@
     <div>
         <NavBar />
         
-        <div class='main_container'>
+        <div class='main_container' v-if="userObject">
             <div class="row1">
                 <div class='profile_pic_container row_item'>
                     <img src="@/assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic" width="100px">
@@ -12,18 +12,19 @@
                             <path fill-rule="evenodd" d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984a.5.5 0 0 0-.708-.708L7 8.793 5.854 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
                         </svg></p>
 
-                    <p class="desc_container">{{  }}</p>
+                    <p class="desc_container">{{ userObject.description }}</p>
 
                     <div class="follow_container">
                         <div class="follow_cont">
                             <p class="follow_label">Followers</p>
-                            <p id="follower_amt">8183</p>
+                            <p id="follower_amt">{{ userObject.followers.length }}</p>
                         </div>
                         <div class="follow_cont">
                             <p class="follow_label">Following</p>
-                            <p id="following_amt">74</p>
+                            <p id="following_amt">{{ userObject.following.length }}</p>
                         </div>
                     </div>
+                    <button class="follow_button">Follow</button>
                 </div>
                 <div class='main_links_container row_item'>
                     <!-- Still have to get the subrouting working here -->
@@ -88,13 +89,18 @@ export default {
         SharedMethods.loadPage();
         this.username = this.$route.params.username;
 
-        this.userObject = await GraphQLService.fetchUserDetails(this.username, [
-            "username",
+        
+        GraphQLService.fetchUserDetails(this.username, [
             "email",
             "tag",
+            "desc",
+            "followers",
+            "following"
         ]).then((res) => {
             if (res.data.user === null) {
                 this.$router.push("/"); // eventully this should route the user to a search area for users with a message sayin he user they requested does not exist
+            } else {
+                this.userObject = res.data.user;
             }
         });
     },
@@ -143,6 +149,22 @@ export default {
     width: 90%;
 }
 
+.follow_button {
+    background-color: var(--main-btn-color);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 125px;
+    height: 40px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 20px auto 10px auto;
+    cursor: pointer;
+}
+.follow_button:hover {
+    box-shadow: 0px 4px 20px var(--main-btn-color);
+}
 
 .link_item {
     width: 100%;
