@@ -115,11 +115,13 @@ export default {
     data() {
         return {
             active: "projects",
-            userObject: this.mainUserObject
+            userObject: this.mainUserObject,
+            userProjects: this.mainUserProjects
         }
     },
     props: {
-        mainUserObject: Object
+        mainUserObject: Object,
+        mainUserProjects: Array
     },
     created() {
         if (this.$route.name === "User") {

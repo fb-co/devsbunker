@@ -60,7 +60,8 @@ export default {
         };
     },
     props: {
-        mainUserObject: Object
+        mainUserObject: Object,
+        mainUserProjects: Array
     },
     components: {
         ...ProfileSections,

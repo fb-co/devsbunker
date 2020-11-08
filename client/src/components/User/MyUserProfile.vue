@@ -4,8 +4,8 @@
 
         <!-- We pass in the user object so we dont have to re-query it from the server on every child component -->
         <!-- You also need to wait to wait to render the components until you get a response from the server or else they wont lazy load! -->
-        <ProfileMobile v-if="mobile && userObject" :mainUserObject="userObject" />
-        <ProfileDesktop v-if="!mobile && userObject" :mainUserObject="userObject" />
+        <ProfileMobile v-if="mobile && userObject && userProjects" :mainUserObject="userObject" :mainUserProjects="userProjects" />
+        <ProfileDesktop v-if="!mobile && userObject && userProjects" :mainUserObject="userObject" :mainUserProjects="userProjects" />
     </div>
 </template>
 
@@ -34,9 +34,8 @@ export default {
         GraphQLService.fetchUserDetails(this.$store.getters.username, ["desc", "email", "profile_pic", "followers", "following"]).then((user) => {
             this.userObject = user.data.user;
         });
-        console.log("Bruh");
         GraphQLService.fetchPostsByAuthor(this.$store.getters.username).then((posts) => {
-            console.log(posts);
+            this.userProjects = posts.data.getPostsByAuthor;
         });
 
         window.addEventListener("resize", () => {

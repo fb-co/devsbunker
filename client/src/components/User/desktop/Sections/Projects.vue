@@ -9,7 +9,7 @@
             </Dropdown>
         </div>
         <div class="project_list">
-            <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="60%" />
+            <MobileProjectCard v-for="project in userProjects" :key="project.name" :projectData="project" width="85%" />
         </div>
     </div>
 </template>
@@ -22,6 +22,8 @@ import SearchBar from '@/components/SearchBar.vue';
 export default {
     data() {
         return {
+            userProjects: this.$parent.userProjects,
+            /*
             projects: [
                 {
                     name: "The Hungry Wolf",
@@ -55,6 +57,7 @@ export default {
                     likes: 1093,
                 },
             ],
+            */
         };
     },
     components: {
@@ -86,7 +89,7 @@ export default {
 .filter_dropdown {
     font-size: 12px;
     width: 150px;
-    margin: 20px auto 20px auto;
+    margin: 20px auto 40px auto;
     background-color: var(--secondary-color);
     border-radius: 5px;
 }

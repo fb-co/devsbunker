@@ -2,8 +2,8 @@
     <div id="card_container" class="main_container no_select" :style="style">
         <div class="card_text_container">
             <p class="author card_text">{{ projectData.author }}</p>
-            <p class="proj_name card_text">{{ projectData.name }}</p>
-            <p class="proj_desc card_text">{{ projectData.desc }}</p>
+            <p class="proj_name card_text">{{ projectData.title }}</p>
+            <p class="proj_desc card_text">{{ projectData.description }}</p>
             <div style="flex-grow: 1;"></div>
             <div class="likes_container">
                 <!--Not filled icon -->
@@ -17,11 +17,13 @@
                 </svg>
 
                 <div class="vertical_flex_center">
-                    <p class="likes card_text">{{ projectData.likes }}</p>
+                    <p class="likes card_text">{{ projectData.likeAmt }}</p>
                 </div>
                 <div class="vertical_flex_center">
-                    <p class="price_text" v-if="projectData.price!=0"> | ${{ projectData.price }}</p>
-                    <p class="price_text" v-else> | Free</p>
+                    <p class="price_text" v-if="projectData.price!=0 && projectData.price!=null">| ${{ projectData.price }}</p>
+                </div>
+                <div class="vertical_flex_center">
+                    <p class="bunker_tag">{{ projectData.bunkerTag }}</p>
                 </div>
             </div>
         </div>
@@ -84,6 +86,7 @@ export default {
         font-size: 18px;
     }
     .proj_desc{
+        margin-bottom: 10px;
         color: var(--soft-text);
         font-size: 11px;
     }
@@ -101,6 +104,11 @@ export default {
         color: var(--soft-text);
         font-size: 11px;
         margin-left: 5px;
+    }
+    .bunker_tag {
+        color: var(--soft-text);
+        font-size: 11px;
+        margin-left: 10px;
     }
     .card_text{
         text-align: left;
@@ -122,6 +130,23 @@ export default {
         .card_img_container{
             display: none;
         }  
+    }
+
+    @media only screen and (min-width: 1200px) {
+        .author{
+            font-size: 18px;
+        }
+        .proj_name{
+            font-size: 25px;
+        }
+        .proj_desc{
+            font-size: 16px;
+        }
+        
+        .likes, .price_text, .bunker_tag{
+            font-size: 15px;
+        }
+        
     }
 
 </style>
