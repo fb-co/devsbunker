@@ -15,14 +15,21 @@ export default {
         },
 
         // returns all the posts in the order of the parameter 'sortingType'
-        getPosts: function (_, args, { res }) {
-            return getPostList(args.sortingType);
+        getPosts: async function (_, args, { res }) {
+            const posts = await getPostList(args.sortingType);
+
+            // we have to do this since likeAmt isnt in the db
+            posts.forEach((post) => {
+                post.likeAmt = post.likes.length;
+            });
+
+            return posts;
         },
 
         // returns all the posts by a given author parameter
-        getPostsByAuthor: function(_, args, { res }) {
+        getPostsByAuthor: function (_, args, { res }) {
             return getPostsByAuthor(args.author);
-        }
+        },
     },
 
     Mutation: {
@@ -42,7 +49,6 @@ export default {
                 collaborators: payload.collaborators,
                 tags: payload.tags,
                 likes: [],
-                likeAmt: 0,
                 price: payload.price,
                 bunkerTag: payload.bunkerTag,
                 clip: payload.clip,
@@ -85,7 +91,6 @@ export default {
                         throw new Error("You have already liked this post");
                     } else {
                         post.likes.push(jwtPayload.username);
-                        post.likeAmt += 1;
 
                         await post.save();
 
@@ -100,7 +105,7 @@ export default {
                             collaborators: post.collaborators,
                             tags: post.tags,
                             likes: post.likes,
-                            likeAmt: post.likeAmt,
+                            likeAmt: post.likes.length,
                             price: post.price,
                             bunkerTag: post.bunkerTag,
                             clip: post.clip,
