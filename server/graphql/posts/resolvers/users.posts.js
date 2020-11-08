@@ -9,12 +9,17 @@ import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: 
 
 export default {
     Query: {
+        // returns a single user post given its title and author (should switch to id at some point)
         userPost: function (_, args, { res }) {
             return getUserPost(args.postTitle, args.postAuthor);
         },
+
+        // returns all the posts in the order of the parameter 'sortingType'
         getPosts: function (_, args, { res }) {
             return getPostList(args.sortingType);
         },
+
+        // returns all the posts by a given author parameter
         getPostsByAuthor: function(_, args, { res }) {
             return getPostsByAuthor(args.author);
         }

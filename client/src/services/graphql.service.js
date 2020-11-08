@@ -127,6 +127,29 @@ const GraphQLService = {
         }
     }, 
 
+    followPerson: async function(token, person) {
+        const mutation = `
+            mutation {
+                followPerson(token: "${token}", person: "${person}") {
+                    followers
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }), 
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
     createNewPost: async function(token, data) {
         const mutation = `
             mutation Update($data: makePostInput!) {

@@ -168,6 +168,44 @@ export default {
                 message: "Successfully updated user details",
             };
         },
+        
+        // will add a follower to "person" and add a following to follower
+        followPerson: async function (_, args, { res }) {
+            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+            const personPayload = args.person;
+
+            if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+            try {
+                // add a follower to the person
+                let person_to_follow = await User.findOne({ username: personPayload });
+
+                if (person_to_follow) {
+                    person_to_follow.followers.push(jwtPayload.username);
+                    
+                    await person_to_follow.save();
+
+                    // add a persn under 'following' for the user that just followed this person
+                    let add_following = await User.findOne({ username: jwtPayload.username });
+
+                    if (add_following) {
+                        add_following.following.push(personPayload);
+
+                        await add_following.save();
+
+                        return {
+                            followers: person_to_follow.followers 
+                        };
+                    }else {
+                        return null;
+                    }
+                } else {
+                    return null;
+                }
+            } catch (err) {
+                throw new Error("Something went wrong following " + personPayload);
+            }
+        },
 
         revokeUserSession: async function (_, args) {
             return await SessionRevoker.revokeRefreshToken(args.token);

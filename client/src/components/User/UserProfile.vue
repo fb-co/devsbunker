@@ -24,7 +24,7 @@
                             <p id="following_amt">{{ userObject.following.length }}</p>
                         </div>
                     </div>
-                    <button class="follow_button">Follow</button>
+                    <button @click="followUser()" class="follow_button">Follow</button>
                 </div>
                 <div class='main_links_container row_item'>
                     <!-- Still have to get the subrouting working here -->
@@ -104,6 +104,13 @@ export default {
             }
         });
     },
+    methods: {
+        followUser() {
+            GraphQLService.followPerson(this.$store.getters.accessToken, this.$route.params.username).then((newFollowers) => {
+                this.userObject.followers = newFollowers.data.followPerson.followers;
+            });
+        }
+    }
 };
 </script>
 

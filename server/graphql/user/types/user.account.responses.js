@@ -62,5 +62,10 @@ export default gql`
             token: String!
             fields: [UpdateUserPayload!]!
         ): UpdateDetailsResponse!
+
+        followPerson(
+            token: String!
+            person: String!
+        ): FetchableUser
     }
 `;
