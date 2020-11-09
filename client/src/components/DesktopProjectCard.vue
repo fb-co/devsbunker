@@ -1,7 +1,7 @@
 <template>
     <div class="proj_card_main_container">
         <div class="text_container">
-            <p class="author">{{ projectData.author }}</p>
+            <router-link :to='"user/" + projectData.author' class="author">{{ projectData.author }}</router-link>
             <p class="title">{{ projectData.title }}</p>
             <p class="desc">{{ projectData.description }}</p>
 
@@ -95,7 +95,12 @@ export default {
                 this.$store.getters.accessToken,
                 this.projectData.id
             ).then((res) => {
-                this.projectData.likeAmt = res.data.likePost.likeAmt;
+                if (res.data.likePost) {
+                    this.projectData.likeAmt = res.data.likePost.likeAmt;
+                } else {
+                    // add a message here that you already liked the post
+                }
+                
             });
         },
     },

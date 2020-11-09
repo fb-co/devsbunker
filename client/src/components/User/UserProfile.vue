@@ -107,7 +107,9 @@ export default {
     methods: {
         followUser() {
             GraphQLService.followPerson(this.$store.getters.accessToken, this.$route.params.username).then((newFollowers) => {
-                this.userObject.followers = newFollowers.data.followPerson.followers;
+                if (newFollowers.data.followPerson) {
+                    this.userObject.followers = newFollowers.data.followPerson.followers;
+                }   
             });
         }
     }

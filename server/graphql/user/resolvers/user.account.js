@@ -179,26 +179,26 @@ export default {
             try {
                 // add a follower to the person
                 let person_to_follow = await User.findOne({ username: personPayload });
+                let add_following = await User.findOne({ username: jwtPayload.username });
 
-                if (person_to_follow) {
-                    person_to_follow.followers.push(jwtPayload.username);
-                    
-                    await person_to_follow.save();
-
-                    // add a persn under 'following' for the user that just followed this person
-                    let add_following = await User.findOne({ username: jwtPayload.username });
-
-                    if (add_following) {
-                        add_following.following.push(personPayload);
-
-                        await add_following.save();
-
-                        return {
-                            followers: person_to_follow.followers 
-                        };
-                    }else {
+                if (person_to_follow && add_following) {
+                    // check to make sure they are not already followed
+                    if (!person_to_follow.followers.includes(add_following.username)) {
+                        person_to_follow.followers.push(jwtPayload.username);
+                    } else {
                         return null;
                     }
+                              
+                    await person_to_follow.save();
+                    
+                    //add a following entry to the person who followed
+                    add_following.following.push(personPayload);
+
+                    await add_following.save();
+
+                    return {
+                        followers: person_to_follow.followers 
+                    };
                 } else {
                     return null;
                 }
