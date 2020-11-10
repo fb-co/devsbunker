@@ -14,6 +14,7 @@ export default gql`
         tag: String!
         followers: [String]!
         following: [String]!
+        liked_posts: [String]!
         profile_pic: String!
     }
 

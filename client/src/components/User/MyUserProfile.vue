@@ -31,7 +31,8 @@ export default {
         this.mobile = this.isMobile();
         
         // get the user object, will be given to all children to avoid excessive calls to the server
-        GraphQLService.fetchUserDetails(this.$store.getters.username, ["desc", "email", "profile_pic", "followers", "following"]).then((user) => {
+        GraphQLService.fetchUserDetails(this.$store.getters.username, ["desc", "email", "profile_pic", "followers", "following", "liked_posts"]).then((user) => {
+            console.log(user.data.user);
             this.userObject = user.data.user;
         });
         GraphQLService.fetchPostsByAuthor(this.$store.getters.username).then((posts) => {

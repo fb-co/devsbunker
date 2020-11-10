@@ -5,6 +5,7 @@ import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
 import Posts from "../../../components/post/post.model.js";
+import User from "../../../components/user/user.model.js";
 import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: move this inside GraphQL/
 
 export default {
@@ -93,6 +94,17 @@ export default {
                         post.likes.push(jwtPayload.username);
 
                         await post.save();
+                        
+                        
+                        // save post id in users db entry as "liked posts"
+                        const user = await User.findOne({ username: jwtPayload.username });
+
+                        if (user) {
+                            user.liked_posts.push(post.id);
+                        }
+
+                        await user.save();
+                        
 
                         return {
                             id: post._id,

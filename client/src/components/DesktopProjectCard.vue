@@ -96,6 +96,7 @@ export default {
                 this.projectData.id
             ).then((res) => {
                 if (res.data.likePost) {
+                    console.log(res.data.likePost);
                     this.projectData.likeAmt = res.data.likePost.likeAmt;
                 } else {
                     // add a message here that you already liked the post

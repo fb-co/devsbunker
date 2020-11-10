@@ -42,6 +42,11 @@ const userSchema = new mongoose.Schema(
             default: []
         },
 
+        liked_posts: {
+            type: Array,
+            default: []
+        },
+
         password: requiredString,
 
         tag: {
