@@ -31,6 +31,12 @@ const routes = [
         component: () => import("../views/Settings.vue"),
         children: [
             {
+                path: "",
+                name: "empty",
+                props: true,
+                redirect: { name: "Account" }
+            },
+            {
                 path: "account",
                 name: "Account",
                 props: true,
@@ -72,6 +78,12 @@ const routes = [
         component: () => import("../views/User.vue"),
         children: [
             {
+                path: "",
+                name: "empty",
+                props: true,
+                redirect: { name: "userInformation" }
+            },
+            {
                 path: "projects",
                 name: "userProjects",
                 props: true,
@@ -103,10 +115,7 @@ const routes = [
                 path: "information",
                 name: "userInformation",
                 props: true,
-                component: () =>
-                    import(
-                        "../components/User/desktop/Sections/Information.vue"
-                    ),
+                component: () => import("../components/User/desktop/Sections/Information.vue"),
             },
         ],
     },

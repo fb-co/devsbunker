@@ -124,9 +124,6 @@ export default {
         mainUserProjects: Array
     },
     created() {
-        if (this.$route.name === "User") {
-            this.$router.push("information");
-        }
         this.userObject = this.mainUserObject;
     },
     methods: {

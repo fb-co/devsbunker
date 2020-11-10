@@ -99,8 +99,7 @@ export default {
                     this.projectData.likeAmt = res.data.likePost.likeAmt;
                 } else {
                     // add a message here that you already liked the post
-                }
-                
+                }  
             });
         },
     },
@@ -129,6 +128,10 @@ export default {
     margin-bottom: 5px;
     font-size: 15px;
     color: var(--soft-text);
+    text-decoration: none;
+}
+.author:hover {
+    text-decoration: underline;
 }
 .title {
     font-size: 22px;
