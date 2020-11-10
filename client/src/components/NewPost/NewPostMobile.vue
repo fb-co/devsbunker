@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="new_post_container">
+        <div ref="main_container" class="new_post_container">
             <div class="header">
                 <svg
                     @click="close()"
@@ -218,6 +218,9 @@ export default {
             isOnStore: false,
         };
     },
+    mounted() {
+        this.$refs.main_container.style.transform = "translateY(0%)";
+    },
     methods: {
         close() {
             this.$parent.close();
@@ -279,13 +282,15 @@ export default {
                     post
                 )
                     .then((returnPost) => {
-                        console.log("Added Post: ");
+                        console.log("Created Post: ");
                         console.log(returnPost);
                         this.success = true;
 
                         setTimeout(() => {
+                            // refresh the post feed, if we ever use this component somewhere else, we will need to rethink how to do this.
+                            this.$parent.$parent.getPosts();
                             this.close();
-                        }, 2000);
+                        }, 1000);
                     })
                     .catch(() => {
                         this.error = true;
@@ -344,6 +349,16 @@ export default {
     box-shadow: 0px 4px 20px var(--main-btn-color);
 }
 */
+
+@keyframes slide {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
 .new_post_container {
     display: flex;
     flex-direction: column;
@@ -352,10 +367,14 @@ export default {
     border-radius: 25px;
     margin: 0px auto 20px auto;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0px 4px 20px var(--main-font-color);*/
     padding-right: 10px;
     padding-left: 10px;
     background-color: var(--main-color);
     margin-top: 20px;
+
+    transform: translateY(-100%);
+    animation: slide 0.3s;
 }
 .header {
     display: flex;

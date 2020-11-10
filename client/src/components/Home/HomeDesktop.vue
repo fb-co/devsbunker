@@ -284,6 +284,7 @@ export default {
     margin-bottom: 20px;
     cursor: pointer;
     text-decoration: none;
+    background-color: transparent;
 }
 .new_button > p {
     display: flex;

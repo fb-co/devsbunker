@@ -135,6 +135,7 @@ export default {
         margin-top: 15px;
         margin-bottom: 20px;
         font-family: rubik;
+        color: var(--main-font-color);
     }
     .searcher:focus {
         border: 1px solid var(--main-font-color);

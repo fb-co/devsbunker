@@ -29,13 +29,7 @@ export default {
         SharedMethods.loadPage();
         this.mobile = this.isMobile();
 
-        // Get the posts
-        GraphQLService.fetchPosts("newest").then((res) => { 
-            // pass in the new post data to the home page main components
-            this.posts = res.data.getPosts;
-            console.log(this.posts);
-         });
-
+        this.getPosts();
 
         // we also check when the user resizes the window
         window.addEventListener("resize", () => {
@@ -63,6 +57,14 @@ export default {
         },
         closePostMenu() {
             this.$refs.newPostMenu.close();
+        },
+        getPosts() {
+            // Get the posts
+            GraphQLService.fetchPosts("newest").then((res) => { 
+                // pass in the new post data to the home page main components
+                this.posts = res.data.getPosts;
+                console.log(this.posts);
+            });
         }
     },
 };

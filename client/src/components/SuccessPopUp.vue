@@ -43,12 +43,23 @@ export default {
 </script>
 
 <style scoped>
+@keyframes slide {
+    from {
+        right: -400px;
+    }
+    to {
+        right: 20px;
+    }
+}
+
 #success {
     position: fixed;
     bottom: 20px;
     right: 20px;
     width: 350px;
     height: 70px;
+
+    animation: slide 0.2s;
 
     background: var(--main-color);
     box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.25);
