@@ -73,6 +73,12 @@ const routes = [
     },
 
     {
+        path: "/post/:postid",
+        name: "Post",
+        component: () => import("../views/Post.vue"),
+    },
+
+    {
         path: "/user/:username",
         name: "User",
         component: () => import("../views/User.vue"),

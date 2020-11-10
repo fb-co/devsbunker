@@ -1,7 +1,7 @@
 <template>
-    <div class="proj_card_main_container">
+    <div class="proj_card_main_container" @click="$router.push('/post/' + projectData.id)">
         <div class="text_container">
-            <router-link :to='"user/" + projectData.author' class="author">{{ projectData.author }}</router-link>
+            <router-link @click.native.stop="" :to='"user/" + projectData.author' class="author">{{ projectData.author }}</router-link>
             <p class="title">{{ projectData.title }}</p>
             <p class="desc">{{ projectData.description }}</p>
 
@@ -9,7 +9,7 @@
             <!--placeholder so info_container sinks to bottom -->
 
             <div class="info_container">
-                <div @click="likePost()" class="vertical_flex_center">
+                <div @click.stop="likePost()" class="vertical_flex_center">
                     <!--Not filled icon -->
                     <svg
                         @mouseover="likeIsActive = true"
