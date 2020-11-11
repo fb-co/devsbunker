@@ -47,6 +47,11 @@ const userSchema = new mongoose.Schema(
             default: []
         },
 
+        saved_posts: {
+            type: Array,
+            default: []
+        },
+
         password: requiredString,
 
         tag: {

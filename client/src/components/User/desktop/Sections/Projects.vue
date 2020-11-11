@@ -9,7 +9,7 @@
             </Dropdown>
         </div>
         <div class="project_list">
-            <MobileProjectCard v-for="project in userProjects" :key="project.name" :projectData="project" width="85%" />
+            <MobileProjectCard v-for="project in userProjects" :key="project.name" :projectData="project" :hasLikeBtn="false" width="85%" />
         </div>
     </div>
 </template>

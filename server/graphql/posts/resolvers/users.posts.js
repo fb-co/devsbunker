@@ -134,5 +134,52 @@ export default {
                 throw err;
             }
         },
+        savePost: async function (_, args, { res }) {
+            const id_payload = args.postId;
+            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+            
+
+
+            if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+            
+            try {
+                // make sure the post exists
+                const post = await Posts.findOne({ _id: id_payload }); 
+                
+                if (post) { 
+                    const user = await User.findOne({ username: jwtPayload.username });
+                    if (user) {
+                        if (!user.saved_posts.includes(post.id)) {
+
+                            user.saved_posts.push(post.id);
+                            await user.save(); 
+
+                            return {
+                                id: post._id,
+                                title: post.title,
+                                author: post.author,
+                                description: post.description,
+                                thumbnail: post.thumbnail,
+                                images: post.images,
+                                links: post.links,
+                                collaborators: post.collaborators,
+                                tags: post.tags,
+                                likes: post.likes,
+                                likeAmt: post.likes.length,
+                                price: post.price,
+                                bunkerTag: post.bunkerTag,
+                                clip: post.clip,
+                            };
+                        } else {
+                            return null;
+                        }
+                    }
+                } else {
+                    return null;
+                }
+            } catch {
+                throw new Error("Internal error. Unable to save post");
+            }
+        },
     },
 };

@@ -9,7 +9,7 @@
             <!--placeholder so info_container sinks to bottom -->
 
             <div class="info_container">
-                <div @click.stop="likePost()" class="vertical_flex_center">
+                <div @click.stop="likePost(proj)" class="vertical_flex_center">
                     <!--Not filled icon -->
                     <svg
                         @mouseover="likeIsActive = true"
@@ -47,6 +47,28 @@
                 <div class="vertical_flex_center likeAmt">
                     <p>{{ projectData.likeAmt }} -</p>
                 </div>
+
+                <div class="vertical_flex_center">
+                    <svg 
+                        @click.stop="saveProject(projectData.id)"
+                        xmlns="http://www.w3.org/2000/svg" 
+                        class="icon icon-tabler icon-tabler-device-floppy save_btn" 
+                        width="27" 
+                        height="27" 
+                        viewBox="0 0 24 24" 
+                        stroke-width="1.2" 
+                        stroke="var(--main-font-color)" 
+                        fill="none" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                    >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                            <circle cx="12" cy="14" r="2" />
+                            <polyline points="14 4 14 8 8 8 8 4" />
+                    </svg>
+                </div>
+
                 <div class="vertical_flex_center">
                     <p class="language">{{ projectData.bunkerTag }}</p>
                 </div>
@@ -75,6 +97,7 @@
 
 <script>
 import GraphQLService from "@/services/graphql.service";
+import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 
 export default {
     data() {
@@ -89,6 +112,9 @@ export default {
             default: "200px",
         },
     },
+    mixins: [
+        ProjectCardUtils
+    ],
     methods: {
         likePost() {
             GraphQLService.likePost(
@@ -120,6 +146,12 @@ export default {
     min-width: 65%;
     text-align: left;
     padding: 10px;
+}
+.save_btn {
+    margin-left: 10px;
+}
+.save_btn:hover {
+    stroke-width: 1.8;
 }
 .likeAmt {
     margin-left: 10px;
