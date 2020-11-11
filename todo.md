@@ -44,6 +44,7 @@
 -   [ ] add the eye button thing to signup card
 -   [x] Error handling and validation for making posts
 -   [ ] make sure that the heart icon is filled even after refresh if user has already liked a post
+-   [ ] Project card author link spans 100% of card (even if you cant see it, you can still click it)
 
 ### Things to optimize
 
