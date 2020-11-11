@@ -1,11 +1,11 @@
 <template>
     <div @click="$router.push('/post/' + projectData.id)" id="card_container" class="main_container no_select" :style="style">
         <div class="card_text_container">
-            <p class="author card_text">{{ projectData.author }}</p>
+            <router-link @click.native.stop="" :to='"user/" + projectData.author' class="author card_text">{{ projectData.author }}</router-link>
             <p class="proj_name card_text">{{ projectData.title }}</p>
             <p class="proj_desc card_text">{{ projectData.description }}</p>
             <div style="flex-grow: 1;"></div>
-            <div @click.stop="likePost()" class="likes_container">
+            <div @click.stop="likePost(projectData.id)" class="likes_container">
                 <!--Not filled icon -->
                 <div v-if="hasLikeBtn">
                     <svg  @mouseover="likeIsActive=true" v-if="!likeIsActive" width="17" height="17" viewBox="0 0 16 16" class="bi bi-heart" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import GraphQLService from "@/services/graphql.service";
+import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 
 export default {
     props: {
@@ -65,28 +65,13 @@ export default {
             default: "100%"
         }
     },
+    mixins: [
+        ProjectCardUtils
+    ],
     data() {
         return {
             likeIsActive: false
         }
-    },
-    created(){
-        console.log(this.projectData);
-    },
-    methods: {
-        likePost() {
-            GraphQLService.likePost(
-                this.$store.getters.accessToken,
-                this.projectData.id
-            ).then((res) => {
-                if (res.data.likePost) {
-                    console.log(res.data.likePost);
-                    this.projectData.likeAmt = res.data.likePost;
-                } else {
-                    // add a message here that you already liked the post
-                }  
-            });
-        },
     },
     computed: {
         style() {
@@ -124,7 +109,12 @@ export default {
         height: 100%;
     }
     .author{
+        display: inline-block;
         color: var(--soft-text);
+        text-decoration: none;
+    }
+    .author:hover {
+        text-decoration: underline;
     }
     .proj_name{
         font-weight: bold;

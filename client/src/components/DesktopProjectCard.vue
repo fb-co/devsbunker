@@ -9,7 +9,7 @@
             <!--placeholder so info_container sinks to bottom -->
 
             <div class="info_container">
-                <div @click.stop="likePost(proj)" class="vertical_flex_center">
+                <div @click.stop="likePost(projectData.id)" class="vertical_flex_center">
                     <!--Not filled icon -->
                     <svg
                         @mouseover="likeIsActive = true"
@@ -50,7 +50,7 @@
 
                 <div class="vertical_flex_center">
                     <svg 
-                        @click.stop="saveProject(projectData.id)"
+                        @click.stop="savePost(projectData.id)"
                         xmlns="http://www.w3.org/2000/svg" 
                         class="icon icon-tabler icon-tabler-device-floppy save_btn" 
                         width="27" 
@@ -96,7 +96,6 @@
 </template>
 
 <script>
-import GraphQLService from "@/services/graphql.service";
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 
 export default {
@@ -115,21 +114,6 @@ export default {
     mixins: [
         ProjectCardUtils
     ],
-    methods: {
-        likePost() {
-            GraphQLService.likePost(
-                this.$store.getters.accessToken,
-                this.projectData.id
-            ).then((res) => {
-                if (res.data.likePost) {
-                    console.log(res.data.likePost);
-                    this.projectData.likeAmt = res.data.likePost.likeAmt;
-                } else {
-                    // add a message here that you already liked the post
-                }  
-            });
-        },
-    },
 };
 </script>
 
