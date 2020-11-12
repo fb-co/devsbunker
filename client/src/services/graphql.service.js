@@ -76,20 +76,40 @@ const GraphQLService = {
         }
     },
 
-    fetchPosts: function(sortMethod) {
-        const query = `
-            query {
-                getPosts(sortingType: "${sortMethod}") {
-                    title
-                    author
-                    description
-                    likeAmt
-                    bunkerTag
-                    price
-                    id
+    fetchPosts: function(sortMethod, token) {
+        let query;
+        // only request the isLiked and isSaved fields if the user is logged in and passes in the auth token
+        if (token) {
+            query = `
+                query {
+                    getPosts(sortingType: "${sortMethod}", token: "${token}") {
+                        title
+                        author
+                        description
+                        likeAmt
+                        isSaved
+                        isLiked
+                        bunkerTag
+                        price
+                        id
+                    }
                 }
-            }
-        `;
+            `
+        }else {
+            query = `
+                query {
+                    getPosts(sortingType: "${sortMethod}") {
+                        title
+                        author
+                        description
+                        likeAmt
+                        bunkerTag
+                        price
+                        id
+                    }
+                }
+            `
+        }
 
         try {
             return fetch(URL, {
@@ -110,6 +130,7 @@ const GraphQLService = {
             mutation {
                 likePost(token: "${token}", postId: "${postId}") {
                     likeAmt
+                    isLiked
                 }
             }
         `;

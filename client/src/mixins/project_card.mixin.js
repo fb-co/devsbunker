@@ -11,6 +11,7 @@ const projectCard = {
         savePost(id) {
             GraphQLService.savePost(this.$store.getters.accessToken, id).then((savedPost) => {
                 console.log(savedPost);
+                this.projectData.isSaved = savedPost.data.savePost ? true : false;
             });
         },
         likePost(id) {
@@ -19,8 +20,9 @@ const projectCard = {
                 id
             ).then((res) => {
                 if (res.data.likePost) {
-                    console.log(res.data.likePost);
+                    console.log(this.projectData);
                     this.projectData.likeAmt = res.data.likePost.likeAmt;
+                    this.projectData.isLiked = res.data.likePost.isLiked;
                 } else {
                     // add a message here that you already liked the post
                 }  

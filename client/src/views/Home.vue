@@ -29,7 +29,7 @@ export default {
         SharedMethods.loadPage();
         this.mobile = this.isMobile();
 
-        this.getPosts();
+        this.queryPosts();
 
         // we also check when the user resizes the window
         window.addEventListener("resize", () => {
@@ -58,9 +58,10 @@ export default {
         closePostMenu() {
             this.$refs.newPostMenu.close();
         },
-        getPosts() {
+        queryPosts() {
             // Get the posts
-            GraphQLService.fetchPosts("newest").then((res) => { 
+            GraphQLService.fetchPosts("newest", this.$store.getters.accessToken).then((res) => { 
+                console.log(res);
                 // pass in the new post data to the home page main components
                 this.posts = res.data.getPosts;
                 console.log(this.posts);

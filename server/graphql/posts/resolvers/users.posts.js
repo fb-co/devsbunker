@@ -17,14 +17,35 @@ export default {
 
         // returns all the posts in the order of the parameter 'sortingType'
         getPosts: async function (_, args, { res }) {
-            const posts = await getPostList(args.sortingType);
+            try {
+                const posts = await getPostList(args.sortingType);
 
-            // we have to do this since likeAmt isnt in the db
-            posts.forEach((post) => {
-                post.likeAmt = post.likes.length;
-            });
+                let user;
 
-            return posts;
+                // if the user was logged in, evaluate if the post requested has been liked or saved before
+                if (args.token) {
+                    const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+
+                    if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+                    user = await User.findOne({ username: jwtPayload.username});
+                }
+
+                // we have to do this since likeAmt isnt in the db
+                posts.forEach((post) => {
+                    post.likeAmt = post.likes.length;
+                    
+                    // if the user is logged in, send in whether or not the posts are saved
+                    if (user) {
+                        post.isLiked = post.likes.includes( user.username );
+                        post.isSaved = user.saved_posts.includes( post.id );
+                    }
+                });
+
+                return posts;
+            } catch (err) {
+                return err;
+            }
         },
 
         // returns all the posts by a given author parameter
@@ -70,6 +91,8 @@ export default {
                     tags: payload.tags,
                     likes: [],
                     likeAmt: 0,
+                    isLiked: false,
+                    isSaved: false,
                     price: payload.price,
                     bunkerTag: post.bunkerTag,
                     clip: post.clip,
@@ -118,6 +141,8 @@ export default {
                             tags: post.tags,
                             likes: post.likes,
                             likeAmt: post.likes.length,
+                            isSaved: user.saved_posts.includes(jwtPayload.username),
+                            isLiked: true,
                             price: post.price,
                             bunkerTag: post.bunkerTag,
                             clip: post.clip,
@@ -138,8 +163,6 @@ export default {
             const id_payload = args.postId;
             const jwtPayload = TokenHandler.verifyAccessToken(args.token);
             
-
-
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
             
             try {
@@ -153,7 +176,7 @@ export default {
 
                             user.saved_posts.push(post.id);
                             await user.save(); 
-
+                            
                             return {
                                 id: post._id,
                                 title: post.title,
@@ -166,6 +189,8 @@ export default {
                                 tags: post.tags,
                                 likes: post.likes,
                                 likeAmt: post.likes.length,
+                                isLiked: post.likes.includes(jwtPayload.username),
+                                isSaved: true,
                                 price: post.price,
                                 bunkerTag: post.bunkerTag,
                                 clip: post.clip,
