@@ -23,12 +23,7 @@
             </div>
             <GeneralInput ref="postTitle" class="field" label="Post Title" />
 
-            <GeneralInput
-                class="field"
-                label="Post Description"
-                ref="postDesc"
-                :isTextArea="true"
-            />
+            <GeneralInput class="field" label="Post Description" ref="postDesc" :isTextArea="true" />
 
             <div class="tag_container">
                 <p>Images (0/5)</p>
@@ -46,9 +41,7 @@
                 >
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <circle cx="12" cy="13" r="3" />
-                    <path
-                        d="M5 7h2a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h2m9 7v7a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"
-                    />
+                    <path d="M5 7h2a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h2m9 7v7a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
                     <line x1="15" y1="6" x2="21" y2="6" />
                     <line x1="18" y1="3" x2="18" y2="9" />
                 </svg>
@@ -57,11 +50,7 @@
             <div class="tag_container">
                 <p>Add Collaborators</p>
                 <div class="add_tags">
-                    <CreateTag
-                        v-for="contributer in contributers"
-                        :key="contributer"
-                        :label="contributer"
-                    />
+                    <CreateTag v-for="contributer in contributers" :key="contributer" :label="contributer" />
 
                     <div class="add_icon_container">
                         <svg
@@ -78,12 +67,8 @@
                             stroke-linejoin="round"
                         >
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path
-                                d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
-                            />
-                            <path
-                                d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
-                            />
+                            <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                            <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
                             <line x1="16" y1="5" x2="19" y2="8" />
                         </svg>
                     </div>
@@ -110,12 +95,8 @@
                             stroke-linejoin="round"
                         >
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path
-                                d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
-                            />
-                            <path
-                                d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
-                            />
+                            <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                            <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
                             <line x1="16" y1="5" x2="19" y2="8" />
                         </svg>
                     </div>
@@ -145,12 +126,8 @@
                             stroke-linejoin="round"
                         >
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path
-                                d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
-                            />
-                            <path
-                                d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
-                            />
+                            <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                            <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
                             <line x1="16" y1="5" x2="19" y2="8" />
                         </svg>
                     </div>
@@ -171,24 +148,9 @@
             </button>
 
             <!-- Sub-Popups -->
-            <NewTagPopup
-                ref="contrib_popup"
-                label="Add Contributers"
-                name="add_contributers"
-                :entries="contributers"
-            />
-            <NewTagPopup
-                ref="tags_popup"
-                label="Add Tags"
-                name="add_tags"
-                :entries="tags"
-            />
-            <NewTagPopup
-                ref="links_popup"
-                label="Add Links"
-                name="add_links"
-                :entries="links"
-            />
+            <NewTagPopup ref="contrib_popup" label="Add Contributers" name="add_contributers" :entries="contributers" />
+            <NewTagPopup ref="tags_popup" label="Add Tags" name="add_tags" :entries="tags" />
+            <NewTagPopup ref="links_popup" label="Add Links" name="add_links" :entries="links" />
         </div>
 
         <ErrorPopUp v-if="error" @display-popup="error = $event" />
@@ -236,17 +198,43 @@ export default {
         },
         validatePostPayload(payload) {
             let valid = true;
-            // I HAD TO REMOVE SOME \+ CUZ VUE WAS COMPLAINING ABOUT THOSE...
-            const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_.~#?&//=]*)/;
+            const regex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
+
+            /*
+                (https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})
+
+                Will match the following cases
+
+                    http://www.foufos.gr
+                    https://www.foufos.gr
+                    http://foufos.gr
+                    http://www.foufos.gr/kino
+                    http://werer.gr
+                    www.foufos.gr
+                    www.mp3.com
+                    www.t.co
+                    http://t.co
+                    http://www.t.co
+                    https://www.t.co
+                    www.aa.com
+                    http://aa.com
+                    http://www.aa.com
+                    https://www.aa.com
+
+                Will NOT match the following
+
+                    www.foufos
+                    www.foufos-.gr
+                    www.-foufos.gr
+                    foufos.gr
+                    http://www.foufos
+                    http://foufos
+                    www.mp3#.com
+
+            */
 
             // had to break this down because of async pain (i think)
-            if (
-                payload.title &&
-                payload.description &&
-                payload.bunkerTag &&
-                payload.links.length &&
-                payload.tags.length
-            ) {
+            if (payload.title && payload.description && payload.bunkerTag && payload.links.length && payload.tags.length) {
                 for (const link of payload.links) {
                     valid = regex.test(link);
                 }
@@ -277,10 +265,7 @@ export default {
             };
 
             if (this.validatePostPayload(post)) {
-                GraphQLService.createNewPost(
-                    this.$store.getters.accessToken,
-                    post
-                )
+                GraphQLService.createNewPost(this.$store.getters.accessToken, post)
                     .then((returnPost) => {
                         console.log("Created Post: ");
                         console.log(returnPost);
