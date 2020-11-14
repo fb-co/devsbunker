@@ -48,7 +48,7 @@
                     <circle cx="12" cy="14" r="2" />
                     <polyline points="14 4 14 8 8 8 8 4" />
                 </svg>
-                <p>Saved Projects</p>
+                <router-link :to='"user/" + $store.getters.username + "/saved"' class="saved_projects_link">Saved Projects</router-link>
             </router-link>
 
             <button @click="makeNewPost()" class="new_button">
@@ -250,6 +250,17 @@ export default {
     color: var(--main-font-color);
 }
 .tab_container > p:hover {
+    color: var(--soft-text);
+}
+.saved_projects_link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+    color: var(--main-font-color);
+    text-decoration: none;
+}
+.saved_projects_link:hover {
     color: var(--soft-text);
 }
 .logout_button {
