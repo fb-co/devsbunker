@@ -47,14 +47,16 @@ const GraphQLService = {
         }
     },
 
-    fetchPostsByAuthor: function(author) {
+    // requester token is an optional parameter so that the like button will stay filled if you logged in and the post was liked by you
+    fetchPostsByAuthor: function(author, requesterToken) {
         const query = `
             query {
-                getPostsByAuthor(author: "${author}") {
+                getPostsByAuthor(author: "${author}", requesterToken: "${requesterToken}") {
                     title
                     author
                     description
                     likeAmt
+                    isLiked
                     bunkerTag
                     price
                     id
@@ -84,6 +86,7 @@ const GraphQLService = {
                     author
                     description
                     likeAmt
+                    isLiked
                     bunkerTag
                     price
                     id

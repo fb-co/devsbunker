@@ -32,11 +32,13 @@ export default {
         
         // get the user object, will be given to all children to avoid excessive calls to the server
         GraphQLService.fetchUserDetails(this.$store.getters.username, ["desc", "email", "profile_pic", "followers", "following", "liked_posts"]).then((user) => {
-            console.log(user.data.user);
             this.userObject = user.data.user;
         });
-        GraphQLService.fetchPostsByAuthor(this.$store.getters.username).then((posts) => {
+
+        // if the user is logged out their token will be undefined anyway
+        GraphQLService.fetchPostsByAuthor(this.$store.getters.username, this.$store.getters.accessToken).then((posts) => {
             this.userProjects = posts.data.getPostsByAuthor;
+            console.log(this.userProjects);
         });
 
         window.addEventListener("resize", () => {

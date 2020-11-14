@@ -1,12 +1,13 @@
 import Posts from "../../../components/post/post.model.js";
 import User from "../../../components/user/user.model.js";
+import AddDynamicData from "../misc/addDynamicData.js";
 import mongoose from "mongoose";
 
 export default async function getSavedPosts(author) {
     return new Promise((resolve) => {
-        User.findOne({ username: author }, { saved_posts: 1 })
-            .then((posts) => {
-                let wrappedPosts = posts.saved_posts;
+        User.findOne({ username: author })
+            .then((user) => {
+                let wrappedPosts = user.saved_posts;
                 
                 // for whatever reason to find by id, they need to wrapped in an ObjectType wrapper
                 for (let i = 0; i < wrappedPosts.length; i++) {
@@ -19,11 +20,9 @@ export default async function getSavedPosts(author) {
                     } 
                 })
                 .then((posts) => {
-                    posts.forEach(post => {
-                        post.likeAmt = post.likes.length;
-                    });
+                    const finalPosts = AddDynamicData.addAll(posts, user);
                     
-                    resolve(posts);
+                    resolve(finalPosts);
                 })
                 .catch((err) => {
                     console.log(err);

@@ -8,6 +8,7 @@ const { AuthenticationError } = ApolloServer;
 import Posts from "../../../components/post/post.model.js";
 import User from "../../../components/user/user.model.js";
 import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: move this inside GraphQL/
+import AddDynamicData from "../misc/addDynamicData.js";
 
 export default {
     Query: {
@@ -31,19 +32,10 @@ export default {
 
                     user = await User.findOne({ username: jwtPayload.username});
                 }
+                
+                const finalPosts = AddDynamicData.addAll(posts, user);
 
-                // we have to do this since likeAmt isnt in the db
-                posts.forEach((post) => {
-                    post.likeAmt = post.likes.length;
-                    
-                    // if the user is logged in, send in whether or not the posts are saved
-                    if (user) {
-                        post.isLiked = post.likes.includes( user.username );
-                        post.isSaved = user.saved_posts.includes( post.id );
-                    }
-                });
-
-                return posts;
+                return finalPosts;
             } catch (err) {
                 return err;
             }
@@ -51,7 +43,7 @@ export default {
 
         // returns all the posts by a given author parameter
         getPostsByAuthor: function (_, args, { res }) {
-            return getPostsByAuthor(args.author);
+            return getPostsByAuthor(args.author, args.requesterToken);
         },
 
         getSavedPosts: function (_, args, { res }) {

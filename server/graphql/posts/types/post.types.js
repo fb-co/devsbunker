@@ -41,7 +41,7 @@ export default gql`
 
         getPosts(sortingType: String!, token: String): [FetchablePost]!
 
-        getPostsByAuthor(author: String!): [FetchablePost]!
+        getPostsByAuthor(author: String!, requesterToken: String): [FetchablePost]!
 
         getSavedPosts(token: String!): [FetchablePost]
     }
