@@ -13,6 +13,9 @@ const projectCard = {
                 this.projectData.isSaved = savedPost.data.savePost ? true : false;
             });
         },
+        unsavePost(id) {
+            console.log("eventully add query here", id);
+        },
         likePost(id) {
             GraphQLService.likePost(
                 this.$store.getters.accessToken,

@@ -68,6 +68,7 @@
                 <div class="vertical_flex_center">
                     <svg 
                         @click.stop="savePost(projectData.id)"
+                        v-if="!projectData.isSaved"
                         xmlns="http://www.w3.org/2000/svg" 
                         class="icon icon-tabler icon-tabler-device-floppy save_btn" 
                         width="27" 
@@ -84,6 +85,7 @@
                             <circle cx="12" cy="14" r="2" />
                             <polyline points="14 4 14 8 8 8 8 4" />
                     </svg>
+                    <p @click.stop="unsavePost(projectData.id)" class="saved_link" v-else>Unsave - </p>
                 </div>
 
                 <div class="vertical_flex_center">
@@ -200,5 +202,13 @@ export default {
 .spacer {
     padding-right: 10px;
     padding-left: 10px;
+}
+.saved_link {
+    margin-left: 5px;
+    color: var(--soft-text);
+}
+.saved_link:hover {
+    margin-left: 5px;
+    color: var(--main-font-color);
 }
 </style>
