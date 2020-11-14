@@ -10,7 +10,6 @@ const projectCard = {
     methods: {
         savePost(id) {
             GraphQLService.savePost(this.$store.getters.accessToken, id).then((savedPost) => {
-                console.log(savedPost);
                 this.projectData.isSaved = savedPost.data.savePost ? true : false;
             });
         },
@@ -20,7 +19,6 @@ const projectCard = {
                 id
             ).then((res) => {
                 if (res.data.likePost) {
-                    console.log(this.projectData);
                     this.projectData.likeAmt = res.data.likePost.likeAmt;
                     this.projectData.isLiked = res.data.likePost.isLiked;
                 } else {
@@ -28,6 +26,16 @@ const projectCard = {
                 }  
             });
         },
+        unlikePost(id) {
+            GraphQLService.unlikePost(
+                this.$store.getters.accessToken,
+                id
+            ).then((res) => {
+                console.log(res);
+                this.projectData.likeAmt = res.data.unlikePost.likeAmt;
+                this.projectData.isLiked = res.data.unlikePost.isLiked;
+            });
+        }
     }
 };
 

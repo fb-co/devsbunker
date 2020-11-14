@@ -180,6 +180,29 @@ const GraphQLService = {
         }
     }, 
 
+    unlikePost: async function(token, postId) {
+        const mutation = `
+            mutation {
+                unlikePost(token: "${token}", postId: "${postId}") {
+                    likeAmt
+                    isLiked
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+            return res.json();
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
     savePost: async function(token, postId) {
         const mutation = `
             mutation {

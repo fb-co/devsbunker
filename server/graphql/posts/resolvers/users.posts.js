@@ -160,6 +160,62 @@ export default {
                 throw err;
             }
         },
+        unlikePost: async function (_, args, { res }) {
+            const id_payload = args.postId;
+            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+
+            if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+            try {
+                const post = await Posts.findOne({ _id: id_payload });
+
+                if (post) {
+                    const index = post.likes.indexOf(jwtPayload.username);
+
+                    if (index !== -1) {
+                        post.likes.splice(index, 1);
+
+                        await post.save();
+
+                        const user = await User.findOne({ username: jwtPayload.username });
+
+                        if (user) {
+                            const userIndex = user.liked_posts.indexOf(post.id);
+
+                            if (userIndex !== -1) {
+                                user.liked_posts.splice(userIndex, 1);
+
+                                await user.save();
+
+                                return {
+                                    id: post._id,
+                                    title: post.title,
+                                    author: post.author,
+                                    description: post.description,
+                                    thumbnail: post.thumbnail,
+                                    images: post.images,
+                                    links: post.links,
+                                    collaborators: post.collaborators,
+                                    tags: post.tags,
+                                    likes: post.likes,
+                                    likeAmt: post.likes.length,
+                                    isSaved: user.saved_posts.includes(jwtPayload.username),
+                                    isLiked: false,
+                                    price: post.price,
+                                    bunkerTag: post.bunkerTag,
+                                    clip: post.clip,
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return null;
+            } catch (err) {
+
+            }
+
+        },
         savePost: async function (_, args, { res }) {
             const id_payload = args.postId;
             const jwtPayload = TokenHandler.verifyAccessToken(args.token);

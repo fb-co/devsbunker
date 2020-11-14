@@ -47,6 +47,7 @@
                 <div v-else class="vertical_flex_center">
                     <!-- Filled icon -->
                     <svg
+                        @click.stop="unlikePost(projectData.id)"
                         width="23"
                         height="23"
                         viewBox="0 0 16 16"
