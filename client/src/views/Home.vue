@@ -22,8 +22,8 @@ export default {
     data() {
         return {
             mobile: false,
-            posts: undefined
-        }
+            posts: undefined,
+        };
     },
     async created() {
         SharedMethods.loadPage();
@@ -46,7 +46,7 @@ export default {
         NavBar,
         HomeMobile,
         HomeDesktop,
-        NewPost
+        NewPost,
     },
     methods: {
         isMobile() {
@@ -59,14 +59,26 @@ export default {
             this.$refs.newPostMenu.close();
         },
         queryPosts() {
+            // CACHE TEST!!!
+            let isCacheSupported = "caches" in window;
+            console.log("is cache supported:", isCacheSupported);
+            if (isCacheSupported) {
+                let cacheName = "devsCache";
+                // just caching a google req
+                fetch("https://google.com").then(async (res) => {
+                    const cache = await caches.open(cacheName);
+                    cache.put(URL, res);
+                    cache.match(URL).then((result) => {
+                        console.log("[CACHE] ", result);
+                    });
+                });
+            }
             // Get the posts
-            GraphQLService.fetchPosts("newest", this.$store.getters.accessToken).then((res) => { 
-                console.log(res);
+            GraphQLService.fetchPosts("newest", this.$store.getters.accessToken).then((res) => {
                 // pass in the new post data to the home page main components
                 this.posts = res.data.getPosts;
-                console.log(this.posts);
             });
-        }
+        },
     },
 };
 </script>

@@ -126,8 +126,8 @@ const GraphQLService = {
                         id
                     }
                 }
-            `
-        }else {
+            `;
+        } else {
             query = `
                 query {
                     getPosts(sortingType: "${sortMethod}") {
@@ -140,7 +140,7 @@ const GraphQLService = {
                         id
                     }
                 }
-            `
+            `;
         }
 
         try {
@@ -150,14 +150,16 @@ const GraphQLService = {
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })
-                .then((res) => res.json())
+                .then((res) => {
+                    return res.json();
+                })
                 .catch(console.error);
         } catch (err) {
             return console.log(err);
         }
     },
 
-    likePost: async function(token, postId) { 
+    likePost: async function(token, postId) {
         const mutation = `
             mutation {
                 likePost(token: "${token}", postId: "${postId}") {
@@ -178,7 +180,7 @@ const GraphQLService = {
         } catch (err) {
             return console.log(err);
         }
-    }, 
+    },
 
     unlikePost: async function(token, postId) {
         const mutation = `
@@ -239,7 +241,7 @@ const GraphQLService = {
                 method: "POST",
                 headers: { "content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify({ query: mutation }), 
+                body: JSON.stringify({ query: mutation }),
             });
 
             return res.json();
