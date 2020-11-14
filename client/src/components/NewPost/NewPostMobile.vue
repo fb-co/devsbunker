@@ -153,7 +153,7 @@
             <NewTagPopup ref="links_popup" label="Add Links" name="add_links" :entries="links" />
         </div>
 
-        <ErrorPopUp v-if="error" @display-popup="error = $event" />
+        <ErrorPopUp v-if="error" @display-popup="error = $event" :msg="errmsg" />
         <SuccessPopUp v-if="success" message="Successfully created new post" />
     </div>
 </template>
@@ -176,6 +176,7 @@ export default {
             tags: [],
             links: [],
             error: false,
+            errmsg: "Internal error. Please try again later.", // by default its a 500 err
             success: false,
             isOnStore: false,
         };
@@ -234,6 +235,7 @@ export default {
             */
 
             // had to break this down because of async pain (i think)
+            let errmsg = null;
             if (payload.title && payload.description && payload.bunkerTag && payload.links.length && payload.tags.length) {
                 for (const link of payload.links) {
                     valid = regex.test(link);
@@ -242,14 +244,20 @@ export default {
                 if (valid) {
                     for (const tag of payload.tags) {
                         valid = Languages.includes(tag);
-                        console.log("tag", valid);
+                        if (!valid) {
+                            errmsg = "Invalid tag. Please select a valid language";
+                            break;
+                        }
                     }
+                } else {
+                    errmsg = "The entered URL is not a valid URL.";
                 }
             } else {
+                errmsg = "Please fill in all the necessary fields.";
                 valid = false;
             }
-            console.log("final: ", valid);
-            return valid;
+
+            return { success: valid, err: errmsg };
         },
         createPost() {
             const post = {
@@ -264,7 +272,8 @@ export default {
                 clip: "Du fuq is a clip?",
             };
 
-            if (this.validatePostPayload(post)) {
+            const check = this.validatePostPayload(post);
+            if (check.success) {
                 GraphQLService.createNewPost(this.$store.getters.accessToken, post)
                     .then((returnPost) => {
                         console.log("Created Post: ");
@@ -281,9 +290,8 @@ export default {
                         this.error = true;
                     });
             } else {
-                // SHOW BETTER ERROR MESSAGES
-                console.log("err");
                 this.error = true;
+                this.errmsg = check.err;
             }
         },
         toggleStoreState() {

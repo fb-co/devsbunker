@@ -1,5 +1,5 @@
 <template>
-    <div ref="error_popup_container" :class="{ error_popup: false}" id="err" v-if="display">
+    <div ref="error_popup_container" :class="{ error_popup: false }" id="err" v-if="display">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-circle-x"
@@ -19,12 +19,9 @@
 
         <div class="err-msg">
             <p>
-                <span
-                    style="font-weight: bold; font-size: 18px; color: var(--main-font-color)"
-                    >Error</span
-                >
+                <span style="font-weight: bold; font-size: 18px; color: var(--main-font-color)">Error</span>
                 <br />
-                Something went wrong
+                {{ msg }}
             </p>
         </div>
 
@@ -45,15 +42,16 @@ export default {
             life: 5000, // in milliseconds
         };
     },
+    props: ["msg"],
     // close the popup after the speficed "life" variable
     mounted() {
         // trigger the css animation by setting the width
         document.getElementById("err").style.right = "20px";
 
-
-        setTimeout(() => { this.$emit('display-popup', false); }, this.life);
-    }
-    
+        setTimeout(() => {
+            this.$emit("display-popup", false);
+        }, this.life);
+    },
 };
 </script>
 
