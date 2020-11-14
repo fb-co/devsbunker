@@ -76,6 +76,35 @@ const GraphQLService = {
         }
     },
 
+    fetchSavedPosts: function(token) {
+        const query = `
+            query {
+                getSavedPosts(token: "${token}") {
+                    title
+                    author
+                    description
+                    likeAmt
+                    bunkerTag
+                    price
+                    id
+                }
+            }
+        `;
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => res.json())
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
     fetchPosts: function(sortMethod, token) {
         let query;
         // only request the isLiked and isSaved fields if the user is logged in and passes in the auth token

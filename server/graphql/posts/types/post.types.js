@@ -42,6 +42,8 @@ export default gql`
         getPosts(sortingType: String!, token: String): [FetchablePost]!
 
         getPostsByAuthor(author: String!): [FetchablePost]!
+
+        getSavedPosts(token: String!): [FetchablePost]
     }
 
     type Mutation {

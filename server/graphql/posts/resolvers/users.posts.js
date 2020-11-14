@@ -1,6 +1,7 @@
 import getUserPost from "../utils/getUserPost.js";
 import getPostList from "../utils/getPostList.js";
 import getPostsByAuthor from "../utils/getPostsByAuthor.js";
+import getSavedPosts from "../utils/getSavedPosts.js";
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
@@ -52,6 +53,14 @@ export default {
         getPostsByAuthor: function (_, args, { res }) {
             return getPostsByAuthor(args.author);
         },
+
+        getSavedPosts: function (_, args, { res }) {
+            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+
+            if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+            return getSavedPosts(jwtPayload.username);
+        }
     },
 
     Mutation: {

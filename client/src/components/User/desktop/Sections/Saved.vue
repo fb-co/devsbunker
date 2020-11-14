@@ -3,8 +3,8 @@
         <div class="filter_dropdown_container">
             <SearchBar placeholder="Search..." class="search_bar" />
         </div>
-        <div class="project_list">
-            <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="60%" />
+        <div v-if="userProjects" class="project_list">
+            <MobileProjectCard v-for="userProject in userProjects" :key="userProject.name" :projectData="userProject" width="85%" />
         </div>
     </div>
 </template>
@@ -12,19 +12,19 @@
 <script>
 import MobileProjectCard from '@/components/MobileProjectCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
+import GraphQLService from "@/services/graphql.service";
 
 export default {
     data() {
         return {
-            projects: undefined,
+            userProjects: undefined,
         }
     },
     created() {
-        /*
-        GraphQLService.fetchPostsByAuthor(this.$store.getters.username).then((posts) => {
-            this.userProjects = posts.data.getPostsByAuthor;
+        // WE SHOULD CACHE THIS FOR A RELATIVELY SHORT AMOUNT OF TIME
+        GraphQLService.fetchSavedPosts(this.$store.getters.accessToken).then((posts) => {
+            this.userProjects = posts.data.getSavedPosts;
         });
-        */
     },
     components: {
         MobileProjectCard,
