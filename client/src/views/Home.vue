@@ -36,10 +36,12 @@ export default {
             this.mobile = this.isMobile();
         });
 
+        /*
         const cache = await caches.open("devsCache");
         cache.match("http://localhost:5000/graphql").then((result) => {
                         console.log("[CACHE] ", result.json());
                     });
+                    */
     },
     destroyed() {
         window.removeEventListener("resize", () => {

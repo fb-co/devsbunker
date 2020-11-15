@@ -89,7 +89,6 @@ export default {
         SharedMethods.loadPage();
         this.username = this.$route.params.username;
 
-        
         GraphQLService.fetchUserDetails(this.username, [
             "email",
             "tag",
@@ -106,9 +105,10 @@ export default {
     },
     methods: {
         followUser() {
-            GraphQLService.followPerson(this.$route.params.username, this.$store.getters.accessToken).then((newFollowers) => {
+            GraphQLService.followPerson(this.$store.getters.accessToken, this.$route.params.username).then((newFollowers) => {
                 if (newFollowers.data.followPerson) {
                     this.userObject.followers = newFollowers.data.followPerson.followers;
+                    console.log(newFollowers);
                 }   
             });
         }
