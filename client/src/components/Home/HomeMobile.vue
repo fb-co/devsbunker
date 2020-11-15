@@ -2,12 +2,7 @@
     <div class="main_container">
         <div class="main_content_container">
             <CustomInput class="main_search">
-                <input
-                    type="text"
-                    name="search"
-                    id="setting_search"
-                    placeholder="Search..."
-                />
+                <input type="text" name="search" id="setting_search" placeholder="Search..." />
                 <div class="submit_search">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -30,11 +25,7 @@
             <div id="loggedIn-header" v-if="$store.getters.isLoggedIn">
                 <div class="header_container">
                     <div class="horizontal_flex_center">
-                        <img
-                            src="../../assets/profilePlaceholder.png"
-                            alt="profile_pic"
-                            class="profile-pic"
-                        />
+                        <img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic" />
                         <div class="header_right_cont">
                             <p class="username_welcome">
                                 {{ "Hello " + $store.getters.username + "!" }}
@@ -87,33 +78,23 @@
 
             <!-- BUG: Buttons get transperent -->
             <div style="margin-bottom: 30px" v-else>
-                <Dropdown
-                    label="Newest"
-                    fontSize="12px"
-                    linkHeight="40px"
-                    height="30px"
-                    justifyLabel="left"
-                    class="filter_dropdown"
-                >
+                <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
                     <button>Newest</button>
                     <button>Most Popular</button>
                     <button>Alphabetical</button>
                 </Dropdown>
             </div>
 
-            <MobileProjectCard
-                v-for="project in projects"
-                :key="project.name"
-                :projectData="project"
-                width="100%"
-            />
+            <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
         </div>
+        <BottomNavBar />
     </div>
 </template>
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import CustomInput from "@/components/global/CustomInput.vue";
+import BottomNavBar from "@/components/BottomNavBar";
 
 export default {
     data() {
@@ -123,7 +104,7 @@ export default {
         };
     },
     props: {
-        projects: Array
+        projects: Array,
     },
     mounted() {
         /* un-comment this if we ever decide to put in the carousel
@@ -164,6 +145,7 @@ export default {
         MobileProjectCard,
         Dropdown,
         CustomInput,
+        BottomNavBar,
     },
 };
 </script>
