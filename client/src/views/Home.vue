@@ -35,6 +35,11 @@ export default {
         window.addEventListener("resize", () => {
             this.mobile = this.isMobile();
         });
+
+        const cache = await caches.open("devsCache");
+        cache.match("http://localhost:5000/graphql").then((result) => {
+                        console.log("[CACHE] ", result.json());
+                    });
     },
     destroyed() {
         window.removeEventListener("resize", () => {
@@ -59,26 +64,43 @@ export default {
             this.$refs.newPostMenu.close();
         },
         queryPosts() {
+            /*
             // CACHE TEST!!!
             let isCacheSupported = "caches" in window;
             console.log("is cache supported:", isCacheSupported);
             if (isCacheSupported) {
-                let cacheName = "devsCache";
+                //let cacheName = "devsCache";
                 // just caching a google req
-                fetch("https://google.com").then(async (res) => {
-                    const cache = await caches.open(cacheName);
-                    cache.put(URL, res);
-                    cache.match(URL).then((result) => {
-                        console.log("[CACHE] ", result);
+
+                const query = `
+                    query {
+                        user(username: "TheJak") {
+                            email
+                            liked_posts
+                        }
+                    }
+                `;
+
+                fetch("http://localhost:5000/graphql", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query }),
+                }).then(async (res) => {
+                    const cache = await caches.open("devsCache");
+                    cache.put("http://localhost:5000/graphql", res);
+                    cache.match("http://localhost:5000/graphql").then((result) => {
+                        console.log("[CACHE] ", result.json());
                     });
                 });
             }
+            */
             // Get the posts
             GraphQLService.fetchPosts("newest", this.$store.getters.accessToken).then((res) => {
                 // pass in the new post data to the home page main components
                 this.posts = res.data.getPosts;
             });
         },
+        
     },
 };
 </script>
