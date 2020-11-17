@@ -28,7 +28,7 @@
                         </svg>
                     </router-link>
                     <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class='static_link profile_pic'>
-                        <img src="../assets/profilePlaceholder.png" alt="profile_pic" style="width: 50px;">
+                        <ProfilePicture v-if="username" :username="username" style="width: 70px" />
                     </router-link>
                 </div>
                 <div class='burger_nav_links'>
@@ -80,6 +80,8 @@ import NavBarSearch from "./NavBarSearch.vue";
 import UserService from "../services/user.service";
 import GraphQLService from "../services/graphql.service";
 
+import ProfilePicture from "@/components/ProfilePicture.vue";
+
 export default {
     props: {
         min_width: String,
@@ -99,6 +101,7 @@ export default {
     components: {
         ...GlobalComponents,
         NavBarSearch,
+        ProfilePicture
     },
 
     created() {

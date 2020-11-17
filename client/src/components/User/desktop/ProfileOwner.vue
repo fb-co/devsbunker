@@ -3,7 +3,8 @@
         <div class='main_container'>
             <div class="row1">
                 <div class='profile_pic_container row_item'>
-                    <img :src="require('@/assets/profile_pictures/' + this.userObject.profile_pic)" alt="profile_pic" class="profile-pic" width="100px">
+                    <!--<img :src="require('@/assets/profile_pictures/' + this.userObject.profile_pic)" alt="profile_pic" class="profile-pic" >-->
+                    <ProfilePicture v-if="userObject" :username="this.$store.getters.username" style="width: 100px;" />
 
                     <!-- not all users will have the verified tag, this is temp -->
                     <p class="username">{{ $store.getters.username }} <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-check-fll" fill="#3C93D2" xmlns="http://www.w3.org/2000/svg">
@@ -110,6 +111,7 @@
 
 <script>
 import GraphQLService from "@/services/graphql.service";
+import ProfilePicture from "@/components/ProfilePicture.vue";
 
 export default {
     data() {
@@ -118,6 +120,9 @@ export default {
             userObject: this.mainUserObject,
             userProjects: this.mainUserProjects
         }
+    },
+    components: {
+        ProfilePicture
     },
     props: {
         mainUserObject: Object,

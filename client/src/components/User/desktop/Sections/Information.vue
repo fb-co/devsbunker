@@ -3,8 +3,7 @@
         <p class="label">General</p>
 
         <div class="profile_pic_container">
-            <!--<img src="@/assets/profilePlaceholder.png" alt="profile_pic" style="width: 250px;" />-->
-            <img :src="require('@/assets/profile_pictures/' + this.userObject.profile_pic)" alt="profile_pic" style="width: 250px;" />
+            <ProfilePicture v-if="userObject" :username="this.$store.getters.username" style="width: 250px;" />
         </div>
 
         <div class="desc_container">
@@ -53,6 +52,7 @@
 
 <script>
 import GraphQLService from "@/services/graphql.service";
+import ProfilePicture from "@/components/ProfilePicture.vue";
 
 export default {
     data() {
@@ -60,6 +60,9 @@ export default {
             userObject: this.$parent.userObject,
             isEditingDesc: false,
         };
+    },  
+    components: {
+        ProfilePicture
     },
     methods: {
         editDesc() {
