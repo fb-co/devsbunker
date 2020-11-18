@@ -146,12 +146,12 @@
             <button @click="createPost()" class="create_post_button">
                 Post
             </button>
-
-            <!-- Sub-Popups -->
-            <NewTagPopup ref="contrib_popup" label="Add Contributers" name="add_contributers" :entries="contributers" />
-            <NewTagPopup ref="tags_popup" label="Add Tags" name="add_tags" :entries="tags" />
-            <NewTagPopup ref="links_popup" label="Add Links" name="add_links" :entries="links" />
         </div>
+
+        <!-- Sub-Popups -->
+        <NewTagPopup ref="contrib_popup" label="Add Contributers" name="add_contributers" :entries="contributers" style="position: fixed;" />
+        <NewTagPopup ref="tags_popup" label="Add Tags" name="add_tags" :entries="tags" style="position: fixed;" />
+        <NewTagPopup ref="links_popup" label="Add Links" name="add_links" :entries="links" style="position: fixed;" />
 
         <ErrorPopUp v-if="error" @display-popup="error = $event" :msg="errmsg" />
         <SuccessPopUp v-if="success" message="Successfully created new post" />
@@ -282,7 +282,7 @@ export default {
 
                         setTimeout(() => {
                             // refresh the post feed, if we ever use this component somewhere else, we will need to rethink how to do this.
-                            this.$parent.$parent.getPosts();
+                            this.$parent.$parent.queryPosts();
                             this.close();
                         }, 1000);
                     })

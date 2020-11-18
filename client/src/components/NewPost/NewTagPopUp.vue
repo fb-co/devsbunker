@@ -58,9 +58,11 @@ export default {
             }
             
             this.isOpen = false;
+            document.body.style.overflowY = "auto";
         },
         open() {
             this.isOpen = true;
+            document.body.style.overflowY = "hidden";
         },
         remove_entry(element) {
             for (let i = 0; i < this.selected_entries.length; i++) {
