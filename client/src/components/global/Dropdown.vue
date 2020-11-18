@@ -20,9 +20,10 @@
 export default {
     data() {
         return {
-            activeLabel: this.label
+            activeLabel: this.label,
+            isOpen: false
         }
-    },
+    },  
     props: {
         label: {
             type: String,
@@ -60,20 +61,30 @@ export default {
     methods: {
         openMenu(from) {
             if (from != null) {
-                if (from==="click" && this.openOn==="click" || from==="hover" && this.openOn==="hover") {
+                if (from==="click" && this.openOn==="click") {
+                    if (this.isOpen) {
+                        this.closeMenu();
+                    } else {
+                        this.$el.getElementsByClassName('menu_cont')[0].style.display = "flex";
+                        this.isOpen = true;
+                    }
+                } else if (from==="hover" && this.openOn==="hover") {
                     this.$el.getElementsByClassName('menu_cont')[0].style.display = "flex";
+                    this.isOpen = true;
                 }
             }else {
                 this.$el.getElementsByClassName('menu_cont')[0].style.display = "flex";
+                this.isOpen = true;
             }
         },
         closeMenu() {
             this.$el.getElementsByClassName('menu_cont')[0].style.display = "none";
+            this.isOpen = false;
         },
         handleClick(e) {
             this.activeLabel = e.target.innerText;
             this.closeMenu();
-        }
+        },
     },
     computed: {
         cssProps() {
@@ -126,6 +137,7 @@ export default {
     font-size: var(--font-size);
     height: var(--link-spacing);
     cursor: pointer;
+    background-color: #efefef;
 }
 .menu_cont > *:hover {
     color: var(--dropdown-hover-color);

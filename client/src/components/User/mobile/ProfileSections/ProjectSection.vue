@@ -1,28 +1,16 @@
 <template>
     <div id="component_container">
-        <Dropdown class="filter_dropdown" style="margin-right: 4%;" label="My Projects" height="40px" linkHeight="40px" openOn="hover">
+        <Dropdown class="filter_dropdown" style="margin-right: 4%;" label="My Projects" height="40px" linkHeight="40px" openOn="click">
             <button>My Projects</button>
             <button>Purchases</button>
             <button>Downloaded</button>
         </Dropdown>
-        <Dropdown class="filter_dropdown" label="Newest" height="40px" linkHeight="40px" openOn="hover">
+        <Dropdown class="filter_dropdown" label="Newest" height="40px" linkHeight="40px" openOn="click">
             <button>Newest</button>
             <button>Most Popular</button>
             <button>Alphabetical</button>
         </Dropdown>
-                <!--
-                <Dropdown label="My Projects" fontSize="12px" spacing="40px" class="filter_dropdown">
-                    <button>My Projects</button>
-                    <button>Purchases</button>
-                    <button>Downloaded</button>
-                </Dropdown>
-                <span style="width: 10px;" />
-                <Dropdown label="Newest" fontSize="12px" spacing="40px" class="filter_dropdown">
-                    <button>Newest</button>
-                    <button>Most Popular</button>
-                    <button>Alphabetical</button>
-                </Dropdown>
-                -->
+
         <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
     </div>
 </template>

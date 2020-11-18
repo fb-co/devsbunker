@@ -25,7 +25,9 @@
             <div id="loggedIn-header" v-if="$store.getters.isLoggedIn">
                 <div class="header_container">
                     <div class="horizontal_flex_center">
-                        <img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic" />
+                        <!--<img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic" />-->
+                        <ProfilePicture :username="$store.getters.username" style="height: 100px;" />
+
                         <div class="header_right_cont">
                             <p class="username_welcome">
                                 {{ "Hello " + $store.getters.username + "!" }}
@@ -95,6 +97,7 @@ import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import CustomInput from "@/components/global/CustomInput.vue";
 import BottomNavBar from "@/components/BottomNavBar";
+import ProfilePicture from "@/components/ProfilePicture.vue";
 
 export default {
     data() {
@@ -146,6 +149,7 @@ export default {
         Dropdown,
         CustomInput,
         BottomNavBar,
+        ProfilePicture
     },
 };
 </script>
@@ -207,10 +211,6 @@ export default {
     stroke-width: 2.5;
 }
 
-.profile-pic {
-    width: 100px;
-    height: auto;
-}
 .header_right_cont {
     width: 75%;
     margin-left: 10px;
