@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+## OUR ADDITION
+# the uploads folder
+uploads
