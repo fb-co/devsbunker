@@ -32,6 +32,7 @@
         "method-override": "^3.0.0",
         "mongoose": "^5.9.23",
         "morgan": "^1.10.0",
+        "multer": "^1.4.2",
         "nodemon": "^2.0.4"
     }
 }

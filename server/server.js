@@ -13,19 +13,14 @@ import methodOverride from "method-override";
 import TokenHandler from "./components/tokens/TokenHandler.js";
 
 import cors from "cors";
-const allowedOrigins = [
-    `http://${process.env.HOST}:8080`,
-    "http://localhost:8080",
-];
+const allowedOrigins = [`http://${process.env.HOST}:8080`, "http://localhost:8080"];
 const corsOptions = {
     origin: function (origin, callback) {
         if (process.env.PROD === "true") {
             if (allowedOrigins.indexOf(origin) !== -1) {
                 callback(null, true);
             } else {
-                console.log(
-                    "[!] A disawllowed origin has tried to connect. [!]"
-                );
+                console.log("[!] A disawllowed origin has tried to connect. [!]");
                 callback(new Error("Not allowed by CORS"));
             }
         } else {
@@ -83,9 +78,11 @@ db.once("open", () => console.log(`Connected to database [${mongoURI}]`));
 
 // imports
 import user from "./components/user/user.route.js";
+import upload from "./components/post/post.route.js";
 
 // route handling
 app.use("/user", TokenHandler.checkHeaderToken, user);
+app.use("/upload", TokenHandler.checkHeaderToken, upload);
 
 /* HANDLING 404 ERRORS */
 app.use((_, res) => {
