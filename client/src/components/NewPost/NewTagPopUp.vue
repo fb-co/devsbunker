@@ -11,11 +11,10 @@
                 <p>{{ label }}</p>
                 <div></div> <!--placeholder-->
             </div>
-            <!---->
-            <DynamicInput>
-                <input ref="tag_search" class="searcher" placeholder="Search for contributers...">
-            </DynamicInput>
-            <button @click="add_entry()">Add (test btn)</button>
+            
+            <QueryInput ref="tag_search" />
+
+            <!--<button @click="add_entry()">Add (test btn)</button>-->
 
             <div v-for="entry in selected_entries" :key="entry" class="contributer">
                 <p v-if="entry.length < 20">{{ entry }}</p>
@@ -31,7 +30,7 @@
 </template>
 
 <script>
-import DynamicInput from "@/components/DynamicInput.vue";
+import QueryInput from "@/components/QueryInput.vue";
 
 export default {
     data() {
@@ -72,13 +71,14 @@ export default {
                 }
             }
         },
-        add_entry() {
-            this.selected_entries.push(this.$refs.tag_search.value);
-            this.$refs.tag_search.value = "";
+        add_entry(value) {
+            this.$refs.tag_search.queryData();
+            this.selected_entries.push(value);
+            this.$refs.tag_search.clearValue();
         },
     },
     components: {
-        DynamicInput
+        QueryInput
     }
 }
 </script>
@@ -100,8 +100,9 @@ export default {
         width: 350px;
         z-index: 11;
         padding-bottom: 10px;
-        max-height: 80vh;
-        overflow-y: auto;
+        height: 300px;
+        max-height: 50vh;
+        overflow-y: scroll;
         
         -ms-transform: translateX(-50%) translateY(-50%);
         transform: translateX(-50%) translateY(-50%);
@@ -128,21 +129,7 @@ export default {
         font-weight: bold;
         color: var(--main-font-color);
     }
-    .searcher {
-        width: 175px;
-        border: 1px solid var(--soft-text);
-        background-color: var(--secondary-color);
-        padding: 5px;
-        border-radius: 5px;
-        margin-top: 15px;
-        margin-bottom: 20px;
-        font-family: rubik;
-        color: var(--main-font-color);
-    }
-    .searcher:focus {
-        border: 1px solid var(--main-font-color);
-        outline: none;
-    }
+    
     .contributer {
         display: flex;
         flex-direction: row;
@@ -155,4 +142,24 @@ export default {
     .contributer > svg:hover {
         stroke-width: 2.2px;
     }
+
+
+    /* Scrollbar */
+
+    .popup_container::-webkit-scrollbar {
+        width: 7px;
+    }
+
+    /* Handle */
+    .popup_container::-webkit-scrollbar-thumb {
+        background: var(--soft-text);
+        margin: 5px;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    .popup_container::-webkit-scrollbar-thumb:hover {
+        background: var(--main-font-color);
+    }
+
 </style>

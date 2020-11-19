@@ -5,6 +5,7 @@ import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: 
 
 import validateCreds from "../utils/validateCreds.js";
 import getUserEntry from "../utils/getUserEntry.js";
+import getUserByPartial from "../utils/getUserByPartial.js";
 import loginValidUser from "../utils/loginValidUser.js";
 
 import ApolloServer from "apollo-server-express";
@@ -60,6 +61,10 @@ export default {
         user: function (_, args, { res }) {
             return getUserEntry(args.username);
         },
+
+        partial_user: function(_, args, { res }) {
+            return getUserByPartial(args.partial_username);
+        }
     },
 
     Mutation: {

@@ -41,6 +41,8 @@ export default gql`
     type Query {
         user(username: String!): FetchableUser
 
+        partial_user(partial_username: String!): [FetchableUser]!
+
         loginUser(
             username: String
             email: String
