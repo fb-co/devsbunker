@@ -23,21 +23,23 @@ const GraphQLService = {
     },
 
     fetchUserByPartial: function(partial_username) {
-        const query = `
-            query {
-                partial_user(partial_username: "${partial_username}") {
-                    username
+        if (partial_username != "") {
+            const query = `
+                query {
+                    partial_user(partial_username: "${partial_username}") {
+                        username
+                    }
                 }
-            }
-        `;
+            `;
 
-        return fetch(URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ query }),
-        })
-            .then((res) => res.json())
-            .catch(console.error);
+            return fetch(URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => res.json())
+                .catch(console.error);
+        }
     },
 
     fetchUserPost: function(postId, postAuthor) {

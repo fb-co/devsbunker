@@ -1,7 +1,7 @@
 <!-- This component is dependant on its parent (Eventully we should combine this with the NewTags.vue component to make like a "global" one) -->
 <template>
-    <div v-if="isOpen" @click="close()" class="popup_background">
-        <div class="popup_container" v-on:click.stop=""> <!-- you need this click event to stop the click propogation to the parent element -->
+    <div v-if="isOpen" @mousedown="close()" class="popup_background">
+        <div class="popup_container" @click.stop="" @mousedown.stop=""> <!-- you need this click event to stop the click propogation to the parent element -->
             <div class="header_container">
                 <svg @click="close()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>

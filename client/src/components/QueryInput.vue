@@ -1,8 +1,8 @@
 <template>
     <div class="query_input_container"> 
-        <input @input="queryData()" ref="input_ref" class="main_query_input" :placeholder="placeholder">
-        <div class="main_query_results">
-            <p @click="addUser(document.username)" v-for="document in documents" :key="document.username" class="document_item">{{ document.username }}</p>
+        <input @click.stop="" @input="queryData()" ref="input_ref" class="main_query_input" :placeholder="placeholder">
+        <div class="main_query_results" ref="results">
+            <p @mousedown="addUser(document.username)" v-for="document in documents" :key="document.username" class="document_item">{{ document.username }}</p>
 
             <!-- <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" /> -->
         </div>
@@ -14,7 +14,12 @@ import GraphQLService from '../services/graphql.service';
 export default {
     data() {
         return {
-            documents: []
+            documents: [],
+            selectedDocument: -1,
+            queryThresh: 1000, // amount of time in between query queue times
+            queryQueued: false, // flag to make sure queries are not spammed
+
+            canClose: false // Important because you need to make sure when you blur the input that the click binding on the options can be triggered
         }
     },
     props: {
@@ -37,11 +42,20 @@ export default {
 
         // NEED TO OPTIMIZE HOW OFTEN IF QUERIES THE SERVER AS THE USER TYPES, RIGHT NOW EVERY KEY THEY PRESS QUERIES THE SERVER
         queryData() {
-            if (this.$refs.input_ref.value != "" && this.$refs.input_ref.value != null && this.$refs.input_ref.value.length > 2) {
-                if (this.searchFor === "users") {
-                    GraphQLService.fetchUserByPartial(this.$refs.input_ref.value).then((res) => {
-                        this.documents = res.data.partial_user;
-                    });
+            if (this.$refs.input_ref.value != "" && this.$refs.input_ref.value.length > 2) {
+                if (!this.queryQueued) {
+                    this.queryQueued = true;
+
+                    setTimeout(() => {
+                        if (this.$refs.input_ref.value != "") {
+                            if (this.searchFor === "users") {
+                                GraphQLService.fetchUserByPartial(this.$refs.input_ref.value).then((res) => {
+                                    this.documents = res.data.partial_user;
+                                });
+                            }
+                        }
+                        this.queryQueued = false;
+                    }, this.queryThresh);
                 }
             } else {
                 this.documents = [];
@@ -49,9 +63,9 @@ export default {
         },
 
         addUser(value) {
-            console.log(value);
             this.$parent.add_entry(value);
-        }
+            this.documents = [];
+        }, 
     }
 }
 </script>
