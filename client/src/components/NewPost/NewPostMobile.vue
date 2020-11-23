@@ -27,7 +27,7 @@
 
             <div class="tag_container">
                 <p>Images (0/5)</p>
-                <input type="file" enctype="multipart/form-data">
+                <input type="file" ref="imageInput" enctype="multipart/form-data">
 
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -282,8 +282,10 @@ export default {
                         console.log("Created Post: ");
                         console.log(returnPost);
                         this.success = true;
+                        
+                        const images = this.$refs.imageInput.files[0];
 
-                        FileUploadService.addPostImages((res) => {
+                        FileUploadService.addPostImages(images, post.data.makePost.id, this.$store.getters.accessToken).then((res) => {
                             console.log(res);
                         });
                         /*

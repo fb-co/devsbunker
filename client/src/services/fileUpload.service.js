@@ -4,6 +4,8 @@
 
 const FileUploadService = {
     addPostImages: async function(image, postId, token) {
+        console.log("PLZ");
+
         const data = {
             media: image,
             postId: postId,
