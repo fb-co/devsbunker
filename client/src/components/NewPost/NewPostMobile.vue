@@ -27,6 +27,8 @@
 
             <div class="tag_container">
                 <p>Images (0/5)</p>
+                <input type="file" enctype="multipart/form-data">
+
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="icon icon-tabler icon-tabler-camera-plus add_image"
@@ -164,6 +166,7 @@ import CreateTag from "./CreateTag";
 import LinkBlock from "./LinkBlock";
 import NewTagPopup from "./NewTagPopUp";
 import GraphQLService from "@/services/graphql.service";
+import FileUploadService from "@/services/fileUpload.service.js";
 import Languages from "../../templates/Languages";
 import ErrorPopUp from "../ErrorPopUp";
 import SuccessPopUp from "../SuccessPopUp";
@@ -280,11 +283,16 @@ export default {
                         console.log(returnPost);
                         this.success = true;
 
+                        FileUploadService.addPostImages((res) => {
+                            console.log(res);
+                        });
+                        /*
                         setTimeout(() => {
                             // refresh the post feed, if we ever use this component somewhere else, we will need to rethink how to do this.
                             this.$parent.$parent.queryPosts();
                             this.close();
                         }, 1000);
+                        */
                     })
                     .catch(() => {
                         this.error = true;

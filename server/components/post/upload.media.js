@@ -20,7 +20,7 @@ export default async function uploadMedia(req, res, next) {
                 // if user is authorized, proceed with handling files
                 if (!files) {
                     res.json({
-                        message: "No files detected",
+                        message: "No files found",
                     });
                 } else {
                     const data = []; // final array with the files inside

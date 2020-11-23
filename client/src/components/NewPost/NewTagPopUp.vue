@@ -14,7 +14,7 @@
             
             <QueryInput ref="tag_search" />
 
-            <!--<button @click="add_entry()">Add (test btn)</button>-->
+            <button @click="add_entry()">Add (test btn)</button>
 
             <div v-for="entry in selected_entries" :key="entry" class="contributer">
                 <p v-if="entry.length < 20">{{ entry }}</p>
@@ -72,8 +72,13 @@ export default {
             }
         },
         add_entry(value) {
+            if (!value) {
+                value = this.$refs.tag_search.getValue();
+            }
+
             this.$refs.tag_search.queryData();
             this.selected_entries.push(value);
+            console.log(this.selected_entries);
             this.$refs.tag_search.clearValue();
         },
     },
