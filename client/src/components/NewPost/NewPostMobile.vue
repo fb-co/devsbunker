@@ -27,7 +27,16 @@
 
             <div class="tag_container">
                 <p>Images (0/5)</p>
-                <input type="file" name="media" ref="imageInput" enctype="multipart/form-data">
+                <input
+                    type="file"
+                    name="files[]"
+                    ref="imageInput"
+                    enctype="multipart/form-data"
+                    @change="handleFiles($event)"
+                    id="files"
+                    multiple
+                    accept=".jpg, .png, .jpeg, .gif"
+                />
 
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -151,7 +160,13 @@
         </div>
 
         <!-- Sub-Popups -->
-        <NewTagPopup ref="contrib_popup" label="Add Contributers" name="add_contributers" :entries="contributers" style="position: fixed;" />
+        <NewTagPopup
+            ref="contrib_popup"
+            label="Add Contributers"
+            name="add_contributers"
+            :entries="contributers"
+            style="position: fixed;"
+        />
         <NewTagPopup ref="tags_popup" label="Add Tags" name="add_tags" :entries="tags" style="position: fixed;" />
         <NewTagPopup ref="links_popup" label="Add Links" name="add_links" :entries="links" style="position: fixed;" />
 
@@ -182,6 +197,7 @@ export default {
             errmsg: "Internal error. Please try again later.", // by default its a 500 err
             success: false,
             isOnStore: false,
+            files: [],
         };
     },
     mounted() {
@@ -283,11 +299,19 @@ export default {
                         console.log(returnPost);
                         this.success = true;
 
-                        const images = this.$refs.imageInput.files[0];
+                        // const images = this.$refs.imageInput.files[0];
 
-                        FileUploadService.addPostImages(images, returnPost.data.makePost.id, this.$store.getters.accessToken).then((res) => {
-                            console.log(res);
-                        });
+                        // FileUploadService.addPostImages(images, returnPost.data.makePost.id, this.$store.getters.accessToken).then(
+                        //     (res) => {
+                        //         console.log(res);
+                        //     }
+                        // );
+
+                        FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then(
+                            (res) => {
+                                console.log(res);
+                            }
+                        );
                         /*
                         setTimeout(() => {
                             // refresh the post feed, if we ever use this component somewhere else, we will need to rethink how to do this.
@@ -306,6 +330,15 @@ export default {
         },
         toggleStoreState() {
             this.isOnStore = !this.isOnStore;
+        },
+
+        handleFiles(event) {
+            if (!this.files) {
+                this.files = [];
+            }
+            for (const file of event.target.files) {
+                this.files.push(file);
+            }
         },
     },
     components: {
