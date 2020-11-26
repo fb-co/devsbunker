@@ -7,7 +7,9 @@ class FilesHandler {
     }
 
     validateFiles({ mimetype, size, originalname }) {
-        const extension = originalname.split(".").pop();
+        const extension = originalname.split(".").pop().toLowerCase();
+
+        console.log(extension);
 
         return size > 0 && this.allowedMimeTypes.includes(mimetype) && this.allowedExtensions.includes(extension);
     }

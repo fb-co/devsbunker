@@ -312,13 +312,12 @@ export default {
                                 console.log(res);
                             }
                         );
-                        /*
+                        
                         setTimeout(() => {
                             // refresh the post feed, if we ever use this component somewhere else, we will need to rethink how to do this.
                             this.$parent.$parent.queryPosts();
                             this.close();
                         }, 1000);
-                        */
                     })
                     .catch(() => {
                         this.error = true;

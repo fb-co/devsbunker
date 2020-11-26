@@ -13,7 +13,7 @@ const FileUploadService = {
         formData.append("postId", postId);
         formData.append("token", token);
 
-        const response = await fetch("http://192.168.1.10:5000/upload/media", {
+        const response = await fetch("http://192.168.0.45:5000/upload/media", {
             method: "POST",
             body: formData,
         });

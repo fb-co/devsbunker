@@ -9,8 +9,6 @@ export default async function uploadMedia(req, res, next) {
     // FILES LIMIT ERROR HANDLED BY EXPRESS
 
     try {
-        console.log(req.media);
-
         const files = req.files; // grabbing the files from the multipart form
         const postId = req.body.postId;
         const token = req.body.token;
