@@ -74,6 +74,7 @@ const GraphQLService = {
                 getPostsByAuthor(author: "${author}", requesterToken: "${requesterToken}") {
                     title
                     author
+                    images
                     description
                     likeAmt
                     isLiked
@@ -104,6 +105,7 @@ const GraphQLService = {
                 getSavedPosts(token: "${token}") {
                     title
                     author
+                    images
                     description
                     likeAmt
                     isLiked
@@ -137,6 +139,10 @@ const GraphQLService = {
                     getPosts(sortingType: "${sortMethod}", token: "${token}") {
                         title
                         author
+                        images {
+                            ogname
+                            dbname
+                        }
                         description
                         likeAmt
                         isSaved
@@ -153,6 +159,7 @@ const GraphQLService = {
                     getPosts(sortingType: "${sortMethod}") {
                         title
                         author
+                        images
                         description
                         likeAmt
                         bunkerTag

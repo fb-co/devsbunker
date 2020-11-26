@@ -106,16 +106,21 @@
             </div>
         </div>
         <div class="image_container">
+            <DynamicPicture :image_link="getThumbnail()" class="card_image" />
+
+            <!--
             <img
-                src="@/assets/project_img_placeholder.png"
+                :src="@/assets/project_img_placeholder.png"
                 class="card_image"
             />
+            -->
         </div>
     </div>
 </template>
 
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
+import DynamicPicture from "@/components/DynamicPicture.vue";
 
 export default {
     data() {
@@ -133,6 +138,17 @@ export default {
     mixins: [
         ProjectCardUtils
     ],
+    components: {
+        DynamicPicture
+    },
+    methods: {
+        getThumbnail() {
+            if (this.projectData.images.length > 0) {
+                return "../../../uploads/media/" + this.projectData.images[0].dbname;
+            }
+            return "../../../uploads/media/profilePlaceholder.png";
+        }
+    }
 };
 </script>
 

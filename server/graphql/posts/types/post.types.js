@@ -2,10 +2,16 @@ import ApolloServer from "apollo-server-express";
 const { gql } = ApolloServer;
 
 export default gql`
+    type PostImageObject {
+        ogname: String
+        dbname: String
+    }
+
     type FetchablePost {
         id: String!
         title: String!
         author: String!
+        images: [PostImageObject]!
         description: String!
         thumbnail: String
         links: [String]
