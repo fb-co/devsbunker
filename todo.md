@@ -9,7 +9,7 @@
 -   [x] add more informations to the about and home page
 -   [x] make Schema for posts
 -   [x] make Schema for bunkers
--   [ ] provide the current user email where needed (?)
+-   [x] provide the current user email where needed (?)
 -   [x] cosnider switching to ES modules
 -   [ ] multiple devices logged into once account
 -   [x] delete all REST endpoints
@@ -21,7 +21,11 @@
 -   [x] add error handling to the like mutation
     -   [x] same user cant like twice
     -   [x] (DONE IN A DIFFERENT WAY) the mutation response will have an error object (can be null) and a post object (can be null). In case of success errors will be null
--   [ ] add dislike mutation
+-   [x] add dislike mutation
+-   [ ] serve back images
+    -   [ ] 1. moving everything inside server/static and serve them as static assets
+    -   [ ] 2. making another server just for those static assets
+    -   [ ] 3. using res.sendFile(\_\_dirname + /images/ + path); or something like this (PATH TRAVERSAL?)
 
 ## Frontend
 
@@ -43,8 +47,9 @@
 -   [ ] Make the first field in the login and signup pages be auto focused on when thep age is loaded
 -   [ ] add the eye button thing to signup card
 -   [x] Error handling and validation for making posts
--   [ ] make sure that the heart icon is filled even after refresh if user has already liked a post
+-   [x] make sure that the heart icon is filled even after refresh if user has already liked a post
 -   [ ] Project card author link spans 100% of card (even if you cant see it, you can still click it)
+-   [ ] attach images to DOM after retreiving them (like a preview)
 
 ### Things to optimize
 
@@ -53,7 +58,7 @@
 ## Glitches
 
 -   [x] if a logged in user refreshes the page the profile link in the navbar and in the burger disappears, Login and Signup take its place (like if the user was not logged in)
--   [ ] Fix browser back arrow button in some pages after 404
+-   [x] Fix browser back arrow button in some pages after 404
 -   [x] Fix Hamburger Menu
 -   [x] Random scroll space on bottom of login/signup cards on mobile
 -   [x] Cant scroll to the top when resizing vertically
@@ -63,7 +68,7 @@
 -   [x] Tapping or clicking outside burger menu on small screens should close it
 -   [x] For a very small horizontal resize range, there are no Nav links or burger menu
 -   [x] If burger menu not closed when page is expanded, when you shrink the page again it instantly opens the burger menu again
--   [ ] Cant use the back arrow at profile page (sometimes)
+-   [x] Cant use the back arrow at profile page (sometimes)
 -   [x] Cant Highlight text inside navbar and burger menu search inputs only on dark theme
 -   [x] Profile page mobile support stopped working for some reason
 -   [x] When visiting someone elses profile, and clicking on the profile picture in the navbar, it wont bring you back to your own profile
