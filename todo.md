@@ -22,10 +22,11 @@
     -   [x] same user cant like twice
     -   [x] (DONE IN A DIFFERENT WAY) the mutation response will have an error object (can be null) and a post object (can be null). In case of success errors will be null
 -   [x] add dislike mutation
--   [ ] serve back images
-    -   [ ] 1. moving everything inside server/static and serve them as static assets
-    -   [ ] 2. making another server just for those static assets
-    -   [ ] 3. using res.sendFile(\_\_dirname + /images/ + path); or something like this (PATH TRAVERSAL?)
+-   [x] serve back images
+    -   [x] 1. moving everything inside server/static and serve them as static assets
+        -   [ ] organize the upload folder
+    -   [x] 2. making another server just for those static assets
+    -   [x] 3. using res.sendFile(\_\_dirname + /images/ + path); or something like this (PATH TRAVERSAL?)
 
 ## Frontend
 
