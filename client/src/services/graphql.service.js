@@ -99,7 +99,10 @@ const GraphQLService = {
                 getPostsByAuthor(author: "${author}", requesterToken: "${requesterToken}") {
                     title
                     author
-                    images
+                    images {
+                        ogname
+                        dbname
+                    }
                     description
                     likeAmt
                     isLiked

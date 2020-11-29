@@ -20,6 +20,7 @@ export default {
         }
     },
     created() {
+        console.log(this.$route.query.projectData);
         this.postData = this.$route.query.projectData;
 
         SharedMethods.loadPage();
