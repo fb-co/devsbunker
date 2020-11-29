@@ -39,6 +39,7 @@ app.use(morgan("dev")); // change to common for production
 app.use(helmet()); // secure headers
 app.use(methodOverride("_method")); // query string in order to make a delete req
 app.use(cors(corsOptions));
+app.use(express.static("uploads"));
 
 app.use(cookieParser());
 app.use(

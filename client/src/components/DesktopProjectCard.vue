@@ -1,7 +1,7 @@
 <template>
     <div class="proj_card_main_container" @click="$router.push('/post/' + projectData.id)">
         <div class="text_container">
-            <router-link @click.native.stop="" :to='"user/" + projectData.author' class="author">{{ projectData.author }}</router-link>
+            <router-link @click.native.stop="" :to="'user/' + projectData.author" class="author">{{ projectData.author }}</router-link>
             <p class="title">{{ projectData.title }}</p>
             <p class="desc">{{ projectData.description }}</p>
 
@@ -38,10 +38,7 @@
                         fill="#eb4034"
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <path
-                            fill-rule="evenodd"
-                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                        />
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                     </svg>
                 </div>
                 <div v-else class="vertical_flex_center">
@@ -55,10 +52,7 @@
                         fill="#eb4034"
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <path
-                            fill-rule="evenodd"
-                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                        />
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                     </svg>
                 </div>
                 <div class="vertical_flex_center likeAmt">
@@ -66,43 +60,35 @@
                 </div>
 
                 <div class="vertical_flex_center">
-                    <svg 
+                    <svg
                         @click.stop="savePost(projectData.id)"
                         v-if="!projectData.isSaved"
-                        xmlns="http://www.w3.org/2000/svg" 
-                        class="icon icon-tabler icon-tabler-device-floppy save_btn" 
-                        width="27" 
-                        height="27" 
-                        viewBox="0 0 24 24" 
-                        stroke-width="1.2" 
-                        stroke="var(--main-font-color)" 
-                        fill="none" 
-                        stroke-linecap="round" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-device-floppy save_btn"
+                        width="27"
+                        height="27"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.2"
+                        stroke="var(--main-font-color)"
+                        fill="none"
+                        stroke-linecap="round"
                         stroke-linejoin="round"
                     >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
-                            <circle cx="12" cy="14" r="2" />
-                            <polyline points="14 4 14 8 8 8 8 4" />
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                        <circle cx="12" cy="14" r="2" />
+                        <polyline points="14 4 14 8 8 8 8 4" />
                     </svg>
-                    <p @click.stop="unsavePost(projectData.id)" class="saved_link" v-else>Unsave - </p>
+                    <p @click.stop="unsavePost(projectData.id)" class="saved_link" v-else>Unsave -</p>
                 </div>
 
                 <div class="vertical_flex_center">
                     <p class="language">{{ projectData.bunkerTag }}</p>
                 </div>
-                <div
-                    class="spacer"
-                    v-if="projectData.price != 0 && projectData.price != null"
-                >
+                <div class="spacer" v-if="projectData.price != 0 && projectData.price != null">
                     -
                 </div>
-                <p
-                    class="price_text"
-                    v-if="projectData.price != 0 && projectData.price != null"
-                >
-                    ${{ projectData.price }}
-                </p>
+                <p class="price_text" v-if="projectData.price != 0 && projectData.price != null">${{ projectData.price }}</p>
             </div>
         </div>
         <div class="image_container">
@@ -135,20 +121,18 @@ export default {
             default: "200px",
         },
     },
-    mixins: [
-        ProjectCardUtils
-    ],
+    mixins: [ProjectCardUtils],
     components: {
-        DynamicPicture
+        DynamicPicture,
     },
     methods: {
         getThumbnail() {
             if (this.projectData.images.length > 0) {
-                return "../../../uploads/media/" + this.projectData.images[0].dbname;
+                return "../../../uploads/profile_pics/" + this.projectData.images[0].dbname;
             }
-            return "../../../uploads/media/profilePlaceholder.png";
-        }
-    }
+            return "../../../uploads/profile_pics/profilePlaceholder.png";
+        },
+    },
 };
 </script>
 
