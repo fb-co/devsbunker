@@ -42,6 +42,31 @@ const GraphQLService = {
         }
     },
 
+    fetchPostById: function(postId) {
+        const query = `
+            query {
+                getPostById(postId: "${postId}") {
+                    author
+                    title
+                    description
+                }
+            }
+        `;
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => res.json())
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
     fetchUserPost: function(postId, postAuthor) {
         const query = `
             query {

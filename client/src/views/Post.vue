@@ -1,24 +1,50 @@
 <template>
     <div class="main_post_container">
-        <p id="test"></p>
+        <div v-if="postData">
+            <PostMobile v-if="mobile" :projectData="postData" />
+        </div>
     </div>
 </template>
 
 <script>
+import SharedMethods from "../utils/shared";
+import ScreenType from "../utils/screenType.js";
+import GraphQLService from "@/services/graphql.service";
+
+import PostMobile from "../components/Post/PostMobile.vue";
+
 export default {
-    props: {
-        oldData: Object
+    data() {
+        return {
+            mobile: false,
+            postData: undefined,
+        }
     },
-    mounted() {
-        document.getElementById("test").innerText = "POST ID: " + this.$route.params.postid;
+    created() {
+        SharedMethods.loadPage();
+
+        this.mobile = this.isMobile();
+
+        // we also check when the user resizes the window
+        window.addEventListener("resize", () => {
+            this.mobile = this.isMobile();
+        });
+
+        GraphQLService.fetchPostById(this.$route.params.postid).then((res) => {
+            this.postData = res.data.getPostById;
+        });
+    },
+    methods: {
+        isMobile() {
+            return ScreenType.isMobile(950);
+        },
+    },
+    components: {
+        PostMobile
     }
 }
 </script>
 
 <style scoped>
-    .main_post_container {
-        width: 100%;
-        height: 200px;
-        background-color: red;
-    }
+
 </style>

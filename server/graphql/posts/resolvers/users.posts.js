@@ -1,4 +1,5 @@
 import getUserPost from "../utils/getUserPost.js";
+import getPostById from "../utils/getPostById.js";
 import getPostList from "../utils/getPostList.js";
 import getPostsByAuthor from "../utils/getPostsByAuthor.js";
 import getSavedPosts from "../utils/getSavedPosts.js";
@@ -39,6 +40,11 @@ export default {
             } catch (err) {
                 return err;
             }
+        },
+
+        // return a post by the id
+        getPostById: function (_, args, { res }) {
+            return getPostById(args.postId);
         },
 
         // returns all the posts by a given author parameter
