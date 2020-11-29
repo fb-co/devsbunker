@@ -9,7 +9,6 @@
 <script>
 import SharedMethods from "../utils/shared";
 import ScreenType from "../utils/screenType.js";
-import GraphQLService from "@/services/graphql.service";
 
 import PostMobile from "../components/Post/PostMobile.vue";
 
@@ -21,6 +20,8 @@ export default {
         }
     },
     created() {
+        this.postData = this.$route.query.projectData;
+
         SharedMethods.loadPage();
 
         this.mobile = this.isMobile();
@@ -28,10 +29,6 @@ export default {
         // we also check when the user resizes the window
         window.addEventListener("resize", () => {
             this.mobile = this.isMobile();
-        });
-
-        GraphQLService.fetchPostById(this.$route.params.postid).then((res) => {
-            this.postData = res.data.getPostById;
         });
     },
     methods: {

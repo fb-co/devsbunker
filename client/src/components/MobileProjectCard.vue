@@ -1,5 +1,5 @@
 <template>
-    <div @click="$router.push('/post/' + projectData.id)" id="card_container" class="main_container no_select" :style="style">
+    <div @click="$router.push({ path: `/post/${projectData.id}`, query: { projectData: projectData }})" id="card_container" class="main_container no_select" :style="style">
         <div class="card_text_container">
             <router-link @click.native.stop="" :to='"user/" + projectData.author' class="author card_text">{{ projectData.author }}</router-link>
             <p class="proj_name card_text">{{ projectData.title }}</p>

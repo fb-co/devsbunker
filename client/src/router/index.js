@@ -75,6 +75,7 @@ const routes = [
     {
         path: "/post/:postid",
         name: "Post",
+        props: true,
         component: () => import("../views/Post.vue"),
     },
 
