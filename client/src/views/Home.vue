@@ -1,9 +1,12 @@
 <template>
-    <div class="home">
+    <div>
         <NavBar />
-        <HomeMobile :projects="posts" v-if="mobile" />
-        <HomeDesktop :projects="posts" v-if="!mobile" />
-        <NewPost ref="newPostMenu" />
+        <button @click="reloadHome()">Reload Home</button>
+        <div class="home" :key="homeKey">
+            <HomeMobile :projects="posts" v-if="mobile" />
+            <HomeDesktop :projects="posts" v-if="!mobile" />
+            <NewPost ref="newPostMenu" />
+        </div>
     </div>
 </template>
 
@@ -23,6 +26,7 @@ export default {
         return {
             mobile: false,
             posts: undefined,
+            homeKey: 0,
         };
     },
     async created() {
@@ -102,6 +106,10 @@ export default {
                 this.posts = res.data.getPosts;
                 console.log(this.posts);
             });
+        },
+        reloadHome() {
+            this.queryPosts(); // i thought I could avoid calling this here but otherwise it doesnt work...
+            this.homeKey += 1;
         },
     },
 };

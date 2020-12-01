@@ -24,11 +24,7 @@
                 </svg>
                 <p>Settings</p>
             </router-link>
-            <router-link
-                v-if="$store.getters.isLoggedIn"
-                :to="userRoute"
-                class="tab_container"
-            >
+            <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="tab_container">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="icon icon-tabler icon-tabler-device-floppy"
@@ -42,13 +38,11 @@
                     stroke-linejoin="round"
                 >
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path
-                        d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"
-                    />
+                    <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
                     <circle cx="12" cy="14" r="2" />
                     <polyline points="14 4 14 8 8 8 8 4" />
                 </svg>
-                <router-link :to='"user/" + $store.getters.username + "/saved"' class="saved_projects_link">Saved Projects</router-link>
+                <router-link :to="'user/' + $store.getters.username + '/saved'" class="saved_projects_link">Saved Projects</router-link>
             </router-link>
 
             <button @click="makeNewPost()" class="new_button">
@@ -70,11 +64,7 @@
                     <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
             </button>
-            <p
-                v-if="$store.getters.isLoggedIn"
-                @click="logout()"
-                class="logout_button"
-            >
+            <p v-if="$store.getters.isLoggedIn" @click="logout()" class="logout_button">
                 Logout
             </p>
         </div>
