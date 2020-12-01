@@ -128,7 +128,7 @@ export default {
     methods: {
         getThumbnail() {
             if (this.projectData.images.length > 0) {
-                return "../../../uploads/profile_pics/" + this.projectData.images[0].dbname;
+                return this.projectData.images[0].dbname;
             }
             return "../../../uploads/profile_pics/profilePlaceholder.png";
         },

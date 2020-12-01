@@ -1,7 +1,7 @@
 <template>
     <!-- You need to provide the entire file path -->
     <!--<img v-if="image_link" :src="require(image_link)" :alt="alternate">-->
-    <img v-if="image_link" src="" :alt="alternate">
+    <img v-if="image_link" :src="full_path" :alt="alternate" />
 </template>
 
 <script>
@@ -13,12 +13,19 @@ export default {
         },
         alternate: {
             type: String,
-            default: "image"
-        }
-    }
-}
+            default: "image",
+        },
+    },
+    data() {
+        return {
+            full_path: undefined,
+        };
+    },
+
+    created() {
+        this.full_path = `${process.env.VUE_APP_IMG_STATIC_ASSETS}${this.image_link}`;
+    },
+};
 </script>
 
-<style lang="less" scoped>
-
-</style>
+<style scoped></style>
