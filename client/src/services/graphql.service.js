@@ -42,13 +42,11 @@ const GraphQLService = {
         }
     },
 
-    fetchPostById: function(postId) {
+    fetchPostById: function(postId, fields) {
         const query = `
             query {
                 getPostById(postId: "${postId}") {
-                    author
-                    title
-                    description
+                    ${fields}
                 }
             }
         `;

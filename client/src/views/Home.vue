@@ -100,7 +100,7 @@ export default {
             GraphQLService.fetchPosts("newest", this.$store.getters.accessToken).then((res) => {
                 // pass in the new post data to the home page main components
                 this.posts = res.data.getPosts;
-                
+                console.log(this.posts);
             });
         },
         

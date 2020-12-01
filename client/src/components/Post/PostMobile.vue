@@ -2,7 +2,7 @@
     <div class="mobile_post_container">
         <div class="custom_header_container">
             <div class="header_actions">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.2" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg @click="back()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.2" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <line x1="5" y1="12" x2="19" y2="12" />
                     <line x1="5" y1="12" x2="11" y2="18" />
@@ -19,13 +19,33 @@
                 <p class="postauthor"><span style="color: var(--soft-text)">By:</span> {{ projectData.author }}</p>
             </div>
         </div>
+        <p class="newPostTag">Tags</p>
+        <div ref="tags" class="tag_container" v-if="tags">
+            <p v-for="tag in tags" :key="tag" class="tag_item">{{ tag }}</p>
+        </div>
+        <p class="newPostTag">Description</p>
+        <p class="post_description">{{ projectData.description }}</p>
+        <p class="newPostTag">Links</p>
     </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            tags: undefined,
+        }
+    },
     props: {
         projectData: Object
+    },
+    created() {
+        this.tags = Object.values(this.projectData.tags);
+    },
+    methods: {
+        back() {
+            this.$router.go(-1);
+        }
     }
 }
 </script>
@@ -33,7 +53,6 @@ export default {
 <style scoped>
     .mobile_post_container {
         width: 100%;
-
     }
     .placeholder {
         height: 150px;
@@ -65,5 +84,45 @@ export default {
     }
     .postauthor {
         color: var(--main-font-color);
+    }
+    .newPostTag {
+        padding: 15px 30px 15px 30px;
+        text-align: left;
+        font-weight: bold;
+    }
+    .post_description {
+        color: var(--main-font-color);
+        text-align: left;
+        font-size: 13px;
+        padding-left: 30px;
+        padding-right: 30px;
+        margin-bottom: 15px;
+    }
+    .icon:hover {
+        stroke-width: 2.5;
+    }
+    .tag_container {
+        display: flex;
+        flex-direction: row;
+        padding-left: 30px;
+        padding-right: 30px;
+        margin-bottom: 15px;
+    }
+    .tag_container {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+    .tag_item {
+        font-size: 12px;
+        color: green;
+        display: inline-block;
+        text-align: left;
+        padding: 5px 15px 5px 15px;
+        border-radius: 20px;
+        border: 1px solid green;
+        margin-right: 5px;
+    }
+    .tag_item:not(:first-child) {
+        margin-left: 5px;
     }
 </style>

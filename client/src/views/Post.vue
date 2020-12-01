@@ -9,6 +9,7 @@
 <script>
 import SharedMethods from "../utils/shared";
 import ScreenType from "../utils/screenType.js";
+import GraphQLService from '../services/graphql.service';
 
 import PostMobile from "../components/Post/PostMobile.vue";
 
@@ -20,8 +21,8 @@ export default {
         }
     },
     created() {
-        console.log(this.$route.query.projectData);
-        this.postData = this.$route.query.projectData;
+        // refrain from setting 'postData' until you receive the other data so the component wont be rendered too early
+        const tempPostData = this.$route.query.projectData;
 
         SharedMethods.loadPage();
 
@@ -31,6 +32,19 @@ export default {
         window.addEventListener("resize", () => {
             this.mobile = this.isMobile();
         });
+
+        // query for the remaining post fields
+        GraphQLService.fetchPostById(tempPostData.id, ["links", "tags"]).then((res) => {
+            const response = res.data.getPostById;
+
+            // add any newly requested post data to the postData object
+            for (const [key, value] of Object.entries(response)) {
+                tempPostData[key] = value;
+            }
+
+            this.postData = tempPostData;
+        });
+
     },
     methods: {
         isMobile() {
