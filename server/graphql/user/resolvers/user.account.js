@@ -64,14 +64,24 @@ export default {
 
         getPersonalDetails: function (_, args, { res }) {
             const jwtPayload = TokenHandler.verifyAccessToken(args.token);
-            
+
             if (!jwtPayload) return { success: false, message: "Invalid token" };
 
             try {
                 const user = User.findOne({ username: jwtPayload.username });
 
                 if (user) {
-                    return user;
+                    return {
+                        username: user.username,
+                        email: user.email,
+                        notifications: user.notifications,
+                        tag: user.tag,
+                        liked_posts: user.liked_posts,
+                        saved_posts: user.saved_posts,
+                        followers: user.followers,
+                        following: user.following,
+                        profile_pic: user.profile_pic,
+                    };
                 } else {
                     console.log(err);
                 }
@@ -80,9 +90,9 @@ export default {
             }
         },
 
-        partial_user: function(_, args, { res }) {
+        partial_user: function (_, args, { res }) {
             return getUserByPartial(args.partial_username);
-        }
+        },
     },
 
     Mutation: {
@@ -191,7 +201,7 @@ export default {
                 message: "Successfully updated user details",
             };
         },
-        
+
         // will add a follower to "person" and add a following to follower
         followPerson: async function (_, args, { res }) {
             const jwtPayload = TokenHandler.verifyAccessToken(args.token);
@@ -211,16 +221,16 @@ export default {
                     } else {
                         return null;
                     }
-                              
+
                     await person_to_follow.save();
-                    
+
                     //add a following entry to the person who followed
                     add_following.following.push(personPayload);
 
                     await add_following.save();
 
                     return {
-                        followers: person_to_follow.followers 
+                        followers: person_to_follow.followers,
                     };
                 } else {
                     return null;

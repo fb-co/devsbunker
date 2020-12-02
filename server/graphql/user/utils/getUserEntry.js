@@ -5,7 +5,16 @@ export default async function getUserEntry(name) {
     return new Promise((resolve) => {
         User.findOne({ username: name })
             .then((user) => {
-                resolve(user);
+                const filtered = {
+                    username: user.username,
+                    tag: user.tag,
+                    liked_posts: user.liked_posts,
+                    followers: user.followers,
+                    following: user.following,
+                    profile_pic: user.profile_pic,
+                };
+
+                resolve(filtered);
             })
             .catch((err) => {
                 console.log(err);
