@@ -102,9 +102,9 @@ export default {
             */
             // Get the posts
             GraphQLService.fetchPosts("newest", this.$store.getters.accessToken).then((res) => {
+                console.log(res);
                 // pass in the new post data to the home page main components
                 this.posts = res.data.getPosts;
-                console.log(this.posts);
             });
         },
         reloadHome() {

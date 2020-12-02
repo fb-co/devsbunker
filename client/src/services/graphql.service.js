@@ -185,7 +185,10 @@ const GraphQLService = {
                     getPosts(sortingType: "${sortMethod}") {
                         title
                         author
-                        images
+                        images {
+                            ogname
+                            dbname
+                        }
                         description
                         likeAmt
                         bunkerTag

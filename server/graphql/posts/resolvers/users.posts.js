@@ -33,7 +33,7 @@ export default {
 
                     user = await User.findOne({ username: jwtPayload.username});
                 }
-                
+
                 const finalPosts = AddDynamicData.addAll(posts, user);
 
                 return finalPosts;
