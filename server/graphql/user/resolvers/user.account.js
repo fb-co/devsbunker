@@ -62,6 +62,24 @@ export default {
             return getUserEntry(args.username);
         },
 
+        getPersonalDetails: function (_, args, { res }) {
+            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+            
+            if (!jwtPayload) return { success: false, message: "Invalid token" };
+
+            try {
+                const user = User.findOne({ username: jwtPayload.username });
+
+                if (user) {
+                    return user;
+                } else {
+                    console.log(err);
+                }
+            } catch (err) {
+                throw new Error("Failed to fetch details");
+            }
+        },
+
         partial_user: function(_, args, { res }) {
             return getUserByPartial(args.partial_username);
         }
@@ -209,6 +227,30 @@ export default {
                 }
             } catch (err) {
                 throw new Error("Something went wrong following " + personPayload);
+            }
+        },
+
+        notifyUser: async function (_, args, { res }) {
+            const userToNotifyPayload = args.userToNotify;
+            const notificationPayload = args.notification;
+
+            notificationPayload.read = false; // set the message read state to false since its a new notification
+
+            try {
+                let person_to_notify = await User.findOne({ username: userToNotifyPayload });
+
+                if (person_to_notify) {
+                    // limit the amount of notifications here (if len > x : delete the oldest)
+                    person_to_notify.notifications.push(notificationPayload);
+
+                    await person_to_notify.save();
+
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (err) {
+                throw new Error("Something went wrong with the notification");
             }
         },
 

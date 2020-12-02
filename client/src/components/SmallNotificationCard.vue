@@ -1,8 +1,8 @@
 <template>
-    <div class="main_container" :style="style">
+    <div v-if="!notificationData.read" class="main_container" :style="style"> <!-- Only show the notification if its unread -->
         <div class="text_container">
-            <p class="title">{{ notificationData.label }}</p>
-            <p class="subtext">{{ notificationData.subtext }}</p>
+            <p class="title">{{ notificationData.sender }}</p>
+            <p class="subtext">{{ notificationData.message }}</p>
         </div>
         <div class="icon_container">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F44336" fill="none" stroke-linecap="round" stroke-linejoin="round">

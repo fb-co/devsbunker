@@ -135,6 +135,17 @@ export default {
 
                         await user.save();
                         
+                        const userToNotify = await User.findOne({ username: post.author });
+
+                        if (userToNotify) {
+                            userToNotify.notifications.push({
+                                read: false,
+                                sender: jwtPayload.username,
+                                message: `liked your post!`,
+                                type: "like"
+                            });
+                            await userToNotify.save();
+                        }
 
                         return {
                             id: post._id,

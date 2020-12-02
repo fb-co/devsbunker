@@ -7,6 +7,18 @@ export default gql`
         accessToken: String
     }
 
+    type Notification {
+        read: Boolean!
+        sender: String!
+        message: String!
+        type: String!
+    }
+
+    input NotificationPayload {
+        message: String!
+        type: String!
+    }
+
     type FetchableUser {
         username: String!
         email: String!
@@ -16,6 +28,7 @@ export default gql`
         following: [String]!
         liked_posts: [String]!
         profile_pic: String!
+        notifications: [Notification]!
     }
 
     type LogoutResponse {
@@ -38,8 +51,12 @@ export default gql`
         newValue: String!
     }
 
+    
+
     type Query {
         user(username: String!): FetchableUser
+
+        getPersonalDetails(token: String!): FetchableUser
 
         partial_user(partial_username: String!): [FetchableUser]!
 
@@ -65,6 +82,11 @@ export default gql`
             token: String!
             fields: [UpdateUserPayload!]!
         ): UpdateDetailsResponse!
+
+        notifyUser(
+            userToNotify: String!
+            notification: NotificationPayload! 
+        ): Boolean
 
         followPerson(
             token: String!

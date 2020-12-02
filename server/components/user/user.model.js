@@ -42,6 +42,11 @@ const userSchema = new mongoose.Schema(
             default: []
         },
 
+        notifications: {
+            type: Array,
+            default: []
+        },
+
         liked_posts: {
             type: Array,
             default: []

@@ -22,6 +22,28 @@ const GraphQLService = {
             .catch(console.error);
     },
 
+    fetchPersonalDetails: function(token, fields) {
+        const query = `
+            query {
+                getPersonalDetails(token: "${token}") {
+                    ${fields}
+                }
+            }
+        `;
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => res.json())
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
     fetchUserByPartial: function(partial_username) {
         if (partial_username != "") {
             const query = `
@@ -385,6 +407,29 @@ const GraphQLService = {
                 signupUser(username: "${username}", email: "${email}", password: "${password}") {
                     message
                     accessToken
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+
+    // Not sure if we should require the access token for this action
+    notifyUser: async function(userToNotify, notification) {
+        const mutation = `
+            mutation {
+                notifyUser(userToNotify: "${userToNotify}", notification: "${notification}") {
+                    success
                 }
             }
         `;

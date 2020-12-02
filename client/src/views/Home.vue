@@ -4,7 +4,7 @@
         <button @click="reloadHome()">Reload Home</button>
         <div class="home" :key="homeKey">
             <HomeMobile :projects="posts" v-if="mobile" />
-            <HomeDesktop :projects="posts" v-if="!mobile" />
+            <HomeDesktop :projects="posts" :notifications="notifications" v-if="!mobile" />
             <NewPost ref="newPostMenu" />
         </div>
     </div>
@@ -26,6 +26,7 @@ export default {
         return {
             mobile: false,
             posts: undefined,
+            notifications: undefined,
             homeKey: 0,
         };
     },
@@ -106,6 +107,13 @@ export default {
                 // pass in the new post data to the home page main components
                 this.posts = res.data.getPosts;
             });
+
+            // if the user is logged in then ask for their notifications
+            if (this.$store.getters.accessToken) {
+                GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, ["notifications {sender message read type }"]).then((res) => {
+                    this.notifications = res.data.getPersonalDetails.notifications;
+                });
+            }
         },
         reloadHome() {
             this.queryPosts(); // i thought I could avoid calling this here but otherwise it doesnt work...

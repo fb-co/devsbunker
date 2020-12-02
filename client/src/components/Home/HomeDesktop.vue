@@ -137,10 +137,10 @@
                 </div>
             </div>
         </div>
-        <div class="right_content">
+        <div v-if="notifications" class="right_content">
             <SmallNotificationCard
                 v-for="notification in notifications"
-                :key="notification.label"
+                :key="notification.message"
                 :notificationData="notification"
                 class="home_page_notification"
             />
@@ -160,20 +160,6 @@ export default {
         return {
             username: "",
             userRoute: "",
-            notifications: [
-                {
-                    label: "Bill Gates",
-                    subtext: "Liked your post!",
-                },
-                {
-                    label: "Elon Musk",
-                    subtext: "Liked your post!",
-                },
-                {
-                    label: "Jeff Bezos",
-                    subtext: "Commented on your post",
-                },
-            ],
         };
     },
     created() {
@@ -182,6 +168,7 @@ export default {
     },
     props: {
         projects: Array,
+        notifications: Array
     },
     methods: {
         logout() {

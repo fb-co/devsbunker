@@ -24,6 +24,8 @@ const projectCard = {
                 if (res.data.likePost) {
                     this.projectData.likeAmt = res.data.likePost.likeAmt;
                     this.projectData.isLiked = res.data.likePost.isLiked;
+
+                    //GraphQLService.notifyUser()
                 } else {
                     // add a message here that you already liked the post
                 }  
