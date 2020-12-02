@@ -7,6 +7,7 @@ export default async function getUserEntry(name) {
             .then((user) => {
                 const filtered = {
                     username: user.username,
+                    desc: user.desc,
                     tag: user.tag,
                     liked_posts: user.liked_posts,
                     followers: user.followers,

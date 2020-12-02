@@ -62,22 +62,23 @@ export default {
             return getUserEntry(args.username);
         },
 
-        getPersonalDetails: function (_, args, { res }) {
+        getPersonalDetails: async function (_, args, { res }) {
             const jwtPayload = TokenHandler.verifyAccessToken(args.token);
 
             if (!jwtPayload) return { success: false, message: "Invalid token" };
 
             try {
-                const user = User.findOne({ username: jwtPayload.username });
+                const user = await User.findOne({ username: jwtPayload.username });
 
                 if (user) {
                     return {
                         username: user.username,
+                        desc: user.desc,
                         email: user.email,
                         notifications: user.notifications,
                         tag: user.tag,
                         liked_posts: user.liked_posts,
-                        saved_posts: user.saved_posts,
+                        // saved_posts: user.saved_posts, WE NEED TO ADD THIS
                         followers: user.followers,
                         following: user.following,
                         profile_pic: user.profile_pic,

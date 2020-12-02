@@ -29,10 +29,22 @@ export default {
         SharedMethods.loadPage();
 
         this.mobile = this.isMobile();
-        
+
         // get the user object, will be given to all children to avoid excessive calls to the server
-        GraphQLService.fetchUserDetails(this.$store.getters.username, ["desc", "email", "profile_pic", "followers", "following", "liked_posts"]).then((user) => {
-            this.userObject = user.data.user;
+        GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, [
+            "desc",
+            "email",
+            "profile_pic",
+            "followers",
+            "following",
+            "liked_posts",
+            "tag",
+        ]).then((res) => {
+            if (res.errors) {
+                console.error("Error while fetching user details.");
+            } else {
+                this.userObject = res.data.getPersonalDetails;
+            }
         });
 
         // if the user is logged out their token will be undefined anyway
@@ -57,5 +69,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
