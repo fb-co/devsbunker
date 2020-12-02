@@ -66,6 +66,8 @@
 
                                 <button v-if="$store.getters.isLoggedIn" class="logout_btn" @click="logout()">Logout</button>
                             </div>
+                            <!-- Adds space below all the buttons for a better mobile experience -->
+                            <div class="mobile_spacer"></div>
                         </div>
                     </div>
                 </div>
@@ -132,23 +134,19 @@ export default {
 
             // toggle burger menu screen blur
             if (window.getComputedStyle(screenBlur).display === "none") {
-                document.getElementById("burger_menu_blur").style.display =
-                    "block";
+                document.getElementById("burger_menu_blur").style.display = "block";
             } else {
-                document.getElementById("burger_menu_blur").style.display =
-                    "none";
+                document.getElementById("burger_menu_blur").style.display = "none";
             }
 
             if (document.getElementById("burger_menu_checkbox").checked) {
-                document.getElementById(
-                    "burger_icon_placeholder"
-                ).style.display = "flex";
+                document.body.style.overflow = "hidden";
+                document.getElementById("burger_icon_placeholder").style.display = "flex";
                 checkBoxGrandparent.style.position = "fixed";
                 checkBoxGrandparent.style.height = "var(--header-height)";
             } else {
-                document.getElementById(
-                    "burger_icon_placeholder"
-                ).style.display = "none";
+                document.body.style.overflow = "auto";
+                document.getElementById("burger_icon_placeholder").style.display = "none";
                 checkBoxGrandparent.style.position = "static";
                 checkBoxGrandparent.style.height = "100%";
             }
@@ -185,6 +183,10 @@ export default {
     to {
         background-color: rgba(0, 0, 0, 0.5);
     }
+}
+
+.mobile_spacer {
+    height: 100px;
 }
 
 .nav_container {

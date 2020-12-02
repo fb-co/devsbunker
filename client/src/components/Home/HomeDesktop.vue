@@ -344,6 +344,7 @@ export default {
     font-size: 20px;
 }
 .projects_area {
+    padding: 10px;
     width: 100%;
     flex-grow: 1;
 }

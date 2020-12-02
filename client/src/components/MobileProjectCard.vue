@@ -51,13 +51,14 @@
             </div>
         </div>
         <div class="card_img_container">
-            <img src="@/assets/project_img_placeholder.png" class="card_img">
+            <DynamicPicture :image_link="getThumbnail()" class="card_img"/>
         </div>
     </div>
 </template>
 
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
+import DynamicPicture from "@/components/DynamicPicture.vue";
 
 export default {
     props: {
@@ -71,6 +72,14 @@ export default {
             default: "100%"
         }
     },
+    methods: {
+        getThumbnail() {
+            if (this.projectData.images.length > 0) {
+                return this.projectData.images[0].dbname;
+            }
+            return "../../../uploads/profile_pics/profilePlaceholder.png";
+        },
+    },
     mixins: [
         ProjectCardUtils
     ],
@@ -83,6 +92,9 @@ export default {
         style() {
             return "width: " + this.width;
         }
+    },
+    components: {
+        DynamicPicture
     }
 }
 </script>

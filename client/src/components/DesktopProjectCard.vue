@@ -197,6 +197,7 @@ export default {
     flex-grow: 1;
 }
 .card_image {
+    border-radius: 5px;
     width: 100%;
 }
 .spacer {
