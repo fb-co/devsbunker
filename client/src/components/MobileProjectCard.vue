@@ -181,6 +181,7 @@ export default {
     }
     .card_img{
         width: 100%;
+        border-radius: 5px;
     }
 
     @media only screen and (max-width: 300px) {

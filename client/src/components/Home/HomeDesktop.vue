@@ -138,12 +138,14 @@
             </div>
         </div>
         <div v-if="notifications" class="right_content">
+            <!-- Set the key to the sender and message because or else you get a bunch of duplicate key issues -->
             <SmallNotificationCard
                 v-for="notification in notifications"
-                :key="notification.message"
+                :key="notification.sender+notification.message" 
                 :notificationData="notification"
                 class="home_page_notification"
             />
+            <p class="no_notification_label" v-if="notifications.length==0">No new notifications</p>
         </div>
     </div>
 </template>
@@ -165,6 +167,7 @@ export default {
     created() {
         // refresh the store
         this.$store.dispatch("setLoggedInState");
+        
     },
     props: {
         projects: Array,
@@ -388,7 +391,7 @@ export default {
 /* RIGHT CONTENT */
 
 .right_content {
-    max-width: 350px;
+    max-width: 250px;
     width: 35%;
     height: calc(100vh - var(--header-height));
     overflow-y: scroll;
@@ -411,6 +414,11 @@ export default {
 .right_content::-webkit-scrollbar-thumb {
     background: var(--soft-text);
     border-radius: 10px;
+}
+
+
+.no_notification_label {
+    padding-top: 20px;
 }
 
 /* RESIZING FUNCTIONALITY */

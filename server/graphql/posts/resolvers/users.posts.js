@@ -138,12 +138,30 @@ export default {
                         const userToNotify = await User.findOne({ username: post.author });
 
                         if (userToNotify) {
-                            userToNotify.notifications.push({
+                            // only notify the user if there is not already an identical notification.
+                            // this is to prevent people from spamming notifications & duplicate key error
+
+                            const notification = {
                                 read: false,
-                                sender: jwtPayload.username,
-                                message: `liked your post!`,
-                                type: "like"
-                            });
+                                    sender: jwtPayload.username,
+                                    message: `liked your post!`,
+                                    type: "like"
+                            };
+
+                            let shouldNotify = true;
+
+                            // the forEach loop was being stoopid, so im using a regular loop
+                            for (let i = 0; i < userToNotify.notifications.length; i++) {
+                                const oldNotification = userToNotify.notifications[i];
+
+                                if (oldNotification.sender == jwtPayload.username && oldNotification.message == notification.message) {
+                                    shouldNotify = false;
+                                }
+                            }
+
+                            if (shouldNotify) {
+                                userToNotify.notifications.push(notification);
+                            }
                             await userToNotify.save();
                         }
 

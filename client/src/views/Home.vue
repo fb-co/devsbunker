@@ -1,7 +1,7 @@
 <template>
     <div>
         <NavBar />
-        <button @click="reloadHome()">Reload Home</button>
+        
         <div class="home" :key="homeKey">
             <HomeMobile :projects="posts" v-if="mobile" />
             <HomeDesktop :projects="posts" :notifications="notifications" v-if="!mobile" />
@@ -103,7 +103,6 @@ export default {
             */
             // Get the posts
             GraphQLService.fetchPosts("newest", this.$store.getters.accessToken).then((res) => {
-                console.log(res);
                 // pass in the new post data to the home page main components
                 this.posts = res.data.getPosts;
             });
@@ -111,6 +110,7 @@ export default {
             // if the user is logged in then ask for their notifications
             if (this.$store.getters.accessToken) {
                 GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, ["notifications {sender message read type }"]).then((res) => {
+                    
                     this.notifications = res.data.getPersonalDetails.notifications;
                 });
             }
