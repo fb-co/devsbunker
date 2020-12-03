@@ -1,7 +1,8 @@
 <template>
     <div v-if="!notificationData.read" class="main_container" :style="style"> <!-- Only show the notification if its unread -->
         <div class="text_container">
-            <p class="title">{{ senderText }}</p>
+            <p v-if="largeScreen" class="title">{{ senderText }}</p>
+            <p v-else class="title">{{ notificationData.sender }}</p>
             <p class="subtext">{{ notificationData.message }}</p>
         </div>
         <div class="icon_container">
@@ -14,9 +15,12 @@
 </template>
 
 <script>
+import ScreenType from "../utils/screenType.js";
+
 export default {
     data() {
         return {
+            largeScreen: false,
             senderText: this.notificationData.sender
         }
     },
@@ -28,6 +32,12 @@ export default {
         }
     },
     created() {
+        this.largeScreen = this.isLargeScreen();
+
+        window.addEventListener("resize", () => {
+            this.largeScreen = this.isLargeScreen();
+        });
+
         console.log(this.notificationData.sender.length);
         if (this.notificationData.sender.length > 10) {
             this.senderText = this.notificationData.sender.slice(0, 9) + "...";
@@ -37,6 +47,11 @@ export default {
         style() {
             return "width: " + this.width;
         }
+    },
+    methods: {
+        isLargeScreen() {
+            return ScreenType.isMobile(1500);
+        },
     }
 }
 </script>

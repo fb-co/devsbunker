@@ -424,4 +424,11 @@ export default {
         width: 100%;
     }
 }
+
+/* Other Styles */
+@media only screen and (min-width: 1500px) {
+    .right_content {
+        margin-right: 100px;
+    }
+}
 </style>
