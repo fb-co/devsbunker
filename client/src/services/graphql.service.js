@@ -304,6 +304,27 @@ const GraphQLService = {
             return console.log(err);
         }
     },
+    unSavePost: async function(token, postId) {
+        const mutation = `
+            mutation {
+                unSavePost(token: "${token}", postId: "${postId}") {
+                    success
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+            return res.json();
+        } catch (err) {
+            return console.log(err);
+        }
+    },
 
     followPerson: async function(token, person) {
         const mutation = `

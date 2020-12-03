@@ -40,6 +40,10 @@ export default gql`
         price: Float
     }
 
+    type savedPostOutput {
+        success: Boolean
+    }
+
     type Query {
         # It's better if we use the ID instead of the post title (maybe someone has 2 posts with the same title)
         # I am going to keep the author even if technically it's not needed, we will see later on
@@ -60,5 +64,6 @@ export default gql`
         likePost(token: String!, postId: String!): FetchablePost
         unlikePost(token: String!, postId: String!): FetchablePost
         savePost(token: String!, postId: String!): FetchablePost
+        unSavePost(token: String!, postId: String!): savedPostOutput
     }
 `;
