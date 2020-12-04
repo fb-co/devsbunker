@@ -126,6 +126,7 @@ const GraphQLService = {
                     description
                     likeAmt
                     isLiked
+                    isSaved
                     bunkerTag
                     price
                     id
@@ -153,10 +154,14 @@ const GraphQLService = {
                 getSavedPosts(token: "${token}") {
                     title
                     author
-                    images
+                    images {
+                        ogname
+                        dbname
+                    }
                     description
                     likeAmt
                     isLiked
+                    isSaved
                     bunkerTag
                     price
                     id

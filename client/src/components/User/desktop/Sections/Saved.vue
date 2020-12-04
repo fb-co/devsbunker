@@ -23,8 +23,8 @@ export default {
     created() {
         // WE SHOULD CACHE THIS FOR A RELATIVELY SHORT AMOUNT OF TIME
         GraphQLService.fetchSavedPosts(this.$store.getters.accessToken).then((posts) => {
+            console.log(posts);
             this.userProjects = posts.data.getSavedPosts;
-            console.log(this.userProjects);
         });
     },
     components: {
