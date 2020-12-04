@@ -60,11 +60,15 @@
         <p class="newPostTag">Description</p>
         <p class="post_description">{{ projectData.description }}</p>
         <p class="newPostTag">Links</p>
+        <div class="links_container">
+            <LinkItem v-for="link in projectData.links" :key="link" :link="link" class="link_item" />   
+        </div>
     </div>
 </template>
 
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
+import LinkItem from "./Link.vue";
 
 export default {
     data() {
@@ -78,6 +82,9 @@ export default {
     mixins: [
         ProjectCardUtils
     ],
+    components: {
+        LinkItem
+    },
     created() {
         console.log(this.projectData);
         this.tags = Object.values(this.projectData.tags);
@@ -171,5 +178,19 @@ export default {
     }
     .tag_item:not(:first-child) {
         margin-left: 5px;
+    }
+    .links_container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        height: 100px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    .link_item {
+        display: inline-block;
+        margin-left: 4%;
+        margin-right: 4%;
     }
 </style>
