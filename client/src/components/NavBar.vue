@@ -6,7 +6,8 @@
             <div class="logo_container">
                 <div class="menu_logo" @click.prevent="routeOrReload()">
                     <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
-                    <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" />
+                    <img src="../assets/templogo.png" alt="Logo" />
+                    <p><span style="font-weight: bold">DEVS</span>BUNKER</p>
                 </div>
             </div>
             <!-- Static menu items (dont go into burger menu) -->
@@ -251,13 +252,23 @@ body {
     flex-direction: column;
     justify-content: center;
 }
+
+.menu_logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 25px;
+}
 .menu_logo img {
     max-height: 40px;
     max-width: 100px;
     flex-shrink: 0;
-    margin-right: 25px;
-    margin-left: 25px;
-    cursor: pointer;
+    margin-right: 10px;
+}
+.menu_logo p {
+    font-weight: 400;
+    letter-spacing: 0.5px;
 }
 .nav_links_container {
     display: flex;
