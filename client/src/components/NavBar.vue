@@ -1,65 +1,89 @@
 <template>
     <div class="menu_container no_select" :style="style">
         <div class="nav_container">
-            <div class='burger_blur' id="burger_menu_blur" @click="hideBurgerMenu()"></div> <!-- Darkens the screen for the burger menu -->
-            <div class='logo_container'>
-                <router-link to="/" class="menu_logo">
+            <div class="burger_blur" id="burger_menu_blur" @click="hideBurgerMenu()"></div>
+            <!-- Darkens the screen for the burger menu -->
+            <div class="logo_container">
+                <div class="menu_logo" @click.prevent="routeOrReload()">
                     <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
                     <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="Logo" />
-                </router-link>
+                </div>
             </div>
             <!-- Static menu items (dont go into burger menu) -->
-            <div class='nav_links_container'>
-                <div class='static_nav_links desktop_only'>
+            <div class="nav_links_container">
+                <div class="static_nav_links desktop_only">
                     <NavBarSearch />
 
-                    <router-link to='/' class='static_link'>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-compass" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <router-link to="/" class="static_link">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-compass"
+                            width="44"
+                            height="44"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="var(--main-font-color)"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <polyline points="8 16 10 10 16 8 14 14 8 16" />
                             <circle cx="12" cy="12" r="9" />
                         </svg>
                     </router-link>
-                    <router-link v-if="$store.getters.isLoggedIn" to='/notifications' class='static_link'>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <router-link v-if="$store.getters.isLoggedIn" to="/notifications" class="static_link">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-bell"
+                            width="44"
+                            height="44"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="var(--main-font-color)"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                             <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                         </svg>
                     </router-link>
-                    <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class='static_link profile_pic'>
+                    <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="static_link profile_pic">
                         <ProfilePicture v-if="username" :username="username" style="width: 70px" />
                     </router-link>
                 </div>
-                <div class='burger_nav_links'>
-                    <router-link v-if="!$store.getters.isLoggedIn" to="/login" class='burger_link desktop_only'>Login</router-link>
-                    <router-link v-if="!$store.getters.isLoggedIn" to="/signup" class='burger_link desktop_only'>Sign-up</router-link>
+                <div class="burger_nav_links">
+                    <router-link v-if="!$store.getters.isLoggedIn" to="/login" class="burger_link desktop_only">Login</router-link>
+                    <router-link v-if="!$store.getters.isLoggedIn" to="/signup" class="burger_link desktop_only">Sign-up</router-link>
                 </div>
-                <div id="burger_icon_placeholder"></div> <!-- fills in the space of the actual burger icon when the burger menu is opened and is given a fixed pos -->
+                <div id="burger_icon_placeholder"></div>
+                <!-- fills in the space of the actual burger icon when the burger menu is opened and is given a fixed pos -->
                 <div class="burger_menu_container">
-                    <div class='burger_menu_subcontainer' id='burger_menu_icon'>
-                        <input type="checkbox" aria-label="Toggle menu" id='burger_menu_checkbox' @click='toggleMenu()' />
+                    <div class="burger_menu_subcontainer" id="burger_menu_icon">
+                        <input type="checkbox" aria-label="Toggle menu" id="burger_menu_checkbox" @click="toggleMenu()" />
                         <span></span>
                         <span></span>
                         <span></span>
 
-                        <div class='burger_menu_cont' id='main_burger_menu'>
+                        <div class="burger_menu_cont" id="main_burger_menu">
                             <!-- make sure not to make that function have '()' because I not giving the directive the return value! -->
-                            <div class='burger_cont_links'>
-                                <input placeholder='Search...' class='light_input_selection'>
+                            <div class="burger_cont_links">
+                                <input placeholder="Search..." class="light_input_selection" />
 
-                                <router-link to='/market'>Market</router-link>
-                                <router-link to='/market'>Projects</router-link>
-                                <router-link to='/about'>About</router-link>
+                                <router-link to="/market">Market</router-link>
+                                <router-link to="/market">Projects</router-link>
+                                <router-link to="/about">About</router-link>
 
-                                <router-link v-if="$store.getters.isLoggedIn" to='/notifications' class='static_link'>
+                                <router-link v-if="$store.getters.isLoggedIn" to="/notifications" class="static_link">
                                     <p>Notifications</p>
                                 </router-link>
-                                <router-link v-if="$store.getters.isLoggedIn" :to='userRoute' class='static_link profile_pic'>
+                                <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="static_link profile_pic">
                                     <p>Profile</p>
                                 </router-link>
 
-                                <router-link to='/settings/account'>Settings</router-link>
+                                <router-link to="/settings/account">Settings</router-link>
 
                                 <router-link v-if="!$store.getters.isLoggedIn" to="/login">Login</router-link>
                                 <router-link v-if="!$store.getters.isLoggedIn" to="/signup">Sign-up</router-link>
@@ -87,7 +111,7 @@ import ProfilePicture from "@/components/ProfilePicture.vue";
 export default {
     props: {
         min_width: String,
-        userObject: Object
+        userObject: Object,
     },
     computed: {
         style() {
@@ -103,7 +127,7 @@ export default {
     components: {
         ...GlobalComponents,
         NavBarSearch,
-        ProfilePicture
+        ProfilePicture,
     },
 
     created() {
@@ -127,9 +151,7 @@ export default {
         },
         toggleMenu() {
             // No idea if they are called grandparents, but its the parent of the parent
-            const checkBoxGrandparent = document.getElementById(
-                "burger_menu_checkbox"
-            ).parentElement.parentElement;
+            const checkBoxGrandparent = document.getElementById("burger_menu_checkbox").parentElement.parentElement;
             const screenBlur = document.getElementById("burger_menu_blur");
 
             // toggle burger menu screen blur
@@ -153,6 +175,13 @@ export default {
         },
         hideBurgerMenu() {
             document.getElementById("burger_menu_checkbox").click();
+        },
+        routeOrReload() {
+            if (this.$route.path == "/") {
+                this.$emit("refreshPosts", true);
+            } else {
+                this.$router.push("/");
+            }
         },
     },
 };
@@ -228,6 +257,7 @@ body {
     flex-shrink: 0;
     margin-right: 25px;
     margin-left: 25px;
+    cursor: pointer;
 }
 .nav_links_container {
     display: flex;
@@ -339,8 +369,7 @@ body {
     border-radius: 3px;
     background: var(--main-font-color);
     transform-origin: 4px 0px;
-    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
-        background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
 }
 
 /* Open burger menu */
