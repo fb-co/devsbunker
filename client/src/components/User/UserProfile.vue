@@ -90,7 +90,6 @@ export default {
         this.username = this.$route.params.username;
 
         GraphQLService.fetchUserDetails(this.username, [
-            "email",
             "tag",
             "desc",
             "followers",

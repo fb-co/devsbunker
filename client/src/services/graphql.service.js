@@ -126,6 +126,7 @@ const GraphQLService = {
                     description
                     likeAmt
                     isLiked
+                    isSaved
                     bunkerTag
                     price
                     id
@@ -153,10 +154,14 @@ const GraphQLService = {
                 getSavedPosts(token: "${token}") {
                     title
                     author
-                    images
+                    images {
+                        ogname
+                        dbname
+                    }
                     description
                     likeAmt
                     isLiked
+                    isSaved
                     bunkerTag
                     price
                     id
@@ -288,6 +293,27 @@ const GraphQLService = {
             mutation {
                 savePost(token: "${token}", postId: "${postId}") {
                     id
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+            return res.json();
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+    unSavePost: async function(token, postId) {
+        const mutation = `
+            mutation {
+                unSavePost(token: "${token}", postId: "${postId}") {
+                    success
                 }
             }
         `;

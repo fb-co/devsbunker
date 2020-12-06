@@ -32,7 +32,7 @@ export default gql`
     type PersonalUserDetails {
         username: String!
         email: String!
-        notification: [Notification]
+        notifications: [Notification]
         desc: String!
         tag: String!
         followers: [String]!

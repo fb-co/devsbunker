@@ -108,7 +108,7 @@ export default {
 
             // if the user is logged in then ask for their notifications
             if (this.$store.getters.accessToken) {
-                GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, ["notification {sender message read type }"]).then(
+                GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, ["notifications {sender message read type }"]).then(
                     (res) => {
                         console.log(res);
                         this.notifications = res.data.getPersonalDetails.notifications;

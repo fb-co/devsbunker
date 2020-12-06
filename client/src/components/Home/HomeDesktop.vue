@@ -25,22 +25,17 @@
                 <p>Settings</p>
             </router-link>
             <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="tab_container">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-device-floppy"
-                    width="30"
-                    height="30"
-                    viewBox="0 0 24 24"
+                <svg 
+                    width="30" 
+                    height="20" 
                     stroke-width="1.2"
                     stroke="var(--main-font-color)"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    viewBox="0 0 16 16" 
+                    class="bi bi-bookmark" 
+                    fill="currentColor" 
+                    xmlns="http://www.w3.org/2000/svg"
                 >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
-                    <circle cx="12" cy="14" r="2" />
-                    <polyline points="14 4 14 8 8 8 8 4" />
+                        <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
                 </svg>
                 <router-link :to="'user/' + $store.getters.username + '/saved'" class="saved_projects_link">Saved Projects</router-link>
             </router-link>
@@ -138,12 +133,14 @@
             </div>
         </div>
         <div v-if="notifications" class="right_content">
+            <!-- Set the key to the sender and message because or else you get a bunch of duplicate key issues -->
             <SmallNotificationCard
                 v-for="notification in notifications"
-                :key="notification.message"
+                :key="notification.sender+notification.message" 
                 :notificationData="notification"
                 class="home_page_notification"
             />
+            <p class="no_notification_label" v-if="notifications.length==0">No new notifications</p>
         </div>
     </div>
 </template>
@@ -165,6 +162,7 @@ export default {
     created() {
         // refresh the store
         this.$store.dispatch("setLoggedInState");
+        
     },
     props: {
         projects: Array,
@@ -388,7 +386,7 @@ export default {
 /* RIGHT CONTENT */
 
 .right_content {
-    max-width: 350px;
+    max-width: 250px;
     width: 35%;
     height: calc(100vh - var(--header-height));
     overflow-y: scroll;
@@ -413,12 +411,24 @@ export default {
     border-radius: 10px;
 }
 
+
+.no_notification_label {
+    padding-top: 20px;
+}
+
 /* RESIZING FUNCTIONALITY */
 
 /* mobile styles */
 @media only screen and (max-width: 1060px) {
     .home_page_notification {
         width: 100%;
+    }
+}
+
+/* Other Styles */
+@media only screen and (min-width: 1500px) {
+    .right_content {
+        margin-right: 100px;
     }
 }
 </style>

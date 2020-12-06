@@ -138,12 +138,30 @@ export default {
                         const userToNotify = await User.findOne({ username: post.author });
 
                         if (userToNotify) {
-                            userToNotify.notifications.push({
+                            // only notify the user if there is not already an identical notification.
+                            // this is to prevent people from spamming notifications & duplicate key error
+
+                            const notification = {
                                 read: false,
-                                sender: jwtPayload.username,
-                                message: `liked your post!`,
-                                type: "like"
-                            });
+                                    sender: jwtPayload.username,
+                                    message: `liked your post!`,
+                                    type: "like"
+                            };
+
+                            let shouldNotify = true;
+
+                            // the forEach loop was being stoopid, so im using a regular loop
+                            for (let i = 0; i < userToNotify.notifications.length; i++) {
+                                const oldNotification = userToNotify.notifications[i];
+
+                                if (oldNotification.sender == jwtPayload.username && oldNotification.message == notification.message) {
+                                    shouldNotify = false;
+                                }
+                            }
+
+                            if (shouldNotify) {
+                                userToNotify.notifications.push(notification);
+                            }
                             await userToNotify.save();
                         }
 
@@ -278,6 +296,38 @@ export default {
                 }
             } catch {
                 throw new Error("Internal error. Unable to save post");
+            }
+        },
+
+        // I avoid sending back an entire post document because you dont actully need to query the db for the post item,
+        // you can just get rid of the postid in the users document. this is why only a boolean is returned;
+        unSavePost: async function (_, args, { res }) {
+            const id_payload = args.postId;
+            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+            
+            if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+            try {
+                const user = await User.findOne({ username: jwtPayload.username });
+
+                if (user) {
+                    for (let i = 0; i < user.saved_posts.length; i++) {
+                        if (user.saved_posts[i] === id_payload) {
+                            // remove saved post from array
+                            user.saved_posts.splice(i, 1);
+                            break;
+                        }
+                    }
+                    await user.save();
+
+                    return {
+                        success: true
+                    }; // only returns whether or not it worked
+                } else { 
+                    return null;
+                }
+            } catch {
+                throw new Error("Internal error. Unable to unsave post");
             }
         },
     },

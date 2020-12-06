@@ -14,7 +14,11 @@ const projectCard = {
             });
         },
         unsavePost(id) {
-            console.log("eventully add query here", id);
+            GraphQLService.unSavePost(this.$store.getters.accessToken, id).then((unSavedPost) => {
+                if (unSavedPost.data.unSavePost) {
+                    this.projectData.isSaved = false;
+                }
+            });
         },
         likePost(id) {
             GraphQLService.likePost(
@@ -24,7 +28,6 @@ const projectCard = {
                 if (res.data.likePost) {
                     this.projectData.likeAmt = res.data.likePost.likeAmt;
                     this.projectData.isLiked = res.data.likePost.isLiked;
-
                     //GraphQLService.notifyUser()
                 } else {
                     // add a message here that you already liked the post
@@ -36,7 +39,6 @@ const projectCard = {
                 this.$store.getters.accessToken,
                 id
             ).then((res) => {
-                console.log(res);
                 this.projectData.likeAmt = res.data.unlikePost.likeAmt;
                 this.projectData.isLiked = res.data.unlikePost.isLiked;
             });

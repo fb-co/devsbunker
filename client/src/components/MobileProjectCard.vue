@@ -27,23 +27,55 @@
                     </div>
                 </div>
                 <svg
-                        v-else
-                        width="23"
-                        height="23"
-                        viewBox="0 0 16 16"
-                        class="bi bi-heart-fill"
-                        fill="#eb4034"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                        />
-                    </svg>
-
+                    v-else
+                    width="23"
+                    height="23"
+                    viewBox="0 0 16 16"
+                    class="bi bi-heart-fill"
+                    fill="#eb4034"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                    />
+                </svg>
+                
                 <div class="vertical_flex_center">
                     <p class="likes card_text">{{ projectData.likeAmt }}</p>
                 </div>
+
+                <div class="save_post_container">
+                    <svg 
+                        @click.stop="savePost(projectData.id)"
+                        v-if="!projectData.isSaved" 
+                        width="18" 
+                        height="18" 
+                        stroke-width="0.7" 
+                        stroke="var(--ssoft-text)" 
+                        viewBox="0 0 16 16" 
+                        class="bi bi-bookmark save_btn" 
+                        fill="currentColor" 
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                    </svg>
+                    <svg 
+                        @click.stop="unsavePost(projectData.id)"
+                        v-else
+                        width="18" 
+                        height="18" 
+                        stroke-width="0.7" 
+                        stroke="var(--ssoft-text)"
+                        viewBox="0 0 16 16" 
+                        class="bi bi-bookmark-fill save_btn" 
+                        fill="currentColor" 
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z"/>
+                    </svg>
+                </div>
+
                 <div class="vertical_flex_center">
                     <p class="price_text" v-if="projectData.price!=0 && projectData.price!=null">| ${{ projectData.price }}</p>
                 </div>
@@ -126,7 +158,7 @@ export default {
         display: flex;
         flex-direction: column;
         width: 65%;
-        height: 100%;
+        flex-grow: 1;
     }
     .author_container {
         text-align: left;
@@ -181,6 +213,11 @@ export default {
     }
     .card_img{
         width: 100%;
+        border-radius: 5px;
+    }
+
+    .save_post_container {
+        padding-left: 10px;
     }
 
     @media only screen and (max-width: 300px) {

@@ -60,6 +60,7 @@
                 </div>
 
                 <div class="vertical_flex_center">
+                    <!--
                     <svg
                         @click.stop="savePost(projectData.id)"
                         v-if="!projectData.isSaved"
@@ -80,6 +81,35 @@
                         <polyline points="14 4 14 8 8 8 8 4" />
                     </svg>
                     <p @click.stop="unsavePost(projectData.id)" class="saved_link" v-else>Unsave -</p>
+                    -->
+                    <svg 
+                        @click.stop="savePost(projectData.id)"
+                        v-if="!projectData.isSaved" 
+                        width="18" 
+                        height="18" 
+                        stroke-width="0.7" 
+                        stroke="var(--ssoft-text)" 
+                        viewBox="0 0 16 16" 
+                        class="bi bi-bookmark save_btn" 
+                        fill="currentColor" 
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                            <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                    </svg>
+                    <svg 
+                        @click.stop="unsavePost(projectData.id)"
+                        v-else
+                        width="18" 
+                        height="18" 
+                        stroke-width="0.7" 
+                        stroke="var(--ssoft-text)"
+                        viewBox="0 0 16 16" 
+                        class="bi bi-bookmark-fill save_btn" 
+                        fill="currentColor" 
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z"/>
+                    </svg>
                 </div>
 
                 <div class="vertical_flex_center">
@@ -154,7 +184,7 @@ export default {
     margin-left: 10px;
 }
 .save_btn:hover {
-    stroke-width: 1.8;
+    stroke: var(--main-font-color);
 }
 .likeAmt {
     margin-left: 10px;
@@ -203,13 +233,5 @@ export default {
 .spacer {
     padding-right: 10px;
     padding-left: 10px;
-}
-.saved_link {
-    margin-left: 5px;
-    color: var(--soft-text);
-}
-.saved_link:hover {
-    margin-left: 5px;
-    color: var(--main-font-color);
 }
 </style>

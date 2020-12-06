@@ -77,6 +77,7 @@
 -   [x] Look at the console when you switch themes in mobile mode :(
 -   [ ] settings sections (account, privacy, etc) are still available in mobile version. This is not a real glitch but we have to decide what to do with it
 -   [x] avoid refreshing access token if user is not logged in (not really possible)
+-   [ ] Cant scroll on mobile settings page
 
 ## Deployment
 
