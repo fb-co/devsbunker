@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 export default async function getSavedPosts(author) {
     return new Promise((resolve) => {
         User.findOne({ username: author })
+            .sort({ _id: -1 }).limit(15)
             .then((user) => {
                 let wrappedPosts = user.saved_posts;
                 

@@ -16,6 +16,7 @@ export default async function getPostsByAuthor(author, requesterToken) {
 
     return new Promise((resolve) => {
         Posts.find({ author: author })
+            .sort({ _id: -1 }).limit(15)
             .then((posts) => {  
                 const finalPosts = AddDynamicData.addAll(posts, requesterUser);
     
