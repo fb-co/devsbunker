@@ -314,8 +314,17 @@ export default {
                         );
                         
                         setTimeout(() => {
-                            // refresh the post feed, if we ever use this component somewhere else, we will need to rethink how to do this.
-                            this.$parent.$parent.queryPosts();
+                            /*
+                            // only refresh the post feed if your on the home page, otherwise redirect to it
+                            if (this.$route.name === "Home") {
+                                this.$parent.$parent.$parent.queryPosts();
+                            } else {
+                                this.$router.push('Home');
+                            }
+                            */
+                           this.$router.push('/');
+
+                                
                             this.close();
                         }, 1000);
                     })

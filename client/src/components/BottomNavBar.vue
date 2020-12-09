@@ -2,7 +2,7 @@
     <div class="nav_container">
         <div id="navbar">
             <div class="icon-array">
-                <div class="icon" @click="setActive('Home')" :class="{ active: isActive('Home') }">
+                <router-link to="#" class="icon">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-home"
@@ -20,9 +20,9 @@
                         <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
                         <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
                     </svg>
-                </div>
+                </router-link>
 
-                <div class="icon" @click="setActive('Discover')" :class="{ active: isActive('Discover') }">
+                <router-link to="#" class="icon">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-brand-safari"
@@ -39,9 +39,9 @@
                         <polyline points="8 16 10 10 16 8 14 14 8 16" />
                         <circle cx="12" cy="12" r="9" />
                     </svg>
-                </div>
+                </router-link>
 
-                <div class="main-icon" @click="setActive('Add')" :class="{ active: isActive('Add') }">
+                <div @click="newPost()" class="icon" style="cursor: pointer;">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-circle-plus"
@@ -61,7 +61,7 @@
                     </svg>
                 </div>
 
-                <div class="icon" @click="setActive('Search')" :class="{ active: isActive('Search') }">
+                <router-link to="#" class="icon">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-search"
@@ -78,9 +78,9 @@
                         <circle cx="10" cy="10" r="7" />
                         <line x1="21" y1="21" x2="15" y2="15" />
                     </svg>
-                </div>
+                </router-link>
 
-                <div class="icon" @click="setActive('Profile')" :class="{ active: isActive('Profile') }">
+                <router-link to="#" class="icon">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-user"
@@ -97,14 +97,17 @@
                         <circle cx="12" cy="7" r="4" />
                         <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                     </svg>
-                </div>
+                </router-link>
             </div>
         </div>
         <div class="nav_placeholder"></div>
+        <NewPost ref="newPostPopup" />
     </div>
 </template>
 
 <script>
+import NewPost from "@/components/NewPost/NewPost.vue";
+
 export default {
     data() {
         return {
@@ -113,13 +116,14 @@ export default {
     },
 
     methods: {
-        setActive(iconName) {
-            this.active = iconName;
-        },
-        isActive(iconName) {
-            return this.active === iconName;
-        },
+        newPost() {
+            this.$refs.newPostPopup.open();
+        }    
     },
+
+    components: {
+        NewPost
+    }
 };
 </script>
 
@@ -129,11 +133,13 @@ export default {
 }
 
 #navbar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     position: fixed;
     bottom: 0;
     width: 100%;
     height: 60px;
-    margin-top: 60px;
 
     background: var(--main-color);
     border-radius: 15px;
@@ -144,23 +150,23 @@ export default {
 .icon-array {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+}
 
-    width: 90%;
-    margin: 0;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 60px;
+    width: 20%;
+}
+.icon:hover > svg {
+    stroke-width: 3px;
 }
 
 .icon svg {
     stroke: var(--main-font-color);
     opacity: 0.6;
     cursor: pointer;
-}
-
-.active svg {
-    opacity: 1;
 }
 </style>
