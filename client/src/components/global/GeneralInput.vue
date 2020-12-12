@@ -2,17 +2,32 @@
     <div class="general_input_container" :style="cssProps">
         <p v-if="label!='' && !labelIsPlaceholder">{{ label }}</p>
         
-        <input v-if="!isTextArea" ref="general_input" :placeholder="labelIsPlaceholder ? label : ''">
-        
+        <input @click.stop="" @input="queryData()" v-if="!isTextArea" ref="general_input" class="main_query_input" :placeholder="labelIsPlaceholder ? label : ''">
         <div v-else ref="general_input" contenteditable="true" class="general_textarea"></div> <!-- Acts like a text area -->
+        
         <div class="form_line_container">
             <div class="bottom_line"></div>
+        </div>
+        <div class="main_query_results" ref="results">
+            <p v-for="document in documents" :key="document.username" class="document_item">{{ document.username }}</p>
         </div>
     </div>
 </template>
 
 <script>
+import GraphQLService from '@/services/graphql.service';
+
 export default {
+    data() {
+        return {
+            documents: [],
+            selectedDocument: -1,
+            queryThresh: 1000, // amount of time in between query queue times
+            queryQueued: false, // flag to make sure queries are not spammed
+
+            canClose: false // Important because you need to make sure when you blur the input that the click binding on the options can be triggered
+        }
+    },
     props: {
         label: {
             type: String,
@@ -30,6 +45,10 @@ export default {
         isTextArea: {
             type: Boolean,
             default: false
+        },
+        searchFor: {
+            type: String,
+            default: "users"
         }
     },
     computed: {
@@ -46,7 +65,28 @@ export default {
         },
         clearValue() {
             this.$refs.general_input.value = "";
-        }
+        },
+
+        queryData() {
+            if (this.$refs.general_input.value != "" && this.$refs.general_input.value.length > 2) {
+                if (!this.queryQueued) {
+                    this.queryQueued = true;
+
+                    setTimeout(() => {
+                        if (this.$refs.general_input.value != "") {
+                            if (this.searchFor === "users") {
+                                GraphQLService.fetchUserByPartial(this.$refs.general_input.value).then((res) => {
+                                    this.documents = res.data.partial_user;
+                                });
+                            }
+                        }
+                        this.queryQueued = false;
+                    }, this.queryThresh);
+                }
+            } else {
+                this.documents = [];
+            }
+        },
     }
 }
 </script>
@@ -62,8 +102,7 @@ export default {
     }
 
     .general_input_container {
-        display: flex;
-        flex-direction: column;
+        position: relative;
         width: var(--width);
         padding: 5px;
     }
@@ -106,5 +145,31 @@ export default {
         animation: form_field_animation 1s;
         width: 100%;
         height: 1.5px;
+    }
+
+    .document_item:first-child {
+        margin-top: 20px;
+        background-color: var(--main-color);
+        color: var(--main-font-color);
+        padding: 15px;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+    }
+    .document_item:hover {
+        color: var(--soft-text);
+    }
+
+    .main_query_input:focus ~ .main_query_results {
+        display: flex;
+    }
+
+    .main_query_results {
+        position: absolute;
+        z-index: 15;
+        width: 100%;
+        box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+        display: none;
+        flex-direction: column;
     }
 </style>

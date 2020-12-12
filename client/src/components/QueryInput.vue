@@ -40,7 +40,6 @@ export default {
             this.$refs.input_ref.value = "";
         },
 
-        // NEED TO OPTIMIZE HOW OFTEN IF QUERIES THE SERVER AS THE USER TYPES, RIGHT NOW EVERY KEY THEY PRESS QUERIES THE SERVER
         queryData() {
             if (this.$refs.input_ref.value != "" && this.$refs.input_ref.value.length > 2) {
                 if (!this.queryQueued) {
@@ -71,11 +70,12 @@ export default {
 </script>
 
 <style scoped>
+    
     .query_input_container{
         width: 175px;
         margin: 0 auto;
+        background-color: red;
     }
-
 
     .main_query_input {
         width: 100%;
@@ -91,6 +91,7 @@ export default {
         border: 1px solid var(--main-font-color);
         outline: none;
     }
+    
 
     .main_query_input:focus + .main_query_results {
         display: flex;
@@ -116,4 +117,5 @@ export default {
     .document_item:hover {
         color: var(--soft-text);
     }
+    
 </style>
