@@ -1,7 +1,9 @@
 <template>
     <div class="general_input_container" :style="cssProps">
-        <p v-if="label!=''">{{ label }}</p>
-        <input v-if="!isTextArea" ref="general_input">
+        <p v-if="label!='' && !labelIsPlaceholder">{{ label }}</p>
+        
+        <input v-if="!isTextArea" ref="general_input" :placeholder="labelIsPlaceholder ? label : ''">
+        
         <div v-else ref="general_input" contenteditable="true" class="general_textarea"></div> <!-- Acts like a text area -->
         <div class="form_line_container">
             <div class="bottom_line"></div>
@@ -15,6 +17,11 @@ export default {
         label: {
             type: String,
             default: ""
+        },
+        // will make the specificed label the inputs placehodler opposed to a label on top
+        labelIsPlaceholder: {
+            type: Boolean,
+            default: false
         },
         width: {
             type: String,
