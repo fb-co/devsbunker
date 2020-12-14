@@ -64,6 +64,28 @@ const GraphQLService = {
         }
     },
 
+    fetchPostByPartial: function(partial_name) {
+        if (partial_name != "") {
+            const query = `
+                query {
+                    partial_post(partial_name: "${partial_name}") {
+                        title
+                    }
+                }
+            `;
+
+
+            return fetch(URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => res.json())
+                .catch(console.error);
+
+        }
+    },
+
     fetchPostById: function(postId, fields) {
         const query = `
             query {

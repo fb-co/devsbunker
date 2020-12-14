@@ -9,7 +9,12 @@
             <div class="bottom_line"></div>
         </div>
         <div class="main_query_results" ref="results">
-            <p v-for="document in documents" :key="document.username" class="document_item">{{ document.username }}</p>
+            <div v-if="searchFor=='users'">
+                <p v-for="document in documents" :key="document.username" class="document_item">{{ document.username }}</p>
+            </div>
+            <div v-else>
+                <p v-for="document in documents" :key="document.title" class="document_item">{{ document.title }}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -77,6 +82,12 @@ export default {
                             if (this.searchFor === "users") {
                                 GraphQLService.fetchUserByPartial(this.$refs.general_input.value).then((res) => {
                                     this.documents = res.data.partial_user;
+                                });
+                            } else if (this.searchFor === "posts") {
+                                console.log("step1");
+                                GraphQLService.fetchPostByPartial(this.$refs.general_input.value).then((res) => {
+                                    console.log(res);
+                                    this.documents = res.data.partial_post;
                                 });
                             }
                         }
@@ -147,8 +158,8 @@ export default {
         height: 1.5px;
     }
 
-    .document_item:first-child {
-        margin-top: 20px;
+    .document_item {
+        width: 100%;
         background-color: var(--main-color);
         color: var(--main-font-color);
         padding: 15px;

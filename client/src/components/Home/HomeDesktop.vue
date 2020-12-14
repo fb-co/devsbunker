@@ -96,7 +96,7 @@
             <div class="scrollable_center">
                 <p class="discover_label no_select">Discover Projects</p>
 
-                <GeneralInput label="Search..." width="50%" :labelIsPlaceholder="true" class="search_bar" />
+                <PostSearch width="50%" class="post_search_bar" />
 
                 <div class="filter_dropdown">
                     <Dropdown label="Newest" linkHeight="40px" height="40px">
@@ -152,8 +152,8 @@
 import DesktopProjectCard from "@/components/DesktopProjectCard.vue";
 import SmallNotificationCard from "@/components/SmallNotificationCard.vue";
 import GraphQLService from "@/services/graphql.service";
-import GeneralInput from "@/components/global/GeneralInput.vue";
 
+import PostSearch from "@/components/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 
 export default {
@@ -186,7 +186,7 @@ export default {
         DesktopProjectCard,
         Dropdown,
         SmallNotificationCard,
-        GeneralInput
+        PostSearch
     },
 };
 </script>
@@ -196,6 +196,10 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
+}
+
+.post_search_bar {
+    margin: 0px auto 20px auto;
 }
 
 /* LEFT CONTENT */
