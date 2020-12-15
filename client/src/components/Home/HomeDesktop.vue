@@ -73,25 +73,16 @@
                 </div>
             </div>
         </div>
-        <div v-if="notifications" class="right_content">
-            <!-- Set the key to the sender and message because or else you get a bunch of duplicate key issues -->
-            <SmallNotificationCard
-                v-for="notification in notifications"
-                :key="notification.sender + notification.message"
-                :notificationData="notification"
-                class="home_page_notification"
-            />
-            <p class="no_notification_label" v-if="notifications.length == 0">No new notifications</p>
-        </div>
+        <RightContent :notifications="notifications" />
     </div>
 </template>
 
 <script>
 import DesktopProjectCard from "@/components/DesktopProjectCard.vue";
-import SmallNotificationCard from "@/components/SmallNotificationCard.vue";
 import PostSearch from "@/components/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
+import RightContent from "@/components/Home/desktop/RightContent.vue";
 
 export default {
     data() {
@@ -115,9 +106,9 @@ export default {
     components: {
         DesktopProjectCard,
         Dropdown,
-        SmallNotificationCard,
         PostSearch,
         LeftContent,
+        RightContent,
     },
 };
 </script>
@@ -229,53 +220,5 @@ export default {
 
 .scrollable_center::-webkit-scrollbar {
     display: none;
-}
-
-/* RIGHT CONTENT */
-
-.right_content {
-    max-width: 250px;
-    width: 35%;
-    height: calc(100vh - var(--header-height));
-    overflow-y: scroll;
-    padding-top: 15px;
-}
-.discover_label {
-    font-size: 25px;
-    margin-top: 50px;
-    margin-bottom: 40px;
-}
-.home_page_notification {
-    width: 80%;
-    margin: 20px auto 20px auto;
-}
-
-/*Scrollbar stuff*/
-.right_content::-webkit-scrollbar {
-    width: 4px;
-}
-.right_content::-webkit-scrollbar-thumb {
-    background: var(--soft-text);
-    border-radius: 10px;
-}
-
-.no_notification_label {
-    padding-top: 20px;
-}
-
-/* RESIZING FUNCTIONALITY */
-
-/* mobile styles */
-@media only screen and (max-width: 1060px) {
-    .home_page_notification {
-        width: 100%;
-    }
-}
-
-/* Other Styles */
-@media only screen and (min-width: 1500px) {
-    .right_content {
-        margin-right: 100px;
-    }
 }
 </style>
