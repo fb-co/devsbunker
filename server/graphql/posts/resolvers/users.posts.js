@@ -1,4 +1,5 @@
 import getUserPost from "../utils/getUserPost.js";
+import getPostByPartial from "../utils/getPostByPartial.js";
 import getPostById from "../utils/getPostById.js";
 import getPostList from "../utils/getPostList.js";
 import getPostsByAuthor from "../utils/getPostsByAuthor.js";
@@ -58,7 +59,11 @@ export default {
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
             return getSavedPosts(jwtPayload.username);
-        }
+        },
+
+        partial_post: async function(_, args, { res }) {
+            return getPostByPartial(args.partial_name, args.requester_token);
+        },
     },
 
     Mutation: {

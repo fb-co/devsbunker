@@ -1,8 +1,14 @@
-<!-- IMPORTANT: THE PARENT COMPONENT NEEDS TO HAVE A getComponentToUpdate() function that returns the component it should render results in-->
+<!-- 
+    IMPORTANT: THE PARENT COMPONENT NEEDS TO a updateSearchComponent() function that takes a parm of some posts and renders them as cards
+               and you will need to render the component as you see fit in the parent. To conditionally render it based on whether the user
+               is searching, use the isSearching() method on this component to return a boolean for that use.
+
+               CONSIDER MOVING THAT FUNCTION TO A MIXIN
+-->
 
 <template>
     <div class="post_search_bar" :style="cssProps">
-        <input class="post_search_input" placeholder='search...'>
+        <input @input="queryData()" ref="general_input" class="post_search_input" placeholder='search...'>
 
         <div class="form_line_container">
             <div class="bottom_line"></div>
@@ -11,7 +17,19 @@
 </template>
 
 <script>
+import GraphQLService from '@/services/graphql.service';
+
 export default {
+    data() {
+        return {
+            documents: [],
+            selectedDocument: -1,
+            queryThresh: 1000, // amount of time in between query queue times
+            queryQueued: false, // flag to make sure queries are not spammed
+
+            //canClose: false // Important because you need to make sure when you blur the input that the click binding on the options can be triggered
+        }
+    },
     props: {
         width: {
             type: String,
@@ -25,6 +43,28 @@ export default {
             };
         },
     },
+    methods: {
+        queryData() {
+            if (this.$refs.general_input.value != "" && this.$refs.general_input.value.length > 2) {
+                if (!this.queryQueued) {
+                    this.queryQueued = true;
+
+                    setTimeout(() => {
+                        if (this.$refs.general_input.value != "") {
+                            GraphQLService.fetchPostsByPartial(this.$refs.general_input.value, this.$store.getters.accessToken).then((res) => {
+                                this.documents = res.data.partial_post;
+                                this.$parent.updateSearchComponent(this.documents);
+                            });
+                        }
+                        this.queryQueued = false;
+                    }, this.queryThresh);
+                }
+            } else {
+                this.$parent.updateSearchComponent([], true); // update the parent component to go back to original feed
+                this.documents = [];
+            }
+        },
+    }
 }
 </script>
 

@@ -144,6 +144,9 @@ export default {
             likeIsActive: false,
         };
     },
+    created(){ 
+        console.log(this.projectData);
+    },
     props: {
         projectData: Object,
         width: {
@@ -157,8 +160,10 @@ export default {
     },
     methods: {
         getThumbnail() {
-            if (this.projectData.images.length > 0) {
-                return this.projectData.images[0].dbname;
+            if (this.projectData.images) {
+                if (this.projectData.images.length > 0) {
+                    return this.projectData.images[0].dbname;
+                }
             }
             return "../../../uploads/profile_pics/profilePlaceholder.png";
         },

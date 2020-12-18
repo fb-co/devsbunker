@@ -64,12 +64,24 @@ const GraphQLService = {
         }
     },
 
-    fetchPostByPartial: function(partial_name) {
+    fetchPostsByPartial: function(partial_name, requester_token) {
         if (partial_name != "") {
             const query = `
                 query {
-                    partial_post(partial_name: "${partial_name}") {
+                    partial_post(partial_name: "${partial_name}", requester_token: "${requester_token}") {
+                        author
                         title
+                        description
+                        images {
+                            ogname
+                            dbname
+                        }
+                        likeAmt
+                        isSaved
+                        isLiked
+                        bunkerTag
+                        price
+                        id
                     }
                 }
             `;

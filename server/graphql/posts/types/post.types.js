@@ -57,6 +57,8 @@ export default gql`
         getPostById(postId: String!): FetchablePost
 
         getSavedPosts(token: String!): [FetchablePost]
+
+        partial_post(partial_name: String!, requester_token: String): [FetchablePost]!
     }
 
     type Mutation {

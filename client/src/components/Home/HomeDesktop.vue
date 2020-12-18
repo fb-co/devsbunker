@@ -37,17 +37,26 @@
                 <PostSearch width="50%" class="post_search_bar" />
 
                 <div class="filter_dropdown">
-                    <Dropdown label="Newest" linkHeight="40px" height="40px">
+                    <Dropdown label="Newest" linkHeight="40px" height="40px" width="200px">
                         <button>Newest</button>
                         <button>Most Popular</button>
                         <button>Alphabetical</button>
                     </Dropdown>
                 </div>
-                <div v-if="projects" class="projects_area">
+                <div v-if="!showSearchResults" class="projects_area">
                     <DesktopProjectCard
                         v-for="project in projects"
                         :key="project.name"
                         :projectData="project"
+                        width="70%"
+                        class="project_card"
+                    />
+                </div>
+                <div v-else>
+                    <DesktopProjectCard
+                        v-for="searchResult in searchResults"
+                        :key="searchResult.id"
+                        :projectData="searchResult"
                         width="70%"
                         class="project_card"
                     />
@@ -88,6 +97,8 @@ export default {
     data() {
         return {
             username: "",
+            searchResults: [],
+            showSearchResults: false
         };
     },
     created() {
@@ -102,6 +113,15 @@ export default {
         makeNewPost() {
             this.$parent.openPostMenu();
         },
+        updateSearchComponent(documents, closeResults) {
+            this.searchResults = documents;
+            
+            if (closeResults) {
+                this.showSearchResults = false;
+            } else {
+                this.showSearchResults = true;
+            }
+        }
     },
     components: {
         DesktopProjectCard,
@@ -207,6 +227,19 @@ export default {
     margin-right: 20px;
     padding: 5px;
 }
+.discover_label {
+    font-size: 25px;
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
+.filter_dropdown {
+    width: 200px;
+    margin: 30px auto 40px auto;
+}
+.filter_dropdown > div {
+    width: 200px;
+}
+
 
 /* (center content scrollbar)
 .scrollable_center::-webkit-scrollbar {
