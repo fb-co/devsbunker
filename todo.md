@@ -26,7 +26,8 @@
     -   [x] 1. moving everything inside server/static and serve them as static assets
         -   [ ] organize the upload folder
     -   [x] 2. making another server just for those static assets
-    -   [x] 3. using res.sendFile(\_\_dirname + /images/ + path); or something like this (PATH TRAVERSAL?)
+    -   [x] 3. using res.sendFile(\_\_dirname + /images/ + path); or something like this (PATH TRAVERSAL?
+-  [ ] The home post feed and presumably many others use the post name as the v-for key, which will cause errors if two posts have the same name (switch to something like id)
 
 ## Frontend
 
