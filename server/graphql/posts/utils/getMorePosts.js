@@ -3,26 +3,29 @@ import User from "../../../components/user/user.model.js";
 import AddDynamicData from "../misc/addDynamicData.js";
 import TokenHandler from "../../../components/tokens/TokenHandler.js";
 
-export default async function getPostsByAuthor(author, requesterToken) {
-    let requesterUser;
+export default async function getMorePosts(alreadyFetched, token) {
+    let user;
 
-    if (requesterToken) {
-        const jwtPayload = TokenHandler.verifyAccessToken(requesterToken);
+    if (token) {
+        const jwtPayload = TokenHandler.verifyAccessToken(token);
 
         if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
-        requesterUser = await User.findOne({ username: jwtPayload.username }, { username: 1, liked_posts: 1, saved_posts: 1 });
+        user = await User.findOne({ username: jwtPayload.username });
     }
 
+    //
     return new Promise((resolve) => {
-        Posts.find({ author: author })
-            .sort({ _id: -1 }).limit(15)
+        Posts.find()
+            .sort({ _id: -1 })
+            .skip(alreadyFetched)
+            .limit(3)
             .then((posts) => {  
-                if (requesterUser) {
-                    const finalPosts = AddDynamicData.addAll(posts, requesterUser);
+                if (user) {
+                    const finalPosts = AddDynamicData.addAll(posts, user);
                     resolve(finalPosts);
                 }
-                resolve(posts)
+                resolve(posts);
             })
             .catch((err) => {
                 console.log(err);

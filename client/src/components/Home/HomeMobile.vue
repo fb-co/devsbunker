@@ -88,6 +88,7 @@
             </div>
 
             <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
+            <p class="load_more_btn">Load More</p>
         </div>
         <BottomNavBar />
     </div>
@@ -269,6 +270,15 @@ export default {
 }
 .current_filter_subcontainer {
     flex-grow: 1;
+}
+
+.load_more_btn {
+    margin: 30px auto 30px auto;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+    width: 200px;
 }
 
 /* mobile styles */

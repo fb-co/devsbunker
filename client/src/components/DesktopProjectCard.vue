@@ -144,9 +144,6 @@ export default {
             likeIsActive: false,
         };
     },
-    created(){ 
-        console.log(this.projectData);
-    },
     props: {
         projectData: Object,
         width: {

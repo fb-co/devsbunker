@@ -61,6 +61,7 @@
                         class="project_card"
                     />
                 </div>
+                <!--
                 <div @click="makeNewPost()" class="projects_footer">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -80,6 +81,8 @@
                         <line x1="12" y1="9" x2="12" y2="15" />
                     </svg>
                 </div>
+                -->
+                <p @click="loadNew()" class="load_more_btn">Load More</p>
             </div>
         </div>
         <RightContent :notifications="notifications" />
@@ -92,6 +95,8 @@ import PostSearch from "@/components/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
+
+import LoadMorePosts from "@/mixins/load_more_posts.mixin";
 
 export default {
     data() {
@@ -109,18 +114,26 @@ export default {
         projects: Array,
         notifications: Array,
     },
+    mixins: [
+        LoadMorePosts
+    ],
     methods: {
         makeNewPost() {
             this.$parent.openPostMenu();
         },
         updateSearchComponent(documents, closeResults) {
             this.searchResults = documents;
-            
+
             if (closeResults) {
                 this.showSearchResults = false;
             } else {
                 this.showSearchResults = true;
             }
+        },
+        async loadNew() {
+            const newProjects = await this.load(this.projects.length, this.$store.getters.accessToken);
+            //this.allProjects.concat(newProjects.data.loadMorePosts);
+            this.projects = this.projects.concat(newProjects.data.loadMorePosts);
         }
     },
     components: {
@@ -237,6 +250,15 @@ export default {
     margin: 30px auto 40px auto;
 }
 .filter_dropdown > div {
+    width: 200px;
+}
+
+.load_more_btn {
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid black;
+    cursor: pointer;
     width: 200px;
 }
 

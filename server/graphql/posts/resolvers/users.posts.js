@@ -4,6 +4,7 @@ import getPostById from "../utils/getPostById.js";
 import getPostList from "../utils/getPostList.js";
 import getPostsByAuthor from "../utils/getPostsByAuthor.js";
 import getSavedPosts from "../utils/getSavedPosts.js";
+import getMorePosts from "../utils/getMorePosts.js";
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
@@ -64,6 +65,10 @@ export default {
         partial_post: async function(_, args, { res }) {
             return getPostByPartial(args.partial_name, args.requester_token);
         },
+
+        loadMorePosts: async function(_, args, { res }) {
+            return getMorePosts(args.alreadyFetched, args.token);
+        } 
     },
 
     Mutation: {

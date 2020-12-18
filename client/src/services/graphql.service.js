@@ -86,7 +86,6 @@ const GraphQLService = {
                 }
             `;
 
-
             return fetch(URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -275,6 +274,44 @@ const GraphQLService = {
             return console.log(err);
         }
     },
+    
+    //already fetched is an integer of the amount of posts already fectched (newest to oldest)
+    loadMorePosts: function(alreadyFetched, token) {
+        const query = `
+            query {
+                loadMorePosts(alreadyFetched: ${alreadyFetched}, token: "${token}") {
+                    title
+                    author
+                    images {
+                        ogname
+                        dbname
+                    }
+                    description
+                    likeAmt
+                    isSaved
+                    isLiked
+                    bunkerTag
+                    price
+                    id
+                }
+            }
+        `;
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        }
+    }, 
 
     likePost: async function(token, postId) {
         const mutation = `
