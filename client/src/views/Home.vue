@@ -20,6 +20,8 @@ import HomeMobile from "@/components/Home/HomeMobile.vue";
 import HomeDesktop from "@/components/Home/HomeDesktop.vue";
 import NewPost from "@/components/NewPost/NewPost.vue";
 
+import LoadMorePosts from "@/mixins/load_more_posts.mixin";
+
 export default {
     data() {
         return {
@@ -52,7 +54,7 @@ export default {
             this.mobile = this.isMobile();
         });
     },
-    mixins: [GeneralProperties],
+    mixins: [GeneralProperties, LoadMorePosts],
     components: {
         NavBar,
         HomeMobile,
@@ -68,6 +70,10 @@ export default {
         },
         closePostMenu() {
             this.$refs.newPostMenu.close();
+        },
+        async loadNew() {
+            const newProjects = await this.load(this.posts.length, this.$store.getters.accessToken);
+            this.posts = this.posts.concat(newProjects.data.loadMorePosts);
         },
         queryPosts() {
             /*

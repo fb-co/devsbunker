@@ -96,8 +96,6 @@ import Dropdown from "@/components/global/Dropdown.vue";
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
 
-import LoadMorePosts from "@/mixins/load_more_posts.mixin";
-
 export default {
     data() {
         return {
@@ -114,9 +112,6 @@ export default {
         projects: Array,
         notifications: Array,
     },
-    mixins: [
-        LoadMorePosts
-    ],
     methods: {
         makeNewPost() {
             this.$parent.openPostMenu();
@@ -130,10 +125,8 @@ export default {
                 this.showSearchResults = true;
             }
         },
-        async loadNew() {
-            const newProjects = await this.load(this.projects.length, this.$store.getters.accessToken);
-            //this.allProjects.concat(newProjects.data.loadMorePosts);
-            this.projects = this.projects.concat(newProjects.data.loadMorePosts);
+        loadNew() {
+            this.$parent.loadNew();
         }
     },
     components: {

@@ -88,7 +88,7 @@
             </div>
 
             <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
-            <p class="load_more_btn">Load More</p>
+            <p @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
         <BottomNavBar />
     </div>
@@ -144,6 +144,9 @@ export default {
         makeNewPost() {
             this.$parent.openPostMenu();
         },
+        loadNew() {
+            this.$parent.loadNew();
+        }
     },
     components: {
         MobileProjectCard,
