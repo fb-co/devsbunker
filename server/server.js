@@ -48,6 +48,7 @@ app.use(
     })
 );
 app.use(express.json());
+app.use(TokenHandler.checkHeaderToken);
 
 // Apollo Server
 import typeDefs from "./graphql/typeDefs.js";
@@ -82,8 +83,8 @@ import user from "./components/user/user.route.js";
 import upload from "./components/post/post.route.js";
 
 // route handling
-app.use("/user", TokenHandler.checkHeaderToken, user);
-app.use("/upload", TokenHandler.checkHeaderToken, upload);
+app.use("/user", user);
+app.use("/upload", upload);
 
 /* HANDLING 404 ERRORS */
 app.use((_, res) => {
