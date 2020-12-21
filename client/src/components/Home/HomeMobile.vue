@@ -1,6 +1,7 @@
 <template>
     <div class="main_container">
         <div class="main_content_container">
+            <!--
             <CustomInput class="main_search">
                 <input type="text" name="search" id="setting_search" placeholder="Search..." />
                 <div class="submit_search">
@@ -22,6 +23,8 @@
                     </svg>
                 </div>
             </CustomInput>
+            -->
+            <PostSearch width="90%" class="post_search_bar" />
             <div id="loggedIn-header" v-if="$store.getters.isLoggedIn">
                 <div class="header_container">
                     <div class="horizontal_flex_center">
@@ -87,7 +90,12 @@
                 </Dropdown>
             </div>
 
-            <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
+            <div v-if="!showSearchResults">
+                <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
+            </div>
+            <div v-else>
+                <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.name" :projectData="searchResult" width="100%" />
+            </div>
             <p @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
         <BottomNavBar />
@@ -96,15 +104,18 @@
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
-import CustomInput from "@/components/global/CustomInput.vue";
 import BottomNavBar from "@/components/BottomNavBar";
 import ProfilePicture from "@/components/ProfilePicture.vue";
+
+import PostSearch from "@/components/PostSearch.vue";
 
 export default {
     data() {
         return {
             bunkers: ["All", "Python", "Javascript", "Java", "C/C++"],
             filter: "All",
+            searchResults: [],
+            showSearchResults: false
         };
     },
     props: {
@@ -146,12 +157,21 @@ export default {
         },
         loadNew() {
             this.$parent.loadNew();
-        }
+        },
+        updateSearchComponent(documents, closeResults) {
+            this.searchResults = documents;
+
+            if (closeResults) {
+                this.showSearchResults = false;
+            } else {
+                this.showSearchResults = true;
+            }
+        },
     },
     components: {
         MobileProjectCard,
         Dropdown,
-        CustomInput,
+        PostSearch,
         BottomNavBar,
         ProfilePicture
     },
@@ -283,6 +303,11 @@ export default {
     cursor: pointer;
     width: 200px;
 }
+
+.post_search_bar {
+    margin: 40px auto 20px auto;
+}
+
 
 /* mobile styles */
 @media only screen and (max-width: 350px) {
