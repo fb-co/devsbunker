@@ -1,8 +1,8 @@
 <template>
-    <div class="query_input_container"> 
+    <div class="query_input_container" @keyup="nextDocument"> 
         <input @click.stop="" @input="queryData()" ref="input_ref" class="main_query_input" :placeholder="placeholder">
         <div class="main_query_results" ref="results">
-            <p @mousedown="addUser(document.username)" v-for="document in documents" :key="document.username" class="document_item">{{ document.username }}</p>
+            <p @mousedown="addUser(document.username)" v-for="(document, index) in documents" :key="document.username" class="document_item" :class="{ selected: index==selectedDocument }">{{ document.username }}</p>
 
             <!-- <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" /> -->
         </div>
@@ -15,7 +15,7 @@ export default {
     data() {
         return {
             documents: [],
-            selectedDocument: -1,
+            selectedDocument: 1,
             queryThresh: 1000, // amount of time in between query queue times
             queryQueued: false, // flag to make sure queries are not spammed
 
@@ -31,6 +31,16 @@ export default {
             type: String,
             default: "users"
         }
+    },
+    mounted() {
+        document.addEventListener("keyup", () => {
+            this.nextDocument();
+        });
+    },
+    destroyed() {
+        document.removeEventListener("keyup", () => {
+            this.nextDocument();
+        });
     },
     methods: {
         getValue() {
@@ -61,6 +71,15 @@ export default {
             }
         },
 
+        nextDocument() {
+            console.log(this.selectedDocument, event.keyCode);
+            if (event.keyCode == 38) {
+                this.selectedDocument--;
+            } else if (event.keyCode == 40) {
+                this.selectedDocument++;
+            }
+        },
+
         addUser(value) {
             this.$parent.add_entry(value);
             this.documents = [];
@@ -74,7 +93,6 @@ export default {
     .query_input_container{
         width: 175px;
         margin: 0 auto;
-        background-color: red;
     }
 
     .main_query_input {
@@ -116,6 +134,15 @@ export default {
     }
     .document_item:hover {
         color: var(--soft-text);
+    }
+    .selected {
+        background-color: var(--secondary-color);
+        color: var(--main-font-color);
+        font-weight: bold;
+        padding: 10px;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
     }
     
 </style>
