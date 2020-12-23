@@ -56,6 +56,7 @@
 -   [ ] mod email in user page doesn't work (the save btn doesn't work)
 -   [ ] add unfollow btn 
 -   [ ] if I visit someone else profile I am able to see a field to modify my profile (if admin visits test_account he can see a field with its username in the information tab)
+-   [ ] opening the NewPostTagPopup on a new post page, the input should auto-select itself
 
 ### Things to optimize
 
