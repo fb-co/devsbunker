@@ -28,6 +28,7 @@
     -   [x] 2. making another server just for those static assets
     -   [x] 3. using res.sendFile(\_\_dirname + /images/ + path); or something like this (PATH TRAVERSAL?
 -  [ ] The home post feed and presumably many others use the post name as the v-for key, which will cause errors if two posts have the same name (switch to something like id)
+-  [ ] Creating a post on the home page wont refresh the post feed since it auto avoids redundant routing
 
 ## Frontend
 
