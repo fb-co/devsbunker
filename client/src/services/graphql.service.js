@@ -405,7 +405,7 @@ const GraphQLService = {
     followPerson: async function(token, person) {
         const mutation = `
             mutation {
-                followPerson(token: "${token}", person: "${person}") {
+                followPerson(person: "${person}") {
                     followers
                 }
             }
@@ -414,7 +414,7 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json" },
+                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}` },
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });

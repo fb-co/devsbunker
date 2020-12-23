@@ -206,8 +206,8 @@ export default {
         },
 
         // will add a follower to "person" and add a following to follower
-        followPerson: async function (_, args, { res }) {
-            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+        followPerson: async function (_, args, { req }) {
+            const jwtPayload = req.user;
             const personPayload = args.person;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
@@ -222,7 +222,7 @@ export default {
                     if (!person_to_follow.followers.includes(add_following.username)) {
                         person_to_follow.followers.push(jwtPayload.username);
                     } else {
-                        return null;
+                        return null; // we should add something better like a msg than just null
                     }
 
                     await person_to_follow.save();
