@@ -53,6 +53,8 @@
 -   [ ] Project card author link spans 100% of card (even if you cant see it, you can still click it)
 -   [ ] attach images to DOM after retreiving them (like a preview)
 -   [ ] mod email in user page doesn't work (the save btn doesn't work)
+-   [ ] add unfollow btn 
+-   [ ] if I visit someone else profile I am able to see a field to modify my profile (if admin visits test_account he can see a field with its username in the information tab)
 
 ### Things to optimize
 
