@@ -12,9 +12,7 @@
                 <div></div> <!--placeholder-->
             </div>
             
-            <QueryInput ref="tag_search" />
-
-            <button @click="add_entry()">Add (test btn)</button>
+            <QueryInput ref="tag_search" :searchFor="searchFor" />
 
             <div v-for="entry in selected_entries" :key="entry" class="contributer">
                 <p v-if="entry.length < 20">{{ entry }}</p>
@@ -44,7 +42,11 @@ export default {
         label: String,
         entries: {
             type: Array
-        }
+        },
+        searchFor: {
+            type: String,
+            default: 'users'
+        },
     },
     methods: {
         close() {
@@ -71,14 +73,14 @@ export default {
                 }
             }
         },
+        
         add_entry(value) {
             if (!value) {
                 value = this.$refs.tag_search.getValue();
             }
 
             this.$refs.tag_search.queryData();
-            this.selected_entries.push(value);
-            console.log(this.selected_entries);
+            this.selected_entries.push(value); 
             this.$refs.tag_search.clearValue();
         },
     },
@@ -140,6 +142,7 @@ export default {
         flex-direction: row;
         justify-content: center;
         margin-bottom: 10px;
+        margin-top: 20px;
     }
     .contributer > p {
         margin-right: 15px;

@@ -2,8 +2,12 @@
     <div class="query_input_container" @keyup.stop="nextDocument"> <!-- Stop the event propogation for the keyup function -->
         <input @click.stop="" @input="queryData()" ref="input_ref" class="main_query_input" :placeholder="placeholder">
         <div class="main_query_results" ref="results">
-            <p @mousedown="addUser(document.username)" v-for="(document, index) in documents" :key="document.username" class="document_item" :class="{ selected: isSelected(index) }">{{ document.username }}</p>
-
+            <div v-if="searchFor==='users'">
+                <p @mousedown="addEntry(document.username)" v-for="(document, index) in documents" :key="document.username" class="document_item" :class="{ selected: isSelected(index) }">{{ document.username }}</p>
+            </div>
+            <div v-else>
+                <p @mousedown="addEntry(document.name)" v-for="(document, index) in documents" :key="document.name" class="document_item" :style="'color: ' + document.color" :class="{ selected: isSelected(index) }">{{ document.name }}</p>
+            </div>
             <!-- <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" /> -->
         </div>
     </div>
@@ -11,6 +15,8 @@
 
 <script>
 import GraphQLService from '../services/graphql.service';
+import Languages from '../templates/Languages.js';
+
 export default {
     data() {
         return {
@@ -52,27 +58,32 @@ export default {
 
         queryData() {
             if (this.$refs.input_ref.value != "" && this.$refs.input_ref.value.length > 2) {
-                if (!this.queryQueued) {
-                    this.queryQueued = true;
+                if (this.searchFor === "users") { // include all searches that require a request to the server in 'or' format at this if statement
+                    if (!this.queryQueued) {
+                        this.queryQueued = true;
 
-                    setTimeout(() => {
-                        if (this.$refs.input_ref.value != "") {
-                            if (this.searchFor === "users") {
-                                GraphQLService.fetchUserByPartial(this.$refs.input_ref.value).then((res) => {
-                                    this.documents = res.data.partial_user;
-                                });
+                        setTimeout(() => {
+                            if (this.$refs.input_ref.value != "") {
+                                // use different queries to search for different items based on 'searchFor'
+                                if (this.searchFor === "users") {
+                                    GraphQLService.fetchUserByPartial(this.$refs.input_ref.value).then((res) => {
+                                        this.documents = res.data.partial_user;
+                                    });
+                                }
                             }
-                        }
-                        this.queryQueued = false;
-                    }, this.queryThresh);
-                }
+                            this.queryQueued = false;
+                        }, this.queryThresh);
+                    }
+                } else if (this.searchFor === "languages") { 
+                    this.documents = Languages.searchByPartial(this.$refs.input_ref.value);
+                    console.log(this.documents);    
+                } 
             } else {
                 this.documents = [];
             }
         },
 
         isSelected(index) {
-            //console.log(index, this.selectedDocument);
             return index===this.selectedDocument;
         },
 
@@ -83,7 +94,9 @@ export default {
                 this.selectedDocument++;
             } else if (event.keyCode == 13) {
                 // handle for pressing enter
-                this.addUser(this.documents[this.selectedDocument].username);
+                if (this.documents[this.selectedDocument] !== undefined) {
+                    this.addEntry(this.documents[this.selectedDocument].username);
+                }
             }
 
             // make sure the selected document is within the bounds of the results
@@ -94,7 +107,7 @@ export default {
             }
         },
 
-        addUser(value) {
+        addEntry(value) {
             this.$parent.add_entry(value);
             this.documents = [];
         }, 
@@ -145,6 +158,7 @@ export default {
         display: inline-block;
         text-align: center;
         cursor: pointer;
+        width: 100%;
     }
     .document_item:hover {
         color: var(--soft-text);

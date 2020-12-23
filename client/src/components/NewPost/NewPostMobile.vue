@@ -165,10 +165,25 @@
             label="Add Contributers"
             name="add_contributers"
             :entries="contributers"
+            searchFor="users"
             style="position: fixed;"
         />
-        <NewTagPopup ref="tags_popup" label="Add Tags" name="add_tags" :entries="tags" style="position: fixed;" />
-        <NewTagPopup ref="links_popup" label="Add Links" name="add_links" :entries="links" style="position: fixed;" />
+        <NewTagPopup 
+            ref="tags_popup" 
+            label="Add Tags" 
+            name="add_tags" 
+            :entries="tags" 
+            searchFor="languages"
+            style="position: fixed;"
+        />
+        <NewTagPopup 
+            ref="links_popup" 
+            label="Add Links" 
+            name="add_links" 
+            :entries="links"
+            searchFor="none" 
+            style="position: fixed;" 
+        />
 
         <ErrorPopUp v-if="error" @display-popup="error = $event" :msg="errmsg" />
         <SuccessPopUp v-if="success" message="Successfully created new post" />
@@ -262,7 +277,7 @@ export default {
 
                 if (valid) {
                     for (const tag of payload.tags) {
-                        valid = Languages.includes(tag);
+                        valid = Languages.check(tag);
                         if (!valid) {
                             errmsg = "Invalid tag. Please select a valid language";
                             break;
