@@ -52,6 +52,7 @@
 -   [x] make sure that the heart icon is filled even after refresh if user has already liked a post
 -   [ ] Project card author link spans 100% of card (even if you cant see it, you can still click it)
 -   [ ] attach images to DOM after retreiving them (like a preview)
+-   [ ] mod email in user page doesn't work (the save btn doesn't work)
 
 ### Things to optimize
 
