@@ -1,23 +1,16 @@
 import User from "../user/user.model.js";
-import TokenHandler from "./TokenHandler.js";
 
 class SessionRevoker {
-    static async revokeRefreshToken(token) {
-        if (token) {
-            const decoded = TokenHandler.verifyAccessToken(token);
+    static async revokeRefreshToken(jwtPayload) {
+        if (jwtPayload) {
+            const user = await User.findOne({
+                _id: jwtPayload._id,
+            });
 
-            if (decoded) {
-                const user = await User.findOne({
-                    _id: decoded._id,
-                });
+            user.tokenVersion += 1;
+            user.save();
 
-                user.tokenVersion += 1;
-                user.save();
-
-                return true;
-            } else {
-                return false;
-            }
+            return true;
         } else {
             return false;
         }

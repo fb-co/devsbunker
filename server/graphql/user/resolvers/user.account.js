@@ -267,8 +267,8 @@ export default {
             }
         },
 
-        revokeUserSession: async function (_, args) {
-            return await SessionRevoker.revokeRefreshToken(args.token);
+        revokeUserSession: async function (_, args, { req }) {
+            return await SessionRevoker.revokeRefreshToken(req.user);
         },
     },
 };
