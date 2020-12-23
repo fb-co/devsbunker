@@ -1,8 +1,8 @@
 <template>
-    <div class="query_input_container" @keyup="nextDocument"> 
+    <div class="query_input_container" @keyup.stop="nextDocument"> <!-- Stop the event propogation for the keyup function -->
         <input @click.stop="" @input="queryData()" ref="input_ref" class="main_query_input" :placeholder="placeholder">
         <div class="main_query_results" ref="results">
-            <p @mousedown="addUser(document.username)" v-for="(document, index) in documents" :key="document.username" class="document_item" :class="{ selected: index==selectedDocument }">{{ document.username }}</p>
+            <p @mousedown="addUser(document.username)" v-for="(document, index) in documents" :key="document.username" class="document_item" :class="{ selected: isSelected(index) }">{{ document.username }}</p>
 
             <!-- <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" /> -->
         </div>
@@ -15,7 +15,7 @@ export default {
     data() {
         return {
             documents: [],
-            selectedDocument: 1,
+            selectedDocument: 0,
             queryThresh: 1000, // amount of time in between query queue times
             queryQueued: false, // flag to make sure queries are not spammed
 
@@ -71,12 +71,26 @@ export default {
             }
         },
 
+        isSelected(index) {
+            //console.log(index, this.selectedDocument);
+            return index===this.selectedDocument;
+        },
+
         nextDocument() {
-            console.log(this.selectedDocument, event.keyCode);
             if (event.keyCode == 38) {
                 this.selectedDocument--;
             } else if (event.keyCode == 40) {
                 this.selectedDocument++;
+            } else if (event.keyCode == 13) {
+                // handle for pressing enter
+                this.addUser(this.documents[this.selectedDocument].username);
+            }
+
+            // make sure the selected document is within the bounds of the results
+            if (this.selectedDocument >= this.documents.length) {
+                this.selectedDocument = 0;
+            } else if (this.selectedDocument < 0) {
+                this.selectedDocument = this.documents.length-1;
             }
         },
 
