@@ -25,7 +25,7 @@ const GraphQLService = {
     fetchPersonalDetails: function(token, fields) {
         const query = `
             query {
-                getPersonalDetails(token: "${token}") {
+                getPersonalDetails {
                     ${fields}
                 }
             }
@@ -33,7 +33,7 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json" },
+                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}` },
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })

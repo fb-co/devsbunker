@@ -64,7 +64,7 @@ export default gql`
     type Query {
         user(username: String!): FetchableUser
 
-        getPersonalDetails(token: String!): PersonalUserDetails
+        getPersonalDetails: PersonalUserDetails
 
         partial_user(partial_username: String!): [FetchableUser]!
 

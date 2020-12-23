@@ -58,17 +58,14 @@ export default {
             }
         },
 
-        user: function (_, args, { res }) {
+        user: function (_, args) {
             return getUserEntry(args.username);
         },
 
         getPersonalDetails: async function (_, args, { req }) {
-            console.log("auth? >>>", req.user); // since we use the auth middleware we can access this, so we don't need to verify the token manually in every query
+            const jwtPayload = req.user;
 
-            /* we won't need this if we use req.user */
-            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
             if (!jwtPayload) return { success: false, message: "Invalid token" };
-            /* */
 
             try {
                 const user = await User.findOne({ username: jwtPayload.username });
