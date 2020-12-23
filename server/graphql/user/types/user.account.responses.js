@@ -78,7 +78,7 @@ export default gql`
 
         revokeUserSession(token: String!): Boolean!
 
-        updateUserDetails(token: String!, fields: [UpdateUserPayload!]!): UpdateDetailsResponse!
+        updateUserDetails(fields: [UpdateUserPayload!]!): UpdateDetailsResponse!
 
         notifyUser(userToNotify: String!, notification: NotificationPayload!): Boolean
 

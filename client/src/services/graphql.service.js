@@ -456,7 +456,9 @@ const GraphQLService = {
                     variables: variables,
                 }),
             });
+            
             return res.json();
+
         } catch (err) {
             return console.log(err);
         }
@@ -467,7 +469,7 @@ const GraphQLService = {
         // solution: we are using a variable (used to pass complex objects as params) of type UpdateUserPayload (same as backend)
         const mutation = `
             mutation Update($fields: [UpdateUserPayload!]!) {
-                updateUserDetails(token: "${token}", fields: $fields) {
+                updateUserDetails(fields: $fields) {
                     message
                     changedData {
                         field
@@ -485,7 +487,7 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "authorization": `Bearer ${token}` },
                 credentials: "include",
                 body: JSON.stringify({
                     query: mutation,

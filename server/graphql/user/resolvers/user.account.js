@@ -148,8 +148,9 @@ export default {
             }
         },
 
-        updateUserDetails: async function (_, args, { res }) {
-            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+        updateUserDetails: async function (_, args, { req }) {
+            const jwtPayload = req.user;
+
             let editedData = [];
 
             if (!jwtPayload) return { success: false, message: "Invalid token" };
@@ -191,6 +192,7 @@ export default {
                         throw new Error(`Field ${payload.field}: does not exist`);
                     }
                 }
+
 
                 await user.save();
             } catch (err) {
