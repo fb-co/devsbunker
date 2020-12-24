@@ -146,10 +146,10 @@ const GraphQLService = {
     },
 
     // requester token is an optional parameter so that the like button will stay filled if you logged in and the post was liked by you
-    fetchPostsByAuthor: function(author, requesterToken) {
+    fetchPostsByAuthor: function(author, token) {
         const query = `
             query {
-                getPostsByAuthor(author: "${author}", requesterToken: "${requesterToken}") {
+                getPostsByAuthor(author: "${author}") {
                     title
                     author
                     images {
@@ -170,7 +170,7 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json" },
+                headers: { "content-Type": "application/json", "authorization" : `Bearer ${token}`},
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })

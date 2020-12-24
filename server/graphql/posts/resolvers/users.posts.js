@@ -42,13 +42,13 @@ export default {
         },
 
         // return a post by the id
-        getPostById: function (_, args, { res }) {
+        getPostById: function (_, args) {
             return getPostById(args.postId);
         },
 
         // returns all the posts by a given author parameter
-        getPostsByAuthor: function (_, args, { res }) {
-            return getPostsByAuthor(args.author, args.requesterToken);
+        getPostsByAuthor: function (_, args, { req }) {
+            return getPostsByAuthor(args.author, req.user);
         },
 
         getSavedPosts: function (_, args, { res }) {
