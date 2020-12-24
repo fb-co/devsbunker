@@ -184,7 +184,7 @@ const GraphQLService = {
     fetchSavedPosts: function(token) {
         const query = `
             query {
-                getSavedPosts(token: "${token}") {
+                getSavedPosts {
                     title
                     author
                     images {
@@ -205,7 +205,7 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json" },
+                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}` },
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })

@@ -51,8 +51,8 @@ export default {
             return getPostsByAuthor(args.author, req.user);
         },
 
-        getSavedPosts: function (_, args, { res }) {
-            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+        getSavedPosts: function (_, args, { req }) {
+            const jwtPayload = req.user;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
