@@ -16,23 +16,20 @@ import AddDynamicData from "../misc/addDynamicData.js";
 export default {
     Query: {
         // returns a single user post given its title and author (should switch to id at some point)
-        userPost: function (_, args, { res }) {
+        userPost: function (_, args) {
             return getUserPost(args.postTitle, args.postAuthor);
         },
 
         // returns all the posts in the order of the parameter 'sortingType'
-        getPosts: async function (_, args, { res }) {
+        getPosts: async function (_, args, { req }) {
             try {
                 const posts = await getPostList(args.sortingType);
 
                 let user;
 
                 // if the user was logged in, evaluate if the post requested has been liked or saved before
-                if (args.token) {
-                    const jwtPayload = TokenHandler.verifyAccessToken(args.token);
-
-                    if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
-
+                if (req.user) {
+                    const jwtPayload = req.user;
                     user = await User.findOne({ username: jwtPayload.username});
                 }
 
