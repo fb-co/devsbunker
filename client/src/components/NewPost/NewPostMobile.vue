@@ -181,7 +181,8 @@
             label="Add Links" 
             name="add_links" 
             :entries="links"
-            searchFor="none" 
+            searchFor="links"
+            inputPlaceholder="Paste URL..." 
             style="position: fixed;" 
         />
 

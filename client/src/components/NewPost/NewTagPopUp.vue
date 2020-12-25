@@ -12,7 +12,8 @@
                 <div></div> <!--placeholder-->
             </div>
             
-            <QueryInput ref="tag_search" :searchFor="searchFor" />
+            <QueryInput ref="tag_search" :placeholder="inputPlaceholder" :searchFor="searchFor" />
+            <button @click="add_entry()" v-if="searchFor==='links'" class="add_link_btn">Add</button>
 
             <div v-for="entry in selected_entries" :key="entry" class="contributer">
                 <p v-if="entry.length < 20">{{ entry }}</p>
@@ -47,6 +48,10 @@ export default {
             type: String,
             default: 'users'
         },
+        inputPlaceholder: {
+            type: String,
+            default: 'Search...'
+        }
     },
     methods: {
         close() {
@@ -151,6 +156,18 @@ export default {
         stroke-width: 2.2px;
     }
 
+    .add_link_btn {
+        color: #fff;
+        margin-top: 15px;
+        border: none;
+        border-radius: 3px;
+        width: 60px;
+        padding: 5px;
+        background-color: var(--main-btn-color);
+    }
+    .add_link_btn:hover {
+        box-shadow: 0px 4px 20px var(--main-btn-color);
+    }
 
     /* Scrollbar */
 

@@ -6,7 +6,7 @@
                 <p @mousedown="addEntry(document.username)" v-for="(document, index) in documents" :key="document.username" class="document_item" :class="{ selected: isSelected(index) }">{{ document.username }}</p>
             </div>
             <div v-else>
-                <p @mousedown="addEntry(document.name)" v-for="(document, index) in documents" :key="document.name" class="document_item" :style="'color: ' + document.color" :class="{ selected: isSelected(index) }">{{ document.name }}</p>
+                <p @mousedown="addEntry(document.name)" v-for="(document, index) in documents" :key="document.name" class="document_item" :style="'color: ' + document.color " :class="{ selected: isSelected(index) }">{{ document.name }}</p>
             </div>
             <!-- <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" /> -->
         </div>
@@ -39,6 +39,8 @@ export default {
         }
     },
     mounted() {
+        this.$refs.input_ref.focus();
+
         document.addEventListener("keyup", () => {
             this.nextDocument();
         });
@@ -95,7 +97,7 @@ export default {
             } else if (event.keyCode == 13) {
                 // handle for pressing enter
                 if (this.documents[this.selectedDocument] !== undefined) {
-                    this.addEntry(this.documents[this.selectedDocument].username);
+                    this.addEntry(this.documents[this.selectedDocument].username || this.documents[this.selectedDocument].name);
                 }
             }
 

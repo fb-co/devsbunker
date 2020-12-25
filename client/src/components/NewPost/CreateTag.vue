@@ -1,17 +1,26 @@
 <template>
     <div class="vertical_flex_center create_tag_container">
-        <div class="tag_person" style="padding: 5px;">
+        <div v-if="tagType=='user'" class="tag_person" style="padding: 5px;">
             <div class="vertical_flex_center" style="height:100%;">
                 <img src="@/assets/profilePlaceholder.png" alt="profile_pic" style="height: 70%;">
             </div>
+            <p>{{ label }}</p>
+        </div>
+        <div v-else-if="tagType=='lang'" class="tag_lang">
             <p>{{ label }}</p>
         </div>
     </div>
 </template>
 
 <script>
+//import Languages from "@/templates/Languages.js";
+
 export default {
     props: {
+        tagType: {
+            type: String,
+            default: 'lang'
+        },
         label: {
             type: String,
         }
@@ -41,5 +50,12 @@ export default {
         justify-content: center;
         margin-left: 10px;
         margin-right: 10px;
+    }
+
+    .tag_lang {
+        cursor: default;
+        border: 2px solid red;
+        padding: 5px 10px 5px 10px;
+        border-radius: 30px;
     }
 </style>

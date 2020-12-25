@@ -29,6 +29,13 @@ const Languages = {
             return this.list;
         }
     },
+    getColor: function(language) {
+        this.list.forEach(lang => {
+            if (lang.name.toLowerCase() === language.toLowerCase()) {
+                return lang.color;
+            }
+        });
+    },
     list: [
         {
             name: "Python",
