@@ -1,5 +1,5 @@
 <template>
-    <div class="vertical_flex_center create_tag_container">
+    <div class="vertical_flex_center create_tag_container" :style="cssProps">
         <div v-if="tagType=='user'" class="tag_person" style="padding: 5px;">
             <div class="vertical_flex_center" style="height:100%;">
                 <img src="@/assets/profilePlaceholder.png" alt="profile_pic" style="height: 70%;">
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-//import Languages from "@/templates/Languages.js";
+import Languages from "@/templates/Languages.js";
 
 export default {
     props: {
@@ -24,7 +24,14 @@ export default {
         label: {
             type: String,
         }
-    }
+    },
+    computed: {
+        cssProps() {
+            return {
+                "--card-color": Languages.getColor(this.label)
+            };
+        },
+    },
 }
 </script>
 
@@ -54,7 +61,8 @@ export default {
 
     .tag_lang {
         cursor: default;
-        border: 2px solid red;
+        border: 2px solid var(--card-color);
+        color: var(--card-color);
         padding: 5px 10px 5px 10px;
         border-radius: 30px;
     }

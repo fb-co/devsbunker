@@ -29,12 +29,12 @@ const Languages = {
             return this.list;
         }
     },
-    getColor: function(language) {
-        this.list.forEach(lang => {
-            if (lang.name.toLowerCase() === language.toLowerCase()) {
-                return lang.color;
-            }
-        });
+    getColor: function(language) {        
+        for (let i = 0; i < this.list.length; i++) {
+            if (this.list[i].name.toLowerCase() == language.toLowerCase()) {
+                return this.list[i].color;
+            }   
+        }
     },
     list: [
         {

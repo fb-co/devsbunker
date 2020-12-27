@@ -78,7 +78,6 @@ export default {
                     }
                 } else if (this.searchFor === "languages") { 
                     this.documents = Languages.searchByPartial(this.$refs.input_ref.value);
-                    console.log(this.documents);    
                 } 
             } else {
                 this.documents = [];
