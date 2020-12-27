@@ -94,9 +94,12 @@ export default {
             } else if (event.keyCode == 40) {
                 this.selectedDocument++;
             } else if (event.keyCode == 13) {
+                console.log("bruh");
                 // handle for pressing enter
                 if (this.documents[this.selectedDocument] !== undefined) {
                     this.addEntry(this.documents[this.selectedDocument].username || this.documents[this.selectedDocument].name);
+                } else {
+                    this.addEntry(this.$refs.input_ref.value);
                 }
             }
 

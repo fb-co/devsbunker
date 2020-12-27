@@ -36,6 +36,7 @@
                     id="files"
                     multiple
                     accept=".jpg, .png, .jpeg, .gif"
+                    class="new_image"
                 />
 
                 <svg
@@ -519,6 +520,11 @@ export default {
 .add_image:hover {
     stroke-width: 2px;
     cursor: pointer;
+}
+
+.new_image {
+    display: block;
+    color: var(--main-font-color);
 }
 
 /* mobile styles */
