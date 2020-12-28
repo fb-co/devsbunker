@@ -90,3 +90,5 @@
 -   [ ] Set Prod env variable to true
 -   [ ] Remove all the console logs, including the one on Logout event
 -   [ ] use a more accurate regex for emails
+-   [ ] clean the code (in some cases we used snake_case and in others camelCase)
+    -   [ ] add comments ot functions following a standard notation
