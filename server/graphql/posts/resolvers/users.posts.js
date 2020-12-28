@@ -258,9 +258,9 @@ export default {
             }
 
         },
-        savePost: async function (_, args, { res }) {
+        savePost: async function (_, args, { req }) {
             const id_payload = args.postId;
-            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+            const jwtPayload = req.user;
             
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
             
@@ -308,9 +308,9 @@ export default {
 
         // I avoid sending back an entire post document because you dont actully need to query the db for the post item,
         // you can just get rid of the postid in the users document. this is why only a boolean is returned;
-        unSavePost: async function (_, args, { res }) {
+        unSavePost: async function (_, args, { req }) {
             const id_payload = args.postId;
-            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+            const jwtPayload = req.user;
             
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 

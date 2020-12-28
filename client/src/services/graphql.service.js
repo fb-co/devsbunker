@@ -362,7 +362,7 @@ const GraphQLService = {
     savePost: async function(token, postId) {
         const mutation = `
             mutation {
-                savePost(token: "${token}", postId: "${postId}") {
+                savePost(postId: "${postId}") {
                     id
                 }
             }
@@ -371,7 +371,7 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json" },
+                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });
@@ -383,7 +383,7 @@ const GraphQLService = {
     unSavePost: async function(token, postId) {
         const mutation = `
             mutation {
-                unSavePost(token: "${token}", postId: "${postId}") {
+                unSavePost(postId: "${postId}") {
                     success
                 }
             }
@@ -392,7 +392,7 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json" },
+                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}` },
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });

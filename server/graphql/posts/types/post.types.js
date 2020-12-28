@@ -67,7 +67,7 @@ export default gql`
         makePost(data: makePostInput): FetchablePost! # returning that post
         likePost(postId: String!): FetchablePost
         unlikePost(postId: String!): FetchablePost
-        savePost(token: String!, postId: String!): FetchablePost
-        unSavePost(token: String!, postId: String!): savedPostOutput
+        savePost(postId: String!): FetchablePost
+        unSavePost(postId: String!): savedPostOutput
     }
 `;
