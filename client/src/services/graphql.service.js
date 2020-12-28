@@ -279,7 +279,7 @@ const GraphQLService = {
     loadMorePosts: function(alreadyFetched, token) {
         const query = `
             query {
-                loadMorePosts(alreadyFetched: ${alreadyFetched}, token: "${token}") {
+                loadMorePosts(alreadyFetched: ${alreadyFetched}) {
                     title
                     author
                     images {
@@ -300,7 +300,7 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json" },
+                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })

@@ -60,7 +60,7 @@ export default gql`
 
         partial_post(partial_name: String!): [FetchablePost]!
 
-        loadMorePosts(alreadyFetched: Int, token: String): [FetchablePost]!
+        loadMorePosts(alreadyFetched: Int): [FetchablePost]!
     }
 
     type Mutation {

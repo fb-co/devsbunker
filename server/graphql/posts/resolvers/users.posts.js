@@ -63,8 +63,8 @@ export default {
             return getPostByPartial(args.partial_name, req.user);
         },
 
-        loadMorePosts: async function(_, args, { res }) {
-            return getMorePosts(args.alreadyFetched, args.token);
+        loadMorePosts: async function(_, args, { req }) {
+            return getMorePosts(args.alreadyFetched, req.user);
         } 
     },
 
