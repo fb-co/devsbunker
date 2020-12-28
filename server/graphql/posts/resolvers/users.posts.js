@@ -10,7 +10,6 @@ const { AuthenticationError } = ApolloServer;
 
 import Posts from "../../../components/post/post.model.js";
 import User from "../../../components/user/user.model.js";
-import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: move this inside GraphQL/
 import AddDynamicData from "../misc/addDynamicData.js";
 
 export default {

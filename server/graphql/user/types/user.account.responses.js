@@ -76,7 +76,7 @@ export default gql`
     type Mutation {
         signupUser(username: String!, email: String!, password: String!): UserAccountAction!
 
-        revokeUserSession(token: String!): Boolean!
+        revokeUserSession: Boolean!
 
         updateUserDetails(fields: [UpdateUserPayload!]!): UpdateDetailsResponse!
 
