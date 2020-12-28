@@ -64,7 +64,7 @@ export default gql`
     }
 
     type Mutation {
-        makePost(token: String!, data: makePostInput): FetchablePost! # returning that post
+        makePost(data: makePostInput): FetchablePost! # returning that post
         likePost(token: String!, postId: String!): FetchablePost
         unlikePost(token: String!, postId: String!): FetchablePost
         savePost(token: String!, postId: String!): FetchablePost

@@ -428,7 +428,7 @@ const GraphQLService = {
     createNewPost: async function(token, data) {
         const mutation = `
             mutation Update($data: makePostInput!) {
-                makePost(token: "${token}", data: $data) {
+                makePost(data: $data) {
                     id
                     title
                     author
@@ -449,7 +449,7 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "authorization": `Bearer ${token}` },
                 credentials: "include",
                 body: JSON.stringify({
                     query: mutation,

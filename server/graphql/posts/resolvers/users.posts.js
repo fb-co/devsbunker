@@ -69,9 +69,9 @@ export default {
     },
 
     Mutation: {
-        makePost: async function (_, args, { res }) {
+        makePost: async function (_, args, { req }) {
             const payload = args.data;
-            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+            const jwtPayload = req.user;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
