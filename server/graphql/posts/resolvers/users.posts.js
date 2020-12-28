@@ -115,9 +115,9 @@ export default {
                 throw new Error("Internal error. Unable to create post");
             }
         },
-        likePost: async function (_, args, { res }) {
+        likePost: async function (_, args, { req }) {
             const id_payload = args.postId;
-            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+            const jwtPayload = req.user;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
@@ -202,9 +202,9 @@ export default {
                 throw err;
             }
         },
-        unlikePost: async function (_, args, { res }) {
+        unlikePost: async function (_, args, { req }) {
             const id_payload = args.postId;
-            const jwtPayload = TokenHandler.verifyAccessToken(args.token);
+            const jwtPayload = req.user;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 

@@ -170,7 +170,7 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization" : `Bearer ${token}`},
+                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })
@@ -316,7 +316,7 @@ const GraphQLService = {
     likePost: async function(token, postId) {
         const mutation = `
             mutation {
-                likePost(token: "${token}", postId: "${postId}") {
+                likePost(postId: "${postId}") {
                     likeAmt
                     isLiked
                 }
@@ -326,7 +326,7 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json" },
+                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });
@@ -339,7 +339,7 @@ const GraphQLService = {
     unlikePost: async function(token, postId) {
         const mutation = `
             mutation {
-                unlikePost(token: "${token}", postId: "${postId}") {
+                unlikePost(postId: "${postId}") {
                     likeAmt
                     isLiked
                 }
@@ -349,7 +349,7 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json" },
+                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });
