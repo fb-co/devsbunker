@@ -59,8 +59,8 @@ export default {
             return getSavedPosts(jwtPayload.username);
         },
 
-        partial_post: async function(_, args, { res }) {
-            return getPostByPartial(args.partial_name, args.requester_token);
+        partial_post: async function(_, args, { req }) {
+            return getPostByPartial(args.partial_name, req.user);
         },
 
         loadMorePosts: async function(_, args, { res }) {

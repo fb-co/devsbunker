@@ -9,11 +9,9 @@ const { AuthenticationError } = ApolloServer;
 export default async function getPostByPartial(partial_name, requester_token) {
     let user;
     console.log(requester_token);
-    if (requester_token!="undefined" && requester_token!=null && requester_token!=undefined) { // little janky but oh well, im tired
-        const jwtPayload = TokenHandler.verifyAccessToken(requester_token);
-
-        if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
-
+    
+    if (requester_token) {
+        const jwtPayload = requester_token;
         user = await User.findOne({ username: jwtPayload.username});
     }
     

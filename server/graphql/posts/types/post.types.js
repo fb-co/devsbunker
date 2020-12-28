@@ -58,7 +58,7 @@ export default gql`
 
         getSavedPosts: [FetchablePost]
 
-        partial_post(partial_name: String!, requester_token: String): [FetchablePost]!
+        partial_post(partial_name: String!): [FetchablePost]!
 
         loadMorePosts(alreadyFetched: Int, token: String): [FetchablePost]!
     }

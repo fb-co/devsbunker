@@ -64,11 +64,11 @@ const GraphQLService = {
         }
     },
 
-    fetchPostsByPartial: function(partial_name, requester_token) {
+    fetchPostsByPartial: function(partial_name, token) {
         if (partial_name != "") {
             const query = `
                 query {
-                    partial_post(partial_name: "${partial_name}", requester_token: "${requester_token}") {
+                    partial_post(partial_name: "${partial_name}") {
                         author
                         title
                         description
@@ -88,7 +88,7 @@ const GraphQLService = {
 
             return fetch(URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "authorization": `Bearer ${token}`},
                 body: JSON.stringify({ query }),
             })
                 .then((res) => res.json())
