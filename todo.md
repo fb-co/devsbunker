@@ -1,5 +1,9 @@
 # TODO
 
+## General
+
+-   [ ] we should not let users put duplicated tags and links in post such as Python, Python, JS, Java, Java and www.google.com www.google.com
+
 ## Backend
 
 -   [ ] send confirmation email for signup
