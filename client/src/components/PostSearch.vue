@@ -1,7 +1,21 @@
 <!-- 
     IMPORTANT: THE PARENT COMPONENT NEEDS TO a updateSearchComponent() function that takes a parm of some posts and renders them as cards
-               and you will need to render the component as you see fit in the parent. To conditionally render it based on whether the user
-               is searching, use the isSearching() method on this component to return a boolean for that use.
+               and you will need to render the component as you see fit in the parent. 
+
+               Commonly they will be this (not 100% of the time):
+               
+               updateSearchComponent(documents, closeResults) {
+                    this.searchResults = documents;
+
+                    if (closeResults) {
+                        this.showSearchResults = false;
+                    } else {
+                        this.showSearchResults = true;
+                    }
+                }, 
+
+                # this means that you will need to have a searchResults -> Array, and showSearchResults -> Bool, and conditionally render
+                * between the posts on that page, and the posts from search results 
 
                CONSIDER MOVING THAT FUNCTION TO A MIXIN
 -->

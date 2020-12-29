@@ -1,35 +1,53 @@
 <template>
-    <div id="main_container">
+    <div v-if="userProjects && userProjects.length>0" id="main_container">
         <div class="filter_dropdown_container">
-            <SearchBar placeholder="Search..." class="search_bar" />
+            <PostSearch width="30%" class="search_bar" />
         </div>
-        <div v-if="userProjects" class="project_list">
-            <MobileProjectCard v-for="userProject in userProjects" :key="userProject.name" :projectData="userProject" width="85%" />
+        <div v-if="!showSearchResults" class="project_list">
+            <MobileProjectCard v-for="userProject in userProjects" :key="userProject.id" :projectData="userProject" width="85%" />
         </div>
+        <div v-else class='project_list'>
+            <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" />
+        </div>
+    </div>
+    <div v-else class="no_saved">
+        <p>You have no saved projects</p>
     </div>
 </template>
 
 <script>
 import MobileProjectCard from '@/components/MobileProjectCard.vue';
-import SearchBar from '@/components/SearchBar.vue';
+import PostSearch from '@/components/PostSearch.vue';
 import GraphQLService from "@/services/graphql.service";
 
 export default {
     data() {
         return {
             userProjects: undefined,
+            searchResults: [],
+            showSearchResults: false
         }
     },
     created() {
         // WE SHOULD CACHE THIS FOR A RELATIVELY SHORT AMOUNT OF TIME
         GraphQLService.fetchSavedPosts(this.$store.getters.accessToken).then((posts) => {
-            console.log(posts);
             this.userProjects = posts.data.getSavedPosts;
         });
     },
     components: {
         MobileProjectCard,
-        SearchBar
+        PostSearch
+    },
+    methods: {
+        updateSearchComponent(documents, closeResults) {
+            this.searchResults = documents;
+
+            if (closeResults) {
+                this.showSearchResults = false;
+            } else {
+                this.showSearchResults = true;
+            }
+        },
     }
 }
 </script>
@@ -52,7 +70,9 @@ export default {
     height: 100px;
 }
 .search_bar{
-    width: 225px;
     margin: 0 auto;
+}
+.no_saved {
+    margin-top: 20px;
 }
 </style>

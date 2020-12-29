@@ -1,38 +1,54 @@
 <template>
-    <div id="main_container">
+    <div v-if="this.userProjects.length > 0" id="main_container">
         <div class="filter_dropdown_container">
-            <SearchBar placeholder="Search..." class="search_bar" />
+            <PostSearch width="30%" class="posts_search_bar" />
             <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown">
                 <button>Newest</button>
                 <button>Most Popular</button>
                 <button>Alphabetical</button>
             </Dropdown>
         </div>
-        <div class="project_list">
-            <MobileProjectCard v-for="project in userProjects" :key="project.name" :projectData="project" width="85%" />
+        <div v-if="!showSearchResults" class="project_list">
+            <MobileProjectCard v-for="project in userProjects" :key="project.id" :projectData="project" width="85%" />
         </div>
+        <div v-else class="project_list">
+            <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" />
+        </div>
+    </div>
+    <div v-else class="no_projects">
+        <p>You have no projects</p>
     </div>
 </template>
 
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
-import SearchBar from '@/components/SearchBar.vue';
+import PostSearch from '@/components/PostSearch.vue';
 
 export default {
     data() {
         return {
             userProjects: this.$parent.userProjects,
+            searchResults: [],
+            showSearchResults: false
         };
-    },
-    created() {
-        console.log(this.userProjects);
     },
     components: {
         MobileProjectCard,
         Dropdown,
-        SearchBar
+        PostSearch
     },
+    methods: {
+        updateSearchComponent(documents, closeResults) {
+            this.searchResults = documents;
+
+            if (closeResults) {
+                this.showSearchResults = false;
+            } else {
+                this.showSearchResults = true;
+            }
+        },
+    }
 };
 </script>
 
@@ -64,5 +80,12 @@ export default {
 .search_bar{
     width: 225px;
     margin: 0 auto;
+}
+.no_projects {
+    margin-top: 20px;
+}
+
+.posts_search_bar {
+    margin: 20px auto 0px auto;
 }
 </style>
