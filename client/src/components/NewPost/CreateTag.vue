@@ -19,7 +19,7 @@ export default {
     props: {
         tagType: {
             type: String,
-            default: 'lang'
+            default: 'user'
         },
         label: {
             type: String,

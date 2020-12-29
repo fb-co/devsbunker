@@ -62,7 +62,7 @@
             <div class="tag_container">
                 <p>Add Collaborators</p>
                 <div class="add_tags">
-                    <CreateTag v-for="contributer in contributers" :key="contributer" :label="contributer" />
+                    <CreateTag v-for="contributer in contributers" :key="contributer" :label="contributer" tagType="user" />
 
                     <div class="add_icon_container">
                         <svg
@@ -90,7 +90,7 @@
             <div class="tag_container">
                 <p>Add Tags</p>
                 <div class="add_tags">
-                    <CreateTag v-for="tag in tags" :key="tag" :label="tag" />
+                    <CreateTag v-for="tag in tags" :key="tag" :label="tag" tagType="lang" />
 
                     <div class="add_icon_container">
                         <svg
@@ -516,7 +516,7 @@ export default {
 .create_post_button:hover {
     box-shadow: 0px 4px 20px var(--main-btn-color);
 }
-
+ 
 .add_image:hover {
     stroke-width: 2px;
     cursor: pointer;

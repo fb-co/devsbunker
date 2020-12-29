@@ -10,6 +10,8 @@
         />
         <p class="no_notification_label" v-if="notifications.length == 0">No new notifications</p>
     </div>
+    <div v-else class="right_cont_placeholder">
+    </div>
 </template>
 
 <script>
@@ -27,6 +29,10 @@ export default {
 
 <style scoped>
 /* RIGHT CONTENT */
+.right_cont_placeholder {
+    width: 35%;
+    max-width: 250px;;
+}
 
 .right_content {
     max-width: 250px;
