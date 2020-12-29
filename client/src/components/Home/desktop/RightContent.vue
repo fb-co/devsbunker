@@ -31,7 +31,7 @@ export default {
 /* RIGHT CONTENT */
 .right_cont_placeholder {
     width: 35%;
-    max-width: 250px;;
+    max-width: 350px;;
 }
 
 .right_content {

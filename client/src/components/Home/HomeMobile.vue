@@ -96,7 +96,7 @@
             <div v-else>
                 <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.name" :projectData="searchResult" width="100%" />
             </div>
-            <p @click="loadNew()" class="load_more_btn">Load More</p>
+            <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
         <BottomNavBar />
     </div>
@@ -120,6 +120,7 @@ export default {
     },
     props: {
         projects: Array,
+        fetchedAll: Boolean
     },
     mounted() {
         /* un-comment this if we ever decide to put in the carousel

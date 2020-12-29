@@ -2,8 +2,8 @@
     <div>
         <NavBar @refreshPosts="reloadHome()" />
         <div class="home" :key="homeKey">
-            <HomeMobile :projects="posts" v-if="mobile" />
-            <HomeDesktop :projects="posts" :notifications="notifications" v-if="!mobile" />
+            <HomeMobile :projects="posts" v-if="mobile" :fetchedAll="fetchedAll" />
+            <HomeDesktop :projects="posts" :notifications="notifications" v-if="!mobile" :fetchedAll="fetchedAll" />
             <NewPost ref="newPostMenu" />
         </div>
     </div>
@@ -29,6 +29,7 @@ export default {
             posts: undefined,
             notifications: undefined,
             homeKey: 0,
+            fetchedAll: false
         };
     },
     async created() {
@@ -73,7 +74,8 @@ export default {
         },
         async loadNew() {
             const newProjects = await this.load(this.posts.length, this.$store.getters.accessToken);
-            this.posts = this.posts.concat(newProjects.data.loadMorePosts);
+            this.fetchedAll = newProjects.data.loadMorePosts.fetchedAll;
+            this.posts = this.posts.concat(newProjects.data.loadMorePosts.posts);
         },
         queryPosts() {
             /*

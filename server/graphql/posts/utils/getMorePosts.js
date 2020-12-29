@@ -10,17 +10,25 @@ export default async function getMorePosts(alreadyFetched, jwtPayload) {
         user = await User.findOne({ username: jwtPayload.username });
     }
 
+    const totalEntries = await Posts.count();
+
     return new Promise((resolve) => {
         Posts.find()
             .sort({ _id: -1 })
             .skip(alreadyFetched)
             .limit(3)
-            .then((posts) => {  
+            .then((posts) => {
+                console.log(alreadyFetched+3, totalEntries);
+
+                const finalPosts = {
+                    posts: posts,
+                    fetchedAll: alreadyFetched+3 >= totalEntries ? true : false
+                }
                 if (user) {
-                    const finalPosts = AddDynamicData.addAll(posts, user);
+                    finalPosts.posts = AddDynamicData.addAll(posts, user);
                     resolve(finalPosts);
                 }
-                resolve(posts);
+                resolve(finalPosts);
             })
             .catch((err) => {
                 console.log(err);

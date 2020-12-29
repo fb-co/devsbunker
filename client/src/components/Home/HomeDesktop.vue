@@ -82,7 +82,7 @@
                     </svg>
                 </div>
                 -->
-                <p @click="loadNew()" class="load_more_btn">Load More</p>
+                <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
             </div>
         </div>
         <RightContent :notifications="notifications" />
@@ -111,6 +111,7 @@ export default {
     props: {
         projects: Array,
         notifications: Array,
+        fetchedAll: Boolean
     },
     methods: {
         makeNewPost() {

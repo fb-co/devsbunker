@@ -280,19 +280,22 @@ const GraphQLService = {
         const query = `
             query {
                 loadMorePosts(alreadyFetched: ${alreadyFetched}) {
-                    title
-                    author
-                    images {
-                        ogname
-                        dbname
+                    posts {
+                        title
+                        author
+                        images {
+                            ogname
+                            dbname
+                        }
+                        description
+                        likeAmt
+                        isSaved
+                        isLiked
+                        bunkerTag
+                        price
+                        id
                     }
-                    description
-                    likeAmt
-                    isSaved
-                    isLiked
-                    bunkerTag
-                    price
-                    id
+                    fetchedAll
                 }
             }
         `;

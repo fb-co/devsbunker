@@ -26,6 +26,11 @@ export default gql`
         clip: String
     }
 
+    type LoadMoreResponse {
+        posts: [FetchablePost]!
+        fetchedAll: Boolean
+    }
+
     # we dont need the author because the username is alredy in the token
     input makePostInput {
         title: String!
@@ -60,7 +65,7 @@ export default gql`
 
         partial_post(partial_name: String!): [FetchablePost]!
 
-        loadMorePosts(alreadyFetched: Int): [FetchablePost]!
+        loadMorePosts(alreadyFetched: Int): LoadMoreResponse!
     }
 
     type Mutation {
