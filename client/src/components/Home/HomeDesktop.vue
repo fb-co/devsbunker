@@ -35,7 +35,7 @@
                 <p class="discover_label no_select">Discover Projects</p>
 
                 <PostSearch width="50%" class="post_search_bar" />
-
+            
                 <div class="filter_dropdown">
                     <Dropdown label="Newest" linkHeight="40px" height="40px" width="200px">
                         <button>Newest</button>

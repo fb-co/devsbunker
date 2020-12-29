@@ -56,7 +56,8 @@ export default {
     data() {
         return {
             activeSection: "projects",
-            userObject: this.mainUserObject
+            userObject: this.mainUserObject,
+            userProjects: this.mainUserProjects
         };
     },
     props: {

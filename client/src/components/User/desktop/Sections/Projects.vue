@@ -2,11 +2,13 @@
     <div v-if="this.userProjects.length > 0" id="main_container">
         <div class="filter_dropdown_container">
             <PostSearch width="30%" class="posts_search_bar" />
+            <!--
             <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown">
                 <button>Newest</button>
                 <button>Most Popular</button>
                 <button>Alphabetical</button>
             </Dropdown>
+            -->
         </div>
         <div v-if="!showSearchResults" class="project_list">
             <MobileProjectCard v-for="project in userProjects" :key="project.id" :projectData="project" width="85%" />
@@ -22,7 +24,7 @@
 
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
-import Dropdown from "@/components/global/Dropdown.vue";
+//import Dropdown from "@/components/global/Dropdown.vue";
 import PostSearch from '@/components/PostSearch.vue';
 
 export default {
@@ -30,12 +32,12 @@ export default {
         return {
             userProjects: this.$parent.userProjects,
             searchResults: [],
-            showSearchResults: false
+            showSearchResults: false,
+            fetchedAll: false
         };
     },
     components: {
         MobileProjectCard,
-        Dropdown,
         PostSearch
     },
     methods: {
@@ -63,6 +65,7 @@ export default {
 .project_list > * {
     margin: 10px;
 }
+/*
 .filter_dropdown_container {
     display: flex;
     flex-direction: column;
@@ -77,15 +80,12 @@ export default {
     background-color: var(--secondary-color);
     border-radius: 5px;
 }
-.search_bar{
-    width: 225px;
-    margin: 0 auto;
-}
+*/
 .no_projects {
     margin-top: 20px;
 }
 
 .posts_search_bar {
-    margin: 20px auto 0px auto;
+    margin: 30px auto 20px auto;
 }
 </style>

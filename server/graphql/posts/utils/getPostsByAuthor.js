@@ -11,7 +11,8 @@ export default async function getPostsByAuthor(author, jwtPayload) {
 
     return new Promise((resolve) => {
         Posts.find({ author: author })
-            .sort({ _id: -1 }).limit(15)
+            .sort({ _id: -1 })
+            .limit(15)
             .then((posts) => {  
                 if (requesterUser) {
                     const finalPosts = AddDynamicData.addAll(posts, requesterUser);

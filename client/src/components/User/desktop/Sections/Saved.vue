@@ -25,7 +25,8 @@ export default {
         return {
             userProjects: undefined,
             searchResults: [],
-            showSearchResults: false
+            showSearchResults: false,
+            fetchedAll: false
         }
     },
     created() {
