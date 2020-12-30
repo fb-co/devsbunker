@@ -47,7 +47,7 @@ export default {
 
         // returns all the posts by a given author parameter
         getPostsByAuthor: function (_, args, { req }) {
-            return getPostsByAuthor(args.author, req.user);
+            return getPostsByAuthor(args.author, req.user, args.fetchedAmt);
         },
 
         getSavedPosts: function (_, args, { req }) {

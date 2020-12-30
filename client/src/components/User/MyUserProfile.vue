@@ -48,8 +48,8 @@ export default {
         });
 
         // if the user is logged out their token will be undefined anyway
-        GraphQLService.fetchPostsByAuthor(this.$store.getters.username, this.$store.getters.accessToken).then((posts) => {
-            this.userProjects = posts.data.getPostsByAuthor;
+        GraphQLService.fetchPostsByAuthor(this.$store.getters.username, this.$store.getters.accessToken, 0).then((posts) => {
+            this.userProjects = posts.data.getPostsByAuthor.posts;
         });
 
         window.addEventListener("resize", () => {

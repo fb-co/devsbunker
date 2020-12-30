@@ -12,6 +12,7 @@
         </div>
         <div v-if="!showSearchResults" class="project_list">
             <MobileProjectCard v-for="project in userProjects" :key="project.id" :projectData="project" width="85%" />
+            <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
         <div v-else class="project_list">
             <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" />
@@ -26,6 +27,7 @@
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 //import Dropdown from "@/components/global/Dropdown.vue";
 import PostSearch from '@/components/PostSearch.vue';
+import GraphQLService from '@/services/graphql.service.js';
 
 export default {
     data() {
@@ -50,6 +52,12 @@ export default {
                 this.showSearchResults = true;
             }
         },
+        loadNew() {
+            GraphQLService.fetchPostsByAuthor(this.$store.getters.username, this.$store.getters.accessToken, this.userProjects.length).then((posts) => {
+                this.userProjects = this.userProjects.concat(posts.data.getPostsByAuthor.posts);
+                this.fetchedAll = posts.data.getPostsByAuthor.fetchedAll;
+            });
+        }
     }
 };
 </script>
@@ -87,5 +95,14 @@ export default {
 
 .posts_search_bar {
     margin: 30px auto 20px auto;
+}
+
+.load_more_btn {
+    margin: 20px auto 40px auto;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+    width: 200px;
 }
 </style>

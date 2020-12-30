@@ -56,7 +56,7 @@ export default gql`
 
         getPosts(sortingType: String!): [FetchablePost]!
 
-        getPostsByAuthor(author: String!): [FetchablePost]!
+        getPostsByAuthor(author: String!, fetchedAmt: Int): LoadMoreResponse!
 
         # not sure if we should make the return required since I dont want it to crash if you give it an invalid post id
         getPostById(postId: String!): FetchablePost
