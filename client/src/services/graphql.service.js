@@ -181,23 +181,26 @@ const GraphQLService = {
         }
     },
 
-    fetchSavedPosts: function(token) {
+    fetchSavedPosts: function(token, fetchedAmt) {
         const query = `
             query {
-                getSavedPosts {
-                    title
-                    author
-                    images {
-                        ogname
-                        dbname
+                getSavedPosts(fetchedAmt: ${fetchedAmt}) {
+                    posts {
+                        title
+                        author
+                        images {
+                            ogname
+                            dbname
+                        }
+                        description
+                        likeAmt
+                        isLiked
+                        isSaved
+                        bunkerTag
+                        price
+                        id
                     }
-                    description
-                    likeAmt
-                    isLiked
-                    isSaved
-                    bunkerTag
-                    price
-                    id
+                    fetchedAll
                 }
             }
         `;

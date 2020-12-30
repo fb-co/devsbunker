@@ -55,7 +55,7 @@ export default {
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
-            return getSavedPosts(jwtPayload.username);
+            return getSavedPosts(jwtPayload.username, args.fetchedAmt);
         },
 
         partial_post: async function(_, args, { req }) {

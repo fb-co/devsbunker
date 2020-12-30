@@ -5,6 +5,7 @@
         </div>
         <div v-if="!showSearchResults" class="project_list">
             <MobileProjectCard v-for="userProject in userProjects" :key="userProject.id" :projectData="userProject" width="85%" />
+            <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
         <div v-else class='project_list'>
             <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" />
@@ -31,8 +32,9 @@ export default {
     },
     created() {
         // WE SHOULD CACHE THIS FOR A RELATIVELY SHORT AMOUNT OF TIME
-        GraphQLService.fetchSavedPosts(this.$store.getters.accessToken).then((posts) => {
-            this.userProjects = posts.data.getSavedPosts;
+        GraphQLService.fetchSavedPosts(this.$store.getters.accessToken, 0).then((posts) => {
+            this.userProjects = posts.data.getSavedPosts.posts;
+            this.fetchedAll = posts.data.getSavedPosts.fetchedAll;
         });
     },
     components: {
@@ -49,6 +51,13 @@ export default {
                 this.showSearchResults = true;
             }
         },
+        loadNew() {
+            // WE SHOULD CACHE THIS FOR A RELATIVELY SHORT AMOUNT OF TIME
+            GraphQLService.fetchSavedPosts(this.$store.getters.accessToken, this.userProjects.length).then((posts) => {
+                this.userProjects = this.userProjects.concat(posts.data.getSavedPosts.posts);
+                this.fetchedAll = posts.data.getSavedPosts.fetchedAll;
+            });    
+        }
     }
 }
 </script>
@@ -75,5 +84,13 @@ export default {
 }
 .no_saved {
     margin-top: 20px;
+}
+.load_more_btn {
+    margin: 20px auto 40px auto;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+    width: 200px;
 }
 </style>
