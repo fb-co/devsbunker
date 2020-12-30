@@ -22,11 +22,80 @@
 
 <template>
     <div class="post_search_bar" :style="cssProps">
-        <input @input="queryData()" ref="general_input" class="post_search_input" placeholder='search...'>
+        <div class="input_loading_cont">
+            <input @input="queryData()" ref="general_input" class="post_search_input" placeholder='search...'>
+
+            <div class="loading_gif">
+                <svg v-if="queryQueued" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:none;display:block;" width="30px" height="30px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                    <g transform="rotate(0 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                    <g transform="rotate(30 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                    <g transform="rotate(60 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                    <g transform="rotate(90 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                    <g transform="rotate(120 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                    <g transform="rotate(150 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                    <g transform="rotate(180 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                    <g transform="rotate(210 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                    <g transform="rotate(240 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                    <g transform="rotate(270 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                    <g transform="rotate(300 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                    <g transform="rotate(330 50 50)">
+                        <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
+                            <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
+                        </rect>
+                    </g>
+                </svg>
+            </div>
+        </div>
 
         <div class="form_line_container">
             <div class="bottom_line"></div>
         </div>
+
+        
     </div>
 </template>
 
@@ -91,6 +160,10 @@ export default {
             width: 100%;
         }
     }
+    .input_loading_cont {
+        display: flex;
+        flex-direction: row;
+    }
 
     .post_search_bar {
         width: var(--width);
@@ -128,5 +201,10 @@ export default {
         animation: form_field_animation 1s;
         width: 100%;
         height: 1.5px;
+    }
+
+    .loading_gif {
+        display: inline-block;
+        margin: 0 auto;
     }
 </style>
