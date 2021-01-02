@@ -46,11 +46,13 @@
             </div>
         </div>
         -->
+        <BottomNavBar />
     </div>
 </template>
 
 <script>
 import ProfileSections from "./ProfileSections/mobile.profile.imports.js";
+import BottomNavBar from "@/components/BottomNavBar.vue";
 
 export default {
     data() {
@@ -65,6 +67,7 @@ export default {
         mainUserProjects: Array
     },
     components: {
+        BottomNavBar,
         ...ProfileSections,
     },
     methods: {

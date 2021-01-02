@@ -73,6 +73,12 @@ const routes = [
     },
 
     {
+        path: "/users",
+        name: "UserSearch",
+        component: () => import("../views/UserSearch.vue"),
+    },
+
+    {
         path: "/post/:postid",
         name: "Post",
         props: true,

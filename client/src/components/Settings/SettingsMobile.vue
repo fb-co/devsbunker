@@ -22,6 +22,7 @@
             <div class="margin-top"></div>
             <SettingList />
         </div>
+        <BottomNavBar />
     </div>
 </template>
 
@@ -29,6 +30,7 @@
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import MobileSettingsComponents from "@/components/Settings/mobile/SettingSections/mobile.import.settings";
 import SettingList from "./mobile/SettingList";
+import BottomNavBar from "@/components/BottomNavBar.vue";
 
 import UserService from "@/services/user.service";
 
@@ -37,6 +39,7 @@ export default {
         ...GlobalComponents,
         ...MobileSettingsComponents,
         SettingList,
+        BottomNavBar
     },
     data() {
         return {
