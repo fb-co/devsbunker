@@ -173,13 +173,21 @@ export default {
                             throw new Error(`Cannot update field: ${payload.field}`);
                         } else {
                             if (payload.field == "password") {
-                                const newHashedPass = await bcrypt.hash(payload.newValue, 10);
-
-                                editedData.push({
-                                    field: payload.field,
-                                    newValue: "Changed",
-                                }); // the only case that we dont want to return the mutated data is for the password
-                                user[payload.field] = newHashedPass;
+                                if (payload.newValue && payload.newValue.toString().trim() !== "" && payload.newValue.length > 8) {
+                                    
+                                    // bcrypt generates a random salt at every bcrypt.hash so first we compare the passwords with the right function and then we hash the new one
+                                    // really important the order of the function arguments here
+                                    if (await bcrypt.compare(payload.newValue, user[payload.field])) throw new Error("Password can't be the same as the previous one.");
+                                    const newHashedPass = await bcrypt.hash(payload.newValue, 10);
+    
+                                    editedData.push({
+                                        field: payload.field,
+                                        newValue: "The password was successfully changed.",
+                                    }); // the only case that we dont want to return the mutated data is for the password
+                                    user[payload.field] = newHashedPass;
+                                } else {
+                                    throw new Error(`Cannot update field: ${payload.field}, please enter a valid password with no spaces and > than 8 characters.`);
+                                }
                             } else {
                                 editedData.push({
                                     field: payload.field,

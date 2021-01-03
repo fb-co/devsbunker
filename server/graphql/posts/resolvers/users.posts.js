@@ -110,8 +110,9 @@ export default {
                     bunkerTag: post.bunkerTag,
                     clip: post.clip,
                 };
-            } catch {
-                throw new Error("Internal error. Unable to create post");
+            } catch (err) {
+                // best error handling I ever made
+                throw new Error(`Unable to create post: ${(err.errors.tags) ? err.errors.tags.properties.message : (err.errors.links.properties.message) ? err.errors.links.properties.message : "Internal Error"}`);
             }
         },
         likePost: async function (_, args, { req }) {

@@ -233,7 +233,7 @@ export default {
         set_links(links) {
             this.links = links;
         },
-        validatePostPayload(payload) {
+        validatePostPayload(payload) {            
             let valid = true;
             const regex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
 
@@ -285,6 +285,11 @@ export default {
                             break;
                         }
                     }
+                    // let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
+                    // if (findDuplicates(payload.tags).length) {
+                    //     errmsg = "Duplicate tags are not allowed.";
+                    // }
+
                 } else {
                     errmsg = "The entered URL is not a valid URL.";
                 }

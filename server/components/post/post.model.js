@@ -95,7 +95,7 @@ postSchema.path("tags").validate((tags) => {
         valid = Languages.includes(tag);
     });
     return valid;
-}, "Invalid Bunker tag.");
+}, "Invalid language tag.");
 
 export default mongoose.model("Post", postSchema);
 

@@ -16,7 +16,11 @@ const Languages = [
     'Rust',
     'Bash',
     'Haskell',
-    'Rust'
+    'Rust',
+    'Assembly',
+    'COBOL',
+    'Brainfuck',
+    'Lua'
 ];
 
 export default Languages;
