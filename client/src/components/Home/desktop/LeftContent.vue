@@ -105,7 +105,6 @@ export default {
     width: 30%;
     min-width: 250px;
     max-width: 350px;
-    background-color: red;
 }
 .username_box {
     font-size: 20px;

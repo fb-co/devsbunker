@@ -32,17 +32,17 @@ export default {
 <style scoped>
 /* RIGHT CONTENT */
 .right_cont_placeholder {
-    width: 35%;
+    width: 30%;
     max-width: 350px;
 }
 
 .right_content {
-    max-width: 250px;
-    width: 35%;
+    max-width: 350px;
+    width: 30%;
     height: calc(100vh - var(--header-height));
     overflow-y: scroll;
     padding-top: 15px;
-    background-color: red;
+
 }
 .discover_label {
     font-size: 25px;
@@ -75,11 +75,11 @@ export default {
         width: 100%;
     }
 }
-
-/* Other Styles */
+/*
 @media only screen and (min-width: 1500px) {
     .right_content {
-        margin-right: 100px;
+        
     }
 }
+*/
 </style>
