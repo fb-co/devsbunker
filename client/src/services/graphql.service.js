@@ -50,6 +50,10 @@ const GraphQLService = {
                 query {
                     partial_user(partial_username: "${partial_username}") {
                         username
+                        desc
+                        followerAmt
+                        followingAmt
+                        isFollowing
                     }
                 }
             `;

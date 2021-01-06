@@ -1,12 +1,14 @@
 <template>
-    <div class="user_card_container">
+    <div class="user_card_container" @click="routeToUser()">
         <div class="user_card_info">
             <p class="user_name">{{ cardData.username }}</p>
             <p class="user_desc">{{ cardData.description }}</p>
             <div class="placeholder"></div>
             <div class="user_details">
-                <p class="user_details_followers">Followers: {{ cardData.followers }}</p>
-                <p class="user_details_posts">Posts: {{ cardData.posts }}</p>
+                <button v-if="!alreadyFollowed" @click.stop="followUser()" class="follow_btn">Follow</button>
+                <button v-else @click.stop="unfollowUser()" class="follow_btn">Unfollow</button>
+                <p class="user_details_followers info">Followers: {{ cardData.followerAmt }}</p>
+                <p class="user_details_posts info">Following: {{ cardData.followingAmt }}</p>
             </div>
             
         </div>
@@ -18,8 +20,27 @@
 
 <script>
 export default {
+    data() {
+        return {
+            alreadyFollowed: false
+        }
+    },
     props: {
-        cardData: Object
+        cardData: Object,
+    },
+    created() {
+        console.log(this.cardData);
+    },
+    methods: {
+        routeToUser() {
+            this.$router.push('/user/' + this.cardData.username);
+        },
+        followUser() {
+            console.log("follow the user");
+        },
+        unfollowUser() {
+            console.log("Unfollow the user");
+        }
     }
 }
 </script>
@@ -34,6 +55,7 @@ export default {
         box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
         background-color: var(--secondary-color);
         border: 2px solid transparent;
+        margin-bottom: 30px;
     }
     .user_card_container:hover {
         border: 2px solid grey;
@@ -62,6 +84,7 @@ export default {
     }
     .user_details_followers {
         margin-right: 20px;
+        margin-left: 20px;
     }
 
     .placeholder {
@@ -76,5 +99,27 @@ export default {
     .user_desc {
         color: var(--soft-text);
         margin-bottom: 20px;
+    }
+
+    .follow_btn {
+        border: none;
+        text-decoration: none;
+        color: #fff;
+        background-color: var(--main-btn-color);
+        padding: 5px 20px 5px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+    .follow_btn:focus {
+        outline: none;
+    }
+    .follow_btn:hover {
+        box-shadow: 0px 4px 40px var(--main-btn-color);
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 </style>

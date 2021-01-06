@@ -5,7 +5,9 @@
         <UserSearch class="user_search_input" />
 
         <div class="users_search_results">
-            <UserCard :cardData="dummyData" />
+            <div v-if="showSearchResults">
+                <UserCard v-for="user in searchResults" :key="user.username" :cardData="user" />
+            </div>
         </div>
 
         <div v-if="mobile">
@@ -27,12 +29,8 @@ export default {
     data() {
         return {
             mobile: false,
-            dummyData: {
-                username: "Bruh",
-                description: "Stoopid Linux User",
-                followers: 10,
-                posts: 23
-            }
+            searchResults: [],
+            showSearchResults: false
         }
     },
     created() {
@@ -54,9 +52,15 @@ export default {
         isMobile() {
             return ScreenType.isMobile(950);
         },
-        updateSearchComponent() {
-            console.log("BRUH");
-        }
+        updateSearchComponent(documents, closeResults) {
+            this.searchResults = documents;
+
+            if (closeResults) {
+                this.showSearchResults = false;
+            } else {
+                this.showSearchResults = true;
+            }
+        }, 
     },
     components: {
         NavBar,

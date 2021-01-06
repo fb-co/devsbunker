@@ -135,9 +135,8 @@
                         setTimeout(() => {
                             if (this.$refs.general_input.value != "") {
                                 GraphQLService.fetchUserByPartial(this.$refs.general_input.value).then((res) => {
-                                    console.log(res);
-                                    //this.documents = res.data.partial_post;
-                                    //this.$parent.updateSearchComponent(this.documents);
+                                    this.documents = res.data.partial_user;
+                                    this.$parent.updateSearchComponent(this.documents);
                                 });
                             }
                             this.queryQueued = false;
