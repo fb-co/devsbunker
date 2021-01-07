@@ -1,22 +1,45 @@
 <template>
     <WrapperDesktop>
-        <div class='setting_item'>
+        <div class="setting_item">
             <p class="setting_label">Password</p>
             <span class="setting_item_spacer" />
-            <div class='setting_container'>
+            <div class="setting_container">
                 <p @click="pwdPopUp = !pwdPopUp" class="important-btn">Reset</p>
             </div>
             <div class="outside" v-if="pwdPopUp" @click.self="pwdPopUp = false">
                 <div id="resetPwd">
-                    <div class="fields">
-                        <!-- i tried to use GeneralInput but v-model wasn't working + we should probably add a isPassword prop on the general input component-->
-                        <input ref="newPwd" class="form_field" label="New Password" v-model="pwd1" type="password" placeholder="New Password"/>
+                    <div class="general_input_container">
+                        <p>New Password</p>
+                        <input
+                            @click.stop=""
+                            ref="newPwd"
+                            class="general_input"
+                            label="New Password"
+                            v-model="pwd1"
+                            type="password"
+                        />
+                        <div class="form_line_container">
+                            <div class="bottom_line"></div>
+                        </div>
                         <div class="space"></div>
-                        <input ref="newPwd" class="form_field" label="Confirm Password" v-model="pwd2" type="password" placeholder="Confirm New Password"/>
+                        <p>Confirm New Password</p>
+                        <input
+                            @click.stop=""
+                            ref="newPwd"
+                            class="general_input"
+                            label="Confirm Password"
+                            v-model="pwd2"
+                            type="password"
+                        />
+                        <div class="form_line_container">
+                            <div class="bottom_line"></div>
+                        </div>
                     </div>
                     <div class="space"></div>
                     <div class="btn-container">
-                        <button class="important-submit" @click="resetPwd()">Reset</button>
+                        <button class="important-submit" @click="resetPwd()">
+                            Reset
+                        </button>
                     </div>
                 </div>
             </div>
@@ -26,7 +49,6 @@
 <script>
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import GraphQLService from "@/services/graphql.service";
-
 
 export default {
     data() {
@@ -40,9 +62,14 @@ export default {
         async resetPwd() {
             if (this.pwd1 == this.pwd2) {
                 const pwd = this.pwd1;
-                const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{ field: "password", newValue: pwd }]);
+                const response = await GraphQLService.updateUserDetails(
+                    this.$store.getters.accessToken,
+                    [{ field: "password", newValue: pwd }]
+                );
                 console.log(response);
-                if (/Successfully/.test(response.data.updateUserDetails.message)) {
+                if (
+                    /Successfully/.test(response.data.updateUserDetails.message)
+                ) {
                     this.pwdPopUp = false;
                 } else {
                     console.log("err");
@@ -50,12 +77,11 @@ export default {
             } else {
                 console.log("PASSWORDS DONT MATCH");
             }
-
         }
-    },  
-    components: {
-        ...GlobalComponents,
     },
+    components: {
+        ...GlobalComponents
+    }
 };
 </script>
 <style scoped>
@@ -105,12 +131,6 @@ export default {
     border-radius: 20px;
 }
 
-.fields {
-    width: 70%;
-    margin: auto;
-    margin-top: 30px;
-}
-
 .space {
     height: 20px;
     width: 100%;
@@ -129,8 +149,9 @@ export default {
     color: #fff;
     font-size: 15px;
     font-weight: bold;
-    margin: 0px auto 40px auto;
     cursor: pointer;
+    margin: auto;
+    margin-top: 20px;
 }
 
 @keyframes form_field_animation {
@@ -144,37 +165,61 @@ export default {
     }
 }
 
-.form_field {
-    width: 75%;
-    padding-top: 12px;
+.general_input_container {
+    position: relative;
+    width: var(--width);
+    padding: 5px;
+    width: 65%;
+    margin: auto;
+    margin-top: 60px;
 }
-.form_field::-webkit-input-placeholder {
-    opacity: 0.5;
+.general_input_container > p {
+    text-align: left;
+    width: 100%;
+    margin: 0px auto 10px auto;
+    color: var(--soft-text);
+    font-size: 14px;
+}
+.general_input_container input,
+.general_textarea {
+    width: 100%;
+    border: none;
+    padding: 3px;
+    background-color: var(--main-color);
+    margin: 0px auto 5px auto;
+    font-family: rubik;
+    color: var(--main-font-color);
+    text-align: left;
+    font-size: 15px;
+}
+.general_input_container input:focus,
+.general_textarea:focus {
+    outline: none;
 }
 
-.form_field:focus + .bottomLine-1 {
+.form_line_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
     height: 2px;
-    animation: form_field_animation 1s;
-    width: 85%;
-    margin-left: -2%;
 }
-.form_field:focus + .bottomLine-2 {
-    height: 2px;
-    animation: form_field_animation 1s;
-    width: 85%;
-    margin-left: -2%;
+.form_line_container > div {
+    width: 98%;
+    height: 1px;
+    background-image: linear-gradient(
+        to right,
+        var(--secondary-color) 0%,
+        var(--main-font-color) 2%,
+        var(--main-font-color) 98%,
+        var(--secondary-color) 100%
+    );
+    opacity: 0.3;
 }
-.form_field:focus + .bottomLine-3 {
-    height: 2px;
+.general_input_container input:focus + .form_line_container > div,
+.general_textarea:focus + .form_line_container > div {
     animation: form_field_animation 1s;
-    width: 85%;
-    margin-left: -2%;
+    width: 100%;
+    height: 1.5px;
 }
-.form_field:focus + .bottomLine-4 {
-    height: 2px;
-    animation: form_field_animation 1s;
-    width: 85%;
-    margin-left: -2%;
-}
-
 </style>
