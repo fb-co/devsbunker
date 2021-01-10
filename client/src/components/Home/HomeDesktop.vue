@@ -35,9 +35,14 @@
                 <p class="discover_label no_select">Discover Projects</p>
 
                 <PostSearch width="50%" class="post_search_bar" />
-            
+
                 <div class="filter_dropdown">
-                    <Dropdown label="Newest" linkHeight="40px" height="40px" width="200px">
+                    <Dropdown
+                        label="Newest"
+                        linkHeight="40px"
+                        height="40px"
+                        width="200px"
+                    >
                         <button>Newest</button>
                         <button>Most Popular</button>
                         <button>Alphabetical</button>
@@ -61,6 +66,10 @@
                         class="project_card"
                     />
                 </div>
+                <div>
+                    <DeletedPost class="project_card" width="70%" />
+                </div>
+
                 <!--
                 <div @click="makeNewPost()" class="projects_footer">
                     <svg
@@ -82,7 +91,9 @@
                     </svg>
                 </div>
                 -->
-                <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
+                <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">
+                    Load More
+                </p>
             </div>
         </div>
         <RightContent :notifications="notifications" />
@@ -95,6 +106,9 @@ import PostSearch from "@/components/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
+
+// tmp
+import DeletedPost from "@/components/Post/DeletedPost.vue";
 
 export default {
     data() {
@@ -136,7 +150,8 @@ export default {
         PostSearch,
         LeftContent,
         RightContent,
-    },
+        DeletedPost
+    }
 };
 </script>
 
@@ -255,7 +270,6 @@ export default {
     cursor: pointer;
     width: 200px;
 }
-
 
 /* (center content scrollbar)
 .scrollable_center::-webkit-scrollbar {
