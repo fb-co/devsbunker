@@ -1,7 +1,6 @@
 <template>
     <div class="user_search_container">
         <NavBar />
-
         <UserSearch class="user_search_input" />
 
         <div class="users_search_results">

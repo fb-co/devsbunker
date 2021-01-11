@@ -23,7 +23,7 @@
 <template>
     <div class="post_search_bar" :style="cssProps">
         <div class="input_loading_cont">
-            <input @input="queryData()" ref="general_input" class="post_search_input" placeholder='search...'>
+            <input @input="queryData()" ref="general_input" class="post_search_input" placeholder='search for people...'>
 
             <div class="loading_gif">
                 <svg v-if="queryQueued" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:none;display:block;" width="30px" height="30px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -134,7 +134,7 @@
 
                         setTimeout(() => {
                             if (this.$refs.general_input.value != "") {
-                                GraphQLService.fetchUserByPartial(this.$refs.general_input.value).then((res) => {
+                                GraphQLService.fetchUserByPartial(this.$refs.general_input.value, this.$store.getters.username).then((res) => {
                                     this.documents = res.data.partial_user;
                                     this.$parent.updateSearchComponent(this.documents);
                                 });

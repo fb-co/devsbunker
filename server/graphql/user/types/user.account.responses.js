@@ -30,6 +30,7 @@ export default gql`
         isFollowing: Boolean
         liked_posts: [String]!
         profile_pic: String!
+        is_following: Boolean
     }
 
     type PersonalUserDetails {
@@ -69,7 +70,7 @@ export default gql`
 
         getPersonalDetails: PersonalUserDetails
 
-        partial_user(partial_username: String!): [FetchableUser]!
+        partial_user(partial_username: String!, requester: String): [FetchableUser]!
 
         loginUser(username: String, email: String, password: String!): UserAccountAction!
 

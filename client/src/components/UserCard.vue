@@ -5,7 +5,7 @@
             <p class="user_desc">{{ cardData.description }}</p>
             <div class="placeholder"></div>
             <div class="user_details">
-                <button v-if="!alreadyFollowed" @click.stop="followUser()" class="follow_btn">Follow</button>
+                <button v-if="!cardData.isFollowing" @click.stop="followUser(cardData.username)" class="follow_btn">Follow</button>
                 <button v-else @click.stop="unfollowUser()" class="follow_btn">Unfollow</button>
                 <p class="user_details_followers info">Followers: {{ cardData.followerAmt }}</p>
                 <p class="user_details_posts info">Following: {{ cardData.followingAmt }}</p>
@@ -19,24 +19,21 @@
 </template>
 
 <script>
+import CardUtilities from "../mixins/user_card.mixin.js";
+
 export default {
-    data() {
-        return {
-            alreadyFollowed: false
-        }
+    created() {
+        console.log(this.cardData);
     },
     props: {
         cardData: Object,
     },
-    created() {
-        console.log(this.cardData);
-    },
+    mixins: [
+        CardUtilities
+    ],
     methods: {
         routeToUser() {
             this.$router.push('/user/' + this.cardData.username);
-        },
-        followUser() {
-            console.log("follow the user");
         },
         unfollowUser() {
             console.log("Unfollow the user");

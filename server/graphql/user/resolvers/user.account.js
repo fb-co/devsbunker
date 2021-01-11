@@ -92,7 +92,7 @@ export default {
         },
 
         partial_user: function (_, args, { res }) {
-            return getUserByPartial(args.partial_username);
+            return getUserByPartial(args.partial_username, args.requester);
         },
     },
 
@@ -241,7 +241,7 @@ export default {
                     await add_following.save();
 
                     return {
-                        followers: person_to_follow.followers,
+                        followers: person_to_follow.followers.length,
                     };
                 } else {
                     return null;

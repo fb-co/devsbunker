@@ -25,15 +25,26 @@ const dynamicData = {
         
         return users;
     },
+
+    // requester needs to be a username string
     addAll: function(users, requester) {
         if (Array.isArray(users)) {
             users.forEach(user => {
                 user.followerAmt = user.followers.length;
                 user.followingAmt = user.following.length;
+                
+                // adds the isFollowing attribute if the requester is following the user
+                if (requester) {
+                    user.isFollowing = user.followers.includes(requester);
+                }
             });
         } else {
             users.followerAmt = users.followers.length;
             users.followingAmt = users.following.length;
+
+            if (requester) {
+                users.isFollowing = users.followers.includes(requester);
+            }
         }
         return users;
     }

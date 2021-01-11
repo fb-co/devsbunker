@@ -44,11 +44,11 @@ const GraphQLService = {
         }
     },
 
-    fetchUserByPartial: function(partial_username) {
+    fetchUserByPartial: function(partial_username, requester) {
         if (partial_username != "") {
             const query = `
                 query {
-                    partial_user(partial_username: "${partial_username}") {
+                    partial_user(partial_username: "${partial_username}", requester: "${requester}") {
                         username
                         desc
                         followerAmt
@@ -419,7 +419,8 @@ const GraphQLService = {
         const mutation = `
             mutation {
                 followPerson(person: "${person}") {
-                    followers
+                    followerAmt
+                    is_following
                 }
             }
         `;
