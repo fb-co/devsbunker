@@ -6,7 +6,7 @@
             <div class="placeholder"></div>
             <div class="user_details">
                 <button v-if="!cardData.isFollowing" @click.stop="followUser(cardData.username)" class="follow_btn">Follow</button>
-                <button v-else @click.stop="unfollowUser()" class="follow_btn">Unfollow</button>
+                <button v-else @click.stop="unfollowUser(cardData.username)" class="follow_btn">Unfollow</button>
                 <p class="user_details_followers info">Followers: {{ cardData.followerAmt }}</p>
                 <p class="user_details_posts info">Following: {{ cardData.followingAmt }}</p>
             </div>
@@ -35,9 +35,6 @@ export default {
         routeToUser() {
             this.$router.push('/user/' + this.cardData.username);
         },
-        unfollowUser() {
-            console.log("Unfollow the user");
-        }
     }
 }
 </script>

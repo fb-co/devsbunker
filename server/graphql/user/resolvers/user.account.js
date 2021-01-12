@@ -241,13 +241,54 @@ export default {
                     await add_following.save();
 
                     return {
-                        followers: person_to_follow.followers.length,
+                        followerAmt: person_to_follow.followers.length,
+                        isFollowing: true
                     };
                 } else {
                     return null;
                 }
             } catch (err) {
                 throw new Error("Something went wrong following " + personPayload);
+            }
+        },
+
+        unfollowPerson: async function (_, args, { req }) {
+            const jwtPayload = req.user;
+            const personPayload = args.person; // this is the name of the user you want to remove from the user owning the token
+
+            if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+            try {
+                let remove_name = await User.findOne({ username: jwtPayload.username }); // this is the user you're removing the name from
+                let user_being_removed = await User.findOne({ username: personPayload }); // this is the user that is being removed from 'remove_name' user
+
+                if (remove_name && user_being_removed) {
+                    for (let i = 0; i < remove_name.following.length; i++) {
+                        if (remove_name.following[i] === personPayload) {
+                            remove_name.following.splice(i, 1);
+                            break;
+                        }
+                    }
+                    for (let i = 0; i < user_being_removed.followers.length; i++) {
+                        if (user_being_removed.followers[i] === jwtPayload.username) {
+                            user_being_removed.followers.splice(i, 1);
+                            break;
+                        }
+                    }
+                    
+                    await user_being_removed.save();
+                    await remove_name.save();
+
+                    return {
+                        followerAmt: user_being_removed.followers.length,
+                        isFollowing: false
+                    };
+                } else {
+                    console.log(personPayload);
+                    return null;
+                }
+            } catch {
+                throw new Error("Something went wrong unfollowing " + personPayload);
             }
         },
 

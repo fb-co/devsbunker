@@ -420,7 +420,31 @@ const GraphQLService = {
             mutation {
                 followPerson(person: "${person}") {
                     followerAmt
-                    is_following
+                    isFollowing
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}` },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
+    unfollowPerson: async function(token, person) {
+        const mutation = `
+            mutation {
+                unfollowPerson(person: "${person}") {
+                    followerAmt
+                    isFollowing
                 }
             }
         `;

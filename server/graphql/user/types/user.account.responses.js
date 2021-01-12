@@ -87,5 +87,7 @@ export default gql`
         notifyUser(userToNotify: String!, notification: NotificationPayload!): Boolean
 
         followPerson(person: String!): FetchableUser
+
+        unfollowPerson(person: String!): FetchableUser
     }
 `;
