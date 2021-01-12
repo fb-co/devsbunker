@@ -17,14 +17,15 @@
                     <div class="follow_container">
                         <div class="follow_cont">
                             <p class="follow_label">Followers</p>
-                            <p id="follower_amt">{{ userObject.followers.length }}</p>
+                            <p id="follower_amt">{{ userObject.followerAmt }}</p>
                         </div>
                         <div class="follow_cont">
                             <p class="follow_label">Following</p>
-                            <p id="following_amt">{{ userObject.following.length }}</p>
+                            <p id="following_amt">{{ userObject.followingAmt }}</p>
                         </div>
                     </div>
-                    <button @click="followUser()" class="follow_button">Follow</button>
+                    <button v-if="!userObject.isFollowing" @click="followUser()" class="follow_button">Follow</button>
+                    <button v-else @click="unfollowUser()" class="follow_button">Unfollow</button>
                 </div>
                 <div class='main_links_container row_item'>
                     <!-- Still have to get the subrouting working here -->
@@ -92,9 +93,10 @@ export default {
         GraphQLService.fetchUserDetails(this.username, [
             "tag",
             "desc",
-            "followers",
-            "following"
-        ]).then((res) => {
+            "followerAmt",
+            "followingAmt",
+            "isFollowing"
+        ], this.$store.getters.username).then((res) => {
             if (res.data.user === null) {
                 this.$router.push("/"); // eventully this should route the user to a search area for users with a message sayin he user they requested does not exist
             } else {
@@ -106,10 +108,18 @@ export default {
         followUser() {
             GraphQLService.followPerson(this.$store.getters.accessToken, this.$route.params.username).then((newFollowers) => {
                 if (newFollowers.data.followPerson) {
-                    this.userObject.followers = newFollowers.data.followPerson.followers;
-                    console.log(newFollowers);
+                    this.userObject.followerAmt = newFollowers.data.followPerson.followerAmt;
+                    this.userObject.isFollowing = newFollowers.data.followPerson.isFollowing;
                 }   
             });
+        },
+        unfollowUser() {
+            GraphQLService.unfollowPerson(this.$store.getters.accessToken, this.$route.params.username).then((newFollowers) => {
+                if (newFollowers.data.unfollowPerson) {
+                    this.userObject.followerAmt = newFollowers.data.unfollowPerson.followerAmt;
+                    this.userObject.isFollowing = newFollowers.data.unfollowPerson.isFollowing;
+                }   
+            });    
         }
     }
 };

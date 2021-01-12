@@ -59,7 +59,7 @@ export default {
         },
 
         user: function (_, args) {
-            return getUserEntry(args.username);
+            return getUserEntry(args.username, args.requester);
         },
 
         getPersonalDetails: async function (_, args, { req }) {

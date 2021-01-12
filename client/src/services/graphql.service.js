@@ -4,10 +4,10 @@ const URL = process.env.VUE_APP_GRAPHQL_API;
 
 const GraphQLService = {
     // fields specify which fields you want to receive
-    fetchUserDetails: function(username, fields) {
+    fetchUserDetails: function(username, fields, requester) {
         const query = `
             query {
-                user(username: "${username}") {
+                user(username: "${username}", requester: "${requester}") {
                     ${fields}
                 }
             }
