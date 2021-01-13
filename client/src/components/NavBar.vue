@@ -34,22 +34,25 @@
                         </svg>
                     </router-link>
                     <router-link v-if="$store.getters.isLoggedIn" to="/notifications" class="static_link">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="icon icon-tabler icon-tabler-bell"
-                            width="44"
-                            height="44"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="var(--main-font-color)"
-                            fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path stroke="none" d="M0 0h24v24H0z" />
-                            <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                            <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-                        </svg>
+                        <!--
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-bell"
+                                width="44"
+                                height="44"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="var(--main-font-color)"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path stroke="none" d="M0 0h24v24H0z" />
+                                <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+                                <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+                            </svg>
+                        -->
+                        <NotificationIcon />
                     </router-link>
                     <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="static_link profile_pic">
                         <ProfilePicture v-if="username" :username="username" style="width: 70px" />
@@ -73,8 +76,9 @@
                             <div class="burger_cont_links">
                                 <input placeholder="Search..." class="light_input_selection" />
 
+                                <router-link to="/">Home</router-link>
                                 <router-link to="/market">Market</router-link>
-                                <router-link to="/market">Projects</router-link>
+                                <router-link to="/users">People</router-link>
                                 <router-link to="/about">About</router-link>
 
                                 <router-link v-if="$store.getters.isLoggedIn" to="/notifications" class="static_link">
@@ -108,6 +112,7 @@ import UserService from "../services/user.service";
 import GraphQLService from "../services/graphql.service";
 
 import ProfilePicture from "@/components/ProfilePicture.vue";
+import NotificationIcon from "@/components/NotificationIcon.vue";
 
 export default {
     props: {
@@ -129,6 +134,7 @@ export default {
         ...GlobalComponents,
         NavBarSearch,
         ProfilePicture,
+        NotificationIcon
     },
 
     created() {

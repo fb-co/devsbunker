@@ -37,16 +37,18 @@
         <!--Placeholder-->
 
         <div class="input_container">
+            <!--
             <div class="input_section">
                 <p class="input_label">Name</p>
-                <input class="info_input" placeholder="" :value="$store.getters.username" />
+                <input ref="username_field" class="info_input" placeholder="" :value="$store.getters.username" />
             </div>
+            -->
             <div class="input_section">
                 <p class="input_label">Email</p>
-                <input class="info_input" placeholder="" :value="userObject.email" />
+                <input ref="email_field" class="info_input" placeholder="" :value="userObject.email" />
             </div>
         </div>
-        <button class="save_button">Save</button>
+        <button @click="saveDetails()" class="save_button">Save</button>
     </div>
 </template>
 
@@ -92,6 +94,25 @@ export default {
                 }
             }
         },
+        saveDetails() {
+            console.log(this.$store.getters.username);
+
+            let fields = [];
+            /*
+            if (this.$refs.username_field.value != this.$store.getters.username) {
+                fields.push({ field: "username", newValue: this.$refs.username_field.value });      
+            }
+            */
+            if (this.$refs.email_field.value != this.userObject.email) {
+                fields.push({ field: "email", newValue: this.$refs.email_field.value });
+            }
+            
+            if (fields.length > 0) {
+                GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
+                    console.log("Details Successfully Changed" + res);
+                });
+            } 
+        }
     },
 };
 </script>
