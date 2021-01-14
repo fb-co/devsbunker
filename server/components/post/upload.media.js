@@ -63,7 +63,9 @@ export default async function uploadMedia(req, res, next) {
                             });
                         } else {
                             filesHandler.deleteFiles(pathsCache); // [!] IMPORTANT: we delete everything because multer saves files immediately to the disk
-                            throw new Error("Make sure the post id exists and you are the author of that post.");
+                            throw new Error(
+                                "Make sure the post id exists and you are the author of that post."
+                            );
                         }
                     } else {
                         res.json({
