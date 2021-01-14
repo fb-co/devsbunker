@@ -1,4 +1,3 @@
-import { UserInputError } from "apollo-server-express";
 import FilesHandler from "../../middlewares/FilesHandler.js";
 const filesHandler = new FilesHandler();
 
