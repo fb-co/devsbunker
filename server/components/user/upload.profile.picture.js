@@ -1,7 +1,8 @@
+import { UserInputError } from "apollo-server-express";
 import FilesHandler from "../../middlewares/FilesHandler.js";
 const filesHandler = new FilesHandler();
 
-// import User from "../user/user.model.js";
+import User from "../user/user.model.js";
 
 export default async function uploadProfilePicture(req, res, next) {
     try {
@@ -30,6 +31,13 @@ export default async function uploadProfilePicture(req, res, next) {
                 }
 
                 if (valid) {
+                    const userDoc = await User.findOne({
+                        _id: user._id,
+                    });
+
+                    userDoc.profile_pic = file.filename;
+                    await userDoc.save();
+
                     res.json({
                         message: "Successfully uploaded files.",
                         data: data,
@@ -46,6 +54,8 @@ export default async function uploadProfilePicture(req, res, next) {
                 throw new Error("Please upload a file.");
             }
         } else {
+            res.status(401);
+            throw new Error("Unauthorized");
         }
     } catch (err) {
         next(err);
