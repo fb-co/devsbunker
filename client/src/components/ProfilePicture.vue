@@ -1,6 +1,16 @@
 <template>
     <!-- This component is for showing profile pcitures to avoid rewriting the query a thousand times -->
-    <img v-if="image_link" :src="require('@/assets/profile_pictures/' + image_link)" alt="profile_pic">
+    <img
+        v-if="image_link && default_image"
+        :src="require('@/assets/profile_pictures/' + image_link)"
+        alt="profile_pic"
+    />
+
+    <img
+        v-else-if="image_link && !default_image"
+        :src="image_link"
+        alt="profile_pic"
+    />
 </template>
 
 <script>
@@ -10,8 +20,9 @@ import GraphQLService from "../services/graphql.service";
 export default {
     data() {
         return {
-            image_link: undefined
-        }
+            image_link: undefined,
+            default_image: undefined
+        };
     },
     props: {
         username: String,
@@ -26,17 +37,30 @@ export default {
     },
     created() {
         // fetch the users profile image link (THIS SHOULD BE CACHED EVENTULLY)
-        GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
-            if (obj.data.user.profile_pic) {
-                this.image_link = obj.data.user.profile_pic;
+        GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
+            obj => {
+                if (obj.data.user.profile_pic) {
+                    if (
+                        obj.data.user.profile_pic ===
+                        "profile_pic_placeholder.png"
+                    ) {
+                        this.default_image = true;
+                        this.image_link = obj.data.user.profile_pic;
+                    } else {
+                        this.default_image = false;
+                        this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
+                    }
+                } else {
+                    console.log("dude wtf err");
+                }
             }
-        });
-    },
-}
+        );
+    }
+};
 </script>
 
 <style scoped>
-    .profile_pic {
-        background-color: red;
-    }
+.profile_pic {
+    background-color: red;
+}
 </style>
