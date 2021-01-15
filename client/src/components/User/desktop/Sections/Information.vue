@@ -2,9 +2,7 @@
     <div class="general_container" v-if="userObject">
         <p class="label">General</p>
 
-        <div class="profile_pic_container">
-            <ProfilePicture v-if="userObject" :username="this.$store.getters.username" style="width: 250px;" />
-        </div>
+        <ProfilePicture v-if="userObject" :username="this.$store.getters.username" wrapperSize="300px" class="profile_pic" />
 
         <div class="desc_container">
             <p @click="editDesc()" v-if="!isEditingDesc" class="desc">{{ userObject.desc }}</p>
@@ -55,6 +53,7 @@
 <script>
 import GraphQLService from "@/services/graphql.service";
 import ProfilePicture from "@/components/ProfilePicture.vue";
+//import FileUploadService from "@/services/fileUpload.service.js";
 
 export default {
     data() {
@@ -64,7 +63,7 @@ export default {
         };
     },  
     components: {
-        ProfilePicture
+        ProfilePicture,
     },
     methods: {
         editDesc() {
@@ -95,8 +94,6 @@ export default {
             }
         },
         saveDetails() {
-            console.log(this.$store.getters.username);
-
             let fields = [];
             /*
             if (this.$refs.username_field.value != this.$store.getters.username) {
@@ -140,12 +137,9 @@ export default {
     width: 450px;
     margin: 40px auto 0px auto;
 }
-.profile_pic_container {
-    width: 450px;
-    margin: 35px auto 10px auto;
-}
-.profile_pic_container > img {
+.profile_pic {
     cursor: pointer;
+    margin: 35px auto 10px auto;
 }
 .edit_desc {
     display: none;

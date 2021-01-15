@@ -1,6 +1,8 @@
 <template>
     <!-- This component is for showing profile pcitures to avoid rewriting the query a thousand times -->
-    <img v-if="image_link" :src="require('@/assets/profile_pictures/' + image_link)" alt="profile_pic">
+    <div class="wrapper" :style="cssProps">
+        <img v-if="image_link" :src="require('@/assets/profile_pictures/' + image_link)" alt="profile_pic" class="profile_pic">
+    </div>
 </template>
 
 <script>
@@ -15,13 +17,9 @@ export default {
     },
     props: {
         username: String,
-        img_width: {
+        wrapperSize: {
             type: String,
-            default: "100%"
-        },
-        img_height: {
-            type: String,
-            default: "auto"
+            default: "100px"
         }
     },
     created() {
@@ -32,11 +30,28 @@ export default {
             }
         });
     },
+    computed: {
+        cssProps() {
+            return {
+                "--wrapper-size": this.wrapperSize
+            };
+        },
+    },
 }
 </script>
 
 <style scoped>
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: var(--wrapper-size) !important;
+        height: var(--wrapper-size) !important;
+        border-radius: 50%;
+        overflow: hidden;
+    }
     .profile_pic {
-        background-color: red;
+        width: 100%;
+        margin: 0 auto;
     }
 </style>

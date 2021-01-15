@@ -55,7 +55,7 @@
                         <NotificationIcon />
                     </router-link>
                     <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="static_link profile_pic">
-                        <ProfilePicture v-if="username" :username="username" style="width: 70px" />
+                        <ProfilePicture v-if="username" :username="username" wrapperSize="100%" />
                     </router-link>
                 </div>
                 <div class="burger_nav_links">
@@ -76,7 +76,8 @@
                             <div class="burger_cont_links">
                                 <input placeholder="Search..." class="light_input_selection" />
 
-                                <router-link to="/">Home</router-link>
+                                
+                                <!--<router-link to="/">Home</router-link>-->
                                 <router-link to="/market">Market</router-link>
                                 <router-link to="/users">People</router-link>
                                 <router-link to="/about">About</router-link>
