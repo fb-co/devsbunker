@@ -7,10 +7,23 @@ import multer from "multer";
 import dotenv from "dotenv";
 dotenv.config();
 
-const FILE_PATH = process.env.UPLOAD_FILES_PATH; // grabs path from ENV file
+const FILE_PATH_FOR_MEDIA = process.env.UPLOAD_FILES_PATH;
+const FILE_PATH_FOR_PROFILE_PIC = process.env.UPLOAD_PROFILE_PIC;
 
-const Multer = multer({
-    dest: `${FILE_PATH}/`,
+/**
+ * ! Note: these configs are for diffente things, tehy have different paths in the hdd. Make sure to
+ * ! add both entries to your env file
+ * * use this:
+ *   UPLOAD_FILES_PATH=./uploads/images
+ *   UPLOAD_PROFILE_PIC=./uploads/profile_pics
+ */
+
+const MulterForMedia = multer({
+    dest: `${FILE_PATH_FOR_MEDIA}/`,
 });
 
-export default Multer;
+const MulterForProfilePics = multer({
+    dest: `${FILE_PATH_FOR_PROFILE_PIC}`,
+});
+
+export { MulterForMedia, MulterForProfilePics };

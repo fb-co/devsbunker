@@ -1,10 +1,18 @@
 import express from "express";
 const router = express.Router();
 
-import Multer from "../../config/Multer.js";
+import { MulterForMedia, MulterForProfilePics } from "../../config/Multer.js";
 import uploadMedia from "../post/upload.media.js";
+import uploadProfilePicture from "../user/upload.profile.picture.js";
 
 // maximum of files = 15
-router.post("/images", Multer.array("images", 15), uploadMedia);
+router.post("/images", MulterForMedia.array("images", 15), uploadMedia);
+
+// maximun of 1 file for the profile pic
+router.post(
+    "/profile_pic",
+    MulterForProfilePics.array("picture", 1),
+    uploadProfilePicture
+);
 
 export default router;
