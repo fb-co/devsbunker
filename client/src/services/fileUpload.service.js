@@ -1,4 +1,5 @@
 const IMG_URL = process.env.VUE_APP_IMAGES_ENDPOINT;
+//const PROFILE_URL = process.enc.VUE_APP_PROFILE_PICTURES;
 
 const FileUploadService = {
     addPostImages: async function(files, postId, token) {
@@ -23,6 +24,24 @@ const FileUploadService = {
             return false;
         }
     },
+    uploadProfilePic: async function(file, token) {
+        const formData = new FormData();
+
+        formData.append("image", file);
+        formData.append("token", token);
+
+        try {
+            const response = await fetch(IMG_URL, {
+                method: "POST",
+                body: formData,
+            });
+
+            return response.json();
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    }
 };
 
 export default FileUploadService;

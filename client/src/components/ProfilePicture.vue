@@ -14,6 +14,15 @@
             alt="profile_pic"
             class="profile_pic"
         />
+
+        <input
+            v-if="forUpload" 
+            class="upload_container" 
+            type="file"
+            enctype="multipart/form-data"
+            multiple
+            accept=".jpg, .png, .jpeg, .gif"
+        />
     </div>
 </template>
 
@@ -33,6 +42,10 @@ export default {
         wrapperSize: {
             type: String,
             default: "100px"
+        },
+        forUpload: {
+            type: Boolean,
+            default: false
         }
     },
     created() {
@@ -68,6 +81,7 @@ export default {
 
 <style scoped>
     .wrapper {
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -79,5 +93,15 @@ export default {
     .profile_pic {
         width: 100%;
         margin: 0 auto;
+    }
+
+    .upload_container {
+        position: absolute;
+        background-color: transparent;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: none;
     }
 </style>
