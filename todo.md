@@ -33,8 +33,8 @@
         -   [ ] organize the upload folder
     -   [x] 2. making another server just for those static assets
     -   [x] 3. using res.sendFile(\_\_dirname + /images/ + path); or something like this (PATH TRAVERSAL?
--  [ ] The home post feed and presumably many others use the post name as the v-for key, which will cause errors if two posts have the same name (switch to something like id)
--  [ ] Creating a post on the home page wont refresh the post feed since it auto avoids redundant routing
+-   [ ] The home post feed and presumably many others use the post name as the v-for key, which will cause errors if two posts have the same name (switch to something like id)
+-   [ ] Creating a post on the home page wont refresh the post feed since it auto avoids redundant routing
 
 ## Frontend
 
@@ -60,7 +60,7 @@
 -   [ ] Project card author link spans 100% of card (even if you cant see it, you can still click it)
 -   [ ] attach images to DOM after retreiving them (like a preview)
 -   [ ] mod email in user page doesn't work (the save btn doesn't work)
--   [ ] add unfollow btn 
+-   [ ] add unfollow btn
 -   [ ] if I visit someone else profile I am able to see a field to modify my profile (if admin visits test_account he can see a field with its username in the information tab)
 -   [ ] opening the NewPostTagPopup on a new post page, the input should auto-select itself
 
@@ -97,4 +97,7 @@
 -   [ ] Remove all the console logs, including the one on Logout event
 -   [ ] use a more accurate regex for emails
 -   [ ] clean the code (in some cases we used snake_case and in others camelCase)
-    -   [ ] add comments ot functions following a standard notation
+
+    -   [ ] add comments of functions following a standard notation
+
+-   [ ] make sure not to include path details in gql errors
