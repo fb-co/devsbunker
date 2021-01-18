@@ -65,10 +65,13 @@ export default {
         getPersonalDetails: async function (_, args, { req }) {
             const jwtPayload = req.user;
 
-            if (!jwtPayload) return { success: false, message: "Invalid token" };
+            if (!jwtPayload)
+                return { success: false, message: "Invalid token" };
 
             try {
-                const user = await User.findOne({ username: jwtPayload.username });
+                const user = await User.findOne({
+                    username: jwtPayload.username,
+                });
 
                 if (user) {
                     return {
@@ -135,16 +138,22 @@ export default {
                     } else {
                         res.status(422);
 
-                        throw new AuthenticationError("Unable to create token.");
+                        throw new AuthenticationError(
+                            "Unable to create token."
+                        );
                     }
                 } catch {
                     res.status(401);
 
-                    throw new AuthenticationError("Credentials are already taken.");
+                    throw new AuthenticationError(
+                        "Credentials are already taken."
+                    );
                 }
             } else {
                 res.status(400);
-                throw new AuthenticationError("Invalid credentials. Try again.");
+                throw new AuthenticationError(
+                    "Invalid credentials. Try again."
+                );
             }
         },
 
@@ -153,7 +162,8 @@ export default {
 
             let editedData = [];
 
-            if (!jwtPayload) return { success: false, message: "Invalid token" };
+            if (!jwtPayload)
+                return { success: false, message: "Invalid token" };
 
             const user = await User.findOne({
                 _id: jwtPayload._id,
@@ -162,7 +172,16 @@ export default {
             // if the token is valid then we should def find a user...
             if (!user) return { success: false, message: "Internal error" };
 
-            const nonMod = ["_id", "id", "tokenVersion", "tag", "createdAt", "updatedAt", "__v", "v"];
+            const nonMod = [
+                "_id",
+                "id",
+                "tokenVersion",
+                "tag",
+                "createdAt",
+                "updatedAt",
+                "__v",
+                "v",
+            ];
 
             try {
                 // loop through all the fields that need to be changed
@@ -170,23 +189,42 @@ export default {
                     // checking if the received payload actually exists in the user object (maybe someone miss spells a field)
                     if (user[payload.field]) {
                         if (nonMod.includes(payload.field)) {
-                            throw new Error(`Cannot update field: ${payload.field}`);
+                            throw new Error(
+                                `Cannot update field: ${payload.field}`
+                            );
                         } else {
                             if (payload.field == "password") {
-                                if (payload.newValue && payload.newValue.toString().trim() !== "" && payload.newValue.length > 8) {
-                                    
+                                if (
+                                    payload.newValue &&
+                                    payload.newValue.toString().trim() !== "" &&
+                                    payload.newValue.length > 8
+                                ) {
                                     // bcrypt generates a random salt at every bcrypt.hash so first we compare the passwords with the right function and then we hash the new one
                                     // really important the order of the function arguments here
-                                    if (await bcrypt.compare(payload.newValue, user[payload.field])) throw new Error("Password can't be the same as the previous one.");
-                                    const newHashedPass = await bcrypt.hash(payload.newValue, 10);
-    
+                                    if (
+                                        await bcrypt.compare(
+                                            payload.newValue,
+                                            user[payload.field]
+                                        )
+                                    )
+                                        throw new Error(
+                                            "Password can't be the same as the previous one."
+                                        );
+                                    const newHashedPass = await bcrypt.hash(
+                                        payload.newValue,
+                                        10
+                                    );
+
                                     editedData.push({
                                         field: payload.field,
-                                        newValue: "The password was successfully changed.",
+                                        newValue:
+                                            "The password was successfully changed.",
                                     }); // the only case that we dont want to return the mutated data is for the password
                                     user[payload.field] = newHashedPass;
                                 } else {
-                                    throw new Error(`Cannot update field: ${payload.field}, please enter a valid password with no spaces and > than 8 characters.`);
+                                    throw new Error(
+                                        `Cannot update field: ${payload.field}, please enter a valid password with no spaces and > than 8 characters.`
+                                    );
                                 }
                             } else {
                                 editedData.push({
@@ -197,10 +235,11 @@ export default {
                             }
                         }
                     } else {
-                        throw new Error(`Field ${payload.field}: does not exist`);
+                        throw new Error(
+                            `Field ${payload.field}: does not exist`
+                        );
                     }
                 }
-
 
                 await user.save();
             } catch (err) {
@@ -222,33 +261,44 @@ export default {
 
             try {
                 // add a follower to the person
-                let person_to_follow = await User.findOne({ username: personPayload });
-                let add_following = await User.findOne({ username: jwtPayload.username });
+                let personToFollow = await User.findOne({
+                    username: personPayload,
+                });
+                let addFollowing = await User.findOne({
+                    username: jwtPayload.username,
+                });
 
-                if (person_to_follow && add_following) {
+                if (personToFollow && addFollowing) {
                     // check to make sure they are not already followed
-                    if (!person_to_follow.followers.includes(add_following.username)) {
-                        person_to_follow.followers.push(jwtPayload.username);
+                    if (
+                        !personToFollow.followers.includes(
+                            addFollowing.username
+                        ) &&
+                        personToFollow._id !== addFollowing._id
+                    ) {
+                        personToFollow.followers.push(jwtPayload.username);
                     } else {
                         return null; // we should add something better like a msg than just null
                     }
 
-                    await person_to_follow.save();
+                    await personToFollow.save();
 
                     //add a following entry to the person who followed
-                    add_following.following.push(personPayload);
+                    addFollowing.following.push(personPayload);
 
-                    await add_following.save();
+                    await addFollowing.save();
 
                     return {
-                        followerAmt: person_to_follow.followers.length,
-                        isFollowing: true
+                        followerAmt: personToFollow.followers.length,
+                        isFollowing: true,
                     };
                 } else {
                     return null;
                 }
             } catch (err) {
-                throw new Error("Something went wrong following " + personPayload);
+                throw new Error(
+                    "Something went wrong following " + personPayload
+                );
             }
         },
 
@@ -259,36 +309,49 @@ export default {
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
             try {
-                let remove_name = await User.findOne({ username: jwtPayload.username }); // this is the user you're removing the name from
-                let user_being_removed = await User.findOne({ username: personPayload }); // this is the user that is being removed from 'remove_name' user
+                let removeName = await User.findOne({
+                    username: jwtPayload.username,
+                }); // this is the user you're removing the name from
+                let userBeingRemoved = await User.findOne({
+                    username: personPayload,
+                }); // this is the user that is being removed from 'removeName' user
 
-                if (remove_name && user_being_removed) {
-                    for (let i = 0; i < remove_name.following.length; i++) {
-                        if (remove_name.following[i] === personPayload) {
-                            remove_name.following.splice(i, 1);
+                if (removeName && userBeingRemoved) {
+                    for (let i = 0; i < removeName.following.length; i++) {
+                        if (removeName.following[i] === personPayload) {
+                            removeName.following.splice(i, 1);
                             break;
                         }
                     }
-                    for (let i = 0; i < user_being_removed.followers.length; i++) {
-                        if (user_being_removed.followers[i] === jwtPayload.username) {
-                            user_being_removed.followers.splice(i, 1);
+                    for (
+                        let i = 0;
+                        i < userBeingRemoved.followers.length;
+                        i++
+                    ) {
+                        if (
+                            userBeingRemoved.followers[i] ===
+                            jwtPayload.username
+                        ) {
+                            userBeingRemoved.followers.splice(i, 1);
                             break;
                         }
                     }
-                    
-                    await user_being_removed.save();
-                    await remove_name.save();
+
+                    await userBeingRemoved.save();
+                    await removeName.save();
 
                     return {
-                        followerAmt: user_being_removed.followers.length,
-                        isFollowing: false
+                        followerAmt: userBeingRemoved.followers.length,
+                        isFollowing: false,
                     };
                 } else {
                     console.log(personPayload);
                     return null;
                 }
             } catch {
-                throw new Error("Something went wrong unfollowing " + personPayload);
+                throw new Error(
+                    "Something went wrong unfollowing " + personPayload
+                );
             }
         },
 
@@ -299,13 +362,15 @@ export default {
             notificationPayload.read = false; // set the message read state to false since its a new notification
 
             try {
-                let person_to_notify = await User.findOne({ username: userToNotifyPayload });
+                let personToNotify = await User.findOne({
+                    username: userToNotifyPayload,
+                });
 
-                if (person_to_notify) {
+                if (personToNotify) {
                     // limit the amount of notifications here (if len > x : delete the oldest)
-                    person_to_notify.notifications.push(notificationPayload);
+                    personToNotify.notifications.push(notificationPayload);
 
-                    await person_to_notify.save();
+                    await personToNotify.save();
 
                     return true;
                 } else {
