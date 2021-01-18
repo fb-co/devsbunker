@@ -20,7 +20,7 @@
                     <line x1="5" y1="12" x2="11" y2="18" />
                     <line x1="5" y1="12" x2="11" y2="6" />
                 </svg>
-                <div style="flex-grow: 1;"></div>
+                <div style="flex-grow: 1"></div>
                 <!-- Placeholder -->
                 <div class="save_post_container">
                     <svg
@@ -84,14 +84,22 @@
                     fill="#eb4034"
                     xmlns="http://www.w3.org/2000/svg"
                 >
-                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                    <path
+                        fill-rule="evenodd"
+                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                    />
                 </svg>
             </div>
-            <div class="placeholder"></div>
+            <div class="placeholder">
+                <img :src="postThumbnail" alt="No Image" />
+            </div>
             <!-- Placeholder -->
             <div class="post_header_details">
                 <p class="postname">{{ projectData.title }}</p>
-                <p class="postauthor"><span style="color: var(--soft-text)">By:</span> {{ projectData.author }}</p>
+                <p class="postauthor">
+                    <span style="color: var(--soft-text)">By:</span>
+                    {{ projectData.author }}
+                </p>
             </div>
         </div>
         <p class="newPostTag">Tags</p>
@@ -102,7 +110,12 @@
         <p class="post_description">{{ projectData.description }}</p>
         <p class="newPostTag">Links</p>
         <div class="links_container">
-            <LinkItem v-for="link in projectData.links" :key="link" :link="link" class="link_item" />
+            <LinkItem
+                v-for="link in projectData.links"
+                :key="link"
+                :link="link"
+                class="link_item"
+            />
         </div>
     </div>
 </template>
@@ -115,24 +128,27 @@ export default {
     data() {
         return {
             tags: undefined,
+            postThumbnail: undefined
         };
     },
     props: {
-        projectData: Object,
+        projectData: Object
     },
     mixins: [ProjectCardUtils],
     components: {
-        LinkItem,
+        LinkItem
     },
     created() {
         console.log(this.projectData);
         this.tags = Object.values(this.projectData.tags);
+
+        this.postThumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
     },
     methods: {
         back() {
             this.$router.go(-1);
-        },
-    },
+        }
+    }
 };
 </script>
 
@@ -141,8 +157,16 @@ export default {
     width: 100%;
 }
 .placeholder {
+    margin-top: 40px;
     height: 150px;
+    width: 100%;
 }
+
+.placeholder img {
+    width: 100%;
+    height: 100%;
+}
+
 .custom_header_container {
     display: flex;
     flex-direction: column;
