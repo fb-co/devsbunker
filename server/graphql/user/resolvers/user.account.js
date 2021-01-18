@@ -274,11 +274,13 @@ export default {
                         !personToFollow.followers.includes(
                             addFollowing.username
                         ) &&
-                        personToFollow._id !== addFollowing._id
+                        personToFollow.username !== addFollowing.username // wanted to do it with IDs but for some reason the comparison wasn't working
                     ) {
                         personToFollow.followers.push(jwtPayload.username);
                     } else {
-                        return null; // we should add something better like a msg than just null
+                        throw new Error(
+                            `Unable to follow ${personPayload}, make sure you don't already follow them/you aren't following yourself!`
+                        );
                     }
 
                     await personToFollow.save();
