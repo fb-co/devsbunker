@@ -1,27 +1,35 @@
 <template>
     <div>
+        <NavBar />
         <div class="main_container">
             <LeftContent />
             <div class="center_content">{{ projectData }}</div>
             <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->
-            <RightContent :notifications="[]" />
+            <RightContent :notifications="notifications" />
         </div>
     </div>
 </template>
 
 <script>
+import NavBar from "@/components/NavBar";
+
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
 
 export default {
     props: {
         projectData: Object,
-        notifications: Array,
+        notifications: Array
     },
     components: {
         RightContent,
         LeftContent,
+        NavBar
     },
+
+    created() {
+        console.log(">>", this.projectData);
+    }
 };
 </script>
 
