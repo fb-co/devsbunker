@@ -4,6 +4,7 @@
         <img
             v-if="image_link && default_image"
             :src="require('@/assets/profile_pictures/' + image_link)"
+            ref="main_image"
             alt="profile_pic"
             class="profile_pic"
         />
@@ -12,17 +13,32 @@
             v-else-if="image_link && !default_image"
             :src="image_link"
             alt="profile_pic"
+            ref="main_image"
             class="profile_pic"
+        />
+
+        <!-- For Upload = true -->
+        <input 
+            v-if="forUpload"
+            class="upload_container"
+            @mouseenter="darkenImage()"
+            @mouseleave="undarkenImage()"
+            type="button"
+            onclick="document.getElementById('file_uploader').click();"
         />
 
         <input
             v-if="forUpload" 
-            class="upload_container" 
+            style="display: none;" 
             type="file"
+            id="file_uploader"
             enctype="multipart/form-data"
             multiple
             accept=".jpg, .png, .jpeg, .gif"
+            @change="handleFiles($event)"
         />
+
+        <p ref="file_upload_label" class="file_upload_name"></p>
     </div>
 </template>
 
@@ -34,7 +50,8 @@ export default {
     data() {
         return {
             image_link: undefined,
-            default_image: undefined
+            default_image: undefined,
+            isChangingImage: false
         };
     },
     props: {
@@ -44,6 +61,11 @@ export default {
             default: "100px"
         },
         forUpload: {
+            type: Boolean,
+            default: false
+        },
+        // if true, will darken the image when its hovered over
+        darkenOnHover: {
             type: Boolean,
             default: false
         }
@@ -76,6 +98,21 @@ export default {
             };
         },
     },
+    methods: {
+        handleFiles(event) {
+            if (event.target.files[0] != undefined) {
+                this.$refs.file_upload_label.innerText = event.target.files[0].name;
+            }
+        },
+
+        //had to use some js here for complicated reasons
+        darkenImage() {
+            this.$refs.main_image.style.filter="brightness(50%)";
+        },
+        undarkenImage() {
+            this.$refs.main_image.style.filter="brightness(100%)";
+        }
+    }
 }
 </script>
 
@@ -87,7 +124,6 @@ export default {
         justify-content: center;
         width: var(--wrapper-size) !important;
         height: var(--wrapper-size) !important;
-        border-radius: 50%;
         overflow: hidden;
     }
     .profile_pic {
@@ -101,7 +137,13 @@ export default {
         cursor: pointer;
         width: 100%;
         height: 100%;
-        border-radius: 50%;
-        border: none;
+        border: none; 
+    }
+    .upload_container:focus {
+        outline: none;
+    }
+
+    .file_upload_name {
+        color: var(--soft-text);
     }
 </style>

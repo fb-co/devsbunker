@@ -2,7 +2,7 @@
     <div class="general_container" v-if="userObject">
         <p class="label">General</p>
 
-        <ProfilePicture v-if="userObject" :username="this.$store.getters.username" :forUpload="true" wrapperSize="300px" class="profile_pic" />
+        <ProfilePicture v-if="userObject" :username="this.$store.getters.username" :darkenOnHover="true" :forUpload="true" wrapperSize="300px" class="profile_pic" />
 
         <div class="desc_container">
             <p @click="editDesc()" v-if="!isEditingDesc" class="desc">{{ userObject.desc }}</p>
@@ -143,9 +143,6 @@ export default {
 .profile_pic {
     cursor: pointer;
     margin: 35px auto 10px auto;
-}
-.profile_pic:hover {
-    filter: brightness(50%);
 }
 .edit_desc {
     display: none;
