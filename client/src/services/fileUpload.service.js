@@ -1,7 +1,8 @@
 const IMG_URL = process.env.VUE_APP_IMAGES_ENDPOINT;
-const PROFILE_URL = process.env.VUE_APP_PROFILE_PICTURES;
+const PROFILE_URL = process.env.VUE_APP_PROFILE_PIC_ENDPOINT;
 
 const FileUploadService = {
+    // TODO: update this to use new auth sys
     addPostImages: async function(files, postId, token) {
         const formData = new FormData();
 
@@ -27,12 +28,14 @@ const FileUploadService = {
     uploadProfilePic: async function(file, token) {
         const formData = new FormData();
 
-        formData.append("image", file);
-        formData.append("token", token);
+        formData.append("picture", file);
 
         try {
             const response = await fetch(PROFILE_URL, {
                 method: "POST",
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
                 body: formData,
             });
 
@@ -41,7 +44,7 @@ const FileUploadService = {
             console.error(e);
             return false;
         }
-    }
+    },
 };
 
 export default FileUploadService;

@@ -18,7 +18,7 @@
         />
 
         <!-- For Upload = true -->
-        <input 
+        <input
             v-if="forUpload"
             class="upload_container"
             @mouseenter="darkenImage()"
@@ -28,8 +28,8 @@
         />
 
         <input
-            v-if="forUpload" 
-            style="display: none;" 
+            v-if="forUpload"
+            style="display: none"
             type="file"
             id="file_uploader"
             enctype="multipart/form-data"
@@ -38,7 +38,11 @@
             @change="handleFiles($event)"
         />
 
-        <ImageCropperPopup v-if="forUpload" ref="cropper" />
+        <ImageCropperPopup
+            v-if="forUpload"
+            ref="cropper"
+            v-on:success="reload($event)"
+        />
 
         <p ref="file_upload_label" class="file_upload_name"></p>
     </div>
@@ -48,7 +52,6 @@
 //'@/assets/profile_pictures/profilePlaceholder.png'
 import GraphQLService from "../services/graphql.service";
 import ImageCropperPopup from "@/components/ImageCropperPopup.vue";
-
 
 export default {
     data() {
@@ -108,7 +111,7 @@ export default {
                 "--wrapper-size": this.wrapperSize,
                 "--image-padding": this.imagePadding
             };
-        },
+        }
     },
     methods: {
         handleFiles(event) {
@@ -124,46 +127,54 @@ export default {
 
         //had to use some js here for complicated reasons
         darkenImage() {
-            this.$refs.main_image.style.filter="brightness(50%)";
+            this.$refs.main_image.style.filter = "brightness(50%)";
         },
         undarkenImage() {
-            this.$refs.main_image.style.filter="brightness(100%)";
+            this.$refs.main_image.style.filter = "brightness(100%)";
+        },
+        reload(status) {
+            console.log("parent: got reload", status);
+            if (status) {
+                // doesnt reach this
+                console.log("emitting");
+                this.$emit("success", status);
+            }
         }
     }
-}
+};
 </script>
 
 <style scoped>
-    .wrapper {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: var(--wrapper-size) !important;
-        height: var(--wrapper-size) !important;
-        overflow: hidden;
-    }
-    .profile_pic {
-        width: 100%;
-        height: 100%;
-        margin: 0 auto;
-        object-fit: cover;
-        padding: var(--image-padding);
-    }
+.wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: var(--wrapper-size) !important;
+    height: var(--wrapper-size) !important;
+    overflow: hidden;
+}
+.profile_pic {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    object-fit: cover;
+    padding: var(--image-padding);
+}
 
-    .upload_container {
-        position: absolute;
-        background-color: transparent;
-        cursor: pointer;
-        width: 100%;
-        height: 100%;
-        border: none; 
-    }
-    .upload_container:focus {
-        outline: none;
-    }
+.upload_container {
+    position: absolute;
+    background-color: transparent;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+.upload_container:focus {
+    outline: none;
+}
 
-    .file_upload_name {
-        display: none;
-    }
+.file_upload_name {
+    display: none;
+}
 </style>
