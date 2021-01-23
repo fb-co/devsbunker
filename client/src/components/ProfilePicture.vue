@@ -75,6 +75,10 @@ export default {
         darkenOnHover: {
             type: Boolean,
             default: false
+        },
+        imagePadding: {
+            type: String,
+            default: "0px"
         }
     },
     created() {
@@ -101,7 +105,8 @@ export default {
     computed: {
         cssProps() {
             return {
-                "--wrapper-size": this.wrapperSize
+                "--wrapper-size": this.wrapperSize,
+                "--image-padding": this.imagePadding
             };
         },
     },
@@ -143,6 +148,7 @@ export default {
         height: 100%;
         margin: 0 auto;
         object-fit: cover;
+        padding: var(--image-padding);
     }
 
     .upload_container {
