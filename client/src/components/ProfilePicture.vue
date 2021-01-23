@@ -38,6 +38,8 @@
             @change="handleFiles($event)"
         />
 
+        <ImageCropperPopup v-if="forUpload" ref="cropper" />
+
         <p ref="file_upload_label" class="file_upload_name"></p>
     </div>
 </template>
@@ -45,6 +47,8 @@
 <script>
 //'@/assets/profile_pictures/profilePlaceholder.png'
 import GraphQLService from "../services/graphql.service";
+import ImageCropperPopup from "@/components/ImageCropperPopup.vue";
+
 
 export default {
     data() {
@@ -53,6 +57,9 @@ export default {
             default_image: undefined,
             isChangingImage: false
         };
+    },
+    components: {
+        ImageCropperPopup
     },
     props: {
         username: String,
@@ -86,7 +93,7 @@ export default {
                         this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
                     }
                 } else {
-                    console.log("dude wtf err");
+                    console.log("wtf err");
                 }
             }
         );
@@ -100,8 +107,13 @@ export default {
     },
     methods: {
         handleFiles(event) {
-            if (event.target.files[0] != undefined) {
-                this.$refs.file_upload_label.innerText = event.target.files[0].name;
+            const file = event.target.files[0];
+
+            if (file != undefined) {
+                this.$refs.file_upload_label.innerText = file.name;
+            }
+            if (file) {
+                this.$refs.cropper.open(file);
             }
         },
 
@@ -128,7 +140,9 @@ export default {
     }
     .profile_pic {
         width: 100%;
+        height: 100%;
         margin: 0 auto;
+        object-fit: cover;
     }
 
     .upload_container {
@@ -144,6 +158,6 @@ export default {
     }
 
     .file_upload_name {
-        color: var(--soft-text);
+        display: none;
     }
 </style>

@@ -109,7 +109,7 @@ export default {
                     console.log("Details Successfully Changed" + res);
                 });
             } 
-        }
+        },
     },
 };
 </script>
