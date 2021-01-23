@@ -79,10 +79,6 @@ export default {
             type: Boolean,
             default: false
         },
-        imagePadding: {
-            type: String,
-            default: "0px"
-        }
     },
     created() {
         // fetch the users profile image link (THIS SHOULD BE CACHED EVENTULLY)
@@ -109,7 +105,6 @@ export default {
         cssProps() {
             return {
                 "--wrapper-size": this.wrapperSize,
-                "--image-padding": this.imagePadding
             };
         }
     },
@@ -153,13 +148,13 @@ export default {
     width: var(--wrapper-size) !important;
     height: var(--wrapper-size) !important;
     overflow: hidden;
+    border-radius: 50%;
 }
 .profile_pic {
     width: 100%;
     height: 100%;
     margin: 0 auto;
     object-fit: cover;
-    padding: var(--image-padding);
 }
 
 .upload_container {
