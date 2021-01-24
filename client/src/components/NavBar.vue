@@ -297,6 +297,7 @@ body {
     justify-content: center;
     width: 50px;
     height: 100%;
+    text-decoration: none !important;
 }
 .static_link svg {
     margin: 0 auto;
