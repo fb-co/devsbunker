@@ -70,6 +70,14 @@ export default {
             type: String,
             default: "100px"
         },
+        maxWrapper: {
+            type: String,
+            default: "none"
+        },
+        minWrapper: {
+            type: String,
+            default: "none"
+        },
         forUpload: {
             type: Boolean,
             default: false
@@ -85,10 +93,7 @@ export default {
         GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
             obj => {
                 if (obj.data.user.profile_pic) {
-                    if (
-                        obj.data.user.profile_pic ===
-                        "profile_pic_placeholder.png"
-                    ) {
+                    if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
                         this.default_image = true;
                         this.image_link = obj.data.user.profile_pic;
                     } else {
@@ -96,7 +101,7 @@ export default {
                         this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
                     }
                 } else {
-                    console.log("wtf err");
+                    console.log("err");
                 }
             }
         );
@@ -105,6 +110,8 @@ export default {
         cssProps() {
             return {
                 "--wrapper-size": this.wrapperSize,
+                "--max-wrapper": this.maxWrapper,
+                "--min-wrapper": this.minWrapper
             };
         }
     },
@@ -147,6 +154,10 @@ export default {
     justify-content: center;
     width: var(--wrapper-size) !important;
     height: var(--wrapper-size) !important;
+    max-width: var(--max-wrapper);
+    max-height: var(--max-wrapper);
+    min-width: var(--min-wrapper);
+    min-height: var(--min-wrapper);
     overflow: hidden;
     border-radius: 50%;
 }

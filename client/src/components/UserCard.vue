@@ -13,13 +13,14 @@
             
         </div>
         <div class="user_card_profile_pic">
-            <img src="@/assets/profilePlaceholder.png">
+            <ProfilePicture class="profile_pic" :username="cardData.username" wrapperSize="20vw" maxWrapper="250px" minWrapper="100px" />
         </div>  
     </div>    
 </template>
 
 <script>
 import CardUtilities from "../mixins/user_card.mixin.js";
+import ProfilePicture from "./ProfilePicture.vue";
 
 export default {
     created() {
@@ -35,6 +36,9 @@ export default {
         routeToUser() {
             this.$router.push('/user/' + this.cardData.username);
         },
+    },
+    components: {
+        ProfilePicture
     }
 }
 </script>
@@ -60,15 +64,14 @@ export default {
         text-align: left;
         padding: 10px;
         width: 60%;
+        
     }
     .user_card_profile_pic {
         display: flex;
         flex-direction: column;
         justify-content: center;
         width: 40%;
-    }
-    .user_card_profile_pic > img {
-        width: 100%;
+
     }
     .user_details {
         color: var(--soft-text);
@@ -115,5 +118,12 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: center;
+    }
+
+    /* mobile styles */
+    @media only screen and (max-width: 620px) {
+        .user_details_posts {
+            display: none;
+        }
     }
 </style>
