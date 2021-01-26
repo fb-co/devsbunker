@@ -16,13 +16,34 @@
             <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
             <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
         </svg>
-        <p class="unread_icon">10</p>
+        <p v-if="unread_notifications!=0" class="unread_icon">{{ unread_notifications }}</p>
     </div>
 </template>
 
 <script>
+import GraphQLService from "../services/graphql.service.js";
+
 export default {
-    
+    data() {
+        return {
+            unread_notifications: this.unread_prop || 0
+        }
+    },
+    props: {
+        unread_prop: Number
+    },
+    created() {
+        if (this.unread_prop == undefined) {
+            this.getUnreadNotifications();
+        }
+    },
+    methods: {
+        getUnreadNotifications() {
+            GraphQLService.getUnreadNotifications(this.$store.getters.accessToken).then((res) => {
+                this.unread_notifications = res.data.getUnreadNotifications.amount;
+            });
+        }
+    }
 }
 </script>
 
@@ -45,7 +66,7 @@ export default {
         flex-direction: column;
         justify-content: center;
         font-size: 10px;
-        padding: 2px;
+        padding: 3px;
         color: #fff;
         border-radius: 30px;
         background-color: red;

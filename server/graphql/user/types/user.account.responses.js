@@ -49,6 +49,10 @@ export default gql`
         message: String!
     }
 
+    type UnreadNotificationsAmtResponse {
+        amount: Int!
+    }
+
     # What the user updated
     type mutatedUserDetails {
         field: String!
@@ -75,6 +79,8 @@ export default gql`
         loginUser(username: String, email: String, password: String!): UserAccountAction!
 
         logoutUser: LogoutResponse!
+
+        getUnreadNotifications: UnreadNotificationsAmtResponse!
     }
 
     type Mutation {

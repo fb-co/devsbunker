@@ -48,7 +48,7 @@
                 <polyline points="17 8 21 12 17 16" />
                 <line x1="14" y1="4" x2="10" y2="20" />
             </svg>
-            <router-link :to="'user/' + $store.getters.username + '/projects'" class="saved_projects_link">Saved Projects</router-link>
+            <router-link :to="'user/' + $store.getters.username + '/projects'" class="saved_projects_link">My Projects</router-link>
         </router-link>
 
         <button @click="makeNewPost()" class="new_button">

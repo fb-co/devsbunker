@@ -97,6 +97,35 @@ export default {
         partial_user: function (_, args, { res }) {
             return getUserByPartial(args.partial_username, args.requester);
         },
+
+        getUnreadNotifications: async function(_, args, { req }) {
+            const jwtPayload = req.user;
+
+            if (!jwtPayload)
+                return { success: false, message: "Invalid token" };
+                
+            try {
+                const user = await User.findOne({ username: jwtPayload.username });
+
+                let unreadNotifications = 0;
+
+                for (let i = 0; i < user.notifications.length; i++) {
+                    if (!user.notifications[i].read) {
+                        unreadNotifications++;
+                    }
+                }
+
+                if (user) {
+                    return {
+                        amount: unreadNotifications
+                    }
+                } else {
+                    console.log(err);
+                }
+            } catch (err) {
+                throw new Error("Failed to get unread notifications");
+            }
+        }
     },
 
     Mutation: {

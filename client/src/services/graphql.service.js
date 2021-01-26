@@ -232,6 +232,31 @@ const GraphQLService = {
         }
     },
 
+    getUnreadNotifications: function(token) {
+        const query = `
+            query {
+                getUnreadNotifications {
+                    amount
+                }
+            }
+        `;
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json", "authorization" : `Bearer ${token}`},
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
     fetchPosts: function(sortMethod, token) {
         let query;
         // only request the isLiked and isSaved fields if the user is logged in and passes in the auth token

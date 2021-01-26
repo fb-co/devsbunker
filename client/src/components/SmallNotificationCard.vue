@@ -38,7 +38,6 @@ export default {
             this.largeScreen = this.isLargeScreen();
         });
 
-        console.log(this.notificationData.sender.length);
         if (this.notificationData.sender.length > 10) {
             this.senderText = this.notificationData.sender.slice(0, 9) + "...";
         }

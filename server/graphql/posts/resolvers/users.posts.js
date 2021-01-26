@@ -120,7 +120,6 @@ export default {
             const jwtPayload = req.user;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
-
             try {
                 const post = await Posts.findOne({ _id: id_payload });
 
@@ -150,9 +149,10 @@ export default {
 
                             const notification = {
                                 read: false,
-                                    sender: jwtPayload.username,
-                                    message: `liked your post!`,
-                                    type: "like"
+                                sender: jwtPayload.username,
+                                message: `liked your post!`,
+                                type: "like",
+                                target: post.title
                             };
 
                             let shouldNotify = true;
@@ -160,10 +160,15 @@ export default {
                             // the forEach loop was being stoopid, so im using a regular loop
                             for (let i = 0; i < userToNotify.notifications.length; i++) {
                                 const oldNotification = userToNotify.notifications[i];
+                                
+                                console.log(oldNotification.target, notification.target);
 
-                                if (oldNotification.sender == jwtPayload.username && oldNotification.message == notification.message) {
+                                if (oldNotification.sender == jwtPayload.username && oldNotification.message == notification.message && oldNotification.target == notification.target) {
                                     shouldNotify = false;
                                 }
+                            }
+                            if (userToNotify == jwtPayload.username) {
+                                shouldNotify = false;
                             }
 
                             if (shouldNotify) {
