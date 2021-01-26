@@ -13,7 +13,7 @@
                 >
             </div>
             <p class="title">{{ projectData.title }}</p>
-            <p class="desc">{{ projectData.description }}</p>
+            <p class="desc">{{ descToShow }}</p>
 
             <div style="flex-grow: 1"></div>
             <!--placeholder so info_container sinks to bottom -->
@@ -175,8 +175,14 @@ import DynamicPicture from "@/components/DynamicPicture.vue";
 export default {
     data() {
         return {
-            likeIsActive: false
+            likeIsActive: false,
+            descToShow: this.projectData.description.length > 200 ?
+                this.projectData.description.substring(0, 200).substring(0, this.projectData.description.substring(0, 200).lastIndexOf(" ")) + " ..." :
+                this.projectData.description
         };
+    },
+    created() {
+        console.log();
     },
     props: {
         projectData: Object,
@@ -245,6 +251,7 @@ export default {
     font-weight: bold;
 }
 .desc {
+    color: var(--soft-text);
     font-size: 16px;
     margin-bottom: 15px;
 }

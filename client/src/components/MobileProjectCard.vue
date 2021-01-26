@@ -5,7 +5,7 @@
                 <router-link @click.native.stop="" :to='"user/" + projectData.author' class="author card_text">{{ projectData.author }}</router-link>
             </div>
             <p class="proj_name card_text">{{ projectData.title }}</p>
-            <p class="proj_desc card_text">{{ projectData.description }}</p>
+            <p class="proj_desc card_text">{{ descToShow }}</p>
             <div style="flex-grow: 1;"></div>
             <div class="likes_container" >
                 <!--Not filled icon -->
@@ -119,7 +119,10 @@ export default {
     ],
     data() {
         return {
-            likeIsActive: false
+            likeIsActive: false,
+            descToShow: this.projectData.description.length > 200 ?
+                this.projectData.description.substring(0, 200).substring(0, this.projectData.description.substring(0, 200).lastIndexOf(" ")) + " ..." :
+                this.projectData.description
         }
     },
     computed: {
@@ -155,6 +158,7 @@ export default {
         font-weight: bold;
     }
     .card_text_container{
+        margin-right: 10px;
         display: flex;
         flex-direction: column;
         width: 65%;
