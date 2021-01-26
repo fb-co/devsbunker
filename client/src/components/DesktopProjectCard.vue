@@ -4,12 +4,14 @@
         @click="$router.push('/post/' + projectData.id)"
     >
         <div class="text_container">
-            <router-link
-                @click.native.stop=""
-                :to="'user/' + projectData.author"
-                class="author"
-                >{{ projectData.author }}</router-link
-            >
+            <div class="author_container">
+                <router-link
+                    @click.native.stop=""
+                    :to="'user/' + projectData.author"
+                    class="author"
+                    >{{ projectData.author }}</router-link
+                >
+            </div>
             <p class="title">{{ projectData.title }}</p>
             <p class="desc">{{ projectData.description }}</p>
 
@@ -208,11 +210,12 @@ export default {
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 }
 .text_container {
+    margin: 10px 10px 0px 10px;
     display: flex;
     flex-direction: column;
-    min-width: 65%;
     text-align: left;
-    padding: 10px;
+    width: 65%;
+    flex-grow: 1;
 }
 .save_btn {
     margin-left: 10px;
@@ -223,6 +226,9 @@ export default {
 .likeAmt {
     margin-left: 10px;
     font-weight: bold;
+}
+.author_container {
+    text-align: left;
 }
 .author {
     margin-bottom: 5px;
@@ -258,7 +264,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    flex-grow: 1;
+    width: 35%;
 }
 .card_image {
     border-radius: 5px;

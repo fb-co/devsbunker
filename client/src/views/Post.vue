@@ -34,7 +34,7 @@ export default {
             ? this.$route.query.projectData
             : {};
 
-        console.log("xx: ", this.$route.query.projectData);
+        console.log("xx: ", this.$route.query);
 
         SharedMethods.loadPage();
 
