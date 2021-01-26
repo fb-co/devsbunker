@@ -27,40 +27,32 @@ export default {
         };
     },
     created() {
-        // What does it mean?? It works while being on mobile but not on desktop
-        // refrain from setting 'postData' until you receive the other data so the component wont be rendered too early
-        // EDIT: I have added ? this.$route.query.projectData : {}
-        const tempPostData = this.$route.query.projectData
-            ? this.$route.query.projectData
-            : {};
-
-        console.log("xx: ", this.$route.query);
-
         SharedMethods.loadPage();
 
-        this.mobile = this.isMobile();
-
-        // we also check when the user resizes the window
-        window.addEventListener("resize", () => {
-            this.mobile = this.isMobile();
-        });
-
-        // query for the remaining post fields
-        // EDIT: im using the route ID param instead of tempPostData.id cuz it wasn't working on desktop
-        GraphQLService.fetchPostById(this.$route.params.postid, [
-            "links",
-            "tags"
-        ]).then(res => {
-            const response = res.data.getPostById;
-            console.log("res >>", response);
-
-            // add any newly requested post data to the postData object
-            for (const [key, value] of Object.entries(response)) {
-                tempPostData[key] = value;
-            }
-
-            this.postData = tempPostData;
-        });
+        // sometimes the query is just a string that says [Object object], so I had to handle for it
+        if (!this.$route.query.projectData.title) {
+            GraphQLService.fetchPostById(this.$route.params.postid, [
+                "author",
+                "title",
+                "bunkerTag",
+                "description",
+                "id",
+                `images {
+                    ogname
+                    dbname
+                }`,
+                "isLiked",
+                "isSaved",
+                "likeAmt",
+                "price",
+                "links",
+                "tags"
+            ]).then(res => {
+                this.postData = res.data.getPostById;
+            });
+        } else {
+            this.postData = this.$route.query.projectData;
+        }
     },
     methods: {
         isMobile() {
@@ -75,3 +67,5 @@ export default {
 </script>
 
 <style scoped></style>
+
+    

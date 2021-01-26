@@ -1,7 +1,7 @@
 <template>
     <div
         class="proj_card_main_container"
-        @click="$router.push('/post/' + projectData.id)"
+        @click="$router.push({ path: `/post/${projectData.id}`, query: { projectData: projectData }})"
     >
         <div class="text_container">
             <div class="author_container">

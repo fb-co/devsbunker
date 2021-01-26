@@ -84,6 +84,8 @@ const GraphQLService = {
                         isSaved
                         isLiked
                         bunkerTag
+                        tags
+                        links
                         price
                         id
                     }
@@ -165,6 +167,8 @@ const GraphQLService = {
                         likeAmt
                         isLiked
                         isSaved
+                        tags
+                        links
                         bunkerTag
                         price
                         id
@@ -204,6 +208,8 @@ const GraphQLService = {
                         isLiked
                         isSaved
                         bunkerTag
+                        tags
+                        links
                         price
                         id
                     }
@@ -244,6 +250,8 @@ const GraphQLService = {
                         isSaved
                         isLiked
                         bunkerTag
+                        tags
+                        links
                         price
                         id
                     }

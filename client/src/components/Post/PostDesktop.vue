@@ -1,18 +1,11 @@
 <template>
     <div>
         <NavBar />
-        <div class="main_container" v-if="projectData.title">
+        <div class="main_container" v-if="projectData">
             <LeftContent />
             <div class="center_content">{{ projectData }}</div>
             <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->
             <RightContent :notifications="notifications" />
-        </div>
-        <div v-else>
-            <p>stoopid something is fucked up</p>
-            <h1>
-                kernel panic bru theres not project data help <br />
-                ahdsdgv hadfhwsdgfh sdfsad hfasgdhf gashdjfjasv
-            </h1>
         </div>
     </div>
 </template>
@@ -33,10 +26,6 @@ export default {
         LeftContent,
         NavBar
     },
-
-    created() {
-        console.log(">>", this.projectData);
-    }
 };
 </script>
 
