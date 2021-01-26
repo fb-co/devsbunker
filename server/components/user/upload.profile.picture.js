@@ -34,6 +34,16 @@ export default async function uploadProfilePicture(req, res, next) {
                         _id: user._id,
                     });
 
+                    // we need to delete the old one
+                    // TODO: is there a picture everytime even for new users ?
+                    console.log(
+                        "deleting: ",
+                        `${process.env.UPLOAD_PROFILE_PIC}/${userDoc.profile_pic}`
+                    );
+                    filesHandler.deleteFiles([
+                        `${process.env.UPLOAD_PROFILE_PIC}/${userDoc.profile_pic}`,
+                    ]);
+
                     userDoc.profile_pic = file.filename;
                     await userDoc.save();
 
