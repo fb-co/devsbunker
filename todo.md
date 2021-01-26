@@ -6,7 +6,10 @@
 
 -   [x] **Critical**: updating the password with the graphql route lets you set a single character password (i believe it doesnt acutally get set in the db but the route says that the operation was successfull) [sorry for the spaghetti english but I gotta eat lunch, this was a quick note before I totally forgot about it]
 
+
 ## Backend
+
+- [ ] **IMPORTANT** we might need to adjust the path passed in deleteFiles calls now that we have nested folders in the uploads/ one
 
 -   [ ] send confirmation email for signup
 -   [x] implement login system
