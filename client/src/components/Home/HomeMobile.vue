@@ -24,13 +24,10 @@
                 </div>
             </CustomInput>
             -->
-            <PostSearch width="90%" class="post_search_bar" />
+
             <div id="loggedIn-header" v-if="$store.getters.isLoggedIn">
                 <div class="header_container">
                     <div class="horizontal_flex_center">
-                        <!--<img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic" />-->
-                        <ProfilePicture :username="$store.getters.username" style="height: 100px;" />
-
                         <div class="header_right_cont">
                             <p class="username_welcome">
                                 {{ "Hello " + $store.getters.username + "!" }}
@@ -60,43 +57,46 @@
                     <div class="filter_container"><p @click="nextScrollMenuItem()" id="next_filter" class="next_filter_class no_select"></p></div>
                 </div>
                 --></div>
-
-                <svg
-                    @click="makeNewPost()"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-square-plus add_button"
-                    width="70"
-                    height="70"
-                    viewBox="0 0 24 24"
-                    stroke-width="0.4"
-                    stroke="var(--main-font-color)"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <rect x="4" y="4" width="16" height="16" rx="2" />
-                    <line x1="9" y1="12" x2="15" y2="12" />
-                    <line x1="12" y1="9" x2="12" y2="15" />
-                </svg>
             </div>
 
             <!-- BUG: Buttons get transperent -->
             <div style="margin-bottom: 30px" v-else>
-                <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
+                <Dropdown
+                    label="Newest"
+                    fontSize="12px"
+                    linkHeight="40px"
+                    height="30px"
+                    justifyLabel="left"
+                    class="filter_dropdown"
+                >
                     <button>Newest</button>
                     <button>Most Popular</button>
                     <button>Alphabetical</button>
                 </Dropdown>
             </div>
 
-            <div v-if="!showSearchResults">
-                <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
+            <!-- I don't like this in the home page, we could move it to the explore/subscription one -->
+            <!-- <PostSearch width="90%" class="post_search_bar" /> -->
+
+            <div v-if="!showSearchResults" class="project-card-container">
+                <MobileProjectCard
+                    v-for="project in projects"
+                    :key="project.name"
+                    :projectData="project"
+                    width="100%"
+                />
             </div>
-            <div v-else>
-                <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.name" :projectData="searchResult" width="100%" />
+            <div v-else class="project-card-container">
+                <MobileProjectCard
+                    v-for="searchResult in searchResults"
+                    :key="searchResult.name"
+                    :projectData="searchResult"
+                    width="100%"
+                />
             </div>
-            <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
+            <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">
+                Load More
+            </p>
         </div>
         <BottomNavBar />
     </div>
@@ -105,9 +105,8 @@
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import BottomNavBar from "@/components/BottomNavBar";
-import ProfilePicture from "@/components/ProfilePicture.vue";
 
-import PostSearch from "@/components/PostSearch.vue";
+// import PostSearch from "@/components/PostSearch.vue";
 
 export default {
     data() {
@@ -115,17 +114,12 @@ export default {
             bunkers: ["All", "Python", "Javascript", "Java", "C/C++"],
             filter: "All",
             searchResults: [],
-            showSearchResults: false
+            showSearchResults: false,
         };
     },
     props: {
         projects: Array,
-        fetchedAll: Boolean
-    },
-    mounted() {
-        /* un-comment this if we ever decide to put in the carousel
-        this.setScrollMenuData();
-        */
+        fetchedAll: Boolean,
     },
     methods: {
         /*
@@ -172,9 +166,8 @@ export default {
     components: {
         MobileProjectCard,
         Dropdown,
-        PostSearch,
+        // PostSearch,
         BottomNavBar,
-        ProfilePicture
     },
 };
 </script>
@@ -237,8 +230,7 @@ export default {
 }
 
 .header_right_cont {
-    width: 75%;
-    margin-left: 10px;
+    width: 85%;
     margin-top: 5px;
 }
 .switcher_container {
@@ -305,10 +297,9 @@ export default {
     width: 200px;
 }
 
-.post_search_bar {
-    margin: 40px auto 20px auto;
-}
-
+/* .post_search_bar {
+    margin: 40px auto 50px auto;
+} */
 
 /* mobile styles */
 @media only screen and (max-width: 350px) {
@@ -324,4 +315,10 @@ export default {
         }
     }
     */
+
+/* added by Leonardo, so if it's shit then it's my bad */
+.project-card-container {
+    width: 95%;
+    margin: auto;
+}
 </style>
