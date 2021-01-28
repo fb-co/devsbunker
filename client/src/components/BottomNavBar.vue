@@ -41,7 +41,11 @@
                     </svg>
                 </router-link>
 
-                <div @click="newPost()" class="icon" style="cursor: pointer;">
+                <div
+                    @click="newPost()"
+                    class="icon special-icon"
+                    style="cursor: pointer"
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-circle-plus"
@@ -76,11 +80,12 @@
                         stroke-linejoin="round"
                     >
                         <path stroke="none" d="M0 0h24v24H0z" />
-                        <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+                        <path
+                            d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"
+                        />
                         <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                     </svg>
                 </router-link>
-
 
                 <router-link to="/users" class="icon">
                     <svg
@@ -120,12 +125,12 @@ export default {
     methods: {
         newPost() {
             this.$refs.newPostPopup.open();
-        }    
+        },
     },
 
     components: {
-        NewPost
-    }
+        NewPost,
+    },
 };
 </script>
 
@@ -167,7 +172,8 @@ export default {
     width: 20%;
 }
 .icon > svg {
-    width: 20px;
+    width: 25px;
+    stroke-width: 1.4px;
 }
 .icon:hover > svg {
     stroke-width: 2.2px;
@@ -177,5 +183,9 @@ export default {
     stroke: var(--main-font-color);
     opacity: 0.6;
     cursor: pointer;
+}
+
+.special-icon svg {
+    stroke: var(--link-color);
 }
 </style>
