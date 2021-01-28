@@ -1,3 +1,5 @@
+<!-- IMPORTANT: if this component is ever cached or 'kept-alive', we need to make sure the destroyed hook gets ran somehow anyway when the user redirects to another pag -->
+
 <template>
     <div class="menu_container no_select" :style="style">
         <div class="nav_container">
@@ -145,6 +147,9 @@ export default {
                 this.userRoute = "/user/" + this.username + "/";
             }
         });
+    },
+    destroyed() {
+        document.body.style.overflow = "auto"; 
     },
     methods: {
         logout() {

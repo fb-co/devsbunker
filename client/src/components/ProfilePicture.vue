@@ -74,10 +74,7 @@ export default {
             type: String,
             default: "none"
         },
-        minWrapper: {
-            type: String,
-            default: "none"
-        },
+        minWrapper: String,
         forUpload: {
             type: Boolean,
             default: false
@@ -111,7 +108,7 @@ export default {
             return {
                 "--wrapper-size": this.wrapperSize,
                 "--max-wrapper": this.maxWrapper,
-                "--min-wrapper": this.minWrapper
+                "--min-wrapper": this.minWrapper || this.wrapperSize
             };
         }
     },

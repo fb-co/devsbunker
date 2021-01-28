@@ -13,9 +13,11 @@
         
 
         <div v-if="username" class="profile-banner">
-            <img src="../../assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic">
-            <h2 style="text-align: left">{{ username }}</h2>
-            <p class="user-mail">{{ email }}</p>
+            <ProfilePicture :username="username" class="profile-pic" />
+            <div>
+                <h2 style="text-align: left">{{ username }}</h2>
+                <p class="user-mail">{{ email }}</p>
+            </div>
         </div>
 
         <div class="settings">
@@ -31,6 +33,7 @@ import GlobalComponents from "@/components/global/GlobalComponents.js";
 import MobileSettingsComponents from "@/components/Settings/mobile/SettingSections/mobile.import.settings";
 import SettingList from "./mobile/SettingList";
 import BottomNavBar from "@/components/BottomNavBar.vue";
+import ProfilePicture from "@/components/ProfilePicture.vue";
 
 import UserService from "@/services/user.service";
 
@@ -39,7 +42,8 @@ export default {
         ...GlobalComponents,
         ...MobileSettingsComponents,
         SettingList,
-        BottomNavBar
+        BottomNavBar,
+        ProfilePicture
     },
     data() {
         return {
@@ -50,9 +54,9 @@ export default {
 
     created() {
         UserService.isLoggedIn().then((result) => {
-            console.log(result);
             if (result.user) {
                 this.username = result.user.username;
+                console.log(this.username);
             }
         });
     },
@@ -78,16 +82,15 @@ export default {
 }
 
 .profile-banner {
+    display: flex;
+    flex-direction: row;
     width: 80%;
-    height: 55px;
     margin: auto;
     margin-top: 20px;
     max-width: 450px;
 }
 
 .profile-pic {
-    width: 70px;
-    float: left;
     margin-right: 20px;
 }
 
