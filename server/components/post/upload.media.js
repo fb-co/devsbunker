@@ -24,7 +24,9 @@ export default async function uploadMedia(req, res, next) {
                 let pathsCache = []; // here we store every file and if an error occurs we remove everything even if they were valid files
 
                 for (const file of files) {
-                    pathsCache.push(file.path);
+                    pathsCache.push(
+                        `${process.env.UPLOAD_FILES_PATH}/${file.path}`
+                    );
 
                     if (filesHandler.validateFiles(file)) {
                         data.push({

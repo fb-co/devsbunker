@@ -17,7 +17,9 @@ export default async function uploadProfilePicture(req, res, next) {
                 let valid = true;
                 let pathsCache = [];
 
-                pathsCache.push(file.path);
+                pathsCache.push(
+                    `${process.env.UPLOAD_PROFILE_PIC}/${file.path}`
+                );
 
                 if (filesHandler.validateFiles(file)) {
                     data.push({
@@ -35,7 +37,7 @@ export default async function uploadProfilePicture(req, res, next) {
                     });
 
                     // if it's not the placeholder, delete it
-                    if (userDoc.profile_pic !== 'profile_pic_placeholder.png') {
+                    if (userDoc.profile_pic !== "profile_pic_placeholder.png") {
                         filesHandler.deleteFiles([
                             `${process.env.UPLOAD_PROFILE_PIC}/${userDoc.profile_pic}`,
                         ]);
