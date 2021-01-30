@@ -21,7 +21,6 @@ export default async function getUserEntry(name, requester) {
                 // MAKE SURE YOU TAKE THE TOKEN AT SOME POINT INSTEAD OF JUST THE USERNAME STRING, OR ELSE ANYONE COULD SEE WHO IS FOLLOWING WHO
                 // (THIS IS PUBLIC INFO ANYWAY I BELEIVE, BUT ANYWAY)
                 if (requester) {
-                    console.log(requester);
                     filtered.isFollowing = false;
                     for (let i = 0; i < user.followers.length; i++) {
                         if (user.followers[i] === requester) {

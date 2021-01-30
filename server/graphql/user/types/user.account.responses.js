@@ -12,6 +12,8 @@ export default gql`
         sender: String!
         message: String!
         type: String!
+        target: String!
+        timestamp: String
     }
 
     input NotificationPayload {
@@ -79,6 +81,8 @@ export default gql`
         loginUser(username: String, email: String, password: String!): UserAccountAction!
 
         logoutUser: LogoutResponse!
+
+        getAndReadNotifications: [Notification]! 
 
         getUnreadNotifications: UnreadNotificationsAmtResponse!
     }

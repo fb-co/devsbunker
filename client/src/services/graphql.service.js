@@ -3,7 +3,7 @@ import { store } from "../store/store";
 const URL = process.env.VUE_APP_GRAPHQL_API;
 
 const GraphQLService = {
-    // fields specify which fields you want to receive
+    // fields specify which fields you want to receive (requester is username string of who is asking for these details)
     fetchUserDetails: function(username, fields, requester) {
         const query = `
             query {
@@ -226,6 +226,36 @@ const GraphQLService = {
                 body: JSON.stringify({ query }),
             })
                 .then((res) => res.json())
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
+    getAndReadNotifications: function(token) {
+        const query = `
+            query {
+                getAndReadNotifications {
+                    read
+                    sender
+                    message
+                    type
+                    target
+                    timestamp
+                }
+            }
+        `;  
+        
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: { "content-Type": "application/json", "authorization" : `Bearer ${token}`},
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => {
+                    return res.json();
+                })
                 .catch(console.error);
         } catch (err) {
             return console.log(err);

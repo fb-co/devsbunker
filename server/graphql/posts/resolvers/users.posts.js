@@ -152,7 +152,8 @@ export default {
                                 sender: jwtPayload.username,
                                 message: `liked your post!`,
                                 type: "like",
-                                target: post.title
+                                target: post.title,
+                                timestamp: new Date()
                             };
 
                             let shouldNotify = true;

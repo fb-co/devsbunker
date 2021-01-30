@@ -1,15 +1,25 @@
 <template>
     <div class='main_container'>
         <NavBar />
-        <p>Notifications</p>
+        <div class="notification_card_container">
+            <!-- Made the key account for many variables to avoid any duplicate key errors -->
+            <LargeNotificationCard 
+                v-for="notification in notifications" 
+                :key="notification.sender+notification.target+notification.message" 
+                :data="notification" 
+                width="100%"
+            />
+        </div>
     </div>
 </template>
 
 <script>
 // The notification target key, is what the notification is refering to, for example, the post title that was liked, or the username of the person being followed
 
+import LargeNotificationCard from "@/components/LargeNotificationCard.vue";
 import NavBar from "@/components/NavBar";
-//import GraphQLService from "@/services/graphql.service.js";
+import GraphQLService from "@/services/graphql.service.js";
+import SharedMethods from "@/utils/shared.js";
 
 export default {
     data() {
@@ -18,14 +28,31 @@ export default {
         }
     },
     components: {
-        NavBar
+        NavBar,
+        LargeNotificationCard
     },
-    created: {
-        //GraphQLService.getUnreadNotifications        
+    created() {
+        SharedMethods.loadPage();
+
+        GraphQLService.getAndReadNotifications(this.$store.getters.accessToken).then((res) => {
+            this.notifications = res.data.getAndReadNotifications;
+
+            // make any like or follow notifications read
+            this.notifications.forEach((item) => {
+                if (item.type == "like" || item.type == "follow") {
+                    item.read = true;
+                }
+            });
+        });        
     }
 }
 </script>
 
 <style scoped>
-    
+    .notification_card_container {
+        margin: 40px auto 0px auto;
+        width: 50%;
+        max-width: 650px;
+        min-width: 300px;
+    }    
 </style>

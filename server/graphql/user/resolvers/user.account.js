@@ -98,6 +98,34 @@ export default {
             return getUserByPartial(args.partial_username, args.requester);
         },
 
+        // will return notifications and turn like and follow types into read = true, this is to avoid an extra call when you actully get the results
+        getAndReadNotifications: async function(_, args, { req }) {
+            const jwtPayload = req.user;
+                
+            if (!jwtPayload)
+                return { success: false, message: "Invalid token" };
+
+            try {
+                const user = await User.findOne({ username: jwtPayload.username });
+
+                if (user) {
+                    user.notifications.forEach((item) => {
+                        if (item.type == "like" || item.type == "follow") {
+                            item.read = true;
+                        }
+                    });
+
+                    await user.save();
+
+                    return user.notifications
+                } else {
+                    console.log(err);
+                }
+            } catch (err) {
+                throw new Error("Failed to get notifications");
+            }
+        },
+
         getUnreadNotifications: async function(_, args, { req }) {
             const jwtPayload = req.user;
 
@@ -107,15 +135,15 @@ export default {
             try {
                 const user = await User.findOne({ username: jwtPayload.username });
 
-                let unreadNotifications = 0;
-
-                for (let i = 0; i < user.notifications.length; i++) {
-                    if (!user.notifications[i].read) {
-                        unreadNotifications++;
-                    }
-                }
-
                 if (user) {
+                    let unreadNotifications = 0;
+
+                    for (let i = 0; i < user.notifications.length; i++) {
+                        if (!user.notifications[i].read) {
+                            unreadNotifications++;
+                        }
+                    }
+
                     return {
                         amount: unreadNotifications
                     }
