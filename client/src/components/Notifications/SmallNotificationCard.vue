@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import ScreenType from "../utils/screenType.js";
+import ScreenType from "../../utils/screenType.js";
 
 export default {
     data() {

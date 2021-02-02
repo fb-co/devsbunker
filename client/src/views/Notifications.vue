@@ -1,6 +1,7 @@
 <template>
     <div class='main_container'>
         <NavBar />
+        <p class="notifications_header">Notifications</p>
         <div class="notification_card_container">
             <!-- Made the key account for many variables to avoid any duplicate key errors -->
             <LargeNotificationCard 
@@ -16,7 +17,7 @@
 <script>
 // The notification target key, is what the notification is refering to, for example, the post title that was liked, or the username of the person being followed
 
-import LargeNotificationCard from "@/components/LargeNotificationCard.vue";
+import LargeNotificationCard from "@/components/Notifications/LargeNotificationCard.vue";
 import NavBar from "@/components/NavBar";
 import GraphQLService from "@/services/graphql.service.js";
 import SharedMethods from "@/utils/shared.js";
@@ -54,5 +55,11 @@ export default {
         width: 50%;
         max-width: 650px;
         min-width: 300px;
-    }    
+    }  
+    .notifications_header {
+        color: var(--main-font-color);
+        font-size: 20px;
+        font-weight: bold;
+        margin: 30px auto 0px auto;
+    }  
 </style>

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import SmallNotificationCard from "@/components/SmallNotificationCard.vue";
+import SmallNotificationCard from "@/components/Notifications/SmallNotificationCard.vue";
 
 export default {
     props: {

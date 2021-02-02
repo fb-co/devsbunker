@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import GraphQLService from "../services/graphql.service.js";
+import GraphQLService from "../../services/graphql.service.js";
 
 export default {
     data() {

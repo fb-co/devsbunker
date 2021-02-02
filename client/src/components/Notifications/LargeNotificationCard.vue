@@ -1,5 +1,7 @@
 <template>
     <div class="large_notification_container" :style="cssProps">
+        <NotificationPopup :data="data" />
+
         <div class="text_container">
             <p class="sender">{{ data.sender }}</p>
             <p class="message">{{ messageToDisplay }}</p>
@@ -15,6 +17,8 @@
 </template>
 
 <script>
+import NotificationPopup from "@/components/Notifications/NotificationPopup.vue";
+
 export default {
     data() {
         return {
@@ -40,6 +44,9 @@ export default {
             return finalMsg;
         }
     },
+    components: {
+        NotificationPopup
+    },  
     computed: {
         cssProps() {
             return {
@@ -58,6 +65,7 @@ export default {
         margin-top: 10px;
         background-color: var(--secondary-color);
         border-radius: 10px;
+        cursor: pointer;
     }
     .sender {
         font-size: 17px;

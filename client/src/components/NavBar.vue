@@ -173,7 +173,7 @@ import UserService from "../services/user.service";
 import GraphQLService from "../services/graphql.service";
 
 import ProfilePicture from "@/components/ProfilePicture.vue";
-import NotificationIcon from "@/components/NotificationIcon.vue";
+import NotificationIcon from "@/components/Notifications/NotificationIcon.vue";
 
 export default {
     props: {
