@@ -87,7 +87,7 @@
                     </svg>
                 </router-link>
 
-                <router-link to="/users" class="icon">
+                <router-link :to="`/user/${userProfile}`" class="icon">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-user"
@@ -119,7 +119,12 @@ export default {
     data() {
         return {
             active: "Home",
+            userProfile: "",
         };
+    },
+
+    created() {
+        this.userProfile = this.$store.getters.username;
     },
 
     methods: {

@@ -1,16 +1,21 @@
 <template>
-    <div class='main_container'>
+    <div class="main_container">
         <NavBar />
         <p class="notifications_header">Notifications</p>
         <div class="notification_card_container">
             <!-- Made the key account for many variables to avoid any duplicate key errors -->
-            <LargeNotificationCard 
-                v-for="notification in notifications" 
-                :key="notification.sender+notification.target+notification.message" 
-                :data="notification" 
+            <LargeNotificationCard
+                v-for="notification in notifications"
+                :key="
+                    notification.sender +
+                    notification.target +
+                    notification.message
+                "
+                :data="notification"
                 width="100%"
             />
         </div>
+        <BottomNavBar v-if="mobile" />
     </div>
 </template>
 
@@ -21,21 +26,32 @@ import LargeNotificationCard from "@/components/Notifications/LargeNotificationC
 import NavBar from "@/components/NavBar";
 import GraphQLService from "@/services/graphql.service.js";
 import SharedMethods from "@/utils/shared.js";
+import BottomNavBar from "@/components/BottomNavBar";
+import ScreenType from "../utils/screenType.js";
 
 export default {
     data() {
         return {
-            notifications: undefined
-        }
+            notifications: undefined,
+            mobile: false,
+        };
     },
     components: {
         NavBar,
-        LargeNotificationCard
+        LargeNotificationCard,
+        BottomNavBar,
     },
     created() {
         SharedMethods.loadPage();
+        this.mobile = this.isMobile();
 
-        GraphQLService.getAndReadNotifications(this.$store.getters.accessToken).then((res) => {
+        window.addEventListener("resize", () => {
+            this.mobile = this.isMobile();
+        });
+
+        GraphQLService.getAndReadNotifications(
+            this.$store.getters.accessToken
+        ).then((res) => {
             this.notifications = res.data.getAndReadNotifications;
 
             // make any like or follow notifications read
@@ -44,22 +60,28 @@ export default {
                     item.read = true;
                 }
             });
-        });        
-    }
-}
+        });
+    },
+
+    methods: {
+        isMobile() {
+            return ScreenType.isMobile(950);
+        },
+    },
+};
 </script>
 
 <style scoped>
-    .notification_card_container {
-        margin: 40px auto 0px auto;
-        width: 50%;
-        max-width: 650px;
-        min-width: 300px;
-    }  
-    .notifications_header {
-        color: var(--main-font-color);
-        font-size: 20px;
-        font-weight: bold;
-        margin: 30px auto 0px auto;
-    }  
+.notification_card_container {
+    margin: 40px auto 0px auto;
+    width: 50%;
+    max-width: 650px;
+    min-width: 300px;
+}
+.notifications_header {
+    color: var(--main-font-color);
+    font-size: 20px;
+    font-weight: bold;
+    margin: 30px auto 0px auto;
+}
 </style>

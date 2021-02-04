@@ -90,6 +90,7 @@
                     />
                 </svg>
             </div>
+            <!-- THIS IS ABSOLUTE GARBAGE LMAO --->
             <div class="placeholder">
                 <img :src="postThumbnail" alt="No Image" />
             </div>
@@ -117,26 +118,29 @@
                 class="link_item"
             />
         </div>
+        <BottomNavBar />
     </div>
 </template>
 
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import LinkItem from "./Link.vue";
+import BottomNavBar from "@/components/BottomNavBar";
 
 export default {
     data() {
         return {
             tags: undefined,
-            postThumbnail: undefined
+            postThumbnail: undefined,
         };
     },
     props: {
-        projectData: Object
+        projectData: Object,
     },
     mixins: [ProjectCardUtils],
     components: {
-        LinkItem
+        LinkItem,
+        BottomNavBar,
     },
     created() {
         console.log(this.projectData);
@@ -147,8 +151,8 @@ export default {
     methods: {
         back() {
             this.$router.go(-1);
-        }
-    }
+        },
+    },
 };
 </script>
 
