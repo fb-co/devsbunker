@@ -23,11 +23,16 @@ export default {
     data() {
         return {
             mobile: false,
-            postData: undefined
+            postData: undefined,
         };
     },
     created() {
         SharedMethods.loadPage();
+        this.mobile = this.isMobile();
+
+        window.addEventListener("resize", () => {
+            this.mobile = this.isMobile();
+        });
 
         // sometimes the query is just a string that says [Object object], so I had to handle for it
         if (!this.$route.query.projectData.title) {
@@ -46,8 +51,8 @@ export default {
                 "likeAmt",
                 "price",
                 "links",
-                "tags"
-            ]).then(res => {
+                "tags",
+            ]).then((res) => {
                 this.postData = res.data.getPostById;
             });
         } else {
@@ -57,12 +62,12 @@ export default {
     methods: {
         isMobile() {
             return ScreenType.isMobile(950);
-        }
+        },
     },
     components: {
         PostMobile,
-        PostDesktop
-    }
+        PostDesktop,
+    },
 };
 </script>
 

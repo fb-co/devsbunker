@@ -12,8 +12,6 @@
                 <div class="vertical_flex_center">
                     <!--Not filled icon -->
                     <svg
-                        @mouseover="likeIsActive = true"
-                        v-if="!likeIsActive"
                         width="23"
                         height="23"
                         viewBox="0 0 16 16"
@@ -67,9 +65,9 @@ export default {
         // what is this used for??
         width: {
             type: String,
-            default: "200px"
-        }
-    }
+            default: "200px",
+        },
+    },
 };
 </script>
 
