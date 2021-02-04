@@ -24,6 +24,7 @@ export default gql`
         price: Float
         bunkerTag: String!
         clip: String
+        createdAt: String!
     }
 
     type LoadMoreResponse {

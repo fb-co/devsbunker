@@ -52,6 +52,7 @@ export default {
                 "price",
                 "links",
                 "tags",
+                "createdAt",
             ]).then((res) => {
                 this.postData = res.data.getPostById;
             });
