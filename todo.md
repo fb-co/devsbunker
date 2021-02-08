@@ -1,5 +1,13 @@
 # TODO
 
+## POSSIBLE FIX FOR NOTIFICATION PROBS
+
+As I was turning off my computer I duckduckgo'd one last time the issue and found this:
+
+https://github.com/Automattic/mongoose/issues/1204
+
+This might be it but i gtg
+
 ## General
 
 -   [ ] we should not let users put duplicated tags and links in post such as Python, Python, JS, Java, Java and www.google.com www.google.com
