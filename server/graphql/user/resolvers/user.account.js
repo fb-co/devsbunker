@@ -401,32 +401,17 @@ export default {
                 });
 
                 if (user) {
-                    console.log(user);
                     for (let i = 0; i < user.notifications.length; i++) {
-                        if (
-                            user.notifications[i].type == "like" ||
-                            user.notifications[i].type == "follow"
-                        ) {
-                            user.notifications[i].message =
-                                "PLEASE FUCCING WORK!";
+                        if (user.notifications[i].type == "like" || user.notifications[i].type == "follow") {
                             user.notifications[i].read = true;
-
-                            // this actually works wtf
-                            user.desc = "testing";
-                            console.log("modded");
                         }
                     }
 
-                    // janky ass fix xD
                     user.markModified("notifications");
 
                     // the save() func is present (check by printing)
                     const saved = await user.save();
-                    console.log("SAVE: ", saved);
-                    console.log("\nreturning", user.notifications);
-
-                    // the problem could be here, in the return statement.
-                    // see similar issue here https://stackoverflow.com/questions/18256707/mongoose-doesnt-save-data-to-the-mongodb
+                    
                     return user.notifications;
                 } else {
                     return null;
