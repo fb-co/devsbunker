@@ -98,14 +98,16 @@ export default {
             return getUserByPartial(args.partial_username, args.requester);
         },
 
-        getUnreadNotifications: async function(_, args, { req }) {
+        getUnreadNotifications: async function (_, args, { req }) {
             const jwtPayload = req.user;
 
             if (!jwtPayload)
                 return { success: false, message: "Invalid token" };
-                
+
             try {
-                const user = await User.findOne({ username: jwtPayload.username });
+                const user = await User.findOne({
+                    username: jwtPayload.username,
+                });
 
                 if (user) {
                     let unreadNotifications = 0;
@@ -117,15 +119,15 @@ export default {
                     }
 
                     return {
-                        amount: unreadNotifications
-                    }
+                        amount: unreadNotifications,
+                    };
                 } else {
                     console.log(err);
                 }
             } catch (err) {
                 throw new Error("Failed to get unread notifications");
             }
-        }
+        },
     },
 
     Mutation: {
@@ -354,8 +356,15 @@ export default {
                             break;
                         }
                     }
-                    for (let i = 0; i < userBeingRemoved.followers.length; i++) {
-                        if (userBeingRemoved.followers[i] === jwtPayload.username) {
+                    for (
+                        let i = 0;
+                        i < userBeingRemoved.followers.length;
+                        i++
+                    ) {
+                        if (
+                            userBeingRemoved.followers[i] ===
+                            jwtPayload.username
+                        ) {
                             userBeingRemoved.followers.splice(i, 1);
                             break;
                         }
@@ -380,34 +389,55 @@ export default {
         },
 
         // will return notifications and turn like and follow types into read = true, this is to avoid an extra call when you actully get the results
-        getAndReadNotifications: async function(_, args, { req }) {
+        // BRO THIS IS CRAZY
+        getAndReadNotifications: async function (_, args, { req }) {
             const jwtPayload = req.user;
-                
+
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
             try {
-                let user = await User.findOne({ username: jwtPayload.username });
+                let user = await User.findOne({
+                    username: jwtPayload.username,
+                });
 
                 if (user) {
+                    console.log(user);
                     for (let i = 0; i < user.notifications.length; i++) {
-                        if (user.notifications[i].type == "like" || user.notifications[i].type == "follow") {
-                            user.notifications[i].message = "PLEASE FUCCING WORK!";
+                        if (
+                            user.notifications[i].type == "like" ||
+                            user.notifications[i].type == "follow"
+                        ) {
+                            user.notifications[i].message =
+                                "PLEASE FUCCING WORK!";
                             user.notifications[i].read = true;
+
+                            // this actually works wtf
+                            user.desc = "testing";
+                            console.log("modded");
                         }
                     }
 
-                    await user.save();
+                    // janky ass fix xD
+                    user.markModified("notifications");
 
+                    // the save() func is present (check by printing)
+                    const saved = await user.save();
+                    console.log("SAVE: ", saved);
+                    console.log("\nreturning", user.notifications);
+
+                    // the problem could be here, in the return statement.
+                    // see similar issue here https://stackoverflow.com/questions/18256707/mongoose-doesnt-save-data-to-the-mongodb
                     return user.notifications;
                 } else {
-                    console.log(err);
+                    return null;
                 }
             } catch (err) {
+                console.log(err);
                 throw new Error("Failed to get notifications");
             }
         },
 
-        notifyUser: async function (_, args, { res }) {
+        notifyUser: async function (_, args) {
             const userToNotifyPayload = args.userToNotify;
             const notificationPayload = args.notification;
 
