@@ -4,10 +4,17 @@
         <div class="main_container" v-if="projectData">
             <LeftContent />
             <div class="center_content">
-                <h2 id="author">
-                    {{ projectData.author }}
-                    <span>{{ projectData.createdAt }}</span>
-                </h2>
+                <div class="author_info_card">
+                    <ProfilePicture :username="projectData.author" wrapperSize="200px" />
+                    <div class="author_info_text">
+                        <h2 id="author">
+                            {{ projectData.author }}
+                            <span>{{ projectData.createdAt }}</span>
+                        </h2>
+                        <p>Followers: 10</p>
+                    </div>
+                </div>
+
                 <h3 id="tags">{{ projectData.tags }}</h3>
                 <h1 id="title">{{ projectData.title }}</h1>
 
@@ -19,13 +26,11 @@
                     molestias sed aspernatur aut. Ea blanditiis ab aut quia hi
                 </p>
 
-                <div class="author_info_card">
-                    Here I want to place the author's profile pic + info
-                </div>
-
                 <div id="thumbnail">
                     here we should implement an image viewer like twitter: small
-                    preview and if you click it expands full resolution
+                    preview and if you click it expands full resolution --
+
+                    I was actully thinking something more like a carousel, what do you think?
                     <img :src="thumbnail" alt="No Image" />
                 </div>
             </div>
@@ -38,6 +43,7 @@
 
 <script>
 import NavBar from "@/components/NavBar";
+import ProfilePicture from "@/components/ProfilePicture.vue";
 
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
@@ -51,6 +57,7 @@ export default {
         RightContent,
         LeftContent,
         NavBar,
+        ProfilePicture
     },
     data() {
         return {
@@ -114,7 +121,13 @@ export default {
 }
 
 .author_info_card {
+    display: flex;
+    flex-direction: row;
     margin-top: 40px;
+    margin-bottom: 40px;
+}
+.author_info_text {
+    margin-left: 20px;
 }
 
 #thumbnail {
