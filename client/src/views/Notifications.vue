@@ -51,7 +51,9 @@ export default {
 
         GraphQLService.getAndReadNotifications(
             this.$store.getters.accessToken
-        ).then((res) => {
+        )
+        .then((res) => {
+            console.log(res);
             this.notifications = res.data.getAndReadNotifications;
 
             // make any like or follow notifications read

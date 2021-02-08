@@ -233,8 +233,8 @@ const GraphQLService = {
     },
 
     getAndReadNotifications: function(token) {
-        const query = `
-            query {
+        const mutation = `
+            mutation {
                 getAndReadNotifications {
                     read
                     sender
@@ -251,7 +251,7 @@ const GraphQLService = {
                 method: "POST",
                 headers: { "content-Type": "application/json", "authorization" : `Bearer ${token}`},
                 credentials: "include",
-                body: JSON.stringify({ query }),
+                body: JSON.stringify({ query: mutation }),
             })
                 .then((res) => {
                     return res.json();

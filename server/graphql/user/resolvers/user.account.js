@@ -98,34 +98,6 @@ export default {
             return getUserByPartial(args.partial_username, args.requester);
         },
 
-        // will return notifications and turn like and follow types into read = true, this is to avoid an extra call when you actully get the results
-        getAndReadNotifications: async function(_, args, { req }) {
-            const jwtPayload = req.user;
-                
-            if (!jwtPayload)
-                return { success: false, message: "Invalid token" };
-
-            try {
-                const user = await User.findOne({ username: jwtPayload.username });
-
-                if (user) {
-                    user.notifications.forEach((item) => {
-                        if (item.type == "like" || item.type == "follow") {
-                            item.read = true;
-                        }
-                    });
-
-                    await user.save();
-
-                    return user.notifications
-                } else {
-                    console.log(err);
-                }
-            } catch (err) {
-                throw new Error("Failed to get notifications");
-            }
-        },
-
         getUnreadNotifications: async function(_, args, { req }) {
             const jwtPayload = req.user;
 
@@ -382,15 +354,8 @@ export default {
                             break;
                         }
                     }
-                    for (
-                        let i = 0;
-                        i < userBeingRemoved.followers.length;
-                        i++
-                    ) {
-                        if (
-                            userBeingRemoved.followers[i] ===
-                            jwtPayload.username
-                        ) {
+                    for (let i = 0; i < userBeingRemoved.followers.length; i++) {
+                        if (userBeingRemoved.followers[i] === jwtPayload.username) {
                             userBeingRemoved.followers.splice(i, 1);
                             break;
                         }
@@ -411,6 +376,34 @@ export default {
                 throw new Error(
                     "Something went wrong unfollowing " + personPayload
                 );
+            }
+        },
+
+        // will return notifications and turn like and follow types into read = true, this is to avoid an extra call when you actully get the results
+        getAndReadNotifications: async function(_, args, { req }) {
+            const jwtPayload = req.user;
+                
+            if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+            try {
+                let user = await User.findOne({ username: jwtPayload.username });
+
+                if (user) {
+                    for (let i = 0; i < user.notifications.length; i++) {
+                        if (user.notifications[i].type == "like" || user.notifications[i].type == "follow") {
+                            user.notifications[i].message = "PLEASE FUCCING WORK!";
+                            user.notifications[i].read = true;
+                        }
+                    }
+
+                    await user.save();
+
+                    return user.notifications;
+                } else {
+                    console.log(err);
+                }
+            } catch (err) {
+                throw new Error("Failed to get notifications");
             }
         },
 

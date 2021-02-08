@@ -1,6 +1,6 @@
 <template>
     <div class="large_notification_container" :style="cssProps">
-        <NotificationPopup :data="data" />
+        <!--<NotificationPopup :data="data" />-->
 
         <div class="text_container">
             <p class="sender">{{ data.sender }}</p>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import NotificationPopup from "@/components/Notifications/NotificationPopup.vue";
+//import NotificationPopup from "@/components/Notifications/NotificationPopup.vue";
 
 export default {
     data() {
@@ -45,7 +45,7 @@ export default {
         }
     },
     components: {
-        NotificationPopup
+        //NotificationPopup
     },  
     computed: {
         cssProps() {

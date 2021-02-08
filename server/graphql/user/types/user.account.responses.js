@@ -82,8 +82,6 @@ export default gql`
 
         logoutUser: LogoutResponse!
 
-        getAndReadNotifications: [Notification]! 
-
         getUnreadNotifications: UnreadNotificationsAmtResponse!
     }
 
@@ -99,5 +97,7 @@ export default gql`
         followPerson(person: String!): FetchableUser
 
         unfollowPerson(person: String!): FetchableUser
+
+        getAndReadNotifications: [Notification]! 
     }
 `;
