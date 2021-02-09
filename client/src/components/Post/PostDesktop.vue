@@ -4,17 +4,17 @@
         <div class="main_container" v-if="projectData">
             <LeftContent />
             <div class="center_content">
-                <div class="author_info_card">
+                <div class="author_info_card" v-if="authorData">
                     <ProfilePicture :username="projectData.author" wrapperSize="200px" />
                     <div class="author_info_text">
                         <h2 id="author">
                             {{ projectData.author }}
                             <span>{{ projectData.createdAt }}</span>
                         </h2>
-                        <p class="author_followerAmt">62 followers</p>
+                        <p class="author_followerAmt">{{ authorData.followerAmt + (authorData.followerAmt == 1 ? " follower" : " follwers")}}</p>
                         <div style="flex-grow: 1;"></div> <!-- Placeholder -->
                         <div class="follow_btn_container">
-                            <button class="follow_btn">Follow</button>
+                            <FollowButton :initialState="authorData.isFollowing" :username="projectData.author" />
                         </div>
                     </div>
                 </div>
@@ -52,6 +52,7 @@
 import NavBar from "@/components/NavBar";
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
+import FollowButton from "@/components/FollowButton.vue";
 
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
@@ -59,6 +60,7 @@ import RightContent from "@/components/Home/desktop/RightContent.vue";
 export default {
     props: {
         projectData: Object,
+        authorData: Object,
         notifications: Array,
     },
     components: {
@@ -66,7 +68,8 @@ export default {
         LeftContent,
         NavBar,
         ProfilePicture,
-        CreateTag
+        CreateTag,
+        FollowButton
     },
     data() {
         return {
@@ -152,22 +155,6 @@ export default {
 .follow_btn_container {
     text-align: right;
     width: 100%;
-}
-.follow_btn {
-    background-color: var(--main-btn-color);
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    width: 125px;
-    height: 40px;
-    color: #fff;
-    font-size: 15px;
-    font-weight: bold;
-    margin: 0px auto 0px auto;
-    cursor: pointer;
-}
-.follow_btn:hover {
-    box-shadow: 0px 4px 20px var(--main-btn-color);
 }
 #thumbnail {
     width: 100%;

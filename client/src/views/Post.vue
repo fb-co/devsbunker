@@ -5,6 +5,7 @@
             <PostDesktop
                 v-if="!mobile"
                 :projectData="postData"
+                :authorData="authorData"
                 :notifications="[]"
             />
         </div>
@@ -24,6 +25,7 @@ export default {
         return {
             mobile: false,
             postData: undefined,
+            authorData: undefined
         };
     },
     created() {
@@ -55,15 +57,22 @@ export default {
                 "createdAt",
             ]).then((res) => {
                 this.postData = res.data.getPostById;
+                this.getAuthorData(this.postData.author); // make sure these two calls stay seperate since one is in an async response
             });
         } else {
             this.postData = this.$route.query.projectData;
+            this.getAuthorData(this.postData.author);
         }
     },
     methods: {
         isMobile() {
             return ScreenType.isMobile(950);
         },
+        getAuthorData(author) {
+            GraphQLService.fetchUserDetails(author, ["followerAmt", "isFollowing"], this.$store.getters.username).then((res) => {
+                this.authorData = res.data.user;
+            });
+        }
     },
     components: {
         PostMobile,
