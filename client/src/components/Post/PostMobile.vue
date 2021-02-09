@@ -143,7 +143,6 @@ export default {
         BottomNavBar,
     },
     created() {
-        console.log(this.projectData);
         this.tags = Object.values(this.projectData.tags);
 
         this.postThumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;

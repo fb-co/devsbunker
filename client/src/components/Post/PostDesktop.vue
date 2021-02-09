@@ -11,11 +11,18 @@
                             {{ projectData.author }}
                             <span>{{ projectData.createdAt }}</span>
                         </h2>
-                        <p>Followers: 10</p>
+                        <p class="author_followerAmt">62 followers</p>
+                        <div style="flex-grow: 1;"></div> <!-- Placeholder -->
+                        <div class="follow_btn_container">
+                            <button class="follow_btn">Follow</button>
+                        </div>
                     </div>
                 </div>
-
-                <h3 id="tags">{{ projectData.tags }}</h3>
+                <div class="tags_container">
+                    <CreateTag v-for="tag in projectData.tags" :key="tag" :label="tag" tagType="lang" />
+                </div>
+                
+                <!--<h3 id="tags">{{ projectData.tags }}</h3>-->
                 <h1 id="title">{{ projectData.title }}</h1>
 
                 <p id="description">
@@ -44,6 +51,7 @@
 <script>
 import NavBar from "@/components/NavBar";
 import ProfilePicture from "@/components/ProfilePicture.vue";
+import CreateTag from "@/components/NewPost/CreateTag.vue";
 
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
@@ -57,7 +65,8 @@ export default {
         RightContent,
         LeftContent,
         NavBar,
-        ProfilePicture
+        ProfilePicture,
+        CreateTag
     },
     data() {
         return {
@@ -106,13 +115,12 @@ export default {
     font-weight: 400;
     font-size: 25px;
 
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-#tags {
-    margin-top: 0;
-    margin-bottom: 30px;
-    color: var(--accent);
+.tags_container {
+    display: flex;
+    margin-bottom: 20px;
 }
 
 #description {
@@ -121,15 +129,46 @@ export default {
 }
 
 .author_info_card {
+    max-width: 700px;
+    background-color: var(--secondary-color);
     display: flex;
     flex-direction: row;
+    padding: 20px;
     margin-top: 40px;
     margin-bottom: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 }
 .author_info_text {
-    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-left: 25px;
+    flex-grow: 1;
 }
-
+.author_followerAmt {
+    color: var(--soft-text);
+}
+.follow_btn_container {
+    text-align: right;
+    width: 100%;
+}
+.follow_btn {
+    background-color: var(--main-btn-color);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 125px;
+    height: 40px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0px auto 0px auto;
+    cursor: pointer;
+}
+.follow_btn:hover {
+    box-shadow: 0px 4px 20px var(--main-btn-color);
+}
 #thumbnail {
     width: 100%;
     height: 200px;
