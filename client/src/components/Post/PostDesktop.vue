@@ -4,26 +4,46 @@
         <div class="main_container" v-if="projectData">
             <LeftContent />
             <div class="center_content">
+                <div class="tags_container">
+                    <CreateTag
+                        v-for="tag in projectData.tags"
+                        :key="tag"
+                        :label="tag"
+                        tagType="lang"
+                    />
+                </div>
+
+                <!--<h3 id="tags">{{ projectData.tags }}</h3>-->
+                <h1 id="title">{{ projectData.title }}</h1>
+
                 <div class="author_info_card" v-if="authorData">
-                    <ProfilePicture :username="projectData.author" wrapperSize="200px" />
+                    <ProfilePicture
+                        :username="projectData.author"
+                        wrapperSize="70px"
+                    />
                     <div class="author_info_text">
                         <h2 id="author">
                             {{ projectData.author }}
                             <span>{{ projectData.createdAt }}</span>
                         </h2>
-                        <p class="author_followerAmt">{{ authorData.followerAmt + (authorData.followerAmt == 1 ? " follower" : " follwers")}}</p>
-                        <div style="flex-grow: 1;"></div> <!-- Placeholder -->
+                        <p class="author_followerAmt">
+                            {{
+                                authorData.followerAmt +
+                                (authorData.followerAmt == 1
+                                    ? " follower"
+                                    : " follwers")
+                            }}
+                        </p>
+                        <div style="flex-grow: 1"></div>
+                        <!-- Placeholder -->
                         <div class="follow_btn_container">
-                            <FollowButton :initialState="authorData.isFollowing" :username="projectData.author" />
+                            <FollowButton
+                                :initialState="authorData.isFollowing"
+                                :username="projectData.author"
+                            />
                         </div>
                     </div>
                 </div>
-                <div class="tags_container">
-                    <CreateTag v-for="tag in projectData.tags" :key="tag" :label="tag" tagType="lang" />
-                </div>
-                
-                <!--<h3 id="tags">{{ projectData.tags }}</h3>-->
-                <h1 id="title">{{ projectData.title }}</h1>
 
                 <p id="description">
                     {{ projectData.description }} <br />
@@ -35,9 +55,9 @@
 
                 <div id="thumbnail">
                     here we should implement an image viewer like twitter: small
-                    preview and if you click it expands full resolution --
-
-                    I was actully thinking something more like a carousel, what do you think?
+                    preview and if you click it expands full resolution -- I was
+                    actully thinking something more like a carousel, what do you
+                    think?
                     <img :src="thumbnail" alt="No Image" />
                 </div>
             </div>
@@ -69,7 +89,7 @@ export default {
         NavBar,
         ProfilePicture,
         CreateTag,
-        FollowButton
+        FollowButton,
     },
     data() {
         return {
@@ -115,8 +135,8 @@ export default {
 }
 
 #author {
-    font-weight: 400;
-    font-size: 25px;
+    font-weight: 500;
+    font-size: 20px;
 
     margin-bottom: 10px;
 }
@@ -128,11 +148,27 @@ export default {
 
 #description {
     color: var(--soft-text);
-    margin-top: 30px;
+    margin-top: 60px;
+    text-align: justify;
+    font-size: 23px;
+    line-height: 30px;
+}
+
+#description::first-letter {
+    color: var(--secondary-color);
+    background-color: var(--main-font-color);
+    border-radius: 2px;
+    box-shadow: 3px 3px 0 var(--accent);
+    font-size: 250%;
+    padding: 6px 3px;
+    margin-right: 6px;
+    margin-right: 10px;
+    float: left;
 }
 
 .author_info_card {
     max-width: 700px;
+    height: 100px;
     background-color: var(--secondary-color);
     display: flex;
     flex-direction: row;
@@ -155,6 +191,8 @@ export default {
 .follow_btn_container {
     text-align: right;
     width: 100%;
+
+    margin-top: -35px;
 }
 #thumbnail {
     width: 100%;
