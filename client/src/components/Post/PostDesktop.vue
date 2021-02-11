@@ -53,15 +53,10 @@
                     molestias sed aspernatur aut. Ea blanditiis ab aut quia hi
                 </p>
 
-                <div id="thumbnail">
-                    here we should implement an image viewer like twitter: small
-                    preview and if you click it expands full resolution -- I was
-                    actully thinking something more like a carousel, what do you
-                    think?
-                    <img :src="thumbnail" alt="No Image" />
+                <div class="carosel_container">
+                    <Carousel />
                 </div>
             </div>
-
             <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->
             <RightContent :notifications="notifications" />
         </div>
@@ -73,6 +68,7 @@ import NavBar from "@/components/NavBar";
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 import FollowButton from "@/components/FollowButton.vue";
+import Carousel from "@/components/Carousel.vue";
 
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
@@ -90,6 +86,7 @@ export default {
         ProfilePicture,
         CreateTag,
         FollowButton,
+        Carousel
     },
     data() {
         return {
