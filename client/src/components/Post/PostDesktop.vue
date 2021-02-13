@@ -54,7 +54,11 @@
                 </p>
 
                 <div class="carosel_container">
-                    <Carousel />
+                    <Carousel
+                        :image0="thumbnail"
+                        :image1="postImages[0]"
+                        :image2="postImages[1]"
+                    />
                 </div>
             </div>
             <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->
@@ -86,15 +90,27 @@ export default {
         ProfilePicture,
         CreateTag,
         FollowButton,
-        Carousel
+        Carousel,
     },
     data() {
         return {
             thumbnail: undefined,
+            postImages: [],
         };
     },
     created() {
         this.thumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
+
+        // avoiding to push the thumbnail
+        for (let i = 1; i < this.projectData.images.length; i++) {
+            if (this.projectData.images[i].dbname) {
+                this.postImages.push(
+                    `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[i].dbname}`
+                );
+            } else {
+                this.postImages.push(null);
+            }
+        }
     },
 };
 </script>
