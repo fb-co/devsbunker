@@ -600,10 +600,10 @@ export default {
         },
 
         removeFile(index) {
-            this.files.splice(index, 1);
-
             if (!this.files.length) {
                 this.files = null;
+            } else {
+                this.files.splice(index, 1);
             }
         },
     },
