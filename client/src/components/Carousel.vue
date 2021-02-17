@@ -5,7 +5,7 @@
         </div>
         <div class="arrow_container">
             <div class="arrow">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-left arrowSVG" width="60" height="60" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg @click="switchLeft()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-left arrowSVG" width="60" height="60" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <polyline points="17 0 12 12 17 24" />
                 </svg>
@@ -13,12 +13,12 @@
             <div class="carousel_container_compo">
                 <div class="images_container">
                     <img class="second_img" :src="image0" />
-                    <img class="main_img" :src="image1" />
+                    <img ref="main_image" class="main_img" :src="image1" />
                     <img class="second_img" :src="image2" />
                 </div>
             </div>
             <div class="arrow">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right arrowSVG" width="60" height="60" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg @click="switchRight()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right arrowSVG" width="60" height="60" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <polyline points="7 0 12 12 7 24" />
                 </svg>
@@ -48,10 +48,28 @@ export default {
         image2: String,
         // it will eventually be the max amount of pics in a post
     },
+    methods: {
+        switchLeft() {
+            this.$refs.main_image.style.right = "100%";
+        },  
+        switchRight() {
+
+        }
+    }
 };
 </script>
 
 <style scoped>
+@keyframes switch {
+    from {
+        right: 0%;
+    }
+    to {
+        right: 100%;
+    }
+}
+
+
 .head_foot_container {
     display: flex;
     flex-direction: column;
@@ -94,16 +112,23 @@ export default {
     margin: 0 auto;
 }
 .main_img {
+    position: relative;
+    right: 0%;
     max-width: 80%;
     object-fit: contain;
     margin: 15px;
     margin-bottom: 20px;
+    animation: switch 1s;
     
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
 }
 .second_img {
+    position: relative;
+    right: 0%;
     max-width: 40%;
     object-fit: contain;
+
+    animation: switch 1s;
 }
 .indicator {
     display: flex;
