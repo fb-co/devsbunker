@@ -1,43 +1,47 @@
-<template>
-    <div class="carousel_container_compo">
-        <div class="arrow">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="50"
-                height="50"
-                fill="var(--main-font-color)"
-                class="bi bi-caret-left arrowSVG"
-                viewBox="0 0 16 16"
-            >
-                <path
-                    d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"
-                />
-            </svg>
+<template> 
+    <div class="head_foot_container">
+        <div class="header_container">
+            <p>{{ header }}</p>
         </div>
-        <div class="images_container">
-            <img class="second_img" :src="image0" />
-            <img class="main_img" :src="image1" />
-            <img class="second_img" :src="image2" />
+        <div class="arrow_container">
+            <div class="arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-left arrowSVG" width="60" height="60" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <polyline points="17 0 12 12 17 24" />
+                </svg>
+            </div>
+            <div class="carousel_container_compo">
+                <div class="images_container">
+                    <img class="second_img" :src="image0" />
+                    <img class="main_img" :src="image1" />
+                    <img class="second_img" :src="image2" />
+                </div>
+            </div>
+            <div class="arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right arrowSVG" width="60" height="60" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <polyline points="7 0 12 12 7 24" />
+                </svg>
+            </div>
         </div>
-        <div class="arrow">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="50"
-                height="50"
-                fill="var(--main-font-color)"
-                class="bi bi-caret-right arrowSVG"
-                viewBox="0 0 16 16"
-            >
-                <path
-                    d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"
-                />
-            </svg>
+        <div class="indicator">
+            <!-- Will move this to a v-for when I get the carousel to swtich images right -->
+            <div class="indicator_bubble"></div>
+            <div class="indicator_bubble"></div>
+            <div class="indicator_bubble active_bubble"></div>
+            <div class="indicator_bubble"></div>
+            <div class="indicator_bubble"></div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            header: "Images"
+        }
+    },
     props: {
         image0: String,
         image1: String,
@@ -48,13 +52,28 @@ export default {
 </script>
 
 <style scoped>
+.head_foot_container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+    margin-top: 100px;
+}
+.header_container {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--soft-text);
+}
+.arrow_container {
+    display: flex;
+    flex-direction: row;
+}
 .carousel_container_compo {
     width: 100%;
     display: flex;
     flex-direction: row;
-    background-color: var(--secondary-color);
-    margin-top: 40px;
-    margin-bottom: 40px;
+    
+    margin: 20px;
 }
 .images_container {
     flex-grow: 1;
@@ -68,24 +87,38 @@ export default {
     flex-direction: column;
     justify-content: center;
     position: relative;
-    width: 100px;
-    padding-left: 20px;
-    padding-right: 20px;
     z-index: 10;
 }
-.arrow:hover {
+.arrowSVG {
     cursor: pointer;
-    background-color: var(--general-card);
+    margin: 0 auto;
 }
 .main_img {
     max-width: 80%;
     object-fit: contain;
-    margin-right: 10px;
-    margin-left: 10px;
-    padding: 10px;
+    margin: 15px;
+    margin-bottom: 20px;
+    
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
 }
 .second_img {
-    max-width: 400px;
+    max-width: 40%;
     object-fit: contain;
+}
+.indicator {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.indicator_bubble {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--soft-text);
+    margin-right: 5px;
+    margin-left: 5px;
+}
+.active_bubble {
+    background-color: var(--main-font-color) !important;
 }
 </style>
