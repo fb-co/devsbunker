@@ -87,7 +87,7 @@
                                 height="30px"
                                 viewBox="0 0 16 16"
                                 class="bi bi-folder-fill"
-                                fill="#5f57d8"
+                                fill="var(--main-btn-color)"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
                                 <path
@@ -835,7 +835,7 @@ export default {
 .icon-container {
     width: 72px;
     height: 52px;
-    border: 1px solid var(--file-icon-border);
+    border: 1px solid #979797;
     border-radius: 16px;
     background: none;
 }
