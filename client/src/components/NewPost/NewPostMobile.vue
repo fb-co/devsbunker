@@ -30,44 +30,6 @@
                 :isTextArea="true"
             />
 
-            <!-- OLD -->
-            <!-- <div class="tag_container">
-                <p>Images (0/5)</p>
-                <input
-                    type="file"
-                    name="files[]"
-                    ref="imageInput"
-                    enctype="multipart/form-data"
-                    @change="handleFiles($event)"
-                    id="files"
-                    multiple
-                    accept=".jpg, .png, .jpeg, .gif"
-                    class="new_image"
-                />
-
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-camera-plus add_image"
-                    width="44"
-                    height="44"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="#2c3e50"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <circle cx="12" cy="13" r="3" />
-                    <path
-                        d="M5 7h2a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h2m9 7v7a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"
-                    />
-                    <line x1="15" y1="6" x2="21" y2="6" />
-                    <line x1="18" y1="3" x2="18" y2="9" />
-                </svg>
-            </div> -->
-
-            <!-- NEW -->
             <div class="upload-card">
                 <form
                     v-on:submit.prevent="createPost()"
@@ -420,7 +382,6 @@ import SuccessPopUp from "../SuccessPopUp";
 export default {
     data() {
         return {
-            images: [], // eventully we will have links to images here
             contributers: [],
             tags: [],
             links: [],
@@ -529,7 +490,7 @@ export default {
                 title: this.$refs.postTitle.getValue(),
                 description: this.$refs.postDesc.getValue(),
                 thumbnail: "@/assets/project_img_placeholder.png", // eventully this should be a real image link
-                images: this.images,
+                images: [],
                 links: this.links,
                 collaborators: this.collaborators,
                 tags: this.tags,
@@ -538,52 +499,50 @@ export default {
             };
 
             const check = this.validatePostPayload(post);
-            if (check.success) {
-                GraphQLService.createNewPost(
-                    this.$store.getters.accessToken,
-                    post
-                )
-                    .then((returnPost) => {
-                        console.log("Created Post: ");
-                        console.log(returnPost);
-                        this.success = true;
 
-                        // const images = this.$refs.imageInput.files[0];
-
-                        // FileUploadService.addPostImages(images, returnPost.data.makePost.id, this.$store.getters.accessToken).then(
-                        //     (res) => {
-                        //         console.log(res);
-                        //     }
-                        // );
-
-                        FileUploadService.addPostImages(
-                            this.files,
-                            returnPost.data.makePost.id,
-                            this.$store.getters.accessToken
-                        ).then((res) => {
-                            console.log(res);
-                        });
-
-                        setTimeout(() => {
-                            /*
-                            // only refresh the post feed if your on the home page, otherwise redirect to it
-                            if (this.$route.name === "Home") {
-                                this.$parent.$parent.$parent.queryPosts();
-                            } else {
-                                this.$router.push('Home');
-                            }
-                            */
-                            this.$router.push("/");
-
-                            this.close();
-                        }, 1000);
-                    })
-                    .catch(() => {
-                        this.error = true;
-                    });
-            } else {
+            if (this.files.length > 5) {
                 this.error = true;
-                this.errmsg = check.err;
+                this.errmsg = "You can upload 5 files max.";
+            } else {
+                if (check.success) {
+                    GraphQLService.createNewPost(
+                        this.$store.getters.accessToken,
+                        post
+                    )
+                        .then((returnPost) => {
+                            console.log("Created Post: ");
+                            console.log(returnPost);
+                            this.success = true;
+
+                            FileUploadService.addPostImages(
+                                this.files,
+                                returnPost.data.makePost.id,
+                                this.$store.getters.accessToken
+                            ).then((res) => {
+                                console.log(res);
+                            });
+
+                            setTimeout(() => {
+                                /*
+                                // only refresh the post feed if your on the home page, otherwise redirect to it
+                                if (this.$route.name === "Home") {
+                                    this.$parent.$parent.$parent.queryPosts();
+                                } else {
+                                    this.$router.push('Home');
+                                }
+                                */
+                                this.$router.push("/");
+
+                                this.close();
+                            }, 1000);
+                        })
+                        .catch(() => {
+                            this.error = true;
+                        });
+                } else {
+                    this.error = true;
+                    this.errmsg = check.err;
+                }
             }
         },
         toggleStoreState() {
