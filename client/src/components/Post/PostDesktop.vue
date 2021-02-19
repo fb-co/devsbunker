@@ -55,9 +55,7 @@
 
                 <div class="carosel_container">
                     <Carousel
-                        :image0="thumbnail"
-                        :image1="postImages[0]"
-                        :image2="postImages[1]"
+                        :images="postImages"
                     />
                 </div>
             </div>

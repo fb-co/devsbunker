@@ -1,24 +1,47 @@
 <template> 
-    <div class="head_foot_container">
+    <div class="head_foot_container no_select">
         <div class="header_container">
             <p>{{ header }}</p>
         </div>
         <div class="arrow_container">
-            <div class="arrow">
-                <svg @click="switchLeft()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-left arrowSVG" width="60" height="60" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <div class="arrow" style="width: 70px;">
+                <svg 
+                    v-if="selectedImage!==0"
+                    @click="switchLeft()" xmlns="http://www.w3.org/2000/svg" 
+                    class="icon icon-tabler icon-tabler-chevrons-left arrowSVG" 
+                    width="60" 
+                    height="60" 
+                    viewBox="0 0 24 24" 
+                    stroke-width="1.5" 
+                    stroke="var(--main-font-color)" 
+                    fill="none" 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round"
+                >
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <polyline points="17 0 12 12 17 24" />
                 </svg>
             </div>
             <div class="carousel_container_compo">
                 <div class="images_container">
-                    <img class="second_img" :src="image0" />
-                    <img ref="main_image" class="main_img" :src="image1" />
-                    <img class="second_img" :src="image2" />
+                    <img v-for="image in images" :key="image" :src="image" class="image" />
                 </div>
             </div>
-            <div class="arrow">
-                <svg @click="switchRight()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right arrowSVG" width="60" height="60" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <div class="arrow" style="width: 70px;">
+                <svg 
+                    v-if="selectedImage!=images.length-1"
+                    @click="switchRight()" 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    class="icon icon-tabler icon-tabler-chevrons-right arrowSVG" 
+                    width="60" 
+                    height="60" 
+                    viewBox="0 0 24 24" 
+                    stroke-width="1.5" 
+                    stroke="var(--main-font-color)" 
+                    fill="none" 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round"
+                >
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <polyline points="7 0 12 12 7 24" />
                 </svg>
@@ -26,11 +49,12 @@
         </div>
         <div class="indicator">
             <!-- Will move this to a v-for when I get the carousel to swtich images right -->
-            <div class="indicator_bubble"></div>
-            <div class="indicator_bubble"></div>
-            <div class="indicator_bubble active_bubble"></div>
-            <div class="indicator_bubble"></div>
-            <div class="indicator_bubble"></div>
+            <div 
+                v-for="(image, index) in images" 
+                :key="index" 
+                v-bind:class="{ active_bubble: selectedImage==index }" 
+                class="indicator_bubble" 
+            />
         </div>
     </div>
 </template>
@@ -39,21 +63,20 @@
 export default {
     data() {
         return {
-            header: "Images"
+            header: "Images",
+            selectedImage: 0
         }
     },
     props: {
-        image0: String,
-        image1: String,
-        image2: String,
+        images: Array,
         // it will eventually be the max amount of pics in a post
     },
     methods: {
         switchLeft() {
-            this.$refs.main_image.style.right = "100%";
+            this.selectedImage--;
         },  
         switchRight() {
-
+            this.selectedImage++;
         }
     }
 };
@@ -97,8 +120,13 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-direction: row;
-    justify-content: center;
     overflow: hidden;
+}
+.image {
+    object-fit: contain;
+    max-width: 100%;
+    position: relative;
+    left: 0%;
 }
 .arrow {
     display: flex;
@@ -110,25 +138,6 @@ export default {
 .arrowSVG {
     cursor: pointer;
     margin: 0 auto;
-}
-.main_img {
-    position: relative;
-    right: 0%;
-    max-width: 80%;
-    object-fit: contain;
-    margin: 15px;
-    margin-bottom: 20px;
-    animation: switch 1s;
-    
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
-}
-.second_img {
-    position: relative;
-    right: 0%;
-    max-width: 40%;
-    object-fit: contain;
-
-    animation: switch 1s;
 }
 .indicator {
     display: flex;
