@@ -1,16 +1,20 @@
 <template>
     <div>
-        <NavBar />
-        
-        <div class='main_container' v-if="userObject">
+        <div class="main_container" v-if="userObject">
             <div class="row1">
-                <div class='profile_pic_container row_item'>
-                    <img src="@/assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic" width="100px">
+                <div class="profile_pic_container row_item">
+                    <img src="@/assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic" width="100px" />
 
                     <!-- not all users will have the verified tag, this is temp -->
-                    <p class="username">{{ username }} <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-check-fll" fill="#3C93D2" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984a.5.5 0 0 0-.708-.708L7 8.793 5.854 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
-                        </svg></p>
+                    <p class="username">
+                        {{ username }}
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-check-fll" fill="#3C93D2" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                fill-rule="evenodd"
+                                d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984a.5.5 0 0 0-.708-.708L7 8.793 5.854 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"
+                            />
+                        </svg>
+                    </p>
 
                     <p class="desc_container">{{ userObject.description }}</p>
 
@@ -27,10 +31,21 @@
                     <button v-if="!userObject.isFollowing" @click="followUser()" class="follow_button">Follow</button>
                     <button v-else @click="unfollowUser()" class="follow_button">Unfollow</button>
                 </div>
-                <div class='main_links_container row_item'>
+                <div class="main_links_container row_item">
                     <!-- Still have to get the subrouting working here -->
                     <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('about') }">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-bookmark"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="#656565"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <path d="M9 4h6a2 2 0 0 1 2 2v14l-5-3l-5 3v-14a2 2 0 0 1 2 -2" />
                         </svg>
@@ -38,7 +53,18 @@
                         <router-link :to="{ name: 'about' }">About</router-link>
                     </div>
                     <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('projects') }">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-code" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#656565" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-code"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="#656565"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <polyline points="7 8 3 12 7 16" />
                             <polyline points="17 8 21 12 17 16" />
@@ -50,10 +76,10 @@
                 </div>
             </div>
             <div class="content_box">
-                <router-view :key="$route.path" /> <!-- This renders the sub-routes component -->
+                <router-view :key="$route.path" />
+                <!-- This renders the sub-routes component -->
             </div>
         </div>
-
 
         <!--
         <p v-if="username">
@@ -72,7 +98,6 @@
 </template>
 
 <script>
-import NavBar from "@/components/NavBar";
 import SharedMethods from "@/utils/shared";
 import GraphQLService from "@/services/graphql.service";
 
@@ -83,20 +108,15 @@ export default {
             userObject: undefined,
         };
     },
-    components: {
-        NavBar,
-    },
     async created() {
         SharedMethods.loadPage();
         this.username = this.$route.params.username;
 
-        GraphQLService.fetchUserDetails(this.username, [
-            "tag",
-            "desc",
-            "followerAmt",
-            "followingAmt",
-            "isFollowing"
-        ], this.$store.getters.username).then((res) => {
+        GraphQLService.fetchUserDetails(
+            this.username,
+            ["tag", "desc", "followerAmt", "followingAmt", "isFollowing"],
+            this.$store.getters.username
+        ).then((res) => {
             if (res.data.user === null) {
                 this.$router.push("/"); // eventully this should route the user to a search area for users with a message sayin he user they requested does not exist
             } else {
@@ -106,22 +126,32 @@ export default {
     },
     methods: {
         followUser() {
-            GraphQLService.followPerson(this.$store.getters.accessToken, this.$route.params.username).then((newFollowers) => {
+            GraphQLService.followPerson(
+                this.$store.getters.accessToken,
+                this.$route.params.username
+            ).then((newFollowers) => {
                 if (newFollowers.data.followPerson) {
-                    this.userObject.followerAmt = newFollowers.data.followPerson.followerAmt;
-                    this.userObject.isFollowing = newFollowers.data.followPerson.isFollowing;
-                }   
+                    this.userObject.followerAmt =
+                        newFollowers.data.followPerson.followerAmt;
+                    this.userObject.isFollowing =
+                        newFollowers.data.followPerson.isFollowing;
+                }
             });
         },
         unfollowUser() {
-            GraphQLService.unfollowPerson(this.$store.getters.accessToken, this.$route.params.username).then((newFollowers) => {
+            GraphQLService.unfollowPerson(
+                this.$store.getters.accessToken,
+                this.$route.params.username
+            ).then((newFollowers) => {
                 if (newFollowers.data.unfollowPerson) {
-                    this.userObject.followerAmt = newFollowers.data.unfollowPerson.followerAmt;
-                    this.userObject.isFollowing = newFollowers.data.unfollowPerson.isFollowing;
-                }   
-            });    
-        }
-    }
+                    this.userObject.followerAmt =
+                        newFollowers.data.unfollowPerson.followerAmt;
+                    this.userObject.isFollowing =
+                        newFollowers.data.unfollowPerson.isFollowing;
+                }
+            });
+        },
+    },
 };
 </script>
 

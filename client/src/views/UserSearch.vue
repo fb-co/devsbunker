@@ -1,6 +1,5 @@
 <template>
     <div class="user_search_container">
-        <NavBar />
         <UserSearch class="user_search_input" />
 
         <div class="users_search_results">
@@ -12,12 +11,11 @@
         <div v-if="mobile">
             <BottomNavBar />
         </div>
-    </div>    
+    </div>
 </template>
 
 <script>
-import NavBar from "@/components/NavBar.vue";
-import BottomNavBar from "@/components/BottomNavBar.vue"
+import BottomNavBar from "@/components/BottomNavBar.vue";
 import SharedMethods from "@/utils/shared";
 import ScreenType from "@/utils/screenType.js";
 
@@ -29,8 +27,8 @@ export default {
         return {
             mobile: false,
             searchResults: [],
-            showSearchResults: false
-        }
+            showSearchResults: false,
+        };
     },
     created() {
         SharedMethods.loadPage();
@@ -40,7 +38,6 @@ export default {
         window.addEventListener("resize", () => {
             this.mobile = this.isMobile();
         });
-
     },
     destroyed() {
         window.removeEventListener("resize", () => {
@@ -59,29 +56,28 @@ export default {
             } else {
                 this.showSearchResults = true;
             }
-        }, 
+        },
     },
     components: {
-        NavBar,
         BottomNavBar,
         UserSearch,
-        UserCard
-    }
-}
+        UserCard,
+    },
+};
 </script>
 
 <style scoped>
-    .user_search_input {
-        width: 30%;
-        min-width: 300px;
-        max-width: 450px;
-        margin: 30px auto 30px auto;
-    }
-    .users_search_results {
-        margin: 0 auto;
-        width: 80%;
-        min-width: 350px;
-        max-width: 700px;
-        height: 200px; 
-    }
+.user_search_input {
+    width: 30%;
+    min-width: 300px;
+    max-width: 450px;
+    margin: 30px auto 30px auto;
+}
+.users_search_results {
+    margin: 0 auto;
+    width: 80%;
+    min-width: 350px;
+    max-width: 700px;
+    height: 200px;
+}
 </style>

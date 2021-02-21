@@ -1,13 +1,11 @@
 <template>
-    <div id='settings'>
-        <NavBar />
+    <div id="settings">
         <SettingsMobile v-if="mobile" />
         <SettingsDesktop v-else />
     </div>
 </template>
 
 <script>
-import NavBar from "@/components/NavBar";
 import SettingsDesktop from "@/components/Settings/SettingsDesktop";
 import SettingsMobile from "@/components/Settings/SettingsMobile";
 import ScreenType from "../utils/screenType.js";
@@ -37,7 +35,6 @@ export default {
     },
 
     components: {
-        NavBar,
         SettingsDesktop,
         SettingsMobile,
     },

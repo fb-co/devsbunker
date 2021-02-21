@@ -1,6 +1,5 @@
 <template>
     <div class="main_container">
-        <NavBar />
         <p class="notifications_header">Notifications</p>
         <div class="notification_card_container">
             <!-- Made the key account for many variables to avoid any duplicate key errors -->
@@ -23,7 +22,6 @@
 // The notification target key, is what the notification is refering to, for example, the post title that was liked, or the username of the person being followed
 
 import LargeNotificationCard from "@/components/Notifications/LargeNotificationCard.vue";
-import NavBar from "@/components/NavBar";
 import GraphQLService from "@/services/graphql.service.js";
 import SharedMethods from "@/utils/shared.js";
 import BottomNavBar from "@/components/BottomNavBar";
@@ -37,7 +35,6 @@ export default {
         };
     },
     components: {
-        NavBar,
         LargeNotificationCard,
         BottomNavBar,
     },
@@ -51,8 +48,7 @@ export default {
 
         GraphQLService.getAndReadNotifications(
             this.$store.getters.accessToken
-        )
-        .then((res) => {
+        ).then((res) => {
             console.log(res);
             this.notifications = res.data.getAndReadNotifications;
 

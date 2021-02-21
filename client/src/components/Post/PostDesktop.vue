@@ -1,26 +1,17 @@
 <template>
     <div>
-        <NavBar />
         <div class="main_container" v-if="projectData">
             <LeftContent />
             <div class="center_content">
                 <div class="tags_container">
-                    <CreateTag
-                        v-for="tag in projectData.tags"
-                        :key="tag"
-                        :label="tag"
-                        tagType="lang"
-                    />
+                    <CreateTag v-for="tag in projectData.tags" :key="tag" :label="tag" tagType="lang" />
                 </div>
 
                 <!--<h3 id="tags">{{ projectData.tags }}</h3>-->
                 <h1 id="title">{{ projectData.title }}</h1>
 
                 <div class="author_info_card" v-if="authorData">
-                    <ProfilePicture
-                        :username="projectData.author"
-                        wrapperSize="70px"
-                    />
+                    <ProfilePicture :username="projectData.author" wrapperSize="70px" />
                     <div class="author_info_text">
                         <h2 id="author">
                             {{ projectData.author }}
@@ -28,35 +19,30 @@
                         </h2>
                         <p class="author_followerAmt">
                             {{
-                                authorData.followerAmt +
-                                (authorData.followerAmt == 1
-                                    ? " follower"
-                                    : " follwers")
+                            authorData.followerAmt +
+                            (authorData.followerAmt == 1
+                            ? " follower"
+                            : " follwers")
                             }}
                         </p>
                         <div style="flex-grow: 1"></div>
                         <!-- Placeholder -->
                         <div class="follow_btn_container">
-                            <FollowButton
-                                :initialState="authorData.isFollowing"
-                                :username="projectData.author"
-                            />
+                            <FollowButton :initialState="authorData.isFollowing" :username="projectData.author" />
                         </div>
                     </div>
                 </div>
 
                 <p id="description">
-                    {{ projectData.description }} <br />
-                    Et sed maxime maiores harum nulla et voluptatem expedita.
+                    {{ projectData.description }}
+                    <br />Et sed maxime maiores harum nulla et voluptatem expedita.
                     Laboriosam quia provident corporis cum doloremque esse non.
                     Facilis nisi omnis id voluptates natus. Eum distinctio
                     molestias sed aspernatur aut. Ea blanditiis ab aut quia hi
                 </p>
 
                 <div class="carosel_container">
-                    <Carousel
-                        :images="postImages"
-                    />
+                    <Carousel :images="postImages" />
                 </div>
             </div>
             <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->
@@ -66,7 +52,6 @@
 </template>
 
 <script>
-import NavBar from "@/components/NavBar";
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 import FollowButton from "@/components/FollowButton.vue";
@@ -84,7 +69,6 @@ export default {
     components: {
         RightContent,
         LeftContent,
-        NavBar,
         ProfilePicture,
         CreateTag,
         FollowButton,

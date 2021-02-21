@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="app" v-if="!isFetching">
-            <!--<NavBar />-->
+            <Navbar />
             <router-view />
         </div>
 
@@ -11,6 +11,7 @@
 
 <script>
 import Loading from "./components/Loading";
+import Navbar from "./components/NavBar";
 
 export default {
     data() {
@@ -21,6 +22,7 @@ export default {
 
     components: {
         Loading,
+        Navbar
     },
 
     async beforeMount() {

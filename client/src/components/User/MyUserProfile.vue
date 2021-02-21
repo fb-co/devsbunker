@@ -1,7 +1,5 @@
 <template>
     <div class="profile">
-        <NavBar />
-
         <!-- We pass in the user object so we dont have to re-query it from the server on every child component -->
         <!-- You also need to wait to wait to render the components until you get a response from the server or else they wont lazy load! -->
         <ProfileMobile v-if="mobile && userObject && userProjects" :mainUserObject="userObject" :mainUserProjects="userProjects" />
@@ -10,7 +8,6 @@
 </template>
 
 <script>
-import NavBar from "@/components/NavBar";
 import SharedMethods from "@/utils/shared";
 import ProfileMobile from "./mobile/ProfileOwner.vue";
 import ProfileDesktop from "./desktop/ProfileOwner.vue";
@@ -48,7 +45,11 @@ export default {
         });
 
         // if the user is logged out their token will be undefined anyway
-        GraphQLService.fetchPostsByAuthor(this.$store.getters.username, this.$store.getters.accessToken, 0).then((posts) => {
+        GraphQLService.fetchPostsByAuthor(
+            this.$store.getters.username,
+            this.$store.getters.accessToken,
+            0
+        ).then((posts) => {
             this.userProjects = posts.data.getPostsByAuthor.posts;
         });
 
@@ -57,7 +58,6 @@ export default {
         });
     },
     components: {
-        NavBar,
         ProfileMobile,
         ProfileDesktop,
     },

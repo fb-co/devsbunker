@@ -1,7 +1,6 @@
 <template>
     <div>
-        <NavBar @refreshPosts="reloadHome()" />
-        <div class="home" :key="homeKey">
+        <div class="home">
             <HomeMobile :projects="posts" v-if="mobile" :fetchedAll="fetchedAll" />
             <HomeDesktop :projects="posts" :notifications="notifications" v-if="!mobile" :fetchedAll="fetchedAll" />
             <NewPost ref="newPostMenu" />
@@ -10,7 +9,6 @@
 </template>
 
 <script>
-import NavBar from "@/components/NavBar";
 import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
 import ScreenType from "../utils/screenType.js";
@@ -28,8 +26,7 @@ export default {
             mobile: false,
             posts: undefined,
             notifications: undefined,
-            homeKey: 0,
-            fetchedAll: false
+            fetchedAll: false,
         };
     },
     async created() {
@@ -57,7 +54,6 @@ export default {
     },
     mixins: [GeneralProperties, LoadMorePosts],
     components: {
-        NavBar,
         HomeMobile,
         HomeDesktop,
         NewPost,
@@ -73,9 +69,14 @@ export default {
             this.$refs.newPostMenu.close();
         },
         async loadNew() {
-            const newProjects = await this.load(this.posts.length, this.$store.getters.accessToken);
+            const newProjects = await this.load(
+                this.posts.length,
+                this.$store.getters.accessToken
+            );
             this.fetchedAll = newProjects.data.loadMorePosts.fetchedAll;
-            this.posts = this.posts.concat(newProjects.data.loadMorePosts.posts);
+            this.posts = this.posts.concat(
+                newProjects.data.loadMorePosts.posts
+            );
         },
         queryPosts() {
             /*
@@ -109,23 +110,24 @@ export default {
             }
             */
             // Get the posts
-            GraphQLService.fetchPosts("newest", this.$store.getters.accessToken).then((res) => {
+            GraphQLService.fetchPosts(
+                "newest",
+                this.$store.getters.accessToken
+            ).then((res) => {
                 // pass in the new post data to the home page main components
                 this.posts = res.data.getPosts;
             });
 
             // if the user is logged in then ask for their notifications
             if (this.$store.getters.accessToken) {
-                GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, ["notifications {sender message read type }"]).then(
-                    (res) => {
-                        this.notifications = res.data.getPersonalDetails.notifications;
-                    }
-                );
+                GraphQLService.fetchPersonalDetails(
+                    this.$store.getters.accessToken,
+                    ["notifications {sender message read type }"]
+                ).then((res) => {
+                    this.notifications =
+                        res.data.getPersonalDetails.notifications;
+                });
             }
-        },
-        reloadHome() {
-            this.queryPosts(); // i thought I could avoid calling this here but otherwise it doesnt work...
-            this.homeKey += 1;
         },
     },
 };
