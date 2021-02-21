@@ -23,8 +23,10 @@
                 </svg>
             </div>
             <div class="carousel_container_compo">
-                <div class="images_container">
-                    <img v-for="image in images" :key="image" :src="image" class="image" />
+                <div ref="images" class="images_container">
+                    <div class="individual_img_container" v-for="image in images" :key="image" :src="image">
+                        <img :src="image" class="image" />
+                    </div>
                 </div>
             </div>
             <div class="arrow" style="width: 70px;">
@@ -64,7 +66,7 @@ export default {
     data() {
         return {
             header: "Images",
-            selectedImage: 0
+            selectedImage: 0,
         }
     },
     props: {
@@ -73,25 +75,29 @@ export default {
     },
     methods: {
         switchLeft() {
+            // trigger animation switch
+            for (let i = 0; i < this.$refs.images.children.length; i++) {
+                this.$refs.images.children[i].style.left = "0%";
+            }
+
             this.selectedImage--;
+            
+
         },  
         switchRight() {
+            // trigger animation switch
+            for (let i = 0; i < this.$refs.images.children.length; i++) {
+                this.$refs.images.children[i].style.left = "-100%";
+            }
+
             this.selectedImage++;
+            
         }
     }
 };
 </script>
 
 <style scoped>
-@keyframes switch {
-    from {
-        right: 0%;
-    }
-    to {
-        right: 100%;
-    }
-}
-
 
 .head_foot_container {
     display: flex;
@@ -117,16 +123,25 @@ export default {
     margin: 20px;
 }
 .images_container {
-    flex-grow: 1;
     display: flex;
     flex-direction: row;
     overflow: hidden;
 }
 .image {
+    margin: 0 auto;
     object-fit: contain;
-    max-width: 100%;
+    width: 100%;
+}
+.individual_img_container {
     position: relative;
     left: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+    
 }
 .arrow {
     display: flex;
