@@ -43,7 +43,7 @@
 -   [ ] I feel that there's a lot of repeated code in the frontend, like the function to check if the user is using a mobile phone or a lot of includes of the same component in multiple pages. We could improve this:
 
     -   [x] include NavBar in App.vue
-    -   [ ] check for mobile in App.vue?
+    -   [x] check for mobile in App.vue?
     -   [ ] bottom navbar in App.vue
     -   [ ] use mixins to avoid re-typing code
     -   [ ] Sharemethods.loadPage could be used in a better way without repeating it everytime?
