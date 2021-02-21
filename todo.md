@@ -1,13 +1,5 @@
 # TODO
 
-## POSSIBLE FIX FOR NOTIFICATION PROBS
-
-As I was turning off my computer I duckduckgo'd one last time the issue and found this:
-
-https://github.com/Automattic/mongoose/issues/1204
-
-This might be it but i gtg
-
 ## General
 
 -   [ ] we should not let users put duplicated tags and links in post such as Python, Python, JS, Java, Java and www.google.com www.google.com
@@ -50,7 +42,7 @@ This might be it but i gtg
 
 -   [ ] I feel that there's a lot of repeated code in the frontend, like the function to check if the user is using a mobile phone or a lot of includes of the same component in multiple pages. We could improve this:
 
-    -   [ ] include NavBar in App.vue
+    -   [x] include NavBar in App.vue
     -   [ ] check for mobile in App.vue?
     -   [ ] bottom navbar in App.vue
     -   [ ] use mixins to avoid re-typing code

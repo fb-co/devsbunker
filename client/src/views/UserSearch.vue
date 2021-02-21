@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <div v-if="mobile">
+        <div v-if="$store.getters.mobile">
             <BottomNavBar />
         </div>
     </div>
@@ -17,7 +17,6 @@
 <script>
 import BottomNavBar from "@/components/BottomNavBar.vue";
 import SharedMethods from "@/utils/shared";
-import ScreenType from "@/utils/screenType.js";
 
 import UserSearch from "@/components/UserSearch.vue";
 import UserCard from "@/components/UserCard.vue";
@@ -25,29 +24,14 @@ import UserCard from "@/components/UserCard.vue";
 export default {
     data() {
         return {
-            mobile: false,
             searchResults: [],
             showSearchResults: false,
         };
     },
     created() {
         SharedMethods.loadPage();
-        this.mobile = this.isMobile();
-
-        // we also check when the user resizes the window
-        window.addEventListener("resize", () => {
-            this.mobile = this.isMobile();
-        });
-    },
-    destroyed() {
-        window.removeEventListener("resize", () => {
-            this.mobile = this.isMobile();
-        });
     },
     methods: {
-        isMobile() {
-            return ScreenType.isMobile(950);
-        },
         updateSearchComponent(documents, closeResults) {
             this.searchResults = documents;
 

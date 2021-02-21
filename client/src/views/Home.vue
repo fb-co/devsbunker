@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="home">
-            <HomeMobile :projects="posts" v-if="mobile" :fetchedAll="fetchedAll" />
-            <HomeDesktop :projects="posts" :notifications="notifications" v-if="!mobile" :fetchedAll="fetchedAll" />
+            <HomeMobile :projects="posts" v-if="$store.getters.mobile" :fetchedAll="fetchedAll" />
+            <HomeDesktop :projects="posts" :notifications="notifications" v-if="!$store.getters.mobile" :fetchedAll="fetchedAll" />
             <NewPost ref="newPostMenu" />
         </div>
     </div>
@@ -11,7 +11,6 @@
 <script>
 import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
-import ScreenType from "../utils/screenType.js";
 import GraphQLService from "@/services/graphql.service";
 
 import HomeMobile from "@/components/Home/HomeMobile.vue";
@@ -23,7 +22,6 @@ import LoadMorePosts from "@/mixins/load_more_posts.mixin";
 export default {
     data() {
         return {
-            mobile: false,
             posts: undefined,
             notifications: undefined,
             fetchedAll: false,
@@ -31,14 +29,8 @@ export default {
     },
     async created() {
         SharedMethods.loadPage();
-        this.mobile = this.isMobile();
 
         this.queryPosts();
-
-        // we also check when the user resizes the window
-        window.addEventListener("resize", () => {
-            this.mobile = this.isMobile();
-        });
 
         /*
         const cache = await caches.open("devsCache");
@@ -47,11 +39,7 @@ export default {
                     });
                     */
     },
-    destroyed() {
-        window.removeEventListener("resize", () => {
-            this.mobile = this.isMobile();
-        });
-    },
+
     mixins: [GeneralProperties, LoadMorePosts],
     components: {
         HomeMobile,
@@ -59,9 +47,6 @@ export default {
         NewPost,
     },
     methods: {
-        isMobile() {
-            return ScreenType.isMobile(950);
-        },
         openPostMenu() {
             this.$refs.newPostMenu.open();
         },

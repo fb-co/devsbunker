@@ -2,8 +2,8 @@
     <div class="profile">
         <!-- We pass in the user object so we dont have to re-query it from the server on every child component -->
         <!-- You also need to wait to wait to render the components until you get a response from the server or else they wont lazy load! -->
-        <ProfileMobile v-if="mobile && userObject && userProjects" :mainUserObject="userObject" :mainUserProjects="userProjects" />
-        <ProfileDesktop v-if="!mobile && userObject && userProjects" :mainUserObject="userObject" :mainUserProjects="userProjects" />
+        <ProfileMobile v-if="$store.getters.mobile && userObject && userProjects" :mainUserObject="userObject" :mainUserProjects="userProjects" />
+        <ProfileDesktop v-if="!$store.getters.mobile && userObject && userProjects" :mainUserObject="userObject" :mainUserProjects="userProjects" />
     </div>
 </template>
 
@@ -11,21 +11,17 @@
 import SharedMethods from "@/utils/shared";
 import ProfileMobile from "./mobile/ProfileOwner.vue";
 import ProfileDesktop from "./desktop/ProfileOwner.vue";
-import ScreenType from "@/utils/screenType.js";
 import GraphQLService from "@/services/graphql.service";
 
 export default {
     data() {
         return {
-            mobile: false,
             userObject: undefined,
             userProjects: undefined,
         };
     },
     created() {
         SharedMethods.loadPage();
-
-        this.mobile = this.isMobile();
 
         // get the user object, will be given to all children to avoid excessive calls to the server
         GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, [
@@ -52,19 +48,10 @@ export default {
         ).then((posts) => {
             this.userProjects = posts.data.getPostsByAuthor.posts;
         });
-
-        window.addEventListener("resize", () => {
-            this.mobile = this.isMobile();
-        });
     },
     components: {
         ProfileMobile,
         ProfileDesktop,
-    },
-    methods: {
-        isMobile() {
-            return ScreenType.isMobile(950);
-        },
     },
 };
 </script>

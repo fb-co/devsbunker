@@ -22,11 +22,16 @@ export default {
 
     components: {
         Loading,
-        Navbar
+        Navbar,
+    },
+
+    destroyed() {
+        window.removeEventListener("resize", () => {});
     },
 
     async beforeMount() {
         await this.$store.dispatch("autoRefreshAccessToken");
+        this.$store.dispatch("checkMobile");
 
         this.isFetching = false;
     },

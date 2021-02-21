@@ -14,7 +14,7 @@
                 width="100%"
             />
         </div>
-        <BottomNavBar v-if="mobile" />
+        <BottomNavBar v-if="$store.getters.mobile" />
     </div>
 </template>
 
@@ -25,13 +25,11 @@ import LargeNotificationCard from "@/components/Notifications/LargeNotificationC
 import GraphQLService from "@/services/graphql.service.js";
 import SharedMethods from "@/utils/shared.js";
 import BottomNavBar from "@/components/BottomNavBar";
-import ScreenType from "../utils/screenType.js";
 
 export default {
     data() {
         return {
             notifications: undefined,
-            mobile: false,
         };
     },
     components: {
@@ -40,11 +38,6 @@ export default {
     },
     created() {
         SharedMethods.loadPage();
-        this.mobile = this.isMobile();
-
-        window.addEventListener("resize", () => {
-            this.mobile = this.isMobile();
-        });
 
         GraphQLService.getAndReadNotifications(
             this.$store.getters.accessToken
@@ -59,12 +52,6 @@ export default {
                 }
             });
         });
-    },
-
-    methods: {
-        isMobile() {
-            return ScreenType.isMobile(950);
-        },
     },
 };
 </script>
