@@ -6,8 +6,8 @@
         <div class="arrow_container">
             <div class="arrow" style="width: 70px;">
                 <svg 
-                    v-if="selectedImage!==0"
-                    @click="switchLeft()" xmlns="http://www.w3.org/2000/svg" 
+                    v-if="currentImage!==0"
+                    @click="switchImage('left')" xmlns="http://www.w3.org/2000/svg" 
                     class="icon icon-tabler icon-tabler-chevrons-left arrowSVG" 
                     width="60" 
                     height="60" 
@@ -31,8 +31,8 @@
             </div>
             <div class="arrow" style="width: 70px;">
                 <svg 
-                    v-if="selectedImage!=images.length-1"
-                    @click="switchRight()" 
+                    v-if="currentImage!=images.length-1"
+                    @click="switchImage('right')" 
                     xmlns="http://www.w3.org/2000/svg" 
                     class="icon icon-tabler icon-tabler-chevrons-right arrowSVG" 
                     width="60" 
@@ -49,12 +49,13 @@
                 </svg>
             </div>
         </div>
-        <div class="indicator">
+        <div ref="dots" class="indicator">
             <!-- Will move this to a v-for when I get the carousel to swtich images right -->
             <div 
                 v-for="(image, index) in images" 
                 :key="index" 
-                v-bind:class="{ active_bubble: selectedImage==index }" 
+                v-bind:class="{ active_bubble: currentImage==index }"
+                @click="switchImageTo(index)" 
                 class="indicator_bubble" 
             />
         </div>
@@ -66,55 +67,54 @@ export default {
     data() {
         return {
             header: "Images",
-            selectedImage: 0,
+            currentImage: 0,
         }
     },
     props: {
         images: Array,
         // it will eventually be the max amount of pics in a post
     },
+    mounted() {
+        this.showImages();
+    },
     methods: {
-        // The switch right and left methods will compute how much it has already slid and add or subtract more
-
-        switchLeft() {
-            // since all children will have the same slide, you can assume the slide of the first child will be the slide for all
-            const currentSlide = getComputedStyle(this.$refs.images.children[0]).left;
-
-            // trigger animation switch
-            for (let i = 0; i < this.$refs.images.children.length; i++) {
-                this.$refs.images.children[i].animate([
-                    // keyframes
-                    { left: currentSlide },
-                    { left: `calc(${currentSlide} + 100%)` }
-                ], {
-                    duration: 300,
-                    iterations: 1
-                });
-
-                this.$refs.images.children[i].style.left = `calc(${currentSlide} + 100%)`;
+        // switches the current image
+        switchImage(direction) {
+            // change the currentImage variable
+            if (direction == 'right') {
+                this.currentImage++;
+            } else if (direction == 'left') {
+                this.currentImage--;
             }
-
-            this.selectedImage--;
-        },  
-        switchRight() {
-            const currentSlide = getComputedStyle(this.$refs.images.children[0]).left;
-
-            // trigger animation switch
-            for (let i = 0; i < this.$refs.images.children.length; i++) {
-                this.$refs.images.children[i].animate([
-                    // keyframes
-                    { left: currentSlide },
-                    { left: `calc(${currentSlide} - 100%)` }
-                ], {
-                    duration: 300,
-                    iterations: 1
-                });
-
-                this.$refs.images.children[i].style.left = `calc(${currentSlide} - 100%)`;
-            }
-
-            this.selectedImage++;
             
+            // constrain the index bounds
+            if (this.currentImage > this.images.length-1) {
+                this.currentImage = 0;
+            } else if (this.currentImage < 0) {
+                this.currentImage = this.images.length-1;
+            }
+
+            // render the new image configuation
+            this.showImages(this.currentImage);
+        },
+
+        // renders the images (run this everytime you switch the currentImage variable)
+        showImages() {
+            const slides = this.$refs.images.children;
+            //const dots = this.$refs.dots.children;
+
+            // hide all the images
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            slides[this.currentImage].style.display = "block";
+        },
+
+        // this swithces the variable to some given index, and updates the display
+        switchImageTo(index) {
+            this.currentImage = index;
+            this.showImages();
         }
     }
 };
@@ -155,24 +155,21 @@ export default {
     margin: 20px;
 }
 .images_container {
+    width: 100%;
+    height: 500px;
     display: flex;
     flex-direction: row;
     overflow: hidden;
 }
-.image {
+.individual_img_container {
     margin: 0 auto;
+}
+.image {
+    display: flex;
     object-fit: contain;
     width: 100%;
-}
-.individual_img_container {
-    position: relative;
-    left: 0%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 100%;
-    max-width: 100%;
-    width: 100%;
+    max-height: 100%;
+    height: 100%;
 }
 .arrow {
     display: flex;
@@ -191,12 +188,13 @@ export default {
     justify-content: center;
 }
 .indicator_bubble {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     background-color: var(--soft-text);
     margin-right: 5px;
     margin-left: 5px;
+    cursor: pointer;
 }
 .active_bubble {
     background-color: var(--main-font-color) !important;
