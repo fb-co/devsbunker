@@ -74,20 +74,43 @@ export default {
         // it will eventually be the max amount of pics in a post
     },
     methods: {
+        // The switch right and left methods will compute how much it has already slid and add or subtract more
+
         switchLeft() {
+            // since all children will have the same slide, you can assume the slide of the first child will be the slide for all
+            const currentSlide = getComputedStyle(this.$refs.images.children[0]).left;
+
             // trigger animation switch
             for (let i = 0; i < this.$refs.images.children.length; i++) {
-                this.$refs.images.children[i].style.left = "0%";
+                this.$refs.images.children[i].animate([
+                    // keyframes
+                    { left: currentSlide },
+                    { left: `calc(${currentSlide} + 100%)` }
+                ], {
+                    duration: 300,
+                    iterations: 1
+                });
+
+                this.$refs.images.children[i].style.left = `calc(${currentSlide} + 100%)`;
             }
 
             this.selectedImage--;
-            
-
         },  
         switchRight() {
+            const currentSlide = getComputedStyle(this.$refs.images.children[0]).left;
+
             // trigger animation switch
             for (let i = 0; i < this.$refs.images.children.length; i++) {
-                this.$refs.images.children[i].style.left = "-100%";
+                this.$refs.images.children[i].animate([
+                    // keyframes
+                    { left: currentSlide },
+                    { left: `calc(${currentSlide} - 100%)` }
+                ], {
+                    duration: 300,
+                    iterations: 1
+                });
+
+                this.$refs.images.children[i].style.left = `calc(${currentSlide} - 100%)`;
             }
 
             this.selectedImage++;
@@ -98,6 +121,15 @@ export default {
 </script>
 
 <style scoped>
+/* animation */
+@keyframes slideOver {
+    from {
+        left: 0%;
+    }
+    to {
+        left: 100%;
+    }
+}
 
 .head_foot_container {
     display: flex;
@@ -141,7 +173,6 @@ export default {
     min-width: 100%;
     max-width: 100%;
     width: 100%;
-    
 }
 .arrow {
     display: flex;
