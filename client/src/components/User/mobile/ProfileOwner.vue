@@ -1,15 +1,15 @@
 <template>
-    <div class='profileMobile'>
+    <div class="profileMobile">
         <div class="profile_banner"></div>
         <div class="profile_card">
-            <div class='card_container'>
-                <p class='card_name'>{{ $store.getters.username }}</p>
-                <p class='card_desc'>{{ userObject.desc }}</p>
+            <div class="card_container">
+                <p class="card_name">{{ $store.getters.username }}</p>
+                <p class="card_desc">{{ userObject.desc }}</p>
                 <form>
                     <!-- Not sure if this is nessacary, but I assume you need a form to get data to the server -->
-                    <input type="submit" value="Edit" @click.prevent="$router.push('/settings/account')">
+                    <input type="submit" value="Edit" @click.prevent="$router.push('/settings/account')" />
                 </form>
-                <div class='follower_container'>
+                <div class="follower_container">
                     <div class="follow_count">
                         <p class="follow_label">Followers</p>
                         <p class="follow_amt" id="followerAmt">{{ userObject.followers.length }}</p>
@@ -46,28 +46,25 @@
             </div>
         </div>
         -->
-        <BottomNavBar />
     </div>
 </template>
 
 <script>
 import ProfileSections from "./ProfileSections/mobile.profile.imports.js";
-import BottomNavBar from "@/components/BottomNavBar.vue";
 
 export default {
     data() {
         return {
             activeSection: "projects",
             userObject: this.mainUserObject,
-            userProjects: this.mainUserProjects
+            userProjects: this.mainUserProjects,
         };
     },
     props: {
         mainUserObject: Object,
-        mainUserProjects: Array
+        mainUserProjects: Array,
     },
     components: {
-        BottomNavBar,
         ...ProfileSections,
     },
     methods: {

@@ -1,16 +1,26 @@
 <template>
     <div id="SettingsPage">
         <h1 class="title">Settings</h1>
-        
+
         <CustomInput class="search_input">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon icon-tabler icon-tabler-search"
+                width="44"
+                height="44"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="var(--main-font-color)"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
                 <path stroke="none" d="M0 0h24v24H0z" />
                 <circle cx="10" cy="10" r="7" />
                 <line x1="21" y1="21" x2="15" y2="15" />
             </svg>
-            <input type="text" name="search" placeholder="Search a setting...">
+            <input type="text" name="search" placeholder="Search a setting..." />
         </CustomInput>
-        
 
         <div v-if="username" class="profile-banner">
             <ProfilePicture :username="username" class="profile-pic" />
@@ -24,7 +34,6 @@
             <div class="margin-top"></div>
             <SettingList />
         </div>
-        <BottomNavBar />
     </div>
 </template>
 
@@ -32,7 +41,6 @@
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import MobileSettingsComponents from "@/components/Settings/mobile/SettingSections/mobile.import.settings";
 import SettingList from "./mobile/SettingList";
-import BottomNavBar from "@/components/BottomNavBar.vue";
 import ProfilePicture from "@/components/ProfilePicture.vue";
 
 import UserService from "@/services/user.service";
@@ -42,8 +50,7 @@ export default {
         ...GlobalComponents,
         ...MobileSettingsComponents,
         SettingList,
-        BottomNavBar,
-        ProfilePicture
+        ProfilePicture,
     },
     data() {
         return {
@@ -64,7 +71,6 @@ export default {
 </script>
 
 <style scoped>
-
 .search_input {
     width: 80%;
     margin: 0 auto;
