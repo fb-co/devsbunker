@@ -41,9 +41,7 @@
                     molestias sed aspernatur aut. Ea blanditiis ab aut quia hi
                 </p>
 
-                <div class="carosel_container">
-                    <Carousel :images="postImages" />
-                </div>
+                <Carousel class="main_carousel" :images="postImages" minWidth="150%" />
             </div>
             <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->
             <RightContent :notifications="notifications" />
@@ -159,6 +157,11 @@ export default {
     margin-right: 6px;
     margin-right: 10px;
     float: left;
+}
+
+.main_carousel {
+    margin-left: 50%;
+    transform: translateX(-50%);
 }
 
 .author_info_card {

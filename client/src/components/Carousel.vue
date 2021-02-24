@@ -1,5 +1,5 @@
 <template> 
-    <div class="head_foot_container no_select">
+    <div class="head_foot_container no_select" :style="cssProps">
         <div class="header_container">
             <p>{{ header }}</p>
         </div>
@@ -24,7 +24,7 @@
             </div>
             <div class="carousel_container_compo">
                 <div ref="images" class="images_container">
-                    <div class="individual_img_container" v-for="image in images" :key="image" :src="image">
+                    <div v-for="image in images" :key="image" :src="image" class="fade">
                         <img :src="image" class="image" />
                     </div>
                 </div>
@@ -72,6 +72,10 @@ export default {
     },
     props: {
         images: Array,
+        minWidth: {
+            type: String,
+            default: "none"
+        }
         // it will eventually be the max amount of pics in a post
     },
     mounted() {
@@ -108,6 +112,7 @@ export default {
                 slides[i].style.display = "none";
             }
 
+            // only display the currentImage one
             slides[this.currentImage].style.display = "block";
         },
 
@@ -116,19 +121,33 @@ export default {
             this.currentImage = index;
             this.showImages();
         }
-    }
+    },
+    computed: {
+        cssProps() {
+            return {
+                "--min-width": this.minWidth
+            };
+        },
+    },
 };
 </script>
 
 <style scoped>
 /* animation */
-@keyframes slideOver {
-    from {
-        left: 0%;
-    }
-    to {
-        left: 100%;
-    }
+@keyframes fade {
+    from { opacity: 0.4 }
+    to { opacity: 1 }
+}
+@-webkit-keyframes fade {
+    from { opacity: 0.4 }
+    to { opacity: 1 }
+}
+
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1s;
+    animation-name: fade;
+    animation-duration: 1s;
 }
 
 .head_foot_container {
@@ -136,6 +155,7 @@ export default {
     flex-direction: column;
     margin-bottom: 40px;
     margin-top: 100px;
+    min-width: var(--min-width);
 }
 .header_container {
     text-align: center;
@@ -146,25 +166,23 @@ export default {
 .arrow_container {
     display: flex;
     flex-direction: row;
+    margin: 0 auto;
 }
 .carousel_container_compo {
-    width: 100%;
     display: flex;
     flex-direction: row;
-    
     margin: 20px;
 }
 .images_container {
-    width: 100%;
+    margin: 0 auto;
     height: 500px;
     display: flex;
     flex-direction: row;
     overflow: hidden;
-}
-.individual_img_container {
-    margin: 0 auto;
+    max-width: 850px;
 }
 .image {
+    margin: auto;
     display: flex;
     object-fit: contain;
     width: 100%;
