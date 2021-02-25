@@ -83,6 +83,7 @@ export default {
         },
         handleClick(e) {
             this.activeLabel = e.target.innerText;
+            this.$emit('itemSelected', this.activeLabel);
             this.closeMenu();
         },
     },

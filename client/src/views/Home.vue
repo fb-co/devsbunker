@@ -1,8 +1,21 @@
 <template>
     <div>
         <div class="home">
-            <HomeMobile :projects="posts" v-if="$store.getters.mobile" :fetchedAll="fetchedAll" />
-            <HomeDesktop :projects="posts" :notifications="notifications" v-if="!$store.getters.mobile" :fetchedAll="fetchedAll" />
+            <HomeMobile 
+                :projects="posts" 
+                v-if="$store.getters.mobile" 
+                :fetchedAll="fetchedAll"
+                :postFeedFilter="filter"
+                @updateFilterDropdown="updateFilterDropdown"
+            />
+            <HomeDesktop 
+                :projects="posts" 
+                :notifications="notifications" 
+                v-if="!$store.getters.mobile" 
+                :fetchedAll="fetchedAll" 
+                :postFeedFilter="filter"
+                @updateFilterDropdown="updateFilterDropdown"
+            />
             <NewPost ref="newPostMenu" />
         </div>
     </div>
@@ -10,6 +23,7 @@
 
 <script>
 import SharedMethods from "../utils/shared";
+import SearchUtilities from "../utils/search_utilities.js";
 import GeneralProperties from "../mixins/general.mixin";
 import GraphQLService from "@/services/graphql.service";
 
@@ -25,19 +39,20 @@ export default {
             posts: undefined,
             notifications: undefined,
             fetchedAll: false,
+            filter: SearchUtilities.getHomePostFilter()
         };
     },
     async created() {
         SharedMethods.loadPage();
 
-        this.queryPosts();
+        this.queryPosts(this.filter);
 
         /*
         const cache = await caches.open("devsCache");
         cache.match("http://localhost:5000/graphql").then((result) => {
-                        console.log("[CACHE] ", result.json());
-                    });
-                    */
+            console.log("[CACHE] ", result.json());
+        });
+        */
     },
 
     mixins: [GeneralProperties, LoadMorePosts],
@@ -62,6 +77,9 @@ export default {
             this.posts = this.posts.concat(
                 newProjects.data.loadMorePosts.posts
             );
+        },
+        updateFilterDropdown(value) {
+            SearchUtilities.setHomePostFilter(value);
         },
         queryPosts() {
             /*

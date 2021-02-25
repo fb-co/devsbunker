@@ -34,12 +34,13 @@
                             </p>
 
                             <Dropdown
-                                label="Newest"
+                                :label="postFeedFilter"
                                 fontSize="12px"
                                 linkHeight="40px"
                                 height="30px"
                                 justifyLabel="left"
                                 class="filter_dropdown"
+                                @itemSelected="updateFilterDropdown"
                             >
                                 <button>Newest</button>
                                 <button>Most Popular</button>
@@ -62,12 +63,13 @@
             <!-- BUG: Buttons get transperent -->
             <div style="margin-bottom: 30px" v-else>
                 <Dropdown
-                    label="Newest"
+                    :label="postFeedFilter"
                     fontSize="12px"
                     linkHeight="40px"
                     height="30px"
                     justifyLabel="left"
                     class="filter_dropdown"
+                    @itemSelected="updateFilterDropdown"
                 >
                     <button>Newest</button>
                     <button>Most Popular</button>
@@ -120,6 +122,7 @@ export default {
     props: {
         projects: Array,
         fetchedAll: Boolean,
+        postFeedFilter: String
     },
     methods: {
         /*
@@ -147,6 +150,10 @@ export default {
             document.getElementById("next_filter").innerText = this.getFilterScrollMenuData(this.filter).next;
         }
         */
+        // emit the data again to get it to the parent component where the localstorage can be updated
+        updateFilterDropdown(value) {
+            this.$emit('updateFilterDropdown', value);
+        },
         makeNewPost() {
             this.$parent.openPostMenu();
         },

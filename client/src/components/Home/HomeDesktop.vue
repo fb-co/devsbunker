@@ -38,10 +38,11 @@
 
                 <div class="filter_dropdown">
                     <Dropdown
-                        label="Newest"
+                        :label="postFeedFilter"
                         linkHeight="40px"
                         height="40px"
                         width="200px"
+                        @itemSelected="updateFilterDropdown"
                     >
                         <button>Newest</button>
                         <button>Most Popular</button>
@@ -67,7 +68,7 @@
                     />
                 </div>
                 <div>
-                    <DeletedPost class="project_card" width="70%" />
+                    <!--<DeletedPost class="project_card" width="70%" />-->
                 </div>
 
                 <!--
@@ -108,7 +109,7 @@ import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
 
 // tmp
-import DeletedPost from "@/components/Post/DeletedPost.vue";
+// import DeletedPost from "@/components/Post/DeletedPost.vue";
 
 export default {
     data() {
@@ -124,12 +125,17 @@ export default {
     },
     props: {
         projects: Array,
+        postFeedFilter: String,
         notifications: Array,
         fetchedAll: Boolean
     },
     methods: {
         makeNewPost() {
             this.$parent.openPostMenu();
+        },
+        // emit the data again to get it to the parent component where the localstorage can be updated
+        updateFilterDropdown(value) {
+            this.$emit('updateFilterDropdown', value);
         },
         updateSearchComponent(documents, closeResults) {
             this.searchResults = documents;
@@ -150,12 +156,13 @@ export default {
         PostSearch,
         LeftContent,
         RightContent,
-        DeletedPost
+        //DeletedPost
     }
 };
 </script>
 
 <style scoped>
+
 .main_container {
     display: flex;
     flex-direction: row;

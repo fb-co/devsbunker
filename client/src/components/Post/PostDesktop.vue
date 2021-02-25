@@ -28,7 +28,11 @@
                         <div style="flex-grow: 1"></div>
                         <!-- Placeholder -->
                         <div class="follow_btn_container">
-                            <FollowButton :initialState="authorData.isFollowing" :username="projectData.author" />
+                            <FollowButton 
+                                :initialState="authorData.isFollowing" 
+                                :username="projectData.author" 
+                                v-if="projectData.author != this.$store.getters.username"
+                            />
                         </div>
                     </div>
                 </div>
