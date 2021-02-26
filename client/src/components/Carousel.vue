@@ -1,7 +1,7 @@
 <template> 
     <div class="head_foot_container no_select" :style="cssProps">
         <div class="header_container">
-            <p>{{ header }}</p>
+            <p>{{ header+' ( '+(currentImage+1)+'/'+images.length+' )' }}</p>
         </div>
         <div class="arrow_container">
             <div class="arrow" style="width: 70px;">
@@ -166,12 +166,15 @@ export default {
 .arrow_container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     margin: 0 auto;
+    width: 100%;
 }
 .carousel_container_compo {
     display: flex;
     flex-direction: row;
     margin: 20px;
+    width: 100%;
 }
 .images_container {
     margin: 0 auto;
@@ -182,7 +185,7 @@ export default {
     max-width: 850px;
 }
 .image {
-    margin: auto;
+    margin: 0 auto;
     display: flex;
     object-fit: contain;
     width: 100%;

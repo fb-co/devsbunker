@@ -46,7 +46,6 @@
                     >
                         <button>Newest</button>
                         <button>Most Popular</button>
-                        <button>Alphabetical</button>
                     </Dropdown>
                 </div>
                 <div v-if="!showSearchResults" class="projects_area">

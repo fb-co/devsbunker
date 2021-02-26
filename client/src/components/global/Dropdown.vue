@@ -8,7 +8,7 @@
                 </svg>
             </div>
         </div>
-        <div @click="handleClick" class="menu_cont">
+        <div @click="handleClick" class="menu_cont" ref="options">
             <slot>
 
             </slot>
@@ -82,10 +82,26 @@ export default {
             this.isOpen = false;
         },
         handleClick(e) {
+            // only bold the option that is selected (clear all then assign bold to the one)
+            for (let i = 0; i < this.$refs.options.children.length; i++) {
+                this.$refs.options.children[i].style.fontWeight = "normal";
+            }
+            e.target.style.fontWeight = "bold";
+
+
             this.activeLabel = e.target.innerText;
             this.$emit('itemSelected', this.activeLabel);
             this.closeMenu();
         },
+    },
+    mounted() {
+        // bold the option if its the same as the initial label
+        for (let i = 0; i < this.$refs.options.children.length; i++) {
+            if (this.$refs.options.children[i].innerText == this.label) {
+                this.$refs.options.children[i].style.fontWeight = "bold";
+                break;
+            }
+        }
     },
     computed: {
         cssProps() {
@@ -145,5 +161,9 @@ export default {
 }
 .menu_cont > *:focus {
     outline: none;
+}
+
+.currentSelected {
+    font-weight: bold;
 }
 </style>
