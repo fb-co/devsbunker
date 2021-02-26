@@ -7,15 +7,10 @@
                 <UserCard v-for="user in searchResults" :key="user.username" :cardData="user" />
             </div>
         </div>
-
-        <div v-if="$store.getters.mobile">
-            <BottomNavBar />
-        </div>
     </div>
 </template>
 
 <script>
-import BottomNavBar from "@/components/BottomNavBar.vue";
 import SharedMethods from "@/utils/shared";
 
 import UserSearch from "@/components/UserSearch.vue";
@@ -43,7 +38,6 @@ export default {
         },
     },
     components: {
-        BottomNavBar,
         UserSearch,
         UserCard,
     },

@@ -29,10 +29,9 @@
                 <div class="header_container">
                     <div class="horizontal_flex_center">
                         <div class="header_right_cont">
-                            <p class="username_welcome">
-                                {{ "Hello " + $store.getters.username + "!" }}
-                            </p>
+                            <p class="username_welcome">{{ "Hello " + $store.getters.username + "!" }}</p>
 
+<<<<<<< HEAD
                             <Dropdown
                                 :label="postFeedFilter"
                                 fontSize="12px"
@@ -42,6 +41,9 @@
                                 class="filter_dropdown"
                                 @itemSelected="updateFilterDropdown"
                             >
+=======
+                            <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
+>>>>>>> 14200dd6ffa47105586e64a0565123c07665b015
                                 <button>Newest</button>
                                 <button>Most Popular</button>
                                 <button>Alphabetical</button>
@@ -57,11 +59,13 @@
                     </div>
                     <div class="filter_container"><p @click="nextScrollMenuItem()" id="next_filter" class="next_filter_class no_select"></p></div>
                 </div>
-                --></div>
+                    -->
+                </div>
             </div>
 
             <!-- BUG: Buttons get transperent -->
             <div style="margin-bottom: 30px" v-else>
+<<<<<<< HEAD
                 <Dropdown
                     :label="postFeedFilter"
                     fontSize="12px"
@@ -71,6 +75,9 @@
                     class="filter_dropdown"
                     @itemSelected="updateFilterDropdown"
                 >
+=======
+                <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
+>>>>>>> 14200dd6ffa47105586e64a0565123c07665b015
                     <button>Newest</button>
                     <button>Most Popular</button>
                     <button>Alphabetical</button>
@@ -81,32 +88,18 @@
             <!-- <PostSearch width="90%" class="post_search_bar" /> -->
 
             <div v-if="!showSearchResults" class="project-card-container">
-                <MobileProjectCard
-                    v-for="project in projects"
-                    :key="project.name"
-                    :projectData="project"
-                    width="100%"
-                />
+                <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
             </div>
             <div v-else class="project-card-container">
-                <MobileProjectCard
-                    v-for="searchResult in searchResults"
-                    :key="searchResult.name"
-                    :projectData="searchResult"
-                    width="100%"
-                />
+                <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.name" :projectData="searchResult" width="100%" />
             </div>
-            <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">
-                Load More
-            </p>
+            <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
-        <BottomNavBar />
     </div>
 </template>
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
-import BottomNavBar from "@/components/BottomNavBar";
 
 // import PostSearch from "@/components/PostSearch.vue";
 
@@ -174,7 +167,6 @@ export default {
         MobileProjectCard,
         Dropdown,
         // PostSearch,
-        BottomNavBar,
     },
 };
 </script>

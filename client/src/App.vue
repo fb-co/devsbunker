@@ -3,6 +3,7 @@
         <div id="app" v-if="!isFetching">
             <Navbar />
             <router-view />
+            <BottomNavBar v-if="$store.getters.mobile" />
         </div>
 
         <Loading v-if="isFetching" />
@@ -12,6 +13,7 @@
 <script>
 import Loading from "./components/Loading";
 import Navbar from "./components/NavBar";
+import BottomNavBar from "./components/BottomNavBar";
 
 export default {
     data() {
@@ -23,6 +25,7 @@ export default {
     components: {
         Loading,
         Navbar,
+        BottomNavBar,
     },
 
     destroyed() {

@@ -14,7 +14,6 @@
                 width="100%"
             />
         </div>
-        <BottomNavBar v-if="$store.getters.mobile" />
     </div>
 </template>
 
@@ -24,7 +23,6 @@
 import LargeNotificationCard from "@/components/Notifications/LargeNotificationCard.vue";
 import GraphQLService from "@/services/graphql.service.js";
 import SharedMethods from "@/utils/shared.js";
-import BottomNavBar from "@/components/BottomNavBar";
 
 export default {
     data() {
@@ -34,7 +32,6 @@ export default {
     },
     components: {
         LargeNotificationCard,
-        BottomNavBar,
     },
     created() {
         SharedMethods.loadPage();

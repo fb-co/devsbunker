@@ -37,6 +37,7 @@
     -   [x] 3. using res.sendFile(\_\_dirname + /images/ + path); or something like this (PATH TRAVERSAL?
 -   [ ] The home post feed and presumably many others use the post name as the v-for key, which will cause errors if two posts have the same name (switch to something like id)
 -   [ ] Creating a post on the home page wont refresh the post feed since it auto avoids redundant routing
+-   [ ] Create a /robots.txt route
 
 ## Frontend
 
@@ -44,7 +45,7 @@
 
     -   [x] include NavBar in App.vue
     -   [x] check for mobile in App.vue?
-    -   [ ] bottom navbar in App.vue
+    -   [x] bottom navbar in App.vue
     -   [ ] use mixins to avoid re-typing code
     -   [ ] Sharemethods.loadPage could be used in a better way without repeating it everytime?
 
@@ -64,11 +65,12 @@
 -   [x] change url dynamically based on selected setting option
 -   [x] The theme changin icon (sun and moon) should be inverted to denote which theme the user is currently using
 -   [ ] Make the first field in the login and signup pages be auto focused on when thep age is loaded
+    -   [ ] **why is this so hard im crying**
 -   [ ] add the eye button thing to signup card
 -   [x] Error handling and validation for making posts
 -   [x] make sure that the heart icon is filled even after refresh if user has already liked a post
 -   [ ] Project card author link spans 100% of card (even if you cant see it, you can still click it)
--   [ ] attach images to DOM after retreiving them (like a preview)
+-   [x] attach images to DOM after retreiving them (like a preview)
 -   [ ] mod email in user page doesn't work (the save btn doesn't work)
 -   [ ] add unfollow btn
 -   [ ] if I visit someone else profile I am able to see a field to modify my profile (if admin visits test_account he can see a field with its username in the information tab)
