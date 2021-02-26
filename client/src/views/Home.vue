@@ -37,6 +37,8 @@ export default {
     data() {
         return {
             posts: undefined,
+            loadedPosts: [], // this contains posts loaded with other filters, to avoid continously loading them when you switch filters
+            
             notifications: undefined,
             fetchedAll: false,
             filter: SearchUtilities.getHomePostFilter()
@@ -80,8 +82,20 @@ export default {
         },
         updateFilterDropdown(value) {
             SearchUtilities.setHomePostFilter(value);
+            this.filter = SearchUtilities.getHomePostFilter();
+
+            this.queryPosts(this.filter); //try and avoid the get notifications server call
         },
-        queryPosts() {
+        // returns whether a post filter type is already loaded in memory (so it doesnt have to re-ask the server)
+        postsInMemory(filter) {
+            for (let i = 0; i < this.loadedPosts.length; i++) {
+                if (this.loadedPosts[i].filter == filter) {
+                    return this.loadedPosts[i].posts;
+                }
+            }
+            return null;
+        },
+        queryPosts(filter) {
             /*
             // CACHE TEST!!!
             let isCacheSupported = "caches" in window;
@@ -112,17 +126,29 @@ export default {
                 });
             }
             */
-            // Get the posts
-            GraphQLService.fetchPosts(
-                "newest",
-                this.$store.getters.accessToken
-            ).then((res) => {
-                // pass in the new post data to the home page main components
-                this.posts = res.data.getPosts;
-            });
+            const alreadyLoadedPosts = this.postsInMemory(filter);
 
+            if (alreadyLoadedPosts) {
+                this.posts = alreadyLoadedPosts;
+            } else {
+                // Get the posts
+                GraphQLService.fetchPosts(
+                    filter,
+                    this.$store.getters.accessToken
+                ).then((res) => {
+                    // pass in the new post data to the home page main components
+                    this.posts = res.data.getPosts;
+                    console.log(this.posts);
+                    
+                    // keep old loaded posts in memory
+                    this.loadedPosts.push({
+                        filter: filter,
+                        posts: res.data.getPosts
+                    });
+                });
+            }
             // if the user is logged in then ask for their notifications
-            if (this.$store.getters.accessToken) {
+            if (this.$store.getters.accessToken && !this.notifications) {
                 GraphQLService.fetchPersonalDetails(
                     this.$store.getters.accessToken,
                     ["notifications {sender message read type }"]

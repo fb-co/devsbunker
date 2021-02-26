@@ -84,6 +84,7 @@ export default {
                 collaborators: payload.collaborators,
                 tags: payload.tags,
                 likes: [],
+                likeAmt: 0,
                 price: payload.price,
                 bunkerTag: payload.bunkerTag,
                 clip: payload.clip,
@@ -128,6 +129,7 @@ export default {
                         throw new Error("You have already liked this post");
                     } else {
                         post.likes.push(jwtPayload.username);
+                        post.likeAmt++;
 
                         await post.save();
                         
@@ -189,7 +191,7 @@ export default {
                             collaborators: post.collaborators,
                             tags: post.tags,
                             likes: post.likes,
-                            likeAmt: post.likes.length,
+                            likeAmt: post.likeAmt || post.likes.length,
                             isSaved: user.saved_posts.includes(jwtPayload.username),
                             isLiked: true,
                             price: post.price,
@@ -222,6 +224,7 @@ export default {
 
                     if (index !== -1) {
                         post.likes.splice(index, 1);
+                        post.likeAmt--;
 
                         await post.save();
 
@@ -246,7 +249,7 @@ export default {
                                     collaborators: post.collaborators,
                                     tags: post.tags,
                                     likes: post.likes,
-                                    likeAmt: post.likes.length,
+                                    likeAmt: post.likeAmt || post.likes.length,
                                     isSaved: user.saved_posts.includes(jwtPayload.username),
                                     isLiked: false,
                                     price: post.price,
@@ -293,7 +296,7 @@ export default {
                                 collaborators: post.collaborators,
                                 tags: post.tags,
                                 likes: post.likes,
-                                likeAmt: post.likes.length,
+                                likeAmt: post.likeAmt || post.likes.length,
                                 isLiked: post.likes.includes(jwtPayload.username),
                                 isSaved: true,
                                 price: post.price,

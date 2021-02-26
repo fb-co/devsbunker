@@ -185,7 +185,7 @@ export default {
 }
 .scrollable_center {
     overflow-y: scroll;
-    height: calc(100vh - var(--header-height) - 50px);
+    height: calc(100vh - var(--header-height));
 }
 .language_cycler_container {
     display: flex;
@@ -270,7 +270,7 @@ export default {
 }
 
 .load_more_btn {
-    margin: 0 auto;
+    margin: 0 auto 40px auto;
     border-radius: 5px;
     padding: 10px;
     border: 1px solid black;
