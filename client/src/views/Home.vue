@@ -138,8 +138,6 @@ export default {
                 ).then((res) => {
                     // pass in the new post data to the home page main components
                     this.posts = res.data.getPosts;
-                    console.log(this.posts);
-                    
                     // keep old loaded posts in memory
                     this.loadedPosts.push({
                         filter: filter,

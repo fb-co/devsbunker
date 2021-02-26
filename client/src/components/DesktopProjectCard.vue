@@ -156,7 +156,7 @@
             </div>
         </div>
         <div class="image_container">
-            <DynamicPicture :image_link="getThumbnail()" class="card_image" />
+            <DynamicPicture :image_link="this.thumbnail_link" class="card_image" />
 
             <!--
             <img
@@ -178,11 +178,12 @@ export default {
             likeIsActive: false,
             descToShow: this.projectData.description.length > 200 ?
                 this.projectData.description.substring(0, 200).substring(0, this.projectData.description.substring(0, 200).lastIndexOf(" ")) + " ..." :
-                this.projectData.description
+                this.projectData.description,
+            thumbnail_link: undefined
         };
     },
     created() {
-        console.log();
+        this.thumbnail_link = this.getThumbnail();
     },
     props: {
         projectData: Object,
@@ -203,6 +204,11 @@ export default {
                 }
             }
             return "../../../uploads/profile_pics/profilePlaceholder.png";
+        }
+    },
+    watch: {
+        projectData: function(newVal) {
+            this.thumbnail_link = newVal.images[0].dbname || "../../../uploads/profile_pics/profilePlaceholder.png";
         }
     }
 };

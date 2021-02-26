@@ -22,6 +22,13 @@ export default {
         };
     },
 
+    // update the image link if the prop changes
+    watch: {
+        image_link: function(newVal) {
+            this.full_path = `${process.env.VUE_APP_IMG_STATIC_ASSETS}${newVal}`;
+        }
+    },
+
     created() {
         this.full_path = `${process.env.VUE_APP_IMG_STATIC_ASSETS}${this.image_link}`;
     },
