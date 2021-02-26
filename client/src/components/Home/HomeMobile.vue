@@ -31,19 +31,7 @@
                         <div class="header_right_cont">
                             <p class="username_welcome">{{ "Hello " + $store.getters.username + "!" }}</p>
 
-<<<<<<< HEAD
-                            <Dropdown
-                                :label="postFeedFilter"
-                                fontSize="12px"
-                                linkHeight="40px"
-                                height="30px"
-                                justifyLabel="left"
-                                class="filter_dropdown"
-                                @itemSelected="updateFilterDropdown"
-                            >
-=======
                             <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
->>>>>>> 14200dd6ffa47105586e64a0565123c07665b015
                                 <button>Newest</button>
                                 <button>Most Popular</button>
                                 <button>Alphabetical</button>
@@ -65,19 +53,7 @@
 
             <!-- BUG: Buttons get transperent -->
             <div style="margin-bottom: 30px" v-else>
-<<<<<<< HEAD
-                <Dropdown
-                    :label="postFeedFilter"
-                    fontSize="12px"
-                    linkHeight="40px"
-                    height="30px"
-                    justifyLabel="left"
-                    class="filter_dropdown"
-                    @itemSelected="updateFilterDropdown"
-                >
-=======
                 <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
->>>>>>> 14200dd6ffa47105586e64a0565123c07665b015
                     <button>Newest</button>
                     <button>Most Popular</button>
                     <button>Alphabetical</button>
