@@ -31,7 +31,7 @@
                         <div class="header_right_cont">
                             <p class="username_welcome">{{ "Hello " + $store.getters.username + "!" }}</p>
 
-                            <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
+                            <Dropdown @itemSelected="updateFilterDropdown" :label="postFeedFilter" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
                                 <button>Newest</button>
                                 <button>Most Popular</button>
                                 <button>Alphabetical</button>
@@ -53,7 +53,7 @@
 
             <!-- BUG: Buttons get transperent -->
             <div style="margin-bottom: 30px" v-else>
-                <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
+                <Dropdown @itemSelected="updateFilterDropdown" :label="postFeedFilter" fontSize="12px" linkHeight="40px" height="30px" justifyLabel="left" class="filter_dropdown">
                     <button>Newest</button>
                     <button>Most Popular</button>
                     <button>Alphabetical</button>
