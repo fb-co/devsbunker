@@ -1,6 +1,6 @@
 <template>
     <div class="mobile_post_container">
-        <div class="custom_header_container">
+        <div class="custom_header_container" ref="image_div">
             <div class="header_actions">
                 <svg
                     @click="back()"
@@ -66,15 +66,14 @@
                     <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                 </svg>
             </div>
-            <!-- THIS IS ABSOLUTE GARBAGE LMAO --->
             <div class="placeholder">
-                <img :src="postThumbnail" alt="No Image" />
+                
             </div>
             <!-- Placeholder -->
             <div class="post_header_details">
                 <p class="postname">{{ projectData.title }}</p>
-                <p class="postauthor">
-                    <span style="color: var(--soft-text)">By:</span>
+                <p>
+                    <span>By:</span>
                     {{ projectData.author }}
                 </p>
             </div>
@@ -115,6 +114,9 @@ export default {
 
         this.postThumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
     },
+    mounted() {
+        this.$refs.image_div.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) ), url('${ this.postThumbnail }')`;
+    },
     methods: {
         back() {
             this.$router.go(-1);
@@ -133,11 +135,6 @@ export default {
     width: 100%;
 }
 
-.placeholder img {
-    width: 100%;
-    height: 100%;
-}
-
 .custom_header_container {
     display: flex;
     flex-direction: column;
@@ -147,6 +144,7 @@ export default {
     border-bottom-right-radius: 50px;
     padding: 30px 30px 40px 30px;
     box-shadow: 0px -8px 20px var(--main-font-color);
+    background-size: cover;
 }
 .header_actions {
     width: 100%;
@@ -157,6 +155,7 @@ export default {
     display: flex;
     flex-direction: column;
     text-align: left;
+    color: #fff;
 }
 .save_post_container {
     display: flex;
@@ -164,14 +163,12 @@ export default {
     justify-content: center;
     height: 30px;
     margin-right: 20px;
+    
 }
 .postname {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-}
-.postauthor {
-    color: var(--main-font-color);
 }
 .newPostTag {
     padding: 15px 30px 15px 30px;
