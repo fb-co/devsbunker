@@ -10,6 +10,7 @@ import MyUserProfile from "@/components/User/MyUserProfile.vue";
 import Loading from "@/components/Loading.vue";
 
 import UserService from "../services/user.service";
+import SharedMethods from '../utils/shared';
 
 export default {
     // mapping components to a value
@@ -25,10 +26,10 @@ export default {
         };
     },
     async created() {
+        SharedMethods.loadPage();
         // The problem with this is that when you re-fresh from some route it takes you back to /projects, so im not sure if its a plausible fix
         //this.$router.push('/user/' + this.$route.params.username + '/projects'); // Route the user to the projects tab so something shows up in the profile card
 
-        this.$store.dispatch("setLoggedInState");
         this.profileComponentGateway();
     },
 

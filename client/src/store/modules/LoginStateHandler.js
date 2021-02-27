@@ -25,11 +25,13 @@ const getters = {
     isLoggedIn: (state) => state.isLoggedIn,
     username: (state) => state.username,
     accessToken: (state) => state.accessToken,
+    //profilePic: (state) => state.profilePic,
 };
 
 const actions = {
     setLoggedInState({ commit }) {
         UserService.isLoggedIn().then((result) => {
+            console.log(result);
             commit("changeLoggedInState", !!result.user);
             commit("changeUsername", result.user?.username);
         });

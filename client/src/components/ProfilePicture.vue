@@ -41,7 +41,7 @@
         <ImageCropperPopup
             v-if="forUpload"
             ref="cropper"
-            v-on:success="reload($event)"
+            @success="reload($event)"
         />
 
         <p ref="file_upload_label" class="file_upload_name"></p>
@@ -86,22 +86,7 @@ export default {
         },
     },
     created() {
-        // fetch the users profile image link (THIS SHOULD BE CACHED EVENTULLY)
-        GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
-            obj => {
-                if (obj.data.user.profile_pic) {
-                    if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
-                        this.default_image = true;
-                        this.image_link = obj.data.user.profile_pic;
-                    } else {
-                        this.default_image = false;
-                        this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
-                    }
-                } else {
-                    console.log("err");
-                }
-            }
-        );
+        this.fetchImageLink();
     },
     computed: {
         cssProps() {
@@ -131,13 +116,32 @@ export default {
         undarkenImage() {
             this.$refs.main_image.style.filter = "brightness(100%)";
         },
+        
         reload(status) {
-            console.log("parent: got reload", status);
             if (status) {
-                // doesnt reach this
-                console.log("emitting");
-                this.$emit("success", status);
+                this.fetchImageLink();
+                //this.$emit("success", status);
+            } else {
+                // SHOW AN ERROR TO THE USER HERE
             }
+        },
+        fetchImageLink() {
+            // fetch the users profile image link (THIS SHOULD BE CACHED EVENTULLY)
+            GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
+                obj => {
+                    if (obj.data.user.profile_pic) {
+                        if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
+                            this.default_image = true;
+                            this.image_link = obj.data.user.profile_pic;
+                        } else {
+                            this.default_image = false;
+                            this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
+                        }
+                    } else {
+                        console.log("err");
+                    }
+                }
+            );
         }
     }
 };

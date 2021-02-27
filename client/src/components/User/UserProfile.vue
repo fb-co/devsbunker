@@ -98,7 +98,6 @@
 </template>
 
 <script>
-import SharedMethods from "@/utils/shared";
 import GraphQLService from "@/services/graphql.service";
 
 export default {
@@ -109,7 +108,6 @@ export default {
         };
     },
     async created() {
-        SharedMethods.loadPage();
         this.username = this.$route.params.username;
 
         GraphQLService.fetchUserDetails(

@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import SharedMethods from "@/utils/shared";
 import ProfileMobile from "./mobile/ProfileOwner.vue";
 import ProfileDesktop from "./desktop/ProfileOwner.vue";
 import GraphQLService from "@/services/graphql.service";
@@ -21,8 +20,6 @@ export default {
         };
     },
     created() {
-        SharedMethods.loadPage();
-
         // get the user object, will be given to all children to avoid excessive calls to the server
         GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, [
             "desc",

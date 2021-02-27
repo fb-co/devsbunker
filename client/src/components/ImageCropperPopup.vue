@@ -66,9 +66,7 @@ export default {
                 this.file,
                 this.$store.getters.accessToken
             ).then(res => {
-                console.log(res);
                 if (res.data) {
-                    console.log("hi");
                     this.$emit("success", true);
                 } else {
                     this.$emit("success", false);

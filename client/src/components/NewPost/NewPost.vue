@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import SharedMethods from "@/utils/shared";
 
 import NewPostMobile from "@/components/NewPost/NewPostMobile.vue";
 
@@ -19,9 +18,6 @@ export default {
     },
     components: {
         NewPostMobile,
-    },
-    created() {
-        SharedMethods.loadPage();
     },
 
     methods: {
