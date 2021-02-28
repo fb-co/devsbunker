@@ -125,20 +125,6 @@ const SharedMethods = {
     loadPage: function() {
         this.initTheme();
     },
-    //Only works with basic one level deep objects so far
-    objectToString: function(obj) {
-        let str = "{";
-
-        const objectKeys = Object.keys(obj);
-        const objectValues = Object.values(obj);
-
-        for (let i = 0; i < objectKeys.length; i++) {
-            str += objectKeys[i] + ": " + objectValues[i] + ",";
-        }
-        str += "}";
-
-        return str;
-    },
 };
 
 export default SharedMethods;
