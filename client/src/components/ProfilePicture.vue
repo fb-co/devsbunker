@@ -51,6 +51,7 @@
 <script>
 //'@/assets/profile_pictures/profilePlaceholder.png'
 import GraphQLService from "../services/graphql.service";
+import CacheService from "../services/cache.service";
 import ImageCropperPopup from "@/components/ImageCropperPopup.vue";
 
 export default {
@@ -126,6 +127,8 @@ export default {
             }
         },
         fetchImageLink() {
+            CacheService.getProfilePicLink();
+            
             // fetch the users profile image link (THIS SHOULD BE CACHED EVENTULLY)
             GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
                 obj => {

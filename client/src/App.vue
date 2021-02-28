@@ -36,6 +36,9 @@ export default {
         await this.$store.dispatch("setLoggedInState");
         this.$store.dispatch("checkMobile");
 
+        // check if caching is supported and shove it into the store
+        this.$store.dispatch("checkCacheSupport");
+
         this.isFetching = false;
     },
 };
