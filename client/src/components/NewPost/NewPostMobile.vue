@@ -599,11 +599,11 @@ export default {
     background-color: var(--main-accent);
     border: none;
     outline: none;
-    border-radius: 5px;
-    width: 125px;
+    border-radius: 12px;
+    width: 75%;
     height: 40px;
     color: #fff;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: bold;
     margin: 0px auto 40px auto;
     cursor: pointer;
