@@ -175,7 +175,7 @@ export default {
                             }
 
                             if (shouldNotify) {
-                                userToNotify.notifications.push(notification);
+                                userToNotify.notifications.unshift(notification);
                             }
                             await userToNotify.save();
                         }

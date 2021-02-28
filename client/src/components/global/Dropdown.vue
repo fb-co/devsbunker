@@ -140,6 +140,7 @@ export default {
     margin-left: 10px;
 }
 .menu .menu_cont {
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     position: absolute;
     z-index: 15;
 }

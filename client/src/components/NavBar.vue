@@ -77,7 +77,7 @@
 
                         <div class="burger_menu_cont" id="main_burger_menu">
                             <!-- make sure not to make that function have '()' because I not giving the directive the return value! -->
-                            <div class="burger_cont_links">
+                            <div class="burger_cont_links" @click="hideBurgerMenu()">
                                 <input placeholder="Search..." class="light_input_selection" />
 
                                 <!--<router-link to="/">Home</router-link>-->

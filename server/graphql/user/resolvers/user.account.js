@@ -435,7 +435,7 @@ export default {
 
                 if (personToNotify) {
                     // limit the amount of notifications here (if len > x : delete the oldest)
-                    personToNotify.notifications.push(notificationPayload);
+                    personToNotify.notifications.unshift(notificationPayload);
 
                     await personToNotify.save();
 
