@@ -196,7 +196,7 @@ export default {
 }
 
 .follow_button {
-    background-color: var(--main-btn-color);
+    background-color: var(--main-accent);
     border: none;
     outline: none;
     border-radius: 5px;
@@ -209,7 +209,7 @@ export default {
     cursor: pointer;
 }
 .follow_button:hover {
-    box-shadow: 0px 4px 20px var(--main-btn-color);
+    box-shadow: 0px 4px 20px var(--main-accent);
 }
 
 .link_item {
@@ -232,7 +232,7 @@ export default {
 }
 
 .link_item:hover {
-    border-left: 3px solid var(--main-btn-color);
+    border-left: 3px solid var(--main-accent);
     background: var(--hover-effect);
 }
 
@@ -242,10 +242,10 @@ export default {
 }
 
 .link_item:hover svg {
-    stroke: var(--main-btn-color);
+    stroke: var(--main-accent);
 }
 .active_link {
-    border-left: 3px solid var(--main-btn-color);
+    border-left: 3px solid var(--main-accent);
     background: var(--hover-effect);
 }
 

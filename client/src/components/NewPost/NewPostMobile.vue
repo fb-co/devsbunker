@@ -23,23 +23,11 @@
             </div>
             <GeneralInput ref="postTitle" class="field" label="Post Title" />
 
-            <GeneralInput
-                class="field"
-                label="Post Description"
-                ref="postDesc"
-                :isTextArea="true"
-            />
+            <GeneralInput class="field" label="Post Description" ref="postDesc" :isTextArea="true" />
 
             <div class="upload-card">
-                <form
-                    v-on:submit.prevent="createPost()"
-                    enctype="multipart/form-data"
-                >
-                    <div
-                        v-if="!files.length"
-                        class="file-area"
-                        @click="extendInput('upload-link')"
-                    >
+                <form v-on:submit.prevent="createPost()" enctype="multipart/form-data">
+                    <div v-if="!files.length" class="file-area" @click="extendInput('upload-link')">
                         <svg
                             id="upload-icon"
                             xmlns="http://www.w3.org/2000/svg"
@@ -54,42 +42,25 @@
                             stroke-linejoin="round"
                         >
                             <path stroke="none" d="M0 0h24v24H0z" />
-                            <path
-                                d="M7 18a4.6 4.4 0 0 1 0 -9h0a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-1"
-                            />
+                            <path d="M7 18a4.6 4.4 0 0 1 0 -9h0a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-1" />
                             <polyline points="9 15 12 12 15 15" />
                             <line x1="12" y1="12" x2="12" y2="21" />
                         </svg>
 
                         <div class="upload-text">
-                            <input
-                                class="input-file"
-                                type="file"
-                                name="files[]"
-                                @change="handleFiles($event)"
-                                id="file"
-                                multiple
-                                accept=".jpg, .png, .jpeg, .gif"
-                            />
-                            <label for="file"
-                                ><span id="upload-link"
-                                    ><strong>Choose</strong></span
-                                >
-                                files.</label
-                            >
+                            <input class="input-file" type="file" name="files[]" @change="handleFiles($event)" id="file" multiple accept=".jpg, .png, .jpeg, .gif" />
+                            <label for="file">
+                                <span id="upload-link">
+                                    <strong>Choose</strong>
+                                </span>
+                                files.
+                            </label>
                         </div>
                     </div>
 
                     <div v-if="files.length" class="file-uploaded">
                         <div class="folder-icon">
-                            <svg
-                                width="30px"
-                                height="30px"
-                                viewBox="0 0 16 16"
-                                class="bi bi-folder-fill"
-                                fill="var(--main-btn-color)"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
+                            <svg width="30px" height="30px" viewBox="0 0 16 16" class="bi bi-folder-fill" fill="var(--main-accent)" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     fill-rule="evenodd"
                                     d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"
@@ -99,11 +70,7 @@
 
                         <h2 class="uploading-header">Your files</h2>
 
-                        <div
-                            class="file"
-                            v-for="(file, index) in files"
-                            :key="index"
-                        >
+                        <div class="file" v-for="(file, index) in files" :key="index">
                             <div class="wrapper">
                                 <div class="icon-container">
                                     <svg
@@ -120,9 +87,7 @@
                                     >
                                         <path stroke="none" d="M0 0h24v24H0z" />
                                         <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                        <path
-                                            d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"
-                                        />
+                                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
                                     </svg>
                                 </div>
 
@@ -130,10 +95,7 @@
                                     <p>{{ file.name }}</p>
                                 </div>
 
-                                <div
-                                    class="remove-file"
-                                    @click="removeFile(index)"
-                                >
+                                <div class="remove-file" @click="removeFile(index)">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         class="icon icon-tabler icon-tabler-trash"
@@ -150,21 +112,14 @@
                                         <line x1="4" y1="7" x2="20" y2="7" />
                                         <line x1="10" y1="11" x2="10" y2="17" />
                                         <line x1="14" y1="11" x2="14" y2="17" />
-                                        <path
-                                            d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
-                                        />
-                                        <path
-                                            d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
-                                        />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                                     </svg>
                                 </div>
                             </div>
                         </div>
 
-                        <div
-                            class="add-file-area"
-                            @click="extendInput('add-link')"
-                        >
+                        <div class="add-file-area" @click="extendInput('add-link')">
                             <svg
                                 id="add-file"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -180,29 +135,19 @@
                             >
                                 <path stroke="none" d="M0 0h24v24H0z" />
                                 <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                <path
-                                    d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"
-                                />
+                                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
                                 <line x1="12" y1="11" x2="12" y2="17" />
                                 <line x1="9" y1="14" x2="15" y2="14" />
                             </svg>
 
                             <div class="upload-text">
-                                <input
-                                    class="add-file-input"
-                                    type="file"
-                                    name="addfiles[]"
-                                    @change="handleFiles($event)"
-                                    id="added-file"
-                                    multiple
-                                    accept=".jpg, .png, .jpeg, .gif"
-                                />
-                                <label for="added-file"
-                                    ><span id="add-link"
-                                        ><strong>Add</strong></span
-                                    >
-                                    files.</label
-                                >
+                                <input class="add-file-input" type="file" name="addfiles[]" @change="handleFiles($event)" id="added-file" multiple accept=".jpg, .png, .jpeg, .gif" />
+                                <label for="added-file">
+                                    <span id="add-link">
+                                        <strong>Add</strong>
+                                    </span>
+                                    files.
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -212,12 +157,7 @@
             <div class="tag_container">
                 <p>Add Collaborators</p>
                 <div class="add_tags">
-                    <CreateTag
-                        v-for="contributer in contributers"
-                        :key="contributer"
-                        :label="contributer"
-                        tagType="user"
-                    />
+                    <CreateTag v-for="contributer in contributers" :key="contributer" :label="contributer" tagType="user" />
 
                     <div class="add_icon_container">
                         <svg
@@ -234,12 +174,8 @@
                             stroke-linejoin="round"
                         >
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path
-                                d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
-                            />
-                            <path
-                                d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
-                            />
+                            <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                            <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
                             <line x1="16" y1="5" x2="19" y2="8" />
                         </svg>
                     </div>
@@ -249,12 +185,7 @@
             <div class="tag_container">
                 <p>Add Tags</p>
                 <div class="add_tags">
-                    <CreateTag
-                        v-for="tag in tags"
-                        :key="tag"
-                        :label="tag"
-                        tagType="lang"
-                    />
+                    <CreateTag v-for="tag in tags" :key="tag" :label="tag" tagType="lang" />
 
                     <div class="add_icon_container">
                         <svg
@@ -271,12 +202,8 @@
                             stroke-linejoin="round"
                         >
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path
-                                d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
-                            />
-                            <path
-                                d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
-                            />
+                            <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                            <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
                             <line x1="16" y1="5" x2="19" y2="8" />
                         </svg>
                     </div>
@@ -290,7 +217,7 @@
                     <!--
                 <LinkBlock link="https://www.figma.com/file/3PE210hyAyBOdf4c8Yk037/devsBunker?node-id=321%3A0" />
                 <LinkBlock link="https://www.github.com" />
-                -->
+                    -->
                     <div class="add_icon_container">
                         <svg
                             @click="$refs.links_popup.open()"
@@ -306,12 +233,8 @@
                             stroke-linejoin="round"
                         >
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path
-                                d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"
-                            />
-                            <path
-                                d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"
-                            />
+                            <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                            <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
                             <line x1="16" y1="5" x2="19" y2="8" />
                         </svg>
                     </div>
@@ -327,43 +250,15 @@
                 </div>
             -->
 
-            <button @click="createPost()" class="create_post_button">
-                Post
-            </button>
+            <button @click="createPost()" class="create_post_button">Post</button>
         </div>
 
         <!-- Sub-Popups -->
-        <NewTagPopup
-            ref="contrib_popup"
-            label="Add Contributers"
-            name="add_contributers"
-            :entries="contributers"
-            searchFor="users"
-            style="position: fixed"
-        />
-        <NewTagPopup
-            ref="tags_popup"
-            label="Add Tags"
-            name="add_tags"
-            :entries="tags"
-            searchFor="languages"
-            style="position: fixed"
-        />
-        <NewTagPopup
-            ref="links_popup"
-            label="Add Links"
-            name="add_links"
-            :entries="links"
-            searchFor="links"
-            inputPlaceholder="Paste URL..."
-            style="position: fixed"
-        />
+        <NewTagPopup ref="contrib_popup" label="Add Contributers" name="add_contributers" :entries="contributers" searchFor="users" style="position: fixed" />
+        <NewTagPopup ref="tags_popup" label="Add Tags" name="add_tags" :entries="tags" searchFor="languages" style="position: fixed" />
+        <NewTagPopup ref="links_popup" label="Add Links" name="add_links" :entries="links" searchFor="links" inputPlaceholder="Paste URL..." style="position: fixed" />
 
-        <ErrorPopUp
-            v-if="error"
-            @display-popup="error = $event"
-            :msg="errmsg"
-        />
+        <ErrorPopUp v-if="error" @display-popup="error = $event" :msg="errmsg" />
         <SuccessPopUp v-if="success" message="Successfully created new post" />
     </div>
 </template>
@@ -594,7 +489,7 @@ export default {
     padding-left: 10px;
 }
 .add_store_container > button {
-    background-color: var(--main-btn-color);
+    background-color: var(--main-accent);
     border: none;
     outline: none;
     border-radius: 5px;
@@ -607,7 +502,7 @@ export default {
     cursor: pointer;
 }
 .add_store_container > button:hover {
-    box-shadow: 0px 4px 20px var(--main-btn-color);
+    box-shadow: 0px 4px 20px var(--main-accent);
 }
 */
 
@@ -701,7 +596,7 @@ export default {
 }
 
 .create_post_button {
-    background-color: var(--main-btn-color);
+    background-color: var(--main-accent);
     border: none;
     outline: none;
     border-radius: 5px;
@@ -714,7 +609,7 @@ export default {
     cursor: pointer;
 }
 .create_post_button:hover {
-    box-shadow: 0px 4px 20px var(--main-btn-color);
+    box-shadow: 0px 4px 20px var(--main-accent);
 }
 
 .add_image:hover {

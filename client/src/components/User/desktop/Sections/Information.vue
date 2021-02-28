@@ -43,7 +43,7 @@
             -->
             <div class="input_section">
                 <p class="input_label">Email</p>
-                <input ref="email_field" class="info_input" placeholder="" :value="userObject.email" />
+                <input ref="email_field" class="info_input" placeholder :value="userObject.email" />
             </div>
         </div>
         <button @click="saveDetails()" class="save_button">Save</button>
@@ -61,13 +61,14 @@ export default {
             userObject: this.$parent.userObject,
             isEditingDesc: false,
         };
-    },  
+    },
     components: {
         ProfilePicture,
     },
     methods: {
         editDesc() {
-            this.$el.getElementsByClassName("edit_desc")[0].style.display = "flex";
+            this.$el.getElementsByClassName("edit_desc")[0].style.display =
+                "flex";
             this.$el.getElementsByClassName("edit_desc")[0].focus();
             this.isEditingDesc = true;
         },
@@ -85,11 +86,16 @@ export default {
 
                 this.userObject.desc = textArea.value;
 
-                const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{ field: "desc", newValue: textArea.value }]);
+                const response = await GraphQLService.updateUserDetails(
+                    this.$store.getters.accessToken,
+                    [{ field: "desc", newValue: textArea.value }]
+                );
 
                 if (response.data.updateUserDetails.message) {
-                    const changedValue = response.data.updateUserDetails.changedData[0]; // this refrences zero because the updateUserDetails mutation has the possibility of returning more than one change
-                    this.$el.getElementsByClassName("desc")[0].innerText = changedValue.newValue;
+                    const changedValue =
+                        response.data.updateUserDetails.changedData[0]; // this refrences zero because the updateUserDetails mutation has the possibility of returning more than one change
+                    this.$el.getElementsByClassName("desc")[0].innerText =
+                        changedValue.newValue;
                 }
             }
         },
@@ -101,14 +107,20 @@ export default {
             }
             */
             if (this.$refs.email_field.value != this.userObject.email) {
-                fields.push({ field: "email", newValue: this.$refs.email_field.value });
+                fields.push({
+                    field: "email",
+                    newValue: this.$refs.email_field.value,
+                });
             }
-            
+
             if (fields.length > 0) {
-                GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
+                GraphQLService.updateUserDetails(
+                    this.$store.getters.accessToken,
+                    fields
+                ).then((res) => {
                     console.log("Details Successfully Changed" + res);
                 });
-            } 
+            }
         },
     },
 };
@@ -183,8 +195,8 @@ export default {
 }
 .info_input:focus {
     outline: none;
-    border: 1px solid var(--main-btn-color);
-    box-shadow: 0px 4px 5px var(--main-btn-color);
+    border: 1px solid var(--main-accent);
+    box-shadow: 0px 4px 5px var(--main-accent);
 }
 .input_label {
     font-weight: bold;
@@ -192,7 +204,7 @@ export default {
     margin-bottom: 15px;
 }
 .save_button {
-    background-color: var(--main-btn-color);
+    background-color: var(--main-accent);
     border: none;
     outline: none;
     border-radius: 5px;

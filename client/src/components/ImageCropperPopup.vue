@@ -1,12 +1,7 @@
 <!--Parent element must have a function to close it closeCropper() -->
 <template>
-    <div
-        @click="close()"
-        ref="cropper"
-        class="image_cropper_container"
-        :key="reload"
-    >
-        <div @click.stop="" class="popup_container">
+    <div @click="close()" ref="cropper" class="image_cropper_container" :key="reload">
+        <div @click.stop class="popup_container">
             <div class="x-button">
                 <svg
                     @click="close()"
@@ -46,7 +41,7 @@ export default {
         return {
             image_url: null,
             file: null,
-            reload: 0
+            reload: 0,
         };
     },
     methods: {
@@ -65,7 +60,7 @@ export default {
             FileUploadService.uploadProfilePic(
                 this.file,
                 this.$store.getters.accessToken
-            ).then(res => {
+            ).then((res) => {
                 if (res.data) {
                     this.$emit("success", true);
                 } else {
@@ -74,8 +69,8 @@ export default {
             });
 
             this.close();
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -121,15 +116,15 @@ export default {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: var(--main-btn-color);
+    background-color: var(--main-accent);
     color: #fff;
-    border: 1px solid var(--main-btn-color);
+    border: 1px solid var(--main-accent);
     cursor: pointer;
     margin: 0px auto 20px auto;
 }
 .upload_button:hover {
     outline: none;
-    box-shadow: 0px 4px 5px var(--main-btn-color);
+    box-shadow: 0px 4px 5px var(--main-accent);
 }
 
 .demo_image {

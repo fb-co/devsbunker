@@ -154,10 +154,10 @@ export default {
     height: 100%;
     width: 50%;
     cursor: pointer;
-    border: 1px solid var(--main-btn-color);
+    border: 1px solid var(--main-accent);
 }
 .personal_btn:hover {
-    background-color: var(--main-btn-color);
+    background-color: var(--main-accent);
     height: 100%;
     width: 50%;
 }
@@ -172,7 +172,7 @@ export default {
     width: 100%;
 }
 .active_section {
-    background-color: var(--main-btn-color);
+    background-color: var(--main-accent);
 }
 .active_section > p {
     color: #fff;
@@ -214,7 +214,7 @@ export default {
     display: inline-block;
     width: 100%;
     text-decoration: none;
-    background-color: var(--main-btn-color);
+    background-color: var(--main-accent);
     color: #fff;
     border-radius: 30px;
     width: 70px;
@@ -229,7 +229,7 @@ input[type="submit"] {
     font-weight: 900;
     text-align: center;
     color: #fff;
-    background-color: var(--main-btn-color);
+    background-color: var(--main-accent);
     border-radius: 16px;
     padding: 0px 0px;
     cursor: pointer;

@@ -14,7 +14,7 @@ const Themes = {
         settingsMobileCard: "#FFFFFF",
         burgerMenuBG: "#2a2a2a",
         burgerTextColor: "hsla(0, 0%, 100%, 0.5)",
-        mainBtnColor: "#49CCE5",
+        mainAccent: "#49CCE5",
         generalCard: "#e3e8ef",
         profileOptionColor: "#656565",
         hoverEffect:
@@ -34,7 +34,7 @@ const Themes = {
         settingsMobileCard: "#2E2E2E",
         burgerMenuBG: "#ededed",
         burgerTextColor: "hsla(0, 0%, 5%, 0.7)",
-        mainBtnColor: "#04C290",
+        mainAccent: "#04C290",
         generalCard: "#2E2E2E",
         profileOptionColor: "#949494",
         hoverEffect: "linear-gradient(90deg, black 3%, #2e2e2e 100%)",
@@ -93,10 +93,7 @@ const SharedMethods = {
             "--burger-textColor",
             themeObj.burgerTextColor
         );
-        document.body.style.setProperty(
-            "--main-btn-color",
-            themeObj.mainBtnColor
-        );
+        document.body.style.setProperty("--main-accent", themeObj.mainAccent);
         document.body.style.setProperty("--general-card", themeObj.generalCard);
         document.body.style.setProperty(
             "--profile-option-color",

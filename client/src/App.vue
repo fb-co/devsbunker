@@ -53,7 +53,7 @@ export default {
     --footer-size: 60px;
     --header-height: 80px;
 
-    --main-color: #212020;
+    --main-color: #16171b;
     --secondary-color: #2e2e2e;
     --main-font-color: #f2f2f2;
     --error-red: #c50000;
