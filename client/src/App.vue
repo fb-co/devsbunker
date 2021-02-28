@@ -64,7 +64,7 @@ export default {
     --soft-text: rgba(242, 242, 242, 0.5);
     --settings-mobile-card: #2e2e2e;
     --burger-menu-bg: #2a2a2a;
-    --main-btn-color: #49cce5;
+    --main-accent: #49cce5;
 
     /* profile page */
     --profile-option-color: #656565;

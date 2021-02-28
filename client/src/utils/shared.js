@@ -34,7 +34,7 @@ const Themes = {
         settingsMobileCard: "#2E2E2E",
         burgerMenuBG: "#ededed",
         burgerTextColor: "hsla(0, 0%, 5%, 0.7)",
-        mainAccent: "#04C290",
+        mainAccent: "#8040E9",
         generalCard: "#2E2E2E",
         profileOptionColor: "#949494",
         hoverEffect: "linear-gradient(90deg, black 3%, #2e2e2e 100%)",
