@@ -33,6 +33,7 @@ export default {
     },
     async beforeMount() {
         await this.$store.dispatch("autoRefreshAccessToken");
+        await this.$store.dispatch("setLoggedInState");
         this.$store.dispatch("checkMobile");
 
         this.isFetching = false;

@@ -98,10 +98,7 @@ export default {
             showSearchResults: false,
         };
     },
-    created() {
-        // refresh the store
-        this.$store.dispatch("setLoggedInState");
-    },
+
     props: {
         projects: Array,
         postFeedFilter: String,
