@@ -58,7 +58,7 @@ export default {
     margin: 40px auto 0px auto;
     width: 50%;
     max-width: 650px;
-    min-width: 300px;
+    min-width: 400px;
 }
 .notifications_header {
     color: var(--main-font-color);
