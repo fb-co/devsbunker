@@ -1,5 +1,4 @@
 import UserService from "@/services/user.service";
-// import SharedMethods from "@/utils/shared";
 
 const state = {
     isLoggedIn: false,
