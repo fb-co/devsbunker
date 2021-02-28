@@ -89,7 +89,7 @@ export default {
     props: {
         projects: Array,
         fetchedAll: Boolean,
-        postFeedFilter: String
+        postFeedFilter: String,
     },
     methods: {
         /*
@@ -119,7 +119,7 @@ export default {
         */
         // emit the data again to get it to the parent component where the localstorage can be updated
         updateFilterDropdown(value) {
-            this.$emit('updateFilterDropdown', value);
+            this.$emit("updateFilterDropdown", value);
         },
         makeNewPost() {
             this.$parent.openPostMenu();
@@ -221,7 +221,7 @@ export default {
 .underline {
     width: 25px;
     height: 4px;
-    background-color: var(--accent);
+    background-color: var(--main-accent);
     margin: 0 auto;
 }
 .switcher_container > div > p {

@@ -28,11 +28,7 @@
                         <div style="flex-grow: 1"></div>
                         <!-- Placeholder -->
                         <div class="follow_btn_container">
-                            <FollowButton 
-                                :initialState="authorData.isFollowing" 
-                                :username="projectData.author" 
-                                v-if="projectData.author != this.$store.getters.username"
-                            />
+                            <FollowButton :initialState="authorData.isFollowing" :username="projectData.author" v-if="projectData.author != this.$store.getters.username" />
                         </div>
                     </div>
                 </div>
@@ -154,7 +150,7 @@ export default {
     color: var(--secondary-color);
     background-color: var(--main-font-color);
     border-radius: 2px;
-    box-shadow: 3px 3px 0 var(--accent);
+    box-shadow: 3px 3px 0 var(--main-accent);
     font-size: 250%;
     padding: 6px 3px;
     margin-right: 6px;

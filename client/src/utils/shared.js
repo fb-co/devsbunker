@@ -23,7 +23,7 @@ const Themes = {
     },
     dark: {
         mainColor: "#171717",
-        secondaryColor: "#2E2E2E",
+        secondaryColor: "#2e2e2e",
         mainFontColor: "#f2f2f2",
         errorRed: "#c50000",
         accent: "#2c6975",

@@ -3,17 +3,15 @@
 <template>
     <div class="menu_container no_select" :style="style">
         <div class="nav_container">
-            <div
-                class="burger_blur"
-                id="burger_menu_blur"
-                @click="hideBurgerMenu()"
-            ></div>
+            <div class="burger_blur" id="burger_menu_blur" @click="hideBurgerMenu()"></div>
             <!-- Darkens the screen for the burger menu -->
             <div class="logo_container">
                 <div class="menu_logo" @click.prevent="routeOrReload()">
                     <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
                     <img src="../assets/templogo.png" alt="Logo" />
-                    <p><span style="font-weight: bold">DEVS</span>BUNKER</p>
+                    <p>
+                        <span style="font-weight: bold">DEVS</span>BUNKER
+                    </p>
                 </div>
             </div>
             <!-- Static menu items (dont go into burger menu) -->
@@ -39,11 +37,7 @@
                             <circle cx="12" cy="12" r="9" />
                         </svg>
                     </router-link>
-                    <router-link
-                        v-if="$store.getters.isLoggedIn"
-                        to="/notifications"
-                        class="static_link"
-                    >
+                    <router-link v-if="$store.getters.isLoggedIn" to="/notifications" class="static_link">
                         <!--
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -64,43 +58,19 @@
                         -->
                         <NotificationIcon />
                     </router-link>
-                    <router-link
-                        v-if="$store.getters.isLoggedIn"
-                        :to="userRoute"
-                        class="static_link profile_pic"
-                    >
-                        <ProfilePicture
-                            v-if="username"
-                            :username="username"
-                            wrapperSize="50px"
-                            style="margin: 0 auto"
-                        />
+                    <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="static_link profile_pic">
+                        <ProfilePicture v-if="username" :username="username" wrapperSize="50px" style="margin: 0 auto" />
                     </router-link>
                 </div>
                 <div class="burger_nav_links">
-                    <router-link
-                        v-if="!$store.getters.isLoggedIn"
-                        to="/login"
-                        class="burger_link desktop_only"
-                        >Login</router-link
-                    >
-                    <router-link
-                        v-if="!$store.getters.isLoggedIn"
-                        to="/signup"
-                        class="burger_link desktop_only"
-                        >Sign-up</router-link
-                    >
+                    <router-link v-if="!$store.getters.isLoggedIn" to="/login" class="burger_link desktop_only">Login</router-link>
+                    <router-link v-if="!$store.getters.isLoggedIn" to="/signup" class="burger_link desktop_only">Sign-up</router-link>
                 </div>
                 <div id="burger_icon_placeholder"></div>
                 <!-- fills in the space of the actual burger icon when the burger menu is opened and is given a fixed pos -->
                 <div class="burger_menu_container">
                     <div class="burger_menu_subcontainer" id="burger_menu_icon">
-                        <input
-                            type="checkbox"
-                            aria-label="Toggle menu"
-                            id="burger_menu_checkbox"
-                            @click="toggleMenu()"
-                        />
+                        <input type="checkbox" aria-label="Toggle menu" id="burger_menu_checkbox" @click="toggleMenu()" />
                         <span></span>
                         <span></span>
                         <span></span>
@@ -108,53 +78,26 @@
                         <div class="burger_menu_cont" id="main_burger_menu">
                             <!-- make sure not to make that function have '()' because I not giving the directive the return value! -->
                             <div class="burger_cont_links">
-                                <input
-                                    placeholder="Search..."
-                                    class="light_input_selection"
-                                />
+                                <input placeholder="Search..." class="light_input_selection" />
 
                                 <!--<router-link to="/">Home</router-link>-->
                                 <router-link to="/market">Market</router-link>
                                 <router-link to="/users">People</router-link>
                                 <router-link to="/about">About</router-link>
 
-                                <router-link
-                                    v-if="$store.getters.isLoggedIn"
-                                    to="/notifications"
-                                    class="static_link"
-                                >
+                                <router-link v-if="$store.getters.isLoggedIn" to="/notifications" class="static_link">
                                     <p>Notifications</p>
                                 </router-link>
-                                <router-link
-                                    v-if="$store.getters.isLoggedIn"
-                                    :to="userRoute"
-                                    class="static_link profile_pic"
-                                >
+                                <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="static_link profile_pic">
                                     <p>Profile</p>
                                 </router-link>
 
-                                <router-link to="/settings/account"
-                                    >Settings</router-link
-                                >
+                                <router-link to="/settings/account">Settings</router-link>
 
-                                <router-link
-                                    v-if="!$store.getters.isLoggedIn"
-                                    to="/login"
-                                    >Login</router-link
-                                >
-                                <router-link
-                                    v-if="!$store.getters.isLoggedIn"
-                                    to="/signup"
-                                    >Sign-up</router-link
-                                >
+                                <router-link v-if="!$store.getters.isLoggedIn" to="/login">Login</router-link>
+                                <router-link v-if="!$store.getters.isLoggedIn" to="/signup">Sign-up</router-link>
 
-                                <button
-                                    v-if="$store.getters.isLoggedIn"
-                                    class="logout_btn"
-                                    @click="logout()"
-                                >
-                                    Logout
-                                </button>
+                                <button v-if="$store.getters.isLoggedIn" class="logout_btn" @click="logout()">Logout</button>
                             </div>
                             <!-- Adds space below all the buttons for a better mobile experience -->
                             <div class="mobile_spacer"></div>
@@ -207,7 +150,7 @@ export default {
         });
     },
     destroyed() {
-        document.body.style.overflow = "auto"; 
+        document.body.style.overflow = "auto";
     },
     methods: {
         logout() {
@@ -315,7 +258,7 @@ body {
 
 .burger_cont_links > .router-link-active {
     font-weight: bold;
-    background-color: var(--accent);
+    background-color: var(--main-accent);
 }
 .menu_container {
     display: flex;

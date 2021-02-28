@@ -169,7 +169,7 @@ export default {
 }
 .edit_desc:focus {
     outline: none;
-    border: 2px solid var(--accent);
+    border: 2px solid var(--main-accent);
 }
 .desc {
     height: 100%;

@@ -4,7 +4,7 @@
             <slot></slot>
         </div>
 
-        <router-link :to=label.toLowerCase() class='link'>
+        <router-link :to="label.toLowerCase()" class="link">
             <p class="option_text" :class="{active: isActive}">{{ label }}</p>
         </router-link>
         <p class="option-arrow option_text" style="font-weight: bold;">></p>
@@ -27,7 +27,7 @@ export default {
     margin-bottom: 15px;
 }
 .settings_list_item:hover {
-    border-left: 2px solid var(--accent);
+    border-left: 2px solid var(--main-accent);
     cursor: pointer;
 }
 

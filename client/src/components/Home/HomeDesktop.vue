@@ -37,34 +37,16 @@
                 <PostSearch width="50%" class="post_search_bar" />
 
                 <div class="filter_dropdown">
-                    <Dropdown
-                        :label="postFeedFilter"
-                        linkHeight="40px"
-                        height="40px"
-                        width="200px"
-                        @itemSelected="updateFilterDropdown"
-                    >
+                    <Dropdown :label="postFeedFilter" linkHeight="40px" height="40px" width="200px" @itemSelected="updateFilterDropdown">
                         <button>Newest</button>
                         <button>Most Popular</button>
                     </Dropdown>
                 </div>
                 <div v-if="!showSearchResults" class="projects_area">
-                    <DesktopProjectCard
-                        v-for="project in projects"
-                        :key="project.name"
-                        :projectData="project"
-                        width="70%"
-                        class="project_card"
-                    />
+                    <DesktopProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="70%" class="project_card" />
                 </div>
                 <div v-else>
-                    <DesktopProjectCard
-                        v-for="searchResult in searchResults"
-                        :key="searchResult.id"
-                        :projectData="searchResult"
-                        width="70%"
-                        class="project_card"
-                    />
+                    <DesktopProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="70%" class="project_card" />
                 </div>
                 <div>
                     <!--<DeletedPost class="project_card" width="70%" />-->
@@ -91,9 +73,7 @@
                     </svg>
                 </div>
                 -->
-                <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">
-                    Load More
-                </p>
+                <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
             </div>
         </div>
         <RightContent :notifications="notifications" />
@@ -115,7 +95,7 @@ export default {
         return {
             username: "",
             searchResults: [],
-            showSearchResults: false
+            showSearchResults: false,
         };
     },
     created() {
@@ -126,7 +106,7 @@ export default {
         projects: Array,
         postFeedFilter: String,
         notifications: Array,
-        fetchedAll: Boolean
+        fetchedAll: Boolean,
     },
     methods: {
         makeNewPost() {
@@ -134,7 +114,7 @@ export default {
         },
         // emit the data again to get it to the parent component where the localstorage can be updated
         updateFilterDropdown(value) {
-            this.$emit('updateFilterDropdown', value);
+            this.$emit("updateFilterDropdown", value);
         },
         updateSearchComponent(documents, closeResults) {
             this.searchResults = documents;
@@ -147,7 +127,7 @@ export default {
         },
         loadNew() {
             this.$parent.loadNew();
-        }
+        },
     },
     components: {
         DesktopProjectCard,
@@ -156,12 +136,11 @@ export default {
         LeftContent,
         RightContent,
         //DeletedPost
-    }
+    },
 };
 </script>
 
 <style scoped>
-
 .main_container {
     display: flex;
     flex-direction: row;
@@ -230,7 +209,7 @@ export default {
 }
 .project_card:hover {
     cursor: pointer;
-    border: 1px solid var(--soft-text);
+    border: 1px solid var(--main-accent);
 }
 
 .add_button {

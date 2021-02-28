@@ -12,12 +12,7 @@
     >
         <div class="card_text_container">
             <div class="author_container">
-                <router-link
-                    @click.native.stop=""
-                    :to="'user/' + projectData.author"
-                    class="author card_text"
-                    >{{ projectData.author }}</router-link
-                >
+                <router-link @click.native.stop :to="'user/' + projectData.author" class="author card_text">{{ projectData.author }}</router-link>
             </div>
             <p class="proj_name card_text">{{ projectData.title }}</p>
             <p class="proj_desc card_text">{{ descToShow }}</p>
@@ -26,16 +21,7 @@
                 <!--Not filled icon -->
                 <div v-if="hasLikeBtn" @click.stop="likePost(projectData.id)">
                     <div v-if="!projectData.isLiked">
-                        <svg
-                            @mouseover="likeIsActive = true"
-                            v-if="!likeIsActive"
-                            width="17"
-                            height="17"
-                            viewBox="0 0 16 16"
-                            class="bi bi-heart"
-                            fill="#eb4034"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
+                        <svg @mouseover="likeIsActive = true" v-if="!likeIsActive" width="17" height="17" viewBox="0 0 16 16" class="bi bi-heart" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 fill-rule="evenodd"
                                 d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
@@ -43,52 +29,18 @@
                         </svg>
 
                         <!-- Filled icon -->
-                        <svg
-                            @mouseleave="likeIsActive = false"
-                            v-else
-                            width="17"
-                            height="17"
-                            viewBox="0 0 16 16"
-                            class="bi bi-heart-fill"
-                            fill="#eb4034"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                            />
+                        <svg @mouseleave="likeIsActive = false" v-else width="17" height="17" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                         </svg>
                     </div>
                     <div v-else>
-                        <svg
-                            @click.stop="unlikePost(projectData.id)"
-                            width="17"
-                            height="17"
-                            viewBox="0 0 16 16"
-                            class="bi bi-heart-fill"
-                            fill="#eb4034"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                            />
+                        <svg @click.stop="unlikePost(projectData.id)" width="17" height="17" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                         </svg>
                     </div>
                 </div>
-                <svg
-                    v-else
-                    width="23"
-                    height="23"
-                    viewBox="0 0 16 16"
-                    class="bi bi-heart-fill"
-                    fill="#eb4034"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        fill-rule="evenodd"
-                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                    />
+                <svg v-else width="23" height="23" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                 </svg>
 
                 <div class="vertical_flex_center">
@@ -125,22 +77,14 @@
                         fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <path
-                            fill-rule="evenodd"
-                            d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z"
-                        />
+                        <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z" />
                     </svg>
                 </div>
 
                 <div class="vertical_flex_center">
-                    <p
-                        class="price_text"
-                        v-if="
+                    <p class="price_text" v-if="
                             projectData.price != 0 && projectData.price != null
-                        "
-                    >
-                        | ${{ projectData.price }}
-                    </p>
+                        ">| ${{ projectData.price }}</p>
                 </div>
                 <div class="vertical_flex_center">
                     <p class="bunker_tag">{{ projectData.bunkerTag }}</p>
@@ -215,12 +159,12 @@ export default {
     box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.15);
     border-radius: 12px;
     padding: 15px;
-    background-color: var(--main-color);
+    background-color: var(--secondary-color);
     cursor: pointer;
     border: 2px solid transparent;
 }
 .main_container:hover {
-    border: 2px solid grey !important;
+    border: 2px solid var(--main-accent) !important;
 }
 .likeAmt {
     margin-left: 10px;
