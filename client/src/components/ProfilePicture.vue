@@ -50,7 +50,7 @@
 
 <script>
 //'@/assets/profile_pictures/profilePlaceholder.png'
-import GraphQLService from "../services/graphql.service";
+//import GraphQLService from "../services/graphql.service";
 import CacheService from "../services/cache.service";
 import ImageCropperPopup from "@/components/ImageCropperPopup.vue";
 
@@ -127,24 +127,20 @@ export default {
             }
         },
         fetchImageLink() {
-            CacheService.getProfilePicLink();
-            
-            // fetch the users profile image link (THIS SHOULD BE CACHED EVENTULLY)
-            GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
-                obj => {
-                    if (obj.data.user.profile_pic) {
-                        if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
-                            this.default_image = true;
-                            this.image_link = obj.data.user.profile_pic;
-                        } else {
-                            this.default_image = false;
-                            this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
-                        }
+            // fetches the image link from the server unless it is in the cache
+            CacheService.getProfilePicLink(this.$store.getters.username).then((obj) => {
+                if (obj.data.user.profile_pic) {
+                    if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
+                        this.default_image = true;
+                        this.image_link = obj.data.user.profile_pic;
                     } else {
-                        console.log("err");
+                        this.default_image = false;
+                        this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
                     }
+                } else {
+                    console.log("err");
                 }
-            );
+            });
         }
     }
 };
