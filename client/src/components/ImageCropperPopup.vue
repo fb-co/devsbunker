@@ -62,9 +62,7 @@ export default {
                 this.$store.getters.accessToken
             ).then((res) => {
                 if (res.data) {
-                    this.$emit("success", true);
-                } else {
-                    this.$emit("success", false);
+                    localStorage.removeItem("profile_pic_link");
                 }
             });
 

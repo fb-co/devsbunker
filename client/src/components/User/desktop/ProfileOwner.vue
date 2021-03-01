@@ -4,7 +4,7 @@
             <div class="row1">
                 <div class="profile_pic_container row_item">
                     <!--<img :src="require('@/assets/profile_pictures/' + this.userObject.profile_pic)" alt="profile_pic" class="profile-pic" >-->
-                    <ProfilePicture v-if="userObject" :username="this.$store.getters.username" wrapperSize="150px" class="profile_pic" :key="reloadFlag" v-on:success="reload($event)" />
+                    <ProfilePicture v-if="userObject" :username="this.$store.getters.username" wrapperSize="150px" class="profile_pic" :key="reloadFlag" />
 
                     <!-- not all users will have the verified tag, this is temp -->
                     <p class="username">
@@ -211,7 +211,6 @@ export default {
             active: "projects",
             userObject: this.mainUserObject,
             userProjects: this.mainUserProjects,
-            reloadFlag: 0,
         };
     },
     components: {
@@ -230,10 +229,6 @@ export default {
                 console.log("logged out: ", response);
             });
             this.$router.push("/");
-        },
-        reload(status) {
-            console.log("parent parent: got reload ", status);
-            this.reloadFlag += 1;
         },
     },
 };

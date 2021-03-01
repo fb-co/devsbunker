@@ -41,7 +41,6 @@
         <ImageCropperPopup
             v-if="forUpload"
             ref="cropper"
-            @success="reload($event)"
         />
 
         <p ref="file_upload_label" class="file_upload_name"></p>
@@ -50,8 +49,7 @@
 
 <script>
 //'@/assets/profile_pictures/profilePlaceholder.png'
-//import GraphQLService from "../services/graphql.service";
-import CacheService from "../services/cache.service";
+import GraphQLService from "../services/graphql.service";
 import ImageCropperPopup from "@/components/ImageCropperPopup.vue";
 
 export default {
@@ -117,30 +115,31 @@ export default {
         undarkenImage() {
             this.$refs.main_image.style.filter = "brightness(100%)";
         },
-        
-        reload(status) {
-            if (status) {
-                this.fetchImageLink();
-                //this.$emit("success", status);
-            } else {
-                // SHOW AN ERROR TO THE USER HERE
-            }
-        },
         fetchImageLink() {
-            // fetches the image link from the server unless it is in the cache
-            CacheService.getProfilePicLink(this.$store.getters.username).then((obj) => {
-                if (obj.data.user.profile_pic) {
-                    if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
-                        this.default_image = true;
-                        this.image_link = obj.data.user.profile_pic;
-                    } else {
-                        this.default_image = false;
-                        this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
+            // fetches the image link from the server unless it is in the localstorage
+            const storedLink = localStorage.getItem("profile_pic_link");
+
+            if (storedLink) {
+                this.image_link = storedLink;
+            } else {
+                // if pfp link not in localstorage
+                GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
+                    obj => {
+                        if (obj.data.user.profile_pic) {
+                            if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
+                                this.default_image = true;
+                                this.image_link = obj.data.user.profile_pic;
+                            } else {
+                                this.default_image = false;
+                                this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
+                            }
+                            localStorage.setItem("profile_pic_link", this.image_link);
+                        } else {
+                            console.log("err");
+                        }
                     }
-                } else {
-                    console.log("err");
-                }
-            });
+                );
+            }    
         }
     }
 };

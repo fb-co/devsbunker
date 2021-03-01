@@ -1,9 +1,9 @@
-import { store } from "../store/store";
+//import { store } from "../store/store";
 
 // this will be similar to graphqlService, however its for smaller and more specific queries that will be cached,
 // It will also query the server just like graphqlService if something is not in the cache that is being requested
 
-const URL = process.env.VUE_APP_GRAPHQL_API;
+//const URL = process.env.VUE_APP_GRAPHQL_API;
 
 const CacheService = {
     cacheName: "devsCache",
@@ -12,7 +12,7 @@ const CacheService = {
     checkIfCacheIsSupported: function() {
         return "caches" in window;
     },
-
+    /*
     getProfilePicLink: function(username) {
         const query = `
             query {
@@ -38,6 +38,7 @@ const CacheService = {
             return res.json();
         }).catch(console.error);
     }
+    */
 };
 
 export default CacheService;
