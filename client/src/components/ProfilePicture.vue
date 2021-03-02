@@ -144,7 +144,6 @@ export default {
             } else {
                 GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
                     obj => {
-                        console.log(obj);
                         if (obj.data.user.profile_pic) {
                             if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
                                 this.default_image = true;
