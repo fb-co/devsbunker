@@ -6,6 +6,14 @@
                 <img :src="image" />
             </div>
         </div>
+        <div class="indicator">
+            <div 
+                v-for="(image, currentIndex) in images" 
+                :key="currentIndex" 
+                v-bind:class="{ active_bubble: index==currentIndex }"
+                class="indicator_bubble" 
+            />
+        </div>
     </div>
 </template>
 
@@ -136,4 +144,24 @@ export default {
         transition: transform calc(var(--f, 1)*0.5s) ease-out;
     }
 
+    
+    .indicator {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .indicator_bubble {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: var(--soft-text);
+        margin-right: 5px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+    .active_bubble {
+        background-color: var(--main-font-color) !important;
+    }
 </style>
