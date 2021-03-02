@@ -104,6 +104,30 @@ const Languages = {
         {
             name: "Haskell",
             color: "#a7eb42"
+        },
+        {
+            name: "Unity",
+            color: "#039dfc"
+        }, 
+        {
+            name: "3D Modeling",
+            color: "#f59342"
+        }, 
+        {
+            name: "Art",
+            color: "#f51414"
+        }, 
+        {
+            name: "Unreal",
+            color: "#5014f5"
+        },
+        {
+            name: "Matlab",
+            color: "#bababa"
+        },
+        {
+            name: "Go",
+            color: "#038c1c"
         }
     ]
 };

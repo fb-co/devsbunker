@@ -24,7 +24,9 @@
             <GeneralInput ref="postTitle" class="field" label="Post Title" />
 
             <GeneralInput class="field" label="Post Description" ref="postDesc" :isTextArea="true" />
-
+            <div class="tag_container">
+                <p style="margin-top: 20px;">Images</p>
+            </div>
             <div class="upload-card">
                 <form v-on:submit.prevent="createPost()" enctype="multipart/form-data">
                     <div v-if="!files.length" class="file-area" @click="extendInput('upload-link')">

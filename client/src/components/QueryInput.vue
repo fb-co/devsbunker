@@ -59,7 +59,7 @@ export default {
         },
 
         queryData() {
-            if (this.$refs.input_ref.value != "" && this.$refs.input_ref.value.length > 2) {
+            if (this.$refs.input_ref.value != "") {
                 if (this.searchFor === "users") { // include all searches that require a request to the server in 'or' format at this if statement
                     if (!this.queryQueued) {
                         this.queryQueued = true;

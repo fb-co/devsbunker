@@ -2,7 +2,7 @@
     <div class="vertical_flex_center create_tag_container" :style="cssProps">
         <div v-if="tagType=='user'" class="tag_person" style="padding: 5px;">
             <div class="vertical_flex_center" style="height:100%;">
-                <img src="@/assets/profilePlaceholder.png" alt="profile_pic" style="height: 70%;">
+                <ProfilePicture :username="label" wrapperSize="50px" />
             </div>
             <p>{{ label }}</p>
         </div>
@@ -14,6 +14,7 @@
 
 <script>
 import Languages from "@/templates/Languages.js";
+import ProfilePicture from "@/components/ProfilePicture.vue";
 
 export default {
     props: {
@@ -25,10 +26,13 @@ export default {
             type: String,
         }
     },
+    components: {
+        ProfilePicture
+    },
     computed: {
         cssProps() {
             return {
-                "--card-color": Languages.getColor(this.label)
+                "--card-color": Languages.getColor(this.label)||"var(--main-font-color)"
             };
         },
     },
