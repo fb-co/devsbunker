@@ -116,15 +116,35 @@ export default {
             this.$refs.main_image.style.filter = "brightness(100%)";
         },
         fetchImageLink() {
-            // fetches the image link from the server unless it is in the localstorage
-            const storedLink = localStorage.getItem("profile_pic_link");
+            if (this.username == this.$store.getters.username) {
+                // fetches the image link from the server unless it is in the localstorage
+                const storedLink = localStorage.getItem("profile_pic_link");
 
-            if (storedLink) {
-                this.image_link = storedLink;
+                if (storedLink) {
+                    this.image_link = storedLink;
+                } else {
+                    // if pfp link not in localstorage
+                    GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
+                        obj => {
+                            if (obj.data.user.profile_pic) {
+                                if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
+                                    this.default_image = true;
+                                    this.image_link = obj.data.user.profile_pic;
+                                } else {
+                                    this.default_image = false;
+                                    this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
+                                }
+                                localStorage.setItem("profile_pic_link", this.image_link);
+                            } else {
+                                console.log("err");
+                            }
+                        }
+                    );
+                }   
             } else {
-                // if pfp link not in localstorage
                 GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
                     obj => {
+                        console.log(obj);
                         if (obj.data.user.profile_pic) {
                             if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
                                 this.default_image = true;
@@ -133,13 +153,12 @@ export default {
                                 this.default_image = false;
                                 this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
                             }
-                            localStorage.setItem("profile_pic_link", this.image_link);
                         } else {
                             console.log("err");
                         }
                     }
                 );
-            }    
+            } 
         }
     }
 };

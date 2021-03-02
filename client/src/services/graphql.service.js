@@ -686,6 +686,9 @@ const GraphQLService = {
     },
 
     logoutUser: async function() {
+        // get rid of any localstorage cache
+        localStorage.removeItem("profile_pic_link");
+
         const query = `
             query {
                 logoutUser {

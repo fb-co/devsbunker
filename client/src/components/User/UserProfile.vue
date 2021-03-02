@@ -3,7 +3,7 @@
         <div class="main_container" v-if="userObject">
             <div class="row1">
                 <div class="profile_pic_container row_item">
-                    <img src="@/assets/profilePlaceholder.png" alt="profile_pic" class="profile-pic" width="100px" />
+                    <ProfilePicture :username="username" style="margin: 0 auto;" />
 
                     <!-- not all users will have the verified tag, this is temp -->
                     <p class="username">
@@ -99,6 +99,7 @@
 
 <script>
 import GraphQLService from "@/services/graphql.service";
+import ProfilePicture from "@/components/ProfilePicture.vue";
 
 export default {
     data() {
@@ -106,6 +107,9 @@ export default {
             username: "",
             userObject: undefined,
         };
+    },
+    components: {
+        ProfilePicture
     },
     async created() {
         this.username = this.$route.params.username;

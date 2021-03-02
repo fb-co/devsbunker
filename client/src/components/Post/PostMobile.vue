@@ -86,7 +86,7 @@
         </div>
         <p class="newPostTag">Tags</p>
         <div ref="tags" class="tag_container" v-if="tags">
-            <p v-for="tag in tags" :key="tag" class="tag_item">{{ tag }}</p>
+            <CreateTag v-for="tag in tags" :key="tag" :label="tag" tagType="lang" />
         </div>
         <p class="newPostTag">Description</p>
         <p class="post_description">{{ projectData.description }}</p>
@@ -102,6 +102,7 @@
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import LinkItem from "./Link.vue";
 import CarouselMobile from "@/components/CarouselMobile.vue";
+import CreateTag from "@/components/NewPost/CreateTag.vue";
 
 export default {
     data() {
@@ -117,7 +118,8 @@ export default {
     mixins: [ProjectCardUtils],
     components: {
         LinkItem,
-        CarouselMobile
+        CarouselMobile,
+        CreateTag
     },
     created() {
         window.scrollTo(0, 0); // this is because for some reason loading mobile posts doesnt always start you at the top
@@ -233,6 +235,7 @@ export default {
 .tag_container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     padding-left: 30px;
     padding-right: 30px;
     margin-bottom: 15px;
@@ -240,19 +243,6 @@ export default {
 .tag_container {
     margin-right: 10px;
     margin-left: 10px;
-}
-.tag_item {
-    font-size: 12px;
-    color: green;
-    display: inline-block;
-    text-align: left;
-    padding: 5px 15px 5px 15px;
-    border-radius: 20px;
-    border: 1px solid green;
-    margin-right: 5px;
-}
-.tag_item:not(:first-child) {
-    margin-left: 5px;
 }
 .links_container {
     display: flex;
