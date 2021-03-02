@@ -94,15 +94,14 @@
         <div class="links_container">
             <LinkItem v-for="link in projectData.links" :key="link" :link="link" class="link_item" />
         </div>
-        <p class="newPostTag">Images</p>
-        <Carousel class="main_carousel" :images="postImages" minWidth="150%" />
+        <CarouselMobile :images="postImages" />
     </div>
 </template>
 
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import LinkItem from "./Link.vue";
-import Carousel from "@/components/Carousel.vue";
+import CarouselMobile from "@/components/CarouselMobile.vue";
 
 export default {
     data() {
@@ -118,7 +117,7 @@ export default {
     mixins: [ProjectCardUtils],
     components: {
         LinkItem,
-        Carousel
+        CarouselMobile
     },
     created() {
         this.tags = Object.values(this.projectData.tags);
@@ -148,6 +147,7 @@ export default {
 <style scoped>
 .mobile_post_container {
     width: 100%;
+    overflow-x: hidden;
 }
 .placeholder {
     margin-top: 40px;
