@@ -30,7 +30,6 @@ const getters = {
 const actions = {
     setLoggedInState({ commit }) {
         UserService.isLoggedIn().then((result) => {
-            console.log("hey", result);
             commit("changeLoggedInState", !!result.user);
             commit("changeUsername", result.user?.username);
         });
