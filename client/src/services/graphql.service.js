@@ -94,7 +94,7 @@ const GraphQLService = {
 
             return fetch(URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json", "authorization": `Bearer ${token}`},
+                headers: { "Content-Type": "application/json", "authorization": `Bearer ${token}` },
                 body: JSON.stringify({ query }),
             })
                 .then((res) => res.json())
@@ -103,7 +103,7 @@ const GraphQLService = {
         }
     },
 
-    fetchPostById: function(postId, fields) {
+    fetchPostById: function(postId, fields, token) {
         const query = `
             query {
                 getPostById(postId: "${postId}") {
@@ -115,7 +115,7 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json" },
+                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })
@@ -325,6 +325,7 @@ const GraphQLService = {
                         description
                         likeAmt
                         bunkerTag
+                        tags
                         price
                         id
                     }

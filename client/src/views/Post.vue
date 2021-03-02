@@ -43,7 +43,7 @@ export default {
                 "links",
                 "tags",
                 "createdAt",
-            ]).then((res) => {
+            ], this.$store.getters.accessToken).then((res) => {
                 this.postData = res.data.getPostById;
                 this.getAuthorData(this.postData.author); // make sure these two calls stay seperate since one is in an async response
             });

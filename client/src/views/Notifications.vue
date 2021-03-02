@@ -56,9 +56,8 @@ export default {
 <style scoped>
 .notification_card_container {
     margin: 40px auto 0px auto;
-    width: 50%;
+    width: 90%;
     max-width: 650px;
-    min-width: 400px;
 }
 .notifications_header {
     color: var(--main-font-color);

@@ -41,8 +41,34 @@ export default {
         },
 
         // return a post by the id
-        getPostById: function (_, args) {
-            return getPostById(args.postId);
+        getPostById: async function (_, args, { req }) {
+            try {
+                let post = await getPostById(args.postId);
+                let user;
+
+                if (req.user) {
+                    const jwtPayload = req.user;
+                    user = await User.findOne({ username: jwtPayload.username });
+
+                    post.isLiked = post.likes.includes(user.username);
+                    post.isSaved = user.saved_posts.includes(post.id);
+                }
+
+                return post;
+            } catch (err) {
+                return err;
+            }
+
+            /*
+            // if the user was logged in, evaluate if the post requested has been liked or saved before
+            const jwtPayload;
+            
+            if (req.user) {
+                jwtPayload = req.user;
+            }
+
+            return getPostById(args.postId, jwtPayload);
+            */
         },
 
         // returns all the posts by a given author parameter
