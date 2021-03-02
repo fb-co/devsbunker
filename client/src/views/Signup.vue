@@ -334,6 +334,7 @@ export default {
                                 "refreshAccessToken",
                                 result.accessToken
                             );
+                            this.$store.commit("changeLoggedInState", true);
 
                             this.$router.push("/");
                         }

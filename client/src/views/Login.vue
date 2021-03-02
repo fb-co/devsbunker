@@ -322,6 +322,7 @@ export default {
 
                 this.errMessage = "";
                 this.$store.commit("refreshAccessToken", result.accessToken);
+                this.$store.commit("changeLoggedInState", true);
                 this.$router.push("/");
             }
         },
