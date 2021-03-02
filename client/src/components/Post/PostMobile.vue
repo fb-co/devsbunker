@@ -94,18 +94,22 @@
         <div class="links_container">
             <LinkItem v-for="link in projectData.links" :key="link" :link="link" class="link_item" />
         </div>
+        <p class="newPostTag">Images</p>
+        <Carousel class="main_carousel" :images="postImages" minWidth="150%" />
     </div>
 </template>
 
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import LinkItem from "./Link.vue";
+import Carousel from "@/components/Carousel.vue";
 
 export default {
     data() {
         return {
             tags: undefined,
             postThumbnail: undefined,
+            postImages: []
         };
     },
     props: {
@@ -114,11 +118,21 @@ export default {
     mixins: [ProjectCardUtils],
     components: {
         LinkItem,
+        Carousel
     },
     created() {
         this.tags = Object.values(this.projectData.tags);
 
         this.postThumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
+
+        // avoiding to push the thumbnail
+        for (let i = 0; i < this.projectData.images.length; i++) {
+            if (this.projectData.images[i].dbname) {
+                this.postImages.push(
+                    `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[i].dbname}`
+                );
+            }
+        }
     },
     mounted() {
         this.$refs.image_div.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) ), url('${ this.postThumbnail }')`;

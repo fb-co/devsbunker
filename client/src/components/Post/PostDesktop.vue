@@ -79,7 +79,6 @@ export default {
         };
     },
     created() {
-        console.log(this.postImages);
         this.thumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
 
         // avoiding to push the thumbnail
