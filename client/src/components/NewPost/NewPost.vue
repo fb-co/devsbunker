@@ -1,13 +1,12 @@
 <!-- Leaving this component in case we ever want to change to a different post view for desktop versions -->
 <template>
     <div v-if="isOpen" class="main_new_post_container">
-        <NewPostMobile />
+        <NewPostMobile v-on:postFlag="propagateEvent($event)" />
         <!--<NewPostDesktop v-else />-->
     </div>
 </template>
 
 <script>
-
 import NewPostMobile from "@/components/NewPost/NewPostMobile.vue";
 
 export default {
@@ -26,6 +25,9 @@ export default {
         },
         open() {
             this.isOpen = true;
+        },
+        propagateEvent(flag) {
+            this.$emit("postFlag", flag);
         },
     },
 };

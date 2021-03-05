@@ -1,22 +1,9 @@
 <template>
     <div>
         <div class="home">
-            <HomeMobile 
-                :projects="posts" 
-                v-if="$store.getters.mobile" 
-                :fetchedAll="fetchedAll"
-                :postFeedFilter="filter"
-                @updateFilterDropdown="updateFilterDropdown"
-            />
-            <HomeDesktop 
-                :projects="posts" 
-                :notifications="notifications" 
-                v-if="!$store.getters.mobile" 
-                :fetchedAll="fetchedAll" 
-                :postFeedFilter="filter"
-                @updateFilterDropdown="updateFilterDropdown"
-            />
-            <NewPost ref="newPostMenu" />
+            <HomeMobile :projects="posts" v-if="$store.getters.mobile" :fetchedAll="fetchedAll" :postFeedFilter="filter" @updateFilterDropdown="updateFilterDropdown" />
+            <HomeDesktop :projects="posts" :notifications="notifications" v-if="!$store.getters.mobile" :fetchedAll="fetchedAll" :postFeedFilter="filter" @updateFilterDropdown="updateFilterDropdown" />
+            <NewPost ref="newPostMenu" v-on:postFlag="reloadPosts($event)" />
         </div>
     </div>
 </template>
@@ -38,10 +25,11 @@ export default {
         return {
             posts: undefined,
             loadedPosts: [], // this contains posts loaded with other filters, to avoid continously loading them when you switch filters
-            
+
             notifications: undefined,
             fetchedAll: false,
-            filter: SearchUtilities.getHomePostFilter()
+            reload: 0,
+            filter: SearchUtilities.getHomePostFilter(),
         };
     },
     async created() {
@@ -95,40 +83,11 @@ export default {
             }
             return null;
         },
-        queryPosts(filter) {
-            /*
-            // CACHE TEST!!!
-            let isCacheSupported = "caches" in window;
-            console.log("is cache supported:", isCacheSupported);
-            if (isCacheSupported) {
-                //let cacheName = "devsCache";
-                // just caching a google req
 
-                const query = `
-                    query {
-                        user(username: "TheJak") {
-                            email
-                            liked_posts
-                        }
-                    }
-                `;
-
-                fetch("http://localhost:5000/graphql", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ query }),
-                }).then(async (res) => {
-                    const cache = await caches.open("devsCache");
-                    cache.put("http://localhost:5000/graphql", res);
-                    cache.match("http://localhost:5000/graphql").then((result) => {
-                        console.log("[CACHE] ", result.json());
-                    });
-                });
-            }
-            */
+        queryPosts(filter, forceReload = false) {
             const alreadyLoadedPosts = this.postsInMemory(filter);
 
-            if (alreadyLoadedPosts) {
+            if (alreadyLoadedPosts && !forceReload) {
                 this.posts = alreadyLoadedPosts;
             } else {
                 // Get the posts
@@ -141,7 +100,7 @@ export default {
                     // keep old loaded posts in memory
                     this.loadedPosts.push({
                         filter: filter,
-                        posts: res.data.getPosts
+                        posts: res.data.getPosts,
                     });
                 });
             }
@@ -155,6 +114,10 @@ export default {
                         res.data.getPersonalDetails.notifications;
                 });
             }
+        },
+        reloadPosts(flag) {
+            // leaving this even tho right now flag is always true, maybe in the future we'll need to propagate a failed attempt
+            if (flag) this.queryPosts(this.filter, true);
         },
     },
 };

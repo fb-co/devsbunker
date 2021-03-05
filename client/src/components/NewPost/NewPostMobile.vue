@@ -419,17 +419,10 @@ export default {
                                 console.log(res);
                             });
 
-                            setTimeout(() => {
-                                /*
-                                // only refresh the post feed if your on the home page, otherwise redirect to it
-                                if (this.$route.name === "Home") {
-                                    this.$parent.$parent.$parent.queryPosts();
-                                } else {
-                                    this.$router.push('Home');
-                                }
-                                */
-                                this.$router.push("/");
+                            this.$emit("postFlag", true);
 
+                            setTimeout(() => {
+                                this.$router.push("/");
                                 this.close();
                             }, 1000);
                         })
