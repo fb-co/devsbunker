@@ -33,7 +33,10 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}` },
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })
@@ -94,12 +97,14 @@ const GraphQLService = {
 
             return fetch(URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json", "authorization": `Bearer ${token}` },
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 body: JSON.stringify({ query }),
             })
                 .then((res) => res.json())
                 .catch(console.error);
-
         }
     },
 
@@ -115,7 +120,10 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })
@@ -181,7 +189,10 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })
@@ -221,7 +232,10 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}` },
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })
@@ -244,12 +258,15 @@ const GraphQLService = {
                     timestamp
                 }
             }
-        `;  
-        
+        `;
+
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization" : `Bearer ${token}`},
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             })
@@ -274,7 +291,10 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization" : `Bearer ${token}`},
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })
@@ -336,7 +356,10 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization" : `Bearer ${token}`},
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })
@@ -348,7 +371,7 @@ const GraphQLService = {
             return console.log(err);
         }
     },
-    
+
     //already fetched is an integer of the amount of posts already fectched (newest to oldest)
     loadMorePosts: function(alreadyFetched, token) {
         const query = `
@@ -377,7 +400,10 @@ const GraphQLService = {
         try {
             return fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query }),
             })
@@ -388,7 +414,7 @@ const GraphQLService = {
         } catch (err) {
             return console.log(err);
         }
-    }, 
+    },
 
     likePost: async function(token, postId) {
         const mutation = `
@@ -403,7 +429,10 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });
@@ -426,7 +455,10 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });
@@ -448,7 +480,10 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}`},
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });
@@ -469,7 +504,10 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}` },
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });
@@ -492,7 +530,10 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}` },
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });
@@ -516,7 +557,10 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "content-Type": "application/json", "authorization": `Bearer ${token}` },
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });
@@ -551,16 +595,18 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json", "authorization": `Bearer ${token}` },
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({
                     query: mutation,
                     variables: variables,
                 }),
             });
-            
-            return res.json();
 
+            return res.json();
         } catch (err) {
             return console.log(err);
         }
@@ -589,7 +635,10 @@ const GraphQLService = {
         try {
             const res = await fetch(URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json", "authorization": `Bearer ${token}` },
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
                 credentials: "include",
                 body: JSON.stringify({
                     query: mutation,
@@ -699,6 +748,7 @@ const GraphQLService = {
 
         store.commit("refreshAccessToken", null);
         store.commit("changeLoggedInState", false);
+        store.commit("changeUsername", null);
 
         try {
             const res = await fetch(URL, {
