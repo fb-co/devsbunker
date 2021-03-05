@@ -51,6 +51,7 @@
 //'@/assets/profile_pictures/profilePlaceholder.png'
 import GraphQLService from "../services/graphql.service";
 import ImageCropperPopup from "@/components/ImageCropperPopup.vue";
+//import { store } from '../store/store';
 
 export default {
     data() {
@@ -122,6 +123,9 @@ export default {
 
                 if (storedLink) {
                     this.image_link = storedLink;
+                    if (storedLink === "profile_pic_placeholder.png") {
+                        this.default_image = true;
+                    }
                 } else {
                     // if pfp link not in localstorage
                     GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
