@@ -407,8 +407,6 @@ export default {
                         post
                     )
                         .then((returnPost) => {
-                            console.log("Created Post: ");
-                            console.log(returnPost);
                             this.success = true;
 
                             FileUploadService.addPostImages(
@@ -416,15 +414,14 @@ export default {
                                 returnPost.data.makePost.id,
                                 this.$store.getters.accessToken
                             ).then((res) => {
+                                if (this.$route.name == "Home") {
+                                    this.$emit("postFlag", true);
+                                } else {
+                                    this.$router.push("/");
+                                }
+                                this.close();
                                 console.log(res);
                             });
-
-                            this.$emit("postFlag", true);
-
-                            setTimeout(() => {
-                                this.$router.push("/");
-                                this.close();
-                            }, 1000);
                         })
                         .catch(() => {
                             this.error = true;
