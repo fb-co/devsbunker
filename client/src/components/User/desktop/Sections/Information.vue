@@ -2,7 +2,14 @@
     <div class="general_container" v-if="userObject">
         <p class="label">General</p>
 
-        <ProfilePicture v-if="userObject" :username="this.$store.getters.username" :darkenOnHover="true" :forUpload="true" wrapperSize="300px" class="profile_pic" />
+        <ProfilePicture 
+            v-if="userObject" 
+            :username="userObject.username" 
+            :darkenOnHover="true" 
+            :forUpload="userObject.username==this.$store.getters.username" 
+            wrapperSize="300px" 
+            class="profile_pic" 
+        />
 
         <div class="desc_container">
             <p @click="editDesc()" v-if="!isEditingDesc" class="desc">{{ userObject.desc }}</p>
@@ -58,9 +65,17 @@ import ProfilePicture from "@/components/ProfilePicture.vue";
 export default {
     data() {
         return {
-            userObject: this.$parent.userObject,
+            userObject: this.userData,
+            isExternal: false,
             isEditingDesc: false,
         };
+    },
+    props: {
+        userData: Object
+    },
+    mounted() {
+        this.isExternal = (this.userObject.username || "")!=this.$store.getters.username;
+        console.log(this.isExternal);
     },
     components: {
         ProfilePicture,

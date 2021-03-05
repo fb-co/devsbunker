@@ -29,6 +29,7 @@ export default {
             "following",
             "liked_posts",
             "tag",
+            "username"
         ]).then((res) => {
             if (res.errors) {
                 console.error("Error while fetching user details.");

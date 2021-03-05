@@ -33,7 +33,7 @@
                 </div>
                 <div class="main_links_container row_item">
                     <!-- Still have to get the subrouting working here -->
-                    <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('about') }">
+                    <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('information') }">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="icon icon-tabler icon-tabler-bookmark"
@@ -50,7 +50,7 @@
                             <path d="M9 4h6a2 2 0 0 1 2 2v14l-5-3l-5 3v-14a2 2 0 0 1 2 -2" />
                         </svg>
 
-                        <router-link :to="{ name: 'about' }">About</router-link>
+                        <router-link :to="{ name: 'userInformation' }">General</router-link>
                     </div>
                     <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('projects') }">
                         <svg
@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div class="content_box">
-                <router-view :key="$route.path" />
+                <router-view :key="$route.path" :userData="userObject" />
                 <!-- This renders the sub-routes component -->
             </div>
         </div>

@@ -194,7 +194,7 @@
                 </div>
             </div>
             <div class="content_box">
-                <router-view :key="$route.path" />
+                <router-view :key="$route.path" :userData="userObject" />
                 <!-- This renders the sub-routes component -->
             </div>
         </div>
