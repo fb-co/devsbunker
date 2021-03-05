@@ -335,7 +335,7 @@ export default {
                                 result.accessToken
                             );
                             this.$store.commit("changeLoggedInState", true);
-
+                            this.$store.commit("changeUsername", this.username);
                             this.$router.push("/");
                         }
                     }

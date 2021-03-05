@@ -58,8 +58,9 @@
                         -->
                         <NotificationIcon />
                     </router-link>
-                    <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="static_link profile_pic">
-                        <ProfilePicture v-if="username" :username="username" wrapperSize="50px" style="margin: 0 auto" />
+                    <router-link v-if="$store.getters.isLoggedIn" :to="`/user/${$store.getters.username}/`" class="static_link profile_pic">
+                        <!-- PASSING THE USERNAME FROM THE STORE IS USELESS, YOU CAN DO IT DIRECTLY IN THE COMPONENT-->
+                        <ProfilePicture v-if="$store.getters.username" :username="$store.getters.username" wrapperSize="50px" style="margin: 0 auto" />
                     </router-link>
                 </div>
                 <div class="burger_nav_links">
@@ -88,7 +89,7 @@
                                 <router-link v-if="$store.getters.isLoggedIn" to="/notifications" class="static_link">
                                     <p>Notifications</p>
                                 </router-link>
-                                <router-link v-if="$store.getters.isLoggedIn" :to="userRoute" class="static_link profile_pic">
+                                <router-link v-if="$store.getters.isLoggedIn" :to="`/user/${this.$store.getters.username}/`" class="static_link profile_pic">
                                     <p>Profile</p>
                                 </router-link>
 
@@ -112,7 +113,6 @@
 <script>
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import NavBarSearch from "./NavBarSearch.vue";
-import UserService from "../services/user.service";
 import GraphQLService from "../services/graphql.service";
 
 import ProfilePicture from "@/components/ProfilePicture.vue";
@@ -128,12 +128,6 @@ export default {
             return "min-width: " + this.min_width;
         },
     },
-    data() {
-        return {
-            username: "",
-            userRoute: "",
-        };
-    },
     components: {
         ...GlobalComponents,
         NavBarSearch,
@@ -141,14 +135,6 @@ export default {
         NotificationIcon,
     },
 
-    created() {
-        UserService.isLoggedIn().then((result) => {
-            if (result.user) {
-                this.username = result.user.username;
-                this.userRoute = "/user/" + this.username + "/";
-            }
-        });
-    },
     destroyed() {
         document.body.style.overflow = "auto";
     },

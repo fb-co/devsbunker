@@ -322,7 +322,9 @@ export default {
 
                 this.errMessage = "";
                 this.$store.commit("refreshAccessToken", result.accessToken);
-                this.$store.commit("changeLoggedInState", true);
+                // this fetches again the server but its the only way since we dont know if the user logs in with the email or the username
+                // alternative would be to call the mutations manually
+                this.$store.dispatch("setLoggedInState");
                 this.$router.push("/");
             }
         },
