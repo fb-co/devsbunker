@@ -42,9 +42,8 @@ export default {
         GraphQLService.fetchPostsByAuthor(
             this.$store.getters.username,
             this.$store.getters.accessToken,
-            0
         ).then((posts) => {
-            this.userProjects = posts.data.getPostsByAuthor.posts;
+            this.userProjects = posts.data.getPostsByAuthor;
         });
     },
     components: {

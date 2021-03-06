@@ -22,7 +22,7 @@ export default {
         // returns all the posts in the order of the parameter 'sortingType'
         getPosts: async function (_, args, { req }) {
             try {
-                const posts = await getPostList(args.sortingType);
+                const posts = await getPostList(args.sortingType, args.lastId);
 
                 let user;
 
@@ -73,7 +73,7 @@ export default {
 
         // returns all the posts by a given author parameter
         getPostsByAuthor: function (_, args, { req }) {
-            return getPostsByAuthor(args.author, req.user, args.fetchedAmt);
+            return getPostsByAuthor(args.author, req.user);
         },
 
         getSavedPosts: function (_, args, { req }) {
@@ -81,7 +81,7 @@ export default {
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
-            return getSavedPosts(jwtPayload.username, args.fetchedAmt);
+            return getSavedPosts(jwtPayload.username);
         },
 
         partial_post: async function(_, args, { req }) {

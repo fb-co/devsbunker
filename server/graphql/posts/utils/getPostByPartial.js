@@ -15,7 +15,6 @@ export default async function getPostByPartial(partial_name, requester_token) {
         const regex = new RegExp(partial_name, "i");
 
         Posts.find({ title: regex })
-            .limit(15)
             .then((posts) => { 
                 if (user) {
                     const finalPosts = AddDynamicData.addAll(posts, user);
