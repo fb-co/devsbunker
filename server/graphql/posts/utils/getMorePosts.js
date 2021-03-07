@@ -3,7 +3,7 @@ import User from "../../../components/user/user.model.js";
 import AddDynamicData from "../misc/addDynamicData.js";
 //import TokenHandler from "../../../components/tokens/TokenHandler.js";
 
-export default async function getMorePosts(alreadyFetched, jwtPayload) {
+export default async function getMorePosts(lastPostId, jwtPayload) {
     let user;
 
     if (jwtPayload) {
@@ -17,12 +17,12 @@ export default async function getMorePosts(alreadyFetched, jwtPayload) {
 
         Posts.find()
             .sort({ _id: -1 })
-            .skip(alreadyFetched)
+            .skip(lastPostId)
             .limit(loadIncrements)
             .then((posts) => {
                 const finalPosts = {
                     posts: posts,
-                    fetchedAll: alreadyFetched+loadIncrements >= totalEntries
+                    fetchedAll: lastPostId+loadIncrements >= totalEntries
                 }
                 if (user) {
                     finalPosts.posts = AddDynamicData.addAll(posts, user);

@@ -63,6 +63,7 @@ export default {
                 this.posts.length,
                 this.$store.getters.accessToken
             );
+            
             this.fetchedAll = newProjects.data.loadMorePosts.fetchedAll;
             this.posts = this.posts.concat(
                 newProjects.data.loadMorePosts.posts

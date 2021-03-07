@@ -369,11 +369,11 @@ const GraphQLService = {
         }
     },
 
-    //already fetched is an integer of the amount of posts already fectched (newest to oldest)
-    loadMorePosts: function(alreadyFetched, token) {
+    //lastPostId is the id of the last fetched post
+    loadMorePosts: function(lastPostId, token) {
         const query = `
             query {
-                loadMorePosts(alreadyFetched: ${alreadyFetched}) {
+                loadMorePosts(lastPostId: ${lastPostId}) {
                     posts {
                         title
                         author

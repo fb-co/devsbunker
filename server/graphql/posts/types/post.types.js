@@ -66,7 +66,7 @@ export default gql`
 
         partial_post(partial_name: String!): [FetchablePost]!
 
-        loadMorePosts(alreadyFetched: Int): LoadMoreResponse!
+        loadMorePosts(lastPostId: Int): LoadMoreResponse!
     }
 
     type Mutation {
