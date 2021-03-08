@@ -114,3 +114,4 @@
     -   [ ] add comments of functions following a standard notation
 
 -   [ ] make sure not to include path details in gql errors
+-   [ ] add NSFW image filter
