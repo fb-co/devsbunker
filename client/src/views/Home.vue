@@ -2,7 +2,15 @@
     <div>
         <div class="home">
             <HomeMobile :projects="posts" v-if="$store.getters.mobile" :fetchedAll="fetchedAll" :postFeedFilter="filter" @updateFilterDropdown="updateFilterDropdown" />
-            <HomeDesktop :projects="posts" :notifications="notifications" v-if="!$store.getters.mobile" :fetchedAll="fetchedAll" :postFeedFilter="filter" @updateFilterDropdown="updateFilterDropdown" />
+            <HomeDesktop
+                :projects="posts"
+                :notifications="notifications"
+                v-if="!$store.getters.mobile"
+                :fetchedAll="fetchedAll"
+                :postFeedFilter="filter"
+                @updateFilterDropdown="updateFilterDropdown"
+                :loaded="loaded"
+            />
             <NewPost ref="newPostMenu" v-on:postFlag="reloadPosts($event)" />
         </div>
     </div>
@@ -31,6 +39,7 @@ export default {
             fetchedAll: false,
             reload: 0,
             filter: SearchUtilities.getHomePostFilter(),
+            loaded: false,
         };
     },
     async created() {
@@ -110,6 +119,8 @@ export default {
                     filter: filter,
                     posts: res.data.getPosts.posts,
                 });
+
+                this.loaded = true;
             }
             // if the user is logged in then ask for their notifications
             if (this.$store.getters.accessToken && !this.notifications) {
@@ -134,8 +145,12 @@ export default {
                 filter: this.filter,
                 posts: res.data.getPosts.posts,
             });
+            this.loaded = true;
+
+            console.log(this.posts);
         },
         async reloadPosts(flag) {
+            this.loaded = false;
             // leaving this even tho right now flag is always true, maybe in the future we'll need to propagate a failed attempt
             if (flag) await this.updatePosts();
         },

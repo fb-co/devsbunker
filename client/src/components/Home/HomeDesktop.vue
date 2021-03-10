@@ -42,15 +42,20 @@
                         <button>Most Popular</button>
                     </Dropdown>
                 </div>
-                <div v-if="!showSearchResults" class="projects_area">
-                    <DesktopProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="70%" class="project_card" />
+                <div v-if="loaded">
+                    <div v-if="!showSearchResults" class="projects_area">
+                        <DesktopProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="70%" class="project_card" />
+                    </div>
+                    <div v-else>
+                        <DesktopProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="70%" class="project_card" />
+                    </div>
                 </div>
-                <div v-else>
-                    <DesktopProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="70%" class="project_card" />
+                <div id="loading-gif" v-else>
+                    <Loading />
                 </div>
-                <div>
-                    <!--<DeletedPost class="project_card" width="70%" />-->
-                </div>
+                <!-- <div>
+                    <DeletedPost class="project_card" width="70%" />
+                </div>-->
 
                 <!--
                 <div @click="makeNewPost()" class="projects_footer">
@@ -86,6 +91,7 @@ import PostSearch from "@/components/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
+import Loading from "@/components/Loading.vue";
 
 // tmp
 // import DeletedPost from "@/components/Post/DeletedPost.vue";
@@ -104,6 +110,7 @@ export default {
         postFeedFilter: String,
         notifications: Array,
         fetchedAll: Boolean,
+        loaded: Boolean,
     },
     methods: {
         makeNewPost() {
@@ -132,6 +139,7 @@ export default {
         PostSearch,
         LeftContent,
         RightContent,
+        Loading,
         //DeletedPost
     },
 };
@@ -266,4 +274,8 @@ export default {
 .scrollable_center::-webkit-scrollbar {
     display: none;
 }
+
+/* #loading-gif {
+    margin-top: 200px;
+} */
 </style>
