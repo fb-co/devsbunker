@@ -27,6 +27,12 @@ export default gql`
         createdAt: String!
     }
 
+    type LoadPostsResponse {
+        posts: [FetchablePost]!
+        lastPostId: String!
+        fetchedAll: Boolean!
+    }
+
     type LoadMoreResponse {
         posts: [FetchablePost]!
         fetchedAll: Boolean
@@ -55,7 +61,7 @@ export default gql`
         # I am going to keep the author even if technically it's not needed, we will see later on
         userPost(postId: String!, postAuthor: String!): FetchablePost
 
-        getPosts(sortingType: String!): [FetchablePost]!
+        getPosts(sortingType: String!, lastPostId: String): LoadPostsResponse!
 
         getPostsByAuthor(author: String!): [FetchablePost]!
 

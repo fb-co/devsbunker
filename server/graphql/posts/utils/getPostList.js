@@ -1,16 +1,16 @@
 import Posts from "../../../components/post/post.model.js";
 
-export default async function getPostList(sortingMethod, lastId) {
+export default async function getPostList(sortingMethod, loadAmt, lastPostId) {
     return new Promise((resolve) => {
-        const loadIncrement = 3; // how many posts are to be loaded at once
+        const loadIncrement = loadAmt; // how many posts are to be loaded at once
 
         if (sortingMethod == "Newest") {
-            // start the post finding from the lastId, or if its null, 0
-            if (lastId != null) {
-                Posts.find({ 'id': { '$gt': lastId || 0 } })
+            // start the post finding from the lastId, or if its null, -1
+            if (lastPostId != 0) {
+                Posts.find({ '_id': { '$lt': lastPostId } })
                     .sort({ _id: -1 })
                     .limit(loadIncrement)
-                    .then((posts) => {        
+                    .then((posts) => { 
                         resolve(posts);
                     })
                     .catch((err) => {
@@ -28,7 +28,7 @@ export default async function getPostList(sortingMethod, lastId) {
                     });
             }
         } else if (sortingMethod == "Most Popular") {
-            Posts.find({ 'id': { '$gt': lastId||0 } })
+            Posts.find({ 'id': { '$lt': lastPostId } })
                 .sort({ likeAmt: -1 })
                 .limit(loadIncrement)
                 .then((posts) => {        

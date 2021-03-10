@@ -304,47 +304,56 @@ const GraphQLService = {
         }
     },
 
-    fetchPosts: function(sortMethod, token) {
+    // enter lastPstId as zero if you havent fetched any yet, and -1 if they have all been fetched
+    fetchPosts: function(sortMethod, lastPostId, token) {
         let query;
         // only request the isLiked and isSaved fields if the user is logged in and passes in the auth token
         if (token) {
             query = `
                 query {
-                    getPosts(sortingType: "${sortMethod}") {
-                        title
-                        author
-                        images {
-                            ogname
-                            dbname
+                    getPosts(sortingType: "${sortMethod}", lastPostId: "${lastPostId}") {
+                        posts {
+                            title
+                            author
+                            images {
+                                ogname
+                                dbname
+                            }
+                            description
+                            likeAmt
+                            isSaved
+                            isLiked
+                            bunkerTag
+                            tags
+                            links
+                            price
+                            id
                         }
-                        description
-                        likeAmt
-                        isSaved
-                        isLiked
-                        bunkerTag
-                        tags
-                        links
-                        price
-                        id
+                        lastPostId
+                        fetchedAll
                     }
                 }
             `;
         } else {
             query = `
                 query {
-                    getPosts(sortingType: "${sortMethod}") {
-                        title
-                        author
-                        images {
-                            ogname
-                            dbname
+                    getPosts(sortingType: "${sortMethod}", lastPostId: "${lastPostId}") {
+                        posts {
+                            title
+                            author
+                            images {
+                                ogname
+                                dbname
+                            }
+                            description
+                            likeAmt
+                            bunkerTag
+                            tags
+                            price
+                            id
                         }
-                        description
-                        likeAmt
-                        bunkerTag
-                        tags
-                        price
-                        id
+                        lastPostId
+                        fetchedAll
                     }
                 }
             `;

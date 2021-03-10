@@ -22,8 +22,9 @@ export default {
         // returns all the posts in the order of the parameter 'sortingType'
         getPosts: async function (_, args, { req }) {
             try {
-                const posts = await getPostList(args.sortingType, args.lastId);
-
+                const loadAmt = 3;
+                const posts = await getPostList(args.sortingType, loadAmt, args.lastPostId);
+    
                 let user;
 
                 // if the user was logged in, evaluate if the post requested has been liked or saved before
@@ -33,8 +34,15 @@ export default {
                 }
 
                 const finalPosts = AddDynamicData.addAll(posts, user);
+                console.log(posts.length < loadAmt);
 
-                return finalPosts;
+                const finalResponse = {
+                    posts: finalPosts,
+                    lastPostId: finalPosts.length > 0 ? finalPosts[finalPosts.length-1].id : -1,
+                    fetchedAll: posts.length < loadAmt
+                }
+
+                return finalResponse;
             } catch (err) {
                 return err;
             }

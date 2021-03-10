@@ -13,7 +13,7 @@ export default async function getMorePosts(lastPostId, jwtPayload) {
     const totalEntries = await Posts.countDocuments();
 
     return new Promise((resolve) => {
-        const loadIncrements = 3; // specifies how many posts to load on each call
+        const loadIncrements = 3; // specifies how many posts to load on each call (defined in parent call)
 
         Posts.find()
             .sort({ _id: -1 })

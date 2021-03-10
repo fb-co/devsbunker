@@ -24,6 +24,7 @@ export default {
     data() {
         return {
             posts: undefined,
+            lastPostId: 0,
             loadedPosts: [], // this contains posts loaded with other filters, to avoid continously loading them when you switch filters
 
             notifications: undefined,
@@ -60,13 +61,17 @@ export default {
         },
         async loadNew() {
             const newProjects = await this.load(
-                this.posts.length,
+                this.filter,
+                this.lastPostId,
                 this.$store.getters.accessToken
             );
+            this.lastPostId = newProjects.data.getPosts.lastPostId;
+            this.fetchedAll = newProjects.data.getPosts.fetchedAll;
+            console.log(newProjects.data.getPosts);
             
-            this.fetchedAll = newProjects.data.loadMorePosts.fetchedAll;
+            //this.fetchedAll = newProjects.data.loadMorePosts.fetchedAll;
             this.posts = this.posts.concat(
-                newProjects.data.loadMorePosts.posts
+                newProjects.data.getPosts.posts
             );
         },
         updateFilterDropdown(value) {
@@ -94,14 +99,17 @@ export default {
                 // Get the posts
                 GraphQLService.fetchPosts(
                     filter,
+                    this.lastPostId,
                     this.$store.getters.accessToken
                 ).then((res) => {
                     // pass in the new post data to the home page main components
-                    this.posts = res.data.getPosts;
+                    this.posts = res.data.getPosts.posts;
+                    this.lastPostId = res.data.getPosts.lastPostId;
+                    
                     // keep old loaded posts in memory
                     this.loadedPosts.push({
                         filter: filter,
-                        posts: res.data.getPosts,
+                        posts: res.data.getPosts.posts,
                     });
                 });
             }
