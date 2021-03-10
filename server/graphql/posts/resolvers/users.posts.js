@@ -23,8 +23,9 @@ export default {
         getPosts: async function (_, args, { req }) {
             try {
                 const loadAmt = 3;
-                const posts = await getPostList(args.sortingType, loadAmt, args.lastPostId);
-    
+                let posts = await getPostList(args.sortingType, loadAmt, args.lastPostId);
+                let fetchedAll = false;
+
                 let user;
 
                 // if the user was logged in, evaluate if the post requested has been liked or saved before
@@ -32,14 +33,21 @@ export default {
                     const jwtPayload = req.user;
                     user = await User.findOne({ username: jwtPayload.username});
                 }
+                
+
+                // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
+                if (posts[loadAmt] === undefined) {
+                    fetchedAll = true;
+                }
+                // remove the test post fetch
+                posts.pop();
 
                 const finalPosts = AddDynamicData.addAll(posts, user);
-                console.log(posts.length < loadAmt);
 
                 const finalResponse = {
                     posts: finalPosts,
                     lastPostId: finalPosts.length > 0 ? finalPosts[finalPosts.length-1].id : -1,
-                    fetchedAll: posts.length < loadAmt
+                    fetchedAll: fetchedAll
                 }
 
                 return finalResponse;
