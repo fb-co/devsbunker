@@ -68,11 +68,9 @@ export default {
             this.lastPostId = newProjects.data.getPosts.lastPostId;
             this.fetchedAll = newProjects.data.getPosts.fetchedAll;
             console.log(newProjects.data.getPosts);
-            
+
             //this.fetchedAll = newProjects.data.loadMorePosts.fetchedAll;
-            this.posts = this.posts.concat(
-                newProjects.data.getPosts.posts
-            );
+            this.posts = this.posts.concat(newProjects.data.getPosts.posts);
         },
         updateFilterDropdown(value) {
             SearchUtilities.setHomePostFilter(value);
@@ -90,43 +88,56 @@ export default {
             return null;
         },
 
-        queryPosts(filter, forceReload = false) {
+        async queryPosts(filter, forceReload = false) {
             const alreadyLoadedPosts = this.postsInMemory(filter);
+            let res = undefined;
 
             if (alreadyLoadedPosts && !forceReload) {
                 this.posts = alreadyLoadedPosts;
             } else {
                 // Get the posts
-                GraphQLService.fetchPosts(
+                res = await GraphQLService.fetchPosts(
                     filter,
                     this.lastPostId,
                     this.$store.getters.accessToken
-                ).then((res) => {
-                    // pass in the new post data to the home page main components
-                    this.posts = res.data.getPosts.posts;
-                    this.lastPostId = res.data.getPosts.lastPostId;
-                    
-                    // keep old loaded posts in memory
-                    this.loadedPosts.push({
-                        filter: filter,
-                        posts: res.data.getPosts.posts,
-                    });
+                );
+                // pass in the new post data to the home page main components
+                this.posts = res.data.getPosts.posts;
+                this.lastPostId = res.data.getPosts.lastPostId;
+
+                // keep old loaded posts in memory
+                this.loadedPosts.push({
+                    filter: filter,
+                    posts: res.data.getPosts.posts,
                 });
             }
             // if the user is logged in then ask for their notifications
             if (this.$store.getters.accessToken && !this.notifications) {
-                GraphQLService.fetchPersonalDetails(
+                res = await GraphQLService.fetchPersonalDetails(
                     this.$store.getters.accessToken,
                     ["notifications {sender message read type }"]
-                ).then((res) => {
-                    this.notifications =
-                        res.data.getPersonalDetails.notifications;
-                });
+                );
+                this.notifications = res.data.getPersonalDetails.notifications;
             }
         },
-        reloadPosts(flag) {
+        async updatePosts() {
+            const res = await GraphQLService.fetchPosts(
+                this.filter,
+                0,
+                this.$store.getters.accessToken
+            );
+            this.posts = res.data.getPosts.posts;
+
+            this.lastPostId = res.data.getPosts.lastPostId;
+
+            this.loadedPosts.push({
+                filter: this.filter,
+                posts: res.data.getPosts.posts,
+            });
+        },
+        async reloadPosts(flag) {
             // leaving this even tho right now flag is always true, maybe in the future we'll need to propagate a failed attempt
-            if (flag) this.queryPosts(this.filter, true);
+            if (flag) await this.updatePosts();
         },
     },
 };
