@@ -200,10 +200,10 @@ const GraphQLService = {
         }
     },
 
-    fetchSavedPosts: function(token, fetchedAmt) {
+    fetchSavedPosts: function(token, lastPostId) {
         const query = `
             query {
-                getSavedPosts(fetchedAmt: ${fetchedAmt}) {
+                getSavedPosts(lastPostId: "${lastPostId}") {
                     posts {
                         title
                         author
@@ -221,6 +221,7 @@ const GraphQLService = {
                         price
                         id
                     }
+                    lastPostId
                     fetchedAll
                 }
             }

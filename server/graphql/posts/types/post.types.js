@@ -68,7 +68,7 @@ export default gql`
         # not sure if we should make the return required since I dont want it to crash if you give it an invalid post id
         getPostById(postId: String!): FetchablePost
 
-        getSavedPosts(fetchedAmt: Int): LoadMoreResponse!
+        getSavedPosts(lastPostId: String): LoadPostsResponse!
 
         partial_post(partial_name: String!): [FetchablePost]!
 

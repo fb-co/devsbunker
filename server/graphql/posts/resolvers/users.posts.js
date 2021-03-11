@@ -4,7 +4,6 @@ import getPostById from "../utils/getPostById.js";
 import getPostList from "../utils/getPostList.js";
 import getPostsByAuthor from "../utils/getPostsByAuthor.js";
 import getSavedPosts from "../utils/getSavedPosts.js";
-import getMorePosts from "../utils/getMorePosts.js";
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
@@ -92,21 +91,34 @@ export default {
             return getPostsByAuthor(args.author, req.user);
         },
 
-        getSavedPosts: function (_, args, { req }) {
+        getSavedPosts: async function (_, args, { req }) {
             const jwtPayload = req.user;
+            const loadAmt = 3;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+            console.log(args.lastPostId);
+            let posts = await getSavedPosts(jwtPayload.username, loadAmt, args.lastPostId);
+            let fetchedAll = false;
 
-            return getSavedPosts(jwtPayload.username);
+            // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
+            if (posts[loadAmt] === undefined) {
+                fetchedAll = true;
+            }
+            // remove the test post fetch
+            posts.pop();
+
+            const finalResponse = {
+                posts: posts,
+                lastPostId: posts.length > 0 ? posts[posts.length-1].id : -1,
+                fetchedAll: fetchedAll
+            };
+
+            return finalResponse;
         },
 
         partial_post: async function(_, args, { req }) {
             return getPostByPartial(args.partial_name, req.user);
         },
-
-        loadMorePosts: async function(_, args, { req }) {
-            return getMorePosts(args.alreadyFetched, req.user);
-        } 
     },
 
     Mutation: {

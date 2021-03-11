@@ -27,13 +27,16 @@ export default {
             userProjects: undefined,
             searchResults: [],
             showSearchResults: false,
-            fetchedAll: false
+            fetchedAll: false,
+            lastPostId: 0
         }
     },
     created() {
         // WE SHOULD CACHE THIS FOR A RELATIVELY SHORT AMOUNT OF TIME
-        GraphQLService.fetchSavedPosts(this.$store.getters.accessToken, 0).then((posts) => {
+        GraphQLService.fetchSavedPosts(this.$store.getters.accessToken, this.lastPostId).then((posts) => {
+            console.log(posts);
             this.userProjects = posts.data.getSavedPosts.posts;
+            this.lastPostId = posts.data.getSavedPosts.lastPostId;
             this.fetchedAll = posts.data.getSavedPosts.fetchedAll;
         });
     },
@@ -53,8 +56,10 @@ export default {
         },
         loadNew() {
             // WE SHOULD CACHE THIS FOR A RELATIVELY SHORT AMOUNT OF TIME
-            GraphQLService.fetchSavedPosts(this.$store.getters.accessToken, this.userProjects.length).then((posts) => {
+            GraphQLService.fetchSavedPosts(this.$store.getters.accessToken, this.lastPostId).then((posts) => {
+                console.log(posts);
                 this.userProjects = this.userProjects.concat(posts.data.getSavedPosts.posts);
+                this.lastPostId = posts.data.getSavedPosts.lastPostId;
                 this.fetchedAll = posts.data.getSavedPosts.fetchedAll;
             });    
         }
