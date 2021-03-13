@@ -157,3 +157,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.home {
+    margin-bottom: 0;
+}
+</style>

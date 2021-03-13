@@ -22,10 +22,10 @@
                         <line x1="5" y1="12" x2="11" y2="6" />
                     </svg>
                 </div>
-                
+
                 <!-- Placeholder -->
                 <div style="flex-grow: 1"></div>
-                
+
                 <div class="actions_container">
                     <div class="save_post_container">
                         <svg
@@ -61,7 +61,16 @@
                         </svg>
                     </div>
 
-                    <svg v-if="!projectData.isLiked" @click="likePost(projectData.id)" width="30" height="30" viewBox="0 0 16 16" class="bi bi-heart" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                        v-if="!projectData.isLiked"
+                        @click="likePost(projectData.id)"
+                        width="30"
+                        height="30"
+                        viewBox="0 0 16 16"
+                        class="bi bi-heart"
+                        fill="#eb4034"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
                         <path
                             fill-rule="evenodd"
                             d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
@@ -72,9 +81,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="placeholder">
-                
-            </div>
+            <div class="placeholder"></div>
             <!-- Placeholder -->
             <div class="post_header_details">
                 <p class="postname">{{ projectData.title }}</p>
@@ -109,7 +116,7 @@ export default {
         return {
             tags: undefined,
             postThumbnail: undefined,
-            postImages: []
+            postImages: [],
         };
     },
     props: {
@@ -119,7 +126,7 @@ export default {
     components: {
         LinkItem,
         CarouselMobile,
-        CreateTag
+        CreateTag,
     },
     created() {
         window.scrollTo(0, 0); // this is because for some reason loading mobile posts doesnt always start you at the top
@@ -138,7 +145,7 @@ export default {
         }
     },
     mounted() {
-        this.$refs.image_div.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) ), url('${ this.postThumbnail }')`;
+        this.$refs.image_div.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) ), url('${this.postThumbnail}')`;
     },
     methods: {
         back() {
@@ -209,7 +216,6 @@ export default {
     justify-content: center;
     height: 30px;
     margin-right: 20px;
-    
 }
 .postname {
     font-size: 20px;

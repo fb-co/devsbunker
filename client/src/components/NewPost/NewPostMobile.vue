@@ -514,11 +514,11 @@ export default {
     max-width: 450px;
     border-radius: 25px;
     margin: 0px auto 20px auto;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); */
     /*box-shadow: 0px 4px 20px var(--main-font-color);*/
     padding-right: 10px;
     padding-left: 10px;
-    background-color: var(--main-color);
+    background-color: var(--secondary-color);
     margin-top: 20px;
 
     transform: translateY(-100%);

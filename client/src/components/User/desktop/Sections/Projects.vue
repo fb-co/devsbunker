@@ -26,8 +26,8 @@
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 //import Dropdown from "@/components/global/Dropdown.vue";
-import PostSearch from '@/components/PostSearch.vue';
-import GraphQLService from '@/services/graphql.service.js';
+import PostSearch from "@/components/PostSearch.vue";
+import GraphQLService from "@/services/graphql.service.js";
 
 export default {
     data() {
@@ -35,12 +35,12 @@ export default {
             userProjects: this.$parent.userProjects,
             searchResults: [],
             showSearchResults: false,
-            fetchedAll: false
+            fetchedAll: false,
         };
     },
     components: {
         MobileProjectCard,
-        PostSearch
+        PostSearch,
     },
     methods: {
         updateSearchComponent(documents, closeResults) {
@@ -53,12 +53,18 @@ export default {
             }
         },
         loadNew() {
-            GraphQLService.fetchPostsByAuthor(this.$store.getters.username, this.$store.getters.accessToken, this.userProjects.length).then((posts) => {
-                this.userProjects = this.userProjects.concat(posts.data.getPostsByAuthor.posts);
+            GraphQLService.fetchPostsByAuthor(
+                this.$store.getters.username,
+                this.$store.getters.accessToken,
+                this.userProjects.length
+            ).then((posts) => {
+                this.userProjects = this.userProjects.concat(
+                    posts.data.getPostsByAuthor.posts
+                );
                 this.fetchedAll = posts.data.getPostsByAuthor.fetchedAll;
             });
-        }
-    }
+        },
+    },
 };
 </script>
 
