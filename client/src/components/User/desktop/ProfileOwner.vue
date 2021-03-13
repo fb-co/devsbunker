@@ -218,7 +218,7 @@ export default {
     },
     props: {
         mainUserObject: Object,
-        mainUserProjects: Array,
+        mainUserProjects: Object,
     },
     created() {
         this.userObject = this.mainUserObject;
@@ -230,6 +230,9 @@ export default {
             });
             this.$router.push("/");
         },
+        loadNewPersonalPosts() {
+            this.$parent.loadNewPersonalPosts();
+        }
     },
 };
 </script>

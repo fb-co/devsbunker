@@ -1,5 +1,8 @@
 import Posts from "../../../components/post/post.model.js";
 
+
+// The reason you fetch load amount + 1 is because you need to make sure that you havent fetched all the posts yet.
+// So by getting the loadInc+1, you can see if that extra post exists or not to see if they have all been fetched or nots
 export default async function getPostList(sortingMethod, loadAmt, lastPostId) {
     return new Promise((resolve) => {
         const loadIncrement = loadAmt; // how many posts are to be loaded at once
@@ -9,7 +12,7 @@ export default async function getPostList(sortingMethod, loadAmt, lastPostId) {
             if (lastPostId != 0) {
                 Posts.find({ '_id': { '$lt': lastPostId } })
                     .sort({ _id: -1 })
-                    .limit(loadIncrement)
+                    .limit(loadIncrement+1)
                     .then((posts) => { 
                         resolve(posts);
                     })
@@ -19,7 +22,7 @@ export default async function getPostList(sortingMethod, loadAmt, lastPostId) {
             } else {
                 Posts.find()
                     .sort({ _id: -1 })
-                    .limit(loadIncrement)
+                    .limit(loadIncrement+1)
                     .then((posts) => {        
                         resolve(posts);
                     })
@@ -30,7 +33,7 @@ export default async function getPostList(sortingMethod, loadAmt, lastPostId) {
         } else if (sortingMethod == "Most Popular") {
             Posts.find({ 'id': { '$lt': lastPostId } })
                 .sort({ likeAmt: -1 })
-                .limit(loadIncrement)
+                .limit(loadIncrement+1)
                 .then((posts) => {        
                     resolve(posts);
                 })

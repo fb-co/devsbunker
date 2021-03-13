@@ -16,7 +16,11 @@ export default {
     data() {
         return {
             userObject: undefined,
-            userProjects: undefined,
+            userProjects: {
+                posts: [],
+                lastPostId: 0,
+                fetchedAll: false
+            },
         };
     },
     created() {
@@ -41,10 +45,27 @@ export default {
         // if the user is logged out their token will be undefined anyway
         GraphQLService.fetchPostsByAuthor(
             this.$store.getters.username,
+            this.userProjects.lastPostId,
             this.$store.getters.accessToken,
         ).then((posts) => {
-            this.userProjects = posts.data.getPostsByAuthor;
+            this.userProjects.posts = posts.data.getPostsByAuthor.posts;
+            this.userProjects.lastPostId = posts.data.getPostsByAuthor.lastPostId;
+            this.userProjects.fetchedAll = posts.data.getPostsByAuthor.fetchedAll;
         });
+    },
+    methods: {
+        loadNewPersonalPosts() {
+            // if the user is logged out their token will be undefined anyway
+            GraphQLService.fetchPostsByAuthor(
+                this.$store.getters.username,
+                this.userProjects.lastPostId,
+                this.$store.getters.accessToken,
+            ).then((posts) => {
+                this.userProjects.posts = this.userProjects.posts.concat(posts.data.getPostsByAuthor.posts);
+                this.userProjects.lastPostId = posts.data.getPostsByAuthor.lastPostId;
+                this.userProjects.fetchedAll = posts.data.getPostsByAuthor.fetchedAll;
+            });
+        }
     },
     components: {
         ProfileMobile,

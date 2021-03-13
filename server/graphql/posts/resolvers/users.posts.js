@@ -4,7 +4,6 @@ import getPostById from "../utils/getPostById.js";
 import getPostList from "../utils/getPostList.js";
 import getPostsByAuthor from "../utils/getPostsByAuthor.js";
 import getSavedPosts from "../utils/getSavedPosts.js";
-import getMorePosts from "../utils/getMorePosts.js";
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
@@ -23,8 +22,9 @@ export default {
         getPosts: async function (_, args, { req }) {
             try {
                 const loadAmt = 3;
-                const posts = await getPostList(args.sortingType, loadAmt, args.lastPostId);
-    
+                let posts = await getPostList(args.sortingType, loadAmt, args.lastPostId);
+                let fetchedAll = false;
+
                 let user;
 
                 // if the user was logged in, evaluate if the post requested has been liked or saved before
@@ -32,14 +32,23 @@ export default {
                     const jwtPayload = req.user;
                     user = await User.findOne({ username: jwtPayload.username});
                 }
+                
+
+                // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
+                if (posts[loadAmt] === undefined) {
+                    fetchedAll = true;
+                } else {
+                    // remove the test post fetch only if you havent reached the end yet and are getting rid of the test post
+                    posts.pop();
+                }
+                
 
                 const finalPosts = AddDynamicData.addAll(posts, user);
-                console.log(posts.length < loadAmt);
 
                 const finalResponse = {
                     posts: finalPosts,
                     lastPostId: finalPosts.length > 0 ? finalPosts[finalPosts.length-1].id : -1,
-                    fetchedAll: posts.length < loadAmt
+                    fetchedAll: fetchedAll
                 }
 
                 return finalResponse;
@@ -80,25 +89,57 @@ export default {
         },
 
         // returns all the posts by a given author parameter
-        getPostsByAuthor: function (_, args, { req }) {
-            return getPostsByAuthor(args.author, req.user);
+        getPostsByAuthor: async function (_, args, { req }) {
+            const loadAmt = 3;
+
+            let posts = await getPostsByAuthor(args.author, args.lastPostId, loadAmt, req.user);
+            let fetchedAll = false;
+
+            // check and remove test post
+            if (posts[loadAmt] === undefined) {
+                fetchedAll = true;
+            } else {
+                posts.pop();
+            }
+
+            const finalResponse = {
+                posts: posts,
+                lastPostId: posts.length > 0 ? posts[posts.length-1].id : -1,
+                fetchedAll: fetchedAll
+            };
+
+            return finalResponse;
         },
 
-        getSavedPosts: function (_, args, { req }) {
+        getSavedPosts: async function (_, args, { req }) {
             const jwtPayload = req.user;
+            const loadAmt = 3;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
-            return getSavedPosts(jwtPayload.username);
+            let posts = await getSavedPosts(jwtPayload.username, loadAmt, args.lastPostId);
+            let fetchedAll = false;
+
+            // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
+            if (posts[loadAmt] === undefined) {
+                fetchedAll = true;
+            } else {
+                // remove the test post fetch if you havent reache the end
+                posts.pop();
+            }
+
+            const finalResponse = {
+                posts: posts,
+                lastPostId: posts.length > 0 ? posts[posts.length-1].id : -1,
+                fetchedAll: fetchedAll
+            };
+
+            return finalResponse;
         },
 
         partial_post: async function(_, args, { req }) {
             return getPostByPartial(args.partial_name, req.user);
         },
-
-        loadMorePosts: async function(_, args, { req }) {
-            return getMorePosts(args.alreadyFetched, req.user);
-        } 
     },
 
     Mutation: {
