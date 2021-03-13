@@ -15,38 +15,39 @@ export default async function getSavedPosts(author, loadAmt, lastPostId) {
                 for (let i = 0; i < wrappedPosts.length; i++) {
                     wrappedPosts[i] = new mongoose.Types.ObjectId(wrappedPosts[i]);
                 }
-                
-                if (lastPostId != 0) {
-                    Posts.find({
-                        $and: [
-                            { _id: { $in: wrappedPosts } },
-                            { _id: { $lt: lastPostId } }
-                        ]
-                    })
-                    .sort({ _id: -1 })
-                    .limit(loadAmt+1)
-                    .then((posts) => {
-                        const finalPosts = AddDynamicData.addAll(posts, user);
-                        resolve(finalPosts);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-                } else {
-                    Posts.find({ 
-                        _id: {
-                            "$in": wrappedPosts 
-                        } 
-                    })
-                    .sort({ _id: -1 })
-                    .limit(loadAmt+1)
-                    .then((posts) => {
-                        const finalPosts = AddDynamicData.addAll(posts, user);
-                        resolve(finalPosts);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
+                if (lastPostId != -1) { // if you havent fetched all the posts yet
+                    if (lastPostId != 0) { // if you havent fetched any posts yet
+                        Posts.find({
+                            $and: [
+                                { _id: { $in: wrappedPosts } },
+                                { _id: { $lt: lastPostId } }
+                            ]
+                        })
+                        .sort({ _id: -1 })
+                        .limit(loadAmt+1)
+                        .then((posts) => {
+                            const finalPosts = AddDynamicData.addAll(posts, user);
+                            resolve(finalPosts);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                    } else {
+                        Posts.find({ 
+                            _id: {
+                                "$in": wrappedPosts 
+                            } 
+                        })
+                        .sort({ _id: -1 })
+                        .limit(loadAmt+1)
+                        .then((posts) => {
+                            const finalPosts = AddDynamicData.addAll(posts, user);
+                            resolve(finalPosts);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                    }
                 }
             })
             .catch((err) => {

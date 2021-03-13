@@ -1,5 +1,5 @@
 <template>
-    <div v-if="this.userProjects.length > 0" id="main_container">
+    <div v-if="userProjects.posts.length > 0" id="main_container">
         <div class="filter_dropdown_container">
             <PostSearch width="30%" class="posts_search_bar" />
             <!--
@@ -11,8 +11,8 @@
             -->
         </div>
         <div v-if="!showSearchResults" class="project_list">
-            <MobileProjectCard v-for="project in userProjects" :key="project.id" :projectData="project" width="85%" />
-            <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
+            <MobileProjectCard v-for="project in userProjects.posts" :key="project.id" :projectData="project" width="85%" />
+            <p v-if="!userProjects.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
         <div v-else class="project_list">
             <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" />
@@ -25,9 +25,7 @@
 
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
-//import Dropdown from "@/components/global/Dropdown.vue";
 import PostSearch from '@/components/PostSearch.vue';
-import GraphQLService from '@/services/graphql.service.js';
 
 export default {
     data() {
@@ -35,7 +33,7 @@ export default {
             userProjects: this.$parent.userProjects,
             searchResults: [],
             showSearchResults: false,
-            fetchedAll: false
+            lastPostId: 0
         };
     },
     components: {
@@ -53,10 +51,7 @@ export default {
             }
         },
         loadNew() {
-            GraphQLService.fetchPostsByAuthor(this.$store.getters.username, this.$store.getters.accessToken, this.userProjects.length).then((posts) => {
-                this.userProjects = this.userProjects.concat(posts.data.getPostsByAuthor.posts);
-                this.fetchedAll = posts.data.getPostsByAuthor.fetchedAll;
-            });
+            this.$parent.loadNewPersonalPosts();
         }
     }
 };

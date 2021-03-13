@@ -37,9 +37,11 @@ export default {
                 // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
                 if (posts[loadAmt] === undefined) {
                     fetchedAll = true;
+                } else {
+                    // remove the test post fetch only if you havent reached the end yet and are getting rid of the test post
+                    posts.pop();
                 }
-                // remove the test post fetch
-                posts.pop();
+                
 
                 const finalPosts = AddDynamicData.addAll(posts, user);
 
@@ -87,8 +89,26 @@ export default {
         },
 
         // returns all the posts by a given author parameter
-        getPostsByAuthor: function (_, args, { req }) {
-            return getPostsByAuthor(args.author, req.user);
+        getPostsByAuthor: async function (_, args, { req }) {
+            const loadAmt = 3;
+
+            let posts = await getPostsByAuthor(args.author, args.lastPostId, loadAmt, req.user);
+            let fetchedAll = false;
+
+            // check and remove test post
+            if (posts[loadAmt] === undefined) {
+                fetchedAll = true;
+            } else {
+                posts.pop();
+            }
+
+            const finalResponse = {
+                posts: posts,
+                lastPostId: posts.length > 0 ? posts[posts.length-1].id : -1,
+                fetchedAll: fetchedAll
+            };
+
+            return finalResponse;
         },
 
         getSavedPosts: async function (_, args, { req }) {
@@ -96,16 +116,17 @@ export default {
             const loadAmt = 3;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
-            console.log(args.lastPostId);
+
             let posts = await getSavedPosts(jwtPayload.username, loadAmt, args.lastPostId);
             let fetchedAll = false;
 
             // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
             if (posts[loadAmt] === undefined) {
                 fetchedAll = true;
+            } else {
+                // remove the test post fetch if you havent reache the end
+                posts.pop();
             }
-            // remove the test post fetch
-            posts.pop();
 
             const finalResponse = {
                 posts: posts,
