@@ -138,7 +138,7 @@ export default {
         },
 
         partial_post: async function(_, args, { req }) {
-            return getPostByPartial(args.partial_name, req.user);
+            return getPostByPartial(args.partial_name, args.filter, req.user);
         },
     },
 
@@ -166,6 +166,12 @@ export default {
             });
 
             try {
+                // add the post id to the users posts
+                const user = await User.findOne({ username: jwtPayload.username });
+                
+                user.posts.push(post._id);
+
+                await user.save();
                 await post.save();
 
                 return {

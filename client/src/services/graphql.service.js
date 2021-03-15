@@ -71,11 +71,12 @@ const GraphQLService = {
         }
     },
 
-    fetchPostsByPartial: function(partial_name, token) {
+    // filter is required, just put a string of 'none' if you want to search all posts
+    fetchPostsByPartial: function(partial_name, filter, token) {
         if (partial_name != "") {
             const query = `
                 query {
-                    partial_post(partial_name: "${partial_name}") {
+                    partial_post(partial_name: "${partial_name}", filter: "${filter}") {
                         author
                         title
                         description

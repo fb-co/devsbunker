@@ -10,7 +10,7 @@ export default async function getSavedPosts(author, loadAmt, lastPostId) {
         User.findOne({ username: author })
             .then((user) => {
                 let wrappedPosts = user.saved_posts;
-                const totalEntries = wrappedPosts.length;
+
                 // for whatever reason to find by id, they need to wrapped in an ObjectType wrapper
                 for (let i = 0; i < wrappedPosts.length; i++) {
                     wrappedPosts[i] = new mongoose.Types.ObjectId(wrappedPosts[i]);

@@ -117,6 +117,10 @@ export default {
         width: {
             type: String,
             default: "100%"
+        },
+        filter: {
+            type: String,
+            default: "none"
         }
     },
     computed: {
@@ -134,7 +138,7 @@ export default {
 
                     setTimeout(() => {
                         if (this.$refs.general_input.value != "") {
-                            GraphQLService.fetchPostsByPartial(this.$refs.general_input.value, this.$store.getters.accessToken).then((res) => {
+                            GraphQLService.fetchPostsByPartial(this.$refs.general_input.value, this.filter, this.$store.getters.accessToken).then((res) => {
                                 this.documents = res.data.partial_post;
                                 this.$parent.updateSearchComponent(this.documents);
                             });

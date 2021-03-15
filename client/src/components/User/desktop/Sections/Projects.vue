@@ -1,7 +1,7 @@
 <template>
     <div v-if="userProjects.posts.length > 0" id="main_container">
         <div class="filter_dropdown_container">
-            <PostSearch width="30%" class="posts_search_bar" />
+            <PostSearch width="30%" filter="myProjects" class="posts_search_bar" />
             <!--
             <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown">
                 <button>Newest</button>
