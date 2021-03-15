@@ -166,12 +166,6 @@ export default {
             });
 
             try {
-                // add the post id to the users posts
-                const user = await User.findOne({ username: jwtPayload.username });
-                
-                user.posts.push(post._id);
-
-                await user.save();
                 await post.save();
 
                 return {

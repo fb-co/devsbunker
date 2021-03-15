@@ -35,7 +35,7 @@ export default async function getPostByPartial(partial_name, filter, requester_t
         } else {
             // search based on some filter
             try {
-                let postsToGet;
+                let postQuery;
     
                 if (filter === "saved") {
                     // need to find the posts objects since they are not contained in the user db document
@@ -43,15 +43,16 @@ export default async function getPostByPartial(partial_name, filter, requester_t
 
                     // for whatever reason to find by id, they need to wrapped in an ObjectType wrapper
                     for (let i = 0; i < userPosts.length; i++) {
-                        postsToGet.push( new mongoose.Types.ObjectId(userPosts[i]) );
+                        userPosts[i] = new mongoose.Types.ObjectId(userPosts[i]);
                     } 
+                    postQuery = { _id: { $in: userPosts } };
                 } else if (filter === "myProjects") {
-                    postsToGet = user.posts;
+                    postQuery = { author: user.username };
                 }
                 
                 Posts.find({
                     $and: [
-                        { _id: { $in: postsToGet } },
+                        postQuery,
                         { title: regex }
                     ]
                 })

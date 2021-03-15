@@ -1,7 +1,7 @@
 <template>
     <div v-if="userProjects && userProjects.length>0" id="main_container">
         <div class="filter_dropdown_container">
-            <PostSearch width="30%" filter="myProjects" class="search_bar" />
+            <PostSearch width="30%" filter="saved" class="search_bar" />
         </div>
         <div v-if="!showSearchResults" class="project_list">
             <MobileProjectCard v-for="userProject in userProjects" :key="userProject.id" :projectData="userProject" width="85%" />
