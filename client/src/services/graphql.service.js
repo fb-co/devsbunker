@@ -183,7 +183,6 @@ const GraphQLService = {
                         price
                         id
                     }
-                    lastPostId
                     fetchedAll
                 }
             }
@@ -312,13 +311,13 @@ const GraphQLService = {
     },
 
     // enter lastPstId as zero if you havent fetched any yet, and -1 if they have all been fetched
-    fetchPosts: function(sortMethod, lastPostId, token) {
+    fetchPosts: function(sortMethod, lastPostId, lastUniqueField, token) {
         let query;
         // only request the isLiked and isSaved fields if the user is logged in and passes in the auth token
         if (token) {
             query = `
                 query {
-                    getPosts(sortingType: "${sortMethod}", lastPostId: "${lastPostId}") {
+                    getPosts(sortingType: "${sortMethod}", lastPostId: "${lastPostId}", lastUniqueField: "${lastUniqueField}") {
                         posts {
                             title
                             author
@@ -336,7 +335,6 @@ const GraphQLService = {
                             price
                             id
                         }
-                        lastPostId
                         fetchedAll
                     }
                 }
@@ -344,7 +342,7 @@ const GraphQLService = {
         } else {
             query = `
                 query {
-                    getPosts(sortingType: "${sortMethod}", lastPostId: "${lastPostId}") {
+                    getPosts(sortingType: "${sortMethod}", lastPostId: "${lastPostId}", lastUniqueField: "${lastUniqueField}") {
                         posts {
                             title
                             author
@@ -359,7 +357,6 @@ const GraphQLService = {
                             price
                             id
                         }
-                        lastPostId
                         fetchedAll
                     }
                 }

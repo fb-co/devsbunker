@@ -22,8 +22,9 @@ export default {
         getPosts: async function (_, args, { req }) {
             try {
                 const loadAmt = 3;
-                let posts = await getPostList(args.sortingType, loadAmt, args.lastPostId);
+                let posts = await getPostList(args.sortingType, loadAmt, args.lastPostId, args.lastUniqueField);
                 let fetchedAll = false;
+                let lastUniqueField; 
 
                 let user;
 
@@ -44,10 +45,14 @@ export default {
                 
 
                 const finalPosts = AddDynamicData.addAll(posts, user);
+                
+                // add the unique field if it is required
+                if (args.sortingType === "Most Popular") {
+                    lastUniqueField = finalPosts[finalPosts.length-1].likeAmt;
+                }
 
                 const finalResponse = {
                     posts: finalPosts,
-                    lastPostId: finalPosts.length > 0 ? finalPosts[finalPosts.length-1].id : -1,
                     fetchedAll: fetchedAll
                 }
 

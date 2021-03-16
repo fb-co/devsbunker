@@ -31,8 +31,7 @@ import LoadMorePosts from "@/mixins/load_more_posts.mixin";
 export default {
     data() {
         return {
-            posts: undefined,
-            lastPostId: 0,
+            posts: [],
             loadedPosts: [], // this contains posts loaded with other filters, to avoid continously loading them when you switch filters
 
             notifications: undefined,
@@ -69,17 +68,26 @@ export default {
             this.$refs.newPostMenu.close();
         },
         async loadNew() {
+            console.log(this.posts);
+
             const newProjects = await this.load(
                 this.filter,
-                this.lastPostId,
+                this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].id : 0,
+                this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].likeAmt : -1, // last unique field (ex: likeAmt)
                 this.$store.getters.accessToken
             );
-            this.lastPostId = newProjects.data.getPosts.lastPostId;
+            console.log(newProjects);
             this.fetchedAll = newProjects.data.getPosts.fetchedAll;
-            console.log(newProjects.data.getPosts);
 
             //this.fetchedAll = newProjects.data.loadMorePosts.fetchedAll;
             this.posts = this.posts.concat(newProjects.data.getPosts.posts);
+
+            // update posts in memory to contain the new loaded posts
+            for (let i = 0; i < this.loadedPosts.length; i++) {
+                if (this.loadedPosts[i].filter === this.filter) {
+                    this.loadedPosts[i].posts = this.posts;
+                }
+            }
         },
         updateFilterDropdown(value) {
             SearchUtilities.setHomePostFilter(value);
@@ -107,12 +115,13 @@ export default {
                 // Get the posts
                 res = await GraphQLService.fetchPosts(
                     filter,
-                    this.lastPostId,
+                    this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].id : 0, // last post id
+                    this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].likeAmt : 0, // last unique field (ex: likeAmt)
                     this.$store.getters.accessToken
                 );
+                console.log(res);
                 // pass in the new post data to the home page main components
                 this.posts = res.data.getPosts.posts;
-                this.lastPostId = res.data.getPosts.lastPostId;
 
                 // keep old loaded posts in memory
                 this.loadedPosts.push({
@@ -139,15 +148,12 @@ export default {
             );
             this.posts = res.data.getPosts.posts;
 
-            this.lastPostId = res.data.getPosts.lastPostId;
 
             this.loadedPosts.push({
                 filter: this.filter,
                 posts: res.data.getPosts.posts,
             });
             this.loaded = true;
-
-            console.log(this.posts);
         },
         async reloadPosts(flag) {
             this.loaded = false;
