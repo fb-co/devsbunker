@@ -72,11 +72,12 @@ const GraphQLService = {
     },
 
     // filter is required, just put a string of 'none' if you want to search all posts
-    fetchPostsByPartial: function(partial_name, filter, token) {
+    // SEE THE MONGO QUERY TO UNDERSTAND WHAT userToFilter is for
+    fetchPostsByPartial: function(partial_name, filter, userToFilter, token) {
         if (partial_name != "") {
             const query = `
                 query {
-                    partial_post(partial_name: "${partial_name}", filter: "${filter}") {
+                    partial_post(partial_name: "${partial_name}", filter: "${filter}", userToFilter: "${userToFilter}") {
                         author
                         title
                         description

@@ -138,7 +138,7 @@ export default {
         },
 
         partial_post: async function(_, args, { req }) {
-            return getPostByPartial(args.partial_name, args.filter, req.user);
+            return getPostByPartial(args.partial_name, args.filter, args.userToFilter, req.user);
         },
     },
 

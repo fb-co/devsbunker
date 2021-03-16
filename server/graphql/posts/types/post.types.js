@@ -70,7 +70,7 @@ export default gql`
 
         getSavedPosts(lastPostId: String): LoadPostsResponse!
 
-        partial_post(partial_name: String!, filter: String!): [FetchablePost]!
+        partial_post(partial_name: String!, filter: String!, userToFilter: String): [FetchablePost]!
 
         loadMorePosts(lastPostId: Int): LoadMoreResponse!
     }

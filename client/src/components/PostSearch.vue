@@ -109,6 +109,7 @@ export default {
             selectedDocument: -1,
             queryThresh: 1000, // amount of time in between query queue times
             queryQueued: false, // flag to make sure queries are not spammed
+            userToFilter: this.userToFilterProp || this.$store.getters.accessToken
 
             //canClose: false // Important because you need to make sure when you blur the input that the click binding on the options can be triggered
         }
@@ -121,7 +122,8 @@ export default {
         filter: {
             type: String,
             default: "none"
-        }
+        },
+        userToFilterProp: String,
     },
     computed: {
         cssProps() {
@@ -138,7 +140,7 @@ export default {
 
                     setTimeout(() => {
                         if (this.$refs.general_input.value != "") {
-                            GraphQLService.fetchPostsByPartial(this.$refs.general_input.value, this.filter, this.$store.getters.accessToken).then((res) => {
+                            GraphQLService.fetchPostsByPartial(this.$refs.general_input.value, this.filter, this.userToFilter, this.$store.getters.accessToken).then((res) => {
                                 this.documents = res.data.partial_post;
                                 this.$parent.updateSearchComponent(this.documents);
                             });

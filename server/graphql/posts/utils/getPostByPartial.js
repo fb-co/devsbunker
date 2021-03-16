@@ -3,7 +3,8 @@ import User from "../../../components/user/user.model.js";
 import AddDynamicData from "../misc/addDynamicData.js";
 import mongoose from "mongoose";
 
-export default async function getPostByPartial(partial_name, filter, requester_token) {
+// userToFilter is the username of the author you want to search based on. Example -> search only the posts of this username
+export default async function getPostByPartial(partial_name, filter, userToFilter, requester_token) {
     let user;
     
     if (requester_token) {
@@ -47,7 +48,7 @@ export default async function getPostByPartial(partial_name, filter, requester_t
                     } 
                     postQuery = { _id: { $in: userPosts } };
                 } else if (filter === "myProjects") {
-                    postQuery = { author: user.username };
+                    postQuery = { author: userToFilter };
                 }
                 
                 Posts.find({

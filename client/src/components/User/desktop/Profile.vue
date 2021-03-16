@@ -104,15 +104,17 @@ import ProfilePicture from "@/components/ProfilePicture.vue";
 export default {
     data() {
         return {
-            userObject: this.userData
+            userObject: this.mainUserObject,
+            userProjects: this.mainUserProjects
         }
     },
     props: {
-        userData: Object
+        mainUserObject: Object,
+        mainUserProjects: Object
     },
     components: {
         ProfilePicture
-    },
+    }, 
     methods: {
         followUser() {
             GraphQLService.followPerson(
@@ -140,6 +142,9 @@ export default {
                 }
             });
         },
+        loadNewPersonalPosts() {
+            this.$parent.loadNewPersonalPosts();
+        }
     },
 };
 </script>
