@@ -68,8 +68,6 @@ export default {
             this.$refs.newPostMenu.close();
         },
         async loadNew() {
-            console.log(this.posts);
-
             const newProjects = await this.load(
                 this.filter,
                 this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].id : 0,
