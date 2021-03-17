@@ -6,7 +6,7 @@
                 :projects="posts"
                 :notifications="notifications"
                 v-if="!$store.getters.mobile"
-                :fetchedAll="fetchedAll"
+                :fetchedAll="fetchedAll[filter]"
                 :postFeedFilter="filter"
                 @updateFilterDropdown="updateFilterDropdown"
                 :loaded="loaded"
@@ -35,7 +35,12 @@ export default {
             loadedPosts: [], // this contains posts loaded with other filters, to avoid continously loading them when you switch filters
 
             notifications: undefined,
-            fetchedAll: false,
+
+            // needs to account for which filters have 'fetched all' which is why this is an object
+            fetchedAll: {
+                "Newest": false,
+                "Most Popular": false,    
+            },
             reload: 0,
             filter: SearchUtilities.getHomePostFilter(),
             loaded: false,
@@ -74,18 +79,13 @@ export default {
                 this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].likeAmt : -1, // last unique field (ex: likeAmt)
                 this.$store.getters.accessToken
             );
-            console.log(newProjects);
-            this.fetchedAll = newProjects.data.getPosts.fetchedAll;
+            
+            // set fetched all value only for the current filter
+            this.fetchedAll[this.filter] = newProjects.data.getPosts.fetchedAll;
 
-            //this.fetchedAll = newProjects.data.loadMorePosts.fetchedAll;
             this.posts = this.posts.concat(newProjects.data.getPosts.posts);
 
-            // update posts in memory to contain the new loaded posts
-            for (let i = 0; i < this.loadedPosts.length; i++) {
-                if (this.loadedPosts[i].filter === this.filter) {
-                    this.loadedPosts[i].posts = this.posts;
-                }
-            }
+            this.updatePostsInMemory(this.filter);
         },
         updateFilterDropdown(value) {
             SearchUtilities.setHomePostFilter(value);
@@ -96,11 +96,21 @@ export default {
         // returns whether a post filter type is already loaded in memory (so it doesnt have to re-ask the server)
         postsInMemory(filter) {
             for (let i = 0; i < this.loadedPosts.length; i++) {
-                if (this.loadedPosts[i].filter == filter) {
+                if (this.loadedPosts[i].filter === filter) {
                     return this.loadedPosts[i].posts;
                 }
             }
             return null;
+        },
+
+        // this will update an old saved post filter with new posts
+        updatePostsInMemory(filter) {
+            for (let i = 0; i < this.loadedPosts.length; i++) {
+                if (this.loadedPosts[i].filter === filter) {
+                    this.loadedPosts[i].posts = this.posts;
+                    return; // break out of the function
+                }
+            }
         },
 
         async queryPosts(filter, forceReload = false) {
@@ -108,16 +118,22 @@ export default {
             let res = undefined;
 
             if (alreadyLoadedPosts && !forceReload) {
+                // check if the posts were already fetched
                 this.posts = alreadyLoadedPosts;
             } else {
+                // reset the posts if none for the filter have been fetched (prevents graph from receiving post related values for the other filter)
+                this.posts = [];
+
                 // Get the posts
                 res = await GraphQLService.fetchPosts(
                     filter,
                     this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].id : 0, // last post id
-                    this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].likeAmt : 0, // last unique field (ex: likeAmt)
+                    this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].likeAmt : -1, // last unique field (ex: likeAmt)
                     this.$store.getters.accessToken
                 );
-                console.log(res);
+                // set fetched all value only for the current filter
+                this.fetchedAll[this.filter] = res.data.getPosts.fetchedAll;
+                
                 // pass in the new post data to the home page main components
                 this.posts = res.data.getPosts.posts;
 
@@ -145,6 +161,9 @@ export default {
                 this.$store.getters.accessToken
             );
             this.posts = res.data.getPosts.posts;
+            
+            // set fetched all value only for the current filter
+            this.fetchedAll[this.filter] = res.data.getPosts.fetchedAll;
 
 
             this.loadedPosts.push({

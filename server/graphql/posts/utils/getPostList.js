@@ -31,10 +31,6 @@ export default async function getPostList(sortingMethod, loadAmt, lastPostId, la
                     });
             }
         } else if (sortingMethod == "Most Popular") {
-            //Posts.find({ 'id': { '$lt': lastPostId } })
-            console.log(lastUniqueField);
-            console.log(lastPostId);
-            
             // if the lastPostId and lastUnique field are defined 
             if (lastUniqueField != -1 && lastPostId != 0) {
                 Posts.find({
@@ -48,8 +44,7 @@ export default async function getPostList(sortingMethod, loadAmt, lastPostId, la
                 })
                     .sort({ likeAmt: -1, _id: -1 })
                     .limit(loadIncrement+1)
-                    .then((posts) => { 
-                        console.log(posts);       
+                    .then((posts) => {      
                         resolve(posts);
                     })
                     .catch((err) => {
