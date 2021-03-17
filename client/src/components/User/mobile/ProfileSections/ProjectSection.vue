@@ -16,33 +16,33 @@
 </template>
 
 <script>
-import MobileProjectCard from '@/components/MobileProjectCard.vue';
+import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 
 export default {
     data() {
         return {
-            projects: this.$parent.userProjects
-        }
+            projects: this.$parent.userProjects,
+        };
     },
     created() {
         console.log(this.$parent.userProjects);
     },
     components: {
         MobileProjectCard,
-        Dropdown
-    }
-}
+        Dropdown,
+    },
+};
 </script>
 
 <style scoped>
-    #component_container {
-        width: 100%;
-    }
-    .filter_dropdown {
-        background-color: var(--secondary-color); 
-        width: 48%;
-        margin: 0px auto 40px auto;
-        display: inline-block;
-    }
+#component_container {
+    width: 100%;
+}
+.filter_dropdown {
+    background-color: var(--secondary-color);
+    width: 48%;
+    margin: 0px auto 40px auto;
+    display: inline-block;
+}
 </style>

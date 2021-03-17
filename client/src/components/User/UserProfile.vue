@@ -1,12 +1,14 @@
 <template>
     <div>
-        <ProfileDesktop v-if="userObject" :mainUserObject="userObject" :mainUserProjects="userProjects" />
-    </div> 
+        <ProfileDesktop v-if="userObject && !$store.getters.mobile" :mainUserObject="userObject" :mainUserProjects="userProjects" />
+        <ProfileMobile v-if="userObject && $store.getters.mobile" :mainUserObject="userObject" :mainUserProjects="userProjects" />
+    </div>
 </template>
 
 <script>
 import GraphQLService from "@/services/graphql.service";
 import ProfileDesktop from "./desktop/Profile.vue";
+import ProfileMobile from "./mobile/Profile.vue";
 
 export default {
     data() {
@@ -16,12 +18,13 @@ export default {
             userProjects: {
                 posts: [],
                 lastPostId: 0,
-                fetchedAll: false
-            }
+                fetchedAll: false,
+            },
         };
     },
     components: {
-        ProfileDesktop
+        ProfileDesktop,
+        ProfileMobile,
     },
     async created() {
         this.username = this.$route.params.username;
@@ -46,8 +49,10 @@ export default {
             this.$store.getters.accessToken
         ).then((posts) => {
             this.userProjects.posts = posts.data.getPostsByAuthor.posts;
-            this.userProjects.lastPostId = posts.data.getPostsByAuthor.lastPostId;
-            this.userProjects.fetchedAll = posts.data.getPostsByAuthor.fetchedAll;
+            this.userProjects.lastPostId =
+                posts.data.getPostsByAuthor.lastPostId;
+            this.userProjects.fetchedAll =
+                posts.data.getPostsByAuthor.fetchedAll;
         });
     },
     methods: {
@@ -58,16 +63,19 @@ export default {
                 this.userProjects.lastPostId,
                 this.$store.getters.accessToken
             ).then((posts) => {
-                this.userProjects.posts = this.userProjects.posts.concat(posts.data.getPostsByAuthor.posts);
-                this.userProjects.lastPostId = posts.data.getPostsByAuthor.lastPostId;
-                this.userProjects.fetchedAll = posts.data.getPostsByAuthor.fetchedAll;
+                this.userProjects.posts = this.userProjects.posts.concat(
+                    posts.data.getPostsByAuthor.posts
+                );
+                this.userProjects.lastPostId =
+                    posts.data.getPostsByAuthor.lastPostId;
+                this.userProjects.fetchedAll =
+                    posts.data.getPostsByAuthor.fetchedAll;
             });
-        }
-    }
+        },
+    },
 };
 </script>
 
 <style scoped>
-
 </style>
 

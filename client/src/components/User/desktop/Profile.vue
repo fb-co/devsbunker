@@ -105,16 +105,16 @@ export default {
     data() {
         return {
             userObject: this.mainUserObject,
-            userProjects: this.mainUserProjects
-        }
+            userProjects: this.mainUserProjects,
+        };
     },
     props: {
         mainUserObject: Object,
-        mainUserProjects: Object
+        mainUserProjects: Object,
     },
     components: {
-        ProfilePicture
-    }, 
+        ProfilePicture,
+    },
     methods: {
         followUser() {
             GraphQLService.followPerson(
@@ -144,7 +144,7 @@ export default {
         },
         loadNewPersonalPosts() {
             this.$parent.loadNewPersonalPosts();
-        }
+        },
     },
 };
 </script>
