@@ -58,9 +58,6 @@ export default {
         mainUserObject: Object,
         mainUserProjects: Object,
     },
-    created() {
-        console.log(this.userProjects);
-    },
     methods: {
         loadNewPersonalPosts() {
             this.$parent.loadNewPersonalPosts();

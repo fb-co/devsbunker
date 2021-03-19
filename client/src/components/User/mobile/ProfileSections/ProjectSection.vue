@@ -1,36 +1,26 @@
 <template>
-    <div id="component_container">
-        <Dropdown class="filter_dropdown" style="margin-right: 4%;" label="My Projects" height="40px" linkHeight="40px" openOn="click">
-            <button>My Projects</button>
-            <button>Purchases</button>
-            <button>Downloaded</button>
-        </Dropdown>
-        <Dropdown class="filter_dropdown" label="Newest" height="40px" linkHeight="40px" openOn="click">
-            <button>Newest</button>
-            <button>Most Popular</button>
-            <button>Alphabetical</button>
-        </Dropdown>
-
-        <MobileProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="100%" />
+    <div id="component_container" v-if="projectsToRender.posts.length>0">
+        <MobileProjectCard v-for="project in projects" :key="project.id" :projectData="project" width="100%" />
     </div>
 </template>
 
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
-import Dropdown from "@/components/global/Dropdown.vue";
 
 export default {
     data() {
         return {
-            projects: this.$parent.userProjects,
+            projects: this.projectsToRender.posts,
         };
     },
     created() {
-        console.log(this.$parent.userProjects);
+        console.log(this.projectsToRender);
+    },
+    props: {
+        projectsToRender: Object
     },
     components: {
         MobileProjectCard,
-        Dropdown,
     },
 };
 </script>

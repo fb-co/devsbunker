@@ -32,7 +32,7 @@
         </div>
 
         <div class="dynamic_feed">
-            <ProjectSection v-if="activeSection==='projects'" />
+            <ProjectSection v-if="activeSection==='projects'" :projectsToRender="userProjects" />
             <AnalyticSection v-if="activeSection==='analytics'" />
         </div>
 
@@ -62,7 +62,7 @@ export default {
     },
     props: {
         mainUserObject: Object,
-        mainUserProjects: Array,
+        mainUserProjects: Object,
     },
     components: {
         ...ProfileSections,
