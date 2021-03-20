@@ -2,6 +2,9 @@
     <div class="profileMobile">
         <div class="profile_banner"></div>
         <div class="profile_card">
+            <div class="space"></div>
+            <ProfilePicture v-if="userObject" :username="userObject.username" wrapperSize="120px" class="profile_pic" />
+
             <div class="card_container">
                 <p class="card_name">{{ $store.getters.username }}</p>
                 <p class="card_desc">{{ userObject.desc }}</p>
@@ -24,7 +27,7 @@
 
         <div class="personal_btn_container">
             <div class="personal_btn" :class="{ active_section: activeSection=='analytics' ? true : false }">
-                <p class="personal_btn_link" @click="navigateTo('analytics')">Analytics</p>
+                <p class="personal_btn_link" @click="navigateTo('saved')">Saved</p>
             </div>
             <div class="personal_btn" :class="{ active_section: activeSection=='projects' ? true : false }">
                 <p class="personal_btn_link" @click="navigateTo('projects')">Projects</p>
@@ -32,25 +35,15 @@
         </div>
 
         <div class="dynamic_feed">
-            <ProjectSection v-if="activeSection==='projects'" :projectsToRender="userProjects" />
-            <AnalyticSection v-if="activeSection==='analytics'" />
+            <ProjectSection v-if="activeSection==='projects' && userProjects" />
+            <SavedProjects v-if="activeSection==='saved'" :projectsToRender="userProjects.posts" />
         </div>
-
-        <!-- FOR THE VISITING ANOTHER USER PROFILE (KEEPING HERE UNTIL THEN)
-        <div class="projects_tab">
-            <div class="projects_tab_item">
-                <p id="projects_title">PROJECTS</p>
-            </div>
-            <div class="projects_tab_item" style="text-align: right;">
-                <router-link to='/' id="view_all_link">VIEW ALL</router-link>
-            </div>
-        </div>
-        -->
     </div>
 </template>
 
 <script>
 import ProfileSections from "./ProfileSections/mobile.profile.imports.js";
+import ProfilePicture from "@/components/ProfilePicture.vue";
 
 export default {
     data() {
@@ -60,25 +53,29 @@ export default {
             userProjects: this.mainUserProjects,
         };
     },
+    created() {
+        console.log("parent", this.userProjects.posts);
+    },
     props: {
         mainUserObject: Object,
         mainUserProjects: Object,
     },
     components: {
         ...ProfileSections,
+        ProfilePicture,
     },
     methods: {
         navigateTo(elem) {
             this.activeSection = elem;
         },
-        loadNewPersonalPosts() {
-            this.$parent.loadNewPersonalPosts();
-        }
     },
 };
 </script>
 
 <style scoped>
+.space {
+    height: 25px;
+}
 .profile_banner {
     position: relative;
     width: 100%;
@@ -189,43 +186,6 @@ export default {
     margin-top: 35px;
 }
 
-/*  THESE SHOULD BE FOR THE VISITING ANOTHER USER PAGE (KEEPING HERE UNTIL I MAKE THAT)
-.projects_tab {
-    width: 80%;
-    max-width: 500px;
-    min-width: 250px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: -60px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-}
-.projects_tab_item {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 50%;
-}
-#projects_title {
-    margin-top: 5px;
-    font-weight: bold;
-    font-size: 20px;
-}
-#view_all_link {
-    display: inline-block;
-    width: 100%;
-    text-decoration: none;
-    background-color: var(--main-accent);
-    color: #fff;
-    border-radius: 30px;
-    width: 70px;
-    padding: 10px;
-    font-size: 11px;
-}
-*/
-
 input[type="submit"] {
     width: 200px;
     font-size: 1rem;
@@ -240,5 +200,40 @@ input[type="submit"] {
     border: none;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+.personal_btn {
+    height: 100%;
+    width: 50%;
+    cursor: pointer;
+    border: 1px solid var(--main-accent);
+}
+.personal_btn:hover {
+    background-color: var(--main-accent);
+    height: 100%;
+    width: 50%;
+}
+.personal_btn_link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
+    /*color: #fff;*/
+    color: var(--main-font-color);
+    height: 100%;
+    width: 100%;
+}
+.active_section {
+    background-color: var(--main-accent);
+}
+.active_section > p {
+    color: #fff;
+}
+.dynamic_feed {
+    width: 80%;
+    max-width: 500px;
+    min-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 35px;
 }
 </style>

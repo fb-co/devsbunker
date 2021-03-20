@@ -1,7 +1,7 @@
 import ProjectSection from './ProjectSection.vue';
-import AnalyticSection from './AnalyticSection.vue';
+import SavedProjects from './SavedProjects.vue';
 
 export default {
     ProjectSection,
-    AnalyticSection
+    SavedProjects
 }

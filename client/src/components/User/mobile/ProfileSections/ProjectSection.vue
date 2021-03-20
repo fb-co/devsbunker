@@ -1,15 +1,17 @@
 <template>
     <div v-if="projectsToRender" id="component_container">
         <PostSearch width="70%" filter="myProjects" :userToFilterProp="$store.getters.username" class="posts_search_bar" />
+
         <div v-if="!showSearchResults">
             <MobileProjectCard v-for="project in projectsToRender.posts" :key="project.id" :projectData="project" width="100%" />
         </div>
         <div v-else>
             <MobileProjectCard v-for="project in searchResults" :key="project.id" :projectData="project" width="100%" />
         </div>
-        
+
         <p v-if="!projectsToRender.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
     </div>
+    <div v-else>damn this doesnt load</div>
 </template>
 
 <script>
@@ -20,11 +22,14 @@ export default {
     data() {
         return {
             searchResults: [],
-            showSearchResults: false
-        }
+            showSearchResults: false,
+        };
+    },
+    created() {
+        console.log("child", this.projectsToRender);
     },
     props: {
-        projectsToRender: Object
+        projectsToRender: Array,
     },
     methods: {
         loadNew() {
@@ -38,11 +43,11 @@ export default {
             } else {
                 this.showSearchResults = true;
             }
-        }
+        },
     },
     components: {
         MobileProjectCard,
-        PostSearch
+        PostSearch,
     },
 };
 </script>
