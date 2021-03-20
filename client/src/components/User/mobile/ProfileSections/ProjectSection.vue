@@ -2,9 +2,6 @@
     <div v-if="projectsToRender.length > 0" id="component_container">
         <p v-if="projectsToRender.length > 0">posts: {{ projectsToRender.length }}</p>
         <PostSearch width="70%" filter="myProjects" :userToFilterProp="$store.getters.username" class="posts_search_bar" />
-
-        <MobileProjectCard v-for="project in projectsToRender.posts" :key="project.id" :projectData="project" width="100%" />
-
         <div v-if="!showSearchResults">
             <MobileProjectCard v-for="project in projectsToRender.posts" :key="project.id" :projectData="project" width="100%" />
         </div>
