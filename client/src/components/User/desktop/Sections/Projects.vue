@@ -34,12 +34,14 @@ export default {
             userData: this.$parent.userObject,
             searchResults: [],
             showSearchResults: false,
-            lastPostId: 0,
         };
     },
     components: {
         MobileProjectCard,
         PostSearch,
+    },
+    created() {
+        console.log(this.userProjects);
     },
     methods: {
         updateSearchComponent(documents, closeResults) {

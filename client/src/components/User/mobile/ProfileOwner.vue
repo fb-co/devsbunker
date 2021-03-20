@@ -71,6 +71,9 @@ export default {
         navigateTo(elem) {
             this.activeSection = elem;
         },
+        loadNewPersonalPosts() {
+            this.$parent.loadNewPersonalPosts();
+        }
     },
 };
 </script>
