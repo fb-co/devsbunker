@@ -1,6 +1,9 @@
 <template>
-    <div v-if="projectsToRender" id="component_container">
+    <div v-if="projectsToRender.length > 0" id="component_container">
+        <p v-if="projectsToRender.length > 0">posts: {{ projectsToRender.length }}</p>
         <PostSearch width="70%" filter="myProjects" :userToFilterProp="$store.getters.username" class="posts_search_bar" />
+
+        <MobileProjectCard v-for="project in projectsToRender.posts" :key="project.id" :projectData="project" width="100%" />
 
         <div v-if="!showSearchResults">
             <MobileProjectCard v-for="project in projectsToRender.posts" :key="project.id" :projectData="project" width="100%" />
@@ -11,7 +14,6 @@
 
         <p v-if="!projectsToRender.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
     </div>
-    <div v-else>damn this doesnt load</div>
 </template>
 
 <script>
@@ -27,13 +29,16 @@ export default {
     },
     created() {
         console.log("child", this.projectsToRender);
+        if (this.projectsToRender.length > 0) {
+            console.log("dude i do have posts");
+        }
     },
     props: {
         projectsToRender: Array,
     },
     methods: {
         loadNew() {
-            this.$parent.loadNewPersonalPosts();
+            this.$parent.$parent.loadNewPersonalPosts();
         },
         updateSearchComponent(documents, closeResults) {
             this.searchResults = documents;

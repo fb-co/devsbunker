@@ -35,8 +35,8 @@
         </div>
 
         <div class="dynamic_feed">
-            <ProjectSection v-if="activeSection==='projects' && userProjects" />
-            <SavedProjects v-if="activeSection==='saved'" :projectsToRender="userProjects.posts" />
+            <ProjectSection v-if="activeSection==='projects' && userProjects.posts.length > 0" :projectsToRender="userProjects.posts" />
+            <SavedProjects v-if="activeSection==='saved'" />
         </div>
     </div>
 </template>
@@ -53,8 +53,14 @@ export default {
             userProjects: this.mainUserProjects,
         };
     },
-    created() {
+    async created() {
         console.log("parent", this.userProjects.posts);
+
+        if (!this.userProjects.posts.length) {
+            console.log("fetching again");
+            await this.$parent.loadNewPersonalPosts();
+            console.log("parent", this.userProjects.posts);
+        }
     },
     props: {
         mainUserObject: Object,

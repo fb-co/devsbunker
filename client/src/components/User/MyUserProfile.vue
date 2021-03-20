@@ -3,7 +3,7 @@
         <!-- We pass in the user object so we dont have to re-query it from the server on every child component -->
         <!-- You also need to wait to wait to render the components until you get a response from the server or else they wont lazy load! -->
         <!-- Weirdly this doesn't work, data here is fetched correctly but the props are undefined -->
-        <ProfileMobile v-if="$store.getters.mobile && userObject && userProjects" :mainUserObject="userObject" :mainUserProjects="userProjects" />
+        <ProfileMobile v-if="$store.getters.mobile && userObject && userProjects.posts" :mainUserObject="userObject" :mainUserProjects="userProjects" />
         <ProfileDesktop v-if="!$store.getters.mobile && userObject" :mainUserObject="userObject" :mainUserProjects="userProjects" />
     </div>
 </template>
@@ -54,9 +54,9 @@ export default {
         console.log("parent-parent", this.userProjects);
     },
     methods: {
-        loadNewPersonalPosts() {
+        async loadNewPersonalPosts() {
             // if the user is logged out their token will be undefined anyway
-            GraphQLService.fetchPostsByAuthor(
+            const posts = await GraphQLService.fetchPostsByAuthor(
                 this.$store.getters.username,
                 this.userProjects.posts.length > 0
                     ? this.userProjects.posts[
@@ -64,15 +64,14 @@ export default {
                       ].id
                     : 0,
                 this.$store.getters.accessToken
-            ).then((posts) => {
-                this.userProjects.posts = this.userProjects.posts.concat(
-                    posts.data.getPostsByAuthor.posts
-                );
-                this.userProjects.lastPostId =
-                    posts.data.getPostsByAuthor.lastPostId;
-                this.userProjects.fetchedAll =
-                    posts.data.getPostsByAuthor.fetchedAll;
-            });
+            );
+            this.userProjects.posts = this.userProjects.posts.concat(
+                posts.data.getPostsByAuthor.posts
+            );
+            this.userProjects.lastPostId =
+                posts.data.getPostsByAuthor.lastPostId;
+            this.userProjects.fetchedAll =
+                posts.data.getPostsByAuthor.fetchedAll;
         },
     },
     components: {
