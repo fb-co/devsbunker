@@ -1,9 +1,10 @@
 <template>
-    <div v-if="projectsToRender.length > 0" id="component_container">
-        <p v-if="projectsToRender.length > 0">posts: {{ projectsToRender.length }}</p>
+    <div v-if="projectsToRender.posts.length > 0" id="component_container">
+        <p v-if="projectsToRender.posts.length > 0">posts: {{ projectsToRender.length }}</p>
         <PostSearch width="70%" filter="myProjects" :userToFilterProp="$store.getters.username" class="posts_search_bar" />
+        
         <div v-if="!showSearchResults">
-            <MobileProjectCard v-for="(project, index) in projectsToRender" :key="index" :projectData="project" width="100%" />
+            <MobileProjectCard v-for="(project, index) in projectsToRender.posts" :key="index" :projectData="project" width="100%" />
         </div>
         <div v-else>
             <MobileProjectCard v-for="(project, index) in searchResults" :key="index" :projectData="project" width="100%" />
@@ -25,10 +26,10 @@ export default {
         };
     },
     created() {
-        console.log("child", this.projectsToRender);
+        console.log("child", this.projectsToRender.posts);
     },
     props: {
-        projectsToRender: Array,
+        projectsToRender: Object,
     },
     methods: {
         loadNew() {

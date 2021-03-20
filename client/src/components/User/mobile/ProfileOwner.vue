@@ -35,7 +35,7 @@
         </div>
 
         <div class="dynamic_feed">
-            <ProjectSection v-if="activeSection==='projects' && userProjects.posts.length > 0" :projectsToRender="userProjects.posts" />
+            <ProjectSection v-if="activeSection==='projects' && userProjects.posts.length > 0" :projectsToRender="userProjects" />
             <SavedProjects v-if="activeSection==='saved'" />
         </div>
     </div>
@@ -56,12 +56,14 @@ export default {
     async created() {
         console.log("parent", this.userProjects.posts);
 
+        /*
         if (!this.userProjects.posts.length) {
             console.log("fetching again");
             // this may be the cause to the duplicate posts
             await this.$parent.loadNewPersonalPosts();
             console.log("parent", this.userProjects.posts);
         }
+        */
     },
     props: {
         mainUserObject: Object,

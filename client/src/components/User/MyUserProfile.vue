@@ -58,11 +58,7 @@ export default {
             // if the user is logged out their token will be undefined anyway
             const posts = await GraphQLService.fetchPostsByAuthor(
                 this.$store.getters.username,
-                this.userProjects.posts.length > 0
-                    ? this.userProjects.posts[
-                          this.userProjects.posts.length - 1
-                      ].id
-                    : 0,
+                this.userProjects.posts.length > 0 ? this.userProjects.posts[this.userProjects.posts.length - 1].id : 0,
                 this.$store.getters.accessToken
             );
             this.userProjects.posts = this.userProjects.posts.concat(
