@@ -60,7 +60,6 @@ export default {
                 this.userProjects.posts.length > 0 ? this.userProjects.posts[this.userProjects.posts.length-1].id : 0,
                 this.$store.getters.accessToken,
             ).then((posts) => {
-                console.log(posts);
                 this.userProjects.posts = this.userProjects.posts.concat(posts.data.getPostsByAuthor.posts);
                 this.userProjects.lastPostId = posts.data.getPostsByAuthor.lastPostId;
                 this.userProjects.fetchedAll = posts.data.getPostsByAuthor.fetchedAll;
