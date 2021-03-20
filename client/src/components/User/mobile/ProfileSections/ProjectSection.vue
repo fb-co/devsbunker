@@ -32,6 +32,7 @@ export default {
     },
     methods: {
         loadNew() {
+            // this may be the cause to the duplicate posts
             this.$parent.$parent.loadNewPersonalPosts();
         },
         updateSearchComponent(documents, closeResults) {
