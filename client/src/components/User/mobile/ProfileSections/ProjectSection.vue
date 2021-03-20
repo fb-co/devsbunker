@@ -1,24 +1,48 @@
 <template>
     <div v-if="projectsToRender" id="component_container">
-        <MobileProjectCard v-for="project in projectsToRender.posts" :key="project.id" :projectData="project" width="100%" />
+        <PostSearch width="70%" filter="myProjects" :userToFilterProp="$store.getters.username" class="posts_search_bar" />
+        <div v-if="!showSearchResults">
+            <MobileProjectCard v-for="project in projectsToRender.posts" :key="project.id" :projectData="project" width="100%" />
+        </div>
+        <div v-else>
+            <MobileProjectCard v-for="project in searchResults" :key="project.id" :projectData="project" width="100%" />
+        </div>
+        
         <p v-if="!projectsToRender.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
     </div>
 </template>
 
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
+import PostSearch from "@/components/PostSearch.vue";
 
 export default {
+    data() {
+        return {
+            searchResults: [],
+            showSearchResults: false
+        }
+    },
     props: {
         projectsToRender: Object
     },
     methods: {
         loadNew() {
             this.$parent.loadNewPersonalPosts();
+        },
+        updateSearchComponent(documents, closeResults) {
+            this.searchResults = documents;
+
+            if (closeResults) {
+                this.showSearchResults = false;
+            } else {
+                this.showSearchResults = true;
+            }
         }
     },
     components: {
         MobileProjectCard,
+        PostSearch
     },
 };
 </script>
@@ -32,6 +56,10 @@ export default {
     width: 48%;
     margin: 0px auto 40px auto;
     display: inline-block;
+}
+
+.posts_search_bar {
+    margin: 30px auto 20px auto;
 }
 
 .load_more_btn {
