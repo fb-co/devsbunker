@@ -58,6 +58,7 @@ export default {
 
         if (!this.userProjects.posts.length) {
             console.log("fetching again");
+            // this may be the cause to the duplicate posts
             await this.$parent.loadNewPersonalPosts();
             console.log("parent", this.userProjects.posts);
         }
