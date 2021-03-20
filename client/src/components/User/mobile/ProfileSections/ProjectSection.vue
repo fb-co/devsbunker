@@ -3,10 +3,10 @@
         <p v-if="projectsToRender.length > 0">posts: {{ projectsToRender.length }}</p>
         <PostSearch width="70%" filter="myProjects" :userToFilterProp="$store.getters.username" class="posts_search_bar" />
         <div v-if="!showSearchResults">
-            <MobileProjectCard v-for="project in projectsToRender.posts" :key="project.id" :projectData="project" width="100%" />
+            <MobileProjectCard v-for="(project, index) in projectsToRender" :key="index" :projectData="project" width="100%" />
         </div>
         <div v-else>
-            <MobileProjectCard v-for="project in searchResults" :key="project.id" :projectData="project" width="100%" />
+            <MobileProjectCard v-for="(project, index) in searchResults" :key="index" :projectData="project" width="100%" />
         </div>
 
         <p v-if="!projectsToRender.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
@@ -26,9 +26,6 @@ export default {
     },
     created() {
         console.log("child", this.projectsToRender);
-        if (this.projectsToRender.length > 0) {
-            console.log("dude i do have posts");
-        }
     },
     props: {
         projectsToRender: Array,
