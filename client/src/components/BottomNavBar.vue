@@ -81,7 +81,7 @@
                     </svg>
                 </router-link>
 
-                <router-link :to="`/user/${$store.getters.username}`" class="icon">
+                <router-link :to="$store.getters.username ? `/user/${$store.getters.username}` : '/login'" class="icon">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-user"
