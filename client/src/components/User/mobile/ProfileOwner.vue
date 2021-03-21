@@ -26,7 +26,7 @@
         </div>
 
         <div class="personal_btn_container">
-            <div class="personal_btn" :class="{ active_section: activeSection=='analytics' ? true : false }">
+            <div class="personal_btn" :class="{ active_section: activeSection=='saved' ? true : false }">
                 <p class="personal_btn_link" @click="navigateTo('saved')">Saved</p>
             </div>
             <div class="personal_btn" :class="{ active_section: activeSection=='projects' ? true : false }">
@@ -35,8 +35,8 @@
         </div>
 
         <div class="dynamic_feed">
-            <ProjectSection v-if="activeSection==='projects' && userProjects.posts.length > 0" :projectsToRender="userProjects" />
-            <SavedProjects v-if="activeSection==='saved'" />
+            <ProjectSection v-if="activeSection === 'projects' && userProjects.posts.length > 0" :projectsToRender="userProjects" />
+            <SavedProjects v-if="activeSection === 'saved'" />
         </div>
     </div>
 </template>
@@ -52,18 +52,6 @@ export default {
             userObject: this.mainUserObject,
             userProjects: this.mainUserProjects,
         };
-    },
-    async created() {
-        console.log("parent", this.userProjects.posts);
-
-        /*
-        if (!this.userProjects.posts.length) {
-            console.log("fetching again");
-            // this may be the cause to the duplicate posts
-            await this.$parent.loadNewPersonalPosts();
-            console.log("parent", this.userProjects.posts);
-        }
-        */
     },
     props: {
         mainUserObject: Object,
@@ -165,10 +153,8 @@ export default {
     cursor: pointer;
     border: 1px solid var(--main-accent);
 }
-.personal_btn:hover {
-    background-color: var(--main-accent);
-    height: 100%;
-    width: 50%;
+.personal_btn:hover > p {
+    color: var(--main-accent);
 }
 .personal_btn_link {
     display: flex;
@@ -183,9 +169,11 @@ export default {
 .active_section {
     background-color: var(--main-accent);
 }
-.active_section > p {
+.active_section > p,
+.active_section:hover > p {
     color: #fff;
 }
+
 .dynamic_feed {
     width: 80%;
     max-width: 500px;
@@ -210,39 +198,10 @@ input[type="submit"] {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.personal_btn {
-    height: 100%;
-    width: 50%;
-    cursor: pointer;
-    border: 1px solid var(--main-accent);
-}
-.personal_btn:hover {
-    background-color: var(--main-accent);
-    height: 100%;
-    width: 50%;
-}
-.personal_btn_link {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-decoration: none;
-    /*color: #fff;*/
-    color: var(--main-font-color);
-    height: 100%;
-    width: 100%;
-}
 .active_section {
     background-color: var(--main-accent);
 }
 .active_section > p {
     color: #fff;
-}
-.dynamic_feed {
-    width: 80%;
-    max-width: 500px;
-    min-width: 250px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 35px;
 }
 </style>

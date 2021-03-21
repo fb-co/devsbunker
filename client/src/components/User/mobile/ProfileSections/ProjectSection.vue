@@ -1,8 +1,7 @@
 <template>
     <div v-if="projectsToRender.posts.length > 0" id="component_container">
-        <p v-if="projectsToRender.posts.length > 0">posts: {{ projectsToRender.length }}</p>
         <PostSearch width="70%" filter="myProjects" :userToFilterProp="$store.getters.username" class="posts_search_bar" />
-        
+
         <div v-if="!showSearchResults">
             <MobileProjectCard v-for="(project, index) in projectsToRender.posts" :key="index" :projectData="project" width="100%" />
         </div>

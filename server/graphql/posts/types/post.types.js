@@ -29,6 +29,7 @@ export default gql`
 
     type LoadPostsResponse {
         posts: [FetchablePost]!
+        lastPostId: String!
         fetchedAll: Boolean!
     }
 
