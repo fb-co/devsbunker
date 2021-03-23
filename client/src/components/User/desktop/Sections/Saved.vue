@@ -1,7 +1,12 @@
 <template>
     <div v-if="userProjects && userProjects.length>0" id="main_container">
         <div class="filter_dropdown_container">
-            <PostSearch width="30%" filter="saved" class="search_bar" />
+            <PostSearch width="40%" filter="saved" class="search_bar" />
+
+            <Dropdown :label="filter" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown" @itemSelected="updateFilter">
+                <button>Newest</button>
+                <button>Most Popular</button>
+            </Dropdown>
         </div>
         <div v-if="!showSearchResults" class="project_list">
             <MobileProjectCard v-for="userProject in userProjects" :key="userProject.id" :projectData="userProject" width="85%" />
@@ -19,7 +24,9 @@
 <script>
 import MobileProjectCard from '@/components/MobileProjectCard.vue';
 import PostSearch from '@/components/PostSearch.vue';
+import Dropdown from "@/components/global/Dropdown.vue";
 import GraphQLService from "@/services/graphql.service";
+import SearchUtilities from "@/utils/search_utilities.js";
 
 export default {
     data() {
@@ -28,7 +35,8 @@ export default {
             searchResults: [],
             showSearchResults: false,
             fetchedAll: false,
-            lastPostId: 0
+            lastPostId: 0,
+            filter: SearchUtilities.getSavedPostFilter()
         }
     },
     created() {
@@ -42,7 +50,8 @@ export default {
     },
     components: {
         MobileProjectCard,
-        PostSearch
+        PostSearch,
+        Dropdown
     },
     methods: {
         updateSearchComponent(documents, closeResults) {
@@ -62,6 +71,9 @@ export default {
                 this.lastPostId = posts.data.getSavedPosts.lastPostId;
                 this.fetchedAll = posts.data.getSavedPosts.fetchedAll;
             });    
+        },
+        updateFilter(value) {
+            this.$emit("updateFilter", value);
         }
     }
 }
@@ -83,6 +95,14 @@ export default {
     flex-direction: column;
     justify-content: center;
     height: 100px;
+    margin-top: 50px;
+}
+.filter_dropdown {
+    font-size: 12px;
+    width: 150px;
+    margin: 20px auto 40px auto;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
 }
 .search_bar{
     margin: 0 auto;

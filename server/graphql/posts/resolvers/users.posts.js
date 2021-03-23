@@ -91,7 +91,7 @@ export default {
         getPostsByAuthor: async function (_, args, { req }) {
             const loadAmt = 3;
 
-            let posts = await getPostsByAuthor(args.author, args.lastPostId, loadAmt, req.user);
+            let posts = await getPostsByAuthor(args.author, args.lastPostId, loadAmt, args.filter, args.lastUniqueField, req.user);
             let fetchedAll = false;
 
             // check and remove test post
@@ -103,7 +103,6 @@ export default {
 
             const finalResponse = {
                 posts: posts,
-                lastPostId: posts.length > 0 ? posts[posts.length-1].id : -1,
                 fetchedAll: fetchedAll
             };
 
@@ -129,7 +128,6 @@ export default {
 
             const finalResponse = {
                 posts: posts,
-                lastPostId: posts.length > 0 ? posts[posts.length-1].id : -1,
                 fetchedAll: fetchedAll
             };
 

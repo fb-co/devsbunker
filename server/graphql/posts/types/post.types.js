@@ -63,7 +63,7 @@ export default gql`
 
         getPosts(sortingType: String!, lastPostId: String, lastUniqueField: String): LoadPostsResponse!
 
-        getPostsByAuthor(author: String!, lastPostId: String): LoadPostsResponse!
+        getPostsByAuthor(author: String!, lastPostId: String, filter: String, lastUniqueField: String): LoadPostsResponse!
 
         # not sure if we should make the return required since I dont want it to crash if you give it an invalid post id
         getPostById(postId: String!): FetchablePost

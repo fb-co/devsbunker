@@ -1,14 +1,13 @@
 <template>
     <div v-if="userProjects.posts.length > 0" id="main_container">
         <div class="filter_dropdown_container">
-            <PostSearch width="30%" filter="myProjects" :userToFilterProp="userData.username" class="posts_search_bar" />
-            <!--
-            <Dropdown label="Newest" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown">
+            <PostSearch width="40%" filter="myProjects" :userToFilterProp="userData.username" class="posts_search_bar" />
+            
+            <Dropdown :label="filter" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown" @itemSelected="updateFilter">
                 <button>Newest</button>
                 <button>Most Popular</button>
-                <button>Alphabetical</button>
             </Dropdown>
-            -->
+            
         </div>
         <div v-if="!showSearchResults" class="project_list">
             <MobileProjectCard v-for="project in userProjects.posts" :key="project.id" :projectData="project" width="85%" />
@@ -26,22 +25,25 @@
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import PostSearch from "@/components/PostSearch.vue";
+import Dropdown from "@/components/global/Dropdown.vue";
+import SearchUtilities from "@/utils/search_utilities.js";
 
 export default {
     data() {
         return {
-            userProjects: this.$parent.userProjects,
             userData: this.$parent.userObject,
             searchResults: [],
             showSearchResults: false,
+            filter: SearchUtilities.getSavedPostFilter()
         };
+    },
+    props: {
+        userProjects: Object
     },
     components: {
         MobileProjectCard,
         PostSearch,
-    },
-    created() {
-        console.log(this.userProjects);
+        Dropdown
     },
     methods: {
         updateSearchComponent(documents, closeResults) {
@@ -56,6 +58,9 @@ export default {
         loadNew() {
             this.$parent.loadNewPersonalPosts();
         },
+        updateFilter(value) {
+            this.$emit("updateFilter", value);
+        }
     },
 };
 </script>
@@ -71,13 +76,13 @@ export default {
 .project_list > * {
     margin: 10px;
 }
-/*
+
 .filter_dropdown_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100px;
-    margin-top: 25px;
+    margin-top: 50px;
 }
 .filter_dropdown {
     font-size: 12px;
@@ -86,13 +91,13 @@ export default {
     background-color: var(--secondary-color);
     border-radius: 5px;
 }
-*/
+
 .no_projects {
     margin-top: 20px;
 }
 
 .posts_search_bar {
-    margin: 30px auto 20px auto;
+    margin: 0 auto;
 }
 
 .load_more_btn {

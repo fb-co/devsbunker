@@ -194,7 +194,7 @@
                 </div>
             </div>
             <div class="content_box">
-                <router-view :key="$route.path" :userData="userObject" />
+                <router-view :key="$route.path" :userData="userObject" :userProjects="mainUserProjects" @updateFilter="updateFilter" />
                 <!-- This renders the sub-routes component -->
             </div>
         </div>
@@ -210,7 +210,6 @@ export default {
         return {
             active: "projects",
             userObject: this.mainUserObject,
-            userProjects: this.mainUserProjects,
         };
     },
     components: {
@@ -219,9 +218,6 @@ export default {
     props: {
         mainUserObject: Object,
         mainUserProjects: Object,
-    },
-    created() {
-        this.userObject = this.mainUserObject;
     },
     methods: {
         logout() {
@@ -232,6 +228,9 @@ export default {
         },
         loadNewPersonalPosts() {
             this.$parent.loadNewPersonalPosts();
+        },
+        updateFilter(value) {
+            this.$emit("updateFilter", value);
         }
     },
 };
