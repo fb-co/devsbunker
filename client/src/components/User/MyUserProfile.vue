@@ -66,7 +66,7 @@ export default {
                 // if the user is logged out their token will be undefined anyway
                 const posts = await GraphQLService.fetchPostsByAuthor(
                     this.$store.getters.username,
-                    this.userProjects.posts.length > 0 ? this.userProjects.posts[this.userProjects.posts.length - 1].id : 0,
+                    0, // zero since your fetching the initial posts
                     this.filter,
                     -1, // last unique field is negative one since this is for initial posts
                     this.$store.getters.accessToken
