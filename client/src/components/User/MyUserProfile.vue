@@ -4,14 +4,17 @@
         <!-- You also need to wait to wait to render the components until you get a response from the server or else they wont lazy load! -->
         <!-- Weirdly this doesn't work, data here is fetched correctly but the props are undefined -->
         <ProfileMobile 
+            @updateFilter="updateFilter"
             v-if="$store.getters.mobile && userObject && userProjects.posts" 
-            :mainUserObject="userObject" 
+            :mainUserObject="userObject"
+            :savedUserProjects="savedProjects" 
             :mainUserProjects="userProjects" 
         />
         <ProfileDesktop 
             @updateFilter="updateFilter" 
             v-if="!$store.getters.mobile && userObject" 
             :mainUserObject="userObject" 
+            :savedUserProjects="savedProjects" 
             :mainUserProjects="userProjects" 
         />
     </div>
@@ -31,8 +34,13 @@ export default {
                 posts: [],
                 fetchedAll: false,
             },
+            savedProjects: {
+                posts: [],
+                fetchedAll: false
+            },
+            loadedSavedProjects: [],
             loadedUserProjects: [],
-            filter: SearchUtilities.getSavedPostFilter()
+            filter: SearchUtilities.getSavedPostFilter(),
         };
     },
     async created() {
@@ -54,9 +62,12 @@ export default {
 
         // get the posts
         await this.getInitialPosts();
+
+        await this.getInitialSavedPosts();
     },
     methods: {
         // use this to query a post filter for the first time, NOT for if you want to load more with the preexisting filter
+        // GETS THE CURRENT USERS POSTS
         async getInitialPosts() {
             const potentialPosts = this.postsInMemory(this.filter);
             if (potentialPosts) {
@@ -80,6 +91,26 @@ export default {
                 this.addOrUpdateSearchResultsInMemory(posts.data.getPostsByAuthor);
             }
         },
+        async getInitialSavedPosts() {
+            const potentialPosts = this.savedPostsInMemory(this.filter);
+            if (potentialPosts) {
+                this.savedProjects.posts = potentialPosts.posts;
+                this.savedProjects.fetchedAll = potentialPosts.fetchedAll;
+            } else {
+                const posts = await GraphQLService.fetchSavedPosts(
+                    0, // zero as last post id since its the initialy posts
+                    this.filter, 
+                    -1, // -1 as lastUniquefield since its the initialy posts
+                    this.$store.getters.accessToken
+                );
+
+                this.savedProjects.posts = posts.data.getSavedPosts.posts;
+                this.savedProjects.fetchedAll = posts.data.getSavedPosts.fetchedAll;
+
+                // add the fetched posts and filter to memory
+                this.addOrUpdateSavedPostsInMemory(posts.data.getSavedPosts);
+            }
+        },
         async loadNewPersonalPosts() {
             // if the user is logged out their token will be undefined anyway
             const posts = await GraphQLService.fetchPostsByAuthor(
@@ -95,12 +126,28 @@ export default {
             // update the posts in memory to have the new ones
             this.addOrUpdateSearchResultsInMemory(this.userProjects);
         },
+        async loadNewSavedPosts() {
+            const posts = await GraphQLService.fetchSavedPosts(
+                this.savedProjects.posts.length > 0 ? this.savedProjects.posts[this.savedProjects.posts.length-1].id : 0, 
+                this.filter,
+                this.savedProjects.posts.length > 0 ? this.savedProjects.posts[this.savedProjects.posts.length-1].likeAmt : -1,
+                this.$store.getters.accessToken
+            );
+
+            this.savedProjects.posts = this.savedProjects.posts.concat(posts.data.getSavedPosts.posts);
+            this.savedProjects.fetchedAll = posts.data.getSavedPosts.fetchedAll;
+
+            // update the filter and posts already in memory
+            this.addOrUpdateSavedPostsInMemory(this.savedProjects);
+        },
         async updateFilter(value) {
             this.filter = value;
             SearchUtilities.setSavedPostFilter(value);
 
             await this.getInitialPosts();
+            await this.getInitialSavedPosts();
         },
+        // I know this is a really long function name, shuddup
         addOrUpdateSearchResultsInMemory(projectsObj) {
             // stores the filter and the PROJECTS OBJECT, not the projects list
             const objToAdd = {
@@ -119,11 +166,35 @@ export default {
             this.loadedUserProjects.push(objToAdd);
         },
 
+        addOrUpdateSavedPostsInMemory(projectsObj) {
+            const objToAdd = {
+                projectsObj: projectsObj,
+                filter: this.filter
+            };
+
+            for (let i = 0; i < this.loadedSavedProjects.length; i++) {
+                if (this.loadedSavedProjects[i].filter == this.filter) {
+                    this.loadedSavedProjects[i].projectsObj.posts = objToAdd.projectsObj.posts;
+                    this.loadedSavedProjects[i].projectsObj.fetchedAll = objToAdd.projectsObj.fetchedAll;
+                    return;
+                }
+            }
+            this.loadedSavedProjects.push(objToAdd);
+        },
+
         // checks and returns if a certain filter is already in memory (returns the userObj withought the wrapper)
         postsInMemory(filter) {
             for (let i = 0; i < this.loadedUserProjects.length; i++) {
                 if (this.loadedUserProjects[i].filter == filter) {
                     return this.loadedUserProjects[i].projectsObj;
+                }
+            }
+        },
+        // get saved posts and the corresponding filter in memory
+        savedPostsInMemory(filter) {
+            for (let i = 0; i < this.loadedSavedProjects.length; i++) {
+                if (this.loadedSavedProjects[i].filter == filter) {
+                    return this.loadedSavedProjects[i].projectsObj;
                 }
             }
         }

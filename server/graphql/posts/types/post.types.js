@@ -29,13 +29,7 @@ export default gql`
 
     type LoadPostsResponse {
         posts: [FetchablePost]!
-        lastPostId: String!
         fetchedAll: Boolean!
-    }
-
-    type LoadMoreResponse {
-        posts: [FetchablePost]!
-        fetchedAll: Boolean
     }
 
     # we dont need the author because the username is alredy in the token
@@ -68,11 +62,9 @@ export default gql`
         # not sure if we should make the return required since I dont want it to crash if you give it an invalid post id
         getPostById(postId: String!): FetchablePost
 
-        getSavedPosts(lastPostId: String): LoadPostsResponse!
+        getSavedPosts(lastPostId: String, filter: String, lastUniqueField: String): LoadPostsResponse!
 
         partial_post(partial_name: String!, filter: String!, userToFilter: String): [FetchablePost]!
-
-        loadMorePosts(lastPostId: Int): LoadMoreResponse!
     }
 
     type Mutation {

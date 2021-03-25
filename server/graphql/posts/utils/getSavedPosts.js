@@ -3,7 +3,7 @@ import User from "../../../components/user/user.model.js";
 import AddDynamicData from "../misc/addDynamicData.js";
 import mongoose from "mongoose";
 
-export default async function getSavedPosts(author, loadAmt, lastPostId) {
+export default async function getSavedPosts(author, loadAmt, lastPostId, filter, lastUniqueField) {
     return new Promise((resolve) => {
         const loadIncrements = loadAmt; // specifies how many posts to load on each call
 
@@ -16,37 +16,81 @@ export default async function getSavedPosts(author, loadAmt, lastPostId) {
                     wrappedPosts[i] = new mongoose.Types.ObjectId(wrappedPosts[i]);
                 }
                 if (lastPostId != -1) { // if you havent fetched all the posts yet
-                    if (lastPostId != 0) { // if you havent fetched any posts yet
-                        Posts.find({
-                            $and: [
-                                { _id: { $in: wrappedPosts } },
-                                { _id: { $lt: lastPostId } }
-                            ]
-                        })
-                        .sort({ _id: -1 })
-                        .limit(loadAmt+1)
-                        .then((posts) => {
-                            const finalPosts = AddDynamicData.addAll(posts, user);
-                            resolve(finalPosts);
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                        });
-                    } else {
-                        Posts.find({ 
-                            _id: {
-                                "$in": wrappedPosts 
-                            } 
-                        })
-                        .sort({ _id: -1 })
-                        .limit(loadAmt+1)
-                        .then((posts) => {
-                            const finalPosts = AddDynamicData.addAll(posts, user);
-                            resolve(finalPosts);
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                        });
+                    if (filter == "Newest") {
+                        if (lastPostId != 0) { // if you havent fetched any posts yet
+                            Posts.find({
+                                $and: [
+                                    { _id: { $in: wrappedPosts } },
+                                    { _id: { $lt: lastPostId } }
+                                ]
+                            })
+                            .sort({ _id: -1 })
+                            .limit(loadAmt+1)
+                            .then((posts) => {
+                                const finalPosts = AddDynamicData.addAll(posts, user);
+                                resolve(finalPosts);
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            });
+                        } else {
+                            Posts.find({ 
+                                _id: {
+                                    "$in": wrappedPosts 
+                                } 
+                            })
+                            .sort({ _id: -1 })
+                            .limit(loadAmt+1)
+                            .then((posts) => {
+                                const finalPosts = AddDynamicData.addAll(posts, user);
+                                resolve(finalPosts);
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            });
+                        }
+                    } else if (filter == "Most Popular") {
+                        if (lastPostId != 0 && lastUniqueField != -1) {
+                            Posts.find({
+                                $or: [
+                                    {   
+                                        _id: { $in: wrappedPosts },
+                                        likeAmt: { $lt: lastUniqueField } 
+                                    },
+                                    { 
+                                        $and: [
+                                            { _id: { $in: wrappedPosts } },
+                                            { _id: { $lt: lastPostId } }
+                                        ],
+                                        likeAmt: lastUniqueField,
+                                    }
+                                ]
+                            })
+                            .sort({ likeAmt: -1, _id: -1 })
+                            .limit(loadAmt+1)
+                            .then((posts) => {
+                                const finalPosts = AddDynamicData.addAll(posts, user);
+                                resolve(finalPosts);
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            });
+                        } else {
+                            Posts.find({ 
+                                _id: {
+                                    "$in": wrappedPosts 
+                                } 
+                            })
+                            .sort({ likeAmt: -1, _id: -1 })
+                            .limit(loadAmt+1)
+                            .then((posts) => {
+                                const finalPosts = AddDynamicData.addAll(posts, user);
+                                resolve(finalPosts);
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            });
+                        }
                     }
                 }
             })

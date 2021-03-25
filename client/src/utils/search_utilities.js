@@ -1,7 +1,7 @@
 // This contains localstorage management and server calls for searchbars and filters
 
 const SearchUtilities = {
-    // SAVED PROJECTS FILTER
+    // SAVED PROJECTS FILTER (used for both saved projects, and personal proejcts list)
     setSavedPostFilter: function(filter) {
         localStorage.setItem("savedPostFilter", filter);
         return localStorage.getItem("savedPostFilter");

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="userProjects && userProjects.length>0" id="main_container">
+    <div v-if="savedUserProjects" id="main_container">
         <div class="filter_dropdown_container">
             <PostSearch width="40%" filter="saved" class="search_bar" />
 
@@ -9,8 +9,8 @@
             </Dropdown>
         </div>
         <div v-if="!showSearchResults" class="project_list">
-            <MobileProjectCard v-for="userProject in userProjects" :key="userProject.id" :projectData="userProject" width="85%" />
-            <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
+            <MobileProjectCard v-for="(userProject, index) in savedUserProjects.posts" :key="index" :projectData="userProject" width="85%" />
+            <p v-if="!savedUserProjects.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
         <div v-else class='project_list'>
             <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" />
@@ -25,28 +25,18 @@
 import MobileProjectCard from '@/components/MobileProjectCard.vue';
 import PostSearch from '@/components/PostSearch.vue';
 import Dropdown from "@/components/global/Dropdown.vue";
-import GraphQLService from "@/services/graphql.service";
 import SearchUtilities from "@/utils/search_utilities.js";
 
 export default {
     data() {
         return {
-            userProjects: undefined,
             searchResults: [],
             showSearchResults: false,
-            fetchedAll: false,
-            lastPostId: 0,
-            filter: SearchUtilities.getSavedPostFilter()
+            filter: SearchUtilities.getSavedPostFilter(),
         }
     },
-    created() {
-        // WE SHOULD CACHE THIS FOR A RELATIVELY SHORT AMOUNT OF TIME
-        GraphQLService.fetchSavedPosts(this.$store.getters.accessToken, this.lastPostId).then((posts) => {
-            console.log(posts);
-            this.userProjects = posts.data.getSavedPosts.posts;
-            this.lastPostId = posts.data.getSavedPosts.lastPostId;
-            this.fetchedAll = posts.data.getSavedPosts.fetchedAll;
-        });
+    props: {
+        savedUserProjects: Object
     },
     components: {
         MobileProjectCard,
@@ -63,17 +53,11 @@ export default {
                 this.showSearchResults = true;
             }
         },
-        loadNew() {
-            // WE SHOULD CACHE THIS FOR A RELATIVELY SHORT AMOUNT OF TIME
-            GraphQLService.fetchSavedPosts(this.$store.getters.accessToken, this.lastPostId).then((posts) => {
-                console.log(posts);
-                this.userProjects = this.userProjects.concat(posts.data.getSavedPosts.posts);
-                this.lastPostId = posts.data.getSavedPosts.lastPostId;
-                this.fetchedAll = posts.data.getSavedPosts.fetchedAll;
-            });    
-        },
         updateFilter(value) {
             this.$emit("updateFilter", value);
+        },
+        loadNew() {
+            this.$parent.loadNewSavedPosts();
         }
     }
 }

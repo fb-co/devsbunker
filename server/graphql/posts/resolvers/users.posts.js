@@ -115,7 +115,7 @@ export default {
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
-            let posts = await getSavedPosts(jwtPayload.username, loadAmt, args.lastPostId);
+            let posts = await getSavedPosts(jwtPayload.username, loadAmt, args.lastPostId, args.filter, args.lastUniqueField);
             let fetchedAll = false;
 
             // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
