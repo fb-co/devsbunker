@@ -8,6 +8,9 @@ import getUserEntry from "../utils/getUserEntry.js";
 import getUserByPartial from "../utils/getUserByPartial.js";
 import loginValidUser from "../utils/loginValidUser.js";
 
+import getAllPostsByAuthor from "../../posts/utils/getAllPostsByAuthor.js";
+
+
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
@@ -123,11 +126,44 @@ export default {
                     };
                 } else {
                     console.log(err);
+                    throw new Error("Failed to get user from token");
                 }
             } catch (err) {
                 throw new Error("Failed to get unread notifications");
             }
         },
+        downloadUserData: async function (_, args, { req }) {
+            const jwtPayload = req.user;
+
+            if (!jwtPayload) throw new Error("Unauthenticated");
+
+            try {
+                const user = await User.findOne({
+                    username: jwtPayload.username
+                });
+
+                const posts = await getAllPostsByAuthor(jwtPayload.username);
+                return {
+                    user: {
+                        username: user.username,
+                        desc: user.desc,
+                        email: user.email,
+                        notifications: user.notifications,
+                        tag: user.tag,
+                        liked_posts: user.liked_posts,
+                        // saved_posts: user.saved_posts, WE NEED TO ADD THIS
+                        followers: user.followers,
+                        following: user.following,
+                        profile_pic: user.profile_pic,
+                    },
+                    posts
+                }
+
+            } catch (e) {
+                console.error(e);
+                throw new Error("Failed to get user from token");
+            }
+        }
     },
 
     Mutation: {
@@ -411,7 +447,7 @@ export default {
 
                     // the save() func is present (check by printing)
                     const saved = await user.save();
-                    
+
                     return user.notifications;
                 } else {
                     return null;

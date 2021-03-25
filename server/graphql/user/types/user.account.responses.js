@@ -47,6 +47,31 @@ export default gql`
         profile_pic: String!
     }
 
+    type FetchablePost {
+        id: String!
+        title: String!
+        author: String!
+        images: [PostImageObject]!
+        description: String!
+        thumbnail: String
+        links: [String]
+        collaborators: [String]
+        tags: [String]
+        likes: [String]!
+        likeAmt: Int
+        isLiked: Boolean
+        isSaved: Boolean
+        price: Float
+        bunkerTag: String!
+        clip: String
+        createdAt: String!
+    }
+
+    type downloadableUserData {
+        user: PersonalUserDetails!
+        posts: [FetchablePost]!
+    }
+
     type LogoutResponse {
         message: String!
     }
@@ -83,6 +108,8 @@ export default gql`
         logoutUser: LogoutResponse!
 
         getUnreadNotifications: UnreadNotificationsAmtResponse!
+
+        downloadUserData: downloadableUserData
     }
 
     type Mutation {
