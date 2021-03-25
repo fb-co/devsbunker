@@ -22,6 +22,65 @@ const GraphQLService = {
             .catch(console.error);
     },
 
+    downloadUserData: function (token) {
+        const query = `
+            query {
+                downloadUserData {
+                    user {
+                        liked_posts
+                        profile_pic
+                        followers
+                        following
+                        notifications {
+                            read
+                            type
+                            target
+                            timestamp
+                        }
+                        email
+                        username
+                    }
+                    posts {
+                        id
+                        title
+                        images {
+                            ogname
+                            dbname
+                        }
+                        author
+                        tags
+                        thumbnail
+                        createdAt
+                        clip
+                        collaborators
+                        price
+                        description
+                        isLiked
+                        isSaved
+                        links
+                        likeAmt
+                    }
+                }
+            }
+        `;
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => res.json())
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
     fetchPersonalDetails: function (token, fields) {
         const query = `
             query {

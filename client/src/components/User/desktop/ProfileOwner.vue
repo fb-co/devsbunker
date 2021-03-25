@@ -167,7 +167,7 @@
                             <line x1="12" y1="4" x2="12" y2="16" />
                         </svg>
 
-                        <router-link to="/">Download Data</router-link>
+                        <p @click="downloadUserData()">Download Data</p>
                     </div>
 
                     <div class="option-wrapper special_link_item">
@@ -218,7 +218,7 @@ export default {
     props: {
         mainUserObject: Object,
         mainUserProjects: Object,
-        savedUserProjects: Object
+        savedUserProjects: Object,
     },
     methods: {
         logout() {
@@ -235,7 +235,35 @@ export default {
         },
         updateFilter(value) {
             this.$emit("updateFilter", value);
-        }
+        },
+        downloadUserData() {
+            GraphQLService.downloadUserData(this.$store.getters.accessToken)
+                .then((res) => {
+                    if (!res.errors) {
+                        const data = res.data.downloadUserData;
+
+                        // straight up robbed from stackoverflow
+                        const dataStr =
+                            "data:text/json;charset=utf-8," +
+                            encodeURIComponent(JSON.stringify(data));
+
+                        const downloadAnchorNode = document.createElement("a");
+                        downloadAnchorNode.setAttribute("href", dataStr);
+                        downloadAnchorNode.setAttribute(
+                            "download",
+                            this.$store.getters.username + ".json"
+                        );
+                        document.body.appendChild(downloadAnchorNode); // required for firefox
+                        downloadAnchorNode.click();
+                        downloadAnchorNode.remove();
+                    } else {
+                        throw new Error("Error while fetching data");
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
+        },
     },
 };
 </script>
@@ -286,8 +314,10 @@ export default {
     width: 100%;
     padding-left: 10px;
     border-left: 3px solid transparent;
+    cursor: pointer;
 }
-.link_item a {
+.link_item a,
+.link_item p {
     display: inline-block;
     width: 100%;
     text-decoration: none;
@@ -306,7 +336,8 @@ export default {
     background: var(--hover-effect);
 }
 
-.link_item:hover a {
+.link_item:hover a,
+.link_item:hover p {
     color: var(--main-font-color);
     font-weight: 600;
 }
