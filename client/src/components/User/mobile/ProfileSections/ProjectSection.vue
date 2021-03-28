@@ -24,9 +24,6 @@ export default {
             showSearchResults: false,
         };
     },
-    created() {
-        console.log("child", this.projectsToRender.posts);
-    },
     props: {
         projectsToRender: Object,
     },
@@ -56,15 +53,9 @@ export default {
 #component_container {
     width: 100%;
 }
-.filter_dropdown {
-    background-color: var(--secondary-color);
-    width: 48%;
-    margin: 0px auto 40px auto;
-    display: inline-block;
-}
 
 .posts_search_bar {
-    margin: 30px auto 20px auto;
+    margin: 50px auto 50px auto;
 }
 
 .load_more_btn {

@@ -83,7 +83,7 @@
 
         <div class="dynamic_feed">
             <ProjectSection v-if="activeSection === 'projects' && userProjects.posts.length > 0" :projectsToRender="userProjects" />
-            <SavedProjects v-if="activeSection === 'saved'" />
+            <SavedProjects v-if="activeSection === 'saved' && savedUserProjects.posts.length > 0" :projectsToRender="savedUserProjects" />
         </div>
     </div>
 </template>
@@ -105,6 +105,7 @@ export default {
     props: {
         mainUserObject: Object,
         mainUserProjects: Object,
+        savedUserProjects: Object
     },
     components: {
         ...ProfileSections,
