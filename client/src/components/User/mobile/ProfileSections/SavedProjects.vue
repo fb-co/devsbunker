@@ -39,7 +39,7 @@ export default {
             -1,
             this.$store.getters.accessToken
         );
-        console.log(posts);
+
         if (!posts.errors) {
             this.userProjects = posts.data.getSavedPosts.posts;
             this.lastPostId = posts.data.getSavedPosts.lastPostId;

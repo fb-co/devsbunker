@@ -3,6 +3,53 @@
         <div class="profile_banner"></div>
         <div class="profile_card">
             <div class="space"></div>
+            <div class="actions">
+                <div class="back-arrow" @click="$router.go(-1)">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-arrow-narrow-left"
+                        width="38"
+                        height="38"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="#646464"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <line x1="5" y1="12" x2="9" y2="16" />
+                        <line x1="5" y1="12" x2="9" y2="8" />
+                    </svg>
+                </div>
+
+                <div></div>
+                <div class="options" @click="showMore = !showMore">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-dots-vertical"
+                        width="38"
+                        height="38"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="#646464"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <circle cx="12" cy="12" r="1" />
+                        <circle cx="12" cy="19" r="1" />
+                        <circle cx="12" cy="5" r="1" />
+                    </svg>
+                    <div v-if="showMore" id="more-options" @click="downloadUserData()">
+                        <p>Download data</p>
+                    </div>
+                </div>
+            </div>
+            <div class="space"></div>
+
             <ProfilePicture v-if="userObject" :username="userObject.username" wrapperSize="120px" class="profile_pic" />
 
             <div class="card_container">
@@ -44,6 +91,7 @@
 <script>
 import ProfileSections from "./ProfileSections/mobile.profile.imports.js";
 import ProfilePicture from "@/components/ProfilePicture.vue";
+import GraphQLService from "@/services/graphql.service";
 
 export default {
     data() {
@@ -51,6 +99,7 @@ export default {
             activeSection: "projects",
             userObject: this.mainUserObject,
             userProjects: this.mainUserProjects,
+            showMore: false,
         };
     },
     props: {
@@ -65,6 +114,34 @@ export default {
         navigateTo(elem) {
             this.activeSection = elem;
         },
+        downloadUserData() {
+            GraphQLService.downloadUserData(this.$store.getters.accessToken)
+                .then((res) => {
+                    if (!res.errors) {
+                        const data = res.data.downloadUserData;
+
+                        // straight up robbed from stackoverflow
+                        const dataStr =
+                            "data:text/json;charset=utf-8," +
+                            encodeURIComponent(JSON.stringify(data));
+
+                        const downloadAnchorNode = document.createElement("a");
+                        downloadAnchorNode.setAttribute("href", dataStr);
+                        downloadAnchorNode.setAttribute(
+                            "download",
+                            this.$store.getters.username + ".json"
+                        );
+                        document.body.appendChild(downloadAnchorNode); // required for firefox
+                        downloadAnchorNode.click();
+                        downloadAnchorNode.remove();
+                    } else {
+                        throw new Error("Error while fetching data");
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
+        },
     },
 };
 </script>
@@ -72,6 +149,38 @@ export default {
 <style scoped>
 .space {
     height: 25px;
+}
+.actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    cursor: pointer;
+}
+.actions svg {
+    margin-top: 30px;
+    stroke: var(--main-font-color);
+}
+
+#more-options {
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    background: var(--main-color);
+    border-radius: 10px;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    right: 30px;
+    margin-top: 15px;
+    z-index: 3;
+}
+#more-options p {
+    color: #db5454;
+    font-weight: bold;
+    cursor: pointer;
 }
 .profile_banner {
     position: relative;
