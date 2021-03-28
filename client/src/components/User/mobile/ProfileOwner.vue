@@ -1,5 +1,5 @@
 <template>
-    <div class="profileMobile">
+    <div class="profileMobile" @click="showMore = false">
         <div class="profile_banner"></div>
         <div class="profile_card">
             <div class="space"></div>
@@ -25,7 +25,7 @@
                 </div>
 
                 <div></div>
-                <div class="options" @click="showMore = !showMore">
+                <div class="options" @click.stop.prevent="showMore = !showMore">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-dots-vertical"
