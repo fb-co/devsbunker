@@ -24,7 +24,7 @@
     -   [x] except refresh_token and auth
 -   [x] use AuthErrors in Signup (GraphQL)
 -   [ ] rate limit making posts
--   [ ] move the auth middleware to GraphQL
+-   [x] move the auth middleware to GraphQL
 -   [x] better post validation: errors are not thrown [see](https://mongoosejs.com/docs/api.html#schematype_SchemaType-validate)
 -   [x] add error handling to the like mutation
     -   [x] same user cant like twice
@@ -32,22 +32,22 @@
 -   [x] add dislike mutation
 -   [x] serve back images
     -   [x] 1. moving everything inside server/static and serve them as static assets
-        -   [ ] organize the upload folder
+        -   [x] organize the upload folder
     -   [x] 2. making another server just for those static assets
     -   [x] 3. using res.sendFile(\_\_dirname + /images/ + path); or something like this (PATH TRAVERSAL?
--   [ ] The home post feed and presumably many others use the post name as the v-for key, which will cause errors if two posts have the same name (switch to something like id)
--   [ ] Creating a post on the home page wont refresh the post feed since it auto avoids redundant routing
+-   [x] The home post feed and presumably many others use the post name as the v-for key, which will cause errors if two posts have the same name (switch to something like id)
+-   [x] Creating a post on the home page wont refresh the post feed since it auto avoids redundant routing
 -   [ ] Create a /robots.txt route
 
 ## Frontend
 
--   [ ] I feel that there's a lot of repeated code in the frontend, like the function to check if the user is using a mobile phone or a lot of includes of the same component in multiple pages. We could improve this:
+-   [x] I feel that there's a lot of repeated code in the frontend, like the function to check if the user is using a mobile phone or a lot of includes of the same component in multiple pages. We could improve this:
 
     -   [x] include NavBar in App.vue
     -   [x] check for mobile in App.vue?
     -   [x] bottom navbar in App.vue
-    -   [ ] use mixins to avoid re-typing code
-    -   [ ] Sharemethods.loadPage could be used in a better way without repeating it everytime?
+    -   [x] use mixins to avoid re-typing code
+    -   [x] Sharemethods.loadPage could be used in a better way without repeating it everytime?
 
 -   [x] home page
 -   [ ] about page
@@ -73,9 +73,9 @@
 -   [x] attach images to DOM after retreiving them (like a preview)
 -   [ ] mod email in user page doesn't work (the save btn doesn't work)
 -   [ ] add unfollow btn
--   [ ] if I visit someone else profile I am able to see a field to modify my profile (if admin visits test_account he can see a field with its username in the information tab)
--   [ ] opening the NewPostTagPopup on a new post page, the input should auto-select itself
--   [ ] multiple 404s while fetching the pfp placeholder. After login the image doesn't get fetched, must refresh the page
+-   [x] if I visit someone else profile I am able to see a field to modify my profile (if admin visits test_account he can see a field with its username in the information tab)
+-   [x] opening the NewPostTagPopup on a new post page, the input should auto-select itself
+-   [x] multiple 404s while fetching the pfp placeholder. After login the image doesn't get fetched, must refresh the page
 
 ### Things to optimize
 
