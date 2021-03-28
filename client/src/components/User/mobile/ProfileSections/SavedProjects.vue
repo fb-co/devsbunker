@@ -20,6 +20,7 @@
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import PostSearch from "@/components/PostSearch.vue";
 import GraphQLService from "@/services/graphql.service";
+import SearchUtilities from "@/utils/search_utilities.js";
 
 export default {
     data() {
@@ -33,9 +34,12 @@ export default {
     },
     async created() {
         const posts = await GraphQLService.fetchSavedPosts(
-            this.$store.getters.accessToken,
-            this.lastPostId
+            0,
+            SearchUtilities.getSavedPostFilter(),
+            -1,
+            this.$store.getters.accessToken
         );
+        console.log(posts);
         if (!posts.errors) {
             this.userProjects = posts.data.getSavedPosts.posts;
             this.lastPostId = posts.data.getSavedPosts.lastPostId;
