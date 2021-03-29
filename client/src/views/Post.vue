@@ -2,7 +2,7 @@
     <div class="main_post_container">
         <div v-if="postData">
             <PostMobile v-if="$store.getters.mobile" :projectData="postData" />
-            <PostDesktop v-if="!$store.getters.mobile" :projectData="postData" :authorData="authorData" :notifications="[]" />
+            <PostDesktop v-if="!$store.getters.mobile" :projectData="postData" :authorData="authorData" :notifications="[]" @postComment="postComment" />
         </div>
     </div>
 </template>
@@ -43,12 +43,29 @@ export default {
                 "links",
                 "tags",
                 "createdAt",
+                `comments {
+                    commenter
+                    comment
+                    timestamp
+                }`,
             ], this.$store.getters.accessToken).then((res) => {
                 this.postData = res.data.getPostById;
                 this.getAuthorData(this.postData.author); // make sure these two calls stay seperate since one is in an async response
             });
         } else {
             this.postData = this.$route.query.projectData;
+
+            // if your navigating from the project card, only fetch the comments
+            GraphQLService.fetchPostById(this.$route.params.postid, [
+                `comments {
+                    commenter
+                    comment
+                    timestamp
+                }`,
+            ], this.$store.getters.accessToken).then((res) => {
+                this.postData.comments = res.data.getPostById.comments;
+            });
+
             this.getAuthorData(this.postData.author);
         }
     },
@@ -62,6 +79,12 @@ export default {
                 this.authorData = res.data.user;
             });
         },
+        async postComment(value) {
+            const response = await GraphQLService.commentOnPost(this.postData.id, value, this.$store.getters.accessToken);
+
+            console.log(response);
+            this.postData.comments.push(response.data.commentOnPost);
+        }
     },
     components: {
         PostMobile,

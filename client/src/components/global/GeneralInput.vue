@@ -56,6 +56,10 @@ export default {
             type: String,
             default: "users",
         },
+        isQuery: {
+            type: Boolean,
+            default: true
+        }
     },
     computed: {
         cssProps() {
@@ -76,36 +80,38 @@ export default {
         },
 
         queryData() {
-            if (
-                this.$refs.general_input.value != "" &&
-                this.$refs.general_input.value.length > 2
-            ) {
-                if (!this.queryQueued) {
-                    this.queryQueued = true;
+            if (this.isQuery) {
+                if (
+                    this.$refs.general_input.value != "" &&
+                    this.$refs.general_input.value.length > 2
+                ) {
+                    if (!this.queryQueued) {
+                        this.queryQueued = true;
 
-                    setTimeout(() => {
-                        if (this.$refs.general_input.value != "") {
-                            if (this.searchFor === "users") {
-                                GraphQLService.fetchUserByPartial(
-                                    this.$refs.general_input.value
-                                ).then((res) => {
-                                    this.documents = res.data.partial_user;
-                                });
-                            } else if (this.searchFor === "posts") {
-                                console.log("step1");
-                                GraphQLService.fetchPostByPartial(
-                                    this.$refs.general_input.value
-                                ).then((res) => {
-                                    console.log(res);
-                                    this.documents = res.data.partial_post;
-                                });
+                        setTimeout(() => {
+                            if (this.$refs.general_input.value != "") {
+                                if (this.searchFor === "users") {
+                                    GraphQLService.fetchUserByPartial(
+                                        this.$refs.general_input.value
+                                    ).then((res) => {
+                                        this.documents = res.data.partial_user;
+                                    });
+                                } else if (this.searchFor === "posts") {
+                                    console.log("step1");
+                                    GraphQLService.fetchPostByPartial(
+                                        this.$refs.general_input.value
+                                    ).then((res) => {
+                                        console.log(res);
+                                        this.documents = res.data.partial_post;
+                                    });
+                                }
                             }
-                        }
-                        this.queryQueued = false;
-                    }, this.queryThresh);
+                            this.queryQueued = false;
+                        }, this.queryThresh);
+                    }
+                } else {
+                    this.documents = [];
                 }
-            } else {
-                this.documents = [];
             }
         },
     },

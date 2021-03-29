@@ -25,11 +25,18 @@ export default gql`
         bunkerTag: String!
         clip: String
         createdAt: String!
+        comments: [CommentResponse]!
     }
 
     type LoadPostsResponse {
         posts: [FetchablePost]!
         fetchedAll: Boolean!
+    }
+
+    type CommentResponse {
+        commenter: String!
+        comment: String!
+        timestamp: String!
     }
 
     # we dont need the author because the username is alredy in the token
@@ -73,5 +80,6 @@ export default gql`
         unlikePost(postId: String!): FetchablePost
         savePost(postId: String!): FetchablePost
         unSavePost(postId: String!): savedPostOutput
+        commentOnPost(postId: String!, comment: String!, timestamp: String!): CommentResponse
     }
 `;

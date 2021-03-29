@@ -160,6 +160,7 @@ export default {
                 price: payload.price,
                 bunkerTag: payload.bunkerTag,
                 clip: payload.clip,
+                comments: []
             });
 
             try {
@@ -182,6 +183,7 @@ export default {
                     price: payload.price,
                     bunkerTag: post.bunkerTag,
                     clip: post.clip,
+                    comments: []
                 };
             } catch (err) {
                 // best error handling I ever made
@@ -338,6 +340,47 @@ export default {
 
             }
 
+        },
+        commentOnPost: async function (_, args, { req }) {
+            const id_payload = args.postId;
+            const commentMessage = args.comment;
+            const jwtPayload = req.user;
+
+            if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+            try {
+                if (args.comment != "" && args.comment != null) {
+                    const user = await User.findOne({ username: jwtPayload.username });
+                    
+                    // make sure the user commeting exists
+                    if (user) {
+                        const post = await Posts.findOne({ _id: id_payload });
+
+                        if (post) { 
+                            const comment = {
+                                commenter: jwtPayload.username,
+                                comment: commentMessage,
+                                timestamp: args.timestamp
+                            };
+
+                            // add the new comment and save the document
+                            post.comments.push(comment);
+
+                            await post.save();
+
+                            return comment;
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        return null;
+                    }
+                } else {
+                    return null;
+                }
+            } catch {
+                throw new Error("Internal error. Unable to comment on post");
+            }
         },
         savePost: async function (_, args, { req }) {
             const id_payload = args.postId;

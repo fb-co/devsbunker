@@ -414,6 +414,10 @@ const GraphQLService = {
                             tags
                             price
                             id
+                            comments {
+                                commenter
+                                comment
+                            }
                         }
                         fetchedAll
                     }
@@ -516,6 +520,37 @@ const GraphQLService = {
                 unlikePost(postId: "${postId}") {
                     likeAmt
                     isLiked
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+            return res.json();
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
+    commentOnPost: async function(postId, comment, token) {
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const timestamp = new Date;
+        const finalTimeStamp = monthNames[timestamp.getMonth()] + ", " + timestamp.getFullYear();
+
+        const mutation = `
+            mutation {
+                commentOnPost(postId: "${postId}", comment: "${comment}", timestamp: "${finalTimeStamp}") {
+                    commenter
+                    comment
+                    timestamp
                 }
             }
         `;

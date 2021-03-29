@@ -42,6 +42,9 @@ const postSchema = new mongoose.Schema(
         clip: {
             type: String, // [!] check notes [!]
         },
+        comments: {
+            type: Array
+        }
     },
     {
         timestamps: true,
