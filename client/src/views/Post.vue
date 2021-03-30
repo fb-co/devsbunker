@@ -21,7 +21,7 @@ export default {
             authorData: undefined,
         };
     },
-    created() {
+    async created() {
         SharedMethods.loadPage();
 
         // sometimes the query is just a string that says [Object object], so I had to handle for it
@@ -53,18 +53,17 @@ export default {
                 this.getAuthorData(this.postData.author); // make sure these two calls stay seperate since one is in an async response
             });
         } else {
-            this.postData = this.$route.query.projectData;
-
-            // if your navigating from the project card, only fetch the comments
-            GraphQLService.fetchPostById(this.$route.params.postid, [
+            // if your arriving from the home page, only load the comments
+            const comments = await GraphQLService.fetchPostById(this.$route.params.postid, [
                 `comments {
                     commenter
                     comment
                     timestamp
                 }`,
-            ], this.$store.getters.accessToken).then((res) => {
-                this.postData.comments = res.data.getPostById.comments;
-            });
+            ], this.$store.getters.accessToken);
+
+            this.postData = this.$route.query.projectData; // only set the post data after the comments arrive to avoid async issues
+            this.postData.comments = comments.data.getPostById.comments;
 
             this.getAuthorData(this.postData.author);
         }
