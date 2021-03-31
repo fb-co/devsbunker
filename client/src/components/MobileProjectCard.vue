@@ -1,14 +1,9 @@
 <template>
-    <div
-        @click="
+    <div @click="
             $router.push({
                 path: `/post/${projectData.id}`,
             })
-        "
-        id="card_container"
-        class="main_container no_select"
-        :style="style"
-    >
+        " id="card_container" class="main_container no_select" :style="style">
         <div class="card_text_container">
             <div class="author_container">
                 <router-link @click.native.stop :to="'user/' + projectData.author" class="author card_text">{{ projectData.author }}</router-link>
@@ -109,8 +104,8 @@ export default {
     },
     methods: {
         getThumbnail() {
-            if (this.projectData.images.length > 0) {
-                return this.projectData.images[0].dbname;
+            if (this.projectData.thumbnail) {
+                return this.projectData.thumbnail;
             }
             return "../../../uploads/profile_pics/profilePlaceholder.png";
         },
