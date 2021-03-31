@@ -9,6 +9,7 @@
 import GraphQLService from "@/services/graphql.service";
 import ProfileDesktop from "./desktop/Profile.vue";
 import ProfileMobile from "./mobile/Profile.vue";
+import SearchUtilities from "@/utils/search_utilities.js";
 
 export default {
     data() {
@@ -46,30 +47,55 @@ export default {
         GraphQLService.fetchPostsByAuthor(
             this.username,
             this.userProjects.lastPostId,
+            SearchUtilities.getSavedPostFilter(),
+            -1,
             this.$store.getters.accessToken
-        ).then((posts) => {
-            this.userProjects.posts = posts.data.getPostsByAuthor.posts;
-            this.userProjects.lastPostId =
-                posts.data.getPostsByAuthor.lastPostId;
-            this.userProjects.fetchedAll =
-                posts.data.getPostsByAuthor.fetchedAll;
-        });
+        )
+            .then((posts) => {
+                if (posts) {
+                    this.userProjects.posts = posts.data.getPostsByAuthor.posts;
+                    this.userProjects.lastPostId =
+                        posts.data.getPostsByAuthor.lastPostId;
+                    this.userProjects.fetchedAll =
+                        posts.data.getPostsByAuthor.fetchedAll;
+                } else {
+                    console.error("Can't get posts!");
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     },
     methods: {
         loadNewPersonalPosts() {
             // if the user is logged out their token will be undefined anyway
             GraphQLService.fetchPostsByAuthor(
                 this.username,
-                this.userProjects.lastPostId,
+                this.userProjects.posts.length > 0
+                    ? this.userProjects.posts[
+                          this.userProjects.posts.length - 1
+                      ].id
+                    : 0,
+                SearchUtilities.getSavedPostFilter(),
+                this.userProjects.posts.length > 0
+                    ? this.userProjects.posts[
+                          this.userProjects.posts.length - 1
+                      ].likeAmt
+                    : -1,
+
                 this.$store.getters.accessToken
             ).then((posts) => {
-                this.userProjects.posts = this.userProjects.posts.concat(
-                    posts.data.getPostsByAuthor.posts
-                );
-                this.userProjects.lastPostId =
-                    posts.data.getPostsByAuthor.lastPostId;
-                this.userProjects.fetchedAll =
-                    posts.data.getPostsByAuthor.fetchedAll;
+                if (posts) {
+                    this.userProjects.posts = this.userProjects.posts.concat(
+                        posts.data.getPostsByAuthor.posts
+                    );
+                    this.userProjects.lastPostId =
+                        posts.data.getPostsByAuthor.lastPostId;
+                    this.userProjects.fetchedAll =
+                        posts.data.getPostsByAuthor.fetchedAll;
+                } else {
+                    console.error("Can't get posts!");
+                }
             });
         },
     },

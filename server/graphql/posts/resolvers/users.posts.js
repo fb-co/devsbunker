@@ -30,9 +30,9 @@ export default {
                 // if the user was logged in, evaluate if the post requested has been liked or saved before
                 if (req.user) {
                     const jwtPayload = req.user;
-                    user = await User.findOne({ username: jwtPayload.username});
+                    user = await User.findOne({ username: jwtPayload.username });
                 }
-                
+
 
                 // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
                 if (posts[loadAmt] === undefined) {
@@ -41,7 +41,7 @@ export default {
                     // remove the test post fetch only if you havent reached the end yet and are getting rid of the test post
                     posts.pop();
                 }
-                
+
 
                 const finalPosts = AddDynamicData.addAll(posts, user);
 
@@ -106,6 +106,7 @@ export default {
                 fetchedAll: fetchedAll
             };
 
+
             return finalResponse;
         },
 
@@ -134,7 +135,7 @@ export default {
             return finalResponse;
         },
 
-        partial_post: async function(_, args, { req }) {
+        partial_post: async function (_, args, { req }) {
             return getPostByPartial(args.partial_name, args.filter, args.userToFilter, req.user);
         },
     },
@@ -206,8 +207,8 @@ export default {
                         post.likeAmt++;
 
                         await post.save();
-                        
-                        
+
+
                         // save post id in users db entry as "liked posts"
                         const user = await User.findOne({ username: jwtPayload.username });
 
@@ -216,7 +217,7 @@ export default {
                         }
 
                         await user.save();
-                        
+
                         const userToNotify = await User.findOne({ username: post.author });
 
                         if (userToNotify) {
@@ -237,7 +238,7 @@ export default {
                             // the forEach loop was being stoopid, so im using a regular loop
                             for (let i = 0; i < userToNotify.notifications.length; i++) {
                                 const oldNotification = userToNotify.notifications[i];
-                                
+
                                 console.log(oldNotification.target, notification.target);
 
                                 if (oldNotification.sender == jwtPayload.username && oldNotification.message == notification.message && oldNotification.target == notification.target) {
@@ -351,12 +352,12 @@ export default {
             try {
                 if (args.comment != "" && args.comment != null) {
                     const user = await User.findOne({ username: jwtPayload.username });
-                    
+
                     // make sure the user commeting exists
                     if (user) {
                         const post = await Posts.findOne({ _id: id_payload });
 
-                        if (post) { 
+                        if (post) {
                             const comment = {
                                 commenter: jwtPayload.username,
                                 comment: commentMessage,
@@ -385,21 +386,21 @@ export default {
         savePost: async function (_, args, { req }) {
             const id_payload = args.postId;
             const jwtPayload = req.user;
-            
+
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
-            
+
             try {
                 // make sure the post exists
-                const post = await Posts.findOne({ _id: id_payload }); 
-                
-                if (post) { 
+                const post = await Posts.findOne({ _id: id_payload });
+
+                if (post) {
                     const user = await User.findOne({ username: jwtPayload.username });
                     if (user) {
                         if (!user.saved_posts.includes(post.id)) {
 
                             user.saved_posts.push(post.id);
-                            await user.save(); 
-                            
+                            await user.save();
+
                             return {
                                 id: post._id,
                                 title: post.title,
@@ -435,7 +436,7 @@ export default {
         unSavePost: async function (_, args, { req }) {
             const id_payload = args.postId;
             const jwtPayload = req.user;
-            
+
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
             try {
@@ -454,7 +455,7 @@ export default {
                     return {
                         success: true
                     }; // only returns whether or not it worked
-                } else { 
+                } else {
                     return null;
                 }
             } catch {

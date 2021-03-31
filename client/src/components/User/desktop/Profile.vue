@@ -76,24 +76,10 @@
                 </div>
             </div>
             <div class="content_box">
-                <router-view :key="$route.path" :userData="userObject" />
+                <router-view :key="$route.path" :userData="userObject" :userProjects="mainUserProjects" />
                 <!-- This renders the sub-routes component -->
             </div>
         </div>
-
-        <!--
-        <p v-if="username">
-            you are visiting <span style="color: red">{{ username }}</span>
-            <br />but you are NOT <span style="color: red">{{ username }}</span>
-        </p>
-        <p v-else>This user doesn't exists</p>
-
-        <p v-if="username">
-            <br />
-            this is for you jak :* <br />
-            {{ userObject }}
-        </p>
-        -->
     </div>
 </template>
 
