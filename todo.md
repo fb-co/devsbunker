@@ -41,6 +41,8 @@
 
 ## Frontend
 
+-   [ ] just noting down (otherwise I forget it) that we could optimize the fetching process due to the change in your latest commit. We should fetch less data when fetching post details for the project cards and then fetching everything in the Post view. We should also cache the first fetched details.
+
 -   [x] I feel that there's a lot of repeated code in the frontend, like the function to check if the user is using a mobile phone or a lot of includes of the same component in multiple pages. We could improve this:
 
     -   [x] include NavBar in App.vue
