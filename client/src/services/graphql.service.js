@@ -379,17 +379,12 @@ const GraphQLService = {
                         posts {
                             title
                             author
-                            images {
-                                ogname
-                                dbname
-                            }
+                            thumbnail
                             description
                             likeAmt
                             isSaved
                             isLiked
-                            bunkerTag
                             tags
-                            links
                             price
                             id
                         }
@@ -404,20 +399,12 @@ const GraphQLService = {
                         posts {
                             title
                             author
-                            images {
-                                ogname
-                                dbname
-                            }
+                            thumbnail
                             description
                             likeAmt
-                            bunkerTag
                             tags
                             price
                             id
-                            comments {
-                                commenter
-                                comment
-                            }
                         }
                         fetchedAll
                     }
@@ -540,7 +527,7 @@ const GraphQLService = {
         }
     },
 
-    commentOnPost: async function(postId, comment, token) {
+    commentOnPost: async function (postId, comment, token) {
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const timestamp = new Date;
         const finalTimeStamp = monthNames[timestamp.getMonth()] + ", " + timestamp.getFullYear();

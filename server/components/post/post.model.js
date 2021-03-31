@@ -14,7 +14,6 @@ const postSchema = new mongoose.Schema(
             type: String,
         },
         thumbnail: {
-            // [!] check notes [!]
             type: String,
         },
         images: {
@@ -40,7 +39,7 @@ const postSchema = new mongoose.Schema(
         },
         bunkerTag: requiredString,
         clip: {
-            type: String, // [!] check notes [!]
+            type: String,
         },
         comments: {
             type: Array
@@ -104,17 +103,3 @@ postSchema.path("tags").validate((tags) => {
 }, "Invalid language tag.");
 
 export default mongoose.model("Post", postSchema);
-
-/*
-
-NOTES:
-since I don't know how we will handle file uploads I thought of
-storing the path fot the uploaded file in the db and so store the
-file in the HDD.
-
-Since files will be, hopefully, less than 16mb we could store
-them directly to the db w/o needing Gridfs
-
-
-noted!
-*/

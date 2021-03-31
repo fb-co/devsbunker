@@ -31,28 +31,6 @@
                 </div>
 
                 <div class="vertical_flex_center">
-                    <!--
-                    <svg
-                        @click.stop="savePost(projectData.id)"
-                        v-if="!projectData.isSaved"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon icon-tabler icon-tabler-device-floppy save_btn"
-                        width="27"
-                        height="27"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.2"
-                        stroke="var(--main-font-color)"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
-                        <circle cx="12" cy="14" r="2" />
-                        <polyline points="14 4 14 8 8 8 8 4" />
-                    </svg>
-                    <p @click.stop="unsavePost(projectData.id)" class="saved_link" v-else>Unsave -</p>
-                    -->
                     <svg
                         @click.stop="savePost(projectData.id)"
                         v-if="!projectData.isSaved"
@@ -87,7 +65,7 @@
                 </div>
 
                 <div class="vertical_flex_center">
-                    <p class="language">{{ projectData.bunkerTag }}</p>
+                    <p class="language">{{ projectData.tags[0] }}</p>
                 </div>
                 <div class="spacer" v-if="projectData.price != 0 && projectData.price != null">-</div>
                 <p class="price_text" v-if="projectData.price != 0 && projectData.price != null">${{ projectData.price }}</p>
@@ -95,13 +73,6 @@
         </div>
         <div class="image_container">
             <DynamicPicture :image_link="this.thumbnail_link" class="card_image" />
-
-            <!--
-            <img
-                :src="@/assets/project_img_placeholder.png"
-                class="card_image"
-            />
-            -->
         </div>
     </div>
 </template>
@@ -143,10 +114,8 @@ export default {
     },
     methods: {
         getThumbnail() {
-            if (this.projectData.images) {
-                if (this.projectData.images.length > 0) {
-                    return this.projectData.images[0].dbname;
-                }
+            if (this.projectData.thumbnail) {
+                return this.projectData.thumbnail;
             }
             return "../../../uploads/profile_pics/profilePlaceholder.png";
         },

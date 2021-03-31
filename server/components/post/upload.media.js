@@ -48,6 +48,7 @@ export default async function uploadMedia(req, res, next) {
 
                     if (post && post.author === req.user.username) {
                         post.images = data;
+                        post.thumbnail = data[0].dbname;
 
                         // shall we add a limit?
                         await post.save();
