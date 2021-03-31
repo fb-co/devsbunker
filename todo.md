@@ -41,9 +41,11 @@
 
 ## Frontend
 
+-   [ ] get rid of DevBunkerTag and clip fields
 -   [ ] just noting down (otherwise I forget it) that we could optimize the fetching process due to the change in your latest commit. We should fetch less data when fetching post details for the project cards and then fetching everything in the Post view. We should also cache the first fetched details.
-    - [ ] my idea is to create a dedicated query for the project cards and to implement a cache system clientside simply in Vuex
-        - [ ] on project card click we cache that specific card details in Vuex and we clear it if the user goes back
+
+    -   [ ] my idea is to create a dedicated query for the project cards and to implement a cache system clientside simply in Vuex
+        -   [ ] on project card click we cache that specific card details in Vuex and we clear it if the user goes back
 
 -   [x] I feel that there's a lot of repeated code in the frontend, like the function to check if the user is using a mobile phone or a lot of includes of the same component in multiple pages. We could improve this:
 
