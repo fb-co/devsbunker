@@ -115,12 +115,12 @@ export default {
         postComment() {
             const comment = this.$refs.comment_input.getValue();
 
-            if (comment != "" && comment != null) {
+            if (comment != "" && comment != null) { // the null check is done also server side
                 this.$emit("postComment", comment);
                 this.$refs.comment_input.clearValue();
             }
         }
-    }
+    },
 };
 </script>
 

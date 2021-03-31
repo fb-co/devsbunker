@@ -26,7 +26,7 @@ export default {
 
         // sometimes the query is just a string that says [Object object], so I had to handle for it
         if (!this.$route.query.projectData.title) {
-            GraphQLService.fetchPostById(this.$route.params.postid, [
+            const pData = await GraphQLService.fetchPostById(this.$route.params.postid, [
                 "author",
                 "title",
                 "bunkerTag",
@@ -48,10 +48,10 @@ export default {
                     comment
                     timestamp
                 }`,
-            ], this.$store.getters.accessToken).then((res) => {
-                this.postData = res.data.getPostById;
-                this.getAuthorData(this.postData.author); // make sure these two calls stay seperate since one is in an async response
-            });
+            ], this.$store.getters.accessToken);
+
+            this.postData = pData.data.getPostById;
+            this.getAuthorData(this.postData.author);
         } else {
             // if your arriving from the home page, only load the comments
             const comments = await GraphQLService.fetchPostById(this.$route.params.postid, [
@@ -81,8 +81,10 @@ export default {
         async postComment(value) {
             const response = await GraphQLService.commentOnPost(this.postData.id, value, this.$store.getters.accessToken);
 
-            console.log(response);
-            this.postData.comments.push(response.data.commentOnPost);
+            // if it was successfull
+            if (response.data.commentOnPost.commenter != null) {
+                this.postData.comments.push(response.data.commentOnPost);
+            }
         }
     },
     components: {
