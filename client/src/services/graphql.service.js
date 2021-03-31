@@ -228,17 +228,12 @@ const GraphQLService = {
                     posts {
                         title
                         author
-                        images {
-                            ogname
-                            dbname
-                        }
+                        thumbnail
                         description
                         likeAmt
                         isLiked
                         isSaved
                         tags
-                        links
-                        bunkerTag
                         price
                         id
                     }
@@ -271,17 +266,12 @@ const GraphQLService = {
                     posts {
                         title
                         author
-                        images {
-                            ogname
-                            dbname
-                        }
                         description
+                        thumbnail
                         likeAmt
                         isLiked
                         isSaved
-                        bunkerTag
                         tags
-                        links
                         price
                         id
                     }

@@ -10,7 +10,7 @@ import MyUserProfile from "@/components/User/MyUserProfile.vue";
 import Loading from "@/components/Loading.vue";
 
 import UserService from "../services/user.service";
-import SharedMethods from '../utils/shared';
+import SharedMethods from "../utils/shared";
 
 export default {
     // mapping components to a value
@@ -35,6 +35,8 @@ export default {
 
     methods: {
         profileComponentGateway() {
+            // TODO: we can use $store.getters.username
+
             UserService.isLoggedIn().then((result) => {
                 if (result.user) {
                     const username = result.user.username;
