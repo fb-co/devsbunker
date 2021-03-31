@@ -24,49 +24,33 @@ export default {
     async created() {
         SharedMethods.loadPage();
 
-        // sometimes the query is just a string that says [Object object], so I had to handle for it
-        if (!this.$route.query.projectData.title) {
-            const pData = await GraphQLService.fetchPostById(this.$route.params.postid, [
-                "author",
-                "title",
-                "bunkerTag",
-                "description",
-                "id",
-                `images {
-                    ogname
-                    dbname
-                }`,
-                "isLiked",
-                "isSaved",
-                "likeAmt",
-                "price",
-                "links",
-                "tags",
-                "createdAt",
-                `comments {
-                    commenter
-                    comment
-                    timestamp
-                }`,
-            ], this.$store.getters.accessToken);
+        //get the data including comments and everything
+        const pData = await GraphQLService.fetchPostById(this.$route.params.postid, [
+            "author",
+            "title",
+            "bunkerTag",
+            "description",
+            "id",
+            `images {
+                ogname
+                dbname
+            }`,
+            "isLiked",
+            "isSaved",
+            "likeAmt",
+            "price",
+            "links",
+            "tags",
+            "createdAt",
+            `comments {
+                commenter
+                comment
+                timestamp
+            }`,
+        ], this.$store.getters.accessToken);
 
-            this.postData = pData.data.getPostById;
-            this.getAuthorData(this.postData.author);
-        } else {
-            // if your arriving from the home page, only load the comments
-            const comments = await GraphQLService.fetchPostById(this.$route.params.postid, [
-                `comments {
-                    commenter
-                    comment
-                    timestamp
-                }`,
-            ], this.$store.getters.accessToken);
-
-            this.postData = this.$route.query.projectData; // only set the post data after the comments arrive to avoid async issues
-            this.postData.comments = comments.data.getPostById.comments;
-
-            this.getAuthorData(this.postData.author);
-        }
+        this.postData = pData.data.getPostById;
+        this.getAuthorData(this.postData.author);
     },
     methods: {
         getAuthorData(author) {

@@ -3,7 +3,6 @@
         @click="
             $router.push({
                 path: `/post/${projectData.id}`,
-                query: { projectData: projectData },
             })
         "
         id="card_container"
