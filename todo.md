@@ -41,6 +41,7 @@
 
 ## Frontend
 
+-   [ ] viewing other people's posts in their profile is broken
 -   [ ] get rid of DevBunkerTag and clip fields
 -   [ ] just noting down (otherwise I forget it) that we could optimize the fetching process due to the change in your latest commit. We should fetch less data when fetching post details for the project cards and then fetching everything in the Post view. We should also cache the first fetched details.
 
