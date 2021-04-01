@@ -2,35 +2,6 @@
     <div class="main_container">
         <LeftContent />
         <div class="center_content">
-            <!--
-            <div class="language_cycler_container">
-                <div class="lan_cycler_arrow">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-left" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                        <line x1="5" y1="12" x2="9" y2="16" />
-                        <line x1="5" y1="12" x2="9" y2="8" />
-                    </svg>
-                </div>
-                <div class="lan_cycler_cont">
-                    <div class="language_car">
-                        <p>Javascript</p>
-                        <p>Python</p>
-                        <p>All</p>
-                        <p>C/C++</p>
-                        <p>Java</p>
-                    </div>
-                </div>
-                <div class="lan_cycler_arrow">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-right" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                        <line x1="15" y1="16" x2="19" y2="12" />
-                        <line x1="15" y1="8" x2="19" y2="12" />
-                    </svg>
-                </div>
-            </div>
-            -->
             <div class="scrollable_center">
                 <p class="discover_label no_select">Discover Projects</p>
 
@@ -53,31 +24,6 @@
                 <div id="loading-gif" v-else>
                     <Loading />
                 </div>
-                <!-- <div>
-                    <DeletedPost class="project_card" width="70%" />
-                </div>-->
-
-                <!--
-                <div @click="makeNewPost()" class="projects_footer">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon icon-tabler icon-tabler-square-plus add_button"
-                        width="70"
-                        height="70"
-                        viewBox="0 0 24 24"
-                        stroke-width="0.4"
-                        stroke="var(--main-font-color)"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <rect x="4" y="4" width="16" height="16" rx="2" />
-                        <line x1="9" y1="12" x2="15" y2="12" />
-                        <line x1="12" y1="9" x2="12" y2="15" />
-                    </svg>
-                </div>
-                -->
                 <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
             </div>
         </div>

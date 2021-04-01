@@ -38,8 +38,8 @@ export default {
 
             // needs to account for which filters have 'fetched all' which is why this is an object
             fetchedAll: {
-                "Newest": false,
-                "Most Popular": false,    
+                Newest: false,
+                "Most Popular": false,
             },
             reload: 0,
             filter: SearchUtilities.getHomePostFilter(),
@@ -75,15 +75,22 @@ export default {
         async loadNew() {
             const newProjects = await this.load(
                 this.filter,
-                this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].id : 0,
-                this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].likeAmt : -1, // last unique field (ex: likeAmt)
+                this.posts[this.posts.length - 1]
+                    ? this.posts[this.posts.length - 1].id
+                    : 0,
+                this.posts[this.posts.length - 1]
+                    ? this.posts[this.posts.length - 1].likeAmt
+                    : -1, // last unique field (ex: likeAmt)
                 this.$store.getters.accessToken
             );
-            
+
             // set fetched all value only for the current filter
             this.fetchedAll[this.filter] = newProjects.data.getPosts.fetchedAll;
 
             this.posts = this.posts.concat(newProjects.data.getPosts.posts);
+            this.$store.commit("appendPosts", newProjects.data.getPosts.posts);
+
+            console.log("cache:", this.$store.getters.cachedPosts);
 
             this.updatePostsInMemory(this.filter);
         },
@@ -118,6 +125,7 @@ export default {
             let res = undefined;
 
             if (alreadyLoadedPosts && !forceReload) {
+                console.log("already loaded!");
                 // check if the posts were already fetched
                 this.posts = alreadyLoadedPosts;
             } else {
@@ -127,17 +135,24 @@ export default {
                 // Get the posts
                 res = await GraphQLService.fetchPosts(
                     filter,
-                    this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].id : 0, // last post id
-                    this.posts[this.posts.length-1] ? this.posts[this.posts.length-1].likeAmt : -1, // last unique field (ex: likeAmt)
+                    this.posts[this.posts.length - 1]
+                        ? this.posts[this.posts.length - 1].id
+                        : 0, // last post id
+                    this.posts[this.posts.length - 1]
+                        ? this.posts[this.posts.length - 1].likeAmt
+                        : -1, // last unique field (ex: likeAmt)
                     this.$store.getters.accessToken
                 );
                 // set fetched all value only for the current filter
                 this.fetchedAll[this.filter] = res.data.getPosts.fetchedAll;
-                
+
                 // pass in the new post data to the home page main components
                 this.posts = res.data.getPosts.posts;
+                this.$store.commit("appendPosts", this.posts);
+                console.log("cache:", this.$store.getters.cachedPosts);
 
                 // keep old loaded posts in memory
+                // TODO: i think we can get rid of this now that we have the PostsCache in Vuex
                 this.loadedPosts.push({
                     filter: filter,
                     posts: res.data.getPosts.posts,
@@ -161,10 +176,9 @@ export default {
                 this.$store.getters.accessToken
             );
             this.posts = res.data.getPosts.posts;
-            
+
             // set fetched all value only for the current filter
             this.fetchedAll[this.filter] = res.data.getPosts.fetchedAll;
-
 
             this.loadedPosts.push({
                 filter: this.filter,
