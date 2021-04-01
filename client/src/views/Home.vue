@@ -1,7 +1,13 @@
 <template>
     <div>
         <div class="home">
-            <HomeMobile :projects="posts" v-if="$store.getters.mobile" :fetchedAll="fetchedAll[filter]" :postFeedFilter="filter" @updateFilterDropdown="updateFilterDropdown" />
+            <HomeMobile
+                :projects="posts"
+                v-if="$store.getters.mobile"
+                :fetchedAll="fetchedAll[filter]"
+                :postFeedFilter="filter"
+                @updateFilterDropdown="updateFilterDropdown"
+            />
             <HomeDesktop
                 :projects="posts"
                 :notifications="notifications"
@@ -88,8 +94,9 @@ export default {
             this.fetchedAll[this.filter] = newProjects.data.getPosts.fetchedAll;
 
             this.posts = this.posts.concat(newProjects.data.getPosts.posts);
-            this.$store.commit("appendPosts", newProjects.data.getPosts.posts);
 
+            // ! COMMENT ME IF YOU WANT TO SEE THE CACHE WORKING
+            this.$store.commit("appendPosts", newProjects.data.getPosts.posts);
             console.log("cache:", this.$store.getters.cachedPosts);
 
             this.updatePostsInMemory(this.filter);
