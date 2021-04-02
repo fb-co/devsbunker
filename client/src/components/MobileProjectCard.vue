@@ -12,7 +12,7 @@
             <p class="proj_desc card_text">{{ descToShow }}</p>
             <div style="flex-grow: 1"></div>
             <div class="likes_container">
-                <!--Not filled icon -->
+                <!--Un-filled icon -->
                 <div v-if="hasLikeBtn" @click.stop="likePost(projectData.id)">
                     <div v-if="!projectData.isLiked">
                         <svg width="17" height="17" viewBox="0 0 16 16" class="bi bi-heart" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
