@@ -41,6 +41,8 @@
 
 ## Frontend
 
+-   [ ] posts cache stores duplicate posts after user creates a new one
+
 -   [x] viewing other people's posts in their profile is broken
     -   [ ] need to add load more btn to mobile view
 -   [ ] get rid of DevBunkerTag and clip fields

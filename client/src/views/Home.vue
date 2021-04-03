@@ -183,6 +183,8 @@ export default {
                 this.$store.getters.accessToken
             );
             this.posts = res.data.getPosts.posts;
+            this.$store.commit("appendPosts", this.posts);
+            console.log("cache:", this.$store.getters.cachedPosts);
 
             // set fetched all value only for the current filter
             this.fetchedAll[this.filter] = res.data.getPosts.fetchedAll;
