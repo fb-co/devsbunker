@@ -124,6 +124,10 @@ export default {
             default: "none"
         },
         userToFilterProp: String,
+        sortingType: {
+            type: String,
+            default: "Newest"
+        }
     },
     computed: {
         cssProps() {
@@ -140,8 +144,16 @@ export default {
 
                     setTimeout(() => {
                         if (this.$refs.general_input.value != "") {
-                            GraphQLService.fetchPostsByPartial(this.$refs.general_input.value, this.filter, this.userToFilter, this.$store.getters.accessToken).then((res) => {
-                                this.documents = res.data.partial_post;
+                            GraphQLService.fetchPostsByPartial(
+                                this.$refs.general_input.value, 
+                                this.filter, 
+                                this.userToFilter, 
+                                this.sortingType, 
+                                this.documents[this.documents.length-1].id || 0,  // last post id
+                                this.documents[this.documents.length-1].likeAmt || -1, // last unique field (only for most popular queries)
+                                this.$store.getters.accessToken
+                            ).then((res) => {
+                                this.documents = res.data.partial_post.posts;
                                 this.$parent.updateSearchComponent(this.documents);
                             });
                         }
@@ -153,6 +165,20 @@ export default {
                 this.documents = [];
             }
         },
+        loadMoreResults() {
+            GraphQLService.fetchPostsByPartial(
+                this.$refs.general_input.value, 
+                this.filter, 
+                this.userToFilter, 
+                this.sortingType, 
+                this.documents[this.documents.length-1].id || 0,  // last post id
+                this.documents[this.documents.length-1].likeAmt || -1, // last unique field (only for most popular queries)
+                this.$store.getters.accessToken
+            ).then((res) => {
+                this.documents = res.data.partial_post.posts;
+                this.$parent.updateSearchComponent(this.documents);
+            });
+        }
     }
 }
 </script>

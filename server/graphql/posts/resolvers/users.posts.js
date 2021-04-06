@@ -136,7 +136,22 @@ export default {
         },
 
         partial_post: async function (_, args, { req }) {
-            return getPostByPartial(args.partial_name, args.filter, args.userToFilter, req.user);
+            const loadAmt = 3;
+            let posts = await getPostByPartial(args.partial_name, args.filter, args.userToFilter, args.sortingType, args.lastPostId, args.lastUniqueField, req.user);
+            let fetchedAll = false;
+
+            if (posts[loadAmt] === undefined) {
+                fetchedAll = true;
+            } else {
+                posts.pop();
+            }
+
+            const finalResponse = {
+                posts: posts,
+                fetchedAll: fetchedAll
+            }
+            
+            return finalResponse;
         },
     },
 

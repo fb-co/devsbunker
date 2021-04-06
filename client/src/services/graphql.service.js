@@ -132,26 +132,29 @@ const GraphQLService = {
 
     // filter is required, just put a string of 'none' if you want to search all posts
     // SEE THE MONGO QUERY TO UNDERSTAND WHAT userToFilter is for
-    fetchPostsByPartial: function (partial_name, filter, userToFilter, token) {
+    fetchPostsByPartial: function (partial_name, filter, userToFilter, sortingType, lastPostId, lastUniqueField, token) {
         if (partial_name != "") {
             const query = `
                 query {
-                    partial_post(partial_name: "${partial_name}", filter: "${filter}", userToFilter: "${userToFilter}") {
-                        author
-                        title
-                        description
-                        images {
-                            ogname
-                            dbname
+                    partial_post(partial_name: "${partial_name}", filter: "${filter}", userToFilter: "${userToFilter}", sortingType: "${sortingType}", lastPostId: "${lastPostId}", lastUniqueField: "${lastUniqueField}") {
+                        posts { 
+                            author
+                            title
+                            description
+                            images {
+                                ogname
+                                dbname
+                            }
+                            likeAmt
+                            isSaved
+                            isLiked
+                            bunkerTag
+                            tags
+                            links
+                            price
+                            id
                         }
-                        likeAmt
-                        isSaved
-                        isLiked
-                        bunkerTag
-                        tags
-                        links
-                        price
-                        id
+                        fetchedAll
                     }
                 }
             `;
