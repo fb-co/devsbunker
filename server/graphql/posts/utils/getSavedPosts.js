@@ -55,7 +55,7 @@ export default async function getSavedPosts(author, loadAmt, lastPostId, filter,
                                 $or: [
                                     {   
                                         _id: { $in: wrappedPosts },
-                                        likeAmt: { $lt: lastUniqueField } 
+                                        likeAmt: { $lt: lastUniqueField },
                                     },
                                     { 
                                         $and: [

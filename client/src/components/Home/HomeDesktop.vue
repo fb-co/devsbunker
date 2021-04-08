@@ -5,7 +5,7 @@
             <div class="scrollable_center">
                 <p class="discover_label no_select">Discover Projects</p>
 
-                <PostSearch width="50%" class="post_search_bar" />
+                <PostSearch :sortingType="this.postFeedFilter" width="50%" class="post_search_bar" ref="home_search" />
 
                 <div class="filter_dropdown">
                     <Dropdown :label="postFeedFilter" linkHeight="40px" height="40px" width="200px" @itemSelected="updateFilterDropdown">
@@ -24,7 +24,8 @@
                 <div id="loading-gif" v-else>
                     <Loading />
                 </div>
-                <p v-if="!fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
+                <!-- this basically will not show if your showing seach results and you fetched all of them -->
+                <p v-if="(!fetchedAll && !showSearchResults) || (showSearchResults && !$refs.home_search.gottenAllSearchResults())" @click="loadNew()" class="load_more_btn">Load More</p>
             </div>
         </div>
         <RightContent :notifications="notifications" />
@@ -76,7 +77,11 @@ export default {
             }
         },
         loadNew() {
-            this.$parent.loadNew();
+            if (!this.showSearchResults) {
+                this.$parent.loadNew();
+            } else {
+                this.$refs.home_search.loadMoreResults();
+            }
         },
     },
     components: {

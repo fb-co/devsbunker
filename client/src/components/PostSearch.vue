@@ -106,6 +106,7 @@ export default {
     data() {
         return {
             documents: [],
+            fetchedAllResults: false,
             selectedDocument: -1,
             queryThresh: 1000, // amount of time in between query queue times
             queryQueued: false, // flag to make sure queries are not spammed
@@ -138,10 +139,11 @@ export default {
     },
     methods: {
         queryData() {
+            this.documents = [];
             if (this.$refs.general_input.value != "" && this.$refs.general_input.value.length > 2) {
                 if (!this.queryQueued) {
                     this.queryQueued = true;
-
+                    console.log(this.documents.length > 0 ? this.documents[this.documents.length-1].id : 0);
                     setTimeout(() => {
                         if (this.$refs.general_input.value != "") {
                             GraphQLService.fetchPostsByPartial(
@@ -149,10 +151,11 @@ export default {
                                 this.filter, 
                                 this.userToFilter, 
                                 this.sortingType, 
-                                this.documents[this.documents.length-1].id || 0,  // last post id
-                                this.documents[this.documents.length-1].likeAmt || -1, // last unique field (only for most popular queries)
+                                this.documents.length > 0 ? this.documents[this.documents.length-1].id : 0,  // last post id
+                                this.documents.length > 0 ? this.documents[this.documents.length-1].likeAmt : -1, // last unique field (only for most popular queries)
                                 this.$store.getters.accessToken
                             ).then((res) => {
+                                this.fetchedAllResults = res.data.partial_post.fetchedAll;
                                 this.documents = res.data.partial_post.posts;
                                 this.$parent.updateSearchComponent(this.documents);
                             });
@@ -171,13 +174,17 @@ export default {
                 this.filter, 
                 this.userToFilter, 
                 this.sortingType, 
-                this.documents[this.documents.length-1].id || 0,  // last post id
-                this.documents[this.documents.length-1].likeAmt || -1, // last unique field (only for most popular queries)
+                this.documents.length > 0 ? this.documents[this.documents.length-1].id : 0,  // last post id
+                this.documents.length > 0 ? this.documents[this.documents.length-1].likeAmt : -1, // last unique field (only for most popular queries)
                 this.$store.getters.accessToken
             ).then((res) => {
-                this.documents = res.data.partial_post.posts;
+                this.fetchedAllResults = res.data.partial_post.fetchedAll;
+                this.documents = this.documents.concat(res.data.partial_post.posts);
                 this.$parent.updateSearchComponent(this.documents);
             });
+        },
+        gottenAllSearchResults() {
+            return this.fetchedAllResults;
         }
     }
 }

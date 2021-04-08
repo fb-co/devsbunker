@@ -71,7 +71,7 @@ export default gql`
 
         getSavedPosts(lastPostId: String, filter: String, lastUniqueField: String): LoadPostsResponse!
 
-        partial_post(partial_name: String!, filter: String!, userToFilter: String): LoadPostsResponse!
+        partial_post(partial_name: String!, filter: String!, userToFilter: String, sortingType: String, lastPostId: String, lastUniqueField: String): LoadPostsResponse!
     }
 
     type Mutation {
