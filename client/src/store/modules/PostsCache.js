@@ -25,6 +25,12 @@ const mutations = {
                     // is the post already in the cache? if not then prepare to cache
                     // this is necessary otherwise, after navigating around the app and coming back
                     // to the home, duplicate posts would be cached
+
+                    // TODO: BUG: when a new post is made, postsToCache includes 3 items, one of them is the  newly made post and
+                    // TODO: the other two are the ones in the cache, so this check fails. Something like this
+                    // toCache: [b, c, d]
+                    // inCache: [a, b, c]
+                    // so this if statement is always true
                     if (state.posts[i].id !== postsToCache[i].id) {
                         tmp.push(postsToCache[i]);
                     }
