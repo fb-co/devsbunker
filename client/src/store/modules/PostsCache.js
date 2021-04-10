@@ -20,17 +20,15 @@ const mutations = {
                 state.posts.splice(0, 10);
             }
 
+            // building an hash-table to map the posts in the cache to their respective IDs
             let cache_map = {};
             state.posts.forEach((post) => {
                 cache_map[post.id] = post;
             });
 
             postsToCache.forEach((post) => {
-                if (cache_map[post.id]) {
-                    if (cache_map[post.id].id !== post.id) {
-                        tmp.push(post);
-                    }
-                } else {
+                // if the post to cache isn't already in the cache
+                if (!cache_map[post.id]) {
                     tmp.push(post);
                 }
             });
