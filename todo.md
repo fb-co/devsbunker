@@ -41,7 +41,8 @@
 
 ## Frontend
 
--   [ ] posts cache stores duplicate posts after user creates a new one
+-   [x] posts cache stores duplicate posts after user creates a new one
+-   [ ] display links while viewing posts on desktop
 
 -   [x] viewing other people's posts in their profile is broken
     -   [ ] need to add load more btn to mobile view
