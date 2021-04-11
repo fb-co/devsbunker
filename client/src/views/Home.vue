@@ -101,12 +101,14 @@ export default {
 
             this.updatePostsInMemory(this.filter);
         },
+
+        // get new posts is whether or not it should fetch new posts
         updateFilterDropdown(value) {
             SearchUtilities.setHomePostFilter(value);
             this.filter = SearchUtilities.getHomePostFilter();
-
             this.queryPosts(this.filter); //try and avoid the get notifications server call
         },
+
         // returns whether a post filter type is already loaded in memory (so it doesnt have to re-ask the server)
         postsInMemory(filter) {
             for (let i = 0; i < this.loadedPosts.length; i++) {

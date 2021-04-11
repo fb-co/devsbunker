@@ -18,6 +18,7 @@ export default async function getPostByPartial(partial_name, filter, userToFilte
         throw new AuthenticationError("Unauthorized.");
     }
     
+    // notes for when I pick this up: you can't run conditional queries in and or or chains because they will always evaluate to false (just dont use them)
     return new Promise((resolve) => {
         const regex = new RegExp(partial_name, "i");
         const lastPostIdQuery = lastPostId!=0 ? { _id: { $lt: lastPostId } } : {};
@@ -62,25 +63,26 @@ export default async function getPostByPartial(partial_name, filter, userToFilte
                 });
             } else if (sortingType === "Most Popular") {
                 if (lastUniqueField != -1) {
+                    console.log(postQuery);
                     Posts.find({
                         $or: [
                             {
-                                postQuery,
+                                //postQuery,
                                 title: regex,
                                 likeAmt: { $lt: lastUniqueField },
                             }, 
                             {
-                                $and: [
-                                    postQuery,
-                                    { title: regex },
-                                ],
-                                likeAmt: { $lt: lastUniqueField }
+                                //postQuery,
+                                title: regex,
+                                likeAmt: lastUniqueField,
+                                _id: { $lt: lastPostId },
                             }
                         ]
                     })
                     .sort({ likeAmt: -1, _id: -1 })
                     .limit(loadAmt+1)
                     .then((results) => {
+                        console.log(results);
                         if (user) {
                             resolve(AddDynamicData.addAll(results, user));
                         }

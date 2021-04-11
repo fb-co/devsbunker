@@ -65,7 +65,13 @@ export default {
         },
         // emit the data again to get it to the parent component where the localstorage can be updated
         updateFilterDropdown(value) {
-            this.$emit("updateFilterDropdown", value);
+            // only ask for new general posts if you dont want to change it for the search results
+            if (!this.showSearchResults) {
+                this.$emit("updateFilterDropdown", value);
+            } else {
+                this.$emit("updateFilterDropdown", value);
+                this.$refs.home_search.forceQueryData(value); // give it what the filter will be so it wont need to wait for the normal posts to load in the background
+            }
         },
         updateSearchComponent(documents, closeResults) {
             this.searchResults = documents;

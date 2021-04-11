@@ -136,7 +136,9 @@ export default {
         },
 
         partial_post: async function (_, args, { req }) {
-            const loadAmt = 3;
+            const loadAmt = 1;
+
+            console.log(args.lastUniqueField);
 
             let posts = await getPostByPartial(
                 args.partial_name, 
@@ -161,7 +163,7 @@ export default {
                 posts: posts,
                 fetchedAll: fetchedAll
             }
-            
+        
             return finalResponse;
         },
     },
