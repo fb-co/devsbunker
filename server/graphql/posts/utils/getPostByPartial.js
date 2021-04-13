@@ -22,111 +22,82 @@ export default async function getPostByPartial(partial_name, filter, userToFilte
     return new Promise((resolve) => {
         const regex = new RegExp(partial_name, "i");
         
-        let postQuery = {};
+        let postQuery = {};  // the actual query
+        let sortFilter = {}; // how the query should be sorted
+        let filter;          // the filter (which author, all posts, only saved, etc)
+
+        // determain the filter
+        // get a query for the post filter (its an array so you can easily append the values to the final query)
+        // I REALLY want to find a better way to handle the filter, but for now this works
+        if (filter === "saved") {
+            let userPosts = user.saved_posts;
+
+            // for whatever reason to find by id, they need to wrapped in an ObjectType wrapper
+            for (let i = 0; i < userPosts.length; i++) {
+                userPosts[i] = new mongoose.Types.ObjectId(userPosts[i]);
+            } 
+
+            filter = [ "_id", { $in: userPosts } ];
+        } else if (filter === "myProjects") {
+            filter = [ "author", userToFilter ];
+        }
 
         // craft the query using all the variables and data
-        if (filter === "saved") {
+        
+        // default query if nothing has been fetched yet reguardless of sortingType (the sort will differentiate the two)
+        postQuery = {
+            title: regex,
+        };
+        if (filter) postQuery[filter[0]] = filter[1]; // I know this is confusing but using an array is the simplest way to do this for any data
+        
+
+        if (sortingType === "Newest") {
+            sortFilter = { _id: -1 };
             
-        } else if (filter === "myProjects") {
+            if (lastPostId != 0) {
+                postQuery = {
+                    title: regex,
+                    _id: { $lt: lastPostId }
+                };
+                if (filter) postQuery[filter[0]] = filter[1];
+            }
+        } else if (sortingType === "Most Popular") {
+            sortFilter = { likeAmt: -1, _id: -1 };
 
+            if (lastPostId != 0 && lastUniqueField != -1) {
+                postQuery = {
+                    $or: [
+                        {
+                            title: regex,
+                            likeAmt: { $lt: lastUniqueField },
+                        }, 
+                        {
+                            title: regex,
+                            likeAmt: lastUniqueField,
+                            _id: { $lt: lastPostId },
+                        }
+                    ]
+                };
+                // add the filter
+                if (filter) {
+                    postQuery.$or[0][filter[0]] = filter[1];
+                    postQuery.$or[1][filter[0]] = filter[1];
+                }
+            }
         }
         
-        
-        
-        /* Old poo poo query (leaving for ref) 
-        const lastPostIdQuery = lastPostId!=0 ? { _id: { $lt: lastPostId } } : {};
-        //const lastUniqueFieldQuery = lastUniqueField!=-1 ? { likeAmt: { $lt: lastUniqueField } } : {};
-        let postQuery = {
-            $and: [
-                { _id: { $in: userPosts } },
-                { title: regex },
-                lastPostIdQuery,
-            ]
-        }; // post query for the filter, like filtering out for a certain title or name
-        
-        try {
-            // get a query for the post filter
-            if (filter === "saved") {
-                let userPosts = user.saved_posts;
-
-                // for whatever reason to find by id, they need to wrapped in an ObjectType wrapper
-                for (let i = 0; i < userPosts.length; i++) {
-                    userPosts[i] = new mongoose.Types.ObjectId(userPosts[i]);
-                } 
-
-                postQuery = { _id: { $in: userPosts } };
-            } else if (filter === "myProjects") {
-                postQuery = { author: userToFilter };
+        Posts.find(postQuery)
+        .sort(sortFilter)
+        .limit(loadAmt+1)
+        .then((results) => {
+            console.log(results);
+            if (user) {
+                resolve(AddDynamicData.addAll(results, user));
             }
-
-            // get posts given a sorting type
-            if (sortingType === "Newest") {
-                console.log(lastPostId);
-                Posts.find(postQuery)
-                .sort({ _id: -1 })
-                .limit(loadAmt + 1)
-                .then((posts) => {
-                    if (user) {
-                        resolve(AddDynamicData.addAll(posts, user));
-                    }
-                    resolve(posts);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-            } else if (sortingType === "Most Popular") {
-                if (lastUniqueField != -1) {
-                    console.log(postQuery);
-                    Posts.find({
-                        $or: [
-                            {
-                                //postQuery,
-                                title: regex,
-                                likeAmt: { $lt: lastUniqueField },
-                            }, 
-                            {
-                                //postQuery,
-                                title: regex,
-                                likeAmt: lastUniqueField,
-                                _id: { $lt: lastPostId },
-                            }
-                        ]
-                    })
-                    .sort({ likeAmt: -1, _id: -1 })
-                    .limit(loadAmt+1)
-                    .then((results) => {
-                        console.log(results);
-                        if (user) {
-                            resolve(AddDynamicData.addAll(results, user));
-                        }
-                        resolve(results);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-                } else {
-                    Posts.find({
-                        $and: [
-                            postQuery,
-                            { title: regex }
-                        ]
-                    })
-                    .sort({ likeAmt: -1, _id: -1 })
-                    .limit(loadAmt+1)
-                    .then((results) => {
-                        if (user) {
-                            resolve(AddDynamicData.addAll(results, user));
-                        }
-                        resolve(results);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-                }   
-            }
-        } catch (err) {
-            throw new Error("There was a problem: " + err);
-        }
-        */
+            resolve(results);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     });
 }
