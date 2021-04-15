@@ -143,7 +143,7 @@ export default {
             if (this.$refs.general_input.value != "" && this.$refs.general_input.value.length > 2) {
                 if (!this.queryQueued) {
                     this.queryQueued = true;
-                    console.log(this.documents.length > 0 ? this.documents[this.documents.length-1].id : 0);
+                    
                     setTimeout(() => {
                         if (this.$refs.general_input.value != "") {
                             GraphQLService.fetchPostsByPartial(

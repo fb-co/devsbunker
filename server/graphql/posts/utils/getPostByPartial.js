@@ -40,12 +40,12 @@ export default async function getPostByPartial(partial_name, filter, userToFilte
         } else if (filter === "myProjects") {
             customQueries.push({ author: userToFilter });
         }
-
-        const posts = LoadMoreModule(sortingType, lastPostId, lastUniqueField, loadAmt, customQueries);
         
-        if (user) {
-            resolve(AddDynamicData.addAll(posts, user));
-        }
-        resolve(posts);
+        LoadMoreModule(sortingType, lastPostId, lastUniqueField, loadAmt, customQueries).then((res) => {
+            if (user) {
+                resolve(AddDynamicData.addAll(res, user));
+            }
+            resolve(res);
+        });
     });
 }
