@@ -100,6 +100,7 @@ export default {
     },
     created() {
         this.thumbnail_link = this.getThumbnail();
+        console.log(this.projectData);
     },
     props: {
         projectData: Object,
@@ -123,7 +124,7 @@ export default {
     watch: {
         projectData: function (newVal) {
             this.thumbnail_link =
-                newVal.images[0].dbname ||
+                newVal.thumbnail ||
                 "../../../uploads/profile_pics/profilePlaceholder.png";
         },
     },

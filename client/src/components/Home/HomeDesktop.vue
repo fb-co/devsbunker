@@ -24,8 +24,8 @@
                 <div id="loading-gif" v-else>
                     <Loading />
                 </div>
-                <!-- this basically will not show if your showing seach results and you fetched all of them -->
-                <p v-if="(!fetchedAll && !showSearchResults) || (showSearchResults && !$refs.home_search.gottenAllSearchResults())" @click="loadNew()" class="load_more_btn">Load More</p>
+                <!-- includes all logic of whether or not to show the loadMorebutton, including search results -->
+                <p v-if="(!showSearchResults && !fetchedAll) || (!fetchedAllSearchResults && showSearchResults)" @click="loadNew()" class="load_more_btn">Load More</p>
             </div>
         </div>
         <RightContent :notifications="notifications" />
@@ -49,6 +49,7 @@ export default {
             username: "",
             searchResults: [],
             showSearchResults: false,
+            fetchedAllSearchResults: true
         };
     },
 
@@ -70,10 +71,11 @@ export default {
                 this.$emit("updateFilterDropdown", value);
             } else {
                 this.$emit("updateFilterDropdown", value);
-                this.$refs.home_search.forceQueryData(value); // give it what the filter will be so it wont need to wait for the normal posts to load in the background
+                this.$refs.home_search.updateFilter(value); // give it what the filter will be so it wont need to wait for the normal posts to load in the background
             }
         },
-        updateSearchComponent(documents, closeResults) {
+        updateSearchComponent(documents, fetchedAllSearched, closeResults) {
+            this.fetchedAllSearchResults = fetchedAllSearched;
             this.searchResults = documents;
 
             if (closeResults) {

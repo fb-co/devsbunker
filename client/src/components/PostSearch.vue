@@ -4,7 +4,8 @@
 
                Commonly they will be this (not 100% of the time):
                
-               updateSearchComponent(documents, closeResults) {
+               updateSearchComponent(documents, fetchedAllSearched, closeResults) {
+                    this.fetchedAllSearchResults = fetchedAllSearched;
                     this.searchResults = documents;
 
                     if (closeResults) {
@@ -157,35 +158,35 @@ export default {
                             ).then((res) => {
                                 this.fetchedAllResults = res.data.partial_post.fetchedAll;
                                 this.documents = res.data.partial_post.posts;
-                                this.$parent.updateSearchComponent(this.documents);
+                                this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
                             });
                         }
                         this.queryQueued = false;
                     }, this.queryThresh);
                 }
             } else {
-                this.$parent.updateSearchComponent([], true); // update the parent component to go back to original feed
+                this.$parent.updateSearchComponent([], true, true); // update the parent component to go back to original feed (find the function to understand parms)
                 this.documents = [];
             }
         },
+        
         // this will clear the documents and does not abide by the queryData cooldown
-        forceQueryData(value) {
-            const filterToUse = value;
-            //this.documents = [];
+        updateFilter(filter) {
+            this.documents = [];
 
-            if (this.$refs.general_input.value != "") {
+            if (this.$refs.general_input.value != "" && this.$refs.general_input.value.length > 2) {
                 GraphQLService.fetchPostsByPartial(
                     this.$refs.general_input.value, 
                     this.filter, 
                     this.userToFilter, 
-                    filterToUse, 
+                    filter, 
                     this.documents.length > 0 ? this.documents[this.documents.length-1].id : 0,  // last post id
                     this.documents.length > 0 ? this.documents[this.documents.length-1].likeAmt : -1, // last unique field (only for most popular queries)
                     this.$store.getters.accessToken
                 ).then((res) => {
                     this.fetchedAllResults = res.data.partial_post.fetchedAll;
                     this.documents = res.data.partial_post.posts;
-                    this.$parent.updateSearchComponent(this.documents);
+                    this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
                 });
             }
         },
@@ -199,15 +200,11 @@ export default {
                 this.documents.length > 0 ? this.documents[this.documents.length-1].likeAmt : -1, // last unique field (only for most popular queries)
                 this.$store.getters.accessToken
             ).then((res) => {
-                console.log(res);
                 this.fetchedAllResults = res.data.partial_post.fetchedAll;
                 this.documents = this.documents.concat(res.data.partial_post.posts);
-                this.$parent.updateSearchComponent(this.documents);
+                this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
             });
         },
-        gottenAllSearchResults() {
-            return this.fetchedAllResults;
-        }
     }
 }
 </script>

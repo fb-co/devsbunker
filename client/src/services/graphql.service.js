@@ -141,10 +141,7 @@ const GraphQLService = {
                             author
                             title
                             description
-                            images {
-                                ogname
-                                dbname
-                            }
+                            thumbnail
                             likeAmt
                             isSaved
                             isLiked
