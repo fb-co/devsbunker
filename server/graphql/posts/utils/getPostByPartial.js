@@ -1,5 +1,6 @@
 import Posts from "../../../components/post/post.model.js";
 import User from "../../../components/user/user.model.js";
+import LoadMoreModule from "./LoadMoreModule.js";
 import AddDynamicData from "../misc/addDynamicData.js";
 import mongoose from "mongoose";
 
@@ -17,18 +18,16 @@ export default async function getPostByPartial(partial_name, filter, userToFilte
         // you need to requester token if you are querying with these filters
         throw new AuthenticationError("Unauthorized.");
     }
-    
-    // notes for when I pick this up: you can't run conditional queries in and or or chains because they will always evaluate to false (just dont use them)
+
     return new Promise((resolve) => {
         const regex = new RegExp(partial_name, "i");
         
-        let postQuery = {};  // the actual query
-        let sortFilter = {}; // how the query should be sorted
-        let filter;          // the filter (which author, all posts, only saved, etc)
-
-        // determain the filter
-        // get a query for the post filter (its an array so you can easily append the values to the final query)
-        // I REALLY want to find a better way to handle the filter, but for now this works
+        // this is what the loadMoremodule requires
+        let customQueries = [
+            { title: regex },
+        ];
+        
+        // add a filter like "myProjects" or "savedProjects" to the query
         if (filter === "saved") {
             let userPosts = user.saved_posts;
 
@@ -37,67 +36,16 @@ export default async function getPostByPartial(partial_name, filter, userToFilte
                 userPosts[i] = new mongoose.Types.ObjectId(userPosts[i]);
             } 
 
-            filter = [ "_id", { $in: userPosts } ];
+            customQueries.push({ _id: { $in: userPosts} });
         } else if (filter === "myProjects") {
-            filter = [ "author", userToFilter ];
+            customQueries.push({ author: userToFilter });
         }
 
-        // craft the query using all the variables and data
+        const posts = LoadMoreModule(sortingType, lastPostId, lastUniqueField, loadAmt, customQueries);
         
-        // default query if nothing has been fetched yet reguardless of sortingType (the sort will differentiate the two)
-        postQuery = {
-            title: regex,
-        };
-        if (filter) postQuery[filter[0]] = filter[1]; // I know this is confusing but using an array is the simplest way to do this for any data
-        
-
-        if (sortingType === "Newest") {
-            sortFilter = { _id: -1 };
-            
-            if (lastPostId != 0) {
-                postQuery = {
-                    title: regex,
-                    _id: { $lt: lastPostId }
-                };
-                if (filter) postQuery[filter[0]] = filter[1];
-            }
-        } else if (sortingType === "Most Popular") {
-            sortFilter = { likeAmt: -1, _id: -1 };
-
-            if (lastPostId != 0 && lastUniqueField != -1) {
-                postQuery = {
-                    $or: [
-                        {
-                            title: regex,
-                            likeAmt: { $lt: lastUniqueField },
-                        }, 
-                        {
-                            title: regex,
-                            likeAmt: lastUniqueField,
-                            _id: { $lt: lastPostId },
-                        }
-                    ]
-                };
-                // add the filter
-                if (filter) {
-                    postQuery.$or[0][filter[0]] = filter[1];
-                    postQuery.$or[1][filter[0]] = filter[1];
-                }
-            }
+        if (user) {
+            resolve(AddDynamicData.addAll(posts, user));
         }
-        
-        Posts.find(postQuery)
-        .sort(sortFilter)
-        .limit(loadAmt+1)
-        .then((results) => {
-            console.log(results);
-            if (user) {
-                resolve(AddDynamicData.addAll(results, user));
-            }
-            resolve(results);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+        resolve(posts);
     });
 }
