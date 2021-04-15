@@ -16,6 +16,7 @@
             :mainUserObject="userObject" 
             :savedUserProjects="savedProjects" 
             :mainUserProjects="userProjects" 
+            :searchFilter="filter"
         />
     </div>
 </template>

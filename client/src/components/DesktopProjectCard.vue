@@ -100,7 +100,6 @@ export default {
     },
     created() {
         this.thumbnail_link = this.getThumbnail();
-        console.log(this.projectData);
     },
     props: {
         projectData: Object,

@@ -111,7 +111,7 @@ export default {
             selectedDocument: -1,
             queryThresh: 1000, // amount of time in between query queue times
             queryQueued: false, // flag to make sure queries are not spammed
-            userToFilter: this.userToFilterProp || this.$store.getters.accessToken
+            userToFilter: this.userToFilterProp || this.$store.getters.username
 
             //canClose: false // Important because you need to make sure when you blur the input that the click binding on the options can be triggered
         }
@@ -121,6 +121,7 @@ export default {
             type: String,
             default: "100%"
         },
+        // its VERY important the filter is wired up to the root components filter so it will always be synced with the dropdown label, even if it seems simpler to get it from localStorage
         filter: {
             type: String,
             default: "none"
@@ -169,7 +170,7 @@ export default {
                 this.documents = [];
             }
         },
-        
+
         // this will clear the documents and does not abide by the queryData cooldown
         updateFilter(filter) {
             this.documents = [];
@@ -180,8 +181,8 @@ export default {
                     this.filter, 
                     this.userToFilter, 
                     filter, 
-                    this.documents.length > 0 ? this.documents[this.documents.length-1].id : 0,  // last post id
-                    this.documents.length > 0 ? this.documents[this.documents.length-1].likeAmt : -1, // last unique field (only for most popular queries)
+                    0,  // last post id
+                    -1, // last unique field (only for most popular queries)
                     this.$store.getters.accessToken
                 ).then((res) => {
                     this.fetchedAllResults = res.data.partial_post.fetchedAll;

@@ -138,8 +138,6 @@ export default {
         partial_post: async function (_, args, { req }) {
             const loadAmt = 1;
 
-            console.log(args.lastUniqueField);
-
             let posts = await getPostByPartial(
                 args.partial_name, 
                 args.filter, 

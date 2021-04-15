@@ -194,7 +194,7 @@
                 </div>
             </div>
             <div class="content_box">
-                <router-view :key="$route.path" :userData="userObject" :userProjects="mainUserProjects" :savedUserProjects="savedUserProjects" @updateFilter="updateFilter" />
+                <router-view :key="$route.path" :sortingFilter="searchFilter" :userData="userObject" :userProjects="mainUserProjects" :savedUserProjects="savedUserProjects" @updateFilter="updateFilter" />
                 <!-- This renders the sub-routes component -->
             </div>
         </div>
@@ -219,6 +219,7 @@ export default {
         mainUserObject: Object,
         mainUserProjects: Object,
         savedUserProjects: Object,
+        searchFilter: String
     },
     methods: {
         logout() {

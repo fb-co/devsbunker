@@ -1,9 +1,9 @@
 <template>
     <div v-if="savedUserProjects" id="main_container">
         <div class="filter_dropdown_container">
-            <PostSearch width="40%" filter="saved" class="search_bar" />
+            <PostSearch :sortingType="sortingFilter" ref="post_search" width="40%" filter="saved" class="search_bar" />
 
-            <Dropdown :label="filter" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown" @itemSelected="updateFilter">
+            <Dropdown :label="sortingFilter" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown" @itemSelected="updateFilter">
                 <button>Newest</button>
                 <button>Most Popular</button>
             </Dropdown>
@@ -14,6 +14,7 @@
         </div>
         <div v-else class='project_list'>
             <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" />
+            <p v-if="!fetchedAllSearchResults" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
     </div>
     <div v-else class="no_saved">
@@ -25,17 +26,17 @@
 import MobileProjectCard from '@/components/MobileProjectCard.vue';
 import PostSearch from '@/components/PostSearch.vue';
 import Dropdown from "@/components/global/Dropdown.vue";
-import SearchUtilities from "@/utils/search_utilities.js";
 
 export default {
     data() {
         return {
             searchResults: [],
             showSearchResults: false,
-            filter: SearchUtilities.getSavedPostFilter(),
+            fetchedAllSearchResults: false,
         }
     },
     props: {
+        sortingFilter: String,
         savedUserProjects: Object
     },
     components: {
@@ -44,7 +45,8 @@ export default {
         Dropdown
     },
     methods: {
-        updateSearchComponent(documents, closeResults) {
+        updateSearchComponent(documents, fetchedAllSearched, closeResults) {
+            this.fetchedAllSearchResults = fetchedAllSearched;
             this.searchResults = documents;
 
             if (closeResults) {
@@ -53,11 +55,21 @@ export default {
                 this.showSearchResults = true;
             }
         },
+        // see the home page desktop updateFilter function for explanations
         updateFilter(value) {
-            this.$emit("updateFilter", value);
+            if (!this.showSearchResults) {
+                this.$emit("updateFilter", value);
+            } else {
+                this.$emit("updateFilter", value);
+                this.$refs.post_search.updateFilter(value);
+            }
         },
         loadNew() {
-            this.$parent.loadNewSavedPosts();
+            if (!this.showSearchResults) {
+                this.$parent.loadNewSavedPosts();
+            } else {
+                this.$refs.post_search.loadMoreResults();
+            }   
         }
     }
 }
