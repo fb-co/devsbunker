@@ -78,7 +78,7 @@ export default {
 
         // returns all the posts by a given author parameter
         getPostsByAuthor: async function (_, args, { req }) {
-            const loadAmt = 1;
+            const loadAmt = 3;
 
             let posts = await getPostsByAuthor(args.author, args.lastPostId, loadAmt, args.filter, args.lastUniqueField, req.user);
             let fetchedAll = false;
@@ -124,7 +124,7 @@ export default {
         },
 
         partial_post: async function (_, args, { req }) {
-            const loadAmt = 1;
+            const loadAmt = 2;
 
             let posts = await getPostByPartial(
                 args.partial_name, 

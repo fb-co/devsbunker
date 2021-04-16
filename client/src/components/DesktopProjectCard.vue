@@ -2,10 +2,10 @@
     <div class="proj_card_main_container" @click="$router.push({ path: `/post/${projectData.id}`})">
         <div class="text_container">
             <div class="author_container">
-                <router-link @click.native.stop :to="'user/' + projectData.author" class="author">{{ projectData.author }}</router-link>
+                <router-link @click.native.stop :to="'user/' + projectData.author" class="author highlightable">{{ projectData.author }}</router-link>
             </div>
-            <p class="title">{{ projectData.title }}</p>
-            <p class="desc">{{ descToShow }}</p>
+            <p class="title highlightable">{{ projectData.title }}</p>
+            <p class="desc highlightable">{{ descToShow }}</p>
 
             <div style="flex-grow: 1"></div>
             <!--placeholder so info_container sinks to bottom -->
@@ -107,6 +107,7 @@ export default {
             type: String,
             default: "200px",
         },
+        highlight_phrase: String,
     },
     mixins: [ProjectCardUtils],
     components: {
@@ -119,6 +120,26 @@ export default {
             }
             return "../../../uploads/profile_pics/profilePlaceholder.png";
         },
+        // highlights the given prop called "highlight_phrase" to any occurance under any html content with the class "highlightable"
+        highlightPhrases() {
+            if (this.highlight_phrase != null) {
+                const elements = document.getElementsByClassName("highlightable");
+
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp(this.highlight_phrase, "ig"), `<mark>${this.highlight_phrase}</mark>`);
+                }
+            } else {
+               // remove all highlights if the highlight phrase is null
+               const elements = document.getElementsByClassName("highlightable");
+
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp("<mark>", "ig"), "");
+                }
+            }
+        }
+    },
+    mounted() {
+        this.highlightPhrases();
     },
     watch: {
         projectData: function (newVal) {

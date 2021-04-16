@@ -20,7 +20,7 @@
             <p v-if="!projectsToRender.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
         <div v-else>
-            <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" />
+            <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
             <p v-if="!fetchedAllSearchResults" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
     </div>

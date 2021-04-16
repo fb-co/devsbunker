@@ -6,10 +6,10 @@
         " id="card_container" class="main_container no_select" :style="style">
         <div class="card_text_container">
             <div class="author_container">
-                <router-link @click.native.stop :to="'user/' + projectData.author" class="author card_text">{{ projectData.author }}</router-link>
+                <router-link @click.native.stop :to="'user/' + projectData.author" class="author card_text highlightable">{{ projectData.author }}</router-link>
             </div>
-            <p class="proj_name card_text">{{ projectData.title }}</p>
-            <p class="proj_desc card_text">{{ descToShow }}</p>
+            <p class="proj_name card_text highlightable">{{ projectData.title }}</p>
+            <p class="proj_desc card_text highlightable">{{ descToShow }}</p>
             <div style="flex-grow: 1"></div>
             <div class="likes_container">
                 <!--Un-filled icon -->
@@ -101,6 +101,7 @@ export default {
             type: String,
             default: "100%",
         },
+        highlight_phrase: String,
     },
     methods: {
         getThumbnail() {
@@ -109,6 +110,23 @@ export default {
             }
             return "../../../uploads/profile_pics/profilePlaceholder.png";
         },
+        // highlights the given prop called "highlight_phrase" to any occurance under any html content with the class "highlightable"
+        highlightPhrases() {
+            if (this.highlight_phrase != null) {
+                const elements = document.getElementsByClassName("highlightable");
+
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp(this.highlight_phrase, "ig"), `<mark>${this.highlight_phrase}</mark>`);
+                }
+            } else {
+               // remove all highlights if the highlight phrase is null
+               const elements = document.getElementsByClassName("highlightable");
+
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp("<mark>", "ig"), "");
+                }
+            }
+        }
     },
     mixins: [ProjectCardUtils],
     data() {
@@ -126,10 +144,18 @@ export default {
                     : this.projectData.description,
         };
     },
+    mounted() {
+        this.highlightPhrases();
+    },
     computed: {
         style() {
             return "width: " + this.width;
         },
+    },
+    watch: {
+        highlight_phrase: function() {
+            this.highlightPhrases();
+        }
     },
     components: {
         DynamicPicture,

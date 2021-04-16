@@ -206,6 +206,9 @@ export default {
                 this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
             });
         },
+        getSearchedPhrase() {
+            return this.$refs.general_input.value;
+        }
     }
 }
 </script>

@@ -5,7 +5,7 @@
             <div class="scrollable_center">
                 <p class="discover_label no_select">Discover Projects</p>
 
-                <PostSearch :sortingType="this.postFeedFilter" width="50%" class="post_search_bar" ref="home_search" />
+                <PostSearch :sortingType="this.postFeedFilter" width="50%" class="post_search_bar" ref="post_search" />
 
                 <div class="filter_dropdown">
                     <Dropdown :label="postFeedFilter" linkHeight="40px" height="40px" width="200px" @itemSelected="updateFilterDropdown">
@@ -18,7 +18,7 @@
                         <DesktopProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="70%" class="project_card" />
                     </div>
                     <div v-else>
-                        <DesktopProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="70%" class="project_card" />
+                        <DesktopProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="70%" class="project_card" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
                     </div>
                 </div>
                 <div id="loading-gif" v-else>
@@ -71,7 +71,7 @@ export default {
                 this.$emit("updateFilterDropdown", value);
             } else {
                 this.$emit("updateFilterDropdown", value);
-                this.$refs.home_search.updateFilter(value); // give it what the filter will be so it wont need to wait for the normal posts to load in the background
+                this.$refs.post_search.updateFilter(value); // give it what the filter will be so it wont need to wait for the normal posts to load in the background
             }
         },
         updateSearchComponent(documents, fetchedAllSearched, closeResults) {
@@ -88,7 +88,7 @@ export default {
             if (!this.showSearchResults) {
                 this.$parent.loadNew();
             } else {
-                this.$refs.home_search.loadMoreResults();
+                this.$refs.post_search.loadMoreResults();
             }
         },
     },
