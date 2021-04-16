@@ -68,6 +68,7 @@ export default {
             if (!this.showSearchResults) {
                 this.$parent.loadNewSavedPosts();
             } else {
+                // load more of the search results if your looking at the search results
                 this.$refs.post_search.loadMoreResults();
             }   
         }

@@ -1,6 +1,7 @@
 import Posts from "../../../components/post/post.model.js";
 import User from "../../../components/user/user.model.js";
 import AddDynamicData from "../misc/addDynamicData.js";
+import LoadMoreModule from "./LoadMoreModule.js";
 
 export default async function getPostsByAuthor(author, lastPostId, loadAmt, filter, lastUniqueField, jwtPayload) {
     let requesterUser;
@@ -11,6 +12,16 @@ export default async function getPostsByAuthor(author, lastPostId, loadAmt, filt
     //console.log(fetchedAmount);
 
     return new Promise((resolve) => {
+        let customQueries = [{ author: author }];
+        
+        LoadMoreModule(filter, lastPostId, lastUniqueField, loadAmt, customQueries).then((res) => {
+            if (requesterUser) {
+                const finalPosts = AddDynamicData.addAll(res, requesterUser);
+                resolve(finalPosts);
+            }
+        });
+
+        /*
         if (lastPostId != -1) { // if you havent fetched all the posts yet
             if (filter === "Newest") {
                 if (lastPostId != 0) { // if you havent fetched any posts yet
@@ -95,5 +106,6 @@ export default async function getPostsByAuthor(author, lastPostId, loadAmt, filt
                 }
             }
         }
+        */
     });
 }

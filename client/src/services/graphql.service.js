@@ -222,48 +222,26 @@ const GraphQLService = {
 
     // requester token is an optional parameter so that the like button will stay filled if you logged in and the post was liked by you
     fetchPostsByAuthor: function (author, lastPostId, filter, lastUniqueField, token) {
-        let query = null;
-
         // this may cause errors because we are just checking if something called token exists
-        if (token) {
-            query = `
-                query {
-                    getPostsByAuthor(author: "${author}", lastPostId: "${lastPostId}", filter: "${filter}", lastUniqueField: "${lastUniqueField}") {
-                        posts {
-                            title
-                            author
-                            thumbnail
-                            description
-                            likeAmt
-                            isLiked
-                            isSaved
-                            tags
-                            price
-                            id
-                        }
-                        fetchedAll
+        const query = `
+            query {
+                getPostsByAuthor(author: "${author}", lastPostId: "${lastPostId}", filter: "${filter}", lastUniqueField: "${lastUniqueField}") {
+                    posts {
+                        title
+                        author
+                        thumbnail
+                        description
+                        likeAmt
+                        isLiked
+                        isSaved
+                        tags
+                        price
+                        id
                     }
+                    fetchedAll
                 }
-            `;
-        } else {
-            query = `
-                query {
-                    getPostsByAuthor(author: "${author}", lastPostId: "${lastPostId}", filter: "${filter}", lastUniqueField: "${lastUniqueField}") {
-                        posts {
-                            title
-                            author
-                            thumbnail
-                            description
-                            likeAmt
-                            tags
-                            price
-                            id
-                        }
-                        fetchedAll
-                    }
-                }
-            `;
-        }
+            }
+        `;
 
         try {
             return fetch(URL, {
