@@ -1,5 +1,5 @@
 <!-- 
-    IMPORTANT: THE PARENT COMPONENT NEEDS TO a updateSearchComponent() function that takes a parm of some posts and renders them as cards
+    IMPORTANT: THE PARENT COMPONENT NEEDS TO have a updateSearchComponent() function that takes a parm of some posts and renders them as cards
                and you will need to render the component as you see fit in the parent. 
 
                Commonly they will be this (not 100% of the time):

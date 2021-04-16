@@ -9,6 +9,7 @@
             :mainUserObject="userObject"
             :savedUserProjects="savedProjects" 
             :mainUserProjects="userProjects" 
+            :searchFilter="filter"
         />
         <ProfileDesktop 
             @updateFilter="updateFilter" 

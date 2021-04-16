@@ -1,9 +1,15 @@
 <template>
     <div v-if="projectsToRender.posts.length>0">
-        <PostSearch width="70%" filter="saved" class="posts_search_bar" />
+        <PostSearch 
+            ref="post_search" 
+            :sortingType="sortingFilter" 
+            width="70%" 
+            filter="saved" 
+            class="posts_search_bar" 
+        />
         
         <div class="filter_dropdown_container">
-            <Dropdown :label="filter" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown" @itemSelected="updateFilter">
+            <Dropdown :label="sortingFilter" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown" @itemSelected="updateFilter">
                 <button>Newest</button>
                 <button>Most Popular</button>
             </Dropdown>
@@ -15,6 +21,7 @@
         </div>
         <div v-else>
             <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" />
+            <p v-if="!fetchedAllSearchResults" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
     </div>
     <div v-else class="no_saved">
@@ -25,7 +32,6 @@
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import PostSearch from "@/components/PostSearch.vue";
-import SearchUtilities from "@/utils/search_utilities.js";
 import Dropdown from "@/components/global/Dropdown.vue";
 
 export default {
@@ -37,10 +43,11 @@ export default {
             },
             searchResults: [],
             showSearchResults: false,
-            filter: SearchUtilities.getSavedPostFilter(),
+            fetchedAllSearchResults: false,
         };
     },
     props: {
+        sortingFilter: String,
         projectsToRender: Object
     },
     components: {
@@ -49,7 +56,8 @@ export default {
         Dropdown
     },
     methods: {
-        updateSearchComponent(documents, closeResults) {
+        updateSearchComponent(documents, fetchedAllSearched,closeResults) {
+            this.fetchedAllSearchResults = fetchedAllSearched;
             this.searchResults = documents;
 
             if (closeResults) {
@@ -59,10 +67,19 @@ export default {
             }
         },
         loadNew() {
-            this.$parent.$parent.loadNewSavedPosts();
+            if (!this.showSearchResults) {
+                this.$parent.$parent.loadNewSavedPosts();
+            } else {
+                this.$refs.post_search.loadMoreResults();
+            }    
         },
         updateFilter(value) {
-            this.$emit("updateFilter", value);
+            if (!this.showSearchResults) {
+                this.$emit("updateFilter", value);
+            } else {
+                this.$emit("updateFilter", value);
+                this.$refs.post_search.updateFilter(value);
+            }
         }
     },
 };

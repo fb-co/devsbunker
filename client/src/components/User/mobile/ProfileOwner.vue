@@ -85,11 +85,13 @@
             <ProjectSection 
                 v-if="activeSection === 'projects' && userProjects.posts.length > 0" 
                 :projectsToRender="userProjects" 
+                :sortingFilter="searchFilter"
                 @updateFilter="updateFilter"
             />
             <SavedProjects 
                 v-if="activeSection === 'saved' && savedUserProjects.posts.length > 0" 
                 :projectsToRender="savedUserProjects" 
+                :sortingFilter="searchFilter"
                 @updateFilter="updateFilter" 
             />
         </div>
@@ -111,6 +113,7 @@ export default {
         };
     },
     props: {
+        searchFilter: String,
         mainUserObject: Object,
         mainUserProjects: Object,
         savedUserProjects: Object

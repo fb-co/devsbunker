@@ -1,9 +1,16 @@
 <template>
     <div v-if="projectsToRender.posts.length > 0" id="component_container">
-        <PostSearch width="70%" filter="myProjects" :userToFilterProp="$store.getters.username" class="posts_search_bar" />
+        <PostSearch 
+            ref="post_search"
+            :sortingType="sortingFilter" 
+            width="70%" 
+            filter="myProjects" 
+            :userToFilterProp="$store.getters.username" 
+            class="posts_search_bar" 
+        />
 
         <div class="filter_dropdown_container">
-            <Dropdown :label="filter" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown" @itemSelected="updateFilter">
+            <Dropdown :label="sortingFilter" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown" @itemSelected="updateFilter">
                 <button>Newest</button>
                 <button>Most Popular</button>
             </Dropdown>
@@ -11,19 +18,18 @@
 
         <div v-if="!showSearchResults">
             <MobileProjectCard v-for="(project, index) in projectsToRender.posts" :key="index" :projectData="project" width="100%" />
+            <p v-if="!projectsToRender.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
         <div v-else>
             <MobileProjectCard v-for="(project, index) in searchResults" :key="index" :projectData="project" width="100%" />
+            <p v-if="!fetchedAllSearchResults" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
-
-        <p v-if="!projectsToRender.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
     </div>
 </template>
 
 <script>
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import PostSearch from "@/components/PostSearch.vue";
-import SearchUtilities from "@/utils/search_utilities.js";
 import Dropdown from "@/components/global/Dropdown.vue";
 
 export default {
@@ -31,18 +37,23 @@ export default {
         return {
             searchResults: [],
             showSearchResults: false,
-            filter: SearchUtilities.getSavedPostFilter(),
+            fetchedAllSearchResults: false,
         };
     },
     props: {
+        sortingFilter: String,
         projectsToRender: Object,
     },
     methods: {
         loadNew() {
-            // this may be the cause to the duplicate posts
-            this.$parent.$parent.loadNewPersonalPosts();
+            if (!this.showSearchResults) {
+                this.$parent.$parent.loadNewPersonalPosts();
+            } else {
+                this.$refs.post_search.loadMoreResults();
+            }
         },
-        updateSearchComponent(documents, closeResults) {
+        updateSearchComponent(documents, fetchedAllSearched,closeResults) {
+            this.fetchedAllSearchResults = fetchedAllSearched;
             this.searchResults = documents;
 
             if (closeResults) {
@@ -52,7 +63,12 @@ export default {
             }
         },
         updateFilter(value) {
-            this.$emit("updateFilter", value);
+            if (!this.showSearchResults) {
+                this.$emit("updateFilter", value);
+            } else {
+                this.$emit("updateFilter", value);
+                this.$refs.post_search.updateFilter(value);
+            }
         }
     },
     components: {
