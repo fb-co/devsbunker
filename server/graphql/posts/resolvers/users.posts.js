@@ -536,26 +536,46 @@ export default {
                 throw new Error("Internal error. Unable to unsave post");
             }
         },
-        // TODO: repsond with more details, not just a boolean value
         deletePost: async function (_, args, { req, res }) {
             if (req.user) {
                 try {
                     const post = await Posts.findOne({ _id: args.postId });
                     if (!post) {
                         res.status(422);
-                        throw new Error("Post not found");
+                        return {
+                            success: false,
+                            message: "Post not found",
+                            stacktrace: [
+                                "deletePost function in user.posts module",
+                            ],
+                        };
                     }
 
                     if (post.author === req.user.username) {
                         await deletePost(null, args.postId);
-                        return true;
+                        return {
+                            success: true,
+                            message: "Successfully delete post.",
+                            stacktrace: null,
+                        };
                     } else {
                         res.status(401);
-                        throw new Error("This post is not yours");
+                        return {
+                            success: false,
+                            message: "The given post is not yours",
+                            stacktrace: [
+                                "deletePost function in user.posts module",
+                                "post.author != req.user.username",
+                            ],
+                        };
                     }
                 } catch (e) {
                     console.error(e);
-                    return false;
+                    return {
+                        success: false,
+                        message: e.message,
+                        stacktrace: null,
+                    };
                 }
             } else {
                 res.status(401);

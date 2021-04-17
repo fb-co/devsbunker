@@ -2,6 +2,12 @@ import ApolloServer from "apollo-server-express";
 const { gql } = ApolloServer;
 
 export default gql`
+    type GeneralActionStatus {
+        success: Boolean!
+        message: String
+        stacktrace: [String]
+    }
+
     type PostImageObject {
         ogname: String
         dbname: String
@@ -105,6 +111,6 @@ export default gql`
             comment: String!
             timestamp: String!
         ): CommentResponse
-        deletePost(postId: String!): Boolean!
+        deletePost(postId: String!): GeneralActionStatus!
     }
 `;
