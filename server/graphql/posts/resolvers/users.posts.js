@@ -136,7 +136,7 @@ export default {
                 loadAmt, 
                 req.user
             );
-
+            
             let fetchedAll = false;
 
             if (posts[loadAmt] === undefined) {

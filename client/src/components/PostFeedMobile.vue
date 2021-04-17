@@ -56,10 +56,11 @@ export default {
                 this.$refs.post_search.loadMoreResults();
             }
         },
-        updateSearchFilter(value) {
+        async updateSearchFilter(value) {
             if (!this.showSearchResults) {
                 this.rootComponent.updateFilterDropdown(value);
             } else {
+                this.rootComponent.updateFilterDropdown(value);
                 this.$refs.post_search.updateFilter(value);
             }
         },

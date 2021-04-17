@@ -5,6 +5,7 @@ import AddDynamicData from "../misc/addDynamicData.js";
 import mongoose from "mongoose";
 
 // userToFilter is the username of the author you want to search based on. Example -> search only the posts of this username
+// filter is something like: saved, myProjects, etc.
 export default async function getPostByPartial(partial_name, filter, userToFilter, sortingType, lastPostId, lastUniqueField, loadAmt, requester_token) {
     let user;
     
