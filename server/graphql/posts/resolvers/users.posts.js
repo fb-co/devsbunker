@@ -1,15 +1,17 @@
-import getUserPost from "../utils/getUserPost.js";
-import getPostByPartial from "../utils/getPostByPartial.js";
-import getPostById from "../utils/getPostById.js";
-import getPostList from "../utils/getPostList.js";
-import getPostsByAuthor from "../utils/getPostsByAuthor.js";
-import getSavedPosts from "../utils/getSavedPosts.js";
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
 import Posts from "../../../components/post/post.model.js";
 import User from "../../../components/user/user.model.js";
 import AddDynamicData from "../misc/addDynamicData.js";
+
+import getUserPost from "../utils/getUserPost.js";
+import getPostByPartial from "../utils/getPostByPartial.js";
+import getPostById from "../utils/getPostById.js";
+import getPostList from "../utils/getPostList.js";
+import getPostsByAuthor from "../utils/getPostsByAuthor.js";
+import getSavedPosts from "../utils/getSavedPosts.js";
+import deletePost from "../utils/deletePost.js";
 
 export default {
     Query: {
@@ -22,7 +24,12 @@ export default {
         getPosts: async function (_, args, { req }) {
             try {
                 const loadAmt = 3;
-                let posts = await getPostList(args.sortingType, loadAmt, args.lastPostId, args.lastUniqueField);
+                let posts = await getPostList(
+                    args.sortingType,
+                    loadAmt,
+                    args.lastPostId,
+                    args.lastUniqueField
+                );
                 let fetchedAll = false;
 
                 let user;
@@ -30,9 +37,10 @@ export default {
                 // if the user was logged in, evaluate if the post requested has been liked or saved before
                 if (req.user) {
                     const jwtPayload = req.user;
-                    user = await User.findOne({ username: jwtPayload.username });
+                    user = await User.findOne({
+                        username: jwtPayload.username,
+                    });
                 }
-
 
                 // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
                 if (posts[loadAmt] === undefined) {
@@ -42,13 +50,12 @@ export default {
                     posts.pop();
                 }
 
-
                 const finalPosts = AddDynamicData.addAll(posts, user);
 
                 const finalResponse = {
                     posts: finalPosts,
-                    fetchedAll: fetchedAll
-                }
+                    fetchedAll: fetchedAll,
+                };
 
                 return finalResponse;
             } catch (err) {
@@ -64,7 +71,9 @@ export default {
 
                 if (req.user) {
                     const jwtPayload = req.user;
-                    user = await User.findOne({ username: jwtPayload.username });
+                    user = await User.findOne({
+                        username: jwtPayload.username,
+                    });
 
                     post.isLiked = post.likes.includes(user.username);
                     post.isSaved = user.saved_posts.includes(post.id);
@@ -80,7 +89,14 @@ export default {
         getPostsByAuthor: async function (_, args, { req }) {
             const loadAmt = 3;
 
-            let posts = await getPostsByAuthor(args.author, args.lastPostId, loadAmt, args.filter, args.lastUniqueField, req.user);
+            let posts = await getPostsByAuthor(
+                args.author,
+                args.lastPostId,
+                loadAmt,
+                args.filter,
+                args.lastUniqueField,
+                req.user
+            );
             let fetchedAll = false;
 
             // check and remove test post
@@ -92,7 +108,7 @@ export default {
 
             const finalResponse = {
                 posts: posts,
-                fetchedAll: fetchedAll
+                fetchedAll: fetchedAll,
             };
 
             return finalResponse;
@@ -104,7 +120,13 @@ export default {
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
-            let posts = await getSavedPosts(jwtPayload.username, loadAmt, args.lastPostId, args.filter, args.lastUniqueField);
+            let posts = await getSavedPosts(
+                jwtPayload.username,
+                loadAmt,
+                args.lastPostId,
+                args.filter,
+                args.lastUniqueField
+            );
             let fetchedAll = false;
 
             // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
@@ -117,7 +139,7 @@ export default {
 
             const finalResponse = {
                 posts: posts,
-                fetchedAll: fetchedAll
+                fetchedAll: fetchedAll,
             };
 
             return finalResponse;
@@ -127,16 +149,16 @@ export default {
             const loadAmt = 2;
 
             let posts = await getPostByPartial(
-                args.partial_name, 
-                args.filter, 
-                args.userToFilter, 
-                args.sortingType, 
-                args.lastPostId, 
-                args.lastUniqueField, 
-                loadAmt, 
+                args.partial_name,
+                args.filter,
+                args.userToFilter,
+                args.sortingType,
+                args.lastPostId,
+                args.lastUniqueField,
+                loadAmt,
                 req.user
             );
-            
+
             let fetchedAll = false;
 
             if (posts[loadAmt] === undefined) {
@@ -147,9 +169,9 @@ export default {
 
             const finalResponse = {
                 posts: posts,
-                fetchedAll: fetchedAll
-            }
-        
+                fetchedAll: fetchedAll,
+            };
+
             return finalResponse;
         },
     },
@@ -175,7 +197,7 @@ export default {
                 price: payload.price,
                 bunkerTag: payload.bunkerTag,
                 clip: payload.clip,
-                comments: []
+                comments: [],
             });
 
             try {
@@ -198,11 +220,19 @@ export default {
                     price: payload.price,
                     bunkerTag: post.bunkerTag,
                     clip: post.clip,
-                    comments: []
+                    comments: [],
                 };
             } catch (err) {
                 // best error handling I ever made
-                throw new Error(`Unable to create post: ${(err.errors.tags) ? err.errors.tags.properties.message : (err.errors.links.properties.message) ? err.errors.links.properties.message : "Internal Error"}`);
+                throw new Error(
+                    `Unable to create post: ${
+                        err.errors.tags
+                            ? err.errors.tags.properties.message
+                            : err.errors.links.properties.message
+                            ? err.errors.links.properties.message
+                            : "Internal Error"
+                    }`
+                );
             }
         },
         likePost: async function (_, args, { req }) {
@@ -222,9 +252,10 @@ export default {
 
                         await post.save();
 
-
                         // save post id in users db entry as "liked posts"
-                        const user = await User.findOne({ username: jwtPayload.username });
+                        const user = await User.findOne({
+                            username: jwtPayload.username,
+                        });
 
                         if (user) {
                             user.liked_posts.push(post.id);
@@ -232,7 +263,9 @@ export default {
 
                         await user.save();
 
-                        const userToNotify = await User.findOne({ username: post.author });
+                        const userToNotify = await User.findOne({
+                            username: post.author,
+                        });
 
                         if (userToNotify) {
                             // only notify the user if there is not already an identical notification.
@@ -244,18 +277,33 @@ export default {
                                 message: `liked your post!`,
                                 type: "like",
                                 target: post.title,
-                                timestamp: new Date()
+                                timestamp: new Date(),
                             };
 
                             let shouldNotify = true;
 
                             // the forEach loop was being stoopid, so im using a regular loop
-                            for (let i = 0; i < userToNotify.notifications.length; i++) {
-                                const oldNotification = userToNotify.notifications[i];
+                            for (
+                                let i = 0;
+                                i < userToNotify.notifications.length;
+                                i++
+                            ) {
+                                const oldNotification =
+                                    userToNotify.notifications[i];
 
-                                console.log(oldNotification.target, notification.target);
+                                console.log(
+                                    oldNotification.target,
+                                    notification.target
+                                );
 
-                                if (oldNotification.sender == jwtPayload.username && oldNotification.message == notification.message && oldNotification.target == notification.target) {
+                                if (
+                                    oldNotification.sender ==
+                                        jwtPayload.username &&
+                                    oldNotification.message ==
+                                        notification.message &&
+                                    oldNotification.target ==
+                                        notification.target
+                                ) {
                                     shouldNotify = false;
                                 }
                             }
@@ -264,7 +312,9 @@ export default {
                             }
 
                             if (shouldNotify) {
-                                userToNotify.notifications.unshift(notification);
+                                userToNotify.notifications.unshift(
+                                    notification
+                                );
                             }
                             await userToNotify.save();
                         }
@@ -281,7 +331,9 @@ export default {
                             tags: post.tags,
                             likes: post.likes,
                             likeAmt: post.likeAmt || post.likes.length,
-                            isSaved: user.saved_posts.includes(jwtPayload.username),
+                            isSaved: user.saved_posts.includes(
+                                jwtPayload.username
+                            ),
                             isLiked: true,
                             price: post.price,
                             bunkerTag: post.bunkerTag,
@@ -317,7 +369,9 @@ export default {
 
                         await post.save();
 
-                        const user = await User.findOne({ username: jwtPayload.username });
+                        const user = await User.findOne({
+                            username: jwtPayload.username,
+                        });
 
                         if (user) {
                             const userIndex = user.liked_posts.indexOf(post.id);
@@ -339,22 +393,21 @@ export default {
                                     tags: post.tags,
                                     likes: post.likes,
                                     likeAmt: post.likeAmt || post.likes.length,
-                                    isSaved: user.saved_posts.includes(jwtPayload.username),
+                                    isSaved: user.saved_posts.includes(
+                                        jwtPayload.username
+                                    ),
                                     isLiked: false,
                                     price: post.price,
                                     bunkerTag: post.bunkerTag,
                                     clip: post.clip,
-                                }
+                                };
                             }
                         }
                     }
                 }
 
                 return null;
-            } catch (err) {
-
-            }
-
+            } catch (err) {}
         },
         commentOnPost: async function (_, args, { req }) {
             const id_payload = args.postId;
@@ -365,7 +418,9 @@ export default {
 
             try {
                 if (args.comment != "" && args.comment != null) {
-                    const user = await User.findOne({ username: jwtPayload.username });
+                    const user = await User.findOne({
+                        username: jwtPayload.username,
+                    });
 
                     // make sure the user commeting exists
                     if (user) {
@@ -375,7 +430,7 @@ export default {
                             const comment = {
                                 commenter: jwtPayload.username,
                                 comment: commentMessage,
-                                timestamp: args.timestamp
+                                timestamp: args.timestamp,
                             };
 
                             // add the new comment and save the document
@@ -408,10 +463,11 @@ export default {
                 const post = await Posts.findOne({ _id: id_payload });
 
                 if (post) {
-                    const user = await User.findOne({ username: jwtPayload.username });
+                    const user = await User.findOne({
+                        username: jwtPayload.username,
+                    });
                     if (user) {
                         if (!user.saved_posts.includes(post.id)) {
-
                             user.saved_posts.push(post.id);
                             await user.save();
 
@@ -427,7 +483,9 @@ export default {
                                 tags: post.tags,
                                 likes: post.likes,
                                 likeAmt: post.likeAmt || post.likes.length,
-                                isLiked: post.likes.includes(jwtPayload.username),
+                                isLiked: post.likes.includes(
+                                    jwtPayload.username
+                                ),
                                 isSaved: true,
                                 price: post.price,
                                 bunkerTag: post.bunkerTag,
@@ -454,7 +512,9 @@ export default {
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
             try {
-                const user = await User.findOne({ username: jwtPayload.username });
+                const user = await User.findOne({
+                    username: jwtPayload.username,
+                });
 
                 if (user) {
                     for (let i = 0; i < user.saved_posts.length; i++) {
@@ -467,13 +527,39 @@ export default {
                     await user.save();
 
                     return {
-                        success: true
+                        success: true,
                     }; // only returns whether or not it worked
                 } else {
                     return null;
                 }
             } catch {
                 throw new Error("Internal error. Unable to unsave post");
+            }
+        },
+        // TODO: repsond with more details, not just a boolean value
+        deletePost: async function (_, args, { req, res }) {
+            if (req.user) {
+                try {
+                    const post = await Posts.findOne({ _id: args.postId });
+                    if (!post) {
+                        res.status(422);
+                        throw new Error("Post not found");
+                    }
+
+                    if (post.author === req.user.username) {
+                        await deletePost(null, args.postId);
+                        return true;
+                    } else {
+                        res.status(401);
+                        throw new Error("This post is not yours");
+                    }
+                } catch (e) {
+                    console.error(e);
+                    return false;
+                }
+            } else {
+                res.status(401);
+                throw new Error("Unauthorized");
             }
         },
     },
