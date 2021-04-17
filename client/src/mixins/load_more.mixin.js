@@ -23,8 +23,12 @@ const LoadMore = {
         }
     },  
     methods: {
-        // a swtich block wont work here because we need a lexical declaration 
-        async getPosts() {
+        // a swtich block wont work here because we need a lexical declaration, also isNew is only true if you havent fetched any of the posts yet
+        async getPosts(clearPosts) {
+            if (clearPosts) {
+                this.posts = [];
+            }
+
             if (this.queryType === 'all') {
                 const res = await GraphQLService.fetchPosts(
                     this.sortingType, 
@@ -32,13 +36,24 @@ const LoadMore = {
                     this.getLastPostUniqueField(), 
                     this.$store.getters.accessToken
                 );
-                this.posts = res.data.getPosts.posts;
+                this.posts = this.posts.concat(res.data.getPosts.posts);
                 this.fetchedAll = res.data.getPosts.fetchedAll;
+            } else if (this.queryType === "projects") {
+                const res = await GraphQLService.fetchPostsByAuthor(
+                    this.$store.getters.username,
+                    0, // zero since your fetching the initial posts
+                    this.filter,
+                    -1, // last unique field is negative one since this is for initial posts
+                    this.$store.getters.accessToken
+                );
+                this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
+                this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
             }
         },
         updateFilterDropdown(value) {
             SearchUtilities.setHomePostFilter(value);
             this.sortingType = SearchUtilities.getHomePostFilter();
+            this.getPosts(true);
         },
 
         // misc functions

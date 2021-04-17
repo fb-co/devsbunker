@@ -3,21 +3,19 @@
         <div class="filter_dropdown_container">
             <PostSearch 
                 ref="post_search" 
-                :sortingType="rootComponent.sortingFilter" 
+                :sortingType="rootComponent.sortingType" 
                 width="40%" 
-                filter="myProjects" 
                 class="posts_search_bar" 
             />
             
-            <Dropdown :label="rootComponent.sortingFilter" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown" @itemSelected="updateFilter">
+            <Dropdown :label="rootComponent.sortingType" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown" @itemSelected="updateSearchFilter">
                 <button>Newest</button>
                 <button>Most Popular</button>
-            </Dropdown>
-            
+            </Dropdown>          
         </div>
         <div v-if="!showSearchResults" class="project_list">
-            <MobileProjectCard v-for="project in userProjects.posts" :key="project.id" :projectData="project" width="85%" />
-            <p v-if="!userProjects.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
+            <MobileProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="85%" />
+            <p v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
         </div>
         <div v-else class="project_list">
             <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
@@ -25,21 +23,56 @@
         </div>
     </div>
     <div v-else class="no_projects">
-        <p>You have no projects</p>
+        <p>No projects found</p>
     </div>
 </template>
 
 <script>
 import PostSearch from "@/components/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
+import MobileProjectCard from "@/components/MobileProjectCard.vue";
 
 export default {
+    data() {
+        return {
+            showSearchResults: false,
+            searchResults: [],
+            fetchedAllSearchResults: false,
+        }
+    },
     props: {
         rootComponent: Object,
     },
     components: {
         PostSearch,
-        Dropdown
+        Dropdown,
+        MobileProjectCard
+    },
+    methods: {
+        loadNew() {
+            if (!this.showSearchResults) {
+                this.rootComponent.getPosts();
+            } else {
+                this.$refs.post_search.loadMoreResults();
+            }
+        },
+        updateSearchFilter(value) {
+            if (!this.showSearchResults) {
+                this.rootComponent.updateFilterDropdown(value);
+            } else {
+                this.$refs.post_search.updateFilter(value);
+            }
+        },
+        updateSearchComponent(documents, fetchedAllSearched, closeResults) {
+            this.fetchedAllSearchResults = fetchedAllSearched;
+            this.searchResults = documents;
+
+            if (closeResults) {
+                this.showSearchResults = false;
+            } else {
+                this.showSearchResults = true;
+            }
+        },
     }
 }
 </script>

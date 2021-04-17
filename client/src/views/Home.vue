@@ -5,7 +5,7 @@
                 :projects="posts"
                 v-if="$store.getters.mobile"
                 :fetchedAll="fetchedAll"
-                :postFeedFilter="filter"
+                :postFeedFilter="sortingType"
                 @updateFilterDropdown="updateFilterDropdown"
             />
             <HomeDesktop
