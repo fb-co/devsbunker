@@ -2,6 +2,12 @@ import ApolloServer from "apollo-server-express";
 const { gql } = ApolloServer;
 
 export default gql`
+    type GeneralActionStatus {
+        success: Boolean!
+        message: String
+        stacktrace: [String]
+    }
+
     type UserAccountAction {
         message: String!
         accessToken: String
@@ -141,6 +147,6 @@ export default gql`
 
         getAndReadNotifications: [Notification]!
 
-        deleteAccount(password: String!): Boolean
+        deleteAccount(password: String!): GeneralActionStatus!
     }
 `;

@@ -490,7 +490,6 @@ export default {
             return await SessionRevoker.revokeRefreshToken(req.user);
         },
 
-        // we should return more stuff instead of a single boolean value
         deleteAccount: async function (_, args, { req, res }) {
             if (req.user) {
                 const user = await User.findOne({
@@ -499,13 +498,26 @@ export default {
 
                 if (!user) {
                     res.status(422);
-                    throw new Error("User not found");
+                    return {
+                        success: false,
+                        message: "User not found",
+                        stacktrace: [
+                            "deleteAccount function in user.account module",
+                            "couldn't find a user document given the jwt",
+                        ],
+                    };
                 }
 
                 const success = await loginValidUser(user, args.password, res);
                 if (!success.accessToken) {
                     res.status(401);
-                    throw new Error("Unauthorized");
+                    return {
+                        success: false,
+                        message: "Unauthorized, incorrect password",
+                        stacktrace: [
+                            "deleteAccount function in user.account module",
+                        ],
+                    };
                 }
 
                 try {
@@ -517,10 +529,21 @@ export default {
                         _id: user._id,
                     });
 
-                    return true;
+                    return {
+                        success: true,
+                        message: "Successfully deleted the account. Bye!",
+                        stacktrace: null,
+                    };
                 } catch (e) {
                     console.error(e);
-                    return false;
+                    return {
+                        success: false,
+                        message: e.message,
+                        stacktrace: [
+                            "deleteAccount function in user.account module",
+                            "internal error",
+                        ],
+                    };
                 }
             } else {
                 res.status(401);
