@@ -9,7 +9,7 @@ import getUserByPartial from "../utils/getUserByPartial.js";
 import loginValidUser from "../utils/loginValidUser.js";
 
 import getAllPostsByAuthor from "../../posts/utils/getAllPostsByAuthor.js";
-
+import deletePost from "../../posts/utils/deletePost.js";
 
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
@@ -139,7 +139,7 @@ export default {
 
             try {
                 const user = await User.findOne({
-                    username: jwtPayload.username
+                    username: jwtPayload.username,
                 });
 
                 const posts = await getAllPostsByAuthor(jwtPayload.username);
@@ -156,14 +156,13 @@ export default {
                         following: user.following,
                         profile_pic: user.profile_pic,
                     },
-                    posts
-                }
-
+                    posts,
+                };
             } catch (e) {
                 console.error(e);
                 throw new Error("Failed to get user from token");
             }
-        }
+        },
     },
 
     Mutation: {
@@ -438,7 +437,10 @@ export default {
 
                 if (user) {
                     for (let i = 0; i < user.notifications.length; i++) {
-                        if (user.notifications[i].type == "like" || user.notifications[i].type == "follow") {
+                        if (
+                            user.notifications[i].type == "like" ||
+                            user.notifications[i].type == "follow"
+                        ) {
                             user.notifications[i].read = true;
                         }
                     }
@@ -486,6 +488,44 @@ export default {
 
         revokeUserSession: async function (_, args, { req }) {
             return await SessionRevoker.revokeRefreshToken(req.user);
+        },
+
+        // we should return more stuff instead of a single boolean value
+        deleteAccount: async function (_, args, { req, res }) {
+            if (req.user) {
+                const user = await User.findOne({
+                    _id: req.user._id,
+                });
+
+                if (!user) {
+                    res.status(422);
+                    throw new Error("User not found");
+                }
+
+                const success = await loginValidUser(user, args.password, res);
+                if (!success.accessToken) {
+                    res.status(401);
+                    throw new Error("Unauthorized");
+                }
+
+                try {
+                    // delete the posts
+                    await deletePost(user.username, null);
+
+                    // delete user
+                    await User.deleteOne({
+                        _id: user._id,
+                    });
+
+                    return true;
+                } catch (e) {
+                    console.error(e);
+                    return false;
+                }
+            } else {
+                res.status(401);
+                throw new Error("Unauthorized");
+            }
         },
     },
 };
