@@ -121,72 +121,74 @@
                         <circle cx="12" cy="5" r="1" />
                     </svg>
                 </div>
-
-                <div class="more_options" v-if="moreOptions">
-                    <div
-                        class="op_wrapper"
-                        v-if="projectData.author === $store.getters.username"
-                        @click.stop="deletePost()"
-                    >
-                        <div class="op_icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-trash"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="#ffffff"
-                                fill="none"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <path
-                                    stroke="none"
-                                    d="M0 0h24v24H0z"
+                <div style="position: relative;"> <!-- make a relative wrapper so absolute works better -->
+                    <!--More Options -->
+                    <div :class="{ darkThemeMore: darkTheme, lightThemeMore: !darkTheme }" class="more_options no_select" v-if="moreOptions">
+                        <div class="op_wrapper" @click.stop="sharePost()">
+                            <div class="op_icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-share"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="var(--main-font-color)"
                                     fill="none"
-                                />
-                                <line x1="4" y1="7" x2="20" y2="7" />
-                                <line x1="10" y1="11" x2="10" y2="17" />
-                                <line x1="14" y1="11" x2="14" y2="17" />
-                                <path
-                                    d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
-                                />
-                                <path
-                                    d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
-                                />
-                            </svg>
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"
+                                    />
+                                    <circle cx="6" cy="12" r="3" />
+                                    <circle cx="18" cy="6" r="3" />
+                                    <circle cx="18" cy="18" r="3" />
+                                    <line x1="8.7" y1="10.7" x2="15.3" y2="7.3" />
+                                    <line x1="8.7" y1="13.3" x2="15.3" y2="16.7" />
+                                </svg>
+                            </div>
+                            <p>Share</p>
                         </div>
-                        <p>Delete</p>
-                    </div>
-                    <div class="op_line"></div>
-                    <div class="op_wrapper" @click.stop="sharePost()">
-                        <div class="op_icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-share"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="#ffffff"
-                                fill="none"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <path
-                                    stroke="none"
-                                    d="M0 0h24v24H0z"
+                        <div
+                            class="op_wrapper"
+                            v-if="projectData.author === $store.getters.username"
+                            @click.stop="deletePost()"
+                        >
+                            <div class="op_icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-trash"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="var(--main-font-color)"
                                     fill="none"
-                                />
-                                <circle cx="6" cy="12" r="3" />
-                                <circle cx="18" cy="6" r="3" />
-                                <circle cx="18" cy="18" r="3" />
-                                <line x1="8.7" y1="10.7" x2="15.3" y2="7.3" />
-                                <line x1="8.7" y1="13.3" x2="15.3" y2="16.7" />
-                            </svg>
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"
+                                    />
+                                    <line x1="4" y1="7" x2="20" y2="7" />
+                                    <line x1="10" y1="11" x2="10" y2="17" />
+                                    <line x1="14" y1="11" x2="14" y2="17" />
+                                    <path
+                                        d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                    />
+                                    <path
+                                        d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                    />
+                                </svg>
+                            </div>
+                            <p>Delete</p>
                         </div>
-                        <p>Share</p>
+                        <div class="op_line"></div>
                     </div>
                 </div>
 
@@ -220,6 +222,7 @@
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import DynamicPicture from "@/components/DynamicPicture.vue";
 import GraphQLService from "../services/graphql.service";
+import GeneralMixin from "../mixins/general.mixin.js";
 
 export default {
     data() {
@@ -251,7 +254,7 @@ export default {
         },
         highlight_phrase: String,
     },
-    mixins: [ProjectCardUtils],
+    mixins: [ProjectCardUtils, GeneralMixin],
     components: {
         DynamicPicture,
     },
@@ -265,9 +268,7 @@ export default {
         // highlights the given prop called "highlight_phrase" to any occurance under any html content with the class "highlightable"
         highlightPhrases() {
             if (this.highlight_phrase != null) {
-                const elements = document.getElementsByClassName(
-                    "highlightable"
-                );
+                const elements = document.getElementsByClassName("highlightable");
 
                 for (let i = 0; i < elements.length; i++) {
                     elements[i].innerHTML = elements[i].innerText.replace(
@@ -277,9 +278,7 @@ export default {
                 }
             } else {
                 // remove all highlights if the highlight phrase is null
-                const elements = document.getElementsByClassName(
-                    "highlightable"
-                );
+                const elements = document.getElementsByClassName("highlightable");
 
                 for (let i = 0; i < elements.length; i++) {
                     elements[i].innerHTML = elements[i].innerText.replace(
@@ -352,14 +351,13 @@ export default {
     font-weight: bold;
 }
 .more_options {
+    position: absolute;
+
     width: 150px;
-    height: 100px;
     background-color: var(--main-color);
 
-    border-radius: 10px;
+    border-radius: 5px;
 
-    /* no questions xD*/
-    margin-bottom: -200px;
     display: flex;
     flex-direction: column;
     cursor: initial;
@@ -367,8 +365,8 @@ export default {
 
 .op_wrapper {
     width: 100%;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     display: flex;
     flex-direction: row;
     cursor: pointer;
@@ -379,6 +377,14 @@ export default {
     text-align: center;
 }
 
+/* This is for the more dropdown on different themes */ 
+.darkThemeMore {
+    box-shadow: 0 2px 4px 0 rgba(215, 280, 220, 0.2)
+}
+.lightThemeMore {
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+}
+
 /* DOESNT WORK */
 /* .op_line {
     width: 100%;
@@ -386,11 +392,7 @@ export default {
     background-color: var(--soft-text);
 } */
 
-.op_wrapper p {
-    text-align: center;
-}
-
-.op_wrapper p:hover {
+.op_wrapper:hover {
     color: var(--main-font-color);
     transition: 0.5s;
 }
