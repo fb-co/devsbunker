@@ -1,8 +1,16 @@
 <template>
-    <div class="proj_card_main_container" @click="$router.push({ path: `/post/${projectData.id}`})">
+    <div
+        class="proj_card_main_container"
+        @click="$router.push({ path: `/post/${projectData.id}` })"
+    >
         <div class="text_container">
             <div class="author_container">
-                <router-link @click.native.stop :to="'user/' + projectData.author" class="author highlightable">{{ projectData.author }}</router-link>
+                <router-link
+                    @click.native.stop
+                    :to="'user/' + projectData.author"
+                    class="author highlightable"
+                    >{{ projectData.author }}</router-link
+                >
             </div>
             <p class="title highlightable">{{ projectData.title }}</p>
             <p class="desc highlightable">{{ descToShow }}</p>
@@ -11,9 +19,20 @@
             <!--placeholder so info_container sinks to bottom -->
 
             <div class="info_container">
-                <div v-if="!projectData.isLiked" @click.stop="likePost(projectData.id)" class="vertical_flex_center">
+                <div
+                    v-if="!projectData.isLiked"
+                    @click.stop="likePost(projectData.id)"
+                    class="vertical_flex_center"
+                >
                     <!--Not filled icon -->
-                    <svg width="23" height="23" viewBox="0 0 16 16" class="bi bi-heart" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                        width="23"
+                        height="23"
+                        viewBox="0 0 16 16"
+                        class="bi bi-heart"
+                        fill="#eb4034"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
                         <path
                             fill-rule="evenodd"
                             d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
@@ -22,8 +41,19 @@
                 </div>
                 <div v-else class="vertical_flex_center">
                     <!-- Filled icon -->
-                    <svg @click.stop="unlikePost(projectData.id)" width="23" height="23" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                    <svg
+                        @click.stop="unlikePost(projectData.id)"
+                        width="23"
+                        height="23"
+                        viewBox="0 0 16 16"
+                        class="bi bi-heart-fill"
+                        fill="#eb4034"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                        />
                     </svg>
                 </div>
                 <div class="vertical_flex_center likeAmt">
@@ -37,7 +67,7 @@
                         width="18"
                         height="18"
                         stroke-width="0.7"
-                        stroke="var(--ssoft-text)"
+                        stroke="var(--soft-text)"
                         viewBox="0 0 16 16"
                         class="bi bi-bookmark save_btn"
                         fill="currentColor"
@@ -54,25 +84,133 @@
                         width="18"
                         height="18"
                         stroke-width="0.7"
-                        stroke="var(--ssoft-text)"
+                        stroke="var(--soft-text)"
                         viewBox="0 0 16 16"
                         class="bi bi-bookmark-fill save_btn"
                         fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z" />
+                        <path
+                            fill-rule="evenodd"
+                            d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z"
+                        />
                     </svg>
+                </div>
+
+                <div
+                    class="vertical_flex_center"
+                    style="margin-left: 5px;"
+                    @click.stop="moreOptions = !moreOptions"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-dots-vertical"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="var(--soft-text)"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <circle cx="12" cy="12" r="1" />
+                        <circle cx="12" cy="19" r="1" />
+                        <circle cx="12" cy="5" r="1" />
+                    </svg>
+                </div>
+
+                <div class="more_options" v-if="moreOptions">
+                    <div
+                        class="op_wrapper"
+                        v-if="projectData.author === $store.getters.username"
+                        @click.stop="deletePost()"
+                    >
+                        <div class="op_icon">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-trash"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="#ffffff"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path
+                                    stroke="none"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                />
+                                <line x1="4" y1="7" x2="20" y2="7" />
+                                <line x1="10" y1="11" x2="10" y2="17" />
+                                <line x1="14" y1="11" x2="14" y2="17" />
+                                <path
+                                    d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                />
+                                <path
+                                    d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                />
+                            </svg>
+                        </div>
+                        <p>Delete</p>
+                    </div>
+                    <div class="op_line"></div>
+                    <div class="op_wrapper" @click.stop="sharePost()">
+                        <div class="op_icon">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-share"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="#ffffff"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path
+                                    stroke="none"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                />
+                                <circle cx="6" cy="12" r="3" />
+                                <circle cx="18" cy="6" r="3" />
+                                <circle cx="18" cy="18" r="3" />
+                                <line x1="8.7" y1="10.7" x2="15.3" y2="7.3" />
+                                <line x1="8.7" y1="13.3" x2="15.3" y2="16.7" />
+                            </svg>
+                        </div>
+                        <p>Share</p>
+                    </div>
                 </div>
 
                 <div class="vertical_flex_center">
                     <p class="language">{{ projectData.tags[0] }}</p>
                 </div>
-                <div class="spacer" v-if="projectData.price != 0 && projectData.price != null">-</div>
-                <p class="price_text" v-if="projectData.price != 0 && projectData.price != null">${{ projectData.price }}</p>
+                <div
+                    class="spacer"
+                    v-if="projectData.price != 0 && projectData.price != null"
+                >
+                    -
+                </div>
+                <p
+                    class="price_text"
+                    v-if="projectData.price != 0 && projectData.price != null"
+                >
+                    ${{ projectData.price }}
+                </p>
             </div>
         </div>
         <div class="image_container">
-            <DynamicPicture :image_link="this.thumbnail_link" class="card_image" />
+            <DynamicPicture
+                :image_link="this.thumbnail_link"
+                class="card_image"
+            />
         </div>
     </div>
 </template>
@@ -96,6 +234,7 @@ export default {
                           ) + " ..."
                     : this.projectData.description,
             thumbnail_link: undefined,
+            moreOptions: false,
         };
     },
     created() {
@@ -123,26 +262,36 @@ export default {
         // highlights the given prop called "highlight_phrase" to any occurance under any html content with the class "highlightable"
         highlightPhrases() {
             if (this.highlight_phrase != null) {
-                const elements = document.getElementsByClassName("highlightable");
+                const elements = document.getElementsByClassName(
+                    "highlightable"
+                );
 
                 for (let i = 0; i < elements.length; i++) {
-                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp(this.highlight_phrase, "ig"), `<mark>${this.highlight_phrase}</mark>`);
+                    elements[i].innerHTML = elements[i].innerText.replace(
+                        new RegExp(this.highlight_phrase, "ig"),
+                        `<mark>${this.highlight_phrase}</mark>`
+                    );
                 }
             } else {
-               // remove all highlights if the highlight phrase is null
-               const elements = document.getElementsByClassName("highlightable");
+                // remove all highlights if the highlight phrase is null
+                const elements = document.getElementsByClassName(
+                    "highlightable"
+                );
 
                 for (let i = 0; i < elements.length; i++) {
-                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp("<mark>", "ig"), "");
+                    elements[i].innerHTML = elements[i].innerText.replace(
+                        new RegExp("<mark>", "ig"),
+                        ""
+                    );
                 }
             }
-        }
+        },
     },
     mounted() {
         this.highlightPhrases();
     },
     watch: {
-        projectData: function (newVal) {
+        projectData: function(newVal) {
             this.thumbnail_link =
                 newVal.thumbnail ||
                 "../../../uploads/profile_pics/profilePlaceholder.png";
@@ -176,6 +325,49 @@ export default {
 .likeAmt {
     margin-left: 10px;
     font-weight: bold;
+}
+.more_options {
+    width: 150px;
+    height: 100px;
+    background-color: var(--main-color);
+
+    border-radius: 10px;
+
+    /* no questions xD*/
+    margin-bottom: -200px;
+    display: flex;
+    flex-direction: column;
+    cursor: initial;
+}
+
+.op_wrapper {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+}
+
+.op_icon {
+    width: 40%;
+    text-align: center;
+}
+
+/* DOESNT WORK */
+/* .op_line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--soft-text);
+} */
+
+.op_wrapper p {
+    text-align: center;
+}
+
+.op_wrapper p:hover {
+    color: var(--main-font-color);
+    transition: 0.5s;
 }
 .author_container {
     text-align: left;
