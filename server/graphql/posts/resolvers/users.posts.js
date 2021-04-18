@@ -553,9 +553,10 @@ export default {
 
                     if (post.author === req.user.username) {
                         await deletePost(null, args.postId);
+
                         return {
                             success: true,
-                            message: "Successfully delete post.",
+                            message: "Successfully deleted post.",
                             stacktrace: null,
                         };
                     } else {
