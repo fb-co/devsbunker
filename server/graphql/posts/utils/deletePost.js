@@ -10,9 +10,20 @@ export default async function deletePost(postAuthor, postId) {
 
     if (postAuthor) {
         return new Promise((resolve) => {
-            // TODO: delete posts assets
-            Posts.deleteMany({ author: postAuthor })
+            Posts.find({ author: postAuthor })
                 .then((ret) => {
+                    let buf = [];
+
+                    ret.forEach((post) => {
+                        post.images.forEach((asset) => {
+                            buf.push(
+                                `${process.env.UPLOAD_FILES_PATH}/${asset.dbname}`
+                            );
+                        });
+                        post.remove();
+                    });
+
+                    fh.deleteFiles(buf);
                     resolve(ret);
                 })
                 .catch((err) => {
@@ -23,7 +34,6 @@ export default async function deletePost(postAuthor, postId) {
         return new Promise((resolve) => {
             Posts.findOneAndDelete({ _id: postId })
                 .then((deleted) => {
-                    // delete assets
                     let buf = [];
 
                     deleted.images.forEach((asset) => {
