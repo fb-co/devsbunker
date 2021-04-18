@@ -1,6 +1,7 @@
 <template>
     <div
         class="proj_card_main_container"
+        :class="{ hide: deleted }"
         @click="$router.push({ path: `/post/${projectData.id}` })"
     >
         <div class="text_container">
@@ -218,6 +219,7 @@
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import DynamicPicture from "@/components/DynamicPicture.vue";
+import GraphQLService from "../services/graphql.service";
 
 export default {
     data() {
@@ -235,6 +237,7 @@ export default {
                     : this.projectData.description,
             thumbnail_link: undefined,
             moreOptions: false,
+            deleted: false,
         };
     },
     created() {
@@ -286,6 +289,25 @@ export default {
                 }
             }
         },
+        sharePost() {
+            console.log("post id:", this.projectData.id);
+        },
+        deletePost() {
+            GraphQLService.deletePostbyId(
+                this.projectData.id,
+                this.$store.getters.accessToken
+            ).then((res) => {
+                console.log(res);
+                if (res.errors) {
+                    console.error(res.errors);
+                } else if (!res.data.deletePost.success) {
+                    console.error(res.data.deletePost.message);
+                } else {
+                    this.moreOptions = !this.moreOptions;
+                    this.deleted = true;
+                }
+            });
+        },
     },
     mounted() {
         this.highlightPhrases();
@@ -307,6 +329,9 @@ export default {
     height: auto;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     background-color: var(--secondary-color);
+}
+.hide {
+    display: none;
 }
 .text_container {
     margin: 10px 10px 0px 10px;

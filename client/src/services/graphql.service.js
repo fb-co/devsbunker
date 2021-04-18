@@ -902,6 +902,33 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    deletePostbyId: async function(postId, token) {
+        const mutation = `
+            mutation {
+                deletePost(postId: "${postId}") {
+                    success
+                    message
+                    stacktrace
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
 };
 
 export default GraphQLService;
