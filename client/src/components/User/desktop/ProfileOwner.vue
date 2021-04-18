@@ -282,8 +282,14 @@
             v-if="displayModal"
             :fields="['#pwd#Confirm password']"
             v-on:closed="displayModal = !$event"
-            v-on:clicked="gotPayloadFromModal($event)"
+            v-on:clicked="deleteProfile($event)"
         />
+
+        <SuccessPopUp
+            v-if="accountDeleted"
+            message="Successfully deleted account... Redirecting."
+        />
+        <ErrorPopUp v-if="error" message="Error while deleting account!" />
     </div>
 </template>
 
@@ -292,6 +298,8 @@ import GraphQLService from "@/services/graphql.service";
 
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import InputModal from "@/components/global/InputModal.vue";
+import SuccessPopUp from "@/components/SuccessPopUp.vue";
+import ErrorPopUp from "@/components/ErrorPopUp.vue";
 
 export default {
     data() {
@@ -299,11 +307,15 @@ export default {
             active: "projects",
             userObject: this.mainUserObject,
             displayModal: false,
+            accountDeleted: false,
+            error: false,
         };
     },
     components: {
         ProfilePicture,
         InputModal,
+        SuccessPopUp,
+        ErrorPopUp,
     },
     props: {
         mainUserObject: Object,
@@ -355,9 +367,36 @@ export default {
                     console.error(e);
                 });
         },
-        gotPayloadFromModal(payload) {
+        async deleteProfile(payload) {
             const password = payload[0];
-            console.log(password);
+            if (password) {
+                const res = await GraphQLService.deleteUserAccount(
+                    password,
+                    this.$store.getters.accessToken
+                );
+
+                if (!res.errors) {
+                    if (res.data.deleteAccount.success) {
+                        this.accountDeleted = true;
+
+                        this.$store.commit("refreshAccessToken", null);
+                        this.$store.commit("changeLoggedInState", false);
+                        this.$store.commit("changeUsername", null);
+
+                        localStorage.removeItem("profile_pic_link");
+
+                        setTimeout(() => {
+                            this.$router.push("/");
+                        }, 2500);
+                    } else {
+                        console.error(res.data.deleteAccount.messsage);
+                        this.error = true;
+                    }
+                } else {
+                    console.error(res.errors);
+                    this.error = true;
+                }
+            }
         },
     },
 };

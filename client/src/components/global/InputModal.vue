@@ -32,7 +32,7 @@
                     class="general_input"
                     label="input.toLowerCase()"
                     v-model="inputFields[index]"
-                    :type="/<#pwd#>/.test(input) ? 'password' : 'text'"
+                    :type="/#pwd#/g.test(input) ? 'password' : 'text'"
                 />
                 <div class="form_line_container">
                     <div class="bottom_line"></div>

@@ -4,7 +4,7 @@ const URL = process.env.VUE_APP_GRAPHQL_API;
 
 const GraphQLService = {
     // fields specify which fields you want to receive (requester is username string of who is asking for these details)
-    fetchUserDetails: function (username, fields, requester) {
+    fetchUserDetails: function(username, fields, requester) {
         const query = `
             query {
                 user(username: "${username}", requester: "${requester}") {
@@ -22,7 +22,7 @@ const GraphQLService = {
             .catch(console.error);
     },
 
-    downloadUserData: function (token) {
+    downloadUserData: function(token) {
         const query = `
             query {
                 downloadUserData {
@@ -81,7 +81,7 @@ const GraphQLService = {
         }
     },
 
-    fetchPersonalDetails: function (token, fields) {
+    fetchPersonalDetails: function(token, fields) {
         const query = `
             query {
                 getPersonalDetails {
@@ -106,7 +106,7 @@ const GraphQLService = {
         }
     },
 
-    fetchUserByPartial: function (partial_username, requester) {
+    fetchUserByPartial: function(partial_username, requester) {
         if (partial_username != "") {
             const query = `
                 query {
@@ -132,7 +132,15 @@ const GraphQLService = {
 
     // filter is required, just put a string of 'none' if you want to search all posts
     // SEE THE MONGO QUERY TO UNDERSTAND WHAT userToFilter is for
-    fetchPostsByPartial: function (partial_name, filter, userToFilter, sortingType, lastPostId, lastUniqueField, token) {
+    fetchPostsByPartial: function(
+        partial_name,
+        filter,
+        userToFilter,
+        sortingType,
+        lastPostId,
+        lastUniqueField,
+        token
+    ) {
         if (partial_name != "") {
             const query = `
                 query {
@@ -169,7 +177,7 @@ const GraphQLService = {
         }
     },
 
-    fetchPostById: function (postId, fields, token) {
+    fetchPostById: function(postId, fields, token) {
         const query = `
             query {
                 getPostById(postId: "${postId}") {
@@ -195,7 +203,7 @@ const GraphQLService = {
         }
     },
 
-    fetchUserPost: function (postId, postAuthor) {
+    fetchUserPost: function(postId, postAuthor) {
         const query = `
             query {
                 userPost(postId: "${postId}", postAuthor: "${postAuthor}") {
@@ -221,7 +229,13 @@ const GraphQLService = {
     },
 
     // requester token is an optional parameter so that the like button will stay filled if you logged in and the post was liked by you
-    fetchPostsByAuthor: function (author, lastPostId, filter, lastUniqueField, token) {
+    fetchPostsByAuthor: function(
+        author,
+        lastPostId,
+        filter,
+        lastUniqueField,
+        token
+    ) {
         // this may cause errors because we are just checking if something called token exists
         const query = `
             query {
@@ -254,13 +268,15 @@ const GraphQLService = {
                 body: JSON.stringify({ query }),
             })
                 .then((res) => res.json())
-                .catch(err => { console.error(err) });
+                .catch((err) => {
+                    console.error(err);
+                });
         } catch (err) {
             return console.log(err);
         }
     },
 
-    fetchSavedPosts: function (lastPostId, filter, lastUniqueField, token) {
+    fetchSavedPosts: function(lastPostId, filter, lastUniqueField, token) {
         const query = `
             query {
                 getSavedPosts(lastPostId: "${lastPostId}", filter: "${filter}", lastUniqueField: "${lastUniqueField}") {
@@ -298,7 +314,7 @@ const GraphQLService = {
         }
     },
 
-    getAndReadNotifications: function (token) {
+    getAndReadNotifications: function(token) {
         const mutation = `
             mutation {
                 getAndReadNotifications {
@@ -331,7 +347,7 @@ const GraphQLService = {
         }
     },
 
-    getUnreadNotifications: function (token) {
+    getUnreadNotifications: function(token) {
         const query = `
             query {
                 getUnreadNotifications {
@@ -360,7 +376,7 @@ const GraphQLService = {
     },
 
     // enter lastPstId as zero if you havent fetched any yet, and -1 if they have all been fetched
-    fetchPosts: function (sortMethod, lastPostId, lastUniqueField, token) {
+    fetchPosts: function(sortMethod, lastPostId, lastUniqueField, token) {
         let query;
         // only request the isLiked and isSaved fields if the user is logged in and passes in the auth token
         if (token) {
@@ -423,7 +439,7 @@ const GraphQLService = {
     },
 
     //lastPostId is the id of the last fetched post
-    loadMorePosts: function (lastPostId, token) {
+    loadMorePosts: function(lastPostId, token) {
         const query = `
             query {
                 loadMorePosts(lastPostId: ${lastPostId}) {
@@ -466,7 +482,7 @@ const GraphQLService = {
         }
     },
 
-    likePost: async function (token, postId) {
+    likePost: async function(token, postId) {
         const mutation = `
             mutation {
                 likePost(postId: "${postId}") {
@@ -492,7 +508,7 @@ const GraphQLService = {
         }
     },
 
-    unlikePost: async function (token, postId) {
+    unlikePost: async function(token, postId) {
         const mutation = `
             mutation {
                 unlikePost(postId: "${postId}") {
@@ -518,10 +534,24 @@ const GraphQLService = {
         }
     },
 
-    commentOnPost: async function (postId, comment, token) {
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        const timestamp = new Date;
-        const finalTimeStamp = monthNames[timestamp.getMonth()] + ", " + timestamp.getFullYear();
+    commentOnPost: async function(postId, comment, token) {
+        const monthNames = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+        const timestamp = new Date();
+        const finalTimeStamp =
+            monthNames[timestamp.getMonth()] + ", " + timestamp.getFullYear();
 
         const mutation = `
             mutation {
@@ -549,7 +579,7 @@ const GraphQLService = {
         }
     },
 
-    savePost: async function (token, postId) {
+    savePost: async function(token, postId) {
         const mutation = `
             mutation {
                 savePost(postId: "${postId}") {
@@ -573,7 +603,7 @@ const GraphQLService = {
             return console.log(err);
         }
     },
-    unSavePost: async function (token, postId) {
+    unSavePost: async function(token, postId) {
         const mutation = `
             mutation {
                 unSavePost(postId: "${postId}") {
@@ -598,7 +628,7 @@ const GraphQLService = {
         }
     },
 
-    followPerson: async function (token, person) {
+    followPerson: async function(token, person) {
         const mutation = `
             mutation {
                 followPerson(person: "${person}") {
@@ -625,7 +655,7 @@ const GraphQLService = {
         }
     },
 
-    unfollowPerson: async function (token, person) {
+    unfollowPerson: async function(token, person) {
         const mutation = `
             mutation {
                 unfollowPerson(person: "${person}") {
@@ -652,7 +682,7 @@ const GraphQLService = {
         }
     },
 
-    createNewPost: async function (token, data) {
+    createNewPost: async function(token, data) {
         const mutation = `
             mutation Update($data: makePostInput!) {
                 makePost(data: $data) {
@@ -694,7 +724,7 @@ const GraphQLService = {
     },
 
     // updates the users db document
-    updateUserDetails: async function (token, fields) {
+    updateUserDetails: async function(token, fields) {
         // solution: we are using a variable (used to pass complex objects as params) of type UpdateUserPayload (same as backend)
         const mutation = `
             mutation Update($fields: [UpdateUserPayload!]!) {
@@ -732,7 +762,7 @@ const GraphQLService = {
         }
     },
 
-    signupUser: async function (username, email, password) {
+    signupUser: async function(username, email, password) {
         const mutation = `
             mutation {
                 signupUser(username: "${username}", email: "${email}", password: "${password}") {
@@ -756,7 +786,7 @@ const GraphQLService = {
     },
 
     // Not sure if we should require the access token for this action
-    notifyUser: async function (userToNotify, notification) {
+    notifyUser: async function(userToNotify, notification) {
         const mutation = `
             mutation {
                 notifyUser(userToNotify: "${userToNotify}", notification: "${notification}") {
@@ -778,7 +808,7 @@ const GraphQLService = {
         }
     },
 
-    loginUser: async function (id, password) {
+    loginUser: async function(id, password) {
         let query;
 
         if (/\S+@\S+\.\S+/.test(id)) {
@@ -815,10 +845,7 @@ const GraphQLService = {
         }
     },
 
-    logoutUser: async function () {
-        // get rid of any localstorage cache
-        localStorage.removeItem("profile_pic_link");
-
+    logoutUser: async function() {
         const query = `
             query {
                 logoutUser {
@@ -827,10 +854,6 @@ const GraphQLService = {
             }
         `;
 
-        store.commit("refreshAccessToken", null);
-        store.commit("changeLoggedInState", false);
-        store.commit("changeUsername", null);
-
         try {
             const res = await fetch(URL, {
                 method: "POST",
@@ -838,6 +861,42 @@ const GraphQLService = {
                 credentials: "include",
                 body: JSON.stringify({ query }),
             });
+
+            // TODO: WE SHOULD NOT DO THIS HERE!!!!
+            store.commit("refreshAccessToken", null);
+            store.commit("changeLoggedInState", false);
+            store.commit("changeUsername", null);
+
+            // get rid of any localstorage cache
+            localStorage.removeItem("profile_pic_link");
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+    deleteUserAccount: async function(password, token) {
+        const mutation = `
+            mutation {
+                deleteAccount(password: "${password}") {
+                    success
+                    message
+                    stacktrace
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+
             return res.json();
         } catch (err) {
             return console.error(err);
