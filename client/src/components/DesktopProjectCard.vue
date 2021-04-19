@@ -99,9 +99,12 @@
                 </div>
 
                 <div
-                    class="vertical_flex_center"
+                    class="vertical_flex_center more_options_button"
                     style="margin-left: 5px;"
-                    @click.stop="moreOptions = !moreOptions"
+                    tabindex="0"
+                    @click.stop=""
+                    @focus.stop="moreOptions = true"
+                    @blur="moreOptions = false"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -362,6 +365,12 @@ export default {
     flex-direction: column;
     cursor: initial;
 }
+
+/*
+.more_options_button {
+    outline: none;
+}
+*/
 
 .op_wrapper {
     width: 100%;
