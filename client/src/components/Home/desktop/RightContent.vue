@@ -13,6 +13,7 @@
         <p class="no_notification_label" v-if="notifications.length == 0">No new notifications</p>
     </div>
     <div v-else class="right_cont_placeholder">
+        <p style="margin-top: 20px;">No new notifications</p>
     </div>
 </template>
 

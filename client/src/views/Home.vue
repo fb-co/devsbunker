@@ -45,7 +45,7 @@ export default {
     async created() {
         this.queryType = 'all';
         this.sortingType = SearchUtilities.getHomePostFilter();
-        this.getPosts(); // this is from the LoadMore mixin
+        this.getPosts(); // this is from the LoadMore mixin 
 
         SharedMethods.loadPage();
 

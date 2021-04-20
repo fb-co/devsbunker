@@ -124,6 +124,7 @@ export default {
 
                 for (let i = 0; i < elements.length; i++) {
                     elements[i].innerHTML = elements[i].innerText.replace(new RegExp("<mark>", "ig"), "");
+                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp("</mark>", "ig"), "");
                 }
             }
         }

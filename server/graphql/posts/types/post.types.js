@@ -85,9 +85,9 @@ export default gql`
         getPostById(postId: String!): FetchablePost
 
         getSavedPosts(
-            lastPostId: String
+            lastPostId: String!
+            lastUniqueField: String!
             filter: String
-            lastUniqueField: String
         ): LoadPostsResponse!
 
         partial_post(

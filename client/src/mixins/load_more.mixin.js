@@ -47,13 +47,31 @@ const LoadMore = {
                 );
                 this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
                 this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
+            } else if (this.queryType === "saved") {
+                const res = await GraphQLService.fetchSavedPosts(
+                    this.getLastPostId(), 
+                    this.getLastPostUniqueField(), 
+                    filter || this.sortingType, 
+                    this.$store.getters.accessToken
+                );
+                this.posts = this.posts.concat(res.data.getSavedPosts.posts);
+                this.fetchedAll = res.data.getSavedPosts.fetchedAll;
             }
         },
         updateFilterDropdown(value) {
             this.posts = [];
             
-            SearchUtilities.setHomePostFilter(value);
-            this.sortingType = SearchUtilities.getHomePostFilter();
+            // update and get the approprate filter in localstorage
+            switch (this.queryType) {
+                case "all": 
+                    SearchUtilities.setHomePostFilter(value);
+                    this.sortingType = SearchUtilities.getHomePostFilter();
+                    break;
+                case "saved":
+                    SearchUtilities.setSavedPostFilter(value);
+                    this.sortingType = SearchUtilities.getSavedPostFilter();
+            }
+            
             this.getPosts(value);
         },
 

@@ -276,10 +276,10 @@ const GraphQLService = {
         }
     },
 
-    fetchSavedPosts: function(lastPostId, filter, lastUniqueField, token) {
+    fetchSavedPosts: function(lastPostId, lastUniqueField, filter, token) {
         const query = `
             query {
-                getSavedPosts(lastPostId: "${lastPostId}", filter: "${filter}", lastUniqueField: "${lastUniqueField}") {
+                getSavedPosts(lastPostId: "${lastPostId}", lastUniqueField: "${lastUniqueField}", filter: "${filter}") {
                     posts {
                         title
                         author

@@ -33,7 +33,7 @@
                     <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
                 </div>
                 <div v-else class="post_card_wrapper">
-                    <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" />
+                    <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
                 </div>
                 <p v-if="!fetchedAllSearchResults" @click="loadNew()" class="load_more_btn">Load More</p>
             </div>

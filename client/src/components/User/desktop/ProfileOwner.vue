@@ -268,11 +268,7 @@
             <div class="content_box">
                 <router-view
                     :key="$route.path"
-                    :sortingFilter="searchFilter"
                     :userData="userObject"
-                    :userProjects="mainUserProjects"
-                    :savedUserProjects="savedUserProjects"
-                    @updateFilter="updateFilter"
                 />
                 <!-- This renders the sub-routes component -->
             </div>
@@ -319,9 +315,6 @@ export default {
     },
     props: {
         mainUserObject: Object,
-        mainUserProjects: Object,
-        savedUserProjects: Object,
-        searchFilter: String,
     },
     methods: {
         logout() {
@@ -329,15 +322,6 @@ export default {
                 console.log("logged out: ", response);
             });
             this.$router.push("/");
-        },
-        loadNewPersonalPosts() {
-            this.$parent.loadNewPersonalPosts();
-        },
-        loadNewSavedPosts() {
-            this.$parent.loadNewSavedPosts();
-        },
-        updateFilter(value) {
-            this.$emit("updateFilter", value);
         },
         downloadUserData() {
             GraphQLService.downloadUserData(this.$store.getters.accessToken)
