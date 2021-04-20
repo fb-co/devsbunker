@@ -4,7 +4,7 @@
             <PostSearch 
                 ref="post_search" 
                 :sortingType="rootComponent.sortingType" 
-                width="40%" 
+                width="50%" 
                 class="posts_search_bar" 
             />
             
@@ -15,7 +15,12 @@
         </div>
         <div v-if="!showSearchResults" class="project_list">
             <div v-if="rootComponent.posts.length > 0" class="post_wrapper">
-                <MobileProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="85%" />
+                <div v-if="!desktop" class="post_card_wrapper">
+                    <MobileProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="85%" />
+                </div>
+                <div v-else class="post_card_wrapper">
+                    <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" />
+                </div>
                 <p v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
             </div>
             <div v-else class="no_projects">
@@ -24,7 +29,12 @@
         </div>
         <div v-else class="project_list">
             <div v-if="searchResults.length > 0" class="post_wrapper">
-                <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
+                <div v-if="!desktop" class="post_card_wrapper">
+                    <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
+                </div>
+                <div v-else class="post_card_wrapper">
+                    <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" />
+                </div>
                 <p v-if="!fetchedAllSearchResults" @click="loadNew()" class="load_more_btn">Load More</p>
             </div>
             <div v-else class="no_projects">
@@ -38,6 +48,7 @@
 import PostSearch from "@/components/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
+import DesktopProjectCard from "@/components/DesktopProjectCard.vue";
 
 export default {
     data() {
@@ -49,11 +60,18 @@ export default {
     },
     props: {
         rootComponent: Object,
+        
+        // specifies whether to use desktop project cards, or mobile
+        desktop: {
+            type: Boolean,
+            default: true
+        }
     },
     components: {
         PostSearch,
         Dropdown,
-        MobileProjectCard
+        MobileProjectCard,
+        DesktopProjectCard
     },
     methods: {
         loadNew() {
@@ -91,7 +109,7 @@ export default {
     flex-direction: row;
     justify-content: center;
 }
-.post_wrapper > * {
+.post_card_wrapper > * {
     margin: 0 auto;
 }
 
@@ -101,13 +119,20 @@ export default {
     justify-content: center;
     height: 100px;
     margin-top: 50px;
+    margin-bottom: 60px;
 }
 .filter_dropdown {
     font-size: 12px;
     width: 150px;
-    margin: 20px auto 40px auto;
+    margin: 20px auto 0px auto;
     background-color: var(--secondary-color);
     border-radius: 5px;
+}
+
+.desktop_project_card {
+    margin: 0px 20px 25px 20px;
+    max-width: 750px;
+    min-width: 400px;
 }
 
 .no_projects {

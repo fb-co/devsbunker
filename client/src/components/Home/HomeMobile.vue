@@ -1,8 +1,8 @@
 <template>
-    <PostFeedMobile :rootComponent="$parent" />
+    <PostFeed :rootComponent="$parent" :desktop="false" />
 </template>
 <script>
-import PostFeedMobile from "@/components/PostFeedMobile.vue";
+import PostFeed from "@/components/PostFeed.vue";
 
 export default {
     data() {
@@ -21,7 +21,7 @@ export default {
         },
     },
     components: {
-        PostFeedMobile
+        PostFeed
     },
 };
 </script>

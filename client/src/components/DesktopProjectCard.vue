@@ -331,6 +331,13 @@ export default {
     height: auto;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     background-color: var(--secondary-color);
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+}
+.proj_card_main_container:hover {
+    cursor: pointer;
+    border: 1px solid var(--main-accent);
 }
 .hide {
     display: none;
