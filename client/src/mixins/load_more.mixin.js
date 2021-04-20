@@ -23,15 +23,14 @@ const LoadMore = {
         }
     },  
     methods: {
-        // a swtich block wont work here because we need a lexical declaration, also isNew is only true if you havent fetched any of the posts yet
-        async getPosts(clearPosts) {
-            if (clearPosts) {
-                this.posts = [];
-            }
-
+        /*
+            * you can also specify a filter to force it query with the given filter instead of the local data
+            * clearCurrent if given as true will clear the current post feed, usually used for things like switching filters (NOT FOR LOADING MORE OBV)
+        */
+        async getPosts(filter) {
             if (this.queryType === 'all') {
                 const res = await GraphQLService.fetchPosts(
-                    this.sortingType, 
+                    filter || this.sortingType, 
                     this.getLastPostId(), 
                     this.getLastPostUniqueField(), 
                     this.$store.getters.accessToken
@@ -51,9 +50,11 @@ const LoadMore = {
             }
         },
         updateFilterDropdown(value) {
+            this.posts = [];
+            
             SearchUtilities.setHomePostFilter(value);
             this.sortingType = SearchUtilities.getHomePostFilter();
-            this.getPosts(true);
+            this.getPosts(value);
         },
 
         // misc functions

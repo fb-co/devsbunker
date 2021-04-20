@@ -1,5 +1,5 @@
 <template>
-    <div v-if="rootComponent.posts.length > 0" id="main_container">
+    <div id="main_container">
         <div class="filter_dropdown_container">
             <PostSearch 
                 ref="post_search" 
@@ -14,16 +14,23 @@
             </Dropdown>          
         </div>
         <div v-if="!showSearchResults" class="project_list">
-            <MobileProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="85%" />
-            <p v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
+            <div v-if="rootComponent.posts.length > 0" class="post_wrapper">
+                <MobileProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="85%" />
+                <p v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
+            </div>
+            <div v-else class="no_projects">
+                <p>No projects found</p>
+            </div>
         </div>
         <div v-else class="project_list">
-            <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
-            <p v-if="!fetchedAllSearchResults" @click="loadNew()" class="load_more_btn">Load More</p>
+            <div v-if="searchResults.length > 0" class="post_wrapper">
+                <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
+                <p v-if="!fetchedAllSearchResults" @click="loadNew()" class="load_more_btn">Load More</p>
+            </div>
+            <div v-else class="no_projects">
+                <p>No projects found</p>
+            </div>
         </div>
-    </div>
-    <div v-else class="no_projects">
-        <p>No projects found</p>
     </div>
 </template>
 
@@ -56,7 +63,7 @@ export default {
                 this.$refs.post_search.loadMoreResults();
             }
         },
-        async updateSearchFilter(value) {
+        updateSearchFilter(value) {
             if (!this.showSearchResults) {
                 this.rootComponent.updateFilterDropdown(value);
             } else {
@@ -74,20 +81,18 @@ export default {
                 this.showSearchResults = true;
             }
         },
-    }
+    },
 }
 </script>
 
 <style scoped>
-    .project_list {
+.project_list {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
 }
-.project_list > * {
-    margin: 10px;
+.post_wrapper > * {
+    margin: 0 auto;
 }
 
 .filter_dropdown_container {
