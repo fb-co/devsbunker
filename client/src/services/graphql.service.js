@@ -347,11 +347,46 @@ const GraphQLService = {
         }
     },
 
+    // This will only return the AMOUNT of unread notifications, the query after it will get the actual data for unread notifications
     getUnreadNotifications: function(token) {
         const query = `
             query {
                 getUnreadNotifications {
                     amount
+                }
+            }
+        `;
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
+    // this query will get the actual data for notifications that are unread
+    getUnreadNotificationsData: function (token) {
+        const query = `
+            query {
+                getUnreadNotificationsData {
+                    read
+                    sender
+                    message
+                    type
+                    target
+                    timestamp
                 }
             }
         `;

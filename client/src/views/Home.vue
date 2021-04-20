@@ -26,7 +26,7 @@
 import SharedMethods from "../utils/shared";
 import SearchUtilities from "../utils/search_utilities.js";
 import GeneralProperties from "../mixins/general.mixin";
-//import GraphQLService from "@/services/graphql.service";
+import GraphQLService from "@/services/graphql.service";
 
 import HomeMobile from "@/components/Home/HomeMobile.vue";
 import HomeDesktop from "@/components/Home/HomeDesktop.vue";
@@ -49,6 +49,11 @@ export default {
 
         SharedMethods.loadPage();
 
+        // get the notifications
+        const res = await GraphQLService.getUnreadNotificationsData(
+            this.$store.getters.accessToken,
+        );
+        this.notifications = res.data.getUnreadNotificationsData;
 
         /*
         const cache = await caches.open("devsCache");

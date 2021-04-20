@@ -122,6 +122,8 @@ export default gql`
 
         getUnreadNotifications: UnreadNotificationsAmtResponse!
 
+        getUnreadNotificationsData: [Notification]!
+
         downloadUserData: downloadableUserData
     }
 
