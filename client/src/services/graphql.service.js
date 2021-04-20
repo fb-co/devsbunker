@@ -232,14 +232,14 @@ const GraphQLService = {
     fetchPostsByAuthor: function(
         author,
         lastPostId,
-        filter,
         lastUniqueField,
+        filter,
         token
     ) {
         // this may cause errors because we are just checking if something called token exists
         const query = `
             query {
-                getPostsByAuthor(author: "${author}", lastPostId: "${lastPostId}", filter: "${filter}", lastUniqueField: "${lastUniqueField}") {
+                getPostsByAuthor(author: "${author}", lastPostId: "${lastPostId}", lastUniqueField: "${lastUniqueField}", filter: "${filter}") {
                     posts {
                         title
                         author

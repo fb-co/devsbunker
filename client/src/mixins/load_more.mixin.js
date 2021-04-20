@@ -17,6 +17,7 @@ const LoadMore = {
             postsInMemory: [], // array of objects not posts
             sortingType: null,
             fetchedAll: false,
+            otherData: {}, // add any other data the mixing might need for a specific case here
             
             // queryType is what we talked about about queryTypes ('all' -> gets all posts, 'saved' -> gets only saved, etc)
             queryType: undefined
@@ -39,10 +40,10 @@ const LoadMore = {
                 this.fetchedAll = res.data.getPosts.fetchedAll;
             } else if (this.queryType === "projects") {
                 const res = await GraphQLService.fetchPostsByAuthor(
-                    this.$store.getters.username,
-                    0, // zero since your fetching the initial posts
-                    this.filter,
-                    -1, // last unique field is negative one since this is for initial posts
+                    this.otherData.foreignUserToFilter || this.$store.getters.username,
+                    this.getLastPostId(),
+                    this.getLastPostUniqueField(),
+                    this.filter || this.sortingType,
                     this.$store.getters.accessToken
                 );
                 this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);

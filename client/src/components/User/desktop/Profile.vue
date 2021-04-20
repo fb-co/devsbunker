@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div class="content_box">
-                <router-view :key="$route.path" :userData="userObject" :userProjects="mainUserProjects" />
+                <router-view :key="$route.path" :userData="userObject" />
                 <!-- This renders the sub-routes component -->
             </div>
         </div>
@@ -91,12 +91,10 @@ export default {
     data() {
         return {
             userObject: this.mainUserObject,
-            userProjects: this.mainUserProjects,
         };
     },
     props: {
         mainUserObject: Object,
-        mainUserProjects: Object,
     },
     components: {
         ProfilePicture,

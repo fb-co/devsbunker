@@ -109,6 +109,9 @@ export default {
     flex-direction: row;
     justify-content: center;
 }
+.post_wrapper {
+    width: 100%;
+}
 .post_card_wrapper > * {
     margin: 0 auto;
 }

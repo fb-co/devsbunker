@@ -88,13 +88,13 @@ export default {
         // returns all the posts by a given author parameter
         getPostsByAuthor: async function (_, args, { req }) {
             const loadAmt = 3;
-
+            
             let posts = await getPostsByAuthor(
                 args.author,
                 args.lastPostId,
-                loadAmt,
-                args.filter,
                 args.lastUniqueField,
+                args.filter,
+                loadAmt,
                 req.user
             );
             let fetchedAll = false;
