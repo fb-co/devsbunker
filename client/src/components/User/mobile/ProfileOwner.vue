@@ -82,18 +82,8 @@
         </div>
 
         <div class="dynamic_feed">
-            <ProjectSection 
-                v-if="activeSection === 'projects' && userProjects.posts.length > 0" 
-                :projectsToRender="userProjects" 
-                :sortingFilter="searchFilter"
-                @updateFilter="updateFilter"
-            />
-            <SavedProjects 
-                v-if="activeSection === 'saved' && savedUserProjects.posts.length > 0" 
-                :projectsToRender="savedUserProjects" 
-                :sortingFilter="searchFilter"
-                @updateFilter="updateFilter" 
-            />
+            <ProjectSection v-if="activeSection === 'projects'" />
+            <SavedProjects v-if="activeSection === 'saved'" />
         </div>
     </div>
 </template>
@@ -108,15 +98,12 @@ export default {
         return {
             activeSection: "projects",
             userObject: this.mainUserObject,
-            userProjects: this.mainUserProjects,
             showMore: false,
         };
     },
     props: {
         searchFilter: String,
         mainUserObject: Object,
-        mainUserProjects: Object,
-        savedUserProjects: Object
     },
     components: {
         ...ProfileSections,
@@ -299,7 +286,7 @@ export default {
 }
 
 .dynamic_feed {
-    width: 80%;
+    width: 100%;
     max-width: 500px;
     min-width: 250px;
     margin-left: auto;

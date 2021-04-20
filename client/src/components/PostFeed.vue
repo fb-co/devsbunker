@@ -58,6 +58,9 @@ export default {
             fetchedAllSearchResults: false,
         }
     },
+    created() {
+        console.log(this.rootComponent);
+    },
     props: {
         rootComponent: Object,
         

@@ -4,7 +4,7 @@
         <!-- You also need to wait to wait to render the components until you get a response from the server or else they wont lazy load! -->
         <!-- Weirdly this doesn't work, data here is fetched correctly but the props are undefined -->
         <ProfileMobile 
-            v-if="$store.getters.mobile && userObject && userProjects.posts" 
+            v-if="$store.getters.mobile && userObject" 
             :mainUserObject="userObject"
         />
         <ProfileDesktop 
