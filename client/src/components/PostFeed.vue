@@ -15,11 +15,13 @@
         </div>
         <div v-if="!showSearchResults" class="project_list">
             <div v-if="rootComponent.posts.length > 0" class="post_wrapper">
-                <div v-if="!desktop" class="post_card_wrapper">
-                    <MobileProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="85%" />
-                </div>
-                <div v-else class="post_card_wrapper">
-                    <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" />
+                <div class="posts_only_wrapper">
+                    <div v-if="!desktop">
+                        <MobileProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="85%" />
+                    </div>
+                    <div v-else>
+                        <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" />
+                    </div>
                 </div>
                 <p v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
             </div>
@@ -28,11 +30,11 @@
             </div>
         </div>
         <div v-else class="project_list">
-            <div v-if="searchResults.length > 0" class="post_wrapper">
+            <div v-if="searchResults.length > 0">
                 <div v-if="!desktop" class="post_card_wrapper">
                     <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
                 </div>
-                <div v-else class="post_card_wrapper">
+                <div v-else>
                     <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
                 </div>
                 <p v-if="!fetchedAllSearchResults" @click="loadNew()" class="load_more_btn">Load More</p>
@@ -57,9 +59,6 @@ export default {
             searchResults: [],
             fetchedAllSearchResults: false,
         }
-    },
-    created() {
-        console.log(this.rootComponent);
     },
     props: {
         rootComponent: Object,
@@ -115,8 +114,10 @@ export default {
 .post_wrapper {
     width: 100%;
 }
-.post_card_wrapper > * {
-    margin: 0 auto;
+.posts_only_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .filter_dropdown_container {

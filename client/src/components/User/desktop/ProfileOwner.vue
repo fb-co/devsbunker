@@ -49,6 +49,7 @@
                 </div>
                 <div class="main_links_container row_item">
                     <div
+                        @click="$router.push({ name: 'userInformation' })"
                         class="option-wrapper link_item"
                         :class="{
                             active_link: $route.path.includes('information'),
@@ -78,6 +79,7 @@
                     </div>
 
                     <div
+                        @click="$router.push({ name: 'userProjects' })"
                         class="option-wrapper link_item"
                         :class="{
                             active_link: $route.path.includes('projects'),
@@ -107,6 +109,7 @@
                     </div>
 
                     <div
+                        @click="$router.push({ name: 'userSavedProjects' })"
                         class="option-wrapper link_item"
                         :class="{ active_link: $route.path.includes('saved') }"
                     >
@@ -134,6 +137,7 @@
                     </div>
 
                     <div
+                        @click="$router.push({ name: 'userPurchases' })"
                         class="option-wrapper link_item"
                         :class="{
                             active_link: $route.path.includes('purchases'),
@@ -166,6 +170,7 @@
                 </div>
                 <div class="other_links_container row_item">
                     <div
+                        @click="$router.push({ name: 'userRevenue' })"
                         class="option-wrapper link_item"
                         :class="{
                             active_link: $route.path.includes('revenue'),
@@ -195,7 +200,7 @@
                         >
                     </div>
 
-                    <div class="option-wrapper link_item">
+                    <div @click="downloadUserData()" class="option-wrapper link_item">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="icon icon-tabler icon-tabler-download"
@@ -216,10 +221,10 @@
                             <line x1="12" y1="4" x2="12" y2="16" />
                         </svg>
 
-                        <p @click="downloadUserData()">Download Data</p>
+                        <p>Download Data</p>
                     </div>
 
-                    <div class="option-wrapper special_link_item">
+                    <div @click="logout()" class="option-wrapper special_link_item">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="icon icon-tabler icon-tabler-alert-circle"
@@ -238,9 +243,9 @@
                             <line x1="12" y1="16" x2="12.01" y2="16" />
                         </svg>
 
-                        <p class="profile_link" @click="logout()">Logout</p>
+                        <p class="profile_link">Logout</p>
                     </div>
-                    <div class="option-wrapper special_link_item">
+                    <div @click="openConfirmation()" class="option-wrapper special_link_item">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="icon icon-tabler icon-tabler-alert-circle"
@@ -259,7 +264,7 @@
                             <line x1="12" y1="16" x2="12.01" y2="16" />
                         </svg>
 
-                        <p class="profile_link" @click="displayModal = true">
+                        <p class="profile_link">
                             Delete profile
                         </p>
                     </div>
@@ -275,10 +280,13 @@
         </div>
 
         <InputModal
-            v-if="displayModal"
-            :fields="['#pwd#Confirm password']"
-            v-on:closed="displayModal = !$event"
-            v-on:clicked="deleteProfile($event)"
+            ref="deleteProfileConfirmation"
+            :fields="[{
+                label: 'Confirm Password',
+                type: 'pwd'
+            }]"
+            title="Confirm"
+            @submitted="deleteProfile($event)"
         />
 
         <SuccessPopUp
@@ -302,7 +310,6 @@ export default {
         return {
             active: "projects",
             userObject: this.mainUserObject,
-            displayModal: false,
             accountDeleted: false,
             error: false,
         };
@@ -351,8 +358,12 @@ export default {
                     console.error(e);
                 });
         },
+        openConfirmation() {
+            this.$refs.deleteProfileConfirmation.open();
+        },
         async deleteProfile(payload) {
             const password = payload[0];
+            
             if (password) {
                 const res = await GraphQLService.deleteUserAccount(
                     password,
@@ -472,6 +483,12 @@ export default {
     width: 100%;
     padding: 10px 0px 10px 10px;
     border-left: 3px solid transparent;
+    cursor: pointer;
+}
+
+.special_link_item:hover {
+    border-left: 3px solid var(--error-red);
+    background: var(--hover-effect);
 }
 
 .special_link_item p {

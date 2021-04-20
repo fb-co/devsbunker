@@ -2,35 +2,6 @@
     <div class="main_container">
         <LeftContent />
         <PostFeed :rootComponent="$parent" class="post_feed" />
-        <!--
-        <div class="center_content">
-            <div class="scrollable_center">
-                <p class="discover_label no_select">Discover Projects</p>
-
-                <PostSearch :sortingType="this.postFeedFilter" width="50%" class="post_search_bar" ref="post_search" />
-
-                <div class="filter_dropdown">
-                    <Dropdown :label="postFeedFilter" linkHeight="40px" height="40px" width="200px" @itemSelected="updateFilterDropdown">
-                        <button>Newest</button>
-                        <button>Most Popular</button>
-                    </Dropdown>
-                </div>
-                <div v-if="loaded">
-                    <div v-if="!showSearchResults" class="projects_area">
-                        <DesktopProjectCard v-for="project in projects" :key="project.name" :projectData="project" width="70%" class="project_card" />
-                    </div>
-                    <div v-else>
-                        <DesktopProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="70%" class="project_card" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
-                    </div>
-                </div>
-                <div id="loading-gif" v-else>
-                    <Loading />
-                </div>
-        
-                <p v-if="(!showSearchResults && !fetchedAll) || (!fetchedAllSearchResults && showSearchResults)" @click="loadNew()" class="load_more_btn">Load More</p>
-            </div>
-        </div>
-        -->
         <RightContent :notifications="notifications" />
     </div>
 </template>

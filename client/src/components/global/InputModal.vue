@@ -1,46 +1,41 @@
 <template>
-    <div id="modal" v-if="display">
-        <div class="close_btn">
-            <svg
-                @click="close()"
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-x"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="#ffffff"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-        </div>
-        <div id="fields">
-            <div
-                class="general_input_container"
-                v-for="(input, index) in fields"
-                :key="index"
-            >
-                <p>{{ input.replace(/#pwd#/g, "") }}</p>
-                <input
-                    @click.stop=""
-                    :ref="input.toLowerCase().replace(/\s+/g, '')"
-                    class="general_input"
-                    label="input.toLowerCase()"
-                    v-model="inputFields[index]"
-                    :type="/#pwd#/g.test(input) ? 'password' : 'text'"
-                />
-                <div class="form_line_container">
-                    <div class="bottom_line"></div>
+    <div v-if="isOpen" class="model_overlay" @click="close()">
+        <div class="model_popup" @click.stop="">
+            <div class="close_button">
+                <div style="width: 33.33%"></div>
+                <p v-if="title" class="main_title vertical_flex_center">{{ title }}</p>
+                <div style="width: 33.33%">
+                    <svg
+                        @click="close()"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-x"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="var(--main-font-color)"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
                 </div>
             </div>
-            <div class="space"></div>
-            <div class="btn-container">
-                <button class="important-submit" @click="clicked()">
+            <div class="fields_container">
+                <SpicyInput v-for="(input, index) in fields" :key="index" class="input_field">
+                    <input 
+                        :type="input.type == 'pwd' ? 'password' : 'text'" 
+                        :label="input.label" 
+                        placeholder="Confirm Password"
+                        v-model="inputFields[index]"
+                    >
+                </SpicyInput>
+            </div>
+            <div class="button_container">
+                <button @click="clicked()" class="submit">
                     {{ btnText }}
                 </button>
             </div>
@@ -49,78 +44,98 @@
 </template>
 
 <script>
-export default {
+import SpicyInput from "@/components/global/SpicyInput.vue";
+
+export default {  
     data() {
         return {
             inputFields: [],
-            display: false,
+            isOpen: false,
         };
     },
     props: {
+        title: String,
         btnText: {
             type: String,
             default: "Submit",
         },
         fields: {
             type: Array,
-            default: () => ["Input field"],
+            default: () => [{
+                label: "Input Field",
+                type: "pwd"
+            }],
         },
-    },
-    created() {
-        // we could remove this
-        if (this.fields.length > 3) {
-            console.error("Max amount of fields is 3");
-            this.display = false;
-        } else {
-            this.display = true;
-        }
     },
     methods: {
+        open() {
+            this.isOpen = true;
+        },
         close() {
-            this.$emit("closed", true);
+            this.isOpen = false;
         },
         clicked() {
-            this.$emit("clicked", this.inputFields);
-            this.$emit("closed", true);
+            this.close();
+            this.$emit("submitted", this.inputFields);    
         },
     },
+    components: {
+        SpicyInput
+    }
 };
 </script>
 
 <style scoped>
-#modal {
-    max-width: 800px;
-    max-height: 400px;
-    width: 60%;
-    height: 40%;
-    background-color: var(--secondary-color);
-    position: absolute;
-    margin: 0;
+.model_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 12;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.model_popup {
+    position: fixed;
     top: 50%;
     left: 50%;
+    max-width: 400px;
+    width: 60%;
+    background-color: var(--secondary-color);
     transform: translate(-50%, -50%);
-    z-index: 3;
-
-    border-radius: 20px;
+    border-radius: 10px;
 }
-
-.close_btn {
-    width: 100%;
+.close_button {
+    display: flex;
+    flex-direction: row;
     text-align: right;
+    width: 100%;
+    margin-bottom: 20px;
 }
-.close_btn svg {
-    margin-right: 50px;
-    margin-top: 20px;
-    cursor: pointer;
+.close_button svg {
+    margin: 10px;
 }
-
-#fields {
+.close_button svg:hover {
+    background-color: var(--error-red);
+}
+.fields_container {
     display: flex;
     flex-direction: column;
-    margin: auto;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.input_field {
+    width: 200px;
+    margin: 0 auto;
+}
+.main_title{
+    text-align: center; 
+    font-size: 20px;
+    font-weight: bold;
+    flex-grow: 1;
 }
 
-.important-submit {
+.submit {
     background-color: var(--error-red);
     border: none;
     outline: none;
@@ -133,5 +148,8 @@ export default {
     cursor: pointer;
     margin: auto;
     margin-top: 20px;
+}
+.button_container {
+    margin-bottom: 20px;
 }
 </style>
