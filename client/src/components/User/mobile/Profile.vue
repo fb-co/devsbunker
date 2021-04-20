@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="projects_area">
-                <MobileProjectCard v-for="project in userProjects.posts" :key="project.id" :projectData="project" width="100%" />
+                <PostFeed :rootComponent="$parent" :desktop="false" />
             </div>
         </div>
     </div>
@@ -41,27 +41,22 @@
 
 <script>
 import ProfilePicture from "@/components/ProfilePicture.vue";
-import MobileProjectCard from "@/components/MobileProjectCard.vue";
+import PostFeed from "@/components/PostFeed.vue";
 
 export default {
     data() {
         return {
             userObject: this.mainUserObject,
-            userProjects: this.mainUserProjects,
         };
     },
     components: {
         ProfilePicture,
-        MobileProjectCard,
+        PostFeed
     },
     props: {
         mainUserObject: Object,
-        mainUserProjects: Object,
     },
     methods: {
-        loadNewPersonalPosts() {
-            this.$parent.loadNewPersonalPosts();
-        },
         navigateTo(elem) {
             this.activeSection = elem;
         },
@@ -177,7 +172,7 @@ input[type="submit"] {
 .projects_area {
     display: flex;
     flex-direction: column;
-    width: 75%;
+    width: 100%;
     max-width: 500px;
     margin: auto;
     margin-top: 50px;
