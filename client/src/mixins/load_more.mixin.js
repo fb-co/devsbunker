@@ -62,12 +62,17 @@ const LoadMore = {
             this.posts = [];
             
             // update and get the approprate filter in localstorage
+            // also, for now were going to use the same localStorage variable as saved for the projects tab
             switch (this.queryType) {
                 case "all": 
                     SearchUtilities.setHomePostFilter(value);
                     this.sortingType = SearchUtilities.getHomePostFilter();
                     break;
                 case "saved":
+                    SearchUtilities.setSavedPostFilter(value);
+                    this.sortingType = SearchUtilities.getSavedPostFilter();
+                    break;
+                case "projects":
                     SearchUtilities.setSavedPostFilter(value);
                     this.sortingType = SearchUtilities.getSavedPostFilter();
             }
@@ -81,6 +86,9 @@ const LoadMore = {
         },
         getLastPostUniqueField() {
             return this.posts.length > 0 ? this.posts[this.posts.length - 1].likeAmt : -1;
+        },
+        clearPosts() {
+            this.posts = [];
         }
     }
 };

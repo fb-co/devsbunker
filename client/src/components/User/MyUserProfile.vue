@@ -28,11 +28,6 @@ export default {
         };
     },
     async created() {
-        // setup for the post feed component
-        this.queryType = 'saved';
-        this.sortingType = SearchUtilities.getSavedPostFilter();
-        this.getPosts(); // this is from the LoadMore mixin 
-
         // get the user object, will be given to all children to avoid excessive calls to the server
         const res = await GraphQLService.fetchPersonalDetails(
             this.$store.getters.accessToken,
@@ -48,6 +43,16 @@ export default {
             ]
         );
         this.userObject = res.data.getPersonalDetails;
+    },
+    methods: {
+        changeTab(value) {
+            // this stuff is from the LoadMore mixin 
+            // setup for the post feed component depending on which tab your in (projects or saved or maybe more in future)
+            this.clearPosts();
+            this.queryType = value;
+            this.sortingType = SearchUtilities.getSavedPostFilter();
+            this.getPosts();
+        }
     },
     mixins: [PostFeedMixin],
     components: {
