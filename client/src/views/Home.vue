@@ -1,13 +1,7 @@
 <template>
     <div>
         <div class="home">
-            <HomeMobile
-                :projects="posts"
-                v-if="$store.getters.mobile"
-                :fetchedAll="fetchedAll"
-                :postFeedFilter="sortingType"
-                @updateFilterDropdown="updateFilterDropdown"
-            />
+            <HomeMobile :projects="posts" v-if="$store.getters.mobile" :fetchedAll="fetchedAll" :postFeedFilter="sortingType" @updateFilterDropdown="updateFilterDropdown" />
             <HomeDesktop
                 :projects="posts"
                 :notifications="notifications"
@@ -43,16 +37,14 @@ export default {
         };
     },
     async created() {
-        this.queryType = 'all';
+        this.queryType = "all";
         this.sortingType = SearchUtilities.getHomePostFilter();
-        this.getPosts(); // this is from the LoadMore mixin 
+        this.getPosts(); // this is from the LoadMore mixin
 
         SharedMethods.loadPage();
 
         // get the notifications
-        const res = await GraphQLService.getUnreadNotificationsData(
-            this.$store.getters.accessToken,
-        );
+        const res = await GraphQLService.getUnreadNotificationsData(this.$store.getters.accessToken);
         this.notifications = res.data.getUnreadNotificationsData;
 
         /*
@@ -77,13 +69,16 @@ export default {
             this.$refs.newPostMenu.close();
         },
 
-        /* i wont delete this because I didnt write it
         async reloadPosts(flag) {
+            // TODO: this still doesnt work
+
             this.loaded = false;
             // leaving this even tho right now flag is always true, maybe in the future we'll need to propagate a failed attempt
-            if (flag) await this.updatePosts();
+            if (flag) {
+                await this.getPosts();
+            }
+            this.loaded = true;
         },
-        */
     },
 };
 </script>
