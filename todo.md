@@ -1,5 +1,9 @@
 # TODO
 
+## Vulns
+
+-   [ ] **XSS** ---> we must filter titles and descs, can't get js to run but content doesn't get added if it contains < and >
+
 ## General
 
 -   [ ] we should not let users put duplicated tags and links in post such as Python, Python, JS, Java, Java and www.google.com www.google.com
