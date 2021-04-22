@@ -102,7 +102,7 @@
                     <!-- make a relative wrapper so absolute works better -->
                     <!--More Options -->
                     <div :class="{ darkThemeMore: darkTheme, lightThemeMore: !darkTheme }" class="more_options no_select" v-if="moreOptions">
-                        <div class="op_wrapper" @click.stop="sharePost()">
+                        <div class="op_wrapper" @mousedown.stop="sharePost()">
                             <div class="op_icon">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,7 @@
                             </div>
                             <p>Share</p>
                         </div>
-                        <div class="op_wrapper" v-if="projectData.author === $store.getters.username" @click.stop="deletePost()">
+                        <div class="op_wrapper" v-if="projectData.author === $store.getters.username" @mousedown.stop="deletePost()">
                             <div class="op_icon">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
