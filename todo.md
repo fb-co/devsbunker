@@ -2,7 +2,8 @@
 
 ## Vulns
 
--   [ ] **XSS** ---> we must filter titles and descs, can't get js to run but content doesn't get added if it contains < and >
+-   [x] **XSS** ---> we must filter titles and descs, can't get js to run but content doesn't get added if it contains < and >
+    -   [ ] filtering v1 done, dont really like it tho
 
 ## General
 
