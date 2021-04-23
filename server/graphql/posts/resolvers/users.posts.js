@@ -159,6 +159,7 @@ export default {
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
             // TODO: im not really happy with this... it's  probably some bad code... let me know
+
             // sanitize
             const sanitizedTitle = sanitizeHtml(payload.title);
             const sanitizedDesc = sanitizeHtml(payload.description);
@@ -377,13 +378,17 @@ export default {
         },
         commentOnPost: async function (_, args, { req }) {
             const id_payload = args.postId;
-            const commentMessage = args.comment;
+
+            const reg0 = new RegExp("<", "g");
+            const reg1 = new RegExp(">", "g");
+            const commentMessage = sanitizeHtml(args.comment).replace(reg0, "").replace(reg1, ""); // ultimate nesting cuz im lazy
+
             const jwtPayload = req.user;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
             try {
-                if (args.comment != "" && args.comment != null) {
+                if (commentMessage != "" && commentMessage != null) {
                     const user = await User.findOne({
                         username: jwtPayload.username,
                     });
