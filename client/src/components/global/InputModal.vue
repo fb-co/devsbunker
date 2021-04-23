@@ -26,13 +26,7 @@
             </div>
             <div class="fields_container">
                 <SpicyInput v-for="(input, index) in fields" :key="index" class="input_field">
-                    <input 
-                        :type="input.type == 'pwd' ? 'password' : 'text'" 
-                        :label="input.label" 
-                        placeholder="Confirm Password"
-                        ref="main_input"
-                        v-model="inputFields[index]"
-                    >
+                    <input :type="input.type == 'pwd' ? 'password' : 'text'" :label="input.label" placeholder="Confirm Password" ref="main_input" v-model="inputFields[index]" />
                 </SpicyInput>
             </div>
             <div class="button_container">
@@ -47,7 +41,7 @@
 <script>
 import SpicyInput from "@/components/global/SpicyInput.vue";
 
-export default {  
+export default {
     data() {
         return {
             inputFields: [],
@@ -62,10 +56,12 @@ export default {
         },
         fields: {
             type: Array,
-            default: () => [{
-                label: "Input Field",
-                type: "pwd"
-            }],
+            default: () => [
+                {
+                    label: "Input Field",
+                    type: "pwd",
+                },
+            ],
         },
     },
     methods: {
@@ -77,19 +73,16 @@ export default {
             this.isOpen = false;
         },
         clicked() {
-            this.$emit("submitted", this.inputFields); 
-            this.clear();   
+            this.$emit("submitted", this.inputFields);
+            this.clearInputs();
         },
         clearInputs() {
-            // clear all the inputs
-            for (let i = 0; i < this.$refs.main_input.length; i++) {
-                this.$refs.main_input[i].value = "";
-            }
-        }
+            this.inputFields = [];
+        },
     },
     components: {
-        SpicyInput
-    }
+        SpicyInput,
+    },
 };
 </script>
 
@@ -136,8 +129,8 @@ export default {
     width: 200px;
     margin: 0 auto;
 }
-.main_title{
-    text-align: center; 
+.main_title {
+    text-align: center;
     font-size: 20px;
     font-weight: bold;
     flex-grow: 1;
