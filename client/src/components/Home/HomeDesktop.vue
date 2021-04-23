@@ -1,7 +1,7 @@
 <template>
     <div class="main_container">
         <LeftContent />
-        <PostFeed :rootComponent="$parent" class="post_feed" />
+        <PostFeed :rootComponent="$parent" class="post_feed" v-if="loaded" />
         <RightContent :notifications="notifications" />
     </div>
 </template>
@@ -26,7 +26,7 @@ export default {
             username: "",
             searchResults: [],
             showSearchResults: false,
-            fetchedAllSearchResults: true
+            fetchedAllSearchResults: true,
         };
     },
 
@@ -78,7 +78,7 @@ export default {
         */
         LeftContent,
         RightContent,
-        PostFeed
+        PostFeed,
     },
 };
 </script>
@@ -100,5 +100,4 @@ export default {
 .post_feed::-webkit-scrollbar {
     display: none;
 }
-
 </style>

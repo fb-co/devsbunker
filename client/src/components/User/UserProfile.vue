@@ -33,13 +33,9 @@ export default {
         this.sortingType = SearchUtilities.getSavedPostFilter();
         this.getPosts();
 
-        GraphQLService.fetchUserDetails(
-            this.username,
-            ["tag", "desc", "followerAmt", "followingAmt", "isFollowing"],
-            this.$store.getters.username
-        ).then((res) => {
+        GraphQLService.fetchUserDetails(this.username, ["tag", "desc", "followerAmt", "followingAmt", "isFollowing"], this.$store.getters.username).then((res) => {
             if (res.data.user === null) {
-                this.$router.push("/"); // eventully this should route the user to a search area for users with a message sayin he user they requested does not exist
+                this.$router.push("/404"); // eventully this should route the user to a search area for users with a message sayin he user they requested does not exist
             } else {
                 this.userObject = res.data.user;
                 this.userObject.username = this.username; // add the username to the object so the child component has is
@@ -50,11 +46,9 @@ export default {
         // have this ready for future uses
         changeTab(value) {
             this.queryType = value;
-        }
-    }
+        },
+    },
 };
 </script>
 
-<style scoped>
-</style>
-
+<style scoped></style>
