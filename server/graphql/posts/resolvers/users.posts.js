@@ -1,6 +1,8 @@
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
+import sanitizeHtml from "sanitize-html";
+
 import Posts from "../../../components/post/post.model.js";
 import User from "../../../components/user/user.model.js";
 import AddDynamicData from "../misc/addDynamicData.js";
@@ -24,12 +26,7 @@ export default {
         getPosts: async function (_, args, { req }) {
             try {
                 const loadAmt = 3;
-                let posts = await getPostList(
-                    args.sortingType,
-                    loadAmt,
-                    args.lastPostId,
-                    args.lastUniqueField
-                );
+                let posts = await getPostList(args.sortingType, loadAmt, args.lastPostId, args.lastUniqueField);
                 let fetchedAll = false;
 
                 let user;
@@ -88,15 +85,8 @@ export default {
         // returns all the posts by a given author parameter
         getPostsByAuthor: async function (_, args, { req }) {
             const loadAmt = 3;
-            
-            let posts = await getPostsByAuthor(
-                args.author,
-                args.lastPostId,
-                args.lastUniqueField,
-                args.filter,
-                loadAmt,
-                req.user
-            );
+
+            let posts = await getPostsByAuthor(args.author, args.lastPostId, args.lastUniqueField, args.filter, loadAmt, req.user);
             let fetchedAll = false;
 
             // check and remove test post
@@ -120,13 +110,7 @@ export default {
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
-            let posts = await getSavedPosts(
-                jwtPayload.username,
-                loadAmt,
-                args.lastPostId,
-                args.filter,
-                args.lastUniqueField
-            );
+            let posts = await getSavedPosts(jwtPayload.username, loadAmt, args.lastPostId, args.filter, args.lastUniqueField);
             let fetchedAll = false;
 
             // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
@@ -148,16 +132,7 @@ export default {
         partial_post: async function (_, args, { req }) {
             const loadAmt = 2;
 
-            let posts = await getPostByPartial(
-                args.partial_name,
-                args.filter,
-                args.userToFilter,
-                args.sortingType,
-                args.lastPostId,
-                args.lastUniqueField,
-                loadAmt,
-                req.user
-            );
+            let posts = await getPostByPartial(args.partial_name, args.filter, args.userToFilter, args.sortingType, args.lastPostId, args.lastUniqueField, loadAmt, req.user);
 
             let fetchedAll = false;
 
@@ -183,10 +158,25 @@ export default {
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
+            // TODO: im not really happy with this... it's  probably some bad code... let me know
+            // sanitize
+            const sanitizedTitle = sanitizeHtml(payload.title);
+            const sanitizedDesc = sanitizeHtml(payload.description);
+
+            const reg0 = new RegExp("<", "g");
+            const reg1 = new RegExp(">", "g");
+
+            const cleanTitle = sanitizedTitle.replace(reg0, "").replace(reg1, "");
+            const cleanDesc = sanitizedDesc.replace(reg0, "").replace(reg1, "");
+
+            if (!cleanDesc || !cleanTitle) {
+                throw new Error("Input is an empty string (after cleaning)");
+            }
+
             const post = new Posts({
-                title: payload.title,
+                title: cleanTitle,
                 author: jwtPayload.username,
-                description: payload.description,
+                description: cleanDesc,
                 thumbnail: payload.thumbnail,
                 images: payload.images,
                 links: payload.links,
@@ -226,11 +216,7 @@ export default {
                 // best error handling I ever made
                 throw new Error(
                     `Unable to create post: ${
-                        err.errors.tags
-                            ? err.errors.tags.properties.message
-                            : err.errors.links.properties.message
-                            ? err.errors.links.properties.message
-                            : "Internal Error"
+                        err.errors.tags ? err.errors.tags.properties.message : err.errors.links.properties.message ? err.errors.links.properties.message : "Internal Error"
                     }`
                 );
             }
@@ -283,26 +269,15 @@ export default {
                             let shouldNotify = true;
 
                             // the forEach loop was being stoopid, so im using a regular loop
-                            for (
-                                let i = 0;
-                                i < userToNotify.notifications.length;
-                                i++
-                            ) {
-                                const oldNotification =
-                                    userToNotify.notifications[i];
+                            for (let i = 0; i < userToNotify.notifications.length; i++) {
+                                const oldNotification = userToNotify.notifications[i];
 
-                                console.log(
-                                    oldNotification.target,
-                                    notification.target
-                                );
+                                console.log(oldNotification.target, notification.target);
 
                                 if (
-                                    oldNotification.sender ==
-                                        jwtPayload.username &&
-                                    oldNotification.message ==
-                                        notification.message &&
-                                    oldNotification.target ==
-                                        notification.target
+                                    oldNotification.sender == jwtPayload.username &&
+                                    oldNotification.message == notification.message &&
+                                    oldNotification.target == notification.target
                                 ) {
                                     shouldNotify = false;
                                 }
@@ -312,9 +287,7 @@ export default {
                             }
 
                             if (shouldNotify) {
-                                userToNotify.notifications.unshift(
-                                    notification
-                                );
+                                userToNotify.notifications.unshift(notification);
                             }
                             await userToNotify.save();
                         }
@@ -331,9 +304,7 @@ export default {
                             tags: post.tags,
                             likes: post.likes,
                             likeAmt: post.likeAmt || post.likes.length,
-                            isSaved: user.saved_posts.includes(
-                                jwtPayload.username
-                            ),
+                            isSaved: user.saved_posts.includes(jwtPayload.username),
                             isLiked: true,
                             price: post.price,
                             bunkerTag: post.bunkerTag,
@@ -344,10 +315,7 @@ export default {
                     return null;
                 }
             } catch (err) {
-                if (/Cast/.test(err.message))
-                    throw new Error(
-                        "Couldn't find the post you were looking for"
-                    );
+                if (/Cast/.test(err.message)) throw new Error("Couldn't find the post you were looking for");
                 throw err;
             }
         },
@@ -393,9 +361,7 @@ export default {
                                     tags: post.tags,
                                     likes: post.likes,
                                     likeAmt: post.likeAmt || post.likes.length,
-                                    isSaved: user.saved_posts.includes(
-                                        jwtPayload.username
-                                    ),
+                                    isSaved: user.saved_posts.includes(jwtPayload.username),
                                     isLiked: false,
                                     price: post.price,
                                     bunkerTag: post.bunkerTag,
@@ -483,9 +449,7 @@ export default {
                                 tags: post.tags,
                                 likes: post.likes,
                                 likeAmt: post.likeAmt || post.likes.length,
-                                isLiked: post.likes.includes(
-                                    jwtPayload.username
-                                ),
+                                isLiked: post.likes.includes(jwtPayload.username),
                                 isSaved: true,
                                 price: post.price,
                                 bunkerTag: post.bunkerTag,
@@ -545,9 +509,7 @@ export default {
                         return {
                             success: false,
                             message: "Post not found",
-                            stacktrace: [
-                                "deletePost function in user.posts module",
-                            ],
+                            stacktrace: ["deletePost function in user.posts module"],
                         };
                     }
 
@@ -564,10 +526,7 @@ export default {
                         return {
                             success: false,
                             message: "The given post is not yours",
-                            stacktrace: [
-                                "deletePost function in user.posts module",
-                                "post.author != req.user.username",
-                            ],
+                            stacktrace: ["deletePost function in user.posts module", "post.author != req.user.username"],
                         };
                     }
                 } catch (e) {
