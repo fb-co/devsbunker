@@ -10,9 +10,7 @@
 </template>
 
 <script>
-export default {
-    
-}
+
 </script>
 
 <style scoped>
@@ -48,12 +46,13 @@ export default {
     .bottom_line { 
         width: 98%;
         height: 1px;
-        background-color: var(--soft-text);
+        opacity: 0.3;
+        background-image: linear-gradient( to right, var(--secondary-color) 0%, var(--main-font-color) 2%, var(--main-font-color) 98%, var(--secondary-color) 100% );
     }
     .input_container input:focus + .bottom_line_container > div {
         animation: line_animation 1s;
         width: 100%;
         height: 1px;
-        background-color: var(--main-font-color);
+        opacity: 0.7;
     }
 </style>

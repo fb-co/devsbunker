@@ -1,5 +1,5 @@
 <template>
-    <PostFeed :rootComponent="$parent.$parent" :desktop="false" />
+    <PostFeed :rootComponent="$parent.$parent" />
 </template>
 
 <script>

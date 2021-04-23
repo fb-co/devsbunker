@@ -1,6 +1,6 @@
 <template>
-    <div v-if="isOpen" class="model_overlay" @click="close()">
-        <div class="model_popup" @click.stop="">
+    <div v-if="isOpen" class="model_overlay" @mousedown="close()">
+        <div class="model_popup" @click.stop="" @mousedown.stop="">
             <div class="close_button">
                 <div style="width: 33.33%"></div>
                 <p v-if="title" class="main_title vertical_flex_center">{{ title }}</p>
@@ -30,6 +30,7 @@
                         :type="input.type == 'pwd' ? 'password' : 'text'" 
                         :label="input.label" 
                         placeholder="Confirm Password"
+                        ref="main_input"
                         v-model="inputFields[index]"
                     >
                 </SpicyInput>
@@ -72,12 +73,19 @@ export default {
             this.isOpen = true;
         },
         close() {
+            this.clearInputs();
             this.isOpen = false;
         },
         clicked() {
-            this.close();
-            this.$emit("submitted", this.inputFields);    
+            this.$emit("submitted", this.inputFields); 
+            this.clear();   
         },
+        clearInputs() {
+            // clear all the inputs
+            for (let i = 0; i < this.$refs.main_input.length; i++) {
+                this.$refs.main_input[i].value = "";
+            }
+        }
     },
     components: {
         SpicyInput

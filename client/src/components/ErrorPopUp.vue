@@ -28,7 +28,7 @@
         <!-- blank space -->
         <div id="void"></div>
 
-        <div id="close" @click="$emit('display-popup', false)">
+        <div id="close" @click="display=false">
             <p>CLOSE</p>
         </div>
     </div>
@@ -94,6 +94,7 @@ export default {
 }
 
 .err-msg {
+    flex-grow: 1;
     height: 100%;
     margin-left: 15px;
     text-align: left;
@@ -117,7 +118,6 @@ export default {
     right: 0;
     border-left: 1px solid rgb(204, 204, 204);
     width: 65px;
-
     cursor: pointer;
 }
 

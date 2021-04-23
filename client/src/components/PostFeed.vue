@@ -17,7 +17,7 @@
             <div v-if="rootComponent.posts.length > 0" class="post_wrapper">
                 <div class="posts_only_wrapper">
                     <div v-if="!desktop">
-                        <MobileProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="85%" />
+                        <MobileProjectCard class="mobile_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="85%" />
                     </div>
                     <div v-else>
                         <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" />
@@ -31,11 +31,13 @@
         </div>
         <div v-else class="project_list">
             <div v-if="searchResults.length > 0">
-                <div v-if="!desktop" class="post_card_wrapper">
-                    <MobileProjectCard v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
-                </div>
-                <div v-else>
-                    <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
+                <div class="posts_only_wrapper">
+                    <div v-if="!desktop">
+                        <MobileProjectCard class="mobile_project_card" v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
+                    </div>
+                    <div v-else>
+                        <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
+                    </div>
                 </div>
                 <p v-if="!fetchedAllSearchResults" @click="loadNew()" class="load_more_btn">Load More</p>
             </div>
@@ -118,6 +120,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin: 0 auto;
 }
 
 .filter_dropdown_container {
@@ -140,6 +143,9 @@ export default {
     margin: 0px 20px 25px 20px;
     max-width: 750px;
     min-width: 400px;
+}
+.mobile_project_card {
+    margin: 0 auto;
 }
 
 .no_projects {
