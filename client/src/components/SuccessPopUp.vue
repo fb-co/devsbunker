@@ -1,5 +1,5 @@
 <template>
-    <div id="success" v-if="display">
+    <div ref="popup_container" id="success" v-if="display">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-circle-check"
@@ -34,11 +34,38 @@
 export default {
     data() {
         return {
-            display: true,
+            display: false,
         };
     },
 
-    props: ["message"],
+    methods: {
+        show() {
+            this.display = true;
+
+            // pause animation after first iteration
+            setTimeout(() => {
+                this.$refs.popup_container.style.animationPlayState = 'paused';
+            }, 300);
+
+            setTimeout(() => {
+                this.$refs.popup_container.style.animationPlayState = 'running';
+                this.$refs.popup_container.style.right="-400px";
+
+                // hide popup after 2nd iteration
+                setTimeout(() => {
+                    this.display = false;
+                }, 300);
+            }, this.duration);
+        }
+    },
+
+    props: {
+        message: String,
+        duration: {
+            type: Number,
+            default: 3000
+        },
+    },
 };
 </script>
 
@@ -59,7 +86,9 @@ export default {
     width: 350px;
     height: 70px;
 
-    animation: slide 0.2s;
+    animation: slide 0.3s;
+    animation-iteration-count: 2;
+    animation-direction: alternate;
 
     background: var(--main-color);
     box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.25);
@@ -92,5 +121,9 @@ export default {
 
     font-size: 14px;
     color: var(--soft-text);
+}
+
+.pauseAnimation {
+    animation-play-state: paused;
 }
 </style>

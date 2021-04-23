@@ -26,9 +26,10 @@
             </div>
             <div class="fields_container">
                 <SpicyInput v-for="(input, index) in fields" :key="index" class="input_field">
-                    <input :type="input.type == 'pwd' ? 'password' : 'text'" :label="input.label" placeholder="Confirm Password" ref="main_input" v-model="inputFields[index]" />
+                    <input :type="input.type == 'pwd' ? 'password' : 'text'" :label="input.label" :placeholder="input.label" ref="main_input" v-model="inputFields[index]" />
                 </SpicyInput>
             </div>
+            <p class="error_msg" ref="error">Invalid Credentials</p>
             <div class="button_container">
                 <button @click="clicked()" class="submit">
                     {{ btnText }}
@@ -49,7 +50,10 @@ export default {
         };
     },
     props: {
-        title: String,
+        title: {
+            type: String,
+            default: "Confirm"
+        },
         btnText: {
             type: String,
             default: "Submit",
@@ -74,11 +78,28 @@ export default {
         },
         clicked() {
             this.$emit("submitted", this.inputFields);
-            this.clearInputs();
+            //this.clearInputs();
         },
         clearInputs() {
             this.inputFields = [];
         },
+        showError(message, clearFields=false) {
+            const errorMsg = this.$refs.error;
+            
+            if (clearFields) {
+                this.clearInputs();
+            }
+            this.redInputs();
+
+            errorMsg.innerText = message;
+            errorMsg.style.visibility = "visible";
+        },
+        redInputs() {
+            for (let i = 0; i < this.$refs.main_input.length; i++) {
+                this.$refs.main_input[i].style.color = "red";
+                this.$refs.main_input[i].style.border = "1px solid red";
+            }
+        }
     },
     components: {
         SpicyInput,
@@ -127,8 +148,20 @@ export default {
 }
 .input_field {
     width: 200px;
-    margin: 0 auto;
+    margin: 0px auto 10px auto;
+    border: 1px solid transparent;
 }
+.fields_container .input_field:not(:last-child) {
+    margin-bottom: 30px;
+}
+
+.error_msg {
+    color: var(--error-red);
+    font-weight: bold;
+    margin-bottom: 10px;
+    visibility: hidden;
+}
+
 .main_title {
     text-align: center;
     font-size: 20px;
