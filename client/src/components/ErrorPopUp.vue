@@ -38,20 +38,46 @@
 export default {
     data() {
         return {
-            display: true,
-            life: 5000, // in milliseconds
+            display: false,
         };
     },
-    props: ["msg"],
-    // close the popup after the speficed "life" variable
-    mounted() {
-        // trigger the css animation by setting the width
-        document.getElementById("err").style.right = "20px";
-
-        setTimeout(() => {
-            this.$emit("display-popup", false);
-        }, this.life);
+    props: {
+        msg: String,
+        duration: {
+            type: Number,
+            default: 3000
+        },
+        // this is really just here for backwards compatibility to the older error popup
+        showOnCreation: {
+            type: Boolean,
+            default: true
+        }
     },
+    mounted() {
+        if (this.showOnCreation) {
+            this.show();
+        }
+    },
+    methods: {
+        show() {
+            this.display = true;
+
+            // pause animation after first iteration
+            setTimeout(() => {
+                this.$refs.error_popup_container.style.animationPlayState = 'paused';
+            }, 300);
+
+            setTimeout(() => {
+                this.$refs.error_popup_container.style.animationPlayState = 'running';
+                this.$refs.error_popup_container.style.right="-400px";
+
+                // hide popup after 2nd iteration
+                setTimeout(() => {
+                    this.display = false;
+                }, 300);
+            }, this.duration);
+        }
+    }
 };
 </script>
 
@@ -72,9 +98,11 @@ export default {
 #err {
     position: fixed;
     bottom: 20px;
-    right: -400px;
+    right: 20px;
     height: 70px;
-    animation: slide 0.2s;
+    animation: slide 0.3s;
+    animation-iteration-count: 2;
+    animation-direction: alternate;
     width: 90%;
     max-width: 350px;
     background: var(--main-color);

@@ -103,7 +103,7 @@ export default {
 
         getUnreadNotificationsData: async function(_, args, { req }) {
             const jwtPayload = req.user;
-
+            
             if (!jwtPayload) throw new Error("Unauthenticated");
 
             try {

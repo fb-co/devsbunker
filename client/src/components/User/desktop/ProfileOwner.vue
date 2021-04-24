@@ -293,7 +293,7 @@
             v-if="accountDeleted"
             message="Successfully deleted account... Redirecting."
         />
-        <ErrorPopUp v-if="error" message="Error while deleting account!" />
+        <ErrorPopUp ref="error_popup" message="Error while deleting account!" :showOnCreation="false" />
     </div>
 </template>
 
@@ -311,7 +311,6 @@ export default {
             active: "projects",
             userObject: this.mainUserObject,
             accountDeleted: false,
-            error: false,
         };
     },
     components: {
@@ -369,7 +368,7 @@ export default {
                     password,
                     this.$store.getters.accessToken
                 );
-
+                console.log(res);
                 if (!res.errors) {
                     if (res.data.deleteAccount.success) {
                         this.accountDeleted = true;
@@ -384,12 +383,13 @@ export default {
                             this.$router.push("/");
                         }, 2500);
                     } else {
-                        console.error(res.data.deleteAccount.messsage);
-                        this.error = true;
+                        this.$refs.error_popup.show();
+                        this.$refs.deleteProfileConfirmation.showError("Something went wrong");
                     }
                 } else {
                     console.error(res.errors);
-                    this.error = true;
+                    this.$refs.error_popup.show();
+                    this.$refs.deleteProfileConfirmation.showError("Incorrect password");
                 }
             }
         },

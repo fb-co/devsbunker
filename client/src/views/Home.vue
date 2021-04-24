@@ -44,8 +44,12 @@ export default {
         SharedMethods.loadPage();
 
         // get the notifications
-        const res = await GraphQLService.getUnreadNotificationsData(this.$store.getters.accessToken);
-        this.notifications = res.data.getUnreadNotificationsData;
+        if (this.$store.getters.accessToken) {
+            const res = await GraphQLService.getUnreadNotificationsData(this.$store.getters.accessToken);
+            this.notifications = res.data.getUnreadNotificationsData;
+        } else {
+            this.notifications = [];
+        }
 
         /*
         const cache = await caches.open("devsCache");
