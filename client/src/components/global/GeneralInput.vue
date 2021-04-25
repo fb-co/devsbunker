@@ -79,6 +79,10 @@ export default {
             this.$refs.general_input.value = "";
         },
 
+        focusInput() {
+            this.$refs.general_input.focus();
+        },
+
         queryData() {
             if (this.isQuery) {
                 if (

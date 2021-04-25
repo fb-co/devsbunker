@@ -139,10 +139,9 @@ export default {
         document.body.style.overflow = "auto";
     },
     methods: {
-        logout() {
-            GraphQLService.logoutUser().then((response) => {
-                console.log("logged out: ", response);
-            });
+        async logout() {
+            await GraphQLService.logoutUser();
+
             if (this.$route.path != "/") {
                 this.$router.push("/");
             } else {

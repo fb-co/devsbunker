@@ -298,6 +298,7 @@ export default {
         };
     },
     mounted() {
+        this.$refs.postTitle.focusInput();
         this.$refs.main_container.style.transform = "translateY(0%)";
     },
     methods: {
@@ -459,38 +460,6 @@ export default {
 </script>
 
 <style scoped>
-/*
-#on_store_options {
-    display: none;
-    background-color: var(--secondary-color);
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    height: 200px;
-    margin: 20px 20px 60px 20px;
-}
-.add_store_container {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    padding-left: 10px;
-}
-.add_store_container > button {
-    background-color: var(--main-accent);
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    width: 150px;
-    height: 40px;
-    color: #fff;
-    font-size: 15px;
-    font-weight: bold;
-    margin: 0px auto 0px auto;
-    cursor: pointer;
-}
-.add_store_container > button:hover {
-    box-shadow: 0px 4px 20px var(--main-accent);
-}
-*/
 
 @keyframes slide {
     from {

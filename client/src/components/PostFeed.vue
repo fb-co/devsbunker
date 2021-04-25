@@ -1,5 +1,6 @@
 <template>
     <div id="main_container">
+        <p v-if="title" class="title">{{ title }}</p>
         <div class="filter_dropdown_container">
             <PostSearch 
                 ref="post_search" 
@@ -16,10 +17,10 @@
         <div v-if="!showSearchResults" class="project_list">
             <div v-if="rootComponent.posts.length > 0" class="post_wrapper">
                 <div class="posts_only_wrapper">
-                    <div v-if="!desktop">
+                    <div v-if="!desktop" class="running_out_of_wrapper_names">
                         <MobileProjectCard class="mobile_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="85%" />
                     </div>
-                    <div v-else>
+                    <div v-else class="running_out_of_wrapper_names">
                         <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" />
                     </div>
                 </div>
@@ -32,10 +33,10 @@
         <div v-else class="project_list">
             <div v-if="searchResults.length > 0">
                 <div class="posts_only_wrapper">
-                    <div v-if="!desktop">
+                    <div v-if="!desktop" class="running_out_of_wrapper_names">
                         <MobileProjectCard class="mobile_project_card" v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
                     </div>
-                    <div v-else>
+                    <div v-else class="running_out_of_wrapper_names">
                         <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
                     </div>
                 </div>
@@ -69,7 +70,9 @@ export default {
         desktop: {
             type: Boolean,
             default: true
-        }
+        },
+
+        title: String
     },
     components: {
         PostSearch,
@@ -108,6 +111,12 @@ export default {
 </script>
 
 <style scoped>
+.title {
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
 .project_list {
     display: flex;
     flex-direction: row;
@@ -120,7 +129,12 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin: 0 auto;
+}
+
+.running_out_of_wrapper_names {
+    padding-right: 15px;
+    padding-left: 15px;
+    width: 100%;
 }
 
 .filter_dropdown_container {
@@ -140,9 +154,10 @@ export default {
 }
 
 .desktop_project_card {
-    margin: 0px 20px 25px 20px;
+    margin: 0px auto 25px auto;
     max-width: 750px;
     min-width: 400px;
+    width: 100%;
 }
 .mobile_project_card {
     margin: 0 auto;
@@ -153,7 +168,8 @@ export default {
 }
 
 .posts_search_bar {
-    margin: 0 auto;
+    margin: 0 auto 10px auto;
+    max-width: 400px;
 }
 
 .load_more_btn {
