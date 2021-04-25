@@ -29,14 +29,18 @@ const LoadMore = {
          * clearCurrent if given as true will clear the current post feed, usually used for things like switching filters (NOT FOR LOADING MORE OBV)
          */
         async getPosts(filter) {
-            console.log("[DEBUG] getPosts CALLED");
+            const alreadyLoadedPosts = this.getPostsInMemory(this.queryType, filter || this.sortingType);
+
+            if (alreadyLoadedPosts) {
+                this.posts = alreadyLoadedPosts.posts;
+            }
+
             if (this.queryType === "all") {
                 const res = await GraphQLService.fetchPosts(filter || this.sortingType, this.getLastPostId(), this.getLastPostUniqueField(), this.$store.getters.accessToken);
                 this.posts = this.posts.concat(res.data.getPosts.posts);
                 this.fetchedAll = res.data.getPosts.fetchedAll;
 
                 this.$store.commit("appendPosts", res.data.getPosts.posts);
-                console.log("cache:", this.$store.getters.cachedPosts);
             } else if (this.queryType === "projects") {
                 const res = await GraphQLService.fetchPostsByAuthor(
                     this.otherData.foreignUserToFilter || this.$store.getters.username,
@@ -49,15 +53,16 @@ const LoadMore = {
                 this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
 
                 this.$store.commit("appendPosts", res.data.getPostsByAuthor.posts);
-                console.log("cache:", this.$store.getters.cachedPosts);
             } else if (this.queryType === "saved") {
                 const res = await GraphQLService.fetchSavedPosts(this.getLastPostId(), this.getLastPostUniqueField(), filter || this.sortingType, this.$store.getters.accessToken);
                 this.posts = this.posts.concat(res.data.getSavedPosts.posts);
                 this.fetchedAll = res.data.getSavedPosts.fetchedAll;
 
                 this.$store.commit("appendPosts", res.data.getSavedPosts.posts);
-                console.log("cache:", this.$store.getters.cachedPosts);
             }
+            
+            // add the posts to a temp memory
+            this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
         },
         updateFilterDropdown(value) {
             this.posts = [];
@@ -81,9 +86,38 @@ const LoadMore = {
             this.getPosts(value);
         },
 
+        // the parameters need to stay, if it gets the data from local variables it will break
+        addPostsToMemory(queryType, filter, posts) {
+            if (queryType && filter && posts) {
+                for (let i = 0; i < this.postsInMemory.length; i++) {
+                    // if the posts with the specifications are already in memory, just update the posts, otherwise add a new entry
+                    if (this.postsInMemory[i].queryType == queryType && this.postsInMemory[i].filter == filter) {
+                        this.postsInMemory[i].posts = posts;
+                        return; // break out of the function
+                    }
+                }
+                
+                // if there was no entry for the current specifications (function would have been exited), add a new entry
+                this.postsInMemory.push({
+                    queryType: queryType,
+                    filter: filter,
+                    posts: posts
+                });
+            }
+        },
+
+        // checks if a type of posts have some already loaded, returns the posts object if true
+        getPostsInMemory(queryType, filter) {
+            for (let i = 0; i < this.postsInMemory.length; i++) {
+                if (this.postsInMemory[i].queryType == queryType && this.postsInMemory[i].filter == filter) {
+                    return this.postsInMemory[i];
+                }
+            }
+            return false;
+        },
+
         // misc functions
         getLastPostId() {
-            console.log("[DEBUG] last post ID:", this.posts.length > 0 ? this.posts[this.posts.length - 1].id : 0, "posts:", this.posts);
             return this.posts.length > 0 ? this.posts[this.posts.length - 1].id : 0;
         },
         getLastPostUniqueField() {
