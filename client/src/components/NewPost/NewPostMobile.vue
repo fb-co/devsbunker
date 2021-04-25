@@ -143,7 +143,15 @@
                             </svg>
 
                             <div class="upload-text">
-                                <input class="add-file-input" type="file" name="addfiles[]" @change="handleFiles($event)" id="added-file" multiple accept=".jpg, .png, .jpeg, .gif" />
+                                <input
+                                    class="add-file-input"
+                                    type="file"
+                                    name="addfiles[]"
+                                    @change="handleFiles($event)"
+                                    id="added-file"
+                                    multiple
+                                    accept=".jpg, .png, .jpeg, .gif"
+                                />
                                 <label for="added-file">
                                     <span id="add-link">
                                         <strong>Add</strong>
@@ -348,13 +356,7 @@ export default {
 
             // had to break this down because of async pain (i think)
             let errmsg = null;
-            if (
-                payload.title &&
-                payload.description &&
-                payload.bunkerTag &&
-                payload.links.length &&
-                payload.tags.length
-            ) {
+            if (payload.title && payload.description && payload.bunkerTag && payload.links.length && payload.tags.length) {
                 for (const link of payload.links) {
                     valid = regex.test(link);
                 }
@@ -363,8 +365,7 @@ export default {
                     for (const tag of payload.tags) {
                         valid = Languages.check(tag);
                         if (!valid) {
-                            errmsg =
-                                "Invalid tag. Please select a valid language";
+                            errmsg = "Invalid tag. Please select a valid language";
                             break;
                         }
                     }
@@ -402,20 +403,13 @@ export default {
                 this.errmsg = "You can upload 5 files max.";
             } else {
                 if (check.success) {
-                    GraphQLService.createNewPost(
-                        this.$store.getters.accessToken,
-                        post
-                    )
+                    GraphQLService.createNewPost(this.$store.getters.accessToken, post)
                         .then((returnPost) => {
                             this.success = true;
 
-                            FileUploadService.addPostImages(
-                                this.files,
-                                returnPost.data.makePost.id,
-                                this.$store.getters.accessToken
-                            ).then((res) => {
+                            FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then((res) => {
                                 if (this.$route.name == "Home") {
-                                    this.$emit("postFlag", true);
+                                    this.$emit("updateFeed", true);
                                 } else {
                                     this.$router.push("/");
                                 }

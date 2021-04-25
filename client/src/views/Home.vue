@@ -11,7 +11,7 @@
                 @updateFilterDropdown="updateFilterDropdown"
                 :loaded="loaded"
             />
-            <NewPost ref="newPostMenu" v-on:postFlag="reloadPosts($event)" />
+            <NewPost ref="newPostMenu" v-on:updateFeed="updateFeedAfterNewPost($event)" />
         </div>
     </div>
 </template>
@@ -73,12 +73,38 @@ export default {
             this.$refs.newPostMenu.close();
         },
 
-        async reloadPosts(flag) {
-            // TODO: this still doesnt work
+        async updateFeedAfterNewPost(flag) {
+            /**
+             * After creating a new post, we don't want to grab the lastPostId and start fetching from there, we instead want to fetch the latest 3 posts.
+             * If we grab the lastPostId this happens:
+             *
+             * Feed before making a post
+             *      post #0
+             *      post #1
+             *      post #2
+             *
+             *  POST MADE
+             *
+             *  Feed after making a post
+             *
+             *      post #0
+             *      post #1
+             *      post #2
+             *      post #3
+             *      post #4
+             *      post #5
+             *
+             *  so, calling this.getPosts is not enough. We can then do:
+             *      option 1 --> (CURRENT) clear the already fetched posts (easy but not efficient)
+             *      option 2 --> (WHAT I WANT TO DO) create an updateFeedAfterNewPost function in the load_more_mixin and handle everything there by quickly caching the new post (the mutation returns the newly made post) and appending that to this.posts (shift() so it is at index 0)
+             *
+             */
 
             this.loaded = false;
+
             // leaving this even tho right now flag is always true, maybe in the future we'll need to propagate a failed attempt
             if (flag) {
+                this.clearPosts();
                 await this.getPosts();
             }
             this.loaded = true;

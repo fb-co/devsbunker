@@ -29,6 +29,7 @@ const LoadMore = {
          * clearCurrent if given as true will clear the current post feed, usually used for things like switching filters (NOT FOR LOADING MORE OBV)
          */
         async getPosts(filter) {
+            console.log("[DEBUG] getPosts CALLED");
             if (this.queryType === "all") {
                 const res = await GraphQLService.fetchPosts(filter || this.sortingType, this.getLastPostId(), this.getLastPostUniqueField(), this.$store.getters.accessToken);
                 this.posts = this.posts.concat(res.data.getPosts.posts);
@@ -82,6 +83,7 @@ const LoadMore = {
 
         // misc functions
         getLastPostId() {
+            console.log("[DEBUG] last post ID:", this.posts.length > 0 ? this.posts[this.posts.length - 1].id : 0, "posts:", this.posts);
             return this.posts.length > 0 ? this.posts[this.posts.length - 1].id : 0;
         },
         getLastPostUniqueField() {

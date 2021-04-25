@@ -1,7 +1,7 @@
 <!-- Leaving this component in case we ever want to change to a different post view for desktop versions -->
 <template>
     <div v-if="isOpen" class="main_new_post_container">
-        <NewPostMobile v-on:postFlag="propagateEvent($event)" />
+        <NewPostMobile v-on:updateFeed="propagateEvent($event)" />
         <!--<NewPostDesktop v-else />-->
     </div>
 </template>
@@ -27,7 +27,7 @@ export default {
             this.isOpen = true;
         },
         propagateEvent(flag) {
-            this.$emit("postFlag", flag);
+            this.$emit("updateFeed", flag);
         },
     },
 };

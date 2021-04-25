@@ -37,6 +37,12 @@ export default {
         fetchedAll: Boolean,
         loaded: Boolean,
     },
+    created() {
+        setTimeout(() => console.log("*** CREATED HOME DESKTOP ***", this.projects), 1000);
+    },
+    updated() {
+        setTimeout(() => console.log("*** UPDATED HOME DESKTOP ***", this.projects), 1000);
+    },
     methods: {
         makeNewPost() {
             this.$parent.openPostMenu();
