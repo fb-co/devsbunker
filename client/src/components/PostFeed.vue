@@ -5,6 +5,7 @@
             <PostSearch 
                 ref="post_search" 
                 :sortingType="rootComponent.sortingType" 
+                :moreOptions="true"
                 width="50%" 
                 class="posts_search_bar" 
             />

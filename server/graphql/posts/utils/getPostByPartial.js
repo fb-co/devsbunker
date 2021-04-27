@@ -22,12 +22,18 @@ export default async function getPostByPartial(partial_name, filter, userToFilte
 
     return new Promise((resolve) => {
         const regex = new RegExp(partial_name, "i");
-        
-        // this is what the loadMoremodule requires
-        let customQueries = [
-            { title: regex },
-        ];
-        
+        let customQueries = [];
+
+        // see if there is an inline filter (search by tag, author, etc)
+        if (partial_name.substring(0, 4) === "tag:") {
+            customQueries.push({ tags: new RegExp(partial_name.substring(4), "i") });
+            console.log(customQueries);
+        } else if (partial_name.substring(0, 7) === "author:") {
+            customQueries.push({ author: new RegExp(partial_name.substring(7), "i") });
+        } else {
+            customQueries.push({ title: regex });
+        }
+
         // add a filter like "myProjects" or "savedProjects" to the query
         if (filter === "saved") {
             let userPosts = user.saved_posts;

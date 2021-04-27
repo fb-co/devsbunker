@@ -25,9 +25,36 @@
     <div class="post_search_bar" :style="cssProps">
         <div class="input_loading_cont">
             <SpicyInput class="post_search">
-                <input @input="queryData()" ref="general_input" placeholder='search...'>
+                <input @input="queryData()" class="main_input" ref="general_input" placeholder='search...'>
             </SpicyInput>
-
+            <svg 
+                v-if="moreOptions"
+                @click.stop=""
+                @focus.stop="moreOptionsMenu = true"
+                @blur="moreOptionsMenu = false" 
+                xmlns="http://www.w3.org/2000/svg" 
+                class="icon icon-tabler icon-tabler-dots-vertical" 
+                width="25" 
+                height="25" 
+                viewBox="0 0 24 24" 
+                stroke-width="1.5" 
+                stroke="var(--main-font-color)" 
+                fill="none" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"
+            >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <circle cx="12" cy="12" r="1" />
+                <circle cx="12" cy="19" r="1" />
+                <circle cx="12" cy="5" r="1" />
+            </svg>
+            <div style="position: relative;">
+                <div v-if="moreOptionsMenu" class="more_options">
+                    <p class="list_title">Search By:</p>
+                    <p class="more_option" @mousedown.stop="addToInput('tag:')">Tag</p>
+                    <p class="more_option" @mousedown.stop="addToInput('author:')">Author</p>
+                </div>
+            </div>
             <div class="loading_gif">
                 <svg v-if="queryQueued" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:none;display:block;" width="30px" height="30px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                     <g transform="rotate(0 50 50)">
@@ -109,6 +136,7 @@ import SpicyInput from "@/components/global/SpicyInput.vue";
 export default {
     data() {
         return {
+            moreOptionsMenu: false,
             documents: [],
             fetchedAllResults: false,
             selectedDocument: -1,
@@ -133,6 +161,10 @@ export default {
         sortingType: {
             type: String,
             default: "Newest"
+        },
+        moreOptions: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {
@@ -215,6 +247,10 @@ export default {
         },
         getSearchedPhrase() {
             return this.$refs.general_input.value;
+        },
+        addToInput(value) {
+            this.$refs.general_input.value = value;
+            setTimeout(() => {this.$refs.general_input.focus(); }, 100); // since the binding is on keydown you need to do this (I know its a little janky)
         }
     }
 }
@@ -241,6 +277,32 @@ export default {
     .loading_gif {
         display: inline-block;
         margin: 0 auto;
+    }
+
+    .list_title {
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        color: var(--main-font-color);
+    }
+    .more_options {
+        position: absolute;
+        border-radius: 5px;
+        width: 200px;
+        background-color: var(--secondary-color);
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .more_option {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        color: var(--main-font-color);
+    }
+    .more_option:hover {
+        color: var(--soft-text);
+    }
+    .main_input {
+        font-size: 18px;
     }
 
 </style>
