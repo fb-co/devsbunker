@@ -8,6 +8,7 @@
 
 import GraphQLService from "@/services/graphql.service";
 import SearchUtilities from "../utils/search_utilities.js";
+import { store } from "../store/store.js";
 
 const LoadMore = {
     data() {
@@ -60,9 +61,19 @@ const LoadMore = {
 
                 this.$store.commit("appendPosts", res.data.getSavedPosts.posts);
             }
-            
+
             // add the posts to a temp memory
             this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
+        },
+        async updateFeedAfterNewPost() {
+            const newPost = store.getters.cachedNewlyMadePost;
+
+            // unshift newly chached post into this.posts
+            if (newPost) {
+                console.log("*** ADDING TO POSTS ARRAY ***", newPost);
+                this.posts.unshift(newPost);
+            }
+            console.log("*** POSTS", this.posts);
         },
         updateFilterDropdown(value) {
             this.posts = [];
@@ -96,12 +107,12 @@ const LoadMore = {
                         return; // break out of the function
                     }
                 }
-                
+
                 // if there was no entry for the current specifications (function would have been exited), add a new entry
                 this.postsInMemory.push({
                     queryType: queryType,
                     filter: filter,
-                    posts: posts
+                    posts: posts,
                 });
             }
         },

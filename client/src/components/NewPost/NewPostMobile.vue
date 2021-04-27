@@ -408,14 +408,17 @@ export default {
                         .then((returnPost) => {
                             this.success = true;
 
-                            FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then((res) => {
+                            FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then(async () => {
+                                // TODO: add thumbnail to this return type
+                                await this.$store.dispatch("cacheNewlyMadePost", returnPost.data.makePost);
+
                                 if (this.$route.name == "Home") {
                                     this.$emit("updateFeed", true);
                                 } else {
                                     this.$router.push("/");
                                 }
+
                                 this.close();
-                                console.log(res);
                             });
                         })
                         .catch(() => {
@@ -460,7 +463,6 @@ export default {
 </script>
 
 <style scoped>
-
 @keyframes slide {
     from {
         transform: translateY(-100%);

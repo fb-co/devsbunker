@@ -2,11 +2,13 @@ const state = {
     posts: [],
     neededPost: null,
     maxCacheSize: 20,
+    newlyMadePost: null,
 };
 
 const getters = {
     cachedPosts: (state) => state.posts,
     cachedPostById: (state) => state.neededPost,
+    cachedNewlyMadePost: (state) => state.newlyMadePost,
 };
 
 const mutations = {
@@ -50,11 +52,19 @@ const mutations = {
 
         state.neededPost = ret;
     },
+    cacheNewPost(state, post) {
+        console.log("[CACHE DEBUG] caching: ", post);
+        state.newlyMadePost = post;
+        console.log("[CACHE DEBUG] in state: ", state.newlyMadePost);
+    },
 };
 
 const actions = {
     extractCachedPostById({ commit }, id) {
         commit("getCachedPostById", id);
+    },
+    cacheNewlyMadePost({ commit }, post) {
+        commit("cacheNewPost", post);
     },
 };
 
