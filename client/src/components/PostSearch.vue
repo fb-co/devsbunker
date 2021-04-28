@@ -26,39 +26,37 @@
         <div class="input_loading_cont">
             <SpicyInput class="post_search">
                 <input @input="queryData()" class="main_input" ref="general_input" placeholder='search...'>
+                <svg 
+                    v-if="moreOptions"
+                    @click.stop=""
+                    @focus.stop="moreOptionsMenu = true"
+                    @blur="moreOptionsMenu = false" 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    class="icon icon-tabler icon-tabler-dots-vertical" 
+                    width="25" 
+                    height="25" 
+                    viewBox="0 0 24 24" 
+                    stroke-width="1.5" 
+                    stroke="var(--main-font-color)" 
+                    fill="none" 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round"
+                >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="12" cy="12" r="1" />
+                    <circle cx="12" cy="19" r="1" />
+                    <circle cx="12" cy="5" r="1" />
+                </svg>
             </SpicyInput>
-            <svg 
-                v-if="moreOptions"
-                @click.stop=""
-                @focus.stop="moreOptionsMenu = true"
-                @blur="moreOptionsMenu = false" 
-                xmlns="http://www.w3.org/2000/svg" 
-                class="icon icon-tabler icon-tabler-dots-vertical" 
-                width="25" 
-                height="25" 
-                viewBox="0 0 24 24" 
-                stroke-width="1.5" 
-                stroke="var(--main-font-color)" 
-                fill="none" 
-                stroke-linecap="round" 
-                stroke-linejoin="round"
-            >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <circle cx="12" cy="12" r="1" />
-                <circle cx="12" cy="19" r="1" />
-                <circle cx="12" cy="5" r="1" />
-            </svg>
-            <div style="position: relative;">
+            
+            <div>
                 <div v-if="moreOptionsMenu" class="more_options">
                     <p class="list_title">Search By:</p>
                     <p class="more_option" @mousedown.stop="addToInput('tag:')">Tag</p>
                     <p class="more_option" @mousedown.stop="addToInput('author:')">Author</p>
                 </div>
             </div>
-        </div>
-        <div class="form_line_container">
-            <div class="bottom_line"></div>
-        </div>        
+        </div>      
     </div>
 </template>
 
