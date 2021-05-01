@@ -27,6 +27,7 @@ export default {
         await this.$store.dispatch("extractCachedPostById", this.$route.params.postid);
 
         const cachedPost = this.$store.getters.cachedPostById;
+
         // TODO: check if the post we want is the newlyMadePost, if so we dont need to fetch data because it is already in that object
 
         let toFetch = [];
@@ -37,14 +38,14 @@ export default {
             // we can use the cached data
             toFetch = [
                 `images {
-                ogname
+                    ogname
                 dbname
             }`,
                 "links",
                 "tags",
                 "createdAt",
                 `comments {
-                commenter
+                    commenter
                 comment
                 timestamp
             }`,
@@ -60,7 +61,7 @@ export default {
                 "description",
                 "id",
                 `images {
-                ogname
+                    ogname
                 dbname
             }`,
                 "isLiked",
@@ -71,7 +72,7 @@ export default {
                 "tags",
                 "createdAt",
                 `comments {
-                commenter
+                    commenter
                 comment
                 timestamp
             }`,
@@ -85,6 +86,7 @@ export default {
         if (cachedPost) {
             // we need to merge the new data to the cached post
             this.postData = Object.assign(this.postData, cachedPost);
+            // TODO: flag this post (merge it also in the cache) so if the user clicks again on the same post we don't have to refetch all this data
         }
         this.getAuthorData(this.postData.author);
     },
