@@ -35,7 +35,7 @@ export default {
 
     methods: {
         profileComponentGateway() {
-            // TODO: we can use $store.getters.username
+            // we can't use $store.getters.username because if the user vists this URL by manually entering it into the search bar, the username is undefined
 
             UserService.isLoggedIn().then((result) => {
                 if (result.user) {

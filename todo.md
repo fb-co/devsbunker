@@ -57,7 +57,9 @@
 -   [ ] don't update Vuex in the logoutUser function in graphqlService
 -   [ ] check if the post we want is the newlyMade one in Post.vue, if so we don't need to fetch extra data
 -   [ ] once we fetch the extra data of a post we should merge that into the object in cache, so if the user clicks again on the same post we don't need to fetch it again
--   [ ] replace UserService.isLoggedIn in User.vue with $store.getters.username
+-   [x] replace UserService.isLoggedIn in User.vue with $store.getters.username
+
+    -   can't be done
 
 -   [x] viewing other people's posts in their profile is broken
     -   [ ] need to add load more btn to mobile view
