@@ -2,13 +2,7 @@
     <div class="main_post_container">
         <div v-if="postData">
             <PostMobile v-if="$store.getters.mobile" :projectData="postData" />
-            <PostDesktop
-                v-if="!$store.getters.mobile"
-                :projectData="postData"
-                :authorData="authorData"
-                :notifications="[]"
-                @postComment="postComment"
-            />
+            <PostDesktop v-if="!$store.getters.mobile" :projectData="postData" :authorData="authorData" :notifications="[]" @postComment="postComment" />
         </div>
     </div>
 </template>
@@ -30,12 +24,10 @@ export default {
     async created() {
         SharedMethods.loadPage();
 
-        await this.$store.dispatch(
-            "extractCachedPostById",
-            this.$route.params.postid
-        );
+        await this.$store.dispatch("extractCachedPostById", this.$route.params.postid);
 
         const cachedPost = this.$store.getters.cachedPostById;
+        // TODO: check if the post we want is the newlyMadePost, if so we dont need to fetch data because it is already in that object
 
         let toFetch = [];
 
@@ -59,9 +51,7 @@ export default {
             ];
         } else {
             // get everything
-            console.log(
-                "this post was not cached, so I had to fetch everthing :("
-            );
+            console.log("this post was not cached, so I had to fetch everthing :(");
 
             toFetch = [
                 "author",
@@ -88,11 +78,7 @@ export default {
             ];
         }
 
-        const pData = await GraphQLService.fetchPostById(
-            this.$route.params.postid,
-            toFetch,
-            this.$store.getters.accessToken
-        );
+        const pData = await GraphQLService.fetchPostById(this.$route.params.postid, toFetch, this.$store.getters.accessToken);
 
         this.postData = pData.data.getPostById;
 
@@ -104,20 +90,12 @@ export default {
     },
     methods: {
         getAuthorData(author) {
-            GraphQLService.fetchUserDetails(
-                author,
-                ["followerAmt", "isFollowing"],
-                this.$store.getters.username
-            ).then((res) => {
+            GraphQLService.fetchUserDetails(author, ["followerAmt", "isFollowing"], this.$store.getters.username).then((res) => {
                 this.authorData = res.data.user;
             });
         },
         async postComment(value) {
-            const response = await GraphQLService.commentOnPost(
-                this.postData.id,
-                value,
-                this.$store.getters.accessToken
-            );
+            const response = await GraphQLService.commentOnPost(this.postData.id, value, this.$store.getters.accessToken);
 
             // if it was successfull
             if (response.data.commentOnPost.commenter != null) {

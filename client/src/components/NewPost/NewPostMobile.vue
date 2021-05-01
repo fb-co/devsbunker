@@ -408,9 +408,10 @@ export default {
                         .then((returnPost) => {
                             this.success = true;
 
-                            FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then(async () => {
-                                // TODO: add thumbnail to this return type
-                                await this.$store.dispatch("cacheNewlyMadePost", returnPost.data.makePost);
+                            FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then(async (res) => {
+                                // TODO: add error  checking
+                                console.log("*** DEBUG addPostImages response:", res.post);
+                                await this.$store.dispatch("cacheNewlyMadePost", res.post);
 
                                 if (this.$route.name == "Home") {
                                     this.$emit("updateFeed", true);

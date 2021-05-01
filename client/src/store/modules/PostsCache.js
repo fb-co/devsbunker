@@ -44,6 +44,7 @@ const mutations = {
         let ret = null;
 
         for (let i = 0; i < state.posts.length; i++) {
+            console.log(`*** DEBUG *** ${id} == ${state.posts[i].id} ?`);
             if (state.posts[i].id == id) {
                 ret = state.posts[i];
                 break;
@@ -56,6 +57,8 @@ const mutations = {
         console.log("[CACHE DEBUG] caching: ", post);
         state.newlyMadePost = post;
         console.log("[CACHE DEBUG] in state: ", state.newlyMadePost);
+
+        this.commit("appendPosts", [post]);
     },
 };
 
