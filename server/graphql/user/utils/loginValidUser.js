@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: move this inside GraphQL/
+import TokenHandler from "../../../components/tokens/TokenHandler.js";
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
