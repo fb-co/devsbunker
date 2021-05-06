@@ -7,6 +7,8 @@
                 @loading="loading=true"
                 @doneLoading="loading=false"
                 :sortingType="rootComponent.sortingType" 
+                :userToFilter="rootComponent.otherData.foreignUserToFilter"
+                :filter="rootComponent.queryType"
                 :moreOptions="true"
                 width="50%" 
                 class="posts_search_bar" 

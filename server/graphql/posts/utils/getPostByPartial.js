@@ -44,7 +44,7 @@ export default async function getPostByPartial(partial_name, filter, userToFilte
             } 
 
             customQueries.push({ _id: { $in: userPosts} });
-        } else if (filter === "myProjects") {
+        } else if (filter === "projects") {
             customQueries.push({ author: userToFilter });
         }
         

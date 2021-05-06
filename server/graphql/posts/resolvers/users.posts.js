@@ -131,7 +131,7 @@ export default {
 
         partial_post: async function (_, args, { req }) {
             const loadAmt = 2;
-
+            
             let posts = await getPostByPartial(args.partial_name, args.filter, args.userToFilter, args.sortingType, args.lastPostId, args.lastUniqueField, loadAmt, req.user);
 
             let fetchedAll = false;
