@@ -24,9 +24,7 @@ export default async function uploadMedia(req, res, next) {
                 let pathsCache = []; // here we store every file and if an error occurs we remove everything even if they were valid files
 
                 for (const file of files) {
-                    pathsCache.push(
-                        `${process.env.UPLOAD_FILES_PATH}/${file.path}`
-                    );
+                    pathsCache.push(`${process.env.UPLOAD_FILES_PATH}/${file.path}`);
 
                     if (filesHandler.validateFiles(file)) {
                         data.push({
@@ -56,13 +54,25 @@ export default async function uploadMedia(req, res, next) {
                         res.json({
                             message: "Successfully uploaded files.",
                             data: data,
-                            post: post,
+                            post: {
+                                id: post._id,
+                                author: post.author,
+                                collaborators: post.collaborators,
+                                comments: post.comments,
+                                createdAt: post.createdAt,
+                                description: post.description,
+                                images: post.images,
+                                likeAmt: post.likeAmt,
+                                likes: post.likes,
+                                links: post.links,
+                                tags: post.tags,
+                                thumbnail: post.thumbnail,
+                                title: post.title,
+                            },
                         });
                     } else {
                         filesHandler.deleteFiles(pathsCache); // [!] IMPORTANT: we delete everything because multer saves files immediately to the disk
-                        throw new Error(
-                            "Make sure the post id exists and you are the author of that post."
-                        );
+                        throw new Error("Make sure the post id exists and you are the author of that post.");
                     }
                 } else {
                     res.json({

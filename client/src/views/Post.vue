@@ -2,13 +2,7 @@
     <div class="main_post_container">
         <div v-if="postData">
             <PostMobile v-if="$store.getters.mobile" :projectData="postData" />
-            <PostDesktop
-                v-if="!$store.getters.mobile"
-                :projectData="postData"
-                :authorData="authorData"
-                :notifications="[]"
-                @postComment="postComment"
-            />
+            <PostDesktop v-if="!$store.getters.mobile" :projectData="postData" :authorData="authorData" :notifications="[]" @postComment="postComment" />
         </div>
     </div>
 </template>
@@ -30,12 +24,11 @@ export default {
     async created() {
         SharedMethods.loadPage();
 
-        await this.$store.dispatch(
-            "extractCachedPostById",
-            this.$route.params.postid
-        );
+        await this.$store.dispatch("extractCachedPostById", this.$route.params.postid);
 
         const cachedPost = this.$store.getters.cachedPostById;
+
+        // TODO: check if the post we want is the newlyMadePost, if so we dont need to fetch data because it is already in that object
 
         let toFetch = [];
 
@@ -45,23 +38,21 @@ export default {
             // we can use the cached data
             toFetch = [
                 `images {
-                ogname
+                    ogname
                 dbname
             }`,
                 "links",
                 "tags",
                 "createdAt",
                 `comments {
-                commenter
+                    commenter
                 comment
                 timestamp
             }`,
             ];
         } else {
             // get everything
-            console.log(
-                "this post was not cached, so I had to fetch everthing :("
-            );
+            console.log("this post was not cached, so I had to fetch everthing :(");
 
             toFetch = [
                 "author",
@@ -70,7 +61,7 @@ export default {
                 "description",
                 "id",
                 `images {
-                ogname
+                    ogname
                 dbname
             }`,
                 "isLiked",
@@ -81,43 +72,32 @@ export default {
                 "tags",
                 "createdAt",
                 `comments {
-                commenter
+                    commenter
                 comment
                 timestamp
             }`,
             ];
         }
 
-        const pData = await GraphQLService.fetchPostById(
-            this.$route.params.postid,
-            toFetch,
-            this.$store.getters.accessToken
-        );
+        const pData = await GraphQLService.fetchPostById(this.$route.params.postid, toFetch, this.$store.getters.accessToken);
 
         this.postData = pData.data.getPostById;
 
         if (cachedPost) {
             // we need to merge the new data to the cached post
             this.postData = Object.assign(this.postData, cachedPost);
+            // TODO: flag this post (merge it also in the cache) so if the user clicks again on the same post we don't have to refetch all this data
         }
         this.getAuthorData(this.postData.author);
     },
     methods: {
         getAuthorData(author) {
-            GraphQLService.fetchUserDetails(
-                author,
-                ["followerAmt", "isFollowing"],
-                this.$store.getters.username
-            ).then((res) => {
+            GraphQLService.fetchUserDetails(author, ["followerAmt", "isFollowing"], this.$store.getters.username).then((res) => {
                 this.authorData = res.data.user;
             });
         },
         async postComment(value) {
-            const response = await GraphQLService.commentOnPost(
-                this.postData.id,
-                value,
-                this.$store.getters.accessToken
-            );
+            const response = await GraphQLService.commentOnPost(this.postData.id, value, this.$store.getters.accessToken);
 
             // if it was successfull
             if (response.data.commentOnPost.commenter != null) {

@@ -1,7 +1,7 @@
-import User from "../../../components/user/user.model.js"; // TODO: move this inside GraphQL/
+import User from "../../../components/user/user.model.js";
 import bcrypt from "bcrypt";
 import SessionRevoker from "../../../components/tokens/SessionRevoker.js";
-import TokenHandler from "../../../components/tokens/TokenHandler.js"; // TODO: move this inside GraphQL/
+import TokenHandler from "../../../components/tokens/TokenHandler.js";
 
 import validateCreds from "../utils/validateCreds.js";
 import getUserEntry from "../utils/getUserEntry.js";
@@ -68,8 +68,7 @@ export default {
         getPersonalDetails: async function (_, args, { req }) {
             const jwtPayload = req.user;
 
-            if (!jwtPayload)
-                return { success: false, message: "Invalid token" };
+            if (!jwtPayload) return { success: false, message: "Invalid token" };
 
             try {
                 const user = await User.findOne({
@@ -101,9 +100,9 @@ export default {
             return getUserByPartial(args.partial_username, args.requester);
         },
 
-        getUnreadNotificationsData: async function(_, args, { req }) {
+        getUnreadNotificationsData: async function (_, args, { req }) {
             const jwtPayload = req.user;
-            
+
             if (!jwtPayload) throw new Error("Unauthenticated");
 
             try {
@@ -229,22 +228,16 @@ export default {
                     } else {
                         res.status(422);
 
-                        throw new AuthenticationError(
-                            "Unable to create token."
-                        );
+                        throw new AuthenticationError("Unable to create token.");
                     }
                 } catch {
                     res.status(401);
 
-                    throw new AuthenticationError(
-                        "Credentials are already taken."
-                    );
+                    throw new AuthenticationError("Credentials are already taken.");
                 }
             } else {
                 res.status(400);
-                throw new AuthenticationError(
-                    "Invalid credentials. Try again."
-                );
+                throw new AuthenticationError("Invalid credentials. Try again.");
             }
         },
 
@@ -253,8 +246,7 @@ export default {
 
             let editedData = [];
 
-            if (!jwtPayload)
-                return { success: false, message: "Invalid token" };
+            if (!jwtPayload) return { success: false, message: "Invalid token" };
 
             const user = await User.findOne({
                 _id: jwtPayload._id,
@@ -263,16 +255,7 @@ export default {
             // if the token is valid then we should def find a user...
             if (!user) return { success: false, message: "Internal error" };
 
-            const nonMod = [
-                "_id",
-                "id",
-                "tokenVersion",
-                "tag",
-                "createdAt",
-                "updatedAt",
-                "__v",
-                "v",
-            ];
+            const nonMod = ["_id", "id", "tokenVersion", "tag", "createdAt", "updatedAt", "__v", "v"];
 
             try {
                 // loop through all the fields that need to be changed
@@ -280,42 +263,22 @@ export default {
                     // checking if the received payload actually exists in the user object (maybe someone miss spells a field)
                     if (user[payload.field]) {
                         if (nonMod.includes(payload.field)) {
-                            throw new Error(
-                                `Cannot update field: ${payload.field}`
-                            );
+                            throw new Error(`Cannot update field: ${payload.field}`);
                         } else {
                             if (payload.field == "password") {
-                                if (
-                                    payload.newValue &&
-                                    payload.newValue.toString().trim() !== "" &&
-                                    payload.newValue.length > 8
-                                ) {
+                                if (payload.newValue && payload.newValue.toString().trim() !== "" && payload.newValue.length > 8) {
                                     // bcrypt generates a random salt at every bcrypt.hash so first we compare the passwords with the right function and then we hash the new one
                                     // really important the order of the function arguments here
-                                    if (
-                                        await bcrypt.compare(
-                                            payload.newValue,
-                                            user[payload.field]
-                                        )
-                                    )
-                                        throw new Error(
-                                            "Password can't be the same as the previous one."
-                                        );
-                                    const newHashedPass = await bcrypt.hash(
-                                        payload.newValue,
-                                        10
-                                    );
+                                    if (await bcrypt.compare(payload.newValue, user[payload.field])) throw new Error("Password can't be the same as the previous one.");
+                                    const newHashedPass = await bcrypt.hash(payload.newValue, 10);
 
                                     editedData.push({
                                         field: payload.field,
-                                        newValue:
-                                            "The password was successfully changed.",
+                                        newValue: "The password was successfully changed.",
                                     }); // the only case that we dont want to return the mutated data is for the password
                                     user[payload.field] = newHashedPass;
                                 } else {
-                                    throw new Error(
-                                        `Cannot update field: ${payload.field}, please enter a valid password with no spaces and > than 8 characters.`
-                                    );
+                                    throw new Error(`Cannot update field: ${payload.field}, please enter a valid password with no spaces and > than 8 characters.`);
                                 }
                             } else {
                                 editedData.push({
@@ -326,9 +289,7 @@ export default {
                             }
                         }
                     } else {
-                        throw new Error(
-                            `Field ${payload.field}: does not exist`
-                        );
+                        throw new Error(`Field ${payload.field}: does not exist`);
                     }
                 }
 
@@ -362,16 +323,12 @@ export default {
                 if (personToFollow && addFollowing) {
                     // check to make sure they are not already followed
                     if (
-                        !personToFollow.followers.includes(
-                            addFollowing.username
-                        ) &&
+                        !personToFollow.followers.includes(addFollowing.username) &&
                         personToFollow.username !== addFollowing.username // wanted to do it with IDs but for some reason the comparison wasn't working
                     ) {
                         personToFollow.followers.push(jwtPayload.username);
                     } else {
-                        throw new Error(
-                            `Unable to follow ${personPayload}, make sure you don't already follow them/you aren't following yourself!`
-                        );
+                        throw new Error(`Unable to follow ${personPayload}, make sure you don't already follow them/you aren't following yourself!`);
                     }
 
                     await personToFollow.save();
@@ -389,9 +346,7 @@ export default {
                     return null;
                 }
             } catch (err) {
-                throw new Error(
-                    "Something went wrong following " + personPayload
-                );
+                throw new Error("Something went wrong following " + personPayload);
             }
         },
 
@@ -416,15 +371,8 @@ export default {
                             break;
                         }
                     }
-                    for (
-                        let i = 0;
-                        i < userBeingRemoved.followers.length;
-                        i++
-                    ) {
-                        if (
-                            userBeingRemoved.followers[i] ===
-                            jwtPayload.username
-                        ) {
+                    for (let i = 0; i < userBeingRemoved.followers.length; i++) {
+                        if (userBeingRemoved.followers[i] === jwtPayload.username) {
                             userBeingRemoved.followers.splice(i, 1);
                             break;
                         }
@@ -442,9 +390,7 @@ export default {
                     return null;
                 }
             } catch {
-                throw new Error(
-                    "Something went wrong unfollowing " + personPayload
-                );
+                throw new Error("Something went wrong unfollowing " + personPayload);
             }
         },
 
@@ -462,10 +408,7 @@ export default {
 
                 if (user) {
                     for (let i = 0; i < user.notifications.length; i++) {
-                        if (
-                            user.notifications[i].type == "like" ||
-                            user.notifications[i].type == "follow"
-                        ) {
+                        if (user.notifications[i].type == "like" || user.notifications[i].type == "follow") {
                             user.notifications[i].read = true;
                         }
                     }
@@ -526,10 +469,7 @@ export default {
                     return {
                         success: false,
                         message: "User not found",
-                        stacktrace: [
-                            "deleteAccount function in user.account module",
-                            "couldn't find a user document given the jwt",
-                        ],
+                        stacktrace: ["deleteAccount function in user.account module", "couldn't find a user document given the jwt"],
                     };
                 }
 
@@ -539,9 +479,7 @@ export default {
                     return {
                         success: false,
                         message: "Unauthorized, incorrect password",
-                        stacktrace: [
-                            "deleteAccount function in user.account module",
-                        ],
+                        stacktrace: ["deleteAccount function in user.account module"],
                     };
                 }
 
@@ -564,10 +502,7 @@ export default {
                     return {
                         success: false,
                         message: e.message,
-                        stacktrace: [
-                            "deleteAccount function in user.account module",
-                            "internal error",
-                        ],
+                        stacktrace: ["deleteAccount function in user.account module", "internal error"],
                     };
                 }
             } else {

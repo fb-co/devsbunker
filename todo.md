@@ -15,6 +15,8 @@
 
 -   [x] **IMPORTANT** we might need to adjust the path passed in deleteFiles calls now that we have nested folders in the uploads/ one
 
+-   [ ] better post sanitazation
+
 -   [ ] send confirmation email for signup
 -   [x] implement login system
     -   [x] better error handling for both login and signup
@@ -48,7 +50,16 @@
 
 -   [x] posts cache stores duplicate posts after user creates a new one
 -   [ ] display links while viewing posts on desktop
--   [ ] handle non existing users by showing a 404
+-   [x] handle non existing users by showing a 404
+
+    -   [ ] do it better
+
+-   [ ] don't update Vuex in the logoutUser function in graphqlService
+-   [ ] check if the post we want is the newlyMade one in Post.vue, if so we don't need to fetch extra data
+-   [ ] once we fetch the extra data of a post we should merge that into the object in cache, so if the user clicks again on the same post we don't need to fetch it again
+-   [x] replace UserService.isLoggedIn in User.vue with $store.getters.username
+
+    -   can't be done
 
 -   [x] viewing other people's posts in their profile is broken
     -   [ ] need to add load more btn to mobile view
