@@ -29,10 +29,11 @@
                 <svg 
                     v-if="moreOptions"
                     @click.stop=""
+                    tabindex="0"
                     @focus.stop="moreOptionsMenu = true"
                     @blur="moreOptionsMenu = false" 
                     xmlns="http://www.w3.org/2000/svg" 
-                    class="icon icon-tabler icon-tabler-dots-vertical" 
+                    class="icon icon-tabler icon-tabler-dots-vertical moreOptionsSelector" 
                     width="25" 
                     height="25" 
                     viewBox="0 0 24 24" 
@@ -172,7 +173,6 @@ export default {
                 this.documents.length > 0 ? this.documents[this.documents.length-1].likeAmt : -1, // last unique field (only for most popular queries)
                 this.$store.getters.accessToken
             ).then((res) => {
-                console.log(res);
                 this.fetchedAllResults = res.data.partial_post.fetchedAll;
                 this.documents = this.documents.concat(res.data.partial_post.posts);
                 this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
@@ -205,6 +205,10 @@ export default {
 
     .post_search_bar {
         width: var(--width);
+    }
+
+    .moreOptionsSelector:focus {
+        outline: 1px solid var(--soft-text);
     }
 
     .loading_gif {
