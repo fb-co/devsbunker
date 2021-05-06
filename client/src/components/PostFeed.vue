@@ -88,7 +88,7 @@
                 <div v-if="rootComponent.posts.length > 0" class="post_wrapper">
                     <div class="posts_only_wrapper">
                         <div v-if="!desktop" class="running_out_of_wrapper_names">
-                            <MobileProjectCard class="mobile_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="85%" />
+                            <MobileProjectCard class="mobile_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="92%" />
                         </div>
                         <div v-else class="running_out_of_wrapper_names">
                             <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" />
@@ -104,7 +104,7 @@
                 <div v-if="searchResults.length > 0">
                     <div class="posts_only_wrapper">
                         <div v-if="!desktop" class="running_out_of_wrapper_names">
-                            <MobileProjectCard class="mobile_project_card" v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="85%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
+                            <MobileProjectCard class="mobile_project_card" v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="92%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
                         </div>
                         <div v-else class="running_out_of_wrapper_names">
                             <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
