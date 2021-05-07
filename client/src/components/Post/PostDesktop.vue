@@ -43,22 +43,7 @@
 
                 <Carousel class="main_carousel" :images="postImages" minWidth="150%" />
 
-                <div class="comment_section" v-if="projectData.comments">
-                    <p class="comments_title">{{ projectData.comments.length + (projectData.comments.length == 1 ? " Comment" : " Comments") }}</p>
-                    <div v-if="$store.getters.accessToken">
-                        <GeneralInput ref="comment_input" :labelIsPlaceholder="true" :isQuery="false" label="Leave a comment" width="100%" class="comment_field" />
-
-                        <button @click="postComment()" class="leave_comment_button">Post</button>
-                    </div>
-                    <Comment v-for="(comment, index) in projectData.comments" :key="index" :commentData="comment" />
-                </div>
-                <div v-else>
-                    <p class="comments_title">0 comments</p>
-
-                    <GeneralInput ref="comment_input" :labelIsPlaceholder="true" :isQuery="false" label="Leave a comment" width="100%" class="comment_field" />
-
-                    <button @click="postComment()" class="leave_comment_button">Post</button>
-                </div>
+                <CommentSection @postComment="$parent.postComment" :comments="projectData.comments" />
             </div>
             <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->
             <RightContent :notifications="notifications" />
@@ -69,10 +54,9 @@
 <script>
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
-import Comment from "@/components/Comment.vue";
+import CommentSection from "@/components/CommentSection.vue";
 import FollowButton from "@/components/FollowButton.vue";
 import Carousel from "@/components/Carousel.vue";
-import GeneralInput from "@/components/global/GeneralInput.vue";
 
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
@@ -90,8 +74,7 @@ export default {
         CreateTag,
         FollowButton,
         Carousel,
-        Comment,
-        GeneralInput
+        CommentSection,
     },
     data() {
         return {
@@ -108,16 +91,6 @@ export default {
                 this.postImages.push(
                     `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[i].dbname}`
                 );
-            }
-        }
-    },
-    methods: {
-        postComment() {
-            const comment = this.$refs.comment_input.getValue();
-
-            if (comment != "" && comment != null) { // the null check is done also server side
-                this.$emit("postComment", comment);
-                this.$refs.comment_input.clearValue();
             }
         }
     },
@@ -231,42 +204,5 @@ export default {
 #thumbnail img {
     width: 100%;
     height: 100%;
-}
-
-.comment_section {
-    width: 60%;
-    min-width: 700px;
-    margin: 75px auto 50px auto;
-    /*
-    margin-left: 50%;
-    transform: translateX(-50%);
-    */
-}
-.comments_title {
-    font-size: 25px;
-    color: var(--main-font-color);
-    margin-bottom: 25px;
-}
-.comment_field {
-    margin-bottom: 25px;
-    max-width: 500px;
-}
-
-.leave_comment_button {
-    background-color: var(--main-accent);
-    border: none;
-    outline: none;
-    border-radius: 12px;
-    width: 100px;
-    height: 40px;
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 40px;
-    margin-left: 5px;
-    cursor: pointer;
-}
-.leave_comment_button:hover {
-    box-shadow: 0px 4px 20px var(--main-accent);
 }
 </style>
