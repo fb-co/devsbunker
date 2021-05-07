@@ -1,5 +1,5 @@
 <template>
-    <div id="main_container">
+    <div class="main_container">
         <p v-if="title" class="title">{{ title }}</p>
         <div class="filter_dropdown_container">
             <PostSearch 
@@ -88,7 +88,7 @@
                 <div v-if="rootComponent.posts.length > 0" class="post_wrapper">
                     <div class="posts_only_wrapper">
                         <div v-if="!desktop" class="running_out_of_wrapper_names">
-                            <MobileProjectCard class="mobile_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="92%" />
+                            <MobileProjectCard class="mobile_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
                         </div>
                         <div v-else class="running_out_of_wrapper_names">
                             <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" />
@@ -104,7 +104,7 @@
                 <div v-if="searchResults.length > 0">
                     <div class="posts_only_wrapper">
                         <div v-if="!desktop" class="running_out_of_wrapper_names">
-                            <MobileProjectCard class="mobile_project_card" v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" width="92%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
+                            <MobileProjectCard class="mobile_project_card" v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
                         </div>
                         <div v-else class="running_out_of_wrapper_names">
                             <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" />
@@ -183,6 +183,10 @@ export default {
 </script>
 
 <style scoped>
+.main_container {
+    overflow: hidden;
+}
+
 .title {
     font-size: 20px;
     margin-top: 30px;
@@ -233,6 +237,8 @@ export default {
 }
 .mobile_project_card {
     margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
 }
 
 .no_projects {
@@ -251,5 +257,9 @@ export default {
     border: 1px solid black;
     cursor: pointer;
     width: 200px;
+}
+.load_more_btn:hover {
+    font-weight: bold;
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
 }
 </style>
