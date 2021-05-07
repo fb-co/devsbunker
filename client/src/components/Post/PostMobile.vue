@@ -102,6 +102,8 @@
             <LinkItem v-for="link in projectData.links" :key="link" :link="link" class="link_item" />
         </div>
         <CarouselMobile :images="postImages" />
+
+        <CommentSection @postComment="$parent.postComment" :mobile="true" :comments="projectData.comments" style="margin-top: 30px;" />
     </div>
 </template>
 
@@ -110,6 +112,7 @@ import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import LinkItem from "./Link.vue";
 import CarouselMobile from "@/components/CarouselMobile.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
+import CommentSection from "@/components/CommentSection.vue";
 
 export default {
     data() {
@@ -127,6 +130,7 @@ export default {
         LinkItem,
         CarouselMobile,
         CreateTag,
+        CommentSection
     },
     created() {
         window.scrollTo(0, 0); // this is because for some reason loading mobile posts doesnt always start you at the top

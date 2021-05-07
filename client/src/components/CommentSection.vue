@@ -1,5 +1,5 @@
 <template>
-    <div class="comment_section" v-if="comments">
+    <div :class="{ comment_section_desktop: !mobile, comment_section_mobile: mobile }" v-if="comments">
         <p class="comments_title">{{ comments.length + (comments.length == 1 ? " Comment" : " Comments") }}</p>
         <div v-if="$store.getters.accessToken">
             <GeneralInput ref="comment_input" :labelIsPlaceholder="true" :isQuery="false" label="Leave a comment" width="100%" class="comment_field" />
@@ -20,7 +20,11 @@ import GeneralInput from "@/components/global/GeneralInput.vue";
 
 export default {
     props: {
-        comments: Array
+        comments: Array,
+        mobile: {
+            type: Boolean,
+            default: false
+        }
     },
     components: {
         Comment,
@@ -40,8 +44,8 @@ export default {
 </script>
 
 <style scoped>
-    .comment_section {
-        width: 60%;
+    .comment_section_desktop {
+        width: 100%;
         min-width: 700px;
         margin: 75px auto 50px auto;
         /*
@@ -49,10 +53,16 @@ export default {
         transform: translateX(-50%);
         */
     }
+    .comment_section_mobile {
+        width: 100%;
+        padding: 15px;
+    }
     .comments_title {
         font-size: 25px;
         color: var(--main-font-color);
         margin-bottom: 25px;
+        text-align: left;
+        padding-left: 10px;
     }
     .comment_field {
         margin-bottom: 25px;

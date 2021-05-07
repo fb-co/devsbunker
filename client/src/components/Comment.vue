@@ -35,6 +35,7 @@ export default {
     max-width: 10%;
 }
 .commentMessage_container {
+    text-align: left;
     margin-left: 30px;
     display: flex;
     flex-direction: column;
@@ -43,11 +44,13 @@ export default {
 .comment_author {
     font-weight: bold;
     margin-bottom: 10px;
+    padding-left: 15px;
 }
 .comment_message {
     color: var(--soft-text);
     overflow-wrap: break-word;
     word-wrap: break-word;
+    padding-left: 15px;
 }
 .timestamp {
     font-weight: normal;
