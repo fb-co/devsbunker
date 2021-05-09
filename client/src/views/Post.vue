@@ -28,66 +28,69 @@ export default {
 
         const cachedPost = this.$store.getters.cachedPostById;
 
-        // TODO: check if the post we want is the newlyMadePost, if so we dont need to fetch data because it is already in that object
-
-        let toFetch = [];
-
-        if (cachedPost) {
-            console.log("this post was cached, so I had to fetch less data :D");
-
-            // we can use the cached data
-            toFetch = [
-                `images {
-                    ogname
-                dbname
-            }`,
-                "links",
-                "tags",
-                "createdAt",
-                `comments {
-                    commenter
-                comment
-                timestamp
-            }`,
-            ];
+        if (this.$store.getters.cachedNewlyMadePost && cachedPost.id === this.$store.getters.cachedNewlyMadePost.id) {
+            this.postData = this.$store.getters.cachedNewlyMadePost;
         } else {
-            // get everything
-            console.log("this post was not cached, so I had to fetch everthing :(");
+            let toFetch = [];
 
-            toFetch = [
-                "author",
-                "title",
-                "bunkerTag",
-                "description",
-                "id",
-                `images {
-                    ogname
-                dbname
-            }`,
-                "isLiked",
-                "isSaved",
-                "likeAmt",
-                "price",
-                "links",
-                "tags",
-                "createdAt",
-                `comments {
-                    commenter
-                comment
-                timestamp
-            }`,
-            ];
+            if (cachedPost) {
+                console.log("this post was cached, so I had to fetch less data :D");
+
+                // we can use the cached data
+                toFetch = [
+                    `images {
+                        ogname
+                    dbname
+                }`,
+                    "links",
+                    "tags",
+                    "createdAt",
+                    `comments {
+                        commenter
+                    comment
+                    timestamp
+                }`,
+                ];
+            } else {
+                // get everything
+                console.log("this post was not cached, so I had to fetch everthing :(");
+
+                toFetch = [
+                    "author",
+                    "title",
+                    "bunkerTag",
+                    "description",
+                    "id",
+                    `images {
+                        ogname
+                    dbname
+                }`,
+                    "isLiked",
+                    "isSaved",
+                    "likeAmt",
+                    "price",
+                    "links",
+                    "tags",
+                    "createdAt",
+                    `comments {
+                        commenter
+                    comment
+                    timestamp
+                }`,
+                ];
+            }
+
+            const pData = await GraphQLService.fetchPostById(this.$route.params.postid, toFetch, this.$store.getters.accessToken);
+
+            this.postData = pData.data.getPostById;
+
+            if (cachedPost) {
+                // we need to merge the new data to the cached post
+                this.postData = Object.assign(this.postData, cachedPost);
+                // TODO: flag this post (merge it also in the cache) so if the user clicks again on the same post we don't have to refetch all this data
+            }
         }
 
-        const pData = await GraphQLService.fetchPostById(this.$route.params.postid, toFetch, this.$store.getters.accessToken);
-
-        this.postData = pData.data.getPostById;
-
-        if (cachedPost) {
-            // we need to merge the new data to the cached post
-            this.postData = Object.assign(this.postData, cachedPost);
-            // TODO: flag this post (merge it also in the cache) so if the user clicks again on the same post we don't have to refetch all this data
-        }
         this.getAuthorData(this.postData.author);
     },
     methods: {
