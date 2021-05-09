@@ -48,6 +48,7 @@
 
 ## Frontend
 
+-   [ ] i think that the posts hot reload thing isnt implemented yet for the mobile version... maybe im wrong
 -   [x] posts cache stores duplicate posts after user creates a new one
 -   [ ] display links while viewing posts on desktop
 -   [x] handle non existing users by showing a 404
@@ -55,7 +56,7 @@
     -   [ ] do it better
 
 -   [ ] don't update Vuex in the logoutUser function in graphqlService
--   [ ] check if the post we want is the newlyMade one in Post.vue, if so we don't need to fetch extra data
+-   [x] check if the post we want is the newlyMade one in Post.vue, if so we don't need to fetch extra data
 -   [ ] once we fetch the extra data of a post we should merge that into the object in cache, so if the user clicks again on the same post we don't need to fetch it again
 -   [x] replace UserService.isLoggedIn in User.vue with $store.getters.username
 
