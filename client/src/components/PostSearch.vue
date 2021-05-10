@@ -50,12 +50,20 @@
                 </svg>
             </SpicyInput>
             
-            <div>
+            <div v-if="!$store.getters.mobile">
                 <div v-if="moreOptionsMenu" class="more_options">
                     <p class="list_title">Search By:</p>
                     <p class="more_option" @mousedown.stop="addToInput('tag:')">Tag</p>
                     <p class="more_option" @mousedown.stop="addToInput('author:')">Author</p>
                 </div>
+            </div>
+            <div v-else>
+                <div v-if="moreOptionsMenu" class="more_options_mobile">
+                    <h4>Search By</h4>
+                    <p @mousedown.stop="addToInput('tag:')">Tag</p>
+                    <p @mousedown.stop="addToInput('author:')">Author</p>
+                </div>
+                <div v-if="moreOptionsMenu" class="more_options_backdrop"></div>
             </div>
         </div>      
     </div>
@@ -64,6 +72,7 @@
 <script>
 import GraphQLService from '@/services/graphql.service';
 import SpicyInput from "@/components/global/SpicyInput.vue";
+//import ScreenType from "@/utils/screenType.js";
 
 export default {
     data() {
@@ -184,7 +193,7 @@ export default {
         addToInput(value) {
             this.$refs.general_input.value = value;
             setTimeout(() => {this.$refs.general_input.focus(); }, 100); // since the binding is on keydown you need to do this (I know its a little janky)
-        }
+        },
     }
 }
 </script>
@@ -198,6 +207,14 @@ export default {
             width: 100%;
         }
     }
+    @keyframes moreOptionsSlider {
+    from {
+        transform: translate(50%) translateY(100%);
+    }
+    to {
+        transform: translate(50%) translateY(0%);
+    }
+}
     .input_loading_cont {
         display: flex;
         flex-direction: row;
@@ -228,6 +245,7 @@ export default {
         width: 200px;
         background-color: var(--secondary-color);
         box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        z-index: 50;
     }
     .more_option {
         margin-top: 15px;
@@ -240,6 +258,45 @@ export default {
     }
     .main_input {
         font-size: 18px;
+    }
+
+    .more_options_mobile {
+        position: fixed;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--main-color);
+        bottom: 0px;
+        right: 50%;
+        transform: translateX(50%);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding-bottom: 40px;
+        z-index: 50;
+        animation: moreOptionsSlider 0.5s;
+    }
+    .more_options_mobile h4 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .more_options_mobile p {
+        cursor: pointer;
+        width: 100%;
+        padding-top: 13px;
+        padding-bottom: 13px;
+        color: var(--main-font-color);
+    }
+    .more_options_mobile p:hover {
+        color: var(--soft-text);
+    }
+    .more_options_backdrop {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        z-index: 49;
+        background-color: rgba(0, 0, 0, 0.5);
     }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="main_container">
+    <div id="main_container">
         <p v-if="title" class="title">{{ title }}</p>
         <div class="filter_dropdown_container">
             <PostSearch 
@@ -183,10 +183,6 @@ export default {
 </script>
 
 <style scoped>
-.main_container {
-    overflow: hidden;
-}
-
 .title {
     font-size: 20px;
     margin-top: 30px;
