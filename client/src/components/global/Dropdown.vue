@@ -1,6 +1,14 @@
 <template>
     <div @mouseleave="closeMenu()" class="menu no_select" :style="cssProps">
-        <div @click="openMenu('click')" @mouseover="openMenu('hover')" class="label_wrapper">
+        <div 
+            
+            ref="focusableElement"
+            @click.stop="openMenu('click')" 
+            @mouseover="openMenu('hover')" 
+            @blur="closeMenu()"
+            tabindex="0"
+            class="label_wrapper"
+        >
             <p>{{ activeLabel }}</p>
             <div class="vertical_flex_center">
                 <svg width="8" height="8" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -8,7 +16,7 @@
                 </svg>
             </div>
         </div>
-        <div @click="handleClick" class="menu_cont" ref="options">
+        <div @mousedown="handleClick" class="menu_cont" ref="options">
             <slot>
 
             </slot>
@@ -76,6 +84,7 @@ export default {
                 this.$el.getElementsByClassName('menu_cont')[0].style.display = "flex";
                 this.isOpen = true;
             }
+            this.$refs.focusableElement.focus(); // for safari users
         },
         closeMenu() {
             this.$el.getElementsByClassName('menu_cont')[0].style.display = "none";
@@ -129,11 +138,11 @@ export default {
     height: var(--main-height);
     line-height: var(--main-height); /* I have bad expereince with line-height, so if your having strange errors, try and remove this */
 }
-.menu > p {
-    display: inline-block;
-}
 .label_wrapper:hover > p {
     font-weight: bold;
+}
+.menu > p {
+    display: inline-block;
 }
 .menu svg {
     width: 10px;

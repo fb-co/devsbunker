@@ -28,10 +28,10 @@
                 <input @input="queryData()" class="main_input" ref="general_input" placeholder='search...'>
                 <svg 
                     v-if="moreOptions"
-                    @click.stop=""
+                    ref="moreOptionsIcon"
+                    @click.stop="openMoreMenu()"
+                    @blur="moreOptionsMenu = false;"
                     tabindex="0"
-                    @focus.stop="moreOptionsMenu = true"
-                    @blur="moreOptionsMenu = false" 
                     xmlns="http://www.w3.org/2000/svg" 
                     class="icon icon-tabler icon-tabler-dots-vertical moreOptionsSelector" 
                     width="25" 
@@ -63,7 +63,7 @@
                     <p @mousedown.stop="addToInput('tag:')">Tag</p>
                     <p @mousedown.stop="addToInput('author:')">Author</p>
                 </div>
-                <div v-if="moreOptionsMenu" class="more_options_backdrop"></div>
+                <div v-if="moreOptionsMenu" class="more_options_backdrop" @click.stop=""></div>
             </div>
         </div>      
     </div>
@@ -119,6 +119,11 @@ export default {
         SpicyInput
     },
     methods: {
+        // needs to be a function because safari has tabindex disabled by default
+        openMoreMenu() {
+            this.moreOptionsMenu = true;
+            this.$refs.moreOptionsIcon.focus();
+        },
         queryData() {
             this.documents = [];
             if (this.$refs.general_input.value != "" && this.$refs.general_input.value.length > 2) {
