@@ -17,7 +17,7 @@
             <!-- Static menu items (dont go into burger menu) -->
             <div class="nav_links_container">
                 <div class="static_nav_links desktop_only">
-                    <NavBarSearch />
+                    <!--<NavBarSearch /> -->
 
                     <router-link to="/" class="static_link">
                         <svg
@@ -79,8 +79,6 @@
                         <div class="burger_menu_cont" id="main_burger_menu">
                             <!-- make sure not to make that function have '()' because I not giving the directive the return value! -->
                             <div class="burger_cont_links" @click="hideBurgerMenu()">
-                                <input placeholder="Search..." class="light_input_selection" />
-
                                 <!--<router-link to="/">Home</router-link>-->
                                 <router-link to="/market">Market</router-link>
                                 <router-link to="/users">People</router-link>
@@ -112,7 +110,7 @@
 
 <script>
 import GlobalComponents from "@/components/global/GlobalComponents.js";
-import NavBarSearch from "./NavBarSearch.vue";
+// import NavBarSearch from "./NavBarSearch.vue"; might re-add this in the future
 import GraphQLService from "../services/graphql.service";
 
 import ProfilePicture from "@/components/ProfilePicture.vue";
@@ -130,7 +128,7 @@ export default {
     },
     components: {
         ...GlobalComponents,
-        NavBarSearch,
+        //NavBarSearch,
         ProfilePicture,
         NotificationIcon,
     },

@@ -138,6 +138,9 @@ export default {
     height: var(--main-height);
     line-height: var(--main-height); /* I have bad expereince with line-height, so if your having strange errors, try and remove this */
 }
+.label_wrapper:focus {
+    outline: none;
+} 
 .label_wrapper:hover > p {
     font-weight: bold;
 }
