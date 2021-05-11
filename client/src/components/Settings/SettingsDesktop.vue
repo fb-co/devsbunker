@@ -4,7 +4,9 @@
             <div class="settings_list">
                 <ul>
                     <li class="list_title">Settings</li>
-
+                    
+                    <SettingSearch />
+                    <!--
                     <CustomInput>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" />
@@ -13,6 +15,7 @@
                         </svg>
                         <input type="text" name="search" id="setting_search" placeholder="Search a setting...">
                     </CustomInput>
+                    -->
 
                     <!-- setting list on the left side -->
                     <SettingList />
@@ -29,6 +32,7 @@
 </template>
 
 <script>
+import SettingSearch from "@/components/SettingSearch.vue";
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import SettingsComponents from "./desktop/SettingSections/desktop.import.settings.js"; /* Import the different components for the settings tabs */
 import SettingList from "./desktop/SettingList";
@@ -38,6 +42,7 @@ export default {
         ...GlobalComponents,
         ...SettingsComponents,
         SettingList,
+        SettingSearch
     },
 };
 </script>
