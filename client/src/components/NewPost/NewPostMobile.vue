@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="new_post_background">
         <div ref="main_container" class="new_post_container">
             <div class="header">
                 <svg

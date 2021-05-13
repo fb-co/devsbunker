@@ -30,16 +30,16 @@
             <button @click="add_entry()" v-if="searchFor==='links'" class="add_link_btn">Add</button>
 
             <div v-for="entry in selected_entries" :key="entry" class="contributer">
-                <CreateTag tagType="lang" :label="entry"  v-if="searchFor === 'tags'" />
+                <CreateTag tagType="lang" :label="entry"  v-if="searchFor === 'languages'" />
                 <div v-else>
-                    <p v-if="entry.length < 20">{{ entry }}</p>
-                    <p v-else>{{ entry.slice(0, 20) + "..." }}</p>
+                    <p class="entry-text" v-if="entry.length < 20">{{ entry }}</p>
+                    <p class="entry-text" v-else>{{ entry.slice(0, 20) + "..." }}</p>
                 </div>
                 <div class="remove_cont_container">
                     <svg
                         @click="remove_entry(entry)"
                         xmlns="http://www.w3.org/2000/svg"
-                        class="icon icon-tabler icon-tabler-circle-x"
+                        class="icon icon-tabler icon-tabler-circle-x contributer_close"
                         width="25"
                         height="25"
                         viewBox="0 0 24 24"
@@ -121,8 +121,6 @@ export default {
             for (let i = 0; i < this.selected_entries.length; i++) {
                 if (this.selected_entries[i] == value) {
                     duplicate = true;
-
-                    this.highlightEntry(this.selected_entries[i]);
                 }
             }
 
@@ -194,11 +192,15 @@ export default {
     margin-bottom: 10px;
     margin-top: 20px;
 }
-.contributer > p {
-    margin-right: 15px;
-}
-.contributer > svg:hover {
+.contributer_close:hover {
     stroke-width: 2.2px;
+}
+.entry-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    margin-right: 10px;
 }
 
 .add_link_btn {

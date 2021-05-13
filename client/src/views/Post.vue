@@ -4,6 +4,7 @@
             <PostMobile v-if="$store.getters.mobile" :projectData="postData" />
             <PostDesktop v-if="!$store.getters.mobile" :projectData="postData" :authorData="authorData" :notifications="[]" @postComment="postComment" />
         </div>
+        <NewPostMenu ref="newPostMenu" />
     </div>
 </template>
 
@@ -13,6 +14,7 @@ import GraphQLService from "../services/graphql.service";
 
 import PostMobile from "../components/Post/PostMobile.vue";
 import PostDesktop from "../components/Post/PostDesktop.vue";
+import NewPostMenu from "../components/NewPost/NewPost.vue";
 
 export default {
     data() {
@@ -107,10 +109,18 @@ export default {
                 this.postData.comments.push(response.data.commentOnPost);
             }
         },
+        openPostMenu() {
+            console.log(this.$refs.newPostMenu);
+            this.$refs.newPostMenu.open();
+        },
+        closePostMenu() {
+            this.$refs.newPostMenu.close();
+        },
     },
     components: {
         PostMobile,
         PostDesktop,
+        NewPostMenu
     },
 };
 </script>
