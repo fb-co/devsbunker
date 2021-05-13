@@ -30,25 +30,30 @@
             <button @click="add_entry()" v-if="searchFor==='links'" class="add_link_btn">Add</button>
 
             <div v-for="entry in selected_entries" :key="entry" class="contributer">
-                <p v-if="entry.length < 20">{{ entry }}</p>
-                <p v-else>{{ entry.slice(0, 20) + "..." }}</p>
-                <svg
-                    @click="remove_entry(entry)"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-circle-x remove_cont"
-                    width="25"
-                    height="25"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="#2c3e50"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M10 10l4 4m0 -4l-4 4" />
-                </svg>
+                <div v-if="searchFor === 'users'">
+                    <p v-if="entry.length < 20">{{ entry }}</p>
+                    <p v-else>{{ entry.slice(0, 20) + "..." }}</p>
+                </div>
+                <CreateTag tagType="lang" :label="entry"  v-else />
+                <div class="remove_cont_container">
+                    <svg
+                        @click="remove_entry(entry)"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-circle-x"
+                        width="25"
+                        height="25"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="#2c3e50"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M10 10l4 4m0 -4l-4 4" />
+                    </svg>
+                </div>
             </div>
         </div>
     </div>
@@ -56,6 +61,7 @@
 
 <script>
 import QueryInput from "@/components/QueryInput.vue";
+import CreateTag from "./CreateTag";
 
 export default {
     data() {
@@ -106,17 +112,30 @@ export default {
         },
 
         add_entry(value) {
+            let duplicate = false;
+
             if (!value) {
                 value = this.$refs.tag_search.getValue();
             }
 
-            this.$refs.tag_search.queryData();
-            this.selected_entries.push(value);
-            this.$refs.tag_search.clearValue();
+            for (let i = 0; i < this.selected_entries.length; i++) {
+                if (this.selected_entries[i] == value) {
+                    duplicate = true;
+
+                    this.highlightEntry(this.selected_entries[i]);
+                }
+            }
+
+            if (!duplicate) {
+                this.$refs.tag_search.queryData();
+                this.selected_entries.push(value);
+                this.$refs.tag_search.clearValue();
+            }
         },
     },
     components: {
         QueryInput,
+        CreateTag
     },
 };
 </script>
@@ -193,6 +212,12 @@ export default {
 }
 .add_link_btn:hover {
     box-shadow: 0px 4px 20px var(--main-accent);
+}
+
+.remove_cont_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* Scrollbar */

@@ -1,4 +1,5 @@
 <template>
+    <!-- Parent needs to have a add_entry() function -->
     <div class="query_input_container" @keyup.stop="nextDocument"> <!-- Stop the event propogation for the keyup function -->
         <input @click.stop="" @input="queryData()" ref="input_ref" class="main_query_input" :placeholder="placeholder">
         <div class="main_query_results" ref="results">
@@ -94,7 +95,6 @@ export default {
             } else if (event.keyCode == 40) {
                 this.selectedDocument++;
             } else if (event.keyCode == 13) {
-                console.log("bruh");
                 // handle for pressing enter
                 if (this.documents[this.selectedDocument] !== undefined) {
                     this.addEntry(this.documents[this.selectedDocument].username || this.documents[this.selectedDocument].name);
@@ -112,8 +112,10 @@ export default {
         },
 
         addEntry(value) {
-            this.$parent.add_entry(value);
-            this.documents = [];
+            if (value !== "") {
+                this.$parent.add_entry(value);
+                this.documents = [];
+            }
         }, 
     }
 }
