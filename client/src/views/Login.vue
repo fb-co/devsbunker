@@ -25,6 +25,7 @@
 
                 <input
                     @click="errMessage ? errMessage = '' : {}"
+                    ref="username_field"
                     id="userID"
                     class="form_field"
                     name="userID"
@@ -281,6 +282,9 @@ export default {
         });
 
         SharedMethods.loadPage();
+    },
+    mounted() {
+        this.$refs.username_field.focus(); // autofocus the field
     },
     mixins: [GeneralProperties],
 
