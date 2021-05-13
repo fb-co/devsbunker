@@ -63,7 +63,7 @@
     -   can't be done
 
 -   [x] viewing other people's posts in their profile is broken
-    -   [ ] need to add load more btn to mobile view
+    -   [x] need to add load more btn to mobile view
 -   [ ] get rid of DevBunkerTag and clip fields
 -   [x] just noting down (otherwise I forget it) that we could optimize the fetching process due to the change in your latest commit. We should fetch less data when fetching post details for the project cards and then fetching everything in the Post view. We should also cache the first fetched details.
 
@@ -94,8 +94,8 @@
 -   [x] error handling for the settings: if we pass a non valid setting like /settings/test it still displays stuff and not a 404
 -   [x] change url dynamically based on selected setting option
 -   [x] The theme changin icon (sun and moon) should be inverted to denote which theme the user is currently using
--   [ ] Make the first field in the login and signup pages be auto focused on when thep age is loaded
-    -   [ ] **why is this so hard im crying**
+-   [x] Make the first field in the login and signup pages be auto focused on when thep age is loaded
+    -   [x] **why is this so hard im crying** (this was sooper EZ u just smull braine)
 -   [ ] add the eye button thing to signup card
 -   [x] Error handling and validation for making posts
 -   [x] make sure that the heart icon is filled even after refresh if user has already liked a post
