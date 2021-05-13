@@ -5,7 +5,10 @@
             <GeneralInput ref="comment_input" :labelIsPlaceholder="true" :isQuery="false" label="Leave a comment" width="100%" class="comment_field" />
             <button @click="postComment()" class="leave_comment_button">Post</button>
         </div>
-        <Comment v-for="(comment, index) in comments" :key="index" :commentData="comment" />
+        <router-link to="/login" class="login_prompt" v-else>Login</router-link>
+        <div style="margin-top: 20px;">
+            <Comment v-for="(comment, index) in comments" :key="index" :commentData="comment" />
+        </div>
     </div>
     <div v-else>
         <p class="comments_title">0 comments</p>
@@ -56,11 +59,12 @@ export default {
     .comment_section_mobile {
         width: 100%;
         padding: 15px;
+        text-align: left;
     }
     .comments_title {
         font-size: 25px;
         color: var(--main-font-color);
-        margin-bottom: 25px;
+        margin-bottom: 30px;
         text-align: left;
         padding-left: 10px;
     }
@@ -84,6 +88,26 @@ export default {
         cursor: pointer;
     }
     .leave_comment_button:hover {
+        box-shadow: 0px 4px 20px var(--main-accent);
+    }
+
+    .login_prompt {
+        background-color: var(--main-accent);
+        border: none;
+        outline: none;
+        border-radius: 12px;
+        width: 100px;
+        height: 40px;
+        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 40px;
+        margin-left: 10px;
+        cursor: pointer;
+        text-decoration: none;
+        padding: 10px;
+    }
+    .login_prompt:hover {
         box-shadow: 0px 4px 20px var(--main-accent);
     }
 </style>

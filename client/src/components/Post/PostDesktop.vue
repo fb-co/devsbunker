@@ -35,11 +35,14 @@
 
                 <p id="description">
                     {{ projectData.description }}
-                    <br />Et sed maxime maiores harum nulla et voluptatem expedita.
-                    Laboriosam quia provident corporis cum doloremque esse non.
-                    Facilis nisi omnis id voluptates natus. Eum distinctio
-                    molestias sed aspernatur aut. Ea blanditiis ab aut quia hi
+                    <br>
+                    If you don't like a test prompt, you can get a different (random) prompt with the "change test" button - or select a specific paragraph to type from the list below. To find out how fast you type, just start typing in the blank textbox on the right of the test prompt. You will see your progress, including errors on the left side as you type. In order to complete the test and save your score, you need to get 100% accuracy. You can fix errors as you go, or correct them at the end with the help of the spell checker.
                 </p>
+
+                <p class="links_label">Links</p>
+                <div class="links_container">
+                    <Link v-for="(link, index) in projectData.links" :key="index" :link="link" :hoverEffect="true" class="desktop_link" />
+                </div>
 
                 <Carousel class="main_carousel" :images="postImages" minWidth="150%" />
 
@@ -57,6 +60,7 @@ import CreateTag from "@/components/NewPost/CreateTag.vue";
 import CommentSection from "@/components/CommentSection.vue";
 import FollowButton from "@/components/FollowButton.vue";
 import Carousel from "@/components/Carousel.vue";
+import Link from "./Link.vue";
 
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
@@ -75,6 +79,7 @@ export default {
         FollowButton,
         Carousel,
         CommentSection,
+        Link
     },
     data() {
         return {
@@ -83,6 +88,7 @@ export default {
         };
     },
     created() {
+        console.log(this.projectData);
         this.thumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
 
         // avoiding to push the thumbnail
@@ -193,6 +199,25 @@ export default {
     width: 100%;
 
     margin-top: -35px;
+}
+.desktop_link {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100px;
+}
+.links_container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.links_label {
+    margin-top: 75px;
+    text-align: center;
+    font-size: 19px;
+    color: var(--soft-text);
+    font-weight: bold;
 }
 #thumbnail {
     width: 100%;
