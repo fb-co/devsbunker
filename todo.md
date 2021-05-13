@@ -7,7 +7,7 @@
 
 ## General
 
--   [ ] we should not let users put duplicated tags and links in post such as Python, Python, JS, Java, Java and www.google.com www.google.com
+-   [x] we should not let users put duplicated tags and links in post such as Python, Python, JS, Java, Java and www.google.com www.google.com
 
 -   [x] **Critical**: updating the password with the graphql route lets you set a single character password (i believe it doesnt acutally get set in the db but the route says that the operation was successfull) [sorry for the spaghetti english but I gotta eat lunch, this was a quick note before I totally forgot about it]
 
