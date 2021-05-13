@@ -11,7 +11,7 @@
                 @updateFilterDropdown="updateFilterDropdown"
                 :loaded="loaded"
             />
-            <NewPost ref="newPostMenu" v-on:updateFeed="updateFeed($event)" />
+            <NewPost ref="newPostMenu" @updateFeed="updateFeed($event)" />
         </div>
     </div>
 </template>
@@ -74,6 +74,7 @@ export default {
         },
 
         updateFeed(flag) {
+            console.log("step: 3");
             /**
              * After creating a new post, we don't want to grab the lastPostId and start fetching from there, we instead want to fetch the latest 3 posts.
              * If we grab the lastPostId this happens:

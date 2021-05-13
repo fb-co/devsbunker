@@ -7,10 +7,11 @@
                 <div class="card_container">
                     <p class="card_name">{{ userObject.username }}</p>
                     <p class="card_desc">{{ userObject.desc }}</p>
-                    <form>
-                        <!-- Not sure if this is nessacary, but I assume you need a form to get data to the server -->
-                        <input type="submit" value="Follow" @click.prevent="follow()" />
-                    </form>
+                    
+                    <!-- Not sure if this is nessacary, but I assume you need a form to get data to the server -->
+                    <button v-if="userObject.isFollowing" type="submit" @click.prevent="unfollow()" class="follow_button">Unfollow</button>
+                    <button v-else type="submit" @click.prevent="follow()" class="follow_button">Follow</button>
+
                     <div class="follower_container">
                         <div class="follow_count">
                             <p class="follow_label">Followers</p>
@@ -42,6 +43,7 @@
 <script>
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import PostFeed from "@/components/PostFeed.vue";
+import GraphQLService from "@/services/graphql.service";
 
 export default {
     data() {
@@ -56,13 +58,35 @@ export default {
     props: {
         mainUserObject: Object,
     },
+    created() {
+        console.log(this.userObject);
+    },
     methods: {
         navigateTo(elem) {
             this.activeSection = elem;
         },
         follow() {
-            console.log("TODO");
+            GraphQLService.followPerson(
+                this.$store.getters.accessToken,
+                this.userObject.username
+            ).then((newFollowers) => {
+                if (newFollowers.data.followPerson) {
+                    this.userObject.followerAmt = newFollowers.data.followPerson.followerAmt;
+                    this.userObject.isFollowing = newFollowers.data.followPerson.isFollowing;
+                }
+            });
         },
+        unfollow() {
+            GraphQLService.unfollowPerson(
+                this.$store.getters.accessToken,
+                this.userObject.username
+            ).then((newFollowers) => {
+                if (newFollowers.data.unfollowPerson) {
+                    this.userObject.followerAmt = newFollowers.data.unfollowPerson.followerAmt;
+                    this.userObject.isFollowing = newFollowers.data.unfollowPerson.isFollowing;
+                }
+            });
+        }
     },
 };
 </script>
@@ -153,7 +177,7 @@ export default {
     font-size: 11px;
 }
 
-input[type="submit"] {
+.follow_button {
     width: 200px;
     font-size: 1rem;
     font-weight: 900;

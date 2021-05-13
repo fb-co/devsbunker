@@ -30,11 +30,11 @@
             <button @click="add_entry()" v-if="searchFor==='links'" class="add_link_btn">Add</button>
 
             <div v-for="entry in selected_entries" :key="entry" class="contributer">
-                <div v-if="searchFor === 'users'">
+                <CreateTag tagType="lang" :label="entry"  v-if="searchFor === 'tags'" />
+                <div v-else>
                     <p v-if="entry.length < 20">{{ entry }}</p>
                     <p v-else>{{ entry.slice(0, 20) + "..." }}</p>
                 </div>
-                <CreateTag tagType="lang" :label="entry"  v-else />
                 <div class="remove_cont_container">
                     <svg
                         @click="remove_entry(entry)"
