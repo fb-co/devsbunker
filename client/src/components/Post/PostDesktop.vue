@@ -41,7 +41,7 @@
 
                 <p class="links_label">Links</p>
                 <div class="links_container">
-                    <Link v-for="(link, index) in projectData.links" :key="index" :link="link" :hoverEffect="true" class="desktop_link" />
+                    <Link v-for="(link, index) in projectData.links" :key="index" :link="link" class="desktop_link" />
                 </div>
 
                 <Carousel class="main_carousel" :images="postImages" minWidth="150%" />

@@ -136,7 +136,9 @@
                                     <line x1="8.7" y1="13.3" x2="15.3" y2="16.7" />
                                 </svg>
                             </div>
-                            <p>Share</p>
+                            <div class="op_label_container">
+                                <p class="op_label">Share</p>
+                            </div>
                         </div>
                         <div class="op_wrapper" v-if="projectData.author === $store.getters.username" @mousedown.stop="deletePost()">
                             <div class="op_icon">
@@ -160,7 +162,9 @@
                                     <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                                 </svg>
                             </div>
-                            <p>Delete</p>
+                            <div class="op_label_container">
+                                <p class="op_label">Delete</p>
+                            </div>
                         </div>
                         <div class="op_line"></div>
                     </div>
@@ -403,8 +407,9 @@ export default {
 
     display: flex;
     flex-direction: column;
-    cursor: initial;
+    
 }
+
 
 /*
 .more_options_button {
@@ -414,16 +419,35 @@ export default {
 
 .op_wrapper {
     width: 100%;
-    padding-top: 15px;
-    padding-bottom: 15px;
     display: flex;
     flex-direction: row;
     cursor: pointer;
+    padding: 15px;
+}
+.op_wrapper:hover + .op_label {
+    color: var(--soft-text);
 }
 
 .op_icon {
-    width: 40%;
-    text-align: center;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.op_icon > svg {
+    margin: 0 auto;
+}
+.op_label {
+    margin-top: 2px;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+}
+.op_label_container {
+    flex-grow: 1;
+}
+.op_label:hover {
+    color: var(--soft-text);
 }
 
 /* This is for the more dropdown on different themes */
