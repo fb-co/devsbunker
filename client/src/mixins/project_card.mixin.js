@@ -10,7 +10,7 @@ const projectCard = {
     methods: {
         savePost(id) {
             GraphQLService.savePost(this.$store.getters.accessToken, id).then((savedPost) => {
-                this.projectData.isSaved = savedPost.data.savePost ? true : false;
+                this.projectData.isSaved = savedPost.data.savePost;
             });
         },
         unsavePost(id) {

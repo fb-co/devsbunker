@@ -21,9 +21,9 @@
                 </svg>
                 <p>New Post</p>
             </div>
-            <GeneralInput ref="postTitle" class="field" label="Post Title" />
+            <GeneralInput :isQuery="false" ref="postTitle" class="field" label="Post Title" />
 
-            <GeneralInput class="field" label="Post Description" ref="postDesc" :isTextArea="true" />
+            <GeneralInput :isQuery="false" class="field" label="Post Description" ref="postDesc" :isTextArea="true" />
             <div class="tag_container">
                 <p style="margin-top: 20px;">Images</p>
             </div>

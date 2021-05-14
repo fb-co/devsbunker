@@ -1,6 +1,5 @@
 <template>
     <div class="profileMobile" @click="showMore = false">
-        <div class="profile_banner"></div>
         <div class="profile_card">
             <div class="space"></div>
             <div class="actions">
@@ -184,25 +183,17 @@ export default {
     font-weight: bold;
     cursor: pointer;
 }
-.profile_banner {
-    position: relative;
-    width: 100%;
-    height: 300px;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-    background-color: transparent; /* Changed this to invisible for now because the red is giving me vision problems */
-    z-index: 1;
-}
 .profile_card {
     position: relative;
-    top: -200px; /* Change this to -100px when we put the banner back in */
-    width: 90%;
+    width: 93%;
     max-width: 500px;
     min-width: 250px;
     height: auto;
     background-color: var(--general-card);
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
+    margin-bottom: 50px;
+    margin-top: 25px;
     border-radius: 20px;
     z-index: 2;
 }
@@ -247,7 +238,6 @@ export default {
     min-width: 250px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: -100px;
     height: 50px;
 }
 .personal_btn_container div:first-child {

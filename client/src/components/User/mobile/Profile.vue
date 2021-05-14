@@ -58,9 +58,6 @@ export default {
     props: {
         mainUserObject: Object,
     },
-    created() {
-        console.log(this.userObject);
-    },
     methods: {
         navigateTo(elem) {
             this.activeSection = elem;
@@ -97,7 +94,7 @@ export default {
 }
 .profile_card {
     position: relative;
-    width: 90%;
+    width: 93%;
     max-width: 500px;
     min-width: 250px;
     height: auto;
@@ -106,8 +103,8 @@ export default {
     margin: 0 auto;
     border-radius: 20px;
     z-index: 2;
-    margin-top: 50px;
     margin-bottom: 100px;
+    margin-top: 25px;
 }
 .card_container {
     padding-bottom: 30px;

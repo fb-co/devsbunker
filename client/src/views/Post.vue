@@ -36,8 +36,6 @@ export default {
             let toFetch = [];
 
             if (cachedPost) {
-                console.log("this post was cached, so I had to fetch less data :D");
-
                 // we can use the cached data
                 toFetch = [
                     `images {
@@ -54,9 +52,6 @@ export default {
                 }`,
                 ];
             } else {
-                // get everything
-                console.log("this post was not cached, so I had to fetch everthing :(");
-
                 toFetch = [
                     "author",
                     "title",
@@ -89,6 +84,12 @@ export default {
             if (cachedPost) {
                 // we need to merge the new data to the cached post
                 this.postData = Object.assign(this.postData, cachedPost);
+                
+                // 10 hours of troubleshooting later, I found out that it was not reactive because of this cache. So by 
+                // assigning the post data object to a new fresh object, vuejs recalculates the hash making the frontend watch for changes again,
+                // so DONT REMOVE THIS EVEN IF IT LOOKS STUPID
+                this.postData = Object.assign({}, this.postData);
+
                 // TODO: flag this post (merge it also in the cache) so if the user clicks again on the same post we don't have to refetch all this data
             }
         }
@@ -110,7 +111,6 @@ export default {
             }
         },
         openPostMenu() {
-            console.log(this.$refs.newPostMenu);
             this.$refs.newPostMenu.open();
         },
         closePostMenu() {

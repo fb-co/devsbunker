@@ -60,7 +60,6 @@
                             <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z" />
                         </svg>
                     </div>
-
                     <svg
                         v-if="!projectData.isLiked"
                         @click="likePost(projectData.id)"
@@ -89,6 +88,12 @@
                     <span>By:</span>
                     {{ projectData.author }}
                 </p>
+                <div class="like_amount_container">
+                    <svg width="13" height="13" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                    </svg>
+                    <p>{{ projectData.likeAmt }}</p>
+                </div>
             </div>
         </div>
         <p class="newPostTag">Tags</p>
@@ -156,6 +161,11 @@ export default {
             this.$router.go(-1);
         },
     },
+    watch: {
+        projectData: function() {
+            console.log("BR");
+        }
+    }
 };
 </script>
 
@@ -199,7 +209,7 @@ export default {
     background-color: var(--secondary-color);
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
-    padding: 30px 30px 40px 30px;
+    padding: 30px 30px 30px 30px;
     box-shadow: 0px -8px 20px var(--main-font-color);
     background-size: cover;
 }
@@ -213,6 +223,24 @@ export default {
     flex-direction: column;
     text-align: left;
     color: #fff;
+}
+.like_amount_container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+.like_amount_container svg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 25px;
+}
+.like_amount_container p {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5px;
 }
 .save_post_container {
     display: flex;

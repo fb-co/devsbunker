@@ -137,9 +137,7 @@ export default {
         height: 100%;
         pointer-events: none;
     }
-    .ind_img_cont > img {
-        object-fit: contain;
-    }
+    
     .smoothTransition {
         transition: transform calc(var(--f, 1)*0.5s) ease-out;
     }

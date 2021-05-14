@@ -19,9 +19,9 @@
             <div style="flex-grow: 1"></div>
             <div class="likes_container">
                 <!--Un-filled icon -->
-                <div v-if="hasLikeBtn" @click.stop="likePost(projectData.id)">
+                <div v-if="hasLikeBtn" @click.stop="likePost(projectData.id)" class="icon_container">
                     <div v-if="!projectData.isLiked">
-                        <svg width="17" height="17" viewBox="0 0 16 16" class="bi bi-heart" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="25" height="25" viewBox="0 0 16 16" class="bi bi-heart" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 fill-rule="evenodd"
                                 d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
@@ -31,8 +31,8 @@
                     <div v-else>
                         <svg
                             @click.stop="unlikePost(projectData.id)"
-                            width="17"
-                            height="17"
+                            width="25"
+                            height="25"
                             viewBox="0 0 16 16"
                             class="bi bi-heart-fill"
                             fill="#eb4034"
@@ -50,12 +50,12 @@
                     <p class="likes card_text">{{ projectData.likeAmt }}</p>
                 </div>
 
-                <div class="save_post_container">
+                <div class="save_post_container icon_container">
                     <svg
                         @click.stop="savePost(projectData.id)"
                         v-if="!projectData.isSaved"
-                        width="18"
-                        height="18"
+                        width="20"
+                        height="20"
                         stroke-width="0.7"
                         stroke="var(--ssoft-text)"
                         viewBox="0 0 16 16"
@@ -95,8 +95,8 @@
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-dots-vertical"
-                        width="18"
-                        height="18"
+                        width="23"
+                        height="23"
                         viewBox="0 0 24 24"
                         stroke-width="2"
                         stroke="var(--soft-text)"
@@ -232,8 +232,6 @@ export default {
             console.log("post id:", this.projectData.id);
         },
         deletePost() {
-            console.log("deleting post...");
-
             GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
                 console.log(res);
                 if (res.errors) {
@@ -241,7 +239,6 @@ export default {
                 } else if (!res.data.deletePost.success) {
                     console.error(res.data.deletePost.message);
                 } else {
-                    console.log("success");
                     this.moreOptions = !this.moreOptions;
                     this.deleted = true;
                 }
@@ -325,6 +322,12 @@ export default {
     margin-bottom: 10px;
     color: var(--soft-text);
     font-size: 11px;
+}
+.icon_container {
+    display: flex;
+}
+.icon_container svg {
+    height: 100%;
 }
 .likes_container {
     display: flex;

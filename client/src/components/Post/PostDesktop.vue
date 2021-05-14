@@ -88,7 +88,6 @@ export default {
         };
     },
     created() {
-        console.log(this.projectData);
         this.thumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
 
         // avoiding to push the thumbnail
@@ -144,6 +143,7 @@ export default {
 
 .tags_container {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 20px;
 }
 
