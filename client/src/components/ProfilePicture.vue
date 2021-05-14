@@ -1,21 +1,9 @@
 <template>
     <!-- This component is for showing profile pcitures to avoid rewriting the query a thousand times -->
     <div class="wrapper" :style="cssProps">
-        <img
-            v-if="image_link && default_image"
-            :src="require('@/assets/profile_pictures/' + image_link)"
-            ref="main_image"
-            alt="profile_pic"
-            class="profile_pic"
-        />
+        <img v-if="image_link && default_image" :src="require('@/assets/profile_pictures/' + image_link)" ref="main_image" alt="profile_pic" class="profile_pic" />
 
-        <img
-            v-else-if="image_link && !default_image"
-            :src="image_link"
-            alt="profile_pic"
-            ref="main_image"
-            class="profile_pic"
-        />
+        <img v-else-if="image_link && !default_image" :src="image_link" alt="profile_pic" ref="main_image" class="profile_pic" />
 
         <!-- For Upload = true -->
         <input
@@ -38,10 +26,7 @@
             @change="handleFiles($event)"
         />
 
-        <ImageCropperPopup
-            v-if="forUpload"
-            ref="cropper"
-        />
+        <ImageCropperPopup v-if="forUpload" ref="cropper" />
 
         <p ref="file_upload_label" class="file_upload_name"></p>
     </div>
@@ -51,38 +36,38 @@
 //'@/assets/profile_pictures/profilePlaceholder.png'
 import GraphQLService from "../services/graphql.service";
 import ImageCropperPopup from "@/components/ImageCropperPopup.vue";
-//import { store } from '../store/store';
+import Compressor from "compressorjs";
 
 export default {
     data() {
         return {
             image_link: undefined,
             default_image: undefined,
-            isChangingImage: false
+            isChangingImage: false,
         };
     },
     components: {
-        ImageCropperPopup
+        ImageCropperPopup,
     },
     props: {
         username: String,
         wrapperSize: {
             type: String,
-            default: "100px"
+            default: "100px",
         },
         maxWrapper: {
             type: String,
-            default: "none"
+            default: "none",
         },
         minWrapper: String,
         forUpload: {
             type: Boolean,
-            default: false
+            default: false,
         },
         // if true, will darken the image when its hovered over
         darkenOnHover: {
             type: Boolean,
-            default: false
+            default: false,
         },
     },
     created() {
@@ -93,19 +78,39 @@ export default {
             return {
                 "--wrapper-size": this.wrapperSize,
                 "--max-wrapper": this.maxWrapper,
-                "--min-wrapper": this.minWrapper || this.wrapperSize
+                "--min-wrapper": this.minWrapper || this.wrapperSize,
             };
-        }
+        },
     },
     methods: {
         handleFiles(event) {
             const file = event.target.files[0];
+            let compressed = null;
 
             if (file != undefined) {
                 this.$refs.file_upload_label.innerText = file.name;
-            }
-            if (file) {
-                this.$refs.cropper.open(file);
+
+                new Compressor(file, {
+                    quality: 0.6,
+                    maxWidth: 800,
+                    maxHeight: 800,
+                    success: (result) => {
+                        compressed = result;
+
+                        console.log("[DEBUG] Compressed profile pic: ", compressed);
+                        console.log("[DEBUG] Original profile pic: ", file);
+
+                        const compressedBlobToFile = new File([compressed], compressed.name, { type: compressed.type });
+                        console.log("[DEBUG] Converted to file: ", compressedBlobToFile);
+
+                        if (compressedBlobToFile) {
+                            this.$refs.cropper.open(compressedBlobToFile);
+                        }
+                    },
+                    error(err) {
+                        console.error("Error while compressing image: ", err.message);
+                    },
+                });
             }
         },
 
@@ -128,26 +133,7 @@ export default {
                     }
                 } else {
                     // if pfp link not in localstorage
-                    GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
-                        obj => {
-                            if (obj.data.user.profile_pic) {
-                                if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
-                                    this.default_image = true;
-                                    this.image_link = obj.data.user.profile_pic;
-                                } else {
-                                    this.default_image = false;
-                                    this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
-                                }
-                                localStorage.setItem("profile_pic_link", this.image_link);
-                            } else {
-                                console.log("err");
-                            }
-                        }
-                    );
-                }   
-            } else {
-                GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then(
-                    obj => {
+                    GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
                         if (obj.data.user.profile_pic) {
                             if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
                                 this.default_image = true;
@@ -156,14 +142,29 @@ export default {
                                 this.default_image = false;
                                 this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
                             }
+                            localStorage.setItem("profile_pic_link", this.image_link);
                         } else {
                             console.log("err");
                         }
+                    });
+                }
+            } else {
+                GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
+                    if (obj.data.user.profile_pic) {
+                        if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
+                            this.default_image = true;
+                            this.image_link = obj.data.user.profile_pic;
+                        } else {
+                            this.default_image = false;
+                            this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
+                        }
+                    } else {
+                        console.log("err");
                     }
-                );
-            } 
-        }
-    }
+                });
+            }
+        },
+    },
 };
 </script>
 

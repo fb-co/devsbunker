@@ -57,10 +57,8 @@ export default {
             this.$refs.cropper.style.display = "block";
         },
         upload() {
-            FileUploadService.uploadProfilePic(
-                this.file,
-                this.$store.getters.accessToken
-            ).then((res) => {
+            console.log("[DEBUG] Uploading: ", this.file);
+            FileUploadService.uploadProfilePic(this.file, this.$store.getters.accessToken).then((res) => {
                 if (res.data) {
                     localStorage.removeItem("profile_pic_link");
                 }
