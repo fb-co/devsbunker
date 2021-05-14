@@ -284,6 +284,8 @@ import Languages from "../../templates/Languages";
 import ErrorPopUp from "../ErrorPopUp";
 import SuccessPopUp from "../SuccessPopUp";
 
+import Compressor from "compressorjs";
+
 export default {
     data() {
         return {
@@ -295,12 +297,14 @@ export default {
             success: false,
             isOnStore: false,
             files: [],
+            compressedFiles: [],
         };
     },
     mounted() {
         this.$refs.postTitle.focusInput();
         this.$refs.main_container.style.transform = "translateY(0%)";
     },
+    created() {},
     methods: {
         close() {
             this.$parent.close();
@@ -445,9 +449,27 @@ export default {
             if (!this.files) {
                 this.files = [];
             }
+            let tmp = [];
             for (const file of event.target.files) {
+                // ! adding an extra array called compressedFiles while testing
                 this.files.push(file);
+
+                new Compressor(file, {
+                    quality: 0.6,
+                    maxWidth: 800,
+                    maxHeight: 800,
+                    success(result) {
+                        tmp.push(result);
+                    },
+                    error(err) {
+                        console.log(err.message);
+                    },
+                });
             }
+
+            this.compressedFiles = tmp;
+            console.log("[DEBUG] Compressed: ", this.compressedFiles);
+            console.log("[DEBUG] Original: ", this.files);
         },
 
         removeFile(index) {
