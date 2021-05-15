@@ -33,7 +33,9 @@ export default {
             xCoord: null,
             index: 0,
             locked: false,
-            width: undefined
+            width: undefined,
+
+            carouselIsMoving: false
         }
     },
     methods: {
@@ -41,8 +43,10 @@ export default {
             this.width = window.innerWidth;
         },
         lock(event) {
+            this.startingMouseCoords = [this.connect(event).clientX, this.connect(event).clientY]; // set mouse coords to calc angle
             this.xCoord = this.connect(event).clientX;
             this.container.classList.toggle('smoothTransition', !(this.locked = true));
+            this.carouselIsMoving = false;
         },
         move(event) {
             if (this.locked) {
@@ -64,15 +68,15 @@ export default {
         connect(event) {
             return event.changedTouches ? event.changedTouches[0] : event;
         },
-        drag(event) {
-            event.preventDefault();
-
+        // To understand this function you need to understand the unit circle
+        drag(event) {      
             if (this.locked) {
                 if (this.xCoord || this.xCoord === 0) {
+                    this.carouselIsMoving = true;
                     this.container.style.setProperty('--tx', `${Math.round(this.connect(event).clientX - this.xCoord)}px`);
                 }
             }
-        }
+        },
     },
     mounted() {
         window.addEventListener('resize', this.size, false);
@@ -87,6 +91,7 @@ export default {
         this.container.addEventListener('mouseup', this.move, false);
         this.container.addEventListener('touchend', this.move, false);
         
+        //document.addEventListener('scroll', this.preventMovement, false);
         this.container.addEventListener('touchmove', event => { event.preventDefault() }, false);
 
         this.container.addEventListener('mousemove', this.drag, false);
@@ -103,7 +108,8 @@ export default {
 
         this.container.removeEventListener('mouseup', () => {});
         this.container.removeEventListener('touchend', () => {});
-        
+
+        //document.removeEventListener('scroll', () => {}); // If you ever have scrolling issues, it might be this line removing your event listener
         this.container.removeEventListener('touchmove', () => {});
 
         this.container.removeEventListener('mousemove', () => {});
@@ -136,6 +142,9 @@ export default {
         width: 100%;
         height: 100%;
         pointer-events: none;
+    }
+    .ind_img_cont img {
+        max-width: 100%;
     }
     
     .smoothTransition {
