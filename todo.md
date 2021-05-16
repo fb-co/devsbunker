@@ -17,6 +17,10 @@
 
 -   [ ] better post sanitazation
 
+-   [ ] serverside thumbnail compression
+
+    -   i dont want to do this clientside because I still want og quality post images and i dont want to send more data over the internet, so we could handle this serverside by making a copy of the first asset and compressing that
+
 -   [ ] send confirmation email for signup
 -   [x] implement login system
     -   [x] better error handling for both login and signup
