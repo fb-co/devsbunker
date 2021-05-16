@@ -26,6 +26,10 @@ export default {
     async created() {
         SharedMethods.loadPage();
 
+        // TODO: first thing to do is checking if we have already fetched all the project details
+        // TODO: by using the new API call in the posts cache "extractCachedFullPostById"
+        // TODO: if we get a match then we dont need to run the code below
+
         await this.$store.dispatch("extractCachedPostById", this.$route.params.postid);
 
         const cachedPost = this.$store.getters.cachedPostById;
@@ -84,13 +88,11 @@ export default {
             if (cachedPost) {
                 // we need to merge the new data to the cached post
                 this.postData = Object.assign(this.postData, cachedPost);
-                
-                // 10 hours of troubleshooting later, I found out that it was not reactive because of this cache. So by 
+
+                // 10 hours of troubleshooting later, I found out that it was not reactive because of this cache. So by
                 // assigning the post data object to a new fresh object, vuejs recalculates the hash making the frontend watch for changes again,
                 // so DONT REMOVE THIS EVEN IF IT LOOKS STUPID
                 this.postData = Object.assign({}, this.postData);
-
-                // TODO: flag this post (merge it also in the cache) so if the user clicks again on the same post we don't have to refetch all this data
             }
         }
 
@@ -120,7 +122,7 @@ export default {
     components: {
         PostMobile,
         PostDesktop,
-        NewPostMenu
+        NewPostMenu,
     },
 };
 </script>
