@@ -1,5 +1,6 @@
 const state = {
     posts: [],
+    fullPosts: [],
     neededPost: null,
     maxCacheSize: 20,
     newlyMadePost: null,
@@ -9,6 +10,7 @@ const getters = {
     cachedPosts: (state) => state.posts,
     cachedPostById: (state) => state.neededPost,
     cachedNewlyMadePost: (state) => state.newlyMadePost,
+    cachedFullPosts: (state) => state.fullPosts,
 };
 
 const mutations = {
@@ -40,6 +42,22 @@ const mutations = {
             state.posts = state.posts.concat(postsToCache);
         }
     },
+    cacheFullPost(state, fullPostToCache) {
+        if (state.fullPosts.length > state.maxCacheSize) {
+            // splitting in half
+            state.fullPosts.splice(0, 10);
+        }
+
+        let dup = false;
+        state.fullPosts.forEach((post) => {
+            if (post.id === fullPostToCache.id) {
+                dup = true;
+                break;
+            }
+        });
+
+        !dup ? state.fullPosts.push(fullPostToCache) : {};
+    },
     getCachedPostById: function(state, id) {
         let ret = null;
 
@@ -47,6 +65,18 @@ const mutations = {
             console.log(`*** DEBUG *** ${id} == ${state.posts[i].id} ?`);
             if (state.posts[i].id == id) {
                 ret = state.posts[i];
+                break;
+            }
+        }
+
+        state.neededPost = ret;
+    },
+    getCachedFullPostById(state, id) {
+        let ret = null;
+
+        for (let i = 0; i < state.fullPosts.length; i++) {
+            if (state.fullPosts[i].id == id) {
+                ret = state.fullPosts[i];
                 break;
             }
         }
@@ -65,6 +95,9 @@ const mutations = {
 const actions = {
     extractCachedPostById({ commit }, id) {
         commit("getCachedPostById", id);
+    },
+    extractCachedFullPostById({ commit }, id) {
+        commit("getCachedFullPostById", id);
     },
     cacheNewlyMadePost({ commit }, post) {
         commit("cacheNewPost", post);
