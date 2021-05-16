@@ -92,8 +92,8 @@ export default {
 
                 new Compressor(file, {
                     quality: 0.6,
-                    maxWidth: 800,
-                    maxHeight: 800,
+                    maxWidth: 500,
+                    maxHeight: 500,
                     success: (result) => {
                         compressed = result;
 
