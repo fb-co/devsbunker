@@ -5,7 +5,10 @@
                 <router-link @click.native.stop :to="'user/' + projectData.author" class="author highlightable">{{ projectData.author }}</router-link>
             </div>
             <p class="title highlightable">{{ projectData.title }}</p>
-            <p class="desc highlightable">{{ descToShow }}</p>
+            <div style="position: relative;">
+                <div class="desc_fade"></div>
+                <pre class="preserveText"><p class="desc highlightable">{{ projectData.description }}</p></pre>
+            </div>
 
             <div style="flex-grow: 1"></div>
             <!--placeholder so info_container sinks to bottom -->
@@ -163,8 +166,10 @@
                 <p class="price_text" v-if="projectData.price != 0 && projectData.price != null">${{ projectData.price }}</p>
             </div>
         </div>
-        <div class="image_container">
-            <DynamicPicture :image_link="this.thumbnail_link" class="card_image" />
+        <div class="image_container_container">
+            <div class="image_container">
+                <DynamicPicture :image_link="this.thumbnail_link" class="card_image" />
+            </div>
         </div>
     </div>
 </template>
@@ -275,7 +280,7 @@ export default {
     display: none;
 }
 .text_container {
-    margin: 10px 10px 0px 10px;
+    margin: 10px 25px 0px 10px;
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -365,6 +370,21 @@ export default {
     color: var(--soft-text);
     font-size: 16px;
     margin-bottom: 15px;
+    max-height: 200px;
+    overflow: hidden;
+}
+.desc_fade {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, transparent 20%, var(--secondary-color) 90%);
+}
+.preserveText {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 .language {
     margin-left: 10px;
@@ -378,15 +398,21 @@ export default {
 .info_container > svg {
     cursor: pointer;
 }
-.image_container {
+.image_container_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 35%;
+    margin-top: 10px;
+    overflow: hidden;
+}
+.image_container {
+    max-height: 250px;
 }
 .card_image {
-    border-radius: 5px;
     width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 .spacer {
     padding-right: 10px;

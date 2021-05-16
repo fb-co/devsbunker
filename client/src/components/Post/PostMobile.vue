@@ -101,7 +101,7 @@
             <CreateTag v-for="tag in tags" :key="tag" :label="tag" tagType="lang" />
         </div>
         <p class="newPostTag">Description</p>
-        <p class="post_description">{{ projectData.description }}</p>
+        <p class="post_description"><pre>{{projectData.description}}</pre></p>
         <p class="newPostTag">Links</p>
         <div class="links_container">
             <LinkItem v-for="link in projectData.links" :key="link" :link="link" class="link_item" />
@@ -138,6 +138,7 @@ export default {
         CommentSection
     },
     created() {
+        console.log(this.projectData);
         window.scrollTo(0, 0); // this is because for some reason loading mobile posts doesnt always start you at the top
 
         this.tags = Object.values(this.projectData.tags);
@@ -266,6 +267,13 @@ export default {
     padding-left: 30px;
     padding-right: 30px;
     margin-bottom: 15px;
+}
+.post_description pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 .icon:hover {
     stroke-width: 2.5;

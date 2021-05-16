@@ -32,13 +32,9 @@
                         </div>
                     </div>
                 </div>
-
-                <p id="description">
-                    {{ projectData.description }}
-                    <br>
-                    If you don't like a test prompt, you can get a different (random) prompt with the "change test" button - or select a specific paragraph to type from the list below. To find out how fast you type, just start typing in the blank textbox on the right of the test prompt. You will see your progress, including errors on the left side as you type. In order to complete the test and save your score, you need to get 100% accuracy. You can fix errors as you go, or correct them at the end with the help of the spell checker.
-                </p>
-
+                
+                <p id="description"><pre>{{ projectData.description }}</pre></p>
+                
                 <p class="links_label">Links</p>
                 <div class="links_container">
                     <Link v-for="(link, index) in projectData.links" :key="index" :link="link" class="desktop_link" />
@@ -88,6 +84,7 @@ export default {
         };
     },
     created() {
+        console.log(this.projectData);
         this.thumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
 
         // avoiding to push the thumbnail
@@ -154,7 +151,14 @@ export default {
     font-size: 23px;
     line-height: 30px;
 }
-
+#description pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+/* this is causing issues
 #description::first-letter {
     color: var(--secondary-color);
     background-color: var(--main-font-color);
@@ -166,6 +170,7 @@ export default {
     margin-right: 10px;
     float: left;
 }
+*/
 
 .main_carousel {
     margin-left: 50%;

@@ -15,7 +15,11 @@
                 <router-link @click.native.stop :to="'user/' + projectData.author" class="author card_text highlightable">{{ projectData.author }}</router-link>
             </div>
             <p class="proj_name card_text highlightable">{{ projectData.title }}</p>
-            <p class="proj_desc card_text highlightable">{{ descToShow }}</p>
+                
+            <div style="position: relative;">
+                <div class="desc_fade"></div>
+                <p class="proj_desc card_text highlightable">{{ projectData.description }}</p>
+            </div>
             <div style="flex-grow: 1"></div>
             <div class="likes_container">
                 <!--Un-filled icon -->
@@ -248,11 +252,6 @@ export default {
     mixins: [ProjectCardUtils, GeneralMixin],
     data() {
         return {
-            descToShow:
-                this.projectData.description.length > 200
-                    ? this.projectData.description.substring(0, 200).substring(0, this.projectData.description.substring(0, 200).lastIndexOf(" ")) + " ..."
-                    : this.projectData.description,
-
             moreOptions: false,
             deleted: false,
         };
@@ -321,7 +320,15 @@ export default {
 .proj_desc {
     margin-bottom: 10px;
     color: var(--soft-text);
-    font-size: 11px;
+    font-size: 11.5px;
+    overflow: hidden;
+    max-height: 100px;
+}
+.desc_fade {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, transparent 20%, var(--secondary-color) 90%);
 }
 .icon_container {
     display: flex;
@@ -360,10 +367,14 @@ export default {
     flex-direction: column;
     justify-content: center;
     width: 35%;
+    max-height: 250px;
+    overflow: hidden;
 }
 .card_img {
     width: 100%;
+    max-height: 100%;
     border-radius: 5px;
+    object-fit: contain;
 }
 
 .save_post_container {
