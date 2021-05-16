@@ -49,12 +49,12 @@ const mutations = {
         }
 
         let dup = false;
-        state.fullPosts.forEach((post) => {
-            if (post.id === fullPostToCache.id) {
+        for (let i = 0; i < state.fullPosts.length; i++) {
+            if (state.fullPosts[i].id === fullPostToCache.id) {
                 dup = true;
                 break;
             }
-        });
+        }
 
         !dup ? state.fullPosts.push(fullPostToCache) : {};
     },
