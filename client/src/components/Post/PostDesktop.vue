@@ -32,6 +32,12 @@
                         </div>
                     </div>
                 </div>
+
+                <h2 style="margin-top: 5px;">Other contributers</h2>
+                
+                <div class="other_contributers_container">
+                    
+                </div>
                 
                 <p id="description"><pre>{{ projectData.description }}</pre></p>
                 
