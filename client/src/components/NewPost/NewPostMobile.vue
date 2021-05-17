@@ -395,7 +395,7 @@ export default {
                 thumbnail: "@/assets/project_img_placeholder.png", // eventully this should be a real image link
                 images: [],
                 links: this.links,
-                collaborators: this.collaborators,
+                collaborators: this.contributers,
                 tags: this.tags,
                 bunkerTag: "DevsBunkerTag",
                 clip: "Du fuq is a clip?",

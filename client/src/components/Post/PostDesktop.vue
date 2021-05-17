@@ -10,12 +10,11 @@
                 <!--<h3 id="tags">{{ projectData.tags }}</h3>-->
                 <h1 id="title">{{ projectData.title }}</h1>
 
-                <div class="author_info_card" v-if="authorData">
+                <router-link :to="'/user/' + projectData.author" class="author_info_card" v-if="authorData">
                     <ProfilePicture :username="projectData.author" wrapperSize="70px" />
                     <div class="author_info_text">
                         <h2 id="author">
-                            {{ projectData.author }}
-                            <span>{{ projectData.createdAt }}</span>
+                            {{ renderUsername(projectData.author, 30) }}
                         </h2>
                         <p class="author_followerAmt">
                             {{
@@ -31,14 +30,22 @@
                             <FollowButton :initialState="authorData.isFollowing" :username="projectData.author" v-if="projectData.author != this.$store.getters.username" />
                         </div>
                     </div>
-                </div>
+                </router-link>
 
-                <h2 style="margin-top: 5px;">Other contributers</h2>
+                <h2 style="margin-top: 10px; margin-bottom: 20px;">Contributers</h2>
                 
-                <div class="other_contributers_container">
-                    
+                <div>
+                    <router-link v-for="(contributer, index) in projectData.collaborators" :key="index" :to="'/user/' + contributer" class="other_info_card">
+                        <ProfilePicture :username="contributer" wrapperSize="70px" />
+                        <div class="author_info_text">
+                            <h2 id="author">
+                                {{ renderUsername(contributer) }}
+                            </h2>
+                            
+                        </div>
+                    </router-link>
                 </div>
-                
+                <p class="links_label">Description</p>
                 <p id="description"><pre>{{ projectData.description }}</pre></p>
                 
                 <p class="links_label">Links</p>
@@ -90,7 +97,6 @@ export default {
         };
     },
     created() {
-        console.log(this.projectData);
         this.thumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
 
         // avoiding to push the thumbnail
@@ -101,7 +107,25 @@ export default {
                 );
             }
         }
+
+        // make sure you are not one of the collaborators
+        for (let i = 0; i < this.projectData.collaborators.length; i++) {
+            if (this.projectData.collaborators[i] == this.$store.getters.username) {
+                this.projectData.collaborators.splice(i, 1);
+                break;
+            }
+        }
     },
+    methods: {
+        // max is optional max length parameter
+        renderUsername(username, max) {
+            if (username.length > (max || 25)) {
+                return username.substring(0, (max || 25)) + "...";
+            } else {
+                return username;
+            }
+        }
+    }
 };
 </script>
 
@@ -182,7 +206,25 @@ export default {
     margin-left: 50%;
     transform: translateX(-50%);
 }
-
+.other_info_card {
+    max-width: 500px;
+    height: 100px;
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
+    color: var(--main-font-color);
+    text-decoration: none;
+}
+.other_info_card:hover {
+    cursor: pointer;
+    border: 1px solid var(--main-accent);
+}
 .author_info_card {
     max-width: 700px;
     height: 100px;
@@ -194,6 +236,13 @@ export default {
     margin-bottom: 40px;
     border-radius: 10px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
+    color: var(--main-font-color);
+    text-decoration: none;
+}
+.author_info_card:hover {
+    cursor: pointer;
+    border: 1px solid var(--main-accent);
 }
 .author_info_text {
     display: flex;

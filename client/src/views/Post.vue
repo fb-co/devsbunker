@@ -48,6 +48,7 @@ export default {
                 }`,
                     "links",
                     "tags",
+                    "collaborators",
                     "createdAt",
                     `comments {
                         commenter
@@ -71,6 +72,7 @@ export default {
                     "likeAmt",
                     "price",
                     "links",
+                    "collaborators",
                     "tags",
                     "createdAt",
                     `comments {

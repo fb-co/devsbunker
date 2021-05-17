@@ -173,6 +173,8 @@ export default {
             if (!cleanDesc || !cleanTitle) {
                 throw new Error("Input is an empty string (after cleaning)");
             }
+            
+            console.log(payload.collaborators);
 
             const post = new Posts({
                 title: cleanTitle,
