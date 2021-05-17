@@ -41,7 +41,6 @@
                             <h2 id="author">
                                 {{ renderUsername(contributer) }}
                             </h2>
-                            
                         </div>
                     </router-link>
                 </div>
@@ -73,6 +72,8 @@ import Link from "./Link.vue";
 
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
+
+import CommonUtils from "@/utils/common_utils.js";
 
 export default {
     props: {
@@ -117,13 +118,8 @@ export default {
         }
     },
     methods: {
-        // max is optional max length parameter
-        renderUsername(username, max) {
-            if (username.length > (max || 25)) {
-                return username.substring(0, (max || 25)) + "...";
-            } else {
-                return username;
-            }
+        renderUsername(username, maxLen) {
+            return CommonUtils.renderUsername(username, maxLen);
         }
     }
 };

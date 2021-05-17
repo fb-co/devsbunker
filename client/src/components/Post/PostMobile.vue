@@ -100,6 +100,15 @@
         <div ref="tags" class="tag_container" v-if="tags">
             <CreateTag v-for="tag in tags" :key="tag" :label="tag" tagType="lang" />
         </div>
+        <p class="newPostTag">Contributers</p>
+        <div class="contributers_container">
+            <router-link v-for="(contributer, index) in projectData.collaborators" :key="index" :to="'/user/' + contributer" class="contributer">
+                <ProfilePicture class="contributer_pfp" :username="contributer" wrapperSize="40px" />
+                <div class="contributer_text">
+                    {{ renderUsername(contributer) }}
+                </div>
+            </router-link>
+        </div>
         <p class="newPostTag">Description</p>
         <p class="post_description"><pre>{{projectData.description}}</pre></p>
         <p class="newPostTag">Links</p>
@@ -118,6 +127,9 @@ import LinkItem from "./Link.vue";
 import CarouselMobile from "@/components/CarouselMobile.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 import CommentSection from "@/components/CommentSection.vue";
+import ProfilePicture from "@/components/ProfilePicture.vue";
+
+import CommonUtils from "@/utils/common_utils.js";
 
 export default {
     data() {
@@ -135,7 +147,8 @@ export default {
         LinkItem,
         CarouselMobile,
         CreateTag,
-        CommentSection
+        CommentSection,
+        ProfilePicture
     },
     created() {
         window.scrollTo(0, 0); // this is because for some reason loading mobile posts doesnt always start you at the top
@@ -152,6 +165,14 @@ export default {
                 );
             }
         }
+
+        // remove yourself from collabor list (if its even there)
+        for (let i = 0; i < this.projectData.collaborators.length; i++) {
+            if (this.projectData.collaborators[i] == this.$store.getters.username) {
+                this.projectData.collaborators.splice(i, 1);
+                break;
+            }
+        }
     },
     mounted() {
         this.$refs.image_div.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) ), url('${this.postThumbnail}')`;
@@ -160,12 +181,10 @@ export default {
         back() {
             this.$router.go(-1);
         },
+        renderUsername(username,  max) {
+            return CommonUtils.renderUsername(username, max);
+        },
     },
-    watch: {
-        projectData: function() {
-            console.log("BR");
-        }
-    }
 };
 </script>
 
@@ -178,6 +197,22 @@ export default {
     margin-top: 40px;
     height: 150px;
     width: 100%;
+}
+.contributers_container {
+    display: flex;
+    flex-direction: column;
+}
+.contributer {
+    display: flex;
+    max-width: 300px;
+    text-decoration: none;
+}
+.contributer_pfp {
+    margin: 10px 10px 10px 25px;
+} 
+.contributer_text {
+    padding-top: 20px;
+    color: var(--main-font-color);
 }
 
 .back_arrow_container {
