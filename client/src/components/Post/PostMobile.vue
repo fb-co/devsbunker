@@ -138,7 +138,6 @@ export default {
         CommentSection
     },
     created() {
-        console.log(this.projectData);
         window.scrollTo(0, 0); // this is because for some reason loading mobile posts doesnt always start you at the top
 
         this.tags = Object.values(this.projectData.tags);

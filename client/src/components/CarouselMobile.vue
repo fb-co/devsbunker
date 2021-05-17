@@ -145,6 +145,8 @@ export default {
     }
     .ind_img_cont img {
         max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
     }
     
     .smoothTransition {

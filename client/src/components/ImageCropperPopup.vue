@@ -128,12 +128,6 @@ export default {
     height: 100%;
     object-fit: cover;
     margin: 0 auto;
-    /*
-        object-fit: contain;
-        max-height: 250px;
-        width: 100%;
-        padding: 10px;
-        */
 }
 
 .wrapper {
