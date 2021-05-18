@@ -108,13 +108,13 @@ export default {
 }
 .username_box {
     font-size: 20px;
-    width: 100%;
+    width: 90%;
     font-weight: bold;
     margin-top: 20px;
     text-align: left;
     padding: 25px 0px 25px 15%;
     overflow: hidden;
-    word-wrap: break-word;
+    text-overflow: ellipsis;
 }
 .tab_container {
     display: flex;

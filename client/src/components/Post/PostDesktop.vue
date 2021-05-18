@@ -14,7 +14,7 @@
                     <ProfilePicture :username="projectData.author" wrapperSize="70px" />
                     <div class="author_info_text">
                         <h2 id="author">
-                            {{ renderUsername(projectData.author, 30) }}
+                            {{ projectData.author }}
                         </h2>
                         <p class="author_followerAmt">
                             {{
@@ -24,19 +24,17 @@
                             : " follwers")
                             }}
                         </p>
-                        <div style="flex-grow: 1"></div>
-                        <!-- Placeholder -->
-                        <div class="follow_btn_container">
-                            <FollowButton :initialState="authorData.isFollowing" :username="projectData.author" v-if="projectData.author != this.$store.getters.username" />
-                        </div>
+                    </div>
+                    <div class="follow_btn_container">
+                        <FollowButton :initialState="authorData.isFollowing" :username="projectData.author" v-if="projectData.author != this.$store.getters.username" />
                     </div>
                 </router-link>
 
-                <h2 style="margin-top: 10px; margin-bottom: 20px;">Contributers</h2>
+                <h2 v-if="projectData.collaborators.length > 0" style="margin-top: 10px; margin-bottom: 20px;">Contributers</h2>
                 
                 <div>
                     <router-link v-for="(contributer, index) in projectData.collaborators" :key="index" :to="'/user/' + contributer" class="other_info_card">
-                        <ProfilePicture :username="contributer" wrapperSize="70px" />
+                        <ProfilePicture :username="contributer" style="background-color: salmon;" wrapperSize="70px" />
                         <div class="author_info_text">
                             <h2 id="author">
                                 {{ renderUsername(contributer) }}
@@ -162,6 +160,9 @@ export default {
     font-size: 20px;
 
     margin-bottom: 10px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tags_container {
@@ -235,26 +236,25 @@ export default {
     border: 1px solid transparent;
     color: var(--main-font-color);
     text-decoration: none;
+    background-color: blue;
 }
 .author_info_card:hover {
     cursor: pointer;
     border: 1px solid var(--main-accent);
 }
 .author_info_text {
+    flex-grow: 1;
+    
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
     margin-left: 25px;
-    flex-grow: 1;
+    background-color: green;
 }
 .author_followerAmt {
     color: var(--soft-text);
 }
 .follow_btn_container {
-    text-align: right;
-    width: 100%;
-
-    margin-top: -35px;
+    background-color: red;
 }
 .desktop_link {
     display: flex;
