@@ -5,9 +5,6 @@
 import PostFeed from "@/components/PostFeed.vue";
 
 export default {
-    data() {
-        return {};
-    },
     props: {
         projects: Array,
         fetchedAll: Boolean,

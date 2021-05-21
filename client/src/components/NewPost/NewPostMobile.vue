@@ -304,7 +304,12 @@ export default {
         this.$refs.postTitle.focusInput();
         this.$refs.main_container.style.transform = "translateY(0%)";
     },
-    created() {},
+    created() {
+        if (!this.$store.getters.username) {
+            this.close();
+            this.$router.push("/login");
+        }
+    },
     methods: {
         close() {
             this.$parent.close();
