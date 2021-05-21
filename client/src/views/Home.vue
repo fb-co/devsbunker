@@ -1,7 +1,14 @@
 <template>
     <div>
         <div class="home">
-            <HomeMobile :projects="posts" v-if="$store.getters.mobile" :fetchedAll="fetchedAll" :postFeedFilter="sortingType" @updateFilterDropdown="updateFilterDropdown" />
+            <HomeMobile
+                :projects="posts"
+                v-if="$store.getters.mobile"
+                :fetchedAll="fetchedAll"
+                :postFeedFilter="sortingType"
+                @updateFilterDropdown="updateFilterDropdown"
+                :loaded="loaded"
+            />
             <HomeDesktop
                 :projects="posts"
                 :notifications="notifications"

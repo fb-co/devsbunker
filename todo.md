@@ -53,6 +53,8 @@
 
 ## Frontend
 
+-   [ ] redirect to login when an authorized user tries to make a post
+-   [ ] deleting a post on mobile doesnt hide the post from the home
 -   [ ] i think that the posts hot reload thing isnt implemented yet for the mobile version... maybe im wrong
 -   [x] posts cache stores duplicate posts after user creates a new one
 -   [ ] display links while viewing posts on desktop

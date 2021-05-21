@@ -30,6 +30,7 @@ export default {
             this.isOpen = true;
         },
         propagateEvent(flag) {
+            console.log("propagating event");
             this.$emit("updateFeed", flag);
         },
     },
@@ -49,7 +50,7 @@ export default {
     z-index: 3;
     overflow: auto;
     max-height: calc(100% - var(--header-height));
-    
+
     -ms-overflow-style: none; /* IE and Edge (scrollbar hide)*/
     scrollbar-width: none; /* Firefox (scrollbar hide)*/
 }

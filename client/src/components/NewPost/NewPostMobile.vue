@@ -410,12 +410,19 @@ export default {
                 if (check.success) {
                     GraphQLService.createNewPost(this.$store.getters.accessToken, post)
                         .then((returnPost) => {
+                            if (returnPost.errors?.length) {
+                                this.error = true;
+                                this.errmsg = returnPost.errors[0].message;
+                                return;
+                            }
+
                             FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then(async (res) => {
                                 // TODO: add error  checking
 
                                 if (!/Successfully/.test(res.message)) {
                                     this.error = true;
                                     this.errmsg = res.message;
+                                    return;
                                 }
 
                                 this.success = true;
@@ -424,6 +431,7 @@ export default {
                                 await this.$store.dispatch("cacheNewlyMadePost", res.post);
 
                                 if (this.$route.name == "Home") {
+                                    console.log("emitting event");
                                     this.$emit("updateFeed", true);
                                 } else {
                                     this.$router.push("/");
@@ -432,7 +440,8 @@ export default {
                                 this.close();
                             });
                         })
-                        .catch(() => {
+                        .catch((e) => {
+                            console.error(e);
                             this.error = true;
                         });
                 } else {
