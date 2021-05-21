@@ -10,6 +10,7 @@
                 <!--<h3 id="tags">{{ projectData.tags }}</h3>-->
                 <h1 id="title">{{ projectData.title }}</h1>
 
+                <!--
                 <router-link :to="'/user/' + projectData.author" class="author_info_card" v-if="authorData">
                     <ProfilePicture :username="projectData.author" wrapperSize="70px" />
                     <div class="author_info_text">
@@ -29,6 +30,8 @@
                         <FollowButton :initialState="authorData.isFollowing" :username="projectData.author" v-if="projectData.author != this.$store.getters.username" />
                     </div>
                 </router-link>
+                -->
+                <AuthorDisplay :username="projectData.author" />
 
                 <h2 v-if="projectData.collaborators.length > 0" style="margin-top: 10px; margin-bottom: 20px;">Contributers</h2>
                 
@@ -64,9 +67,9 @@
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 import CommentSection from "@/components/CommentSection.vue";
-import FollowButton from "@/components/FollowButton.vue";
 import Carousel from "@/components/Carousel.vue";
 import Link from "./Link.vue";
+import AuthorDisplay from "./AuthorDisplay.vue";
 
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
@@ -84,10 +87,10 @@ export default {
         LeftContent,
         ProfilePicture,
         CreateTag,
-        FollowButton,
         Carousel,
         CommentSection,
-        Link
+        Link,
+        AuthorDisplay
     },
     data() {
         return {
