@@ -15,7 +15,7 @@
                 <router-link @click.native.stop :to="'user/' + projectData.author" class="author card_text highlightable">{{ projectData.author }}</router-link>
             </div>
             <p class="proj_name card_text highlightable">{{ projectData.title }}</p>
-                
+
             <div style="position: relative;">
                 <div class="desc_fade"></div>
                 <p class="proj_desc card_text highlightable">{{ projectData.description }}</p>
@@ -243,6 +243,7 @@ export default {
                 } else if (!res.data.deletePost.success) {
                     console.error(res.data.deletePost.message);
                 } else {
+                    console.log("POST DELETED");
                     this.moreOptions = !this.moreOptions;
                     this.deleted = true;
                 }
@@ -291,6 +292,9 @@ export default {
 }
 .main_container:hover {
     border: 2px solid var(--main-accent) !important;
+}
+.hide {
+    display: none !important;
 }
 .likeAmt {
     margin-left: 10px;
@@ -408,9 +412,6 @@ export default {
     }
 }
 
-.hide {
-    display: none;
-}
 .more_options {
     position: absolute;
 
@@ -421,9 +422,7 @@ export default {
 
     display: flex;
     flex-direction: column;
-    
 }
-
 
 /*
 .more_options_button {
