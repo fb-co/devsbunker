@@ -3,6 +3,9 @@ import bcrypt from "bcrypt";
 import SessionRevoker from "../../../components/tokens/SessionRevoker.js";
 import TokenHandler from "../../../components/tokens/TokenHandler.js";
 
+import FilesHandler from "../../../middlewares/FilesHandler.js";
+const fh = new  FilesHandler();
+
 import validateCreds from "../utils/validateCreds.js";
 import getUserEntry from "../utils/getUserEntry.js";
 import getUserByPartial from "../utils/getUserByPartial.js";
@@ -486,6 +489,12 @@ export default {
                 try {
                     // delete the posts
                     await deletePost(user.username, null);
+
+                    
+                    // delete profile picture
+                    fh.deleteFiles([
+                        `${process.env.UPLOAD_PROFILE_PIC}/${user.profile_pic}`
+                    ]);
 
                     // delete user
                     await User.deleteOne({
