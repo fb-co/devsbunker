@@ -18,9 +18,12 @@
 -   [ ] better post sanitazation
 
 -   [ ] serverside thumbnail compression
--   [ ] delete all images related to account when deleting account or post
 
     -   i dont want to do this clientside because I still want og quality post images and i dont want to send more data over the internet, so we could handle this serverside by making a copy of the first asset and compressing that
+
+-   [x] delete all images related to account when deleting account or post
+
+    -   [x] this was already implemented, now implementing a function to delete also the profile pic
 
 -   [ ] send confirmation email for signup
 -   [x] implement login system
@@ -53,6 +56,7 @@
 
 ## Frontend
 
+-   [ ] add visual feedback to actions like deleting the account and making posts, a popup or something that displays the status of the action (success or failure)
 -   [x] redirect to login when an authorized user tries to make a post
 -   [x] deleting a post on mobile doesnt hide the post from the home
 -   [ ] i think that the posts hot reload thing isnt implemented yet for the mobile version... maybe im wrong
