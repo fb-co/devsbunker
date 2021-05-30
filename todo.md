@@ -77,7 +77,7 @@
 
 -   [x] viewing other people's posts in their profile is broken
     -   [x] need to add load more btn to mobile view
--   [ ] get rid of DevBunkerTag and clip fields
+-   [x] get rid of DevBunkerTag and clip fields
 -   [x] just noting down (otherwise I forget it) that we could optimize the fetching process due to the change in your latest commit. We should fetch less data when fetching post details for the project cards and then fetching everything in the Post view. We should also cache the first fetched details.
 
     -   [x] my idea is to create a dedicated query for the project cards and to implement a cache system clientside simply in Vuex
