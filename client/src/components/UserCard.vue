@@ -1,18 +1,19 @@
 <template>
     <div class="user_card_container" @click="routeToUser()">
         <div class="user_card_info">
-            <p class="user_name">{{ cardData.username }}</p>
-            <p class="user_desc">{{ cardData.description }}</p>
+            <p class="user_name">{{ authorData.username }}</p>
+            <p class="user_desc">{{ authorData.description }}</p>
             <div class="placeholder"></div>
             <div class="user_details">
-                <button v-if="!cardData.isFollowing" @click.stop="followUser(cardData.username)" class="follow_btn">Follow</button>
-                <button v-else @click.stop="unfollowUser(cardData.username)" class="follow_btn">Unfollow</button>
-                <p class="user_details_followers info">Followers: {{ cardData.followerAmt }}</p>
-                <p class="user_details_posts info">Following: {{ cardData.followingAmt }}</p>
+                <button v-if="!authorData.isFollowing" @click.stop="followUser(authorData.username)" class="follow_btn">Follow</button>
+                <button v-else @click.stop="unfollowUser(authorData.username)" class="follow_btn">Unfollow</button>
+                <p class="user_details_followers info">Followers: {{ authorData.followerAmt }}</p>
+                <p class="user_details_posts info">Following: {{ authorData.followingAmt }}</p>
             </div>
         </div>
+        <div style="flex-grow: 1;"></div>
         <div class="user_card_profile_pic">
-            <ProfilePicture class="profile_pic" :username="cardData.username" wrapperSize="20vw" maxWrapper="250px" minWrapper="100px" />
+            <ProfilePicture class="profile_pic" :username="authorData.username" wrapperSize="20vw" maxWrapper="250px" minWrapper="50px" />
         </div>
     </div>
 </template>
@@ -22,16 +23,13 @@ import CardUtilities from "../mixins/user_card.mixin.js";
 import ProfilePicture from "./ProfilePicture.vue";
 
 export default {
-    created() {
-        console.log(this.cardData);
-    },
     props: {
-        cardData: Object,
+        authorData: Object,
     },
     mixins: [CardUtilities],
     methods: {
         routeToUser() {
-            this.$router.push("/user/" + this.cardData.username);
+            this.$router.push("/user/" + this.authorData.username);
         },
     },
     components: {
@@ -60,13 +58,14 @@ export default {
     flex-direction: column;
     text-align: left;
     padding: 10px;
-    width: 60%;
+    max-width: 70%;
 }
 .user_card_profile_pic {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 40%;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 .user_details {
     color: var(--soft-text);
@@ -84,6 +83,8 @@ export default {
 }
 
 .user_name {
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-weight: bold;
     color: var(--main-font-color);
     margin-bottom: 10px;
@@ -119,6 +120,15 @@ export default {
 @media only screen and (max-width: 620px) {
     .user_details_posts {
         display: none;
+    }
+}
+/* mobile styles */
+@media only screen and (max-width: 950px) {
+    .user_name {
+        font-size: 14px;
+    }
+    .info {
+        font-size: 11px;
     }
 }
 </style>

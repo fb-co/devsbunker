@@ -75,7 +75,6 @@ export default {
     },
     mounted() {
         this.isExternal = (this.userObject.username || "")!=this.$store.getters.username;
-        console.log(this.isExternal);
     },
     components: {
         ProfilePicture,

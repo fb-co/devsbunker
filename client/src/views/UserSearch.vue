@@ -4,7 +4,7 @@
 
         <div class="users_search_results">
             <div v-if="showSearchResults">
-                <UserCard v-for="user in searchResults" :key="user.username" :cardData="user" />
+                <UserCard v-for="user in searchResults" :key="user.username" :authorData="user" />
             </div>
         </div>
     </div>
@@ -29,6 +29,7 @@ export default {
     methods: {
         updateSearchComponent(documents, closeResults) {
             this.searchResults = documents;
+            console.log(this.searchResults);
 
             if (closeResults) {
                 this.showSearchResults = false;

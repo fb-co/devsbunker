@@ -201,14 +201,19 @@ export default {
     padding-bottom: 30px;
 }
 .card_name {
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding-top: 40px;
-    font-size: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 17px;
     font-weight: bold;
 }
 .card_desc {
     margin-top: 20px;
     padding: 20px;
     color: var(--soft-text);
+    font-size: 13px;
 }
 .follower_container {
     display: flex;

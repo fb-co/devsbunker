@@ -350,6 +350,8 @@ export default {
     transition: 0.5s;
 }
 .author_container {
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-align: left;
 }
 .author {

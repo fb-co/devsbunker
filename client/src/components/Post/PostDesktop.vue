@@ -10,40 +10,12 @@
                 <!--<h3 id="tags">{{ projectData.tags }}</h3>-->
                 <h1 id="title">{{ projectData.title }}</h1>
 
-                <!--
-                <router-link :to="'/user/' + projectData.author" class="author_info_card" v-if="authorData">
-                    <ProfilePicture :username="projectData.author" wrapperSize="70px" />
-                    <div class="author_info_text">
-                        <h2 id="author">
-                            {{ projectData.author }}
-                        </h2>
-                        <p class="author_followerAmt">
-                            {{
-                            authorData.followerAmt +
-                            (authorData.followerAmt == 1
-                            ? " follower"
-                            : " follwers")
-                            }}
-                        </p>
-                    </div>
-                    <div class="follow_btn_container">
-                        <FollowButton :initialState="authorData.isFollowing" :username="projectData.author" v-if="projectData.author != this.$store.getters.username" />
-                    </div>
-                </router-link>
-                -->
-                <AuthorDisplay :username="projectData.author" />
+                <AuthorDisplay v-if="authorData" :username="projectData.author" :followerAmt="authorData.followerAmt" :isFollowing="authorData.isFollowing" @followAction="followAuthor" />
 
                 <h2 v-if="projectData.collaborators.length > 0" style="margin-top: 10px; margin-bottom: 20px;">Contributers</h2>
                 
                 <div>
-                    <router-link v-for="(contributer, index) in projectData.collaborators" :key="index" :to="'/user/' + contributer" class="other_info_card">
-                        <ProfilePicture :username="contributer" style="background-color: salmon;" wrapperSize="70px" />
-                        <div class="author_info_text">
-                            <h2 id="author">
-                                {{ renderUsername(contributer) }}
-                            </h2>
-                        </div>
-                    </router-link>
+                    <AuthorDisplay v-for="(contributer, index) in projectData.collaborators" :key="index" :username="contributer" :showFollowerAmt="false" :showFollowButton="false" />
                 </div>
                 <p class="links_label">Description</p>
                 <p id="description"><pre>{{ projectData.description }}</pre></p>
@@ -64,7 +36,6 @@
 </template>
 
 <script>
-import ProfilePicture from "@/components/ProfilePicture.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 import CommentSection from "@/components/CommentSection.vue";
 import Carousel from "@/components/Carousel.vue";
@@ -75,6 +46,7 @@ import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
 
 import CommonUtils from "@/utils/common_utils.js";
+import UserUtils from "@/mixins/user_card.mixin.js";
 
 export default {
     props: {
@@ -85,12 +57,11 @@ export default {
     components: {
         RightContent,
         LeftContent,
-        ProfilePicture,
         CreateTag,
         Carousel,
         CommentSection,
         Link,
-        AuthorDisplay
+        AuthorDisplay,
     },
     data() {
         return {
@@ -118,9 +89,17 @@ export default {
             }
         }
     },
+    mixins: [UserUtils],
     methods: {
         renderUsername(username, maxLen) {
             return CommonUtils.renderUsername(username, maxLen);
+        },
+        followAuthor() {
+            if (!this.authorData.isFollowing) {
+                this.followUser(this.projectData.author);
+            } else {
+                this.unfollowUser(this.projectData.author);
+            }
         }
     }
 };

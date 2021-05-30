@@ -368,7 +368,6 @@ export default {
                     password,
                     this.$store.getters.accessToken
                 );
-                console.log(res);
                 if (!res.errors) {
                     if (res.data.deleteAccount.success) {
                         this.accountDeleted = true;
@@ -411,6 +410,7 @@ export default {
     display: flex;
     flex-direction: column;
     min-width: 300px;
+    max-width: 300px;
 }
 .row_item {
     background-color: var(--general-card);
@@ -525,6 +525,8 @@ export default {
 }
 
 .username {
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-top: 20px;
     font-weight: bold;
     font-size: 18px;

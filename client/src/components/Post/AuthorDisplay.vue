@@ -3,11 +3,11 @@
         <ProfilePicture :username="username" wrapperSize="70px" />
         <div class="text_container">
             <h2 class="username">{{ username }}</h2>
-            <p class="followerAmt">{{ followerAmt + (followerAmt == 1 ? ' Follower' : " Followers") }}</p>
+            <p v-if="showFollowerAmt" class="followerAmt">{{ followerAmt + (followerAmt == 1 ? ' Follower' : " Followers") }}</p>
         </div>
-        <div class="follow_btn_container">
+        <div v-if="showFollowButton" class="follow_btn_container">
             <div style="flex-grow: 1;"></div> <!-- Placeholder -->
-            <button class="follow_btn">Follow</button>
+            <button class="follow_btn" @click="$emit('followAction')">{{ isFollowing ? "Unfollow" : "Follow" }}</button>
         </div>
     </div>    
 </template>
@@ -25,14 +25,19 @@ export default {
         followerAmt: {
             type: Number,
             default: 0
+        },
+        showFollowButton: {
+            type: Boolean,
+            default: true
+        },
+        showFollowerAmt: {
+            type: Boolean,
+            default: true
         }
     },
     components: {
         ProfilePicture
     },
-    created() {
-        console.log(this.username);
-    }
 }
 </script>
 
@@ -52,6 +57,7 @@ export default {
         flex-grow: 1;
         width: 55%;
         margin-left: 15px;
+        padding-top: 7px;
     }
     .username {
         overflow: hidden;

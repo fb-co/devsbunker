@@ -308,6 +308,8 @@ export default {
     flex-grow: 1;
 }
 .author_container {
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-align: left;
 }
 .author {

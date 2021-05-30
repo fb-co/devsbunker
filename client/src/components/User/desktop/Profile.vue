@@ -147,6 +147,7 @@ export default {
     display: flex;
     flex-direction: column;
     min-width: 300px;
+    max-width: 300px;
 }
 .row_item {
     background-color: var(--general-card);
@@ -248,6 +249,8 @@ export default {
 }
 
 .username {
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-top: 20px;
     font-weight: bold;
     font-size: 18px;

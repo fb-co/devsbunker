@@ -56,6 +56,7 @@ export default {
 :root {
     --footer-size: 60px;
     --header-height: 80px;
+    --default-mobile-thresh: 950px;
 
     --main-color: #16171b;
     --secondary-color: #2e2e2e;

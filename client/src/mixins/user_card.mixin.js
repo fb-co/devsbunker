@@ -5,16 +5,16 @@ const userCard = {
         followUser(username) {
             GraphQLService.followPerson(this.$store.getters.accessToken, username).then((newFollowers) => {
                 if (newFollowers.data.followPerson) {
-                    this.cardData.followerAmt = newFollowers.data.followPerson.followerAmt;
-                    this.cardData.isFollowing = newFollowers.data.followPerson.isFollowing;
+                    this.authorData.followerAmt = newFollowers.data.followPerson.followerAmt;
+                    this.authorData.isFollowing = newFollowers.data.followPerson.isFollowing;
                 }
             });
         },
         unfollowUser(username) {
             GraphQLService.unfollowPerson(this.$store.getters.accessToken, username).then((newFollowers) => {
                 if (newFollowers.data.unfollowPerson) {
-                    this.cardData.followerAmt = newFollowers.data.unfollowPerson.followerAmt;
-                    this.cardData.isFollowing = newFollowers.data.unfollowPerson.isFollowing;
+                    this.authorData.followerAmt = newFollowers.data.unfollowPerson.followerAmt;
+                    this.authorData.isFollowing = newFollowers.data.unfollowPerson.isFollowing;
                 }
             });    
         }
