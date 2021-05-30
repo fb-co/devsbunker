@@ -2,7 +2,7 @@ const Languages = {
     searchByPartial: function(partial) {
         let matches = [];
 
-        this.list.forEach(lang => {
+        this.list.forEach((lang) => {
             if (lang.name.toLocaleLowerCase().includes(partial.toLowerCase())) {
                 matches.push(lang);
             }
@@ -15,121 +15,133 @@ const Languages = {
         let all_tags = this.getList(true);
 
         return all_tags.includes(tag);
-    },  
+    },
     getList: function(justNames) {
         if (justNames) {
             let lang_list = [];
 
-            this.list.forEach(lang => {
+            this.list.forEach((lang) => {
                 lang_list.push(lang.name);
-            })
+            });
 
             return lang_list;
         } else {
             return this.list;
         }
     },
-    getColor: function(language) {        
+    getColor: function(language) {
         for (let i = 0; i < this.list.length; i++) {
             if (this.list[i].name.toLowerCase() == language.toLowerCase()) {
                 return this.list[i].color;
-            }   
+            }
         }
     },
     list: [
         {
             name: "Python",
-            color: "#218a3d"
+            color: "#218a3d",
         },
         {
             name: "Javascript",
-            color: "#b32020"
+            color: "#b32020",
         },
         {
             name: "C++",
-            color: "#2d3291"
+            color: "#2d3291",
         },
         {
             name: "C",
-            color: "#627cf0"
+            color: "#627cf0",
         },
         {
             name: "C#",
-            color: "#62bef0"
+            color: "#62bef0",
         },
         {
             name: "Kotlin",
-            color: "#f7f05e"
+            color: "#f7f05e",
         },
         {
             name: "Java",
-            color: "#e36720"
+            color: "#e36720",
         },
         {
             name: "HTML",
-            color: "#42ad62"
+            color: "#42ad62",
         },
         {
             name: "CSS",
-            color: "#9d42ad"
+            color: "#9d42ad",
         },
         {
             name: "SQL",
-            color: "#e6be49"
+            color: "#e6be49",
         },
         {
             name: "PHP",
-            color: "#e5eb42" 
+            color: "#e5eb42",
         },
         {
             name: "Swift",
-            color: "#5ae0e0"
+            color: "#5ae0e0",
         },
         {
             name: "Objective C",
-            color: "#734dd1"
+            color: "#734dd1",
         },
         {
             name: "Julia",
-            color: "#fc88b9"
+            color: "#fc88b9",
         },
         {
             name: "Rust",
-            color: "#d98d45"
+            color: "#d98d45",
         },
         {
             name: "Bash",
-            color: "#e00404"
+            color: "#e00404",
         },
         {
             name: "Haskell",
-            color: "#a7eb42"
+            color: "#a7eb42",
         },
         {
             name: "Unity",
-            color: "#039dfc"
-        }, 
+            color: "#039dfc",
+        },
         {
             name: "3D Modeling",
-            color: "#f59342"
-        }, 
+            color: "#f59342",
+        },
         {
             name: "Art",
-            color: "#f51414"
-        }, 
+            color: "#f51414",
+        },
         {
             name: "Unreal",
-            color: "#5014f5"
+            color: "#5014f5",
         },
         {
             name: "Matlab",
-            color: "#bababa"
+            color: "#bababa",
         },
         {
             name: "Go",
-            color: "#038c1c"
-        }
-    ]
+            color: "#038c1c",
+        },
+        {
+            name: "Assembly",
+            color: "#b59a51",
+        },
+        {
+            name: "COBOL",
+            color: "#949494",
+        },
+        {
+            name: "Brainfuck",
+            color: "#ff3b3b",
+        },
+    ],
 };
 
 export default Languages;
