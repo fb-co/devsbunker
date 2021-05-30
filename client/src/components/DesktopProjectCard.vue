@@ -112,6 +112,7 @@
                                     class="icon icon-tabler icon-tabler-share"
                                     width="16"
                                     height="16"
+                                    style="margin-top: 1px;"
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="var(--main-font-color)"
@@ -326,10 +327,16 @@ export default {
 }
 
 .op_icon {
+    height: 100%;
     width: 40%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-
+.op_icon svg {
+    margin: 0 auto;
+}
 /* This is for the more dropdown on different themes */
 .darkThemeMore {
     box-shadow: 0 2px 4px 0 rgba(215, 280, 220, 0.2);

@@ -9,6 +9,10 @@ import GraphQLService from "@/services/graphql.service";
 const projectCard = {
     methods: {
         savePost(id) {
+            if (!this.$store.getters.accessToken) {
+                this.$router.push("/login");
+            }
+
             GraphQLService.savePost(this.$store.getters.accessToken, id).then((savedPost) => {
                 this.projectData.isSaved = savedPost.data.savePost;
             });
@@ -21,6 +25,10 @@ const projectCard = {
             });
         },
         likePost(id) {
+            if (!this.$store.getters.accessToken) {
+                this.$router.push("/login");
+            }
+
             GraphQLService.likePost(
                 this.$store.getters.accessToken,
                 id

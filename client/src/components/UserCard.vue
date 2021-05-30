@@ -5,8 +5,10 @@
             <p class="user_desc">{{ authorData.description }}</p>
             <div class="placeholder"></div>
             <div class="user_details">
-                <button v-if="!authorData.isFollowing" @click.stop="followUser(authorData.username)" class="follow_btn">Follow</button>
-                <button v-else @click.stop="unfollowUser(authorData.username)" class="follow_btn">Unfollow</button>
+                <div v-if="$store.getters.accessToken">
+                    <button v-if="!authorData.isFollowing" @click.stop="followUser(authorData.username)" class="follow_btn">Follow</button>
+                    <button v-else @click.stop="unfollowUser(authorData.username)" class="follow_btn">Unfollow</button>
+                </div>
                 <p class="user_details_followers info">Followers: {{ authorData.followerAmt }}</p>
                 <p class="user_details_posts info">Following: {{ authorData.followingAmt }}</p>
             </div>
