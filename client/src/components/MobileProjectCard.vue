@@ -178,7 +178,7 @@
                     <p class="price_text" v-if="projectData.price != 0 && projectData.price != null">| ${{ projectData.price }}</p>
                 </div>
                 <div class="vertical_flex_center">
-                    <p class="bunker_tag">{{ projectData.bunkerTag }}</p>
+                    <p class="bunker_tag">{{ projectData.tags[0] }}</p>
                 </div>
             </div>
         </div>

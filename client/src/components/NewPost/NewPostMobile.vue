@@ -366,7 +366,7 @@ export default {
 
             // had to break this down because of async pain (i think)
             let errmsg = null;
-            if (payload.title && payload.description && payload.bunkerTag && payload.links.length && payload.tags.length) {
+            if (payload.title && payload.description && payload.links.length && payload.tags.length) {
                 for (const link of payload.links) {
                     valid = regex.test(link);
                 }
@@ -402,8 +402,6 @@ export default {
                 links: this.links,
                 collaborators: this.contributers,
                 tags: this.tags,
-                bunkerTag: "DevsBunkerTag",
-                clip: "Du fuq is a clip?",
             };
 
             const check = this.validatePostPayload(post);

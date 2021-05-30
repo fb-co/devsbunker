@@ -68,8 +68,6 @@ export default gql`
         isLiked: Boolean
         isSaved: Boolean
         price: Float
-        bunkerTag: String!
-        clip: String
         createdAt: String!
     }
 

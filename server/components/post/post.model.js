@@ -37,10 +37,6 @@ const postSchema = new mongoose.Schema(
         price: {
             type: Number,
         },
-        bunkerTag: requiredString,
-        clip: {
-            type: String,
-        },
         comments: {
             type: Array
         }

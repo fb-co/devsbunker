@@ -60,7 +60,6 @@ export default {
                 toFetch = [
                     "author",
                     "title",
-                    "bunkerTag",
                     "description",
                     "id",
                     `images {

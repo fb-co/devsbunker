@@ -188,8 +188,6 @@ export default {
                 likes: [],
                 likeAmt: 0,
                 price: payload.price,
-                bunkerTag: payload.bunkerTag,
-                clip: payload.clip,
                 comments: [],
             });
 
@@ -211,8 +209,6 @@ export default {
                     isLiked: false,
                     isSaved: false,
                     price: payload.price,
-                    bunkerTag: post.bunkerTag,
-                    clip: post.clip,
                     comments: [],
                 };
             } catch (err) {
@@ -310,8 +306,6 @@ export default {
                             isSaved: user.saved_posts.includes(jwtPayload.username),
                             isLiked: true,
                             price: post.price,
-                            bunkerTag: post.bunkerTag,
-                            clip: post.clip,
                         };
                     }
                 } else {
@@ -367,8 +361,6 @@ export default {
                                     isSaved: user.saved_posts.includes(jwtPayload.username),
                                     isLiked: false,
                                     price: post.price,
-                                    bunkerTag: post.bunkerTag,
-                                    clip: post.clip,
                                 };
                             }
                         }
@@ -459,8 +451,6 @@ export default {
                                 isLiked: post.likes.includes(jwtPayload.username),
                                 isSaved: true,
                                 price: post.price,
-                                bunkerTag: post.bunkerTag,
-                                clip: post.clip,
                             };
                         } else {
                             return null;

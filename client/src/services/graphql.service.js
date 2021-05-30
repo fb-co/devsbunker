@@ -51,7 +51,6 @@ const GraphQLService = {
                         tags
                         thumbnail
                         createdAt
-                        clip
                         collaborators
                         price
                         description
@@ -153,7 +152,6 @@ const GraphQLService = {
                             likeAmt
                             isSaved
                             isLiked
-                            bunkerTag
                             tags
                             links
                             price
@@ -489,7 +487,6 @@ const GraphQLService = {
                         likeAmt
                         isSaved
                         isLiked
-                        bunkerTag
                         price
                         id
                     }
@@ -729,8 +726,6 @@ const GraphQLService = {
                     links
                     collaborators
                     tags
-                    bunkerTag
-                    clip
                 }
             }
         `;

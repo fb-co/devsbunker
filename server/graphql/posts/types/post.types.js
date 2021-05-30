@@ -28,8 +28,6 @@ export default gql`
         isLiked: Boolean
         isSaved: Boolean
         price: Float
-        bunkerTag: String!
-        clip: String
         createdAt: String!
         comments: [CommentResponse]!
     }
@@ -54,8 +52,6 @@ export default gql`
         links: [String]
         collaborators: [String]
         tags: [String]
-        bunkerTag: String!
-        clip: String
         price: Float
     }
 
