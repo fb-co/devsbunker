@@ -68,6 +68,8 @@ export default {
         cursor: pointer;
     }
     .sender {
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-size: 17px;
         font-weight: bold;
         color: var(--main-font-color);

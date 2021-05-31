@@ -408,6 +408,36 @@ const GraphQLService = {
         }
     },
 
+    fetchUsers: function(sortMethod, lastUserId, lastUniqueField, token) {
+        const query = `
+            query {
+                getUsers(sortMethod: "${sortMethod}", lastUserId: "${lastUserId}", lastUniqueField: "${lastUniqueField}") {
+                    users {
+                        description
+                    }
+                }
+            }
+        `;
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .catch(console.error);
+        } catch (err) {
+            return console.log(err);
+        }
+    },
+
     // enter lastPstId as zero if you havent fetched any yet, and -1 if they have all been fetched
     fetchPosts: function(sortMethod, lastPostId, lastUniqueField, token) {
         let query;

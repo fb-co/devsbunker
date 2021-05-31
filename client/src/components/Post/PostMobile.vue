@@ -206,6 +206,7 @@ export default {
     display: flex;
     max-width: 300px;
     text-decoration: none;
+    margin-left: 30px;
 }
 .contributer_pfp {
     margin: 10px 10px 10px 25px;

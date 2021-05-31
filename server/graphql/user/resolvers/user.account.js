@@ -19,6 +19,9 @@ const { AuthenticationError } = ApolloServer;
 
 export default {
     Query: {
+        getUsers: function (_, args) {
+            return this.getUsers()
+        },
         loginUser: async function (_, args, { res }) {
             let user;
 
