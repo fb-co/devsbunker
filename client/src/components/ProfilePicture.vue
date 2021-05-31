@@ -122,6 +122,34 @@ export default {
             this.$refs.main_image.style.filter = "brightness(100%)";
         },
         fetchImageLink() {
+            const link = this.$store.getters.getPfpLink(this.username);
+
+            // if pfp link is in cache, use it
+            if (link) {
+                if (link === "profile_pic_placeholder.png") {
+                    this.default_image = true;
+                    this.image_link = link;
+                } else {
+                    this.default_image = false;
+                    this.image_link = link;
+                } 
+            } else {
+                GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
+                    if (obj.data.user.profile_pic) {
+                        if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
+                            this.default_image = true;
+                            this.image_link = obj.data.user.profile_pic;
+                        } else {
+                            this.default_image = false;
+                            this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
+                        }
+                        this.$store.commit('cachePfpLink', { username: this.username, link: this.image_link });
+                    } else {
+                        console.log("err");
+                    }
+                });
+            }
+            /*
             if (this.username == this.$store.getters.username) {
                 // fetches the image link from the server unless it is in the localstorage
                 const storedLink = localStorage.getItem("profile_pic_link");
@@ -163,6 +191,7 @@ export default {
                     }
                 });
             }
+            */
         },
     },
 };

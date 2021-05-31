@@ -1,5 +1,5 @@
 <template>
-    <div class="card_container">
+    <div @click="$router.push('/user/' + username)" class="card_container">
         <ProfilePicture :username="username" wrapperSize="70px" />
         <div class="text_container">
             <h2 class="username">{{ username }}</h2>
@@ -7,7 +7,7 @@
         </div>
         <div v-if="showFollowButton" class="follow_btn_container">
             <div style="flex-grow: 1;"></div> <!-- Placeholder -->
-            <button class="follow_btn" @click="$emit('followAction')">{{ isFollowing ? "Unfollow" : "Follow" }}</button>
+            <button v-if="$store.getters.accessToken" class="follow_btn" @click.stop="$emit('followAction')">{{ isFollowing ? "Unfollow" : "Follow" }}</button>
         </div>
     </div>    
 </template>
@@ -52,6 +52,10 @@ export default {
         border: 1px solid transparent;
         display: flex;
         flex-direction: row;
+        border: 1px solid transparent;
+    }
+    .card_container:hover {
+        border: 1px solid var(--accent);
     }
     .text_container {
         flex-grow: 1;

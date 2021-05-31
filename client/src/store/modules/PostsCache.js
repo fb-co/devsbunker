@@ -44,7 +44,7 @@ const mutations = {
     },
     cacheFullPost(state, fullPostToCache) {
         if (state.fullPosts.length > state.maxCacheSize) {
-            // splitting in half
+            // splitting in half note-> (KEEP IN MIND THAT THIS WONT BE HALF IF YOU EVER CHANGE MAXCACHESIZE)
             state.fullPosts.splice(0, 10);
         }
 

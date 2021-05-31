@@ -4,6 +4,7 @@ import LoginStateHandler from "./modules/LoginStateHandler";
 import ScreenHandler from "./modules/ScreenHandler";
 import LocalDataHandler from "./modules/LocalDataHandler";
 import PostsCache from "./modules/PostsCache";
+import PfpCache from "./modules/PfpCache";
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ export const store = new Vuex.Store({
         LoginStateHandler,
         ScreenHandler,
         LocalDataHandler,
-        PostsCache
+        PostsCache,
+        PfpCache
     },
 });
