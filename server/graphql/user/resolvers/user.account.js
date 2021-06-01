@@ -4,7 +4,7 @@ import SessionRevoker from "../../../components/tokens/SessionRevoker.js";
 import TokenHandler from "../../../components/tokens/TokenHandler.js";
 
 import FilesHandler from "../../../middlewares/FilesHandler.js";
-const fh = new  FilesHandler();
+const fh = new FilesHandler();
 
 import validateCreds from "../utils/validateCreds.js";
 import getUserEntry from "../utils/getUserEntry.js";
@@ -19,9 +19,9 @@ const { AuthenticationError } = ApolloServer;
 
 export default {
     Query: {
-        getUsers: function (_, args) {
-            return this.getUsers()
-        },
+        // getUsers: function (_, args) {
+        //     return this.getUsers()
+        // },
         loginUser: async function (_, args, { res }) {
             let user;
 
@@ -275,7 +275,8 @@ export default {
                                 if (payload.newValue && payload.newValue.toString().trim() !== "" && payload.newValue.length > 8) {
                                     // bcrypt generates a random salt at every bcrypt.hash so first we compare the passwords with the right function and then we hash the new one
                                     // really important the order of the function arguments here
-                                    if (await bcrypt.compare(payload.newValue, user[payload.field])) throw new Error("Password can't be the same as the previous one.");
+                                    if (await bcrypt.compare(payload.newValue, user[payload.field]))
+                                        throw new Error("Password can't be the same as the previous one.");
                                     const newHashedPass = await bcrypt.hash(payload.newValue, 10);
 
                                     editedData.push({
@@ -284,7 +285,9 @@ export default {
                                     }); // the only case that we dont want to return the mutated data is for the password
                                     user[payload.field] = newHashedPass;
                                 } else {
-                                    throw new Error(`Cannot update field: ${payload.field}, please enter a valid password with no spaces and > than 8 characters.`);
+                                    throw new Error(
+                                        `Cannot update field: ${payload.field}, please enter a valid password with no spaces and > than 8 characters.`
+                                    );
                                 }
                             } else {
                                 editedData.push({
@@ -493,11 +496,8 @@ export default {
                     // delete the posts
                     await deletePost(user.username, null);
 
-                    
                     // delete profile picture
-                    fh.deleteFiles([
-                        `${process.env.UPLOAD_PROFILE_PIC}/${user.profile_pic}`
-                    ]);
+                    fh.deleteFiles([`${process.env.UPLOAD_PROFILE_PIC}/${user.profile_pic}`]);
 
                     // delete user
                     await User.deleteOne({
