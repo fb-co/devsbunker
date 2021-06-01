@@ -25,7 +25,7 @@ export default {
         // returns all the posts in the order of the parameter 'sortingType'
         getPosts: async function (_, args, { req }) {
             try {
-                const loadAmt = 3;
+                const loadAmt = 10;
                 let posts = await getPostList(args.sortingType, loadAmt, args.lastPostId, args.lastUniqueField);
                 let fetchedAll = false;
 
@@ -84,7 +84,7 @@ export default {
 
         // returns all the posts by a given author parameter
         getPostsByAuthor: async function (_, args, { req }) {
-            const loadAmt = 3;
+            const loadAmt = 10;
 
             let posts = await getPostsByAuthor(args.author, args.lastPostId, args.lastUniqueField, args.filter, loadAmt, req.user);
             let fetchedAll = false;
@@ -106,7 +106,7 @@ export default {
 
         getSavedPosts: async function (_, args, { req }) {
             const jwtPayload = req.user;
-            const loadAmt = 3;
+            const loadAmt = 10;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
@@ -130,9 +130,18 @@ export default {
         },
 
         partial_post: async function (_, args, { req }) {
-            const loadAmt = 2;
-            
-            let posts = await getPostByPartial(args.partial_name, args.filter, args.userToFilter, args.sortingType, args.lastPostId, args.lastUniqueField, loadAmt, req.user);
+            const loadAmt = 9;
+
+            let posts = await getPostByPartial(
+                args.partial_name,
+                args.filter,
+                args.userToFilter,
+                args.sortingType,
+                args.lastPostId,
+                args.lastUniqueField,
+                loadAmt,
+                req.user
+            );
 
             let fetchedAll = false;
 
@@ -173,7 +182,7 @@ export default {
             if (!cleanDesc || !cleanTitle) {
                 throw new Error("Input is an empty string (after cleaning)");
             }
-            
+
             console.log(payload.collaborators);
 
             const post = new Posts({
@@ -215,7 +224,11 @@ export default {
                 // best error handling I ever made
                 throw new Error(
                     `Unable to create post: ${
-                        err.errors.tags ? err.errors.tags.properties.message : err.errors.links.properties.message ? err.errors.links.properties.message : "Internal Error"
+                        err.errors.tags
+                            ? err.errors.tags.properties.message
+                            : err.errors.links.properties.message
+                            ? err.errors.links.properties.message
+                            : "Internal Error"
                     }`
                 );
             }

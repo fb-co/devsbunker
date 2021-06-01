@@ -2,7 +2,7 @@ const state = {
     posts: [],
     fullPosts: [],
     neededPost: null,
-    maxCacheSize: 20,
+    maxCacheSize: 50,
     newlyMadePost: null,
 };
 
@@ -20,8 +20,12 @@ const mutations = {
 
         if (state.posts.length > 0) {
             if (state.posts.length > state.maxCacheSize) {
-                // splitting in half
-                state.posts.splice(0, 10);
+                // making room for the posts we must cache by removing the oldest posts in cache
+                state.posts.filter((_, index) => {
+                    if (index <= postsToCache.length) {
+                        state.posts.shift();
+                    }
+                });
             }
 
             // building an hash-table to map the posts in the cache to their respective IDs
