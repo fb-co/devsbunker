@@ -84,24 +84,28 @@ export default {
 
         // returns all the posts by a given author parameter
         getPostsByAuthor: async function (_, args, { req }) {
-            const loadAmt = 10;
+            try {
+                const loadAmt = 10;
 
-            let posts = await getPostsByAuthor(args.author, args.lastPostId, args.lastUniqueField, args.filter, loadAmt, req.user);
-            let fetchedAll = false;
+                let posts = await getPostsByAuthor(args.author, args.lastPostId, args.lastUniqueField, args.filter, loadAmt, req.user);
+                let fetchedAll = false;
 
-            // check and remove test post
-            if (posts[loadAmt] === undefined) {
-                fetchedAll = true;
-            } else {
-                posts.pop();
+                // check and remove test post
+                if (posts[loadAmt] === undefined) {
+                    fetchedAll = true;
+                } else {
+                    posts.pop();
+                }
+
+                const finalResponse = {
+                    posts: posts,
+                    fetchedAll: fetchedAll,
+                };
+
+                return finalResponse;
+            } catch (err) {
+                return err;
             }
-
-            const finalResponse = {
-                posts: posts,
-                fetchedAll: fetchedAll,
-            };
-
-            return finalResponse;
         },
 
         getSavedPosts: async function (_, args, { req }) {

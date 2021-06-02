@@ -7,11 +7,15 @@
 <script>
 import SharedMethods from "@/utils/shared";
 import UserFeed from "@/components/UserFeed.vue";
+import UserFeedMixin from "@/mixins/user_feed.mixin.js";
 
 export default {
-    created() {
+    async created() {
+        await this.fetchUsers(); // this is from the LoadMore mixin
+
         SharedMethods.loadPage();
     },
+    mixins: [UserFeedMixin],
     components: {
         UserFeed
     }

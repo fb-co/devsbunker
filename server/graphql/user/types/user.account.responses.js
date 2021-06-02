@@ -41,6 +41,11 @@ export default gql`
         is_following: Boolean
     }
 
+    type LoadUsersResponse {
+        users: [FetchableUser]!
+        fetchedAll: Boolean
+    }
+
     type PersonalUserDetails {
         username: String!
         email: String!
@@ -102,6 +107,8 @@ export default gql`
 
     type Query {
         user(username: String!, requester: String): FetchableUser
+
+        getUsers(sortMethod: String!, lastUserId: String!, lastUniqueField: String): LoadUsersResponse!
 
         getPersonalDetails: PersonalUserDetails
 

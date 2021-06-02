@@ -413,8 +413,13 @@ const GraphQLService = {
             query {
                 getUsers(sortMethod: "${sortMethod}", lastUserId: "${lastUserId}", lastUniqueField: "${lastUniqueField}") {
                     users {
-                        description
+                        username
+                        desc
+                        followerAmt
+                        followingAmt
+                        isFollowing
                     }
+                    fetchedAll
                 }
             }
         `;

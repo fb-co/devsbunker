@@ -10,18 +10,51 @@ import validateCreds from "../utils/validateCreds.js";
 import getUserEntry from "../utils/getUserEntry.js";
 import getUserByPartial from "../utils/getUserByPartial.js";
 import loginValidUser from "../utils/loginValidUser.js";
+import AddDynamicData from "../misc/addDynamicData.js";
 
 import getAllPostsByAuthor from "../../posts/utils/getAllPostsByAuthor.js";
 import deletePost from "../../posts/utils/deletePost.js";
+import fetchUsers from "../utils/fetchUsers.js";
 
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
 export default {
     Query: {
-        // getUsers: function (_, args) {
-        //     return this.getUsers()
-        // },
+        getUsers: async function (_, args, { req }) {
+            try {
+                const loadAmt = 1;
+                let fetchedAll = false;
+
+                let requester;
+                
+                // if a token was given, assign requester the username of who is asking for the user cards
+                if (req.user) {
+                    requester = req.user.username;
+                }
+
+                let users = await fetchUsers(args.sortMethod, args.lastUserId, args.lastUniqueField, loadAmt);
+                
+                if (users[loadAmt] === undefined) {
+                    fetchedAll = true;
+                } else {
+                    // remove the test post fetch only if you havent reached the end yet and are getting rid of the test post
+                    users.pop();
+                }
+                
+                // add the dynamic data if a requester is assigned
+                const finalUsers = requester ? AddDynamicData.addAll(users, req.user.username) : users;
+
+                const finalResponse = {
+                    users: finalUsers,
+                    fetchedAll: fetchedAll
+                };
+
+                return finalResponse;
+            } catch (err) {
+                return err;
+            }
+        },
         loginUser: async function (_, args, { res }) {
             let user;
 

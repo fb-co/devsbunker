@@ -7,7 +7,7 @@ export default function loadMoreModule(sortingType, lastPostId, lastUniqueField,
     return new Promise((resolve) => {
         let sortFilter = {};
         
-        // the initial query, reeguardless of filter, will always be the same with the sortFilterb eing the differentiator
+        // the initial query, reeguardless of filter, will always be the same with the sortFilter being the differentiator
         let postQuery = {
             $and: customQueries
         };

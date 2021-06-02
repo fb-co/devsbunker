@@ -5,14 +5,17 @@ const LoadMore = {
         return {
             users: [],
             usersInMemory: [],
-            sortingType: null,
+            sortingType: "Most Popular",
             fetchedAll: false,
             otherData: {}, // add any other data the mixing might need for a specific case here
         }
     },
     methods: {
         async fetchUsers() {
-            const res = GraphQLService.fetchUsers(this.sortingType, this.getLastUserId())
+            const res = await GraphQLService.fetchUsers(this.sortingType, this.getLastUserId(), this.getLastUserUniqueField(), this.$store.getters.accessToken);
+            console.log(res);
+            this.users = this.users.concat(res.data.getUsers.users);
+            this.fetchedAll = res.data.getUsers.fetchedAll;
         },
 
 
@@ -20,10 +23,12 @@ const LoadMore = {
         getLastUserId() {
             return this.users.length > 0 ? this.users[this.users.length - 1].id : 0;
         },
-        /*
-        getLastPostUniqueField() {
-            return this.users.length > 0 ? this.users[this.users.length - 1].likeAmt : -1;
+        
+        getLastUserUniqueField() {
+            return this.users.length > 0 ? this.users[this.users.length - 1].followers : -1;
         },
-        */
+        
     }
 };
+
+export default LoadMore;
