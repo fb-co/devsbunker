@@ -111,7 +111,9 @@
                 queryQueued: false, // flag to make sure queries are not spammed
 
                 sortingType: "Most Popular",
-                
+                fetchedAllResults: false
+
+
 
                 //canClose: false // Important because you need to make sure when you blur the input that the click binding on the options can be triggered
             }
@@ -139,10 +141,13 @@
                             if (this.$refs.general_input.value != "") {
                                 GraphQLService.fetchUserByPartial(
                                     this.$refs.general_input.value, 
-
+                                    this.sortingType,
+                                    this.getLastUserId(),
+                                    this.getLastUniqueField(),
                                     this.$store.getters.accessToken
                                 ).then((res) => {
-                                    this.documents = res.data.partial_user;
+                                    this.documents = res.data.partial_user.users;
+                                    this.fetchedAllResults = res.data.partial_user.fetchedAll;
                                     this.$parent.updateSearchComponent(this.documents);
                                 });
                             }
@@ -154,6 +159,26 @@
                     this.documents = [];
                 }
             },
+            loadMoreResults() {
+                GraphQLService.fetchUserByPartial(
+                    this.$refs.general_input.value, 
+                    this.sortingType,
+                    this.getLastUserId(),
+                    this.getLastUniqueField(),
+                    this.$store.getters.accessToken
+                ).then((res) => {
+                    this.fetchedAllResults = res.data.partial_user.fetchedAll;
+                    this.documents = this.documents.concat(res.data.partial_user.users);
+                    this.$parent.updateSearchComponent(this.documents);
+                    //console.log(this.documents);
+                });
+            },
+            getLastUserId() {
+                return this.documents.length > 0 ? this.documents[this.documents.length - 1].id : 0;
+            },
+            getLastUniqueField() {
+                return this.documents.length > 0 ? this.documents[this.documents.length - 1].followerAmt : -1;
+            }
         }
     }
 </script>

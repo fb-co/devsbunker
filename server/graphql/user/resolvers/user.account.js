@@ -56,10 +56,31 @@ export default {
                 return err;
             }
         },
-        partial_user: function (_, args, { res }) {
+        partial_user: async function (_, args, { req }) {
             const loadAmt = LoadAmounts.userSearch;
-            console.log(args.requester);
-            return getUserByPartial(args.partial_username, args.lastUserId, args.lastUniqueField, args.requester, loadAmt);
+            
+            let fetchedAll = false;
+            let requester;
+            let users = await getUserByPartial(args.partial_username, args.lastUserId, args.lastUniqueField, requester, loadAmt);
+
+            if (req.user) {
+                requester = req.user.username;
+            }
+
+            if (users[loadAmt] === undefined) {
+                fetchedAll = true;
+            } else {
+                users.pop();
+            }
+
+            const finalUsers = requester ? AddDynamicData.addAll(users, req.user.username) : users;
+
+            const finalResponse = {
+                users: finalUsers,
+                fetchedAll: fetchedAll
+            };
+            
+            return finalResponse;
         },
         loginUser: async function (_, args, { res }) {
             let user;

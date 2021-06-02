@@ -1,10 +1,11 @@
 <template>
     <div class="user_feed">
-        <UserSearch class="user_search_input" />
+        <UserSearch ref="user_search_bar" class="user_search_input" />
 
         <div class="users_search_results">
             <div v-if="showSearchResults" class="card_container">
                 <UserCard v-for="(user, index) in searchResults" :key="index" :authorData="user" />
+                <button v-if="!$refs.user_search_bar.fetchedAllResults" @click="loadNew()" class="load_more_btn">Load More</button>
             </div>
             <div v-else class="card_container">
                 <UserCard v-for="(user, index) in rootComponent.users" :key="index" :authorData="user" />
@@ -46,7 +47,7 @@ export default {
             if (!this.showSearchResults) {
                 this.rootComponent.fetchUsers();
             } else {
-                this.$refs.post_search.loadMoreResults();
+                this.$refs.user_search_bar.loadMoreResults();
             }
         },
         /*

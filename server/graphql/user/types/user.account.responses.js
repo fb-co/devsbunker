@@ -115,8 +115,10 @@ export default gql`
 
         partial_user(
             partial_username: String!
-            requester: String
-        ): [FetchableUser]!
+            sortMethod: String!
+            lastUserId: String!
+            lastUniqueField: String!
+        ): LoadUsersResponse!
 
         loginUser(
             username: String

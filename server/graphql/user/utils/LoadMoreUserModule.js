@@ -29,7 +29,7 @@ export default function LoadMoreUserModule(sortingType, lastUserId, lastUniqueFi
         console.log(lastUniqueField);
 
         // query the db
-        User.find(postQuery)
+        User.find(postQuery, { email: 0, password: 0, tokenVersion: 0 }) // filter out sensitive data
             .sort(sortFilter)
             .limit(loadAmt + 1)
             .then((results) => {
