@@ -105,30 +105,6 @@ const GraphQLService = {
         }
     },
 
-    fetchUserByPartial: function(partial_username, requester) {
-        if (partial_username != "") {
-            const query = `
-                query {
-                    partial_user(partial_username: "${partial_username}", requester: "${requester}") {
-                        username
-                        desc
-                        followerAmt
-                        followingAmt
-                        isFollowing
-                    }
-                }
-            `;
-
-            return fetch(URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ query }),
-            })
-                .then((res) => res.json())
-                .catch(console.error);
-        }
-    },
-
     // filter is required, just put a string of 'none' if you want to search all posts
     // SEE THE MONGO QUERY TO UNDERSTAND WHAT userToFilter is for
     fetchPostsByPartial: function(
@@ -413,6 +389,7 @@ const GraphQLService = {
             query {
                 getUsers(sortMethod: "${sortMethod}", lastUserId: "${lastUserId}", lastUniqueField: "${lastUniqueField}") {
                     users {
+                        id
                         username
                         desc
                         followerAmt
@@ -440,6 +417,40 @@ const GraphQLService = {
                 .catch(console.error);
         } catch (err) {
             return console.log(err);
+        }
+    },
+
+    fetchUserByPartial: function(partial_username, sortMethod, lastUserId, lastUniqueField, token) {
+        if (partial_username != "") {
+            const query = `
+                query {
+                    partial_user(partial_username: "${partial_username}", sortMethod: "${sortMethod}", lastUserId: "${lastUserId}", lastUniqueField: "${lastUniqueField}") {
+                        username
+                        desc
+                        followerAmt
+                        followingAmt
+                        isFollowing
+                    }
+                }
+            `;
+            
+            try {
+                return fetch(URL, {
+                    method: "POST",
+                    headers: {
+                        "content-Type": "application/json",
+                        authorization: `Bearer ${token}`,
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({ query }),
+                })
+                    .then((res) => {
+                        return res.json();
+                    })
+                    .catch(console.error);
+            } catch (err) {
+                return console.log(err);
+            }
         }
     },
 

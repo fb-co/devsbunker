@@ -11,6 +11,7 @@ import getUserEntry from "../utils/getUserEntry.js";
 import getUserByPartial from "../utils/getUserByPartial.js";
 import loginValidUser from "../utils/loginValidUser.js";
 import AddDynamicData from "../misc/addDynamicData.js";
+import LoadAmounts from "../misc/loadAmounts.js";
 
 import getAllPostsByAuthor from "../../posts/utils/getAllPostsByAuthor.js";
 import deletePost from "../../posts/utils/deletePost.js";
@@ -23,7 +24,7 @@ export default {
     Query: {
         getUsers: async function (_, args, { req }) {
             try {
-                const loadAmt = 1;
+                const loadAmt = LoadAmounts.userFeed;
                 let fetchedAll = false;
 
                 let requester;
@@ -54,6 +55,11 @@ export default {
             } catch (err) {
                 return err;
             }
+        },
+        partial_user: function (_, args, { res }) {
+            const loadAmt = LoadAmounts.userSearch;
+            console.log(args.requester);
+            return getUserByPartial(args.partial_username, args.lastUserId, args.lastUniqueField, args.requester, loadAmt);
         },
         loginUser: async function (_, args, { res }) {
             let user;
@@ -133,10 +139,6 @@ export default {
             } catch (err) {
                 throw new Error("Failed to fetch details");
             }
-        },
-
-        partial_user: function (_, args, { res }) {
-            return getUserByPartial(args.partial_username, args.requester);
         },
 
         getUnreadNotificationsData: async function (_, args, { req }) {

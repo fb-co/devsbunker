@@ -28,6 +28,7 @@ export default gql`
     }
 
     type FetchableUser {
+        id: String
         username: String!
         desc: String!
         tag: String!

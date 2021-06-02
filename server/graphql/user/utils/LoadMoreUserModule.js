@@ -26,6 +26,8 @@ export default function LoadMoreUserModule(sortingType, lastUserId, lastUniqueFi
             delete postQuery.$and;
         }
 
+        console.log(lastUniqueField);
+
         // query the db
         User.find(postQuery)
             .sort(sortFilter)

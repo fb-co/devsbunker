@@ -110,6 +110,9 @@
                 queryThresh: 1000, // amount of time in between query queue times
                 queryQueued: false, // flag to make sure queries are not spammed
 
+                sortingType: "Most Popular",
+                
+
                 //canClose: false // Important because you need to make sure when you blur the input that the click binding on the options can be triggered
             }
         },
@@ -134,7 +137,11 @@
 
                         setTimeout(() => {
                             if (this.$refs.general_input.value != "") {
-                                GraphQLService.fetchUserByPartial(this.$refs.general_input.value, this.$store.getters.username).then((res) => {
+                                GraphQLService.fetchUserByPartial(
+                                    this.$refs.general_input.value, 
+
+                                    this.$store.getters.accessToken
+                                ).then((res) => {
                                     this.documents = res.data.partial_user;
                                     this.$parent.updateSearchComponent(this.documents);
                                 });

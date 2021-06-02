@@ -13,7 +13,6 @@ const LoadMore = {
     methods: {
         async fetchUsers() {
             const res = await GraphQLService.fetchUsers(this.sortingType, this.getLastUserId(), this.getLastUserUniqueField(), this.$store.getters.accessToken);
-            console.log(res);
             this.users = this.users.concat(res.data.getUsers.users);
             this.fetchedAll = res.data.getUsers.fetchedAll;
         },

@@ -50,7 +50,7 @@ export default {
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     background-color: var(--secondary-color);
     border: 2px solid transparent;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 .user_card_container:hover {
     border: 2px solid grey;

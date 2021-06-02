@@ -1,10 +1,14 @@
 <template>
-    <div class="user_feed_container">
+    <div class="user_feed">
         <UserSearch class="user_search_input" />
 
         <div class="users_search_results">
-            <div v-if="showSearchResults">
-                <UserCard v-for="user in searchResults" :key="user.username" :authorData="user" />
+            <div v-if="showSearchResults" class="card_container">
+                <UserCard v-for="(user, index) in searchResults" :key="index" :authorData="user" />
+            </div>
+            <div v-else class="card_container">
+                <UserCard v-for="(user, index) in rootComponent.users" :key="index" :authorData="user" />
+                <button v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</button>
             </div>
         </div>
     </div>
@@ -40,11 +44,12 @@ export default {
         },
         loadNew() {
             if (!this.showSearchResults) {
-                this.rootComponent.getPosts();
+                this.rootComponent.fetchUsers();
             } else {
                 this.$refs.post_search.loadMoreResults();
             }
         },
+        /*
         updateSearchFilter(value) {
             if (!this.showSearchResults) {
                 this.rootComponent.updateFilterDropdown(value);
@@ -53,22 +58,37 @@ export default {
                 this.$refs.post_search.updateFilter(value);
             }
         },
+        */
     }
 }
 </script>
 
 <style scoped>
+.user_feed {
+    margin-bottom: 30px;
+}
 .user_search_input {
     width: 30%;
     min-width: 300px;
     max-width: 450px;
-    margin: 30px auto 30px auto;
+    margin: 30px auto 60px auto;
 }
 .users_search_results {
     margin: 0 auto;
     width: 80%;
     min-width: 350px;
     max-width: 700px;
-    height: 200px;
+}
+.load_more_btn {
+    margin: 20px auto 40px auto;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+    width: 200px;
+}
+.load_more_btn:hover {
+    font-weight: bold;
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
 }
 </style>

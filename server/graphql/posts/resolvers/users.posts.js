@@ -48,7 +48,7 @@ export default {
                 }
 
                 const finalPosts = AddDynamicData.addAll(posts, user);
-
+                
                 const finalResponse = {
                     posts: finalPosts,
                     fetchedAll: fetchedAll,
