@@ -2,8 +2,8 @@
 // *** this one only controls the user related fetching load amounts
 
 const LoadAmounts = {
-    userFeed: 1,
-    userSearch: 1,
+    userFeed: 10,
+    userSearch: 10,
 };
 
 export default LoadAmounts;

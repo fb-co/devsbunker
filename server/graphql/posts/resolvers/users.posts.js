@@ -15,6 +15,8 @@ import getPostsByAuthor from "../utils/getPostsByAuthor.js";
 import getSavedPosts from "../utils/getSavedPosts.js";
 import deletePost from "../utils/deletePost.js";
 
+import LoadAmounts from "../misc/loadAmounts.js";
+
 export default {
     Query: {
         // returns a single user post given its title and author (should switch to id at some point)
@@ -25,7 +27,7 @@ export default {
         // returns all the posts in the order of the parameter 'sortingType'
         getPosts: async function (_, args, { req }) {
             try {
-                const loadAmt = 10;
+                const loadAmt = LoadAmounts.mainPostFeed;
                 let posts = await getPostList(args.sortingType, loadAmt, args.lastPostId, args.lastUniqueField);
                 let fetchedAll = false;
 
@@ -85,7 +87,7 @@ export default {
         // returns all the posts by a given author parameter
         getPostsByAuthor: async function (_, args, { req }) {
             try {
-                const loadAmt = 10;
+                const loadAmt = LoadAmounts.personalPosts;
 
                 let posts = await getPostsByAuthor(args.author, args.lastPostId, args.lastUniqueField, args.filter, loadAmt, req.user);
                 let fetchedAll = false;
@@ -110,7 +112,7 @@ export default {
 
         getSavedPosts: async function (_, args, { req }) {
             const jwtPayload = req.user;
-            const loadAmt = 10;
+            const loadAmt = LoadAmounts.savedPosts;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
@@ -134,7 +136,7 @@ export default {
         },
 
         partial_post: async function (_, args, { req }) {
-            const loadAmt = 9;
+            const loadAmt = LoadAmounts.postSearch;
 
             let posts = await getPostByPartial(
                 args.partial_name,

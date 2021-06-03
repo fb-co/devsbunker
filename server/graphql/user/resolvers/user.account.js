@@ -61,7 +61,8 @@ export default {
             
             let fetchedAll = false;
             let requester;
-            let users = await getUserByPartial(args.partial_username, args.lastUserId, args.lastUniqueField, requester, loadAmt);
+
+            let users = await getUserByPartial(args.partial_username, args.sortMethod, args.lastUserId, args.lastUniqueField, requester, loadAmt);
 
             if (req.user) {
                 requester = req.user.username;

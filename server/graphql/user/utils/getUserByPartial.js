@@ -7,7 +7,7 @@ export default async function getUserByPartial(partial_username, sortMethod, las
         const customQueries = [{
             username: regex
         }];
-        
+
         LoadMoreUserModule(sortMethod, lastUserId, lastUniqueField, loadAmt, customQueries).then((res) => {
             resolve(res);
         });
