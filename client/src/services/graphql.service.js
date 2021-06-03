@@ -420,18 +420,13 @@ const GraphQLService = {
         }
     },
 
-    fetchUserByPartial: function(partial_username, sortMethod, lastUserId, lastUniqueField, token) {
+    fetchUserByPartial: function(partial_username, sortMethod, lastUserId, lastUniqueField, fields, token) {
         if (partial_username != "") {
             const query = `
                 query {
                     partial_user(partial_username: "${partial_username}", sortMethod: "${sortMethod}", lastUserId: "${lastUserId}", lastUniqueField: "${lastUniqueField}") {
                         users {
-                            id
-                            username
-                            desc
-                            followerAmt
-                            followingAmt
-                            isFollowing
+                            ${fields}
                         }
                         fetchedAll
                     }

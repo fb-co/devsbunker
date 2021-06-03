@@ -100,7 +100,7 @@ export default {
         },
         open() {
             this.isOpen = true;
-            document.body.style.overflowY = "hidden";
+            document.body.style.overflowY = "hidden"; // temporarily disable main page scrolling
         },
         remove_entry(element) {
             for (let i = 0; i < this.selected_entries.length; i++) {

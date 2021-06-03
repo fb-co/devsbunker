@@ -4,10 +4,10 @@
             <div class="vertical_flex_center" style="height:100%;">
                 <ProfilePicture :username="label" wrapperSize="50px" />
             </div>
-            <p>{{ label }}</p>
+            <p class="pfp_label">{{ label }}</p>
         </div>
         <div v-else-if="tagType=='lang'" class="tag_lang">
-            <p>{{ label }}</p>
+            <p class="general_label">{{ label }}</p>
         </div>
     </div>
 </template>
@@ -37,6 +37,9 @@ export default {
             };
         },
     },
+    created() {
+        console.log(this.tagType);
+    },
 }
 </script>
 
@@ -44,6 +47,12 @@ export default {
     .create_tag_container {
         margin: 5px;
         cursor: pointer;
+        max-width: 100%;
+    }
+    .pfp_label {
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .create_tag_container:hover > .tag_person {
         border: 1px solid var(--soft-text);

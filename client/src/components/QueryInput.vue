@@ -69,8 +69,8 @@ export default {
                             if (this.$refs.input_ref.value != "") {
                                 // use different queries to search for different items based on 'searchFor'
                                 if (this.searchFor === "users") {
-                                    GraphQLService.fetchUserByPartial(this.$refs.input_ref.value).then((res) => {
-                                        this.documents = res.data.partial_user;
+                                    GraphQLService.fetchUserByPartial(this.$refs.input_ref.value, "Most Popular", 0, -1, ["username"]).then((res) => {
+                                        this.documents = res.data.partial_user.users;
                                     });
                                 }
                             }
@@ -99,7 +99,9 @@ export default {
                 if (this.documents[this.selectedDocument] !== undefined) {
                     this.addEntry(this.documents[this.selectedDocument].username || this.documents[this.selectedDocument].name);
                 } else {
-                    this.addEntry(this.$refs.input_ref.value);
+                    if (this.searchFor === "links") {
+                        this.addEntry(this.$refs.input_ref.value);
+                    }
                 }
             }
 
@@ -155,6 +157,7 @@ export default {
         position: absolute;
         z-index: 15;
         width: 175px;
+        background-color: var(--main-color);
     }
 
     .document_item {
@@ -165,6 +168,8 @@ export default {
         text-align: center;
         cursor: pointer;
         width: 100%;
+        overflow: hidden; 
+        text-overflow: ellipsis;
     }
     .document_item:hover {
         color: var(--soft-text);

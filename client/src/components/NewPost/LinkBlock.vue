@@ -3,7 +3,7 @@
         <img class="link_logo" v-if="!github_link" :src="'https://api.statvoo.com/favicon/?url=' + link">
         <img class="link_logo" v-else src="@/assets/github-logo.png">
 
-        <a :href="link">{{ link }}</a>
+        <a :href="link" class="link_text">{{ link }}</a>
     </div>
 </template>
 
@@ -33,6 +33,7 @@ export default {
     }
     .link_logo {
         width: 40px;
+        object-fit: contain;
     }
     .link_block_container > a {
         flex-grow: 1;
@@ -47,5 +48,8 @@ export default {
         margin-left: 20px;
         overflow: hidden;
     }
-        
+    .link_text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    } 
 </style>
