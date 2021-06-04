@@ -144,6 +144,7 @@
                                     this.sortingType,
                                     this.getLastUserId(),
                                     this.getLastUniqueField(),
+                                    ["id", "username", "desc", "followerAmt", "followingAmt", "isFollowing"], // requesting only these fields
                                     this.$store.getters.accessToken
                                 ).then((res) => {
                                     this.documents = res.data.partial_user.users;
@@ -165,6 +166,7 @@
                     this.sortingType,
                     this.getLastUserId(),
                     this.getLastUniqueField(),
+                    ["id", "username", "desc", "followerAmt", "followingAmt", "isFollowing"], // requesting only these fields
                     this.$store.getters.accessToken
                 ).then((res) => {
                     this.fetchedAllResults = res.data.partial_user.fetchedAll;

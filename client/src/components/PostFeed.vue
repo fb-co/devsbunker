@@ -250,12 +250,13 @@ export default {
     margin: 20px auto 40px auto;
     border-radius: 5px;
     padding: 10px;
-    border: 1px solid black;
+    background-color: var(--main-accent);
     cursor: pointer;
     width: 200px;
+    color: #fff;
 }
 .load_more_btn:hover {
     font-weight: bold;
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 20px var(--main-accent);
 }
 </style>

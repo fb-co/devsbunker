@@ -384,17 +384,12 @@ const GraphQLService = {
         }
     },
 
-    fetchUsers: function(sortMethod, lastUserId, lastUniqueField, token) {
+    fetchUsers: function(sortMethod, lastUserId, lastUniqueField, fields, token) {
         const query = `
             query {
                 getUsers(sortMethod: "${sortMethod}", lastUserId: "${lastUserId}", lastUniqueField: "${lastUniqueField}") {
                     users {
-                        id
-                        username
-                        desc
-                        followerAmt
-                        followingAmt
-                        isFollowing
+                        ${fields}
                     }
                     fetchedAll
                 }

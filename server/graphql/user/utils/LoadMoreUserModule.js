@@ -2,7 +2,7 @@ import User from "../../../components/user/user.model.js"; // the db
 
 export default function LoadMoreUserModule(sortingType, lastUserId, lastUniqueField, loadAmt, customQueries) {
     return new Promise((resolve) => {
-        let sortFilter = {};
+        let sortFilter = { _id: -1 };
         
         let postQuery = {
             $and: customQueries
@@ -25,7 +25,7 @@ export default function LoadMoreUserModule(sortingType, lastUserId, lastUniqueFi
         } else if (customQueries.length === 0) {
             delete postQuery.$and;
         }
-
+        console.log(postQuery, sortFilter, "LoadAmt: " + loadAmt);
         // query the db
         User.find(postQuery, { email: 0, password: 0, tokenVersion: 0 }) // filter out sensitive data
             .sort(sortFilter)
@@ -36,6 +36,5 @@ export default function LoadMoreUserModule(sortingType, lastUserId, lastUniqueFi
             .catch((err) => {
                 console.log(err);
             })
-
     });
 }

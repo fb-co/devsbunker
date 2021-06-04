@@ -33,7 +33,7 @@ export default {
                 if (req.user) {
                     requester = req.user.username;
                 }
-
+                console.log(requester);
                 let users = await fetchUsers(args.sortMethod, args.lastUserId, args.lastUniqueField, loadAmt);
                 
                 if (users[loadAmt] === undefined) {
@@ -58,22 +58,22 @@ export default {
         },
         partial_user: async function (_, args, { req }) {
             const loadAmt = LoadAmounts.userSearch;
-            
+
             let fetchedAll = false;
             let requester;
-
-            let users = await getUserByPartial(args.partial_username, args.sortMethod, args.lastUserId, args.lastUniqueField, requester, loadAmt);
 
             if (req.user) {
                 requester = req.user.username;
             }
+
+            let users = await getUserByPartial(args.partial_username, args.sortMethod, args.lastUserId, args.lastUniqueField, loadAmt);
 
             if (users[loadAmt] === undefined) {
                 fetchedAll = true;
             } else {
                 users.pop();
             }
-
+            
             const finalUsers = requester ? AddDynamicData.addAll(users, req.user.username) : users;
 
             const finalResponse = {

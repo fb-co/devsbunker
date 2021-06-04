@@ -164,6 +164,11 @@ export default {
     border: 1px solid var(--error-red);
     cursor: pointer;
 }
+.logout_button:hover {
+    color: var(--main-color);
+    background-color: var(--error-red);
+    font-weight: bold;
+}
 .filter_dropdown {
     width: 200px;
     margin: 0px auto 40px auto;
@@ -180,11 +185,21 @@ export default {
     border: 1px solid var(--main-font-color);
     margin-left: 15%;
     margin-top: 30px;
-    margin-bottom: 20px;
     cursor: pointer;
     text-decoration: none;
     background-color: transparent;
 }
+.new_button:hover {
+    background-color: var(--secondary-color);
+}
+
+.new_button:hover > p {
+    font-weight: bold;
+}
+.new_button:hover > svg {
+    stroke-width: 2px;
+}
+
 .new_button > p {
     display: flex;
     flex-direction: column;

@@ -34,12 +34,11 @@ export default gql`
         tag: String!
         followers: [String]!
         following: [String]!
-        followerAmt: Int!
-        followingAmt: Int!
+        followerAmt: Int
+        followingAmt: Int
         isFollowing: Boolean
         liked_posts: [String]!
         profile_pic: String!
-        is_following: Boolean
     }
 
     type LoadUsersResponse {

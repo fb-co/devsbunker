@@ -37,9 +37,6 @@ export default {
             };
         },
     },
-    created() {
-        console.log(this.tagType);
-    },
 }
 </script>
 

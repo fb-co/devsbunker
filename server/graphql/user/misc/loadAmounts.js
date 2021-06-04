@@ -3,7 +3,7 @@
 
 const LoadAmounts = {
     userFeed: 10,
-    userSearch: 10,
+    userSearch: 1,
 };
 
 export default LoadAmounts;
