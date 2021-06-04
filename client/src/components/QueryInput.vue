@@ -168,15 +168,16 @@ export default {
         text-align: center;
         cursor: pointer;
         width: 100%;
-        overflow: hidden; 
+        overflow: hidden;
         text-overflow: ellipsis;
+        vertical-align:top;
     }
     .document_item:hover {
         color: var(--soft-text);
     }
     .selected {
-        background-color: var(--secondary-color);
-        color: var(--main-font-color);
+        background-color: var(--main-accent); 
+        color: #fff !important;
         font-weight: bold;
         padding: 10px;
         display: inline-block;
