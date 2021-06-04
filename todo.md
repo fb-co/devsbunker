@@ -61,7 +61,7 @@
 -   [x] deleting a post on mobile doesnt hide the post from the home
 -   [ ] i think that the posts hot reload thing isnt implemented yet for the mobile version... maybe im wrong
 -   [x] posts cache stores duplicate posts after user creates a new one
--   [ ] display links while viewing posts on desktop
+-   [x] display links while viewing posts on desktop
 -   [x] handle non existing users by showing a 404
 
     -   [ ] do it better
@@ -145,7 +145,7 @@
 -   [x] Look at the console when you switch themes in mobile mode :(
 -   [ ] settings sections (account, privacy, etc) are still available in mobile version. This is not a real glitch but we have to decide what to do with it
 -   [x] avoid refreshing access token if user is not logged in (not really possible)
--   [ ] Cant scroll on mobile settings page
+-   [x] Cant scroll on mobile settings page
 
 ## Deployment
 
