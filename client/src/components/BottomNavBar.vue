@@ -102,7 +102,7 @@
             </div>
         </div>
         <div class="nav_placeholder"></div>
-        <NewPost ref="newPostPopup" />
+        <NewPost ref="newPostPopup" @updateFeed="updateFeed()" />
     </div>
 </template>
 
@@ -120,6 +120,12 @@ export default {
         newPost() {
             this.$refs.newPostPopup.open();
         },
+        updateFeed() {
+            if (this.$route.name === "Home") {
+                // if your already at the home page dont re-route and just update the feed from the bottom navbar (this requires going through app.vue)
+                this.$emit("updateFeed"); // this is going to App.vue
+            }
+        }
     },
 
     components: {

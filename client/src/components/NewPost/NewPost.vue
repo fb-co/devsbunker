@@ -30,7 +30,6 @@ export default {
             this.isOpen = true;
         },
         propagateEvent(flag) {
-            console.log("propagating event");
             this.$emit("updateFeed", flag);
         },
     },

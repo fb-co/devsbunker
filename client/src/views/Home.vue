@@ -81,8 +81,6 @@ export default {
         },
 
         updateFeed(flag) {
-            // ! FOR SOME REASON, THIS FUNCTION DOESN'T GET CALLED ON MOBILE
-            console.log("[!] CALLED updateFeed, flag:", flag);
             /**
              * After creating a new post, we don't want to grab the lastPostId and start fetching from there, we instead want to fetch the latest 3 posts.
              * If we grab the lastPostId this happens:

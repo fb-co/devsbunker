@@ -430,11 +430,9 @@ export default {
 
                                 this.success = true;
 
-                                console.log("*** DEBUG addPostImages response:", res.post);
                                 await this.$store.dispatch("cacheNewlyMadePost", res.post);
 
                                 if (this.$route.name == "Home") {
-                                    console.log("emitting event");
                                     this.$emit("updateFeed", true);
                                 } else {
                                     this.$router.push("/");
@@ -480,8 +478,6 @@ export default {
             }
 
             this.compressedFiles = tmp;
-            console.log("[DEBUG] Compressed: ", this.compressedFiles);
-            console.log("[DEBUG] Original: ", this.files);
         },
 
         removeFile(index) {

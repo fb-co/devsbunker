@@ -2,8 +2,8 @@
     <div>
         <div id="app" v-if="!isFetching">
             <Navbar />
-            <router-view />
-            <BottomNavBar v-if="$store.getters.mobile" />
+            <router-view ref="page_content" />
+            <BottomNavBar v-if="$store.getters.mobile" @updateFeed="updateFeed($event)" />
         </div>
 
         <Loading v-if="isFetching" />
@@ -41,6 +41,12 @@ export default {
 
         this.isFetching = false;
     },
+
+    methods: {
+        updateFeed() {
+            this.$refs.page_content.updateFeed(true);
+        }
+    }
 };
 </script>
 

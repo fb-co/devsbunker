@@ -70,10 +70,8 @@ const LoadMore = {
 
             // unshift newly chached post into this.posts
             if (newPost) {
-                console.log("*** ADDING TO POSTS ARRAY ***", newPost);
                 this.posts.unshift(newPost);
             }
-            console.log("*** POSTS", this.posts);
         },
         updateFilterDropdown(value) {
             this.posts = [];

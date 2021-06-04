@@ -88,9 +88,7 @@ const mutations = {
         state.neededPost = ret;
     },
     cacheNewPost(state, post) {
-        console.log("[CACHE DEBUG] caching: ", post);
         state.newlyMadePost = post;
-        console.log("[CACHE DEBUG] in state: ", state.newlyMadePost);
 
         this.commit("appendPosts", [post]);
     },
