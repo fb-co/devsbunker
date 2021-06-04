@@ -5,7 +5,7 @@
         <div class="text_container">
             <p class="sender">{{ data.sender }}</p>
             <p class="message">{{ messageToDisplay }}</p>
-            <p v-if="data.timestamp" class="timestamp">{{ data.timestamp }}</p>
+            <p v-if="data.timestamp" class="timestamp">{{ usableTimestamp }}</p>
         </div> 
         <div class="icon_container">
             <svg v-if="data.type=='like'" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F44336" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -18,12 +18,17 @@
 
 <script>
 //import NotificationPopup from "@/components/Notifications/NotificationPopup.vue";
+import TimeStampService from "@/services/timestamp.service.js";
 
 export default {
     data() {
         return {
-            messageToDisplay: this.processMessage(this.data.message)
+            messageToDisplay: this.processMessage(this.data.message),
+            usableTimestamp: this.data.timestamp, 
         }
+    },
+    created() {
+        this.usableTimestamp = TimeStampService.convertToDate(this.data.timestamp, true, true, true);       
     },
     props: {
         data: Object,

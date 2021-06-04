@@ -3,7 +3,7 @@
         <img class="link_logo" v-if="!github_link" :src="'https://api.statvoo.com/favicon/?url=' + link">
         <img class="link_logo" v-else src="@/assets/github-logo.png">
 
-        <a :href="link" class="link_text">{{ link }}</a>
+        <a :href="usableLink" target="_blank" class="link_text">{{ link }}</a>
     </div>
 </template>
 
@@ -11,15 +11,19 @@
 export default {
     data() {
         return {
-            github_link: false
+            github_link: false,
+            usableLink: this.link,
         }
     },
     props: {
-        link: String
+        link: String,
     },
     created() {
         if (this.link.includes("github.com")) {
             this.github_link = true; 
+        }
+        if (!this.link.toLowerCase().includes("http://") && !this.link.toLowerCase().includes("https://")) {
+            this.usableLink = 'http://' + this.usableLink;
         }
     }
 }

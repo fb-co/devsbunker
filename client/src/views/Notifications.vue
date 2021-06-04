@@ -4,12 +4,8 @@
         <div class="notification_card_container">
             <!-- Made the key account for many variables to avoid any duplicate key errors -->
             <LargeNotificationCard
-                v-for="notification in notifications"
-                :key="
-                    notification.sender +
-                    notification.target +
-                    notification.message
-                "
+                v-for="(notification, index) in notifications"
+                :key="index"
                 :data="notification"
                 width="100%"
             />
