@@ -304,6 +304,9 @@ input[type="submit"] {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+input[type="submit"]:hover {
+    box-shadow: 0px 4px 20px var(--main-accent);
+}
 .active_section {
     background-color: var(--main-accent);
 }

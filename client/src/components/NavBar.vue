@@ -142,8 +142,6 @@ export default {
 
             if (this.$route.path != "/") {
                 this.$router.push("/");
-            } else {
-                this.hideBurgerMenu();
             }
         },
         toggleMenu() {

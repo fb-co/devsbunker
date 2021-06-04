@@ -18,7 +18,7 @@ export default gql`
         sender: String!
         message: String!
         type: String!
-        target: String!
+        target: String
         timestamp: String
     }
 

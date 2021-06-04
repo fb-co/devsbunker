@@ -12,6 +12,7 @@ import getUserByPartial from "../utils/getUserByPartial.js";
 import loginValidUser from "../utils/loginValidUser.js";
 import AddDynamicData from "../misc/addDynamicData.js";
 import LoadAmounts from "../misc/loadAmounts.js";
+import NotificationData from "../misc/notificationData.js";
 
 import getAllPostsByAuthor from "../../posts/utils/getAllPostsByAuthor.js";
 import deletePost from "../../posts/utils/deletePost.js";
@@ -395,6 +396,45 @@ export default {
                         personToFollow.followers.push(jwtPayload.username);
                     } else {
                         throw new Error(`Unable to follow ${personPayload}, make sure you don't already follow them/you aren't following yourself!`);
+                    }
+
+                    
+                    // Notify the user that someone followed them!
+
+                    const notification = {
+                        read: false,
+                        sender: addFollowing.username,
+                        message: `followed you!`,
+                        type: "follow",
+                        target: null,
+                        timestamp: new Date(),
+                    };
+
+                    let shouldNotify = true;
+
+                    // the forEach loop was being stoopid, so im using a regular loop
+                    for (let i = 0; i < personToFollow.notifications.length; i++) {
+                        const oldNotification = personToFollow.notifications[i];
+
+                        if (
+                            oldNotification.sender == notification.sender &&
+                            oldNotification.message == notification.message &&
+                            oldNotification.target == notification.target
+                        ) {
+                            shouldNotify = false;
+                        }
+                    }
+                    if (personToFollow == notification.sender) {
+                        shouldNotify = false;
+                    }
+
+                    if (shouldNotify) {
+                        personToFollow.notifications.unshift(notification);
+                        
+                        // remove a notitcation if the user has to many
+                        if (personToFollow.notifications.length > NotificationData.maxNotifications) {
+                            personToFollow.notifications.pop();
+                        }
                     }
 
                     await personToFollow.save();

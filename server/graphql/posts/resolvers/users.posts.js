@@ -290,8 +290,6 @@ export default {
                             for (let i = 0; i < userToNotify.notifications.length; i++) {
                                 const oldNotification = userToNotify.notifications[i];
 
-                                console.log(oldNotification.target, notification.target);
-
                                 if (
                                     oldNotification.sender == jwtPayload.username &&
                                     oldNotification.message == notification.message &&
