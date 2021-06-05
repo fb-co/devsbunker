@@ -90,8 +90,9 @@
                         <div v-if="!desktop" class="running_out_of_wrapper_names">
                             <MobileProjectCard class="mobile_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
                         </div>
-                        <div v-else class="running_out_of_wrapper_names">
-                            <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" />
+                        <div v-else class="desktop_post_feed">
+                            <!-- <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" /> -->
+                            <LargeDesktopProjectCard v-for="(project, index) in rootComponent.posts" :key="index" :projectData="project" />
                         </div>
                     </div>
                     <p v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
@@ -125,6 +126,7 @@ import PostSearch from "@/components/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import MobileProjectCard from "@/components/MobileProjectCard.vue";
 import DesktopProjectCard from "@/components/DesktopProjectCard.vue";
+import LargeDesktopProjectCard from "@/components/LargeDesktopProjectCard.vue";
 
 export default {
     data() {
@@ -150,7 +152,8 @@ export default {
         PostSearch,
         Dropdown,
         MobileProjectCard,
-        DesktopProjectCard
+        DesktopProjectCard,
+        LargeDesktopProjectCard
     },
     methods: {
         loadNew() {
@@ -207,6 +210,12 @@ export default {
     padding-right: 15px;
     padding-left: 15px;
     width: 100%;
+}
+.desktop_post_feed {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .filter_dropdown_container {
