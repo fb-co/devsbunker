@@ -25,6 +25,10 @@ export async function getAccessToken(req, res, next) {
                 next({
                     message: "Token not valid. User revoked the session.",
                 });
+            } else if (!user.enabled) {
+                next({
+                    message: "User is banned",
+                });
             } else {
                 res.json({
                     accessToken: TokenHandler.createAccessToken(user),

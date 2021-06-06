@@ -29,27 +29,27 @@ export default {
                 let fetchedAll = false;
 
                 let requester;
-                
+
                 // if a token was given, assign requester the username of who is asking for the user cards
                 if (req.user) {
                     requester = req.user.username;
                 }
                 console.log(requester);
                 let users = await fetchUsers(args.sortMethod, args.lastUserId, args.lastUniqueField, loadAmt);
-                
+
                 if (users[loadAmt] === undefined) {
                     fetchedAll = true;
                 } else {
                     // remove the test post fetch only if you havent reached the end yet and are getting rid of the test post
                     users.pop();
                 }
-                
+
                 // add the dynamic data if a requester is assigned
                 const finalUsers = requester ? AddDynamicData.addAll(users, req.user.username) : users;
 
                 const finalResponse = {
                     users: finalUsers,
-                    fetchedAll: fetchedAll
+                    fetchedAll: fetchedAll,
                 };
 
                 return finalResponse;
@@ -74,14 +74,14 @@ export default {
             } else {
                 users.pop();
             }
-            
+
             const finalUsers = requester ? AddDynamicData.addAll(users, req.user.username) : users;
 
             const finalResponse = {
                 users: finalUsers,
-                fetchedAll: fetchedAll
+                fetchedAll: fetchedAll,
             };
-            
+
             return finalResponse;
         },
         loginUser: async function (_, args, { res }) {
@@ -143,7 +143,7 @@ export default {
                     username: jwtPayload.username,
                 });
 
-                if (user) {
+                if (user && user.enabled) {
                     return {
                         username: user.username,
                         desc: user.desc,
@@ -158,6 +158,7 @@ export default {
                     };
                 } else {
                     console.log(err);
+                    throw new Error("Unable to find user details");
                 }
             } catch (err) {
                 throw new Error("Failed to fetch details");
@@ -229,6 +230,8 @@ export default {
                 const user = await User.findOne({
                     username: jwtPayload.username,
                 });
+
+                if (!user.enabled) throw new Error("User is banned");
 
                 const posts = await getAllPostsByAuthor(jwtPayload.username);
                 return {
@@ -318,6 +321,7 @@ export default {
 
             // if the token is valid then we should def find a user...
             if (!user) return { success: false, message: "Internal error" };
+            if (!user.enabled) return { success: false, message: "User is banned" };
 
             const nonMod = ["_id", "id", "tokenVersion", "tag", "createdAt", "updatedAt", "__v", "v"];
 
@@ -398,7 +402,6 @@ export default {
                         throw new Error(`Unable to follow ${personPayload}, make sure you don't already follow them/you aren't following yourself!`);
                     }
 
-                    
                     // Notify the user that someone followed them!
 
                     const notification = {
@@ -430,7 +433,7 @@ export default {
 
                     if (shouldNotify) {
                         personToFollow.notifications.unshift(notification);
-                        
+
                         // remove a notitcation if the user has to many
                         if (personToFollow.notifications.length > NotificationData.maxNotifications) {
                             personToFollow.notifications.pop();
@@ -570,7 +573,7 @@ export default {
                     _id: req.user._id,
                 });
 
-                if (!user) {
+                if (!user && !user.enabled) {
                     res.status(422);
                     return {
                         success: false,
