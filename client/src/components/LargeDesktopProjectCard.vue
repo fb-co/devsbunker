@@ -138,7 +138,6 @@ export default {
     min-width: 250px;
     min-height: 250px;
 
-    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) );
     background-size: cover;
     background-position: center;
 }
@@ -192,7 +191,7 @@ export default {
     flex-direction: row;
     width: 100%;
     height: 70px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.8);
 }
 .text {
     display: flex;
@@ -201,7 +200,7 @@ export default {
     max-width: 80%;
 }
 .title {
-    color: var(--main-font-color);
+    color: #fff;
     font-size: 17px;
     font-weight: bold;
     padding: 15px 8px 5px 8px;
@@ -211,7 +210,7 @@ export default {
     text-align: left;
 }
 .author {
-    color: var(--soft-text);
+    color: rgb(189, 189, 189);
     font-size: 13px;
     padding: 5px 8px 15px 8px;
     white-space: nowrap;
