@@ -1,11 +1,6 @@
 <template>
-    <!-- 
-        Its a bit janky, but the reason the mouseover and leave event is binding in three places is because the overlay 
-        falls beneath the text and icons. As a result, if you only binded it to the overlay, the icons would be hidden
-        every time you hovered over the text container or the icons parent itself
-    -->
     <div class="project_box" ref="image_div" @click="$router.push({ path: `/post/${projectData.id}` })">
-        <div @click.stop="" class="top_text_container" ref="icons" @mouseover="showIcons()" @mouseleave="hideIcons()">
+        <div @click.stop="" class="top_text_container" ref="icons">
             <!--Not filled icon -->
             <div class="icon_container">
                 <svg 
@@ -72,15 +67,15 @@
                 </svg>
             </div>
         </div>
-        <div class="text_container" @mouseover="showIcons()" @mouseleave="hideIcons()">
+        <div class="text_container">
             <div class="text">
                 <p class="title">{{ projectData.title }}</p>
                 <p class="author">By: {{ projectData.author }}</p>
             </div>
         </div>
         <!-- Because of the structure of the html, we need to use js to show the icons when you hover over the overlay -->
-        <div @mouseover="showIcons()" @mouseleave="hideIcons()" class="hover_overlay" />
-    </div>    
+        <div class="hover_overlay" />
+    </div>
 </template>
 
 <script>
@@ -101,14 +96,6 @@ export default {
     },
     mounted() {
         this.$refs.image_div.style.backgroundImage = `url('${this.thumbnail_link}')`;
-    },
-    methods: {
-        showIcons() {
-            this.$refs.icons.style.display = "flex";
-        },
-        hideIcons() {
-            this.$refs.icons.style.display = "none";
-        }
     },
     watch: {
         projectData: function(newVal) {
@@ -132,11 +119,10 @@ export default {
     position: relative;
     display: flex;
     flex-direction: column;
-    margin: 5px;
+    margin: 10px 5px 10px 5px;
     flex: 1; /* Makes it stretch to fill container */
     
     min-width: 250px;
-    max-width: 300px;
     min-height: 250px;
 
     background-size: cover;
@@ -168,7 +154,7 @@ export default {
     display: flex;
 }
 .top_text_container {
-    display: none;
+    display: flex;
     position: absolute;
     top: 0px;
     z-index: 1;
