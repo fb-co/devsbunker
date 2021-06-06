@@ -132,15 +132,21 @@ export default {
     position: relative;
     display: flex;
     flex-direction: column;
-    margin: 5px;
+    margin: 10px;
     flex: 1; /* Makes it stretch to fill container */
+    border-bottom: 1px solid var(--soft-text);
     
+    /*
     min-width: 250px;
     max-width: 300px;
     min-height: 250px;
+    */
+    min-width: 300px;
+    min-height: 300px;
 
     background-size: cover;
     background-position: center;
+
 }
 .hover_overlay {
     position: absolute;

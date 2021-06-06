@@ -67,7 +67,11 @@ export default {
     display: flex;
     flex-direction: column;
     margin: 5px;
+    padding: 20px;
+    min-width: 510px;
+    min-height: 520px;
     background-color: var(--secondary-color);
+    border: 1px solid var(--soft-text);
 }
 .top_container {
     display: flex;
@@ -88,6 +92,7 @@ export default {
     flex-direction: column;
     flex-grow: 1;
     height: 100%; /* Delete this after */
+    margin-left: 15px;
 }
 .title {
     font-weight: bold;
@@ -97,11 +102,11 @@ export default {
 .description {
     color: var(--soft-text);
     text-align: left;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 10px 20px 10px;
 }
 .thumbnail {
-    width: 250px;
-    height: 200px;
+    width: 350px;
+    height: 300px;
     object-fit: cover;
     border-radius: 5px;
     margin: 10px;
