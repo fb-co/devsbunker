@@ -23,38 +23,39 @@ const userSchema = new mongoose.Schema(
             index: true,
         },
 
-        desc: {  // description
+        desc: {
+            // description
             type: String,
-            default: "No Description"
-        }, 
+            default: "No Description",
+        },
 
         profile_pic: {
             type: String,
-            default: "profile_pic_placeholder.png"
+            default: "profile_pic_placeholder.png",
         },
 
         followers: {
             type: Array,
-            default: []
+            default: [],
         },
         following: {
             type: Array,
-            default: []
+            default: [],
         },
 
         notifications: {
             type: Array,
-            default: []
+            default: [],
         },
 
         liked_posts: {
             type: Array,
-            default: []
+            default: [],
         },
 
         saved_posts: {
             type: Array,
-            default: []
+            default: [],
         },
 
         password: requiredString,
@@ -68,6 +69,12 @@ const userSchema = new mongoose.Schema(
             type: Number,
             required: true,
             default: 0,
+        },
+
+        enabled: {
+            type: Boolean,
+            requred: true,
+            default: true,
         },
     },
     {
