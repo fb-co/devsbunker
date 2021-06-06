@@ -1,8 +1,8 @@
 <template>
     <div class="main_container">
-        <LeftContent />
+        <LeftContent class="left_content" />
         <PostFeed :rootComponent="$parent" title="Discover Projects" class="post_feed" v-if="loaded" />
-        <RightContent :notifications="notifications" />
+        <RightContent :notifications="notifications" class="right_content" />
     </div>
 </template>
 
@@ -95,9 +95,20 @@ export default {
     flex-direction: row;
     width: 100%;
 }
+.left_content {
+    width: 20%;
+    min-width: 150px;
+    max-width: 250px;
+}
+.right_content {
+    min-width: 150px;
+    max-width: 250px;
+    width: 20%;
+}
 .post_feed {
     overflow-y: auto;
     flex-grow: 1;
+    width: 60%;
     height: calc(100vh - var(--header-height));
 
     -ms-overflow-style: none; /* IE and Edge (scrollbar hide)*/

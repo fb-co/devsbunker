@@ -92,7 +92,7 @@
                         </div>
                         <div v-else class="desktop_post_feed">
                             <!-- <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" /> -->
-                            <LargeDesktopProjectCard v-for="(project, index) in rootComponent.posts" :key="index" :projectData="project" />
+                            <LargeDesktopProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
                         </div>
                     </div>
                     <p v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
@@ -118,6 +118,8 @@
                 </div>
             </div>
         </div> 
+        <!-- Just a placeholder to add some space beneath the results even after the load more button is gone -->
+        <div v-if="(showSearchResults && fetchedAllSearchResults) || (!fetchedAllSearchResults && rootComponent.fetchedAll)" style="height: 60px;" />
     </div>
 </template>
 
@@ -256,7 +258,7 @@ export default {
 }
 
 .load_more_btn {
-    margin: 20px auto 40px auto;
+    margin: 30px auto 30px auto;
     border-radius: 5px;
     padding: 10px;
     background-color: var(--main-accent);

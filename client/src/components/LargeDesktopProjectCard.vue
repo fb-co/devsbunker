@@ -48,7 +48,7 @@
                     stroke="var(--soft-text)"
                     viewBox="0 0 16 16"
                     class="bi bi-bookmark save_btn"
-                    fill="currentColor"
+                    fill="#fff"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
@@ -65,7 +65,7 @@
                     stroke="var(--soft-text)"
                     viewBox="0 0 16 16"
                     class="bi bi-bookmark-fill save_btn"
-                    fill="currentColor"
+                    fill="#fff"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z" />
@@ -97,7 +97,6 @@ export default {
         projectData: Object,
     },
     created() {
-        console.log(this.projectData);
         this.thumbnail_link = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.thumbnail}`;
     },
     mounted() {
@@ -110,7 +109,12 @@ export default {
         hideIcons() {
             this.$refs.icons.style.display = "none";
         }
-    }
+    },
+    watch: {
+        projectData: function(newVal) {
+            this.thumbnail_link = newVal.thumbnail || "../../../uploads/profile_pics/profilePlaceholder.png";
+        },
+    },
 }
 </script>
 
@@ -129,8 +133,11 @@ export default {
     display: flex;
     flex-direction: column;
     margin: 5px;
-    width: 350px;
-    height: 300px;
+    flex: 1; /* Makes it stretch to fill container */
+    
+    min-width: 250px;
+    min-height: 250px;
+
     background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) );
     background-size: cover;
     background-position: center;
@@ -167,7 +174,6 @@ export default {
     z-index: 1;
     border-radius: 5px;
     margin: 5px;
-    width: 30%;
     flex-direction: row;
     background-color: rgba(0, 0, 0, 0.8);
 }

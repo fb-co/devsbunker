@@ -102,9 +102,6 @@ export default {
 .left_content {
     display: flex;
     flex-direction: column;
-    width: 30%;
-    min-width: 250px;
-    max-width: 350px;
 }
 .username_box {
     font-size: 20px;
