@@ -50,7 +50,7 @@ export default {
                 }
 
                 const finalPosts = AddDynamicData.addAll(posts, user);
-                
+
                 const finalResponse = {
                     posts: finalPosts,
                     fetchedAll: fetchedAll,
@@ -517,7 +517,8 @@ export default {
         deletePost: async function (_, args, { req, res }) {
             if (req.user) {
                 try {
-                    const post = await Posts.findOne({ _id: args.postId });
+                    const post = await Posts.findOne({ _id: args.postId, enabled: true });
+
                     if (!post) {
                         res.status(422);
                         return {

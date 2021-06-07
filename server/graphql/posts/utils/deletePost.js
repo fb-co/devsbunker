@@ -9,44 +9,50 @@ export default async function deletePost(postAuthor, postId) {
     }
 
     if (postAuthor) {
-        return new Promise((resolve) => {
-            Posts.find({ author: postAuthor })
+        return new Promise((resolve, reject) => {
+            Posts.find({ author: postAuthor, enabled: true })
                 .then((ret) => {
-                    let buf = [];
+                    if (ret) {
+                        let buf = [];
 
-                    ret.forEach((post) => {
-                        post.images.forEach((asset) => {
-                            buf.push(
-                                `${process.env.UPLOAD_FILES_PATH}/${asset.dbname}`
-                            );
+                        ret.forEach((post) => {
+                            post.images.forEach((asset) => {
+                                buf.push(`${process.env.UPLOAD_FILES_PATH}/${asset.dbname}`);
+                            });
+                            post.remove();
                         });
-                        post.remove();
-                    });
 
-                    fh.deleteFiles(buf);
-                    resolve(ret);
+                        fh.deleteFiles(buf);
+                        resolve(ret);
+                    } else {
+                        reject(new Error("Unable to find post"));
+                    }
                 })
                 .catch((err) => {
                     console.log(err);
+                    reject(err);
                 });
         });
     } else {
-        return new Promise((resolve) => {
-            Posts.findOneAndDelete({ _id: postId })
+        return new Promise((resolve, reject) => {
+            Posts.findOneAndDelete({ _id: postId, enabled: true })
                 .then((deleted) => {
-                    let buf = [];
+                    if (deleted) {
+                        let buf = [];
 
-                    deleted.images.forEach((asset) => {
-                        buf.push(
-                            `${process.env.UPLOAD_FILES_PATH}/${asset.dbname}`
-                        );
-                    });
+                        deleted.images.forEach((asset) => {
+                            buf.push(`${process.env.UPLOAD_FILES_PATH}/${asset.dbname}`);
+                        });
 
-                    fh.deleteFiles(buf);
-                    resolve(deleted);
+                        fh.deleteFiles(buf);
+                        resolve(deleted);
+                    } else {
+                        reject(new Error("Unable to find post"));
+                    }
                 })
                 .catch((err) => {
                     console.log(err);
+                    reject(err);
                 });
         });
     }

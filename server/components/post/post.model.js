@@ -32,14 +32,19 @@ const postSchema = new mongoose.Schema(
             type: Array,
         },
         likeAmt: {
-            type: Number
+            type: Number,
         },
         price: {
             type: Number,
         },
         comments: {
-            type: Array
-        }
+            type: Array,
+        },
+        enabled: {
+            type: Boolean,
+            required: true,
+            default: true,
+        },
     },
     {
         timestamps: true,
@@ -80,7 +85,8 @@ postSchema.path("links").validate((urls) => {
         www.mp3#.com
 
     */
-    const regex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
+    const regex =
+        /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
     let valid = true;
 
     urls.forEach((link) => {
