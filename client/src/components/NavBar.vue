@@ -153,11 +153,12 @@ export default {
 
             // toggle burger menu screen blur
             if (window.getComputedStyle(screenBlur).display === "none") {
-                document.getElementById("burger_menu_blur").style.display =
-                    "block";
+                document.getElementById("burger_menu_blur").style.display = "block";
+                
+                //scroll to the top of the burger menu when you close and reopen
+                document.getElementById("main_burger_menu").scrollTop = 0;
             } else {
-                document.getElementById("burger_menu_blur").style.display =
-                    "none";
+                document.getElementById("burger_menu_blur").style.display = "none";
             }
 
             if (document.getElementById("burger_menu_checkbox").checked) {
@@ -167,6 +168,7 @@ export default {
                 ).style.display = "flex";
                 checkBoxGrandparent.style.position = "fixed";
                 checkBoxGrandparent.style.height = "var(--header-height)";
+
             } else {
                 document.body.style.overflow = "auto";
                 document.getElementById(
