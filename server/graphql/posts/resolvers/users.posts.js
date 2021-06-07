@@ -38,6 +38,7 @@ export default {
                     const jwtPayload = req.user;
                     user = await User.findOne({
                         username: jwtPayload.username,
+                        enabled: true,
                     });
                 }
 
@@ -72,6 +73,7 @@ export default {
                     const jwtPayload = req.user;
                     user = await User.findOne({
                         username: jwtPayload.username,
+                        enabled: true,
                     });
 
                     post.isLiked = post.likes.includes(user.username);
@@ -245,7 +247,7 @@ export default {
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
             try {
-                const post = await Posts.findOne({ _id: id_payload });
+                const post = await Posts.findOne({ _id: id_payload, enabled: true });
 
                 if (post) {
                     if (post.likes.includes(jwtPayload.username)) {
@@ -259,6 +261,7 @@ export default {
                         // save post id in users db entry as "liked posts"
                         const user = await User.findOne({
                             username: jwtPayload.username,
+                            enabled: true,
                         });
 
                         if (user) {
@@ -269,6 +272,7 @@ export default {
 
                         const userToNotify = await User.findOne({
                             username: post.author,
+                            enabled: true,
                         });
 
                         if (userToNotify) {
@@ -340,7 +344,7 @@ export default {
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
             try {
-                const post = await Posts.findOne({ _id: id_payload });
+                const post = await Posts.findOne({ _id: id_payload, enabled: true });
 
                 if (post) {
                     const index = post.likes.indexOf(jwtPayload.username);
@@ -353,6 +357,7 @@ export default {
 
                         const user = await User.findOne({
                             username: jwtPayload.username,
+                            enabled: true,
                         });
 
                         if (user) {
@@ -402,11 +407,12 @@ export default {
                 if (commentMessage != "" && commentMessage != null) {
                     const user = await User.findOne({
                         username: jwtPayload.username,
+                        enabled: true,
                     });
 
                     // make sure the user commeting exists
                     if (user) {
-                        const post = await Posts.findOne({ _id: id_payload });
+                        const post = await Posts.findOne({ _id: id_payload, enabled: true });
 
                         if (post) {
                             const comment = {
@@ -442,11 +448,12 @@ export default {
 
             try {
                 // make sure the post exists
-                const post = await Posts.findOne({ _id: id_payload });
+                const post = await Posts.findOne({ _id: id_payload, enabled: true });
 
                 if (post) {
                     const user = await User.findOne({
                         username: jwtPayload.username,
+                        enabled: true,
                     });
                     if (user) {
                         if (!user.saved_posts.includes(post.id)) {
@@ -492,6 +499,7 @@ export default {
             try {
                 const user = await User.findOne({
                     username: jwtPayload.username,
+                    enabled: true,
                 });
 
                 if (user) {
