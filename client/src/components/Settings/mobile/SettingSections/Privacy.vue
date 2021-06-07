@@ -17,6 +17,7 @@
                 @submitted="resetPwd($event[0], $event[1])"
             /> 
         </div>
+        <SuccessPopup ref="success_popup" message="Successfully Reset Password" />
     </WrapperMobile>
 </template>
 
@@ -24,11 +25,13 @@
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import GraphQLService from "@/services/graphql.service";
 import InputModal from "@/components/global/InputModal.vue";
+import SuccessPopup from "@/components/SuccessPopUp.vue";
 
 export default {
     components: {
         ...GlobalComponents,
-        InputModal
+        InputModal,
+        SuccessPopup
     },
     methods: {
         async resetPwd(pwd, pwdConfirm) {

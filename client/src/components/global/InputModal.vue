@@ -114,7 +114,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 12;
+    z-index: 16;
     background-color: rgba(0, 0, 0, 0.5);
 }
 .model_popup {
