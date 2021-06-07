@@ -22,11 +22,14 @@
 
         <div class="settings_box">
             <div class="setting_item">
-                <p>Theme</p>
-                <div class="placeholder" />
-                <ThemeSwitcher class="theme_switcher" width="30px" />
+                <p class="label">Theme</p>
+                <ThemeSwitcher class="theme_switcher vertical_flex_center" width="30px" />
             </div>
             <div class="setting_item">
+                <p class="label">Change Password</p>
+                <div class="reset_pwd_container">
+                    <p @click="openResetPwdModal()" class="reset_pwd">Reset</p>
+                </div>
                 <InputModal
                     ref="resetPwd"
                     :fields="[{
@@ -60,6 +63,7 @@ export default {
     },
 };
 */
+import GraphQLService from "@/services/graphql.service";
 
 import ThemeSwitcher from "@/components/global/ThemeSwitcher.vue";
 import InputModal from "@/components/global/InputModal.vue";
@@ -68,6 +72,30 @@ export default {
     components: {
         ThemeSwitcher,
         InputModal
+    },
+    methods: {
+        async resetPwd(pwd, pwdConfirm) {
+            if (pwd == pwdConfirm) {
+                const response = await GraphQLService.updateUserDetails(
+                    this.$store.getters.accessToken,
+                    [{ field: "password", newValue: pwd }]
+                );
+
+                if (
+                    /Successfully/.test(response.data.updateUserDetails.message)
+                ) {
+                    this.$refs.resetPwd.close();
+                    this.$refs.success_popup.show();
+                } else {
+                    this.$refs.resetPwd.showError("Invalid credentials", true);
+                }
+            } else {
+                this.$refs.resetPwd.showError("Passwords do not match");
+            }
+        },
+        openResetPwdModal() {
+            this.$refs.resetPwd.open();
+        }
     }
 }
 </script>
@@ -99,18 +127,46 @@ export default {
 .setting_item {
     display: flex;
     flex-direction: row;
-    width: 25%;
+    width: 50%;
     margin: 30px auto 0px auto;
 }
-.setting_item p {
+.label {
     display: flex;
     flex-direction: column;
     justify-content: center;
     font-size: 18px;
+    width: 70%;
+    text-align: left;
 }
-
+.theme_switcher {
+    margin: 0 auto;
+}
 .placeholder {
     flex-grow: 1;
+}
+
+.reset_pwd_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+}
+.reset_pwd {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 30px;
+    border: 2px solid var(--error-red);
+    border-radius: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    cursor: pointer;
+    color: var(--error-red);
+    width: 100%;
+}
+.reset_pwd:hover {
+    background-color: var(--error-red);
+    color: #fff;
 }
 
 /* Old good settings page

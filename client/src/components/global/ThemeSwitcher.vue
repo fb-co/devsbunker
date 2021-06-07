@@ -35,8 +35,7 @@ export default {
 
 <style scoped>
 #theme-switcher-container {
-    width: 50px;
-    margin: auto;
+    margin: 0 auto;
 }
 .theme-switcher-icon {
     stroke: var(--main-font-color);
