@@ -8,13 +8,13 @@ import mongoose from "mongoose";
 // filter is something like: saved, myProjects, etc.
 export default async function getPostByPartial(partial_name, filter, userToFilter, sortingType, lastPostId, lastUniqueField, loadAmt, requester_token) {
     let user;
-    
+
     if (requester_token) {
         const jwtPayload = requester_token;
 
         if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
-        user = await User.findOne({ username: jwtPayload.username});
+        user = await User.findOne({ username: jwtPayload.username });
     } else if (filter === "myProjects" || filter === "saved") {
         // you need to requester token if you are querying with these filters
         throw new AuthenticationError("Unauthorized.");
@@ -26,12 +26,12 @@ export default async function getPostByPartial(partial_name, filter, userToFilte
 
         // see if there is an inline filter (search by tag, author, etc)
         if (partial_name.substring(0, 4) === "tag:") {
-            customQueries.push({ tags: new RegExp(partial_name.substring(4), "i") });
+            customQueries.push({ tags: new RegExp(partial_name.substring(4), "i"), enabled: true });
             console.log(customQueries);
         } else if (partial_name.substring(0, 7) === "author:") {
-            customQueries.push({ author: new RegExp(partial_name.substring(7), "i") });
+            customQueries.push({ author: new RegExp(partial_name.substring(7), "i"), enabled: true });
         } else {
-            customQueries.push({ title: regex });
+            customQueries.push({ title: regex, enabled: true });
         }
 
         // add a filter like "myProjects" or "savedProjects" to the query
@@ -41,13 +41,13 @@ export default async function getPostByPartial(partial_name, filter, userToFilte
             // for whatever reason to find by id, they need to wrapped in an ObjectType wrapper
             for (let i = 0; i < userPosts.length; i++) {
                 userPosts[i] = new mongoose.Types.ObjectId(userPosts[i]);
-            } 
+            }
 
-            customQueries.push({ _id: { $in: userPosts} });
+            customQueries.push({ _id: { $in: userPosts }, enabled: true });
         } else if (filter === "projects") {
-            customQueries.push({ author: userToFilter });
+            customQueries.push({ author: userToFilter, enabled: true });
         }
-        
+
         LoadMoreModule(sortingType, lastPostId, lastUniqueField, loadAmt, customQueries).then((res) => {
             if (user) {
                 resolve(AddDynamicData.addAll(res, user));

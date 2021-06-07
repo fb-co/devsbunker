@@ -5,27 +5,32 @@ import LoadMoreModule from "./LoadMoreModule.js";
 import mongoose from "mongoose";
 
 export default async function getSavedPosts(author, loadAmt, lastPostId, filter, lastUniqueField) {
-    return new Promise((resolve) => {
-        User.findOne({ username: author })
+    return new Promise((resolve, reject) => {
+        User.findOne({ username: author, enabled: true })
             .then((user) => {
-                let wrappedPosts = user.saved_posts;
-                let customQueries = [];
+                if (user) {
+                    let wrappedPosts = user.saved_posts;
+                    let customQueries = [];
 
-                // for whatever reason to find by id, they need to wrapped in an ObjectType wrapper
-                for (let i = 0; i < wrappedPosts.length; i++) {
-                    wrappedPosts[i] = new mongoose.Types.ObjectId(wrappedPosts[i]);
+                    // for whatever reason to find by id, they need to wrapped in an ObjectType wrapper
+                    for (let i = 0; i < wrappedPosts.length; i++) {
+                        wrappedPosts[i] = new mongoose.Types.ObjectId(wrappedPosts[i]);
+                    }
+
+                    customQueries.push({ _id: { $in: wrappedPosts }, enabled: true });
+
+                    // Dont change this to the await syntax because it will break everything
+                    LoadMoreModule(filter, lastPostId, lastUniqueField, loadAmt, customQueries).then((res) => {
+                        const finalPosts = AddDynamicData.addAll(res, user);
+                        resolve(finalPosts);
+                    });
+                } else {
+                    reject(new Error("Unable to find user"));
                 }
-
-                customQueries.push({ _id: { $in: wrappedPosts } });
-                
-                // Dont change this to the await syntax because it will break everything
-                LoadMoreModule(filter, lastPostId, lastUniqueField, loadAmt, customQueries).then((res) => {
-                    const finalPosts = AddDynamicData.addAll(res, user);
-                    resolve(finalPosts);
-                });
             })
             .catch((err) => {
                 console.log(err);
+                reject(err);
             });
     });
 }
