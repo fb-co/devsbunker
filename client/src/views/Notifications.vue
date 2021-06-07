@@ -50,7 +50,9 @@ export default {
 
 <style scoped>
 .main_container {
-    margin-bottom: 30px;
+    padding-bottom: 30px;
+    max-height: calc(100vh - var(--header-height));
+    overflow: auto;
 }
 .notification_card_container {
     margin: 40px auto 0px auto;
@@ -61,6 +63,7 @@ export default {
     color: var(--main-font-color);
     font-size: 20px;
     font-weight: bold;
-    margin: 30px auto 0px auto;
+    margin: 0 auto;
+    padding-top: 30px;
 }
 </style>

@@ -194,6 +194,26 @@ body {
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
 }
+
+/* SCROLL BAR UNIVERSAL STYLES (uncompatible with firefox) */
+
+/* scrollbar width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* scrollbar track */
+::-webkit-scrollbar-track-piece {
+    background-color: var(--main-color);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* handle */
+::-webkit-scrollbar-thumb:vertical {
+    border-radius: 20px;
+    background-color: var(--soft-text);
+}
 </style>
 
 

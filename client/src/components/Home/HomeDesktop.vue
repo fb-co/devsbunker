@@ -109,12 +109,6 @@ export default {
     overflow-y: auto;
     flex-grow: 1;
     width: 60%;
-    height: calc(100vh - var(--header-height));
-
-    -ms-overflow-style: none; /* IE and Edge (scrollbar hide)*/
-    scrollbar-width: none; /* Firefox (scrollbar hide)*/
-}
-.post_feed::-webkit-scrollbar {
-    display: none;
+    height: calc(100vh - var(--header-height)); 
 }
 </style>

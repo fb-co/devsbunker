@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="user_search_container">
         <p class="title">Find People</p>
         <UserFeed :rootComponent="this" />
     </div>
@@ -24,8 +24,12 @@ export default {
 </script>
 
 <style scoped>
+.user_search_container {
+    max-height: calc(100vh - var(--header-height));
+    overflow: auto;
+}
 .title {
-    margin-top: 50px;
+    padding-top: 50px;
     margin-bottom: 80px;
     font-size: 25px;
     font-weight: bold;

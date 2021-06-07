@@ -19,7 +19,7 @@
                 <div class="static_nav_links desktop_only">
                     <!--<NavBarSearch /> -->
 
-                    <router-link to="/" class="static_link">
+                    <router-link to="/users" class="static_link">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="icon icon-tabler icon-tabler-compass"

@@ -22,11 +22,9 @@ export default {
 
     methods: {
         close() {
-            document.body.style.overflowY = "auto"; // reenable main page scrolling
             this.isOpen = false;
         },
         open() {
-            document.body.style.overflowY = "hidden"; // disable main page scrolling
             this.isOpen = true;
         },
         propagateEvent(flag) {

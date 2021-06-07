@@ -65,9 +65,6 @@ export default {
 </script>
 
 <style scoped>
-.user_feed {
-    margin-bottom: 30px;
-}
 .user_search_input {
     width: 30%;
     min-width: 300px;
