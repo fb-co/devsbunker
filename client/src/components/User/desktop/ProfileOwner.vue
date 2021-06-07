@@ -44,9 +44,6 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="edit_link_container">
-                            <router-link to="/settings/account">Edit</router-link>
-                        </div>
                     </div>
                     <div class="main_links_container row_item">
                         <div
@@ -105,7 +102,7 @@
                             </svg>
 
                             <router-link :to="{ name: 'userProjects' }"
-                                >Projects</router-link
+                                >Your Projects</router-link
                             >
                         </div>
 
@@ -407,8 +404,22 @@ export default {
     justify-content: center;
     width: 90%;
     height: auto;
-    margin: 50px auto 25px auto;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 25px;
     min-width: 900px;
+    max-height: calc(100vh - var(--header-height));
+}
+.content_box {
+    border-radius: 5px;
+    flex-grow: 1;
+    background-color: var(--main-color);
+    margin: 0px 15px 0px 15px;
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    max-height: 80vh;
+    min-height: 80vh;
+    overflow: auto;
 }
 .row1_placeholder {
     position: relative;
@@ -421,6 +432,8 @@ export default {
     flex-direction: column;
     min-width: 300px;
     max-width: 300px;
+    overflow: auto;
+    max-height: 80vh;
 }
 .row_item {
     background-color: var(--general-card);
@@ -525,16 +538,6 @@ export default {
 .profile_link {
     width: 100%;
 }
-.content_box {
-    border-radius: 5px;
-    flex-grow: 1;
-    background-color: var(--main-color);
-    margin: 0px 15px 0px 15px;
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
-    max-width: 1000px;
-    max-height: 800px;
-    overflow: auto;
-}
 
 .username {
     overflow: hidden;
@@ -550,6 +553,7 @@ export default {
     justify-content: center;
     width: 90%;
     padding-top: 30px;
+    padding-bottom: 20px;
     margin: 0 auto;
 }
 .follow_cont {
@@ -558,18 +562,5 @@ export default {
 .follow_label {
     font-weight: bold;
     margin-bottom: 10px;
-}
-
-.edit_link_container {
-    padding-top: 25px;
-    padding-bottom: 5px;
-}
-.edit_link_container a {
-    display: inline-block;
-    text-decoration: none;
-    color: #fff;
-    background-color: var(--main-accent);
-    padding: 5px 20px 5px 20px;
-    border-radius: 20px;
 }
 </style>
