@@ -1,13 +1,18 @@
 import Posts from "../../../components/post/post.model.js";
 
-export default async function getAllPostsByAuthor(postAuthor) {
-    return new Promise((resolve) => {
+export default function getAllPostsByAuthor(postAuthor) {
+    return new Promise((resolve, reject) => {
         Posts.find({ author: postAuthor })
             .then((posts) => {
-                resolve(posts);
+                if (posts) {
+                    resolve(posts);
+                } else {
+                    reject(new Error("Unable to find posts"));
+                }
             })
             .catch((err) => {
                 console.log(err);
+                reject(err);
             });
     });
 }
