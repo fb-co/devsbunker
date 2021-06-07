@@ -5,7 +5,7 @@ export default async function getUserPost(postId) {
     return new Promise((resolve, reject) => {
         Posts.findOne({ _id: postId, enabled: true })
             .then((post) => {
-                if (posts) {
+                if (post) {
                     resolve(post);
                 } else {
                     reject(new Error("Unabled to find post"));
