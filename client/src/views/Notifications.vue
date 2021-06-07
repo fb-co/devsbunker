@@ -49,6 +49,9 @@ export default {
 </script>
 
 <style scoped>
+.main_container {
+    margin-bottom: 30px;
+}
 .notification_card_container {
     margin: 40px auto 0px auto;
     width: 90%;

@@ -34,7 +34,6 @@ export default {
                 if (req.user) {
                     requester = req.user.username;
                 }
-                console.log(requester);
                 let users = await fetchUsers(args.sortMethod, args.lastUserId, args.lastUniqueField, loadAmt);
 
                 if (users[loadAmt] === undefined) {
@@ -495,7 +494,6 @@ export default {
                         isFollowing: false,
                     };
                 } else {
-                    console.log(personPayload);
                     return null;
                 }
             } catch {
