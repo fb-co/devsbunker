@@ -129,6 +129,9 @@ body {
     flex-direction: column;
     justify-content: center;
 }
+.placeholder {
+    flex-grow: 1;
+}
 .relative_vertical_center {
     position: relative;
     top: 50%;

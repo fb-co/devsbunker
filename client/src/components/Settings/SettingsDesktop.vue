@@ -122,7 +122,7 @@ export default {
     width: 50%;
     max-width: 700px;
     min-width: 500px;
-    height: 200px;
+    padding-bottom: 30px;
     margin: 0 auto;
     border-radius: 6px;
     background-color: var(--secondary-color);
