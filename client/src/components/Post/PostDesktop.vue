@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="main_container" v-if="projectData">
-            <LeftContent />
+            <LeftContent class="left_content" />
             <div class="center_content">
                 <div class="tags_container">
                     <CreateTag v-for="tag in projectData.tags" :key="tag" :label="tag" tagType="lang" />
@@ -30,7 +30,7 @@
                 <CommentSection @postComment="$parent.postComment" :comments="projectData.comments" />
             </div>
             <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->
-            <RightContent :notifications="notifications" />
+            <RightContent class="right_content" :notifications="notifications" />
         </div>
     </div>
 </template>
@@ -124,6 +124,16 @@ export default {
 
     text-align: left;
     margin-top: 42px;
+}
+.left_content {
+    width: 20%;
+    min-width: 150px;
+    max-width: 250px;
+}
+.right_content {
+    min-width: 150px;
+    max-width: 250px;
+    width: 20%;
 }
 
 #title {

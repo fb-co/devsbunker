@@ -23,7 +23,7 @@
             </svg>
             <p>Settings</p>
         </router-link>
-        <router-link v-if="$store.getters.isLoggedIn" :to="'user/' + $store.getters.username + '/saved'" class="tab_container">
+        <router-link v-if="$store.getters.isLoggedIn" :to="'/user/' + $store.getters.username + '/saved'" class="tab_container">
             <svg
                 width="30"
                 height="20"
@@ -39,16 +39,16 @@
                     d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
                 />
             </svg>
-            <router-link :to="'user/' + $store.getters.username + '/saved'" class="saved_projects_link">Saved Projects</router-link>
+            <router-link :to="'/user/' + $store.getters.username + '/saved'" class="saved_projects_link">Saved Projects</router-link>
         </router-link>
-        <router-link v-if="$store.getters.isLoggedIn" :to="'user/' + $store.getters.username + '/projects'" class="tab_container">
+        <router-link v-if="$store.getters.isLoggedIn" :to="'/user/' + $store.getters.username + '/projects'" class="tab_container">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-code" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" />
                 <polyline points="7 8 3 12 7 16" />
                 <polyline points="17 8 21 12 17 16" />
                 <line x1="14" y1="4" x2="10" y2="20" />
             </svg>
-            <router-link :to="'user/' + $store.getters.username + '/projects'" class="saved_projects_link">My Projects</router-link>
+            <router-link :to="'/user/' + $store.getters.username + '/projects'" class="saved_projects_link">My Projects</router-link>
         </router-link>
 
         <button @click="makeNewPost()" class="new_button">
