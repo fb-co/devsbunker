@@ -76,6 +76,7 @@ export default {
     --settings-mobile-card: #2e2e2e;
     --burger-menu-bg: #2a2a2a;
     --main-accent: #49cce5;
+    --drop-shadow: rgba(0, 0, 0, 0.1);
 
     /* profile page */
     --profile-option-color: #656565;

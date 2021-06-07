@@ -17,7 +17,6 @@
                 <div>
                     <AuthorDisplay v-for="(contributer, index) in projectData.collaborators" :key="index" :username="contributer" :showFollowerAmt="false" :showFollowButton="false" />
                 </div>
-                <p class="links_label">Description</p>
                 <p id="description"><pre>{{ projectData.description }}</pre></p>
                 
                 <p class="links_label">Links</p>

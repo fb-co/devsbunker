@@ -20,6 +20,7 @@ const Themes = {
         hoverEffect:
             "linear-gradient(90deg, rgba(255, 255, 255, 1) 3%, rgba(1, 135, 175, 0) 100%)",
         dropdownHoverColor: "#7a7a7a",
+        dropShadow: "rgba(0, 0, 0, 0.1)",
     },
     dark: {
         mainColor: "#171717",
@@ -39,6 +40,7 @@ const Themes = {
         profileOptionColor: "#949494",
         hoverEffect: "linear-gradient(90deg, black 3%, #2e2e2e 100%)",
         dropdownHoverColor: "#7a7a7a",
+        dropShadow: "#828282",
     },
     getTheme: function(themeString) {
         if (themeString === "dark-theme") {
@@ -104,6 +106,7 @@ const SharedMethods = {
             "--dropdown-hover-color",
             themeObj.dropdownHoverColor
         );
+        document.body.style.setProperty("--drop-shadow", themeObj.dropShadow);
     },
     changeTheme: function(theme) {
         localStorage.setItem("theme", theme);
