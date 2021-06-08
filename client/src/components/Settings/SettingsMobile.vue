@@ -1,7 +1,7 @@
 <template>
     <div id="SettingsPage">
         <h1 class="title">Settings</h1>
-
+        <!--
         <CustomInput class="search_input">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -21,13 +21,12 @@
             </svg>
             <input type="text" name="search" placeholder="Search a setting..." />
         </CustomInput>
+        -->
+        <div class="line" style="margin-top: 30px; margin-bottom: 60px;" />
 
         <div v-if="username" class="profile-banner">
-            <ProfilePicture :username="username" class="profile-pic" />
-            <div>
-                <h2 style="text-align: left">{{ username }}</h2>
-                <p class="user-mail">{{ email }}</p>
-            </div>
+            <ProfilePicture :username="username" wrapperSize="75px" class="profile-pic" />
+            <h2 class="username">{{username}}</h2>
         </div>
 
         <div class="settings">
@@ -55,7 +54,6 @@ export default {
     data() {
         return {
             username: "",
-            email: "TODO: provide also the email",
         };
     },
 
@@ -63,7 +61,6 @@ export default {
         UserService.isLoggedIn().then((result) => {
             if (result.user) {
                 this.username = result.user.username;
-                console.log(this.username);
             }
         });
     },
@@ -94,10 +91,20 @@ export default {
     margin: auto;
     margin-top: 20px;
     max-width: 450px;
+    
+    text-overflow: ellipsis;
 }
 
 .profile-pic {
     margin-right: 20px;
+}
+.username {
+    text-align: left; 
+    margin-top: 10px;
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .user-mail {

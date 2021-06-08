@@ -20,7 +20,8 @@ export default {
 
     data() {
         return {
-            items: ["Account", "Appearance", "Privacy"],
+            //items: ["Account", "Appearance", "Privacy"], -> this has the old sections
+            items: ["Appearance", "Privacy"],
         };
     },
 };

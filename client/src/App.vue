@@ -132,6 +132,13 @@ body {
 .placeholder {
     flex-grow: 1;
 }
+.line {
+    background-image: linear-gradient( to right, var(--secondary-color) 0%, var(--soft-text) 40%, var(--soft-text) 60%, var(--secondary-color) 100% );
+    width: 90%;
+    height: 1.5px;
+    margin: 0 auto;
+    border-radius: 5px;
+}
 .relative_vertical_center {
     position: relative;
     top: 50%;
