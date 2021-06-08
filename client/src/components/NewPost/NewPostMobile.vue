@@ -121,7 +121,7 @@
                             </div>
                         </div>
 
-                        <div class="add-file-area" @click="extendInput('add-link')">
+                        <div class="add-file-area" v-if="files.length < 5" @click="extendInput('add-link')">
                             <svg
                                 id="add-file"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -456,6 +456,11 @@ export default {
         },
 
         handleFiles(event) {
+            if (event.target.files.length > 5 || this.files.length > 5) {
+                alert("You can upload a maximum of 5 files!");
+                return;
+            }
+
             if (!this.files) {
                 this.files = [];
             }
