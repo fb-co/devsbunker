@@ -8,9 +8,9 @@
 
 -   [x] Selecting more than five images while creating a new post graphically shows it in the menu, but only uploads the first five
 
--   [ ] -   Make the Post thumbnail default placeholder image actully work
+-   [x] Make the Post thumbnail default placeholder image actully work
 
--   [ ] -   Some user feedback when creating a post, logging out, etc
+-   [ ] Some user feedback when creating a post, logging out, etc
 
 -   [ ] Prepare foreign profile page for deployment
 
