@@ -19,7 +19,7 @@
     },
     "homepage": "https://github.com/fb-co/devsBunker#readme",
     "dependencies": {
-        "apollo-server-express": "^2.18.1",
+        "apollo-server-express": "^2.7.0",
         "bcrypt": "^5.0.0",
         "cookie-parser": "^1.4.5",
         "cors": "^2.8.5",
