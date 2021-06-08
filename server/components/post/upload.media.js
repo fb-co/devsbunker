@@ -12,10 +12,41 @@ export default async function uploadMedia(req, res, next) {
 
         if (req.user) {
             // if user is authorized, proceed with handling files
-            if (!files) {
-                res.json({
-                    message: "No files found",
+            if (!(files.length > 0)) {
+                // if no files were attached proceed to create the post anyway
+                
+                const post = await Posts.findOne({
+                    _id: postId,
                 });
+                
+                if (post && post.author === req.user.username) {
+                    post.thumbnail = "@/assets/project_img_placeholder.png";
+
+                    // shall we add a limit?
+                    await post.save();
+
+                    res.json({
+                        message: "Successfully uploaded 0 files.",
+                        post: {
+                            id: post._id,
+                            author: post.author,
+                            collaborators: post.collaborators,
+                            comments: post.comments,
+                            createdAt: post.createdAt,
+                            description: post.description,
+                            images: post.images,
+                            likeAmt: post.likeAmt,
+                            likes: post.likes,
+                            links: post.links,
+                            tags: post.tags,
+                            thumbnail: post.thumbnail,
+                            title: post.title,
+                        },
+                    });
+                } else {
+                    filesHandler.deleteFiles(pathsCache); // [!] IMPORTANT: we delete everything because multer saves files immediately to the disk
+                    throw new Error("Make sure the post id exists and you are the author of that post.");
+                }
             } else {
                 const data = []; // final array with the files inside
                 let unvalidData; // here we will save the unvalid file so we can serve it back to the user

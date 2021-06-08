@@ -421,7 +421,6 @@ export default {
 
                             FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then(async (res) => {
                                 // TODO: add error  checking
-
                                 if (!/Successfully/.test(res.message)) {
                                     this.error = true;
                                     this.errmsg = res.message;

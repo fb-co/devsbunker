@@ -106,7 +106,7 @@ export default {
     },
     watch: {
         projectData: function(newVal) {
-            this.thumbnail_link = newVal.thumbnail || "../../../uploads/profile_pics/profilePlaceholder.png";
+            this.thumbnail_link = newVal.thumbnail || "@/assets/project_img_placeholder.png";
         },
     },
 }
