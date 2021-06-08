@@ -4,7 +4,7 @@
         falls beneath the text and icons. As a result, if you only binded it to the overlay, the icons would be hidden
         every time you hovered over the text container or the icons parent itself
     -->
-    <div class="project_box" ref="image_div" @click="$router.push({ path: `/post/${projectData.id}` })">
+    <div class="project_box" ref="image_div" @click="$router.push({ path: `/post/${projectData.id}` })" :class="{ default_image: isDefault }">
         <div @click.stop="" class="top_text_container" ref="icons" @mouseover="showIcons()" @mouseleave="hideIcons()">
             <!--Not filled icon -->
             <div class="icon_container">
@@ -89,7 +89,8 @@ import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 export default {
     data() {
         return {
-            thumbnail_link: undefined
+            thumbnail_link: undefined,
+            isDefault: false,
         }
     },
     mixins: [ProjectCardUtils],
@@ -97,10 +98,16 @@ export default {
         projectData: Object,
     },
     created() {
-        this.thumbnail_link = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.thumbnail}`;
+        if (this.projectData.thumbnail === "@/assets/project_img_placeholder.png") {
+            this.isDefault = true;
+        } else {
+            this.thumbnail_link = `${process.env.VUE_APP_IMG_STATIC_ASSETS}${this.projectData.thumbnail}`;
+        }  
     },
     mounted() {
-        this.$refs.image_div.style.backgroundImage = `url('${this.thumbnail_link}')`;
+        if (!this.isDefault) {
+            this.$refs.image_div.style.backgroundImage = `url('${this.thumbnail_link}')`;
+        }
     },
     methods: {
         showIcons() {
@@ -112,7 +119,7 @@ export default {
     },
     watch: {
         projectData: function(newVal) {
-            this.thumbnail_link = newVal.thumbnail || "../../../uploads/profile_pics/profilePlaceholder.png";
+            this.thumbnail_link = newVal.thumbnail || "@/assets/project_img_placeholder.png";
         },
     },
 }
@@ -147,6 +154,9 @@ export default {
     background-size: cover;
     background-position: center;
 
+}
+.default_image {
+    background-color: var(--accent);
 }
 .hover_overlay {
     position: absolute;
