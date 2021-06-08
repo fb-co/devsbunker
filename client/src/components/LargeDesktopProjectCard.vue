@@ -96,6 +96,7 @@ export default {
     mixins: [ProjectCardUtils],
     props: {
         projectData: Object,
+        highlight_phrase: String,
     },
     created() {
         if (this.projectData.thumbnail === "@/assets/project_img_placeholder.png") {
@@ -115,12 +116,34 @@ export default {
         },
         hideIcons() {
             this.$refs.icons.style.display = "none";
-        }
+        },
+        // highlights the given prop called "highlight_phrase" to any occurance under any html content with the class "highlightable"
+        highlightPhrases() {
+            if (this.highlight_phrase != null) {
+                const elements = document.getElementsByClassName("highlightable");
+
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp(this.highlight_phrase, "ig"), `<mark>${this.highlight_phrase}</mark>`);
+                }
+            } else {
+                // remove all highlights if the highlight phrase is null
+                const elements = document.getElementsByClassName("highlightable");
+
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp("<mark>", "ig"), "");
+                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp("</mark>", "ig"), "");
+                }     
+            }
+        },
     },
     watch: {
         projectData: function(newVal) {
             this.thumbnail_link = newVal.thumbnail || "@/assets/project_img_placeholder.png";
         },
+        highlight_phrase: function(newVal) {
+            console.log(newVal);
+            this.highlightPhrases();
+        }
     },
 }
 </script>
