@@ -7,7 +7,7 @@
             height="44"
             viewBox="0 0 24 24"
             stroke-width="1.5"
-            stroke="var(--main-font-color)"
+            :stroke="bellColor"
             fill="none"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -26,11 +26,15 @@ import GraphQLService from "../../services/graphql.service.js";
 export default {
     data() {
         return {
-            unread_notifications: this.unread_prop || 0
+            unread_notifications: this.unread_prop || 0,
         }
     },
     props: {
-        unread_prop: Number
+        unread_prop: Number,
+        bellColor: {
+            type: String,
+            default: "var(--main-font-color)"
+        },
     },
     created() {
         if (this.unread_prop == undefined) {
@@ -49,6 +53,9 @@ export default {
 
 <style scoped>
     .notification_icon_container {
+        width: 25px;
+        height: 25px;
+        margin: 0 auto;
         display: flex;
         flex-direction: row;
         position: relative;
@@ -60,8 +67,8 @@ export default {
     }
     .unread_icon {
         position: absolute;
-        top: 60%;
-        left: 60%;
+        bottom: -10px;
+        right: -5px;
         display: flex;
         flex-direction: column;
         justify-content: center;
