@@ -4,7 +4,7 @@
 
 -   [ ] LOGO
 
--   [ ] Auto-update profile pics when you upload a new one
+-   [x] Auto-update profile pics when you upload a new one
 
 -   [x] Selecting more than five images while creating a new post graphically shows it in the menu, but only uploads the first five
 
