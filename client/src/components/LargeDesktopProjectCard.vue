@@ -74,7 +74,7 @@
         </div>
         <div class="text_container" @mouseover="showIcons()" @mouseleave="hideIcons()">
             <div class="text">
-                <p class="title">{{ projectData.title }}</p>
+                <p class="title highlightable">{{ projectData.title }}</p>
                 <p class="author">By: {{ projectData.author }}</p>
             </div>
         </div>
