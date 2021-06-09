@@ -20,7 +20,7 @@
 
     -   [ ] Spruce up the styling or functionality since it seems a little "empty"
 
--   [ ] Highlight search phrases on post searches
+-   [x] Highlight search phrases on post searches
 
 -   [ ] @focus and @blur does not work on iphone making a lot of the dropdowns and focus based menues not work
 
