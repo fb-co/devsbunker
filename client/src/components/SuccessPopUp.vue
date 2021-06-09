@@ -81,7 +81,7 @@ export default {
 
 #success {
     position: fixed;
-    z-index: 16;
+    z-index: 10;
     bottom: 20px;
     right: 20px;
     width: 350px;

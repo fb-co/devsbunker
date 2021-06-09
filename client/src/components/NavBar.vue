@@ -85,7 +85,11 @@
                                 <router-link to="/about">About</router-link>
 
                                 <router-link v-if="$store.getters.isLoggedIn" to="/notifications" class="static_link">
-                                    <p>Notifications</p>
+                                    <p style="position: relative;">
+                                        Notifications
+                                        <UnreadNumber v-if="$store.getters.mobile" style="bottom: -10px; right: 40px;" :hideOnZero="true" />
+                                        <UnreadNumber v-else style="bottom: -10px; right: 80px;" :hideOnZero="true" />
+                                    </p>
                                 </router-link>
                                 <router-link v-if="$store.getters.isLoggedIn" :to="`/user/${this.$store.getters.username}/`" class="static_link profile_pic">
                                     <p>Profile</p>
@@ -115,6 +119,7 @@ import GraphQLService from "../services/graphql.service";
 
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import NotificationIcon from "@/components/Notifications/NotificationIcon.vue";
+import UnreadNumber from "@/components/Notifications/UnreadNumber.vue";
 
 export default {
     props: {
@@ -131,6 +136,7 @@ export default {
         //NavBarSearch,
         ProfilePicture,
         NotificationIcon,
+        UnreadNumber
     },
 
     destroyed() {
@@ -500,19 +506,21 @@ body {
     .desktop_only {
         display: none;
     }
-    .burger_menu_cont {
-        width: 225px;
-        animation: burger_animation_mobile 0.5s;
-    }
 }
 
 @media only screen and (max-width: 950px) {
     .nav_container {
         background-color: var(--main-color);
     }
+    .burger_menu_cont {
+        width: 225px;
+        animation: burger_animation_mobile 0.5s;
+    }
 }
-/* desktop styles */
-@media only screen and (min-width: 500px) {
+@media only screen and (min-width: 950px) {
+    .nav_container {
+        background-color: var(--main-color);
+    }
     .burger_menu_cont {
         width: 300px;
         animation: burger_animation 0.5s;

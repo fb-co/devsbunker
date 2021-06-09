@@ -519,7 +519,7 @@ export default {
     width: 95%;
     max-width: 450px;
     border-radius: 25px;
-    margin: 0px auto 20px auto;
+    margin: 0px auto 70px auto;
     /* box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); */
     /*box-shadow: 0px 4px 20px var(--main-font-color);*/
     padding-right: 10px;

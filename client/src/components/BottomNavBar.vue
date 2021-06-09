@@ -136,7 +136,7 @@ export default {
     justify-content: center;
     position: fixed;
     bottom: 0;
-    z-index: 15;
+    z-index: 9;
     width: 100%;
     height: 60px;
 
