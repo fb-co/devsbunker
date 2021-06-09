@@ -57,10 +57,10 @@ export default {
             this.$refs.cropper.style.display = "block";
         },
         upload() {
-            console.log("[DEBUG] Uploading: ", this.file);
             FileUploadService.uploadProfilePic(this.file, this.$store.getters.accessToken).then((res) => {
                 if (res.data) {
-                    localStorage.removeItem("profile_pic_link");
+                    localStorage.setItem("profile_pic_link", process.env.VUE_APP_PROFILE_PICTURES + res.data[0].dbname);
+                    this.$store.dispatch("isPfpLinkCached"); // update the vuex store to contain the new pfp link
                 }
             });
 

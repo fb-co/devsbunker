@@ -44,6 +44,7 @@ export default {
             image_link: undefined,
             default_image: undefined,
             isChangingImage: false,
+            yourPfp: false,
         };
     },
     components: {
@@ -81,6 +82,23 @@ export default {
                 "--min-wrapper": this.minWrapper || this.wrapperSize,
             };
         },
+        yourPfpLink() {
+            return this.$store.getters.getPersonalPfpLink;
+        }
+    },
+    watch: {
+        yourPfpLink (newLink) {
+            if (this.yourPfp) {
+                this.image_link = newLink;
+
+                // default pic could be stored in localstorage
+                if (newLink === "profile_pic_placeholder.png") {
+                    this.default_image = true;
+                } else {
+                    this.default_image = false;
+                }
+            }
+        }
     },
     methods: {
         handleFiles(event) {
@@ -97,11 +115,7 @@ export default {
                     success: (result) => {
                         compressed = result;
 
-                        console.log("[DEBUG] Compressed profile pic: ", compressed);
-                        console.log("[DEBUG] Original profile pic: ", file);
-
                         const compressedBlobToFile = new File([compressed], compressed.name, { type: compressed.type });
-                        console.log("[DEBUG] Converted to file: ", compressedBlobToFile);
 
                         if (compressedBlobToFile) {
                             this.$refs.cropper.open(compressedBlobToFile);
@@ -134,33 +148,27 @@ export default {
                     this.image_link = link;
                 } 
             } else {
-                GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
-                    if (obj.data.user.profile_pic) {
-                        if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
-                            this.default_image = true;
-                            this.image_link = obj.data.user.profile_pic;
-                        } else {
-                            this.default_image = false;
-                            this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
-                        }
-                        this.$store.commit('cachePfpLink', { username: this.username, link: this.image_link });
-                    } else {
-                        console.log("err");
-                    }
-                });
-            }
-            /*
-            if (this.username == this.$store.getters.username) {
-                // fetches the image link from the server unless it is in the localstorage
-                const storedLink = localStorage.getItem("profile_pic_link");
+                let shouldFetch = false;
 
-                if (storedLink) {
-                    this.image_link = storedLink;
-                    if (storedLink === "profile_pic_placeholder.png") {
-                        this.default_image = true;
+                if (this.username == this.$store.getters.username) {
+                    this.yourPfp = true;
+                    const storedLink = this.$store.getters.getPersonalPfpLink;
+
+                    if (storedLink) {
+                        this.image_link = storedLink;
+
+                        // default pic could be stored in localstorage
+                        if (storedLink === "profile_pic_placeholder.png") {
+                            this.default_image = true;
+                        }
+                    } else {
+                        shouldFetch = true;
                     }
                 } else {
-                    // if pfp link not in localstorage
+                    shouldFetch = true;
+                }
+
+                if (shouldFetch) {
                     GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
                         if (obj.data.user.profile_pic) {
                             if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
@@ -170,28 +178,18 @@ export default {
                                 this.default_image = false;
                                 this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
                             }
-                            localStorage.setItem("profile_pic_link", this.image_link);
+                            this.$store.commit('cachePfpLink', { username: this.username, link: this.image_link });
+
+                            // cache in localstorage if its your own username
+                            if (this.username == this.$store.getters.username) {
+                                localStorage.setItem("profile_pic_link", this.image_link);
+                            }
                         } else {
                             console.log("err");
                         }
                     });
                 }
-            } else {
-                GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
-                    if (obj.data.user.profile_pic) {
-                        if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
-                            this.default_image = true;
-                            this.image_link = obj.data.user.profile_pic;
-                        } else {
-                            this.default_image = false;
-                            this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
-                        }
-                    } else {
-                        console.log("err");
-                    }
-                });
             }
-            */
         },
     },
 };
