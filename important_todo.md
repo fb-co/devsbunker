@@ -24,6 +24,8 @@
 
 -   [ ] @focus and @blur does not work on iphone making a lot of the dropdowns and focus based menues not work
 
+-   [ ] GraphQLService line that reads "TODO: WE SHOULD NOT DO THIS HERE!!!!" (don't know what it is so ill leave this for you)
+
 ## Low Priority
 
 -   [ ] Optimize notification bell, and make a standardized component (ill do this)
