@@ -12,6 +12,8 @@
 
 -   [ ] Some user feedback when creating a post, logging out, etc
 
+    -   [ ] tried to use SuccessPopUp after logout in navbar but it wasnt working, I don't want to use a stoopid alert
+
 -   [ ] Prepare foreign profile page for deployment
 
     -   [ ] Shoulnt give option to change desc if its not your own profile page
