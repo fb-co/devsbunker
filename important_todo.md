@@ -24,11 +24,13 @@
 
 -   [ ] @focus and @blur does not work on iphone making a lot of the dropdowns and focus based menues not work
 
--   [ ] GraphQLService line that reads "TODO: WE SHOULD NOT DO THIS HERE!!!!" (don't know what it is so ill leave this for you)
+-   [x] GraphQLService line that reads "TODO: WE SHOULD NOT DO THIS HERE!!!!" (don't know what it is so ill leave this for you)
 
 ## Low Priority
 
 -   [ ] Optimize notification bell, and make a standardized component (ill do this)
+
+    -   [ ] mark as read as soon as user navigates to notification page (hot reload)
 
 -   [ ] Redundant navigation errors for some reason in the User pages (try clicking around the tabs a bit and you should see them)
 
@@ -36,4 +38,4 @@
 
 -   [ ] Remove all follow buttons for yourself since they don't work it can be confusing
 
--   [ ] Post view should have static left and right content (maybe) 
+-   [ ] Post view should have static left and right content (maybe)
