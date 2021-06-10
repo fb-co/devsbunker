@@ -49,7 +49,6 @@ const actions = {
 
         // every 14 mins we refresh the accessToken, we don't need await here
         setInterval(() => {
-            console.log("Automatically refreshing accessToken");
             actions.manualRefreshAccessToken(commit);
         }, 840000);
     },

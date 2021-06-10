@@ -39,8 +39,13 @@ export default {
         // check if caching is supported and shove it into the store
         this.$store.dispatch("checkCacheSupport");
 
+        // fetches any data that should be readily available on page load
+        await this.$store.dispatch("fetchPageLoadData");
+
         // if pfp link is in localstorage, shove it into store
         this.$store.dispatch("isPfpLinkCached");
+
+
 
         this.isFetching = false;
     },

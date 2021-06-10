@@ -143,11 +143,20 @@ export default {
                 });
 
                 if (user && user.enabled) {
+                    let unreadAmt = 0;
+
+                    for (let i = 0; i < user.notifications.length; i++) {
+                        if (!user.notifications[i].read) {
+                            unreadAmt++;
+                        }
+                    }
+
                     return {
                         username: user.username,
                         desc: user.desc,
                         email: user.email,
                         notifications: user.notifications,
+                        unreadNotificationAmt: unreadAmt,
                         tag: user.tag,
                         liked_posts: user.liked_posts,
                         // saved_posts: user.saved_posts, WE NEED TO ADD THIS

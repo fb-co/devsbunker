@@ -50,12 +50,13 @@ export default gql`
         username: String!
         email: String!
         notifications: [Notification]
+        unreadNotificationAmt: Int
         desc: String!
         tag: String!
         followers: [String]!
         following: [String]!
         liked_posts: [String]!
-        profile_pic: String!
+        profile_pic: String
     }
 
     type FetchablePost {

@@ -21,33 +21,18 @@
 </template>
 
 <script>
-import GraphQLService from "../../services/graphql.service.js";
-
 export default {
     data() {
         return {
-            unread_notifications: this.unread_prop || 0,
+            unread_notifications: this.$store.getters.unread_notifications || 0,
         }
     },
     props: {
-        unread_prop: Number,
         bellColor: {
             type: String,
             default: "var(--main-font-color)"
         },
     },
-    created() {
-        if (this.unread_prop == undefined) {
-            this.getUnreadNotifications();
-        }
-    },
-    methods: {
-        getUnreadNotifications() {
-            GraphQLService.getUnreadNotifications(this.$store.getters.accessToken).then((res) => {
-                this.unread_notifications = res.data.getUnreadNotifications.amount;
-            });
-        }
-    }
 }
 </script>
 
