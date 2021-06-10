@@ -909,6 +909,7 @@ const GraphQLService = {
                 credentials: "include",
                 body: JSON.stringify({ query }),
             });
+
             return res.json();
         } catch (err) {
             return console.error(err);

@@ -87,8 +87,8 @@
                                 <router-link v-if="$store.getters.isLoggedIn" to="/notifications" class="static_link">
                                     <p style="position: relative;">
                                         Notifications
-                                        <UnreadNumber v-if="$store.getters.mobile" style="bottom: -10px; right: 40px;" :hideOnZero="true" />
-                                        <UnreadNumber v-else style="bottom: -10px; right: 80px;" :hideOnZero="true" />
+                                        <UnreadNumber v-if="$store.getters.mobile" style="bottom: -10px; right: 40px;" />
+                                        <UnreadNumber v-else style="bottom: -10px; right: 80px;" />
                                     </p>
                                 </router-link>
                                 <router-link v-if="$store.getters.isLoggedIn" :to="`/user/${this.$store.getters.username}/`" class="static_link profile_pic">

@@ -60,7 +60,7 @@ export default {
             FileUploadService.uploadProfilePic(this.file, this.$store.getters.accessToken).then((res) => {
                 if (res.data) {
                     localStorage.setItem("profile_pic_link", process.env.VUE_APP_PROFILE_PICTURES + res.data[0].dbname);
-                    this.$store.dispatch("isPfpLinkCached"); // update the vuex store to contain the new pfp link
+                    this.$store.dispatch("check_and_cache_pfp");
                 }
             });
 

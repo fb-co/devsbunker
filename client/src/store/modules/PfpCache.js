@@ -1,6 +1,7 @@
+// Data concerining the users personal pfp can be found in the PageLoadHandler vuex module
+
 const state = {
     profilePictures: [],
-    personalPfpLink: null,
     maxCacheSize: 1000
 };
 
@@ -14,9 +15,6 @@ const getters = {
         }
         return null;
     },
-    getPersonalPfpLink: (state) => {
-        return state.personalPfpLink;
-    }
 };
 
 const mutations = {
@@ -37,27 +35,10 @@ const mutations = {
             state.profilePictures.push({ username: data.username, link: data.link });
         }
     },
-    cachePersonalPfpLink(state, link) {
-        state.personalPfpLink = link;
-    },
-    removePersonalPfpLink(state) {
-        state.personalPfpLink = null;
-    }
-};
-
-const actions = {
-    isPfpLinkCached({ commit }) {
-        const link = localStorage.getItem("profile_pic_link");
-
-        if (link) {
-            commit("cachePersonalPfpLink", link);
-        }
-    }
 };
 
 export default {
     state,
     getters,
     mutations,
-    actions,
 };

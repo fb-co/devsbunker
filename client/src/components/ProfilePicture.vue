@@ -72,7 +72,6 @@ export default {
         },
     },
     created() {
-        console.log(this.$store.getters.getPersonalPfpLink, localStorage.getItem("profile_pic_link"));
         this.fetchImageLink();
     },
     computed: {
@@ -84,7 +83,7 @@ export default {
             };
         },
         yourPfpLink() {
-            return this.$store.getters.getPersonalPfpLink;
+            return this.$store.getters.profile_pic;
         }
     },
     watch: {
@@ -152,7 +151,7 @@ export default {
                 let shouldFetch = false;
 
                 if (this.username == this.$store.getters.username) {
-                    const storedLink = this.$store.getters.getPersonalPfpLink;
+                    const storedLink = this.$store.getters.profile_pic || localStorage.getItem("profile_pic_link");
 
                     if (storedLink) {
                         this.image_link = storedLink;
@@ -178,14 +177,7 @@ export default {
                                 this.default_image = false;
                                 this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
                             }
-
                             this.$store.commit('cachePfpLink', { username: this.username, link: this.image_link });
-
-                            // cache in localstorage if its your own username
-                            if (this.username == this.$store.getters.username) {
-                                localStorage.setItem("profile_pic_link", this.image_link);
-                                this.$store.dispatch("isPfpLinkCached"); //update the store too
-                            }
                         } else {
                             console.log("err");
                         }

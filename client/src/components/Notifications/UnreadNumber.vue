@@ -1,5 +1,5 @@
 <template>
-    <p v-if="(unread_amount!=0 && hideOnZero)" class="unread_icon">{{ unread_amount }}</p>
+    <p v-if="unread_amount!=0" class="unread_icon">{{ unread_amount }}</p>
 </template>
 
 <script>
@@ -9,12 +9,6 @@ export default {
             unread_amount: this.$store.getters.unread_notifications || 0,
         }
     },
-    props: {
-        hideOnZero: {
-            type: Boolean,
-            default: false
-        }
-    }
 }
 </script>
 

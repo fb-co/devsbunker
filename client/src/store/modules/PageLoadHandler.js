@@ -23,15 +23,40 @@ const mutations = {
     },
     cacheUnreadNotificationsAmt(state, amt) {
         state.unreadNotificationsAmt = amt;
+    },
+    removePersonalPfpLink(state) {
+        state.pfpLink = null;
+    },
+    cachePersonalPfpLink(state, link) {
+        state.pfpLink = link;
     }
 };
 
 const actions = {
     async fetchPageLoadData ({ commit, rootState }) {
-        const res = await GraphQLService.fetchPersonalDetails(rootState.LoginStateHandler.accessToken, ["unreadNotificationAmt", "profile_pic"]);
+        const storedLink = localStorage.getItem("profile_pic_link");
+        let dataToFetch = ["unreadNotificationAmt"];
 
-        commit("cachePfpLink", res.data.getPersonalDetails.profile_pic);
+        let pfpLink;
+
+        if (storedLink) {
+            pfpLink = storedLink;
+        } else {
+            dataToFetch.push("profile_pic");
+        }
+
+        const res = await GraphQLService.fetchPersonalDetails(rootState.LoginStateHandler.accessToken, dataToFetch);
+        
+        commit("cachePfpLink", pfpLink || process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
         commit("cacheUnreadNotificationsAmt", res.data.getPersonalDetails.unreadNotificationAmt);
+    },
+    check_and_cache_pfp({ commit }) {
+        const storedLink = localStorage.getItem("profile_pic_link");
+
+        if (storedLink) {
+            
+            commit("cachePersonalPfpLink", storedLink);
+        }
     }
 };
 
