@@ -107,15 +107,7 @@ const GraphQLService = {
 
     // filter is required, just put a string of 'none' if you want to search all posts
     // SEE THE MONGO QUERY TO UNDERSTAND WHAT userToFilter is for
-    fetchPostsByPartial: function(
-        partial_name,
-        filter,
-        userToFilter,
-        sortingType,
-        lastPostId,
-        lastUniqueField,
-        token
-    ) {
+    fetchPostsByPartial: function(partial_name, filter, userToFilter, sortingType, lastPostId, lastUniqueField, token) {
         if (partial_name != "") {
             const query = `
                 query {
@@ -203,13 +195,7 @@ const GraphQLService = {
     },
 
     // requester token is an optional parameter so that the like button will stay filled if you logged in and the post was liked by you
-    fetchPostsByAuthor: function(
-        author,
-        lastPostId,
-        lastUniqueField,
-        filter,
-        token
-    ) {
+    fetchPostsByAuthor: function(author, lastPostId, lastUniqueField, filter, token) {
         // this may cause errors because we are just checking if something called token exists
         const query = `
             query {
@@ -351,7 +337,7 @@ const GraphQLService = {
     },
 
     // this query will get the actual data for notifications that are unread
-    getUnreadNotificationsData: function (token) {
+    getUnreadNotificationsData: function(token) {
         const query = `
             query {
                 getUnreadNotificationsData {
@@ -427,7 +413,7 @@ const GraphQLService = {
                     }
                 }
             `;
-            
+
             try {
                 return fetch(URL, {
                     method: "POST",
@@ -607,23 +593,9 @@ const GraphQLService = {
     },
 
     commentOnPost: async function(postId, comment, token) {
-        const monthNames = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-        ];
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const timestamp = new Date();
-        const finalTimeStamp =
-            monthNames[timestamp.getMonth()] + ", " + timestamp.getFullYear();
+        const finalTimeStamp = monthNames[timestamp.getMonth()] + ", " + timestamp.getFullYear();
 
         const mutation = `
             mutation {
@@ -933,16 +905,19 @@ const GraphQLService = {
                 body: JSON.stringify({ query }),
             });
 
-            // TODO: WE SHOULD NOT DO THIS HERE!!!!
-            store.commit("refreshAccessToken", null);
-            store.commit("changeLoggedInState", false);
-            store.commit("changeUsername", null);
+            // consuming json here because othwerwise we'd have to repeat the following code everywhere we wanted to logout
+            const json = await res.json();
+            if (!json.errors) {
+                store.commit("refreshAccessToken", null);
+                store.commit("changeLoggedInState", false);
+                store.commit("changeUsername", null);
 
-            // get rid of any localstorage cache
-            localStorage.removeItem("profile_pic_link");
-            store.commit("removePersonalPfpLink"); // flush the vuex store of the cached pfp link
+                // get rid of any localstorage cache
+                localStorage.removeItem("profile_pic_link");
+                store.commit("removePersonalPfpLink"); // flush the vuex store of the cached pfp link
+            }
 
-            return res.json();
+            return json;
         } catch (err) {
             return console.error(err);
         }

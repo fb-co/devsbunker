@@ -42,7 +42,18 @@
             <router-link :to="'/user/' + $store.getters.username + '/saved'" class="saved_projects_link">Saved Projects</router-link>
         </router-link>
         <router-link v-if="$store.getters.isLoggedIn" :to="'/user/' + $store.getters.username + '/projects'" class="tab_container">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-code" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon icon-tabler icon-tabler-code"
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="var(--main-font-color)"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
                 <path stroke="none" d="M0 0h24v24H0z" />
                 <polyline points="7 8 3 12 7 16" />
                 <polyline points="17 8 21 12 17 16" />
@@ -88,7 +99,10 @@ export default {
     methods: {
         logout() {
             GraphQLService.logoutUser().then((response) => {
-                console.log("logged out: ", response);
+                if (response.errors) {
+                    alert("Unable to logout");
+                    console.error(response.errors);
+                }
             });
         },
         makeNewPost() {

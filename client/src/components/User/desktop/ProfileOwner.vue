@@ -5,24 +5,12 @@
                 <div class="row1">
                     <div class="profile_pic_container row_item">
                         <!--<img :src="require('@/assets/profile_pictures/' + this.userObject.profile_pic)" alt="profile_pic" class="profile-pic" >-->
-                        <ProfilePicture
-                            v-if="userObject"
-                            :username="this.$store.getters.username"
-                            wrapperSize="150px"
-                            class="profile_pic"
-                        />
+                        <ProfilePicture v-if="userObject" :username="this.$store.getters.username" wrapperSize="150px" class="profile_pic" />
 
                         <!-- not all users will have the verified tag, this is temp -->
                         <p class="username">
                             {{ $store.getters.username }}
-                            <svg
-                                width="1em"
-                                height="1em"
-                                viewBox="0 0 16 16"
-                                class="bi bi-patch-check-fll"
-                                fill="#3C93D2"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-check-fll" fill="#3C93D2" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     fill-rule="evenodd"
                                     d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984a.5.5 0 0 0-.708-.708L7 8.793 5.854 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"
@@ -71,9 +59,7 @@
                                 <polyline points="11 12 12 12 12 16 13 16" />
                             </svg>
 
-                            <router-link :to="{ name: 'userInformation' }"
-                                >General</router-link
-                            >
+                            <router-link :to="{ name: 'userInformation' }">General</router-link>
                         </div>
 
                         <div
@@ -101,9 +87,7 @@
                                 <line x1="14" y1="4" x2="10" y2="20" />
                             </svg>
 
-                            <router-link :to="{ name: 'userProjects' }"
-                                >Your Projects</router-link
-                            >
+                            <router-link :to="{ name: 'userProjects' }">Your Projects</router-link>
                         </div>
 
                         <div
@@ -124,14 +108,10 @@
                                 stroke-linejoin="round"
                             >
                                 <path stroke="none" d="M0 0h24v24H0z" />
-                                <path
-                                    d="M9 4h6a2 2 0 0 1 2 2v14l-5-3l-5 3v-14a2 2 0 0 1 2 -2"
-                                />
+                                <path d="M9 4h6a2 2 0 0 1 2 2v14l-5-3l-5 3v-14a2 2 0 0 1 2 -2" />
                             </svg>
 
-                            <router-link :to="{ name: 'userSavedProjects' }"
-                                >Saved Projects</router-link
-                            >
+                            <router-link :to="{ name: 'userSavedProjects' }">Saved Projects</router-link>
                         </div>
 
                         <div
@@ -156,14 +136,10 @@
                                 <path stroke="none" d="M0 0h24v24H0z" />
                                 <rect x="7" y="9" width="14" height="10" rx="2" />
                                 <circle cx="14" cy="14" r="2" />
-                                <path
-                                    d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"
-                                />
+                                <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" />
                             </svg>
 
-                            <router-link :to="{ name: 'userPurchases' }"
-                                >Purchases</router-link
-                            >
+                            <router-link :to="{ name: 'userPurchases' }">Purchases</router-link>
                         </div>
                     </div>
                     <div class="other_links_container row_item">
@@ -214,9 +190,7 @@
                                 stroke-linejoin="round"
                             >
                                 <path stroke="none" d="M0 0h24v24H0z" />
-                                <path
-                                    d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"
-                                />
+                                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
                                 <polyline points="7 11 12 16 17 11" />
                                 <line x1="12" y1="4" x2="12" y2="16" />
                             </svg>
@@ -272,28 +246,24 @@
                 </div>
             </div>
             <div class="content_box">
-                <router-view
-                    :key="$route.path"
-                    :userData="userObject"
-                />
+                <router-view :key="$route.path" :userData="userObject" />
                 <!-- This renders the sub-routes component -->
             </div>
         </div>
 
         <InputModal
             ref="deleteProfileConfirmation"
-            :fields="[{
-                label: 'Confirm Password',
-                type: 'pwd'
-            }]"
+            :fields="[
+                {
+                    label: 'Confirm Password',
+                    type: 'pwd',
+                },
+            ]"
             title="Confirm"
             @submitted="deleteProfile($event)"
         />
 
-        <SuccessPopUp
-            v-if="accountDeleted"
-            message="Successfully deleted account... Redirecting."
-        />
+        <SuccessPopUp v-if="accountDeleted" message="Successfully deleted account... Redirecting." />
         <ErrorPopUp ref="error_popup" message="Error while deleting account!" :showOnCreation="false" />
     </div>
 </template>
@@ -326,9 +296,13 @@ export default {
     methods: {
         logout() {
             GraphQLService.logoutUser().then((response) => {
-                console.log("logged out: ", response);
+                if (response.errors) {
+                    alert("Unable to logout");
+                    console.error(response.errors);
+                } else {
+                    this.$router.push("/");
+                }
             });
-            this.$router.push("/");
         },
         downloadUserData() {
             GraphQLService.downloadUserData(this.$store.getters.accessToken)
@@ -337,16 +311,11 @@ export default {
                         const data = res.data.downloadUserData;
 
                         // straight up robbed from stackoverflow
-                        const dataStr =
-                            "data:text/json;charset=utf-8," +
-                            encodeURIComponent(JSON.stringify(data));
+                        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
 
                         const downloadAnchorNode = document.createElement("a");
                         downloadAnchorNode.setAttribute("href", dataStr);
-                        downloadAnchorNode.setAttribute(
-                            "download",
-                            this.$store.getters.username + ".json"
-                        );
+                        downloadAnchorNode.setAttribute("download", this.$store.getters.username + ".json");
                         document.body.appendChild(downloadAnchorNode); // required for firefox
                         downloadAnchorNode.click();
                         downloadAnchorNode.remove();
@@ -363,12 +332,9 @@ export default {
         },
         async deleteProfile(payload) {
             const password = payload[0];
-            
+
             if (password) {
-                const res = await GraphQLService.deleteUserAccount(
-                    password,
-                    this.$store.getters.accessToken
-                );
+                const res = await GraphQLService.deleteUserAccount(password, this.$store.getters.accessToken);
                 if (!res.errors) {
                     if (res.data.deleteAccount.success) {
                         this.accountDeleted = true;

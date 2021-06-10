@@ -9,9 +9,7 @@
                 <div class="menu_logo" @click.prevent="routeOrReload()">
                     <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
                     <img src="../assets/templogo.png" alt="Logo" />
-                    <p>
-                        <span style="font-weight: bold">DEVS</span>BUNKER
-                    </p>
+                    <p><span style="font-weight: bold">DEVS</span>BUNKER</p>
                 </div>
             </div>
             <!-- Static menu items (dont go into burger menu) -->
@@ -136,7 +134,7 @@ export default {
         //NavBarSearch,
         ProfilePicture,
         NotificationIcon,
-        UnreadNumber
+        UnreadNumber,
     },
 
     destroyed() {
@@ -144,23 +142,27 @@ export default {
     },
     methods: {
         async logout() {
-            await GraphQLService.logoutUser();
+            const res = await GraphQLService.logoutUser();
+            console.log("LOGOUT:", res);
 
-            if (this.$route.path != "/") {
-                this.$router.push("/");
+            if (res.errors) {
+                alert("Unable to logout");
+                console.error(res.errors);
+            } else {
+                if (this.$route.path != "/") {
+                    this.$router.push("/");
+                }
             }
         },
         toggleMenu() {
             // No idea if they are called grandparents, but its the parent of the parent
-            const checkBoxGrandparent = document.getElementById(
-                "burger_menu_checkbox"
-            ).parentElement.parentElement;
+            const checkBoxGrandparent = document.getElementById("burger_menu_checkbox").parentElement.parentElement;
             const screenBlur = document.getElementById("burger_menu_blur");
 
             // toggle burger menu screen blur
             if (window.getComputedStyle(screenBlur).display === "none") {
                 document.getElementById("burger_menu_blur").style.display = "block";
-                
+
                 //scroll to the top of the burger menu when you close and reopen
                 document.getElementById("main_burger_menu").scrollTop = 0;
             } else {
@@ -169,17 +171,12 @@ export default {
 
             if (document.getElementById("burger_menu_checkbox").checked) {
                 document.body.style.overflow = "hidden";
-                document.getElementById(
-                    "burger_icon_placeholder"
-                ).style.display = "flex";
+                document.getElementById("burger_icon_placeholder").style.display = "flex";
                 checkBoxGrandparent.style.position = "fixed";
                 checkBoxGrandparent.style.height = "var(--header-height)";
-
             } else {
                 document.body.style.overflow = "auto";
-                document.getElementById(
-                    "burger_icon_placeholder"
-                ).style.display = "none";
+                document.getElementById("burger_icon_placeholder").style.display = "none";
                 checkBoxGrandparent.style.position = "static";
                 checkBoxGrandparent.style.height = "100%";
             }
@@ -391,8 +388,7 @@ body {
     border-radius: 3px;
     background: var(--main-font-color);
     transform-origin: 4px 0px;
-    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
-        background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
 }
 
 /* Open burger menu */
