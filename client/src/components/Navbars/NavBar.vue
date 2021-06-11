@@ -8,7 +8,7 @@
             <div class="logo_container">
                 <div class="menu_logo" @click.prevent="routeOrReload()">
                     <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
-                    <img src="../assets/templogo.png" alt="Logo" />
+                    <img src="../../assets/templogo.png" alt="Logo" />
                     <p><span style="font-weight: bold">DEVS</span>BUNKER</p>
                 </div>
             </div>
@@ -113,7 +113,7 @@
 <script>
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 // import NavBarSearch from "./NavBarSearch.vue"; might re-add this in the future
-import GraphQLService from "../services/graphql.service";
+import GraphQLService from "../../services/graphql.service";
 
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import NotificationIcon from "@/components/Notifications/NotificationIcon.vue";

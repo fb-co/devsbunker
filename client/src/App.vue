@@ -12,8 +12,8 @@
 
 <script>
 import Loading from "./components/Loading";
-import Navbar from "./components/NavBar";
-import BottomNavBar from "./components/BottomNavBar";
+import Navbar from "./components/Navbars/NavBar.vue";
+import BottomNavBar from "./components/Navbars/BottomNavBar.vue";
 
 export default {
     data() {
@@ -42,15 +42,15 @@ export default {
         // fetches any data that should be readily available on page load
         await this.$store.dispatch("fetchPageLoadData");
         localStorage.setItem("profile_pic_link", this.$store.getters.profile_pic);
-        
+
         this.isFetching = false;
     },
 
     methods: {
         updateFeed() {
             this.$refs.page_content.updateFeed(true);
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -137,7 +137,7 @@ body {
     flex-grow: 1;
 }
 .line {
-    background-image: linear-gradient( to right, var(--secondary-color) 0%, var(--soft-text) 40%, var(--soft-text) 60%, var(--secondary-color) 100% );
+    background-image: linear-gradient(to right, var(--secondary-color) 0%, var(--soft-text) 40%, var(--soft-text) 60%, var(--secondary-color) 100%);
     width: 90%;
     height: 1.5px;
     margin: 0 auto;
@@ -185,13 +185,7 @@ body {
 
 /* Form Things */
 .form_field_line {
-    background-image: linear-gradient(
-        to right,
-        var(--secondary-color) 0%,
-        var(--main-font-color) 2%,
-        var(--main-font-color) 98%,
-        var(--secondary-color) 100%
-    );
+    background-image: linear-gradient(to right, var(--secondary-color) 0%, var(--main-font-color) 2%, var(--main-font-color) 98%, var(--secondary-color) 100%);
     opacity: 0.5;
 }
 
@@ -230,5 +224,3 @@ body {
     background-color: var(--soft-text);
 }
 </style>
-
-
