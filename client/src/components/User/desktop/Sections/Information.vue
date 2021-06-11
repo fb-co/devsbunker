@@ -2,16 +2,16 @@
     <div class="general_container" v-if="userObject">
         <p class="label">General</p>
 
-        <ProfilePicture 
-            v-if="userObject" 
-            :username="userObject.username" 
-            :darkenOnHover="true" 
-            :forUpload="userObject.username==this.$store.getters.username" 
-            wrapperSize="300px" 
-            class="profile_pic" 
+        <ProfilePicture
+            v-if="userObject"
+            :username="userObject.username"
+            :darkenOnHover="true"
+            :forUpload="userObject.username === this.$store.getters.username"
+            wrapperSize="300px"
+            class="profile_pic"
         />
 
-        <div class="desc_container">
+        <div class="desc_container" v-if="userObject.username === this.$store.getters.username">
             <p @click="editDesc()" v-if="!isEditingDesc" class="desc">{{ userObject.desc }}</p>
             <!-- Conditionally render it or else you get errors in console as it tries to return the value before the promise is resolved (it will work fine tho) -->
 
@@ -38,22 +38,26 @@
             <textarea @blur="saveDesc()" :value="userObject.desc" maxlength="400" class="edit_desc"></textarea>
         </div>
 
-        <div style="flex-grow: 1;"></div>
+        <div style="flex-grow: 1;">
+            <p v-if="userObject.username !== this.$store.getters.username" style="color: var(--main-font-color)">{{ userObject.desc }}</p>
+        </div>
         <!--Placeholder-->
 
-        <div class="input_container">
-            <!--
+        <main v-if="userObject.username === this.$store.getters.username">
+            <div class="input_container">
+                <!--
             <div class="input_section">
                 <p class="input_label">Name</p>
                 <input ref="username_field" class="info_input" placeholder="" :value="$store.getters.username" />
             </div>
             -->
-            <div class="input_section">
-                <p class="input_label">Email</p>
-                <input ref="email_field" class="info_input" placeholder :value="userObject.email" />
+                <div class="input_section">
+                    <p class="input_label">Email</p>
+                    <input ref="email_field" class="info_input" placeholder :value="userObject.email" />
+                </div>
             </div>
-        </div>
-        <button @click="saveDetails()" class="save_button">Save</button>
+            <button @click="saveDetails()" class="save_button">Save</button>
+        </main>
     </div>
 </template>
 
@@ -71,18 +75,17 @@ export default {
         };
     },
     props: {
-        userData: Object
+        userData: Object,
     },
     mounted() {
-        this.isExternal = (this.userObject.username || "")!=this.$store.getters.username;
+        this.isExternal = (this.userObject.username || "") != this.$store.getters.username;
     },
     components: {
         ProfilePicture,
     },
     methods: {
         editDesc() {
-            this.$el.getElementsByClassName("edit_desc")[0].style.display =
-                "flex";
+            this.$el.getElementsByClassName("edit_desc")[0].style.display = "flex";
             this.$el.getElementsByClassName("edit_desc")[0].focus();
             this.isEditingDesc = true;
         },
@@ -100,16 +103,11 @@ export default {
 
                 this.userObject.desc = textArea.value;
 
-                const response = await GraphQLService.updateUserDetails(
-                    this.$store.getters.accessToken,
-                    [{ field: "desc", newValue: textArea.value }]
-                );
+                const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{ field: "desc", newValue: textArea.value }]);
 
                 if (response.data.updateUserDetails.message) {
-                    const changedValue =
-                        response.data.updateUserDetails.changedData[0]; // this refrences zero because the updateUserDetails mutation has the possibility of returning more than one change
-                    this.$el.getElementsByClassName("desc")[0].innerText =
-                        changedValue.newValue;
+                    const changedValue = response.data.updateUserDetails.changedData[0]; // this refrences zero because the updateUserDetails mutation has the possibility of returning more than one change
+                    this.$el.getElementsByClassName("desc")[0].innerText = changedValue.newValue;
                 }
             }
         },
@@ -128,10 +126,7 @@ export default {
             }
 
             if (fields.length > 0) {
-                GraphQLService.updateUserDetails(
-                    this.$store.getters.accessToken,
-                    fields
-                ).then((res) => {
+                GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
                     console.log("Details Successfully Changed" + res);
                 });
             }
