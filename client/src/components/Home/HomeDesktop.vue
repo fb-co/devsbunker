@@ -8,7 +8,7 @@
 
 <script>
 /*
-import DesktopProjectCard from "@/components/DesktopProjectCard.vue";
+import DesktopProjectCard from "@/components/ProjectCard/DesktopProjectCard.vue";
 import PostSearch from "@/components/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import Loading from "@/components/Loading.vue";
@@ -109,6 +109,6 @@ export default {
     overflow-y: auto;
     flex-grow: 1;
     width: 60%;
-    height: calc(100vh - var(--header-height)); 
+    height: calc(100vh - var(--header-height));
 }
 </style>

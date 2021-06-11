@@ -191,8 +191,8 @@
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import DynamicPicture from "@/components/DynamicPicture.vue";
-import GraphQLService from "../services/graphql.service";
-import GeneralMixin from "../mixins/general.mixin";
+import GraphQLService from "../../services/graphql.service";
+import GeneralMixin from "../../mixins/general.mixin";
 
 export default {
     props: {

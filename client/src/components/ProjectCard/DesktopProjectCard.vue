@@ -178,8 +178,8 @@
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import DynamicPicture from "@/components/DynamicPicture.vue";
-import GraphQLService from "../services/graphql.service";
-import GeneralMixin from "../mixins/general.mixin.js";
+import GraphQLService from "../../services/graphql.service";
+import GeneralMixin from "../../mixins/general.mixin.js";
 
 export default {
     data() {
@@ -389,11 +389,11 @@ export default {
     background-image: linear-gradient(to bottom, transparent 20%, var(--secondary-color) 90%);
 }
 .preserveText {
-    white-space: pre-wrap;       /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 .language {
     margin-left: 10px;

@@ -2,26 +2,41 @@
     <div id="main_container">
         <p v-if="title" class="title">{{ title }}</p>
         <div class="filter_dropdown_container">
-            <PostSearch 
+            <PostSearch
                 ref="post_search"
-                @highlightPhrases="highlightCards" 
-                @loading="loading=true"
-                @doneLoading="loading=false"
-                :sortingType="rootComponent.sortingType" 
+                @highlightPhrases="highlightCards"
+                @loading="loading = true"
+                @doneLoading="loading = false"
+                :sortingType="rootComponent.sortingType"
                 :userToFilter="rootComponent.otherData.foreignUserToFilter"
                 :filter="rootComponent.queryType"
                 :moreOptions="true"
-                width="50%" 
-                class="posts_search_bar" 
+                width="50%"
+                class="posts_search_bar"
             />
-            
-            <Dropdown :label="rootComponent.sortingType" fontSize="12px" linkHeight="40px" height="40px" class="filter_dropdown" @itemSelected="updateSearchFilter">
+
+            <Dropdown
+                :label="rootComponent.sortingType"
+                fontSize="12px"
+                linkHeight="40px"
+                height="40px"
+                class="filter_dropdown"
+                @itemSelected="updateSearchFilter"
+            >
                 <button>Newest</button>
                 <button>Most Popular</button>
-            </Dropdown>          
+            </Dropdown>
         </div>
         <div v-if="loading">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:none;display:block;" width="100px" height="100px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                style="margin:auto;background:none;display:block;"
+                width="100px"
+                height="100px"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="xMidYMid"
+            >
                 <g transform="rotate(0 50 50)">
                     <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
                         <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
@@ -42,7 +57,7 @@
                         <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
                     </rect>
                 </g>
-                    <g transform="rotate(120 50 50)">
+                <g transform="rotate(120 50 50)">
                     <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
                         <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
                     </rect>
@@ -89,11 +104,11 @@
                 <div v-if="rootComponent.posts.length > 0" class="post_wrapper">
                     <div v-if="!desktop" class="mobile_post_feed">
                         <!-- <MobileProjectCard class="mobile_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" /> -->
-                        <LargeMobileProjectCard  v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
+                        <LargeMobileProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
                     </div>
                     <div v-else class="desktop_post_feed">
                         <!-- <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" /> -->
-                        <LargeDesktopProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" /> 
+                        <LargeDesktopProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
                         <!--<DetailedDesktopProjCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" /> -->
                     </div>
                     <p v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
@@ -106,11 +121,21 @@
                 <div v-if="searchResults.length > 0" class="post_wrapper">
                     <div v-if="!desktop" class="mobile_post_feed">
                         <!-- <MobileProjectCard class="mobile_project_card" v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" :highlight_phrase="$refs.post_search.getSearchedPhrase()" /> -->
-                        <LargeMobileProjectCard  v-for="searchResult in searchResults" :key="searchResult.id" :projectData="searchResult" :highlight_phrase="searchPhrase" />
+                        <LargeMobileProjectCard
+                            v-for="searchResult in searchResults"
+                            :key="searchResult.id"
+                            :projectData="searchResult"
+                            :highlight_phrase="searchPhrase"
+                        />
                     </div>
                     <div v-else class="desktop_post_feed">
                         <!-- <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" /> -->
-                        <LargeDesktopProjectCard v-for="searchResults in searchResults" :key="searchResults.id" :projectData="searchResults" :highlight_phrase="searchPhrase" />
+                        <LargeDesktopProjectCard
+                            v-for="searchResults in searchResults"
+                            :key="searchResults.id"
+                            :projectData="searchResults"
+                            :highlight_phrase="searchPhrase"
+                        />
                     </div>
                     <p v-if="!fetchedAllSearchResults" @click="loadNew()" class="load_more_btn">Load More</p>
                 </div>
@@ -118,7 +143,7 @@
                     <p>No projects found</p>
                 </div>
             </div>
-        </div> 
+        </div>
         <!-- Just a placeholder to add some space beneath the results even after the load more button is gone -->
         <div v-if="(showSearchResults && fetchedAllSearchResults) || (!fetchedAllSearchResults && rootComponent.fetchedAll)" style="height: 60px;" />
     </div>
@@ -127,11 +152,11 @@
 <script>
 import PostSearch from "@/components/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
-//import MobileProjectCard from "@/components/MobileProjectCard.vue";
-//import DesktopProjectCard from "@/components/DesktopProjectCard.vue";
-import LargeDesktopProjectCard from "@/components/LargeDesktopProjectCard.vue";
-import LargeMobileProjectCard from "@/components/LargeMobileProjectCard.vue";
-//import DetailedDesktopProjCard from "@/components/DetailedDesktopProjCard.vue";
+//import MobileProjectCard from "@/components/ProjectCard/MobileProjectCard.vue";
+//import DesktopProjectCard from "@/components/ProjectCard/DesktopProjectCard.vue";
+import LargeDesktopProjectCard from "@/components/ProjectCard/LargeDesktopProjectCard.vue";
+import LargeMobileProjectCard from "@/components/ProjectCard/LargeMobileProjectCard.vue";
+//import DetailedDesktopProjCard from "@/components/ProjectCard/DetailedDesktopProjCard.vue";
 
 export default {
     data() {
@@ -141,18 +166,18 @@ export default {
             fetchedAllSearchResults: false,
             loading: false,
             searchPhrase: undefined,
-        }
+        };
     },
     props: {
         rootComponent: Object,
-        
+
         // specifies whether to use desktop project cards, or mobile
         desktop: {
             type: Boolean,
-            default: true
+            default: true,
         },
 
-        title: String
+        title: String,
     },
     components: {
         PostSearch,
@@ -191,9 +216,9 @@ export default {
         },
         highlightCards(phrase) {
             this.searchPhrase = phrase;
-        }
+        },
     },
-}
+};
 </script>
 
 <style scoped>
