@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="content_box">
-                <router-view :key="$route.path" :userData="userObject" />
+                <router-view :key="path" :userData="userObject" />
                 <!-- This renders the sub-routes component -->
             </div>
         </div>
@@ -93,6 +93,7 @@ export default {
     data() {
         return {
             userObject: this.mainUserObject,
+            path: "",
         };
     },
     props: {
@@ -101,30 +102,23 @@ export default {
     components: {
         ProfilePicture,
     },
+    created() {
+        ["information", "projects"].includes(this.$route.path.split("/")[3]) ? (this.path = this.$route.path) : this.$router.push("/404");
+    },
     methods: {
         followUser() {
-            GraphQLService.followPerson(
-                this.$store.getters.accessToken,
-                this.userObject.username
-            ).then((newFollowers) => {
+            GraphQLService.followPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
                 if (newFollowers.data.followPerson) {
-                    this.userObject.followerAmt =
-                        newFollowers.data.followPerson.followerAmt;
-                    this.userObject.isFollowing =
-                        newFollowers.data.followPerson.isFollowing;
+                    this.userObject.followerAmt = newFollowers.data.followPerson.followerAmt;
+                    this.userObject.isFollowing = newFollowers.data.followPerson.isFollowing;
                 }
             });
         },
         unfollowUser() {
-            GraphQLService.unfollowPerson(
-                this.$store.getters.accessToken,
-                this.userObject.username
-            ).then((newFollowers) => {
+            GraphQLService.unfollowPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
                 if (newFollowers.data.unfollowPerson) {
-                    this.userObject.followerAmt =
-                        newFollowers.data.unfollowPerson.followerAmt;
-                    this.userObject.isFollowing =
-                        newFollowers.data.unfollowPerson.isFollowing;
+                    this.userObject.followerAmt = newFollowers.data.unfollowPerson.followerAmt;
+                    this.userObject.isFollowing = newFollowers.data.unfollowPerson.isFollowing;
                 }
             });
         },
