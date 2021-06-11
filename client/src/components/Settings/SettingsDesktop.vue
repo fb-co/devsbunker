@@ -32,16 +32,19 @@
                 </div>
                 <InputModal
                     ref="resetPwd"
-                    :fields="[{
-                        label: 'New Password',
-                        type: 'pwd'
-                    }, {
-                        label: 'Confirm New Password',
-                        type: 'pwd'
-                    }]"
+                    :fields="[
+                        {
+                            label: 'New Password',
+                            type: 'pwd',
+                        },
+                        {
+                            label: 'Confirm New Password',
+                            type: 'pwd',
+                        },
+                    ]"
                     title="Reset"
                     @submitted="resetPwd($event[0], $event[1])"
-                /> 
+                />
             </div>
         </div>
         <SuccessPopup ref="success_popup" message="Successfully Reset Password" />
@@ -68,26 +71,21 @@ import GraphQLService from "@/services/graphql.service";
 
 import ThemeSwitcher from "@/components/global/ThemeSwitcher.vue";
 import InputModal from "@/components/global/InputModal.vue";
-import SuccessPopup from "@/components/SuccessPopUp.vue";
+import SuccessPopup from "@/components/Popups/SuccessPopUp.vue";
 
 export default {
     components: {
         ThemeSwitcher,
         InputModal,
-        SuccessPopup
+        SuccessPopup,
     },
     methods: {
         async resetPwd(pwd, pwdConfirm) {
             if (pwd == pwdConfirm) {
-                const response = await GraphQLService.updateUserDetails(
-                    this.$store.getters.accessToken,
-                    [{ field: "password", newValue: pwd }]
-                );
+                const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{ field: "password", newValue: pwd }]);
                 console.log(response);
 
-                if (
-                    /Successfully/.test(response.data.updateUserDetails.message)
-                ) {
+                if (/Successfully/.test(response.data.updateUserDetails.message)) {
                     this.$refs.resetPwd.close();
                     this.$refs.success_popup.show();
                 } else {
@@ -99,13 +97,13 @@ export default {
         },
         openResetPwdModal() {
             this.$refs.resetPwd.open();
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style scoped>
-.simple_settings_container {  
+.simple_settings_container {
     width: 100%;
     height: calc(100vh - var(--header-height));
 }

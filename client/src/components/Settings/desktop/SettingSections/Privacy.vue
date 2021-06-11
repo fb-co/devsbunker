@@ -8,16 +8,19 @@
             </div>
             <InputModal
                 ref="resetPwd"
-                :fields="[{
-                    label: 'New Password',
-                    type: 'pwd'
-                }, {
-                    label: 'Confirm New Password',
-                    type: 'pwd'
-                }]"
+                :fields="[
+                    {
+                        label: 'New Password',
+                        type: 'pwd',
+                    },
+                    {
+                        label: 'Confirm New Password',
+                        type: 'pwd',
+                    },
+                ]"
                 title="Reset"
                 @submitted="resetPwd($event[0], $event[1])"
-            /> 
+            />
         </div>
         <SuccessPopup ref="success_popup" message="Successfully Reset Password" />
     </WrapperDesktop>
@@ -26,20 +29,15 @@
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import GraphQLService from "@/services/graphql.service";
 import InputModal from "@/components/global/InputModal.vue";
-import SuccessPopup from "@/components/SuccessPopUp.vue";
+import SuccessPopup from "@/components/Popups/SuccessPopUp.vue";
 
 export default {
     methods: {
         async resetPwd(pwd, pwdConfirm) {
             if (pwd == pwdConfirm) {
-                const response = await GraphQLService.updateUserDetails(
-                    this.$store.getters.accessToken,
-                    [{ field: "password", newValue: pwd }]
-                );
+                const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{ field: "password", newValue: pwd }]);
 
-                if (
-                    /Successfully/.test(response.data.updateUserDetails.message)
-                ) {
+                if (/Successfully/.test(response.data.updateUserDetails.message)) {
                     this.$refs.resetPwd.close();
                     this.$refs.success_popup.show();
                 } else {
@@ -51,13 +49,13 @@ export default {
         },
         openResetPwdModal() {
             this.$refs.resetPwd.open();
-        }
+        },
     },
     components: {
         ...GlobalComponents,
         InputModal,
-        SuccessPopup
-    }
+        SuccessPopup,
+    },
 };
 </script>
 <style scoped>
