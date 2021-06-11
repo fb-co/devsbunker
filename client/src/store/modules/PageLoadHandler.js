@@ -18,7 +18,7 @@ const getters = {
 };
 
 const mutations = {
-    cachePfpLink(state, link) {
+    cachePersonalPfpLink(state, link) {
         state.pfpLink = link;
     },
     cacheUnreadNotificationsAmt(state, amt) {
@@ -27,9 +27,6 @@ const mutations = {
     removePersonalPfpLink(state) {
         state.pfpLink = null;
     },
-    cachePersonalPfpLink(state, link) {
-        state.pfpLink = link;
-    }
 };
 
 const actions = {
@@ -47,14 +44,22 @@ const actions = {
 
         const res = await GraphQLService.fetchPersonalDetails(rootState.LoginStateHandler.accessToken, dataToFetch);
         
-        commit("cachePfpLink", pfpLink || process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
+        commit("cachePersonalPfpLink", pfpLink || process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
         commit("cacheUnreadNotificationsAmt", res.data.getPersonalDetails.unreadNotificationAmt);
+        console.log(res);
+        // add the pfp link to localstorage if its not already in there
+        if (!storedLink) {
+            localStorage.setItem("profile_pic_link", process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
+        }
+    },
+    flush_user_data({ commit }) {
+        commit("cachePersonalPfpLink", undefined);
+        commit("cacheUnreadNotificationsAmt", undefined);
     },
     check_and_cache_pfp({ commit }) {
         const storedLink = localStorage.getItem("profile_pic_link");
 
         if (storedLink) {
-            
             commit("cachePersonalPfpLink", storedLink);
         }
     }

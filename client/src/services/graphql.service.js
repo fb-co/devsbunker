@@ -914,7 +914,9 @@ const GraphQLService = {
 
                 // get rid of any localstorage cache
                 localStorage.removeItem("profile_pic_link");
-                store.commit("removePersonalPfpLink"); // flush the vuex store of the cached pfp link
+                
+                // get rid of any user specific data in the store
+                store.dispatch("flush_user_data");
             }
 
             return json;
