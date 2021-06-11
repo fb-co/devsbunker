@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Comment from "@/components/Comment.vue";
+import Comment from "@/components/Comments/Comment.vue";
 import GeneralInput from "@/components/global/GeneralInput.vue";
 
 export default {
@@ -26,88 +26,89 @@ export default {
         comments: Array,
         mobile: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     components: {
         Comment,
-        GeneralInput
+        GeneralInput,
     },
     methods: {
         postComment() {
             const comment = this.$refs.comment_input.getValue();
 
-            if (comment != "" && comment != null) { // the null check is done also server side
+            if (comment != "" && comment != null) {
+                // the null check is done also server side
                 this.$emit("postComment", comment);
                 this.$refs.comment_input.clearValue();
             }
-        }
+        },
     },
-}
+};
 </script>
 
 <style scoped>
-    .comment_section_desktop {
-        width: 100%;
-        min-width: 700px;
-        margin: 75px auto 50px auto;
-        /*
+.comment_section_desktop {
+    width: 100%;
+    min-width: 700px;
+    margin: 75px auto 50px auto;
+    /*
         margin-left: 50%;
         transform: translateX(-50%);
         */
-    }
-    .comment_section_mobile {
-        width: 100%;
-        padding: 15px;
-        text-align: left;
-    }
-    .comments_title {
-        font-size: 25px;
-        color: var(--main-font-color);
-        margin-bottom: 30px;
-        text-align: left;
-        padding-left: 10px;
-    }
-    .comment_field {
-        margin-bottom: 25px;
-        max-width: 500px;
-    }
+}
+.comment_section_mobile {
+    width: 100%;
+    padding: 15px;
+    text-align: left;
+}
+.comments_title {
+    font-size: 25px;
+    color: var(--main-font-color);
+    margin-bottom: 30px;
+    text-align: left;
+    padding-left: 10px;
+}
+.comment_field {
+    margin-bottom: 25px;
+    max-width: 500px;
+}
 
-    .leave_comment_button {
-        background-color: var(--main-accent);
-        border: none;
-        outline: none;
-        border-radius: 12px;
-        width: 100px;
-        height: 40px;
-        color: #fff;
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 40px;
-        margin-left: 5px;
-        cursor: pointer;
-    }
-    .leave_comment_button:hover {
-        box-shadow: 0px 4px 20px var(--main-accent);
-    }
+.leave_comment_button {
+    background-color: var(--main-accent);
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    width: 100px;
+    height: 40px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.leave_comment_button:hover {
+    box-shadow: 0px 4px 20px var(--main-accent);
+}
 
-    .login_prompt {
-        background-color: var(--main-accent);
-        border: none;
-        outline: none;
-        border-radius: 12px;
-        width: 100px;
-        height: 40px;
-        color: #fff;
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 40px;
-        margin-left: 10px;
-        cursor: pointer;
-        text-decoration: none;
-        padding: 10px;
-    }
-    .login_prompt:hover {
-        box-shadow: 0px 4px 20px var(--main-accent);
-    }
+.login_prompt {
+    background-color: var(--main-accent);
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    width: 100px;
+    height: 40px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    margin-left: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 10px;
+}
+.login_prompt:hover {
+    box-shadow: 0px 4px 20px var(--main-accent);
+}
 </style>

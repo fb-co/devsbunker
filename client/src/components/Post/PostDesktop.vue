@@ -36,7 +36,7 @@
 
 <script>
 import CreateTag from "@/components/NewPost/CreateTag.vue";
-import CommentSection from "@/components/CommentSection.vue";
+import CommentSection from "@/components/Comments/CommentSection.vue";
 import Carousel from "@/components/Carousel/Carousel.vue";
 import Link from "./Link.vue";
 import AuthorDisplay from "./AuthorDisplay.vue";
