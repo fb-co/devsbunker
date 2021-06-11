@@ -124,7 +124,7 @@
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import LinkItem from "./Link.vue";
-import CarouselMobile from "@/components/CarouselMobile.vue";
+import CarouselMobile from "@/components/Carousel/CarouselMobile.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 import CommentSection from "@/components/CommentSection.vue";
 import ProfilePicture from "@/components/ProfilePicture.vue";
