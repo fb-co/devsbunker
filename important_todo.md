@@ -16,6 +16,8 @@
 
 -   [ ] Prepare foreign profile page for deployment
 
+    -   [x] IMPORTANT: if you navigate to something like /revenue or /saved (not present on the left side), the component still gets rendered
+
     -   [ ] Shoulnt give option to change desc if its not your own profile page
 
     -   [ ] Get rid of email option for foreign user
