@@ -46,7 +46,7 @@ const actions = {
         
         commit("cachePersonalPfpLink", pfpLink || process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
         commit("cacheUnreadNotificationsAmt", res.data.getPersonalDetails.unreadNotificationAmt);
-        console.log(res);
+
         // add the pfp link to localstorage if its not already in there
         if (!storedLink) {
             localStorage.setItem("profile_pic_link", process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);

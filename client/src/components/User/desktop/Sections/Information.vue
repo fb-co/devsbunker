@@ -12,7 +12,7 @@
         />
 
         <div class="desc_container" v-if="userObject.username === this.$store.getters.username">
-            <p @click="editDesc()" v-if="!isEditingDesc" class="desc">{{ userObject.desc }}</p>
+            <p @click="editDesc()" ref="static_desc" class="desc">{{ userObject.desc }}</p>
             <!-- Conditionally render it or else you get errors in console as it tries to return the value before the promise is resolved (it will work fine tho) -->
 
             <!-- Its important that the SVG goes before the textarea -->
@@ -35,7 +35,7 @@
                 <line x1="16" y1="5" x2="19" y2="8" />
             </svg>
 
-            <textarea @blur="saveDesc()" :value="userObject.desc" maxlength="400" class="edit_desc"></textarea>
+            <textarea @blur="closeDescEditing()" :value="userObject.desc" maxlength="400" class="edit_desc" ref="edit_desc"></textarea>
         </div>
 
         <div style="flex-grow: 1;">
@@ -53,10 +53,11 @@
             -->
                 <div class="input_section">
                     <p class="input_label">Email</p>
-                    <input ref="email_field" class="info_input" placeholder :value="userObject.email" />
+                    <input ref="email_field" class="info_input" placeholder :value="userObject.email" @blur="editEmail()" />
                 </div>
             </div>
-            <button @click="saveDetails()" class="save_button">Save</button>
+            <button v-if="editsMade" @click="saveDetails()" class="save_button">Save</button>
+            <div v-else style="height: 80px;" />
         </main>
     </div>
 </template>
@@ -72,6 +73,7 @@ export default {
             userObject: this.userData,
             isExternal: false,
             isEditingDesc: false,
+            editsMade: false,
         };
     },
     props: {
@@ -83,16 +85,48 @@ export default {
     components: {
         ProfilePicture,
     },
+    beforeRouteLeave(to, from, next) {
+        this.closeDescEditing(); // in case they leave the page while they are editing the desc
+
+        if (this.editsMade) {
+            const answer = window.confirm("You have unsaved changes, are you sure you want to leave this page?");
+
+            if (answer) {
+                next();
+            } else {
+                next(false);
+            }
+        }
+    },
     methods: {
         editDesc() {
-            this.$el.getElementsByClassName("edit_desc")[0].style.display = "flex";
-            this.$el.getElementsByClassName("edit_desc")[0].focus();
+            this.$refs.edit_desc.style.display = "flex";
+            this.$refs.edit_desc.focus();
             this.isEditingDesc = true;
+
+            // hide the p tag
+            const staticArea = this.$refs.static_desc;
+            staticArea.style.display = "none";
+        },
+        editEmail() {
+            if (this.$refs.email_field.value != this.userObject.email) {
+                this.editsMade = true;
+            }
+        },
+        closeDescEditing() {
+            const textArea = this.$refs.edit_desc;
+            const staticArea = this.$refs.static_desc;
+            textArea.style.display = "none";
+            staticArea.style.display = "flex";
+            this.isEditingDesc = false;
+
+            if (this.userObject.desc != textArea.value) {
+                this.editsMade = true;
+                this.$refs.static_desc.innerText = textArea.value; // set the static value to whatever changes were made
+            }
         },
         async saveDesc() {
-            const textArea = this.$el.getElementsByClassName("edit_desc")[0];
-            textArea.style.display = "none";
-            this.isEditingDesc = false;
+            const textArea = this.$refs.edit_desc;
 
             // prevent user queries if the description did not change
             if (this.userObject.desc != textArea.value) {
@@ -103,26 +137,45 @@ export default {
 
                 this.userObject.desc = textArea.value;
 
+                // limit the length
+                if (this.userObject.desc.length > 400) {
+                    this.userObject = this.userObject.substring(0, 397) + "...";
+                }
+
                 const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{ field: "desc", newValue: textArea.value }]);
 
                 if (response.data.updateUserDetails.message) {
                     const changedValue = response.data.updateUserDetails.changedData[0]; // this refrences zero because the updateUserDetails mutation has the possibility of returning more than one change
-                    this.$el.getElementsByClassName("desc")[0].innerText = changedValue.newValue;
+                    this.$refs.static_desc.innerText = changedValue.newValue;
                 }
             }
         },
-        saveDetails() {
+        async saveDetails() {
             let fields = [];
-            /*
-            if (this.$refs.username_field.value != this.$store.getters.username) {
-                fields.push({ field: "username", newValue: this.$refs.username_field.value });      
-            }
-            */
+
             if (this.$refs.email_field.value != this.userObject.email) {
                 fields.push({
                     field: "email",
                     newValue: this.$refs.email_field.value,
                 });
+            }
+
+            if (this.$refs.static_desc.innerText != this.userObject.desc) {
+                const descArea = this.$refs.static_desc;
+
+                if (this.userObject.desc != descArea.innerText) {
+                    this.userObject.desc = descArea.innerText;
+
+                    // limit the length
+                    if (this.userObject.desc.length > 400) {
+                        this.userObject = this.userObject.substring(0, 397) + "...";
+                    }
+
+                    fields.push({
+                        field: "desc",
+                        newValue: this.userObject.desc,
+                    });
+                }
             }
 
             if (fields.length > 0) {
@@ -149,11 +202,12 @@ export default {
 }
 .desc_edit_icon {
     display: none;
-    position: relative;
-    right: -45%;
-    top: -15px;
+    position: absolute;
+    right: -25px;
+    bottom: -15px;
 }
 .desc_container {
+    position: relative;
     cursor: text;
     width: 450px;
     margin: 40px auto 0px auto;
@@ -195,7 +249,7 @@ export default {
     margin: 0 auto;
 }
 .input_section {
-    margin: 40px;
+    margin: 40px auto 40px auto;
 }
 .info_input {
     border: 1px solid var(--soft-text);
@@ -224,5 +278,8 @@ export default {
     font-weight: bold;
     margin: 0px auto 40px auto;
     cursor: pointer;
+}
+.save_button:hover {
+    box-shadow: 0px 4px 20px var(--main-accent);
 }
 </style>
