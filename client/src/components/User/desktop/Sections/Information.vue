@@ -12,7 +12,13 @@
         />
 
         <div class="desc_container" v-if="userObject.username === this.$store.getters.username">
-            <p @click="editDesc()" ref="static_desc" class="desc">{{ userObject.desc }}</p>
+            <p 
+                @click="editDesc()" 
+                ref="static_desc" 
+                class="desc" 
+            >
+                {{ userObject.desc }}
+            </p>
             <!-- Conditionally render it or else you get errors in console as it tries to return the value before the promise is resolved (it will work fine tho) -->
 
             <!-- Its important that the SVG goes before the textarea -->
@@ -35,7 +41,12 @@
                 <line x1="16" y1="5" x2="19" y2="8" />
             </svg>
 
-            <textarea @blur="closeDescEditing()" :value="userObject.desc" maxlength="400" class="edit_desc" ref="edit_desc"></textarea>
+            <textarea 
+                @blur="closeDescEditing()" 
+                maxlength="400" 
+                class="edit_desc" 
+                ref="edit_desc"
+            />
         </div>
 
         <div style="flex-grow: 1;">
@@ -43,22 +54,27 @@
         </div>
         <!--Placeholder-->
 
-        <main v-if="userObject.username === this.$store.getters.username">
+        <div v-if="userObject.username === this.$store.getters.username">
             <div class="input_container">
                 <!--
-            <div class="input_section">
-                <p class="input_label">Name</p>
-                <input ref="username_field" class="info_input" placeholder="" :value="$store.getters.username" />
-            </div>
-            -->
+                <div class="input_section">
+                    <p class="input_label">Name</p>
+                    <input ref="username_field" class="info_input" placeholder="" :value="$store.getters.username" />
+                </div>
+                -->
                 <div class="input_section">
                     <p class="input_label">Email</p>
-                    <input ref="email_field" class="info_input" placeholder :value="userObject.email" @blur="editEmail()" />
+                    <input 
+                        ref="email_field" 
+                        class="info_input" 
+                        placeholder="Email..." 
+                        @input="editEmail()" 
+                    />
                 </div>
             </div>
             <button v-if="editsMade" @click="saveDetails()" class="save_button">Save</button>
             <div v-else style="height: 80px;" />
-        </main>
+        </div>
     </div>
 </template>
 
@@ -81,6 +97,9 @@ export default {
     },
     mounted() {
         this.isExternal = (this.userObject.username || "") != this.$store.getters.username;
+
+        // populate the email field (dont use the :value binding!)
+        this.$refs.email_field.value = this.userObject.email;
     },
     components: {
         ProfilePicture,
@@ -101,6 +120,7 @@ export default {
     methods: {
         editDesc() {
             this.$refs.edit_desc.style.display = "flex";
+            this.$refs.edit_desc.value = this.$refs.static_desc.innerText;
             this.$refs.edit_desc.focus();
             this.isEditingDesc = true;
 
@@ -111,6 +131,7 @@ export default {
         editEmail() {
             if (this.$refs.email_field.value != this.userObject.email) {
                 this.editsMade = true;
+                this.editedEmail = true;
             }
         },
         closeDescEditing() {
@@ -122,6 +143,7 @@ export default {
 
             if (this.userObject.desc != textArea.value) {
                 this.editsMade = true;
+                this.editedDesc = true;
                 this.$refs.static_desc.innerText = textArea.value; // set the static value to whatever changes were made
             }
         },
@@ -180,7 +202,9 @@ export default {
 
             if (fields.length > 0) {
                 GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
-                    console.log("Details Successfully Changed" + res);
+                    if (res.data.updateUserDetails.message === "Successfully updated user details") {
+                        this.editsMade = false;
+                    }
                 });
             }
         },
