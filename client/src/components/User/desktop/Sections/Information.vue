@@ -198,8 +198,7 @@ export default {
                         newValue: this.userObject.desc,
                     });
                 }
-            }
-
+            }            
             if (fields.length > 0) {
                 GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
                     if (res.data.updateUserDetails.message === "Successfully updated user details") {
