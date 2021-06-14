@@ -63,7 +63,9 @@
         </router-link>
 
         <button @click="makeNewPost()" class="new_button">
-            <p>New</p>
+            <div style="display: flex; height: 25px;">
+                <p class="new_button_label">New</p>
+            </div>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon icon-tabler icon-tabler-plus"
@@ -204,14 +206,14 @@ export default {
     background-color: var(--secondary-color);
 }
 
-.new_button:hover > p {
+.new_button:hover p {
     font-weight: bold;
 }
 .new_button:hover > svg {
     stroke-width: 2px;
 }
 
-.new_button > p {
+.new_button_label {
     display: flex;
     flex-direction: column;
     justify-content: center;

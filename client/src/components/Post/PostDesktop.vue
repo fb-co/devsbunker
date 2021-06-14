@@ -2,6 +2,7 @@
     <div>
         <div class="main_container" v-if="projectData">
             <LeftContent class="left_content" />
+            <div class="left_content_placeholder" />
             <div class="center_content">
                 <div class="tags_container">
                     <CreateTag v-for="tag in projectData.tags" :key="tag" :label="tag" tagType="lang" />
@@ -30,6 +31,7 @@
             </div>
             <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->
             <RightContent class="right_content" :notifications="notifications" />
+            <div class="right_content_placeholder" />
         </div>
     </div>
 </template>
@@ -106,6 +108,7 @@ export default {
 
 <style scoped>
 .main_container {
+    position: relative;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -125,11 +128,25 @@ export default {
     margin-top: 42px;
 }
 .left_content {
+    position: fixed;
     width: 20%;
     min-width: 150px;
     max-width: 250px;
 }
 .right_content {
+    position: fixed;
+    right: 0px;
+    min-width: 150px;
+    max-width: 250px;
+    width: 20%;
+}
+
+.left_content_placeholder {
+    width: 20%;
+    min-width: 150px;
+    max-width: 250px;
+}
+.right_content_placeholder {
     min-width: 150px;
     max-width: 250px;
     width: 20%;
