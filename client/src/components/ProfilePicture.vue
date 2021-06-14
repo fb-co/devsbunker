@@ -136,38 +136,17 @@ export default {
             this.$refs.main_image.style.filter = "brightness(100%)";
         },
         fetchImageLink() {
-            const link = this.$store.getters.getPfpLink(this.username);
-
-            // if pfp link is in cache, use it
-            if (link) {
-                if (link === "profile_pic_placeholder.png") {
-                    this.default_image = true;
-                    this.image_link = link;
-                } else {
-                    this.default_image = false;
-                    this.image_link = link;
-                } 
-            } else {
-                let shouldFetch = false;
-
-                if (this.username == this.$store.getters.username) {
-                    const storedLink = this.$store.getters.profile_pic || localStorage.getItem("profile_pic_link");
-
-                    if (storedLink) {
-                        this.image_link = storedLink;
-
-                        // default pic could be stored in localstorage
-                        if (storedLink === "profile_pic_placeholder.png") {
-                            this.default_image = true;
-                        }
+            if (this.username != this.$store.getters.username) {
+                const link = this.$store.getters.getPfpLink(this.username);
+                
+                if (link) {
+                    if (link === "profile_pic_placeholder.png") {
+                        this.default_image = true;
                     } else {
-                        shouldFetch = true;
-                    }
+                        this.default_image = false;
+                    }   
+                    this.image_link = link;
                 } else {
-                    shouldFetch = true;
-                }
-
-                if (shouldFetch) {
                     GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
                         if (obj.data.user.profile_pic) {
                             if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
@@ -178,6 +157,34 @@ export default {
                                 this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
                             }
                             this.$store.commit('cachePfpLink', { username: this.username, link: this.image_link });
+                        } else {
+                            console.log("err");
+                        }
+                    });
+                }
+            } else {
+                const link = this.$store.getters.profile_pic;
+
+                if (link) {
+                    if (link == "profile_pic_placeholder.png") {
+                        this.default_image = true;
+                    } else {
+                        this.default_image = false;
+                    }
+                    this.image_link = link;
+                } else {
+                    // This is a fallback in case for some random reason the pfp wasent placed in the store (if everything goes right, it should never reach this point)
+                    GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
+                        if (obj.data.user.profile_pic) {
+                            if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
+                                this.default_image = true;
+                                this.image_link = obj.data.user.profile_pic;
+                            } else {
+                                this.default_image = false;
+                                this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
+                            }
+                            localStorage.setItem("profile_pic_link", this.image_link);
+                            this.$store.dispatch("check_and_cache_pfp"); // cache what is in the localstorage
                         } else {
                             console.log("err");
                         }

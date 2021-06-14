@@ -41,7 +41,6 @@ export default {
 
         // fetches any data that should be readily available on page load
         await this.$store.dispatch("fetchPageLoadData");
-        localStorage.setItem("profile_pic_link", this.$store.getters.profile_pic);
 
         this.isFetching = false;
     },
