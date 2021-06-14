@@ -358,7 +358,6 @@ export default {
                             }
                         } else {
                             if (payload.field == "email") {
-                                console.log(/\S+@\S+\.\S+/.test(payload.newValue));
                                 if (!/\S+@\S+\.\S+/.test(payload.newValue)) throw new Error("Invalid email");
                             }
 
