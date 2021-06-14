@@ -42,4 +42,4 @@
 
 -   [ ] Remove all follow buttons for yourself since they don't work it can be confusing
 
--   [ ] Post view should have static left and right content (maybe)
+-   [x] Post view should have static left and right content (maybe)
