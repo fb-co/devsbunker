@@ -119,6 +119,11 @@ export default {
             }
             */
             if (this.$refs.email_field.value != this.userObject.email) {
+                if (!/\S+@\S+\.\S+/.test(this.$refs.email_field.value)) {
+                    alert("Please enter a valid email");
+                    return;
+                }
+
                 fields.push({
                     field: "email",
                     newValue: this.$refs.email_field.value,
@@ -127,7 +132,10 @@ export default {
 
             if (fields.length > 0) {
                 GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
-                    console.log("Details Successfully Changed" + res);
+                    console.log(res);
+                    if (res.errors) {
+                        alert(res.errors[0].message);
+                    }
                 });
             }
         },

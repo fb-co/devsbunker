@@ -333,49 +333,48 @@ export default {
 
             const nonMod = ["_id", "id", "tokenVersion", "tag", "createdAt", "updatedAt", "__v", "v"];
 
-            try {
-                // loop through all the fields that need to be changed
-                for (const payload of args.fields) {
-                    // checking if the received payload actually exists in the user object (maybe someone miss spells a field)
-                    if (user[payload.field]) {
-                        if (nonMod.includes(payload.field)) {
-                            throw new Error(`Cannot update field: ${payload.field}`);
-                        } else {
-                            if (payload.field == "password") {
-                                if (payload.newValue && payload.newValue.toString().trim() !== "" && payload.newValue.length > 8) {
-                                    // bcrypt generates a random salt at every bcrypt.hash so first we compare the passwords with the right function and then we hash the new one
-                                    // really important the order of the function arguments here
-                                    if (await bcrypt.compare(payload.newValue, user[payload.field]))
-                                        throw new Error("Password can't be the same as the previous one.");
-                                    const newHashedPass = await bcrypt.hash(payload.newValue, 10);
+            // loop through all the fields that need to be changed
+            for (const payload of args.fields) {
+                // checking if the received payload actually exists in the user object (maybe someone miss spells a field)
+                if (user[payload.field]) {
+                    if (nonMod.includes(payload.field)) {
+                        throw new Error(`Cannot update field: ${payload.field}`);
+                    } else {
+                        if (payload.field == "password") {
+                            if (payload.newValue && payload.newValue.toString().trim() !== "" && payload.newValue.length > 8) {
+                                // bcrypt generates a random salt at every bcrypt.hash so first we compare the passwords with the right function and then we hash the new one
+                                // really important the order of the function arguments here
+                                if (await bcrypt.compare(payload.newValue, user[payload.field]))
+                                    throw new Error("Password can't be the same as the previous one.");
+                                const newHashedPass = await bcrypt.hash(payload.newValue, 10);
 
-                                    editedData.push({
-                                        field: payload.field,
-                                        newValue: "The password was successfully changed.",
-                                    }); // the only case that we dont want to return the mutated data is for the password
-                                    user[payload.field] = newHashedPass;
-                                } else {
-                                    throw new Error(
-                                        `Cannot update field: ${payload.field}, please enter a valid password with no spaces and > than 8 characters.`
-                                    );
-                                }
-                            } else {
                                 editedData.push({
                                     field: payload.field,
-                                    newValue: payload.newValue,
-                                });
-                                user[payload.field] = payload.newValue;
+                                    newValue: "The password was successfully changed.",
+                                }); // the only case that we dont want to return the mutated data is for the password
+                                user[payload.field] = newHashedPass;
+                            } else {
+                                throw new Error(`Cannot update field: ${payload.field}, please enter a valid password with no spaces and > than 8 characters.`);
                             }
-                        }
-                    } else {
-                        throw new Error(`Field ${payload.field}: does not exist`);
-                    }
-                }
+                        } else {
+                            if (payload.field == "email") {
+                                console.log(/\S+@\S+\.\S+/.test(payload.newValue));
+                                if (!/\S+@\S+\.\S+/.test(payload.newValue)) throw new Error("Invalid email");
+                            }
 
-                await user.save();
-            } catch (err) {
-                return { changedData: null, message: err.message };
+                            editedData.push({
+                                field: payload.field,
+                                newValue: payload.newValue,
+                            });
+                            user[payload.field] = payload.newValue;
+                        }
+                    }
+                } else {
+                    throw new Error(`Field ${payload.field}: does not exist`);
+                }
             }
+
+            await user.save();
 
             return {
                 changedData: editedData,
