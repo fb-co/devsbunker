@@ -150,7 +150,7 @@
 </template>
 
 <script>
-import PostSearch from "@/components/PostSearch.vue";
+import PostSearch from "@/components/SearchLogic/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 //import MobileProjectCard from "@/components/ProjectCard/MobileProjectCard.vue";
 //import DesktopProjectCard from "@/components/ProjectCard/DesktopProjectCard.vue";

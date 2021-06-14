@@ -16,22 +16,22 @@
 </template>
 
 <script>
-import UserSearch from "@/components/UserSearch.vue";
+import UserSearch from "@/components/SearchLogic/UserSearch.vue";
 import UserCard from "@/components/UserCard.vue";
 
 export default {
     data() {
         return {
             searchResults: [],
-            showSearchResults: false
-        }
+            showSearchResults: false,
+        };
     },
     components: {
         UserSearch,
-        UserCard
+        UserCard,
     },
     props: {
-        rootComponent: Object
+        rootComponent: Object,
     },
     methods: {
         updateSearchComponent(documents, closeResults) {
@@ -60,8 +60,8 @@ export default {
             }
         },
         */
-    }
-}
+    },
+};
 </script>
 
 <style scoped>
