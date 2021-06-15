@@ -24,7 +24,7 @@
                     >Success</span
                 >
                 <br />
-                {{ message }}
+                {{ msg }}
             </p>
         </div>
     </div>
@@ -60,7 +60,7 @@ export default {
     },
 
     props: {
-        message: String,
+        msg: String,
         duration: {
             type: Number,
             default: 3000

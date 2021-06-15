@@ -31,36 +31,38 @@
                 placeholder="Description..." 
             />
             <div class="other_cont_container">
-                <div class="other_cont_item">
+                <div class="other_cont_item" :class="{ invalid: invalidEmail }">
                     <p class="bold other_item_label">Email</p>
                     <input 
                         class="cont_field" 
                         ref="edit_email" 
-                        :value="userObject.email"
+                        :value="emailInInput"
                         placeholder="Email..." 
                     />
                 </div>
             </div>
             <button @click="saveFields()" class="save_button">Save</button>
         </div>
+        <ErrorPopup msg="One or more invalid fields" :showOnCreation="false" ref="error_popup" />
+        <SuccessPopup msg="Successfully changed fields" ref="success_popup" />
     </div>
 </template>
 
 <script>
-import GraphQLService from "@/services/graphql.service";
 import ProfilePicture from "@/components/ProfilePicture.vue";
+import GeneralProfile from "@/mixins/general_profile.js";
 
 export default {
     data() {
         return {
-            userObject: this.userData,
             isExternal: false,
-            editing: false,
+            emailInInput: this.userObject.email
         };
     },
     props: {
-        userData: Object,
+        userObject: Object,
     },
+    mixins: [GeneralProfile],
     mounted() {
         this.isExternal = (this.userObject.username || "") != this.$store.getters.username;
     },
@@ -72,58 +74,6 @@ export default {
         
     },
     */
-    methods: {
-        editFields() {
-            this.editing = true;
-        },
-        cancelFieldsEdit() {
-            this.editing = false;
-        },
-        saveFields() {
-            const newDesc = this.$refs.edit_desc.value;
-            const newEmail = this.$refs.edit_email.value;
-            let fields = [];
-
-            if (newDesc != this.userObject.desc) {
-                fields.push({
-                    field: "desc",
-                    newValue: newDesc
-                });
-            }
-            if (newEmail != this.userObject.email) {
-                fields.push({
-                    field: "email",
-                    newValue: newEmail
-                });
-            }
-
-            if (fields.length > 0) {
-                GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
-                    if (!res.errors) {
-                        const data = res.data.updateUserDetails.changedData;
-                        
-                        // hot reload the new data
-                        for (let i = 0; i < data.length; i++) {
-                            if (data[i].field === "email") {
-                                this.userObject.email = data[i].newValue;
-                            } else if (data[i].field === "desc") {
-                                this.userObject.desc = data[i].newValue;
-                            }
-                        }
-
-                        // add success feedback here
-
-                        this.cancelFieldsEdit();
-                    } else {
-                        // todo: make better invalid field or error handling
-                        console.log(res);
-                    }
-                });
-            } else {
-                this.cancelFieldsEdit();
-            }
-        }
-    },
 };
 </script>
 
@@ -197,6 +147,14 @@ export default {
     margin-bottom: 10px;
     color: var(--main-font-color);
     font-size: 18px
+}
+
+
+.invalid p {
+    color: var(--error-red);
+}
+.invalid input {
+    border-bottom: 2px solid var(--error-red);
 }
 
 

@@ -4,8 +4,8 @@
             <div class="row1_placeholder">
                 <div class="row1">
                     <div class="profile_pic_container row_item">
-                        <!--<img :src="require('@/assets/profile_pictures/' + this.userObject.profile_pic)" alt="profile_pic" class="profile-pic" >-->
-                        <ProfilePicture v-if="userObject" :username="this.$store.getters.username" wrapperSize="15vh" class="profile_pic" />
+                        <!--<img :src="require('@/assets/profile_pictures/' + this.rootUserObject.profile_pic)" alt="profile_pic" class="profile-pic" >-->
+                        <ProfilePicture v-if="rootUserObject" :username="this.$store.getters.username" wrapperSize="15vh" class="profile_pic" />
 
                         <!-- not all users will have the verified tag, this is temp -->
                         <p class="username">
@@ -22,13 +22,13 @@
                             <div class="follow_cont">
                                 <p class="follow_label">Followers</p>
                                 <p id="follower_amt">
-                                    {{ userObject.followers.length }}
+                                    {{ rootUserObject.followers.length }}
                                 </p>
                             </div>
                             <div class="follow_cont">
                                 <p class="follow_label">Following</p>
                                 <p id="following_amt">
-                                    {{ userObject.following.length }}
+                                    {{ rootUserObject.following.length }}
                                 </p>
                             </div>
                         </div>
@@ -246,7 +246,7 @@
                 </div>
             </div>
             <div class="content_box">
-                <router-view :key="$route.path" :userData="userObject" />
+                <router-view :key="$route.path" :userObject="rootUserObject" />
                 <!-- This renders the sub-routes component -->
             </div>
         </div>
@@ -280,7 +280,7 @@ export default {
     data() {
         return {
             active: "projects",
-            userObject: this.mainUserObject,
+            rootUserObject: this.mainUserObject,
             accountDeleted: false,
         };
     },

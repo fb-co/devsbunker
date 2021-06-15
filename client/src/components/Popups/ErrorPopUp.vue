@@ -64,17 +64,21 @@ export default {
 
             // pause animation after first iteration
             setTimeout(() => {
-                this.$refs.error_popup_container.style.animationPlayState = 'paused';
+                if (this.display) { // in case its forcefully closed
+                    this.$refs.error_popup_container.style.animationPlayState = 'paused';
+                }
             }, 300);
 
             setTimeout(() => {
-                this.$refs.error_popup_container.style.animationPlayState = 'running';
-                this.$refs.error_popup_container.style.right="-400px";
+                if (this.display) { // in case its forcefully closed
+                    this.$refs.error_popup_container.style.animationPlayState = 'running';
+                    this.$refs.error_popup_container.style.right="-400px";
 
-                // hide popup after 2nd iteration
-                setTimeout(() => {
-                    this.display = false;
-                }, 300);
+                    // hide popup after 2nd iteration
+                    setTimeout(() => {
+                        this.display = false;
+                    }, 300);
+                }
             }, this.duration);
         }
     }

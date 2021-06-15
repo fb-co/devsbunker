@@ -276,7 +276,8 @@ export default {
         width: 100%;
         display: flex;
         flex-direction: column;
-        background-color: var(--main-color);
+        background-color: var(--burger-menu-bg);
+        color: var(--main-color);
         bottom: 0px;
         right: 50%;
         transform: translateX(50%);
@@ -295,7 +296,7 @@ export default {
         width: 100%;
         padding-top: 13px;
         padding-bottom: 13px;
-        color: var(--main-font-color);
+        color: var(--main-color);
     }
     .more_options_mobile p:hover {
         color: var(--soft-text);
