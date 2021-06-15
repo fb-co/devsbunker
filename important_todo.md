@@ -14,7 +14,7 @@
 
     -   [ ] tried to use SuccessPopUp after logout in navbar but it wasnt working, I don't want to use a stoopid alert
 
--   [ ] Prepare foreign profile page for deployment
+-   [x] Prepare foreign profile page for deployment
 
     -   [x] IMPORTANT: if you navigate to something like /revenue or /saved (not present on the left side), the component still gets rendered
 
@@ -24,7 +24,7 @@
 
     -   [x] Spruce up the styling or functionality since it seems a little "empty"
     
-    -   [ ] Add cancel button to field edits (mobile and desktop)
+    -   [x] Add cancel button to field edits (mobile and desktop)
 
 -   [x] Highlight search phrases on post searches
 
