@@ -41,7 +41,10 @@
                     />
                 </div>
             </div>
-            <button @click="saveFields()" class="save_button">Save</button>
+            <div class="field_edit_buttons_container">
+                <button @click="cancelFields()" class="cancel_button">Cancel</button>
+                <button @click="saveFields()" class="save_button">Save</button>
+            </div>
         </div>
         <ErrorPopup msg="One or more invalid fields" :showOnCreation="false" ref="error_popup" />
         <SuccessPopup msg="Successfully changed fields" ref="success_popup" />
@@ -157,6 +160,10 @@ export default {
     border-bottom: 2px solid var(--error-red);
 }
 
+.field_edit_buttons_container button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
 
 .save_button {
     background-color: var(--main-accent);
@@ -173,5 +180,22 @@ export default {
 }
 .save_button:hover {
     box-shadow: 0px 4px 20px var(--main-accent);
+}
+
+.cancel_button {
+    background-color: var(--error-red);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 125px;
+    height: 40px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0px auto 40px auto;
+    cursor: pointer;
+}
+.cancel_button:hover {
+    box-shadow: 0px 4px 20px var(--error-red);
 }
 </style>

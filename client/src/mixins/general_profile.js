@@ -32,6 +32,11 @@ const GeneralProfile = {
         cancelFieldsEdit() {
             this.editing = false;
         },
+        cancelFields() {
+            this.emailInInput = this.userObject.email;
+            this.invalidEmail = false;
+            this.cancelFieldsEdit();
+        },
         saveFields() {
             const newDesc = this.$refs.edit_desc.value;
             const newEmail = this.$refs.edit_email.value;
