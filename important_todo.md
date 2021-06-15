@@ -22,13 +22,22 @@
 
     -   [x] Get rid of email option for foreign user
 
-    -   [ ] Spruce up the styling or functionality since it seems a little "empty"
+    -   [x] Spruce up the styling or functionality since it seems a little "empty"
+    
+    -   [ ] Add cancel button to field edits (mobile and desktop)
 
 -   [x] Highlight search phrases on post searches
 
 -   [ ] @focus and @blur does not work on iphone making a lot of the dropdowns and focus based menues not work
 
 -   [x] GraphQLService line that reads "TODO: WE SHOULD NOT DO THIS HERE!!!!" (don't know what it is so ill leave this for you)
+
+-   [ ] Improve success and error popups
+
+    - [ ] Layering is bad on mobile as it falls under the bottom navbar
+    - [ ] Both show up in front of the burger menu
+
+-   [ ] Components which contain calc(100vh - var(--header-height)) need to account for the bottom navbar in mobile views or else two scrollbars show up
 
 ## Low Priority
 
