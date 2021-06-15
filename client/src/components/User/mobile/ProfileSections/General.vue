@@ -1,15 +1,14 @@
 <template>
-    <div class="general_container" v-if="userObject">
-        <p class="label">General</p>
-
+    <div class="general_container">
         <ProfilePicture
             v-if="userObject"
             :username="userObject.username"
             :darkenOnHover="true"
             :forUpload="userObject.username === this.$store.getters.username"
-            wrapperSize="300px"
+            wrapperSize="200px"
             class="profile_pic"
         />
+
         <div class="fancy_line" />
         <div v-if="!editing">
             <p ref="static_description" class="desc_not_editing">{{ userObject.desc }}</p>
@@ -47,31 +46,24 @@
 </template>
 
 <script>
-import GraphQLService from "@/services/graphql.service";
 import ProfilePicture from "@/components/ProfilePicture.vue";
+import GraphQLService from "@/services/graphql.service";
 
 export default {
     data() {
         return {
-            userObject: this.userData,
-            isExternal: false,
-            editing: false,
-        };
+            editing: false
+        }
     },
-    props: {
-        userData: Object,
-    },
-    mounted() {
-        this.isExternal = (this.userObject.username || "") != this.$store.getters.username;
+    created() {
+        console.log(this.userObject);
     },
     components: {
-        ProfilePicture,
+        ProfilePicture
     },
-    /*
-    beforeRouteLeave(to, from, next) {
-        
+    props: {
+        userObject: Object
     },
-    */
     methods: {
         editFields() {
             this.editing = true;
@@ -124,31 +116,10 @@ export default {
             }
         }
     },
-};
+}
 </script>
 
 <style scoped>
-.general_container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    overflow: auto;
-}
-.label {
-    font-size: 25px;
-    font-weight: bold;
-    margin: 20px auto 20px auto;
-}
-.profile_pic_container {
-    position: relative;
-}
-.profile_pic {
-    cursor: pointer;
-    margin: 35px auto 10px auto;
-}
-
 .fancy_line {
     width: 15%;
     height: 2.5px;
@@ -158,16 +129,16 @@ export default {
 }
 .desc_not_editing {
     width: 50%;
-    min-width: 400px;
-    max-width: 700px;
+    min-width: 300px;
+    max-width: 350px;
     margin: 30px auto 0px auto;
     text-align: justify;
     color: var(--soft-text);
 }
 .desc_editing {
     width: 50%;
-    min-width: 400px;
-    max-width: 700px;
+    min-width: 300px;
+    max-width: 350px;
     height: 125px;
     max-height: 200px;
     min-height: 75px;
@@ -186,8 +157,8 @@ export default {
     flex-direction: row;
     justify-content: left;
     width: 50%;
-    min-width: 400px;
-    max-width: 700px;
+    min-width: 300px;
+    max-width: 350px;
     margin: 50px auto 70px auto;
 }
 .other_cont_item {

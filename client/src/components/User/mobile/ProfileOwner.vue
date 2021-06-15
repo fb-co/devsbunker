@@ -78,11 +78,15 @@
             <div class="personal_btn" :class="{ active_section: activeSection=='projects' ? true : false }">
                 <p class="personal_btn_link" @click="navigateTo('projects')">Projects</p>
             </div>
+            <div class="personal_btn" :class="{ active_section: activeSection=='general' ? true : false }">
+                <p class="personal_btn_link" @click="navigateTo('general')">General</p>
+            </div>
         </div>
 
         <div class="dynamic_feed">
             <ProjectSection v-if="activeSection === 'projects'" />
             <SavedProjects v-if="activeSection === 'saved'" />
+            <General v-if="activeSection === 'general'" :userObject="mainUserObject" />
         </div>
     </div>
 </template>
@@ -248,16 +252,19 @@ export default {
 .personal_btn_container div:first-child {
     border-bottom-left-radius: 20px;
     border-top-left-radius: 20px;
+    border-left: 1px solid var(--main-accent);
 }
 .personal_btn_container div:last-child {
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
+    border-right: 1px solid var(--main-accent);
 }
 .personal_btn {
     height: 100%;
     width: 50%;
     cursor: pointer;
-    border: 1px solid var(--main-accent);
+    border-top: 1px solid var(--main-accent);
+    border-bottom: 1px solid var(--main-accent);
 }
 .personal_btn:hover > p {
     color: var(--main-accent);
