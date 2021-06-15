@@ -108,8 +108,8 @@
                     </div>
                     <div v-else class="desktop_post_feed">
                         <!-- <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" /> -->
-                        <!-- <LargeDesktopProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" /> -->
-                        <DetailedDesktopProjCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
+                        <LargeDesktopProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
+                        <!-- <DetailedDesktopProjCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" /> -->
                     </div>
                     <p v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
                 </div>
@@ -156,7 +156,7 @@ import Dropdown from "@/components/global/Dropdown.vue";
 //import DesktopProjectCard from "@/components/ProjectCard/DesktopProjectCard.vue";
 import LargeDesktopProjectCard from "@/components/ProjectCard/LargeDesktopProjectCard.vue";
 import LargeMobileProjectCard from "@/components/ProjectCard/LargeMobileProjectCard.vue";
-import DetailedDesktopProjCard from "@/components/ProjectCard/DetailedDesktopProjCard.vue";
+//import DetailedDesktopProjCard from "@/components/ProjectCard/DetailedDesktopProjCard.vue";
 
 export default {
     data() {
@@ -186,7 +186,7 @@ export default {
         //DesktopProjectCard,
         LargeDesktopProjectCard,
         LargeMobileProjectCard,
-        DetailedDesktopProjCard,
+        //DetailedDesktopProjCard,
     },
     methods: {
         loadNew() {
