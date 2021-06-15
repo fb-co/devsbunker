@@ -5,7 +5,7 @@
                 <div class="row1">
                     <div class="profile_pic_container row_item">
                         <!--<img :src="require('@/assets/profile_pictures/' + this.userObject.profile_pic)" alt="profile_pic" class="profile-pic" >-->
-                        <ProfilePicture v-if="userObject" :username="this.$store.getters.username" wrapperSize="150px" class="profile_pic" />
+                        <ProfilePicture v-if="userObject" :username="this.$store.getters.username" wrapperSize="15vh" class="profile_pic" />
 
                         <!-- not all users will have the verified tag, this is temp -->
                         <p class="username">
@@ -367,55 +367,51 @@ export default {
 .main_container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    width: 90%;
-    height: auto;
     margin: 0 auto;
-    padding-top: 50px;
-    padding-bottom: 25px;
-    min-width: 900px;
-    max-height: calc(100vh - var(--header-height));
+    width: 90%;
+    max-width: 1300px;
+    height: calc(100vh - var(--header-height));
+    padding-top: 2vh;
+    padding-bottom: 0.5vh;
 }
 .content_box {
     border-radius: 5px;
-    flex-grow: 1;
-    background-color: var(--main-color);
-    margin: 0px 15px 0px 15px;
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+    width: 75%;
     max-width: 1000px;
-    max-height: 80vh;
-    min-height: 80vh;
-    overflow: auto;
+    height: 83vh;
+    margin: 0 auto;
+    background-color: var(--main-color);
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
 }
 .row1_placeholder {
     position: relative;
+    margin: 0 auto;
     min-width: 300px;
     max-width: 300px;
+    height: 83vh;
 }
 .row1 {
     position: fixed;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     min-width: 300px;
     max-width: 300px;
-    overflow: auto;
-    max-height: 80vh;
+    height: 83vh;
+    padding: 3px 10px 3px 10px;
+    overflow-y: auto;
 }
 .row_item {
     background-color: var(--general-card);
     width: 100%;
     border-radius: 5px;
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
-}
-.row_item:first-child {
-    margin-bottom: 15px;
-}
-.row_item:last-child {
-    margin-top: 15px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 }
 .main_links_container {
     padding-top: 15px;
     padding-bottom: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .other_links_container {
     padding-top: 15px;
@@ -433,6 +429,8 @@ export default {
     padding-left: 10px;
     border-left: 3px solid transparent;
     cursor: pointer;
+    height: 5vh;
+    min-height: 35px;
 }
 .link_item a,
 .link_item p {
@@ -473,6 +471,8 @@ export default {
     padding: 10px 0px 10px 10px;
     border-left: 3px solid transparent;
     cursor: pointer;
+    height: 5vh;
+    min-height: 35px;
 }
 
 .special_link_item:hover {

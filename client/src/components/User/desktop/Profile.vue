@@ -133,14 +133,28 @@ export default {
 .main_container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    width: 90%;
-    height: auto;
     margin: 0 auto;
-    padding-top: 50px;
-    padding-bottom: 25px;
-    min-width: 900px;
-    max-height: calc(100vh - var(--header-height));
+    width: 90%;
+    max-width: 1300px;
+    height: calc(100vh - var(--header-height));
+    padding-top: 2vh;
+    padding-bottom: 0.5vh;
+}
+.content_box {
+    border-radius: 5px;
+    width: 75%;
+    max-width: 1000px;
+    height: 83vh;
+    margin: 0 auto;
+    background-color: var(--main-color);
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+}
+.row1_placeholder {
+    position: relative;
+    margin: 0 auto;
+    min-width: 300px;
+    max-width: 300px;
+    height: 83vh;
 }
 .row1 {
     position: fixed;
@@ -148,30 +162,15 @@ export default {
     flex-direction: column;
     min-width: 300px;
     max-width: 300px;
-    overflow: auto;
-    max-height: 80vh;
-}
-.row1_placeholder {
-    position: relative;
-    min-width: 300px;
-    max-width: 300px;
-}
-.content_box {
-    border-radius: 5px;
-    flex-grow: 1;
-    background-color: var(--main-color);
-    margin: 0px 15px 0px 15px;
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
-    max-width: 1000px;
-    max-height: 80vh;
-    min-height: 80vh;
-    overflow: auto;
+    height: 83vh;
+    padding: 3px 10px 3px 10px;
+    overflow-y: auto;
 }
 .row_item {
     background-color: var(--general-card);
     width: 100%;
     border-radius: 5px;
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 }
 .row_item:first-child {
     margin-bottom: 15px;
@@ -215,6 +214,8 @@ export default {
     width: 100%;
     padding-left: 10px;
     border-left: 3px solid transparent;
+    height: 5vh;
+    min-height: 35px;
 }
 .link_item a {
     display: inline-block;
