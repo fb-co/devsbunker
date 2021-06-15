@@ -135,6 +135,9 @@ body {
 .placeholder {
     flex-grow: 1;
 }
+.bold {
+    font-weight: bold;
+}
 .line {
     background-image: linear-gradient(to right, var(--secondary-color) 0%, var(--soft-text) 40%, var(--soft-text) 60%, var(--secondary-color) 100%);
     width: 90%;

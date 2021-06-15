@@ -10,12 +10,44 @@
             wrapperSize="300px"
             class="profile_pic"
         />
-        <!--<textarea @blur="closeDescEditing()" maxlength="400" class="edit_desc" ref="edit_desc" />-->
+        <div class="fancy_line" />
+        <div v-if="!editing">
+            <p ref="static_description" class="desc_not_editing">{{ userObject.desc }}</p>
+
+            <div class="other_cont_container">
+                <div class="other_cont_item">
+                    <p class="bold other_item_label">Email</p>
+                    <p>{{ userObject.email }}</p>
+                </div>
+            </div>
+            <button @click="editFields()" class="save_button">Edit</button>
+        </div>
+        <div v-else>
+            <textarea 
+                maxlength="400" 
+                class="desc_editing" 
+                ref="edit_desc" 
+                :value="userObject.desc"
+                placeholder="Description..." 
+            />
+            <div class="other_cont_container">
+                <div class="other_cont_item">
+                    <p class="bold other_item_label">Email</p>
+                    <input 
+                        class="cont_field" 
+                        ref="edit_email" 
+                        :value="userObject.email"
+                        placeholder="Email..." 
+                    />
+                </div>
+            </div>
+            <button @click="saveFields()" class="save_button">Save</button>
+        </div>
     </div>
 </template>
 
 <script>
-//import GraphQLService from "@/services/graphql.service";
+import GraphQLService from "@/services/graphql.service";
 import ProfilePicture from "@/components/ProfilePicture.vue";
 
 export default {
@@ -23,8 +55,7 @@ export default {
         return {
             userObject: this.userData,
             isExternal: false,
-            isEditingDesc: false,
-            editsMade: false,
+            editing: false,
         };
     },
     props: {
@@ -42,7 +73,54 @@ export default {
     },
     */
     methods: {
-        
+        editFields() {
+            this.editing = true;
+        },
+        cancelFieldsEdit() {
+            this.editing = false;
+        },
+        saveFields() {
+            const newDesc = this.$refs.edit_desc.value;
+            const newEmail = this.$refs.edit_email.value;
+            let fields = [];
+
+            if (newDesc != this.userObject.desc) {
+                fields.push({
+                    field: "desc",
+                    newValue: newDesc
+                });
+            }
+            if (newEmail != this.userObject.email) {
+                fields.push({
+                    field: "email",
+                    newValue: newEmail
+                });
+            }
+
+            if (fields.length > 0) {
+                GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
+                    if (!res.errors) {
+                        const data = res.data.updateUserDetails.changedData;
+                        
+                        // hot reload the new data
+                        for (let i = 0; i < data.length; i++) {
+                            if (data[i].field === "email") {
+                                this.userObject.email = data[i].newValue;
+                            } else if (data[i].field === "desc") {
+                                this.userObject.desc = data[i].newValue;
+                            }
+                        }
+
+                        // add success feedback here
+
+                        this.cancelFieldsEdit();
+                    } else {
+                        // todo: make better invalid field or error handling
+                        console.log(res);
+                    }
+                });
+            }
+        }
     },
 };
 </script>
@@ -53,23 +131,13 @@ export default {
     flex-direction: column;
     width: 100%;
     height: 100%;
+    max-height: 100%;
+    overflow: auto;
 }
 .label {
     font-size: 25px;
     font-weight: bold;
     margin: 20px auto 20px auto;
-}
-.desc_edit_icon {
-    display: none;
-    position: absolute;
-    right: -25px;
-    bottom: -15px;
-}
-.desc_container {
-    position: relative;
-    cursor: text;
-    width: 450px;
-    margin: 40px auto 0px auto;
 }
 .profile_pic_container {
     position: relative;
@@ -78,53 +146,58 @@ export default {
     cursor: pointer;
     margin: 35px auto 10px auto;
 }
-.edit_desc {
-    display: none;
-    resize: none;
-    border: 1px solid var(--soft-text);
-    border-radius: 4px;
-    width: 100%;
-    height: 150px;
+
+.fancy_line {
+    width: 15%;
+    height: 2.5px;
+    margin: 30px auto 0px auto;
+    background-color: var(--main-accent);
+    border-radius: 10px;
+}
+.desc_not_editing {
+    width: 50%;
+    min-width: 400px;
+    max-width: 700px;
+    margin: 30px auto 0px auto;
+    text-align: justify;
+    color: var(--soft-text);
+}
+.desc_editing {
+    width: 50%;
+    min-width: 400px;
+    max-width: 700px;
+    height: 125px;
+    max-height: 200px;
+    min-height: 75px;
+    margin: 30px auto 0px auto;
+    padding: 10px;
+    font-size: 15px;
+    font-family: rubik;
+}
+.cont_field {
     padding: 7px;
     font-size: 15px;
     font-family: rubik;
 }
-.edit_desc:focus {
-    outline: none;
-    border: 2px solid var(--main-accent);
-}
-.desc {
-    height: 100%;
-    display: block;
-    color: var(--soft-text);
-}
-
-.desc_container:hover > .desc_edit_icon {
-    display: inline-block;
-}
-.input_container {
+.other_cont_container {
     display: flex;
     flex-direction: row;
-    margin: 0 auto;
+    justify-content: left;
+    width: 50%;
+    min-width: 400px;
+    max-width: 700px;
+    margin: 50px auto 70px auto;
 }
-.input_section {
-    margin: 40px auto 40px auto;
-}
-.info_input {
-    border: 1px solid var(--soft-text);
-    padding: 5px 5px 5px 10px;
-    border-radius: 3px;
-}
-.info_input:focus {
-    outline: none;
-    border: 1px solid var(--main-accent);
-    box-shadow: 0px 4px 5px var(--main-accent);
-}
-.input_label {
-    font-weight: bold;
+.other_cont_item {
     text-align: left;
-    margin-bottom: 15px;
 }
+.other_item_label {
+    margin-bottom: 10px;
+    color: var(--main-font-color);
+    font-size: 18px
+}
+
+
 .save_button {
     background-color: var(--main-accent);
     border: none;
