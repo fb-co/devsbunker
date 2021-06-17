@@ -81,10 +81,12 @@ db.once("open", () => console.log(`Connected to database [${mongoURI}]`));
 // imports
 import user from "./components/user/user.route.js";
 import upload from "./components/post/post.route.js";
+import oauth from "./components/github/oauth.routes.js";
 
 // route handling
 app.use("/user", user);
 app.use("/upload", upload);
+app.use("/auth/github/", oauth);
 
 /* HANDLING 404 ERRORS */
 app.use((_, res) => {
