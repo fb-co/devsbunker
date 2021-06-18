@@ -1,10 +1,5 @@
 import mongoose from "mongoose";
 
-const requiredString = {
-    type: String,
-    required: true,
-};
-
 const userSchema = new mongoose.Schema(
     {
         username: {
@@ -58,7 +53,9 @@ const userSchema = new mongoose.Schema(
             default: [],
         },
 
-        password: requiredString,
+        password: {
+            type: String,
+        },
 
         tag: {
             type: String,
@@ -75,6 +72,11 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             requred: true,
             default: true,
+        },
+
+        isGitHubUser: {
+            type: Boolean,
+            required: true,
         },
     },
     {

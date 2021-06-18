@@ -279,6 +279,7 @@ export default {
                     username: args.username,
                     email: args.email,
                     password: hashedPass,
+                    isGitHubUser: false,
                 });
 
                 try {
