@@ -53,6 +53,7 @@ export async function authorize({ query: { code } }, res, next) {
                 username: user_json.login,
                 email: user_json.email,
                 profile_pic: user_json.avatar_url,
+                desc: user_json.bio,
                 isGitHubUser: true,
             });
             await user.save();
