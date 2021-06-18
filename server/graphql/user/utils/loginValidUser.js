@@ -4,6 +4,7 @@ import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
 export default async function loginValidUser(user, password, res) {
+    // TODO: checking  if the user is enabled is redundant
     if (user.enabled) {
         const valid = await bcrypt.compare(password, user.password);
         if (valid) {

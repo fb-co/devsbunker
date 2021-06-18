@@ -89,10 +89,14 @@ export default {
             if (args.email) {
                 user = await User.findOne({
                     email: args.email,
+                    isGitHubUser: false,
+                    enabled: true,
                 });
             } else if (args.username) {
                 user = await User.findOne({
                     username: args.username,
+                    isGitHubUser: false,
+                    enabled: true,
                 });
             } else {
                 return {
@@ -577,9 +581,11 @@ export default {
             if (req.user) {
                 const user = await User.findOne({
                     _id: req.user._id,
+                    isGitHubUser: false,
+                    enabled: true,
                 });
 
-                if (!user && !user.enabled) {
+                if (!user) {
                     res.status(422);
                     return {
                         success: false,
