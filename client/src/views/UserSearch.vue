@@ -7,7 +7,7 @@
 
 <script>
 import SharedMethods from "@/utils/shared";
-import UserFeed from "@/components/UserFeed.vue";
+import UserFeed from "@/components/User/UserFeed.vue";
 import UserFeedMixin from "@/mixins/user_feed.mixin.js";
 
 export default {
@@ -18,8 +18,8 @@ export default {
     },
     mixins: [UserFeedMixin],
     components: {
-        UserFeed
-    }
+        UserFeed,
+    },
 };
 </script>
 

@@ -17,7 +17,7 @@
 
 <script>
 import UserSearch from "@/components/SearchLogic/UserSearch.vue";
-import UserCard from "@/components/UserCard.vue";
+import UserCard from "@/components/User/UserCard.vue";
 
 export default {
     data() {
