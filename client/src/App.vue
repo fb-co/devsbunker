@@ -4,6 +4,7 @@
             <Navbar />
             <router-view ref="page_content" />
             <BottomNavBar v-if="$store.getters.mobile" @updateFeed="updateFeed($event)" />
+            <AlertFeed />
         </div>
 
         <Loading v-if="isFetching" />
@@ -14,6 +15,7 @@
 import Loading from "./components/Loading";
 import Navbar from "./components/Navbars/NavBar.vue";
 import BottomNavBar from "./components/Navbars/BottomNavBar.vue";
+import AlertFeed from "./components/Notifications/AlertFeed.vue";
 
 export default {
     data() {
@@ -26,6 +28,7 @@ export default {
         Loading,
         Navbar,
         BottomNavBar,
+        AlertFeed
     },
 
     destroyed() {
@@ -49,6 +52,9 @@ export default {
         updateFeed() {
             this.$refs.page_content.updateFeed(true);
         },
+        test() {
+            console.log("EYYYYY");
+        }
     },
 };
 </script>
