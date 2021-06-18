@@ -25,7 +25,7 @@
                     <Link v-for="(link, index) in projectData.links" :key="index" :link="link" class="desktop_link" />
                 </div>
 
-                <Carousel class="main_carousel" :images="postImages" minWidth="150%" />
+                <Carousel class="main_carousel" :images="postImages" minWidth="100%" />
 
                 <CommentSection @postComment="$parent.postComment" :comments="projectData.comments" />
             </div>

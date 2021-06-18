@@ -155,6 +155,7 @@ export default {
     flex-direction: column;
     margin-bottom: 40px;
     margin-top: 100px;
+    width: 100%;
     min-width: var(--min-width);
 }
 .header_container {
