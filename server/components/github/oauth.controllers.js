@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import User from "../user/user.model.js";
 
 async function getToken(code) {
     const data = {
@@ -20,7 +21,7 @@ async function getToken(code) {
     return token_json.access_token;
 }
 
-export async function authorize({ query: { code } }, res) {
+export async function authorize({ query: { code } }, res, next) {
     const token = await getToken(code);
 
     const user_res = await fetch("https://api.github.com/user", {
@@ -32,5 +33,36 @@ export async function authorize({ query: { code } }, res) {
     });
 
     const user_json = await user_res.json();
-    res.send({ user: user_json });
+
+    if (user_json.message) {
+        res.send({ error: user_json.message, description: "Error while getting GitHub user object" });
+        return;
+    }
+
+    let user = undefined;
+    try {
+        user = await User.findOne({
+            username: user_json.login,
+        });
+
+        if (user) {
+            if (!user.enabled) throw new Error("User is banned");
+            // TODO: reply with our tokens
+        } else {
+            user = new User({
+                username: user_json.login,
+                email: user_json.email,
+                profile_pic: user_json.avatar_url,
+                isGitHubUser: true,
+            });
+            await user.save();
+
+            // TODO: reply with our tokens
+        }
+    } catch (err) {
+        res.send({ error: err });
+        return;
+    }
+
+    res.send(user);
 }
