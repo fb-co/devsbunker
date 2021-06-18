@@ -44,11 +44,12 @@
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import GeneralProfile from "@/mixins/general_profile.js";
 
+// TODO: check why userObject is undefined
 export default {
     data() {
         return {
             isExternal: false,
-            emailInInput: this.userObject.email,
+            emailInInput: this.userObject?.email,
         };
     },
     props: {
@@ -56,14 +57,14 @@ export default {
     },
     mixins: [GeneralProfile],
     mounted() {
-        this.isExternal = (this.userObject.username || "") != this.$store.getters.username;
+        this.isExternal = (this.userObject?.username || "") != this.$store.getters.username;
     },
     components: {
         ProfilePicture,
     },
     /*
     beforeRouteLeave(to, from, next) {
-        
+
     },
     */
 };

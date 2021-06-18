@@ -160,7 +160,12 @@ export default {
                                 this.image_link = obj.data.user.profile_pic;
                             } else {
                                 this.default_image = false;
-                                this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
+
+                                if (/avatars.githubusercontent.com/.test(obj.data.user.profile_pic)) {
+                                    this.image_link = obj.data.user.profile_pic;
+                                } else {
+                                    this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
+                                }
                             }
                             this.$store.commit("cachePfpLink", { username: this.username, link: this.image_link });
                         } else {
