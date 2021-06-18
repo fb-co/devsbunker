@@ -4,24 +4,26 @@
             <ProfilePicture :username="commentData.commenter" :wrapperSize="mobile ? '40px' : '60px'" />
         </div>
         <div class="commentMessage_container">
-            <p :class="{ comment_author: mobile, comment_author_desktop: !mobile }">{{ commentData.commenter }} <span class="timestamp">{{ commentData.timestamp }}</span></p>
+            <p :class="{ comment_author: mobile, comment_author_desktop: !mobile }">
+                {{ commentData.commenter }} <span class="timestamp">{{ commentData.timestamp }}</span>
+            </p>
             <p :class="{ comment_message: mobile, comment_message_desktop: !mobile }">{{ commentData.comment }}</p>
         </div>
     </div>
 </template>
 
 <script>
-import ProfilePicture from "@/components/ProfilePicture.vue";
+import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import CommonUtils from "@/utils/common_utils.js";
 
 export default {
     data() {
         return {
-            mobile: this.$store.getters.mobile
-        }
+            mobile: this.$store.getters.mobile,
+        };
     },
     props: {
-        commentData: Object
+        commentData: Object,
     },
     components: {
         ProfilePicture,
@@ -29,16 +31,16 @@ export default {
     methods: {
         renderUsername(username, max) {
             return CommonUtils.renderUsername(username, max);
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style scoped>
 .comment_container {
     display: flex;
     flex-direction: row;
-    
+
     padding: 15px;
     width: 100%;
 }

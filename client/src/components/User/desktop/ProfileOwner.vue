@@ -271,7 +271,7 @@
 <script>
 import GraphQLService from "@/services/graphql.service";
 
-import ProfilePicture from "@/components/ProfilePicture.vue";
+import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import InputModal from "@/components/global/InputModal.vue";
 import SuccessPopUp from "@/components/Popups/SuccessPopUp.vue";
 import ErrorPopUp from "@/components/Popups/ErrorPopUp.vue";

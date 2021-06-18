@@ -26,7 +26,7 @@
 
         <div v-if="username" class="profile-banner">
             <ProfilePicture :username="username" wrapperSize="75px" class="profile-pic" />
-            <h2 class="username">{{username}}</h2>
+            <h2 class="username">{{ username }}</h2>
         </div>
 
         <div class="settings">
@@ -40,7 +40,7 @@
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import MobileSettingsComponents from "@/components/Settings/mobile/SettingSections/mobile.import.settings";
 import SettingList from "./mobile/SettingList";
-import ProfilePicture from "@/components/ProfilePicture.vue";
+import ProfilePicture from "@/components/User/ProfilePicture.vue";
 
 import UserService from "@/services/user.service";
 
@@ -91,7 +91,7 @@ export default {
     margin: auto;
     margin-top: 20px;
     max-width: 450px;
-    
+
     text-overflow: ellipsis;
 }
 
@@ -99,7 +99,7 @@ export default {
     margin-right: 20px;
 }
 .username {
-    text-align: left; 
+    text-align: left;
     margin-top: 10px;
     font-size: 15px;
     overflow: hidden;

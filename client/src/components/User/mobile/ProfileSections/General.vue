@@ -22,22 +22,11 @@
             <button @click="editFields()" class="save_button">Edit</button>
         </div>
         <div v-else>
-            <textarea 
-                maxlength="400" 
-                class="desc_editing" 
-                ref="edit_desc" 
-                :value="userObject.desc"
-                placeholder="Description..." 
-            />
+            <textarea maxlength="400" class="desc_editing" ref="edit_desc" :value="userObject.desc" placeholder="Description..." />
             <div class="other_cont_container">
                 <div class="other_cont_item" :class="{ invalid: invalidEmail }">
                     <p class="bold other_item_label">Email</p>
-                    <input 
-                        class="cont_field" 
-                        ref="edit_email" 
-                        :value="emailInInput"
-                        placeholder="Email..." 
-                    />
+                    <input class="cont_field" ref="edit_email" :value="emailInInput" placeholder="Email..." />
                 </div>
             </div>
             <div class="field_edit_buttons_container">
@@ -51,23 +40,23 @@
 </template>
 
 <script>
-import ProfilePicture from "@/components/ProfilePicture.vue";
+import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import GeneralProfile from "@/mixins/general_profile.js";
 
 export default {
     data() {
         return {
-            emailInInput: this.userObject.email
-        }
+            emailInInput: this.userObject.email,
+        };
     },
     props: {
-        userObject: Object
+        userObject: Object,
     },
     mixins: [GeneralProfile],
     components: {
-        ProfilePicture
+        ProfilePicture,
     },
-}
+};
 </script>
 
 <style scoped>
@@ -118,7 +107,7 @@ export default {
 .other_item_label {
     margin-bottom: 10px;
     color: var(--main-font-color);
-    font-size: 18px
+    font-size: 18px;
 }
 
 .invalid p {

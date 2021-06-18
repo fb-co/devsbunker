@@ -115,7 +115,7 @@ import GlobalComponents from "@/components/global/GlobalComponents.js";
 // import NavBarSearch from "./NavBarSearch.vue"; might re-add this in the future
 import GraphQLService from "../../services/graphql.service";
 
-import ProfilePicture from "@/components/ProfilePicture.vue";
+import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import NotificationIcon from "@/components/Notifications/NotificationIcon.vue";
 import UnreadNumber from "@/components/Notifications/UnreadNumber.vue";
 

@@ -1,7 +1,13 @@
 <template>
     <!-- This component is for showing profile pcitures to avoid rewriting the query a thousand times -->
     <div class="wrapper" :style="cssProps">
-        <img v-if="image_link && default_image" :src="require('@/assets/profile_pictures/' + image_link)" ref="main_image" alt="profile_pic" class="profile_pic" />
+        <img
+            v-if="image_link && default_image"
+            :src="require('@/assets/profile_pictures/' + image_link)"
+            ref="main_image"
+            alt="profile_pic"
+            class="profile_pic"
+        />
 
         <img v-else-if="image_link && !default_image" :src="image_link" alt="profile_pic" ref="main_image" class="profile_pic" />
 
@@ -34,7 +40,7 @@
 
 <script>
 //'@/assets/profile_pictures/profilePlaceholder.png'
-import GraphQLService from "../services/graphql.service";
+import GraphQLService from "@/services/graphql.service";
 import ImageCropperPopup from "@/components/ImageCropperPopup.vue";
 import Compressor from "compressorjs";
 
@@ -84,10 +90,10 @@ export default {
         },
         yourPfpLink() {
             return this.$store.getters.profile_pic;
-        }
+        },
     },
     watch: {
-        yourPfpLink (newLink) {
+        yourPfpLink(newLink) {
             if (this.username == this.$store.getters.username) {
                 this.image_link = newLink;
 
@@ -98,7 +104,7 @@ export default {
                     this.default_image = false;
                 }
             }
-        }
+        },
     },
     methods: {
         handleFiles(event) {
@@ -138,13 +144,13 @@ export default {
         fetchImageLink() {
             if (this.username != this.$store.getters.username) {
                 const link = this.$store.getters.getPfpLink(this.username);
-                
+
                 if (link) {
                     if (link === "profile_pic_placeholder.png") {
                         this.default_image = true;
                     } else {
                         this.default_image = false;
-                    }   
+                    }
                     this.image_link = link;
                 } else {
                     GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
@@ -156,7 +162,7 @@ export default {
                                 this.default_image = false;
                                 this.image_link = `${process.env.VUE_APP_PROFILE_PICTURES}${obj.data.user.profile_pic}`;
                             }
-                            this.$store.commit('cachePfpLink', { username: this.username, link: this.image_link });
+                            this.$store.commit("cachePfpLink", { username: this.username, link: this.image_link });
                         } else {
                             console.log("err");
                         }

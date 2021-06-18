@@ -47,7 +47,7 @@
 
 <script>
 import DynamicPicture from "@/components/DynamicPicture.vue";
-import ProfilePicture from "@/components/ProfilePicture.vue";
+import ProfilePicture from "@/components/User/ProfilePicture.vue";
 
 export default {
     props: {

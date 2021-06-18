@@ -127,7 +127,7 @@ import LinkItem from "./Link.vue";
 import CarouselMobile from "@/components/Carousel/CarouselMobile.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 import CommentSection from "@/components/Comments/CommentSection.vue";
-import ProfilePicture from "@/components/ProfilePicture.vue";
+import ProfilePicture from "@/components/User/ProfilePicture.vue";
 
 import CommonUtils from "@/utils/common_utils.js";
 

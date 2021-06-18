@@ -72,13 +72,13 @@
         </div>
 
         <div class="personal_btn_container">
-            <div class="personal_btn" :class="{ active_section: activeSection=='saved' ? true : false }">
+            <div class="personal_btn" :class="{ active_section: activeSection == 'saved' ? true : false }">
                 <p class="personal_btn_link" @click="navigateTo('saved')">Saved</p>
             </div>
-            <div class="personal_btn" :class="{ active_section: activeSection=='projects' ? true : false }">
+            <div class="personal_btn" :class="{ active_section: activeSection == 'projects' ? true : false }">
                 <p class="personal_btn_link" @click="navigateTo('projects')">Projects</p>
             </div>
-            <div class="personal_btn" :class="{ active_section: activeSection=='general' ? true : false }">
+            <div class="personal_btn" :class="{ active_section: activeSection == 'general' ? true : false }">
                 <p class="personal_btn_link" @click="navigateTo('general')">General</p>
             </div>
         </div>
@@ -93,7 +93,7 @@
 
 <script>
 import ProfileSections from "./ProfileSections/mobile.profile.imports.js";
-import ProfilePicture from "@/components/ProfilePicture.vue";
+import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import GraphQLService from "@/services/graphql.service";
 
 export default {
@@ -123,16 +123,11 @@ export default {
                         const data = res.data.downloadUserData;
 
                         // straight up robbed from stackoverflow
-                        const dataStr =
-                            "data:text/json;charset=utf-8," +
-                            encodeURIComponent(JSON.stringify(data));
+                        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
 
                         const downloadAnchorNode = document.createElement("a");
                         downloadAnchorNode.setAttribute("href", dataStr);
-                        downloadAnchorNode.setAttribute(
-                            "download",
-                            this.$store.getters.username + ".json"
-                        );
+                        downloadAnchorNode.setAttribute("download", this.$store.getters.username + ".json");
                         document.body.appendChild(downloadAnchorNode); // required for firefox
                         downloadAnchorNode.click();
                         downloadAnchorNode.remove();

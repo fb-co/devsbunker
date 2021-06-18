@@ -22,7 +22,7 @@
 
 <script>
 import CardUtilities from "../mixins/user_card.mixin.js";
-import ProfilePicture from "./ProfilePicture.vue";
+import ProfilePicture from "./User/ProfilePicture.vue";
 
 export default {
     props: {

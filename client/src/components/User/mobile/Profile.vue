@@ -7,7 +7,7 @@
                 <div class="card_container">
                     <p class="card_name">{{ userObject.username }}</p>
                     <p class="card_desc">{{ userObject.desc }}</p>
-                    
+
                     <!-- Not sure if this is nessacary, but I assume you need a form to get data to the server -->
                     <button v-if="userObject.isFollowing" type="submit" @click.prevent="unfollow()" class="follow_button">Unfollow</button>
                     <button v-else type="submit" @click.prevent="follow()" class="follow_button">Follow</button>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import ProfilePicture from "@/components/ProfilePicture.vue";
+import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import PostFeed from "@/components/PostFeed.vue";
 import GraphQLService from "@/services/graphql.service";
 
@@ -53,7 +53,7 @@ export default {
     },
     components: {
         ProfilePicture,
-        PostFeed
+        PostFeed,
     },
     props: {
         mainUserObject: Object,
@@ -63,10 +63,7 @@ export default {
             this.activeSection = elem;
         },
         follow() {
-            GraphQLService.followPerson(
-                this.$store.getters.accessToken,
-                this.userObject.username
-            ).then((newFollowers) => {
+            GraphQLService.followPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
                 if (newFollowers.data.followPerson) {
                     this.userObject.followerAmt = newFollowers.data.followPerson.followerAmt;
                     this.userObject.isFollowing = newFollowers.data.followPerson.isFollowing;
@@ -74,16 +71,13 @@ export default {
             });
         },
         unfollow() {
-            GraphQLService.unfollowPerson(
-                this.$store.getters.accessToken,
-                this.userObject.username
-            ).then((newFollowers) => {
+            GraphQLService.unfollowPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
                 if (newFollowers.data.unfollowPerson) {
                     this.userObject.followerAmt = newFollowers.data.unfollowPerson.followerAmt;
                     this.userObject.isFollowing = newFollowers.data.unfollowPerson.isFollowing;
                 }
             });
-        }
+        },
     },
 };
 </script>
