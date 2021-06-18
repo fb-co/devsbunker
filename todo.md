@@ -26,6 +26,7 @@
     -   [x] this was already implemented, now implementing a function to delete also the profile pic
 
 -   [ ] send confirmation email for signup
+    -   [ ] only for normal users, not github ones
 -   [x] implement login system
     -   [x] better error handling for both login and signup
 -   [x] implement the auth route
@@ -34,7 +35,8 @@
 -   [x] make Schema for bunkers
 -   [x] provide the current user email where needed (?)
 -   [x] cosnider switching to ES modules
--   [ ] multiple devices logged into once account
+-   [ ] multiple devices logged into one account
+    -   [ ] profile pictures are broken
 -   [x] delete all REST endpoints
     -   [x] except refresh_token and auth
 -   [x] use AuthErrors in Signup (GraphQL)
@@ -59,7 +61,7 @@
 -   [ ] add visual feedback to actions like deleting the account and making posts, a popup or something that displays the status of the action (success or failure)
 -   [x] redirect to login when an authorized user tries to make a post
 -   [x] deleting a post on mobile doesnt hide the post from the home
--   [ ] i think that the posts hot reload thing isnt implemented yet for the mobile version... maybe im wrong
+-   [x] i think that the posts hot reload thing isnt implemented yet for the mobile version... maybe im wrong
 -   [x] posts cache stores duplicate posts after user creates a new one
 -   [x] display links while viewing posts on desktop
 -   [x] handle non existing users by showing a 404
@@ -115,10 +117,12 @@
 -   [ ] Project card author link spans 100% of card (even if you cant see it, you can still click it)
 -   [x] attach images to DOM after retreiving them (like a preview)
 -   [ ] mod email in user page doesn't work (the save btn doesn't work)
--   [ ] add unfollow btn
+-   [x] add unfollow btn
 -   [x] if I visit someone else profile I am able to see a field to modify my profile (if admin visits test_account he can see a field with its username in the information tab)
 -   [x] opening the NewPostTagPopup on a new post page, the input should auto-select itself
 -   [x] multiple 404s while fetching the pfp placeholder. After login the image doesn't get fetched, must refresh the page
+-   [ ] add the possibility to see users that we follow
+-   [ ] add option to switch project card theme
 
 ### Things to optimize
 
