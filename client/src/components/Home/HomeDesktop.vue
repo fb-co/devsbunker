@@ -40,7 +40,7 @@ export default {
     created() {
         setTimeout(() => console.log("*** CREATED HOME DESKTOP ***", this.projects), 1000);
 
-        /*
+        
         // delete these eventully xD
 
         this.$store.dispatch("alertUser", { msg: "Hey", type: "error", title: "You smell" });
@@ -49,7 +49,6 @@ export default {
         setTimeout(() => { this.$store.dispatch("alertUser", { msg: "What", type: "error" }); }, 2000);
         setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Is", type: "success" }); }, 3000);
         setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Up?", type: "success" }); }, 4000);
-        */
     },
     updated() {
         setTimeout(() => console.log("*** UPDATED HOME DESKTOP ***", this.projects), 1000);
