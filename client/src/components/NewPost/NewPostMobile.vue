@@ -290,9 +290,6 @@
             inputPlaceholder="Paste URL..."
             style="position: fixed"
         />
-
-        <ErrorPopUp v-if="error" @display-popup="error = $event" :msg="errmsg" />
-        <SuccessPopUp v-if="success" message="Successfully created new post" />
     </div>
 </template>
 
@@ -304,8 +301,6 @@ import NewTagPopup from "./NewTagPopUp";
 import GraphQLService from "@/services/graphql.service";
 import FileUploadService from "@/services/fileUpload.service.js";
 import Languages from "../../templates/Languages";
-import ErrorPopUp from "../Popups/ErrorPopUp";
-import SuccessPopUp from "../Popups/SuccessPopUp.vue";
 
 import Compressor from "compressorjs";
 
@@ -315,9 +310,6 @@ export default {
             contributers: [],
             tags: [],
             links: [],
-            error: false,
-            errmsg: "Internal error. Please try again later.", // by default its a 500 err
-            success: false,
             isOnStore: false,
             files: [],
             compressedFiles: [],
@@ -430,28 +422,25 @@ export default {
             const check = this.validatePostPayload(post);
 
             if (this.files.length > 5) {
-                this.error = true;
-                this.errmsg = "You can upload 5 files max.";
+                this.$store.dispatch("alertUser", { msg: "You can upload 5 files max.", type: "error", title: "Error" });
             } else {
                 if (check.success) {
                     GraphQLService.createNewPost(this.$store.getters.accessToken, post)
                         .then((returnPost) => {
                             if (returnPost.errors?.length) {
-                                this.error = true;
-                                this.errmsg = returnPost.errors[0].message;
+                                this.$store.dispatch("alertUser", { msg: returnPost.errors[0].message, type: "error", title: "Error" });
                                 return;
                             }
 
                             FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then(async (res) => {
                                 // TODO: add error  checking
                                 if (!/Successfully/.test(res.message)) {
-                                    this.error = true;
-                                    this.errmsg = res.message;
+                                    this.$store.dispatch("alertUser", { msg: res.message, type: "error", title: "Error" });
                                     return;
                                 }
 
-                                this.success = true;
-
+                                this.$store.dispatch("alertUser", { msg: "Created post!", type: "success", title: "Success" });
+                                
                                 await this.$store.dispatch("cacheNewlyMadePost", res.post);
 
                                 if (this.$route.name == "Home") {
@@ -463,13 +452,11 @@ export default {
                                 this.close();
                             });
                         })
-                        .catch((e) => {
-                            console.error(e);
-                            this.error = true;
+                        .catch(() => {
+                            this.$store.dispatch("alertUser", { msg: "Internal error. Please try again later.", type: "error", title: "Error" });
                         });
                 } else {
-                    this.error = true;
-                    this.errmsg = check.err;
+                    this.$store.dispatch("alertUser", { msg: check.err, type: "error", title: "Error" });
                 }
             }
         },
@@ -479,7 +466,7 @@ export default {
 
         handleFiles(event) {
             if (event.target.files.length > 5 || this.files.length > 5) {
-                alert("You can upload a maximum of 5 files!");
+                this.$store.dispatch("alertUser", { msg: "You can upload a maximum of 5 files!", type: "error", title: "Error" });
                 return;
             }
 
@@ -520,8 +507,6 @@ export default {
         CreateTag,
         LinkBlock,
         NewTagPopup,
-        ErrorPopUp,
-        SuccessPopUp,
     },
 };
 </script>
