@@ -1,6 +1,6 @@
 <template>
     <div class="alert_feed_container">
-        <Alert v-for="(alert, index) in alerts" :key="index" :msg="alert.msg" />
+        <Alert v-for="(alert, index) in alerts" :key="index" :alertData="alert" />
     </div>
 </template>
 

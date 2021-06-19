@@ -40,20 +40,16 @@ export default {
     created() {
         setTimeout(() => console.log("*** CREATED HOME DESKTOP ***", this.projects), 1000);
 
+        /*
         // delete these eventully xD
 
-        this.$store.dispatch("alertUser", { msg: "Hey" });
+        this.$store.dispatch("alertUser", { msg: "Hey", type: "error", title: "You smell" });
 
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Leo" }); }, 1000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "What" }); }, 2000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Is" }); }, 3000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Up" }); }, 4000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "My" }); }, 5000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Dood?..." }); }, 6000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "What" }); }, 7000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Do" }); }, 8000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "You" }); }, 9000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Think??" }); }, 10000);
+        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Leo", type: "error" }); }, 1000);
+        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "What", type: "error" }); }, 2000);
+        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Is", type: "success" }); }, 3000);
+        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Up?", type: "success" }); }, 4000);
+        */
     },
     updated() {
         setTimeout(() => console.log("*** UPDATED HOME DESKTOP ***", this.projects), 1000);

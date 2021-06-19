@@ -881,8 +881,14 @@ const GraphQLService = {
                 credentials: "include",
                 body: JSON.stringify({ query }),
             });
+            
+            const json = await res.json();
 
-            return res.json();
+            if (!json.errors) {
+                store.dispatch("alertUser", { title: "Success", type: "success", msg: "Successfully logged in!" });
+            }
+
+            return json;
         } catch (err) {
             return console.error(err);
         }
@@ -917,6 +923,8 @@ const GraphQLService = {
                 
                 // get rid of any user specific data in the store
                 store.dispatch("flush_user_data");
+
+                store.dispatch("alertUser", { title: "Success", type: "success", msg: "Successfully logged out" });
             }
 
             return json;
