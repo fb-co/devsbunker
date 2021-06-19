@@ -21,6 +21,11 @@ const routes = [
         component: () => import("../views/Login.vue"),
     },
     {
+        path: "/get_session",
+        name: "GetSession",
+        component: () => import("../views/GetSession.vue"),
+    },
+    {
         path: "/about",
         name: "About",
         component: () => import("../views/About.vue"),
@@ -39,38 +44,29 @@ const routes = [
                 path: "",
                 name: "empty",
                 props: true,
-                redirect: { name: "Account" }
+                redirect: { name: "Account" },
             },
             {
                 path: "account",
                 name: "Account",
                 props: true,
-                component: () =>
-                    import(
-                        "../components/Settings/desktop/SettingSections/Account.vue"
-                    ),
+                component: () => import("../components/Settings/desktop/SettingSections/Account.vue"),
             },
             {
                 path: "appearance",
                 name: "Appearance",
                 props: true,
-                component: () =>
-                    import(
-                        "../components/Settings/desktop/SettingSections/Appearance.vue"
-                    ),
+                component: () => import("../components/Settings/desktop/SettingSections/Appearance.vue"),
             },
             {
                 path: "privacy",
                 name: "Privacy",
                 props: true,
-                component: () =>
-                    import(
-                        "../components/Settings/desktop/SettingSections/Privacy.vue"
-                    ),
+                component: () => import("../components/Settings/desktop/SettingSections/Privacy.vue"),
             },
         ],
     },
-    
+
     {
         path: "/notifications",
         name: "Notifications",
@@ -99,35 +95,31 @@ const routes = [
                 path: "",
                 name: "empty",
                 props: true,
-                redirect: { name: "userInformation" }
+                redirect: { name: "userInformation" },
             },
             {
                 path: "projects",
                 name: "userProjects",
                 props: true,
-                component: () =>
-                    import("../components/User/desktop/Sections/Projects.vue"),
+                component: () => import("../components/User/desktop/Sections/Projects.vue"),
             },
             {
                 path: "saved",
                 name: "userSavedProjects",
                 props: true,
-                component: () =>
-                    import("../components/User/desktop/Sections/Saved.vue"),
+                component: () => import("../components/User/desktop/Sections/Saved.vue"),
             },
             {
                 path: "purchases",
                 name: "userPurchases",
                 props: true,
-                component: () =>
-                    import("../components/User/desktop/Sections/Purchases.vue"),
+                component: () => import("../components/User/desktop/Sections/Purchases.vue"),
             },
             {
                 path: "revenue",
                 name: "userRevenue",
                 props: true,
-                component: () =>
-                    import("../components/User/desktop/Sections/Revenue.vue"),
+                component: () => import("../components/User/desktop/Sections/Revenue.vue"),
             },
             {
                 path: "information",
