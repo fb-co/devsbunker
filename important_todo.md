@@ -39,6 +39,8 @@
 
 -   [ ] Components which contain calc(100vh - var(--header-height)) need to account for the bottom navbar in mobile views or else two scrollbars show up
 
+-   [ ] Notifications don't get cleared immediatly after logging out
+
 ## Low Priority
 
 -   [X] Optimize notification bell, and make a standardized component (ill do this)
