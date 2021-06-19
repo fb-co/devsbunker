@@ -5,14 +5,9 @@
      - desscription
      - email
 
-    Also requires it to have the error and success popups with refs:
-     - success -> success_popup
-     - error   -> error_popup
 */
 
 import GraphQLService from "@/services/graphql.service";
-import ErrorPopup from "@/components/Popups/ErrorPopUp.vue";
-import SuccessPopup from "@/components/Popups/SuccessPopUp.vue";
 
 const GeneralProfile = {
     data() {
@@ -20,10 +15,6 @@ const GeneralProfile = {
             editing: false,
             invalidEmail: false,
         }
-    },
-    components: {
-        ErrorPopup,
-        SuccessPopup
     },
     methods: {
         editFields() {
@@ -73,7 +64,7 @@ const GeneralProfile = {
                         }
 
                         // add success feedback here
-                        this.$refs.success_popup.show();
+                        this.$store.dispatch("alertUser", { msg: "Updated Details", type: "success", title: "Success" });
 
                         this.invalidEmail = false;
                         this.emailInInput = newEmail; // override vue's value binding
@@ -91,7 +82,12 @@ const GeneralProfile = {
 
                         this.emailInInput = editedValue; // override vue's value binding
 
-                        this.$refs.error_popup.show();
+                        // add success feedback here
+                        if (this.invalidEmail) {
+                            this.$store.dispatch("alertUser", { msg: "Invalid email", type: "error", title: "Error" });
+                        } else {
+                            this.$store.dispatch("alertUser", { msg: "Something went wrong updating details.", type: "error", title: "Error" });
+                        }
                     }
                 });
             } else {
