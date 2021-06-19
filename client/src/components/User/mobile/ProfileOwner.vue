@@ -132,6 +132,7 @@ export default {
                         downloadAnchorNode.click();
                         downloadAnchorNode.remove();
                     } else {
+                        this.$store.dispatch("alertUser", { msg: "Error while fetching data", type: "error", title: "Error" });
                         throw new Error("Error while fetching data");
                     }
                 })

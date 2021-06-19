@@ -262,9 +262,6 @@
             title="Confirm"
             @submitted="deleteProfile($event)"
         />
-
-        <SuccessPopUp v-if="accountDeleted" message="Successfully deleted account... Redirecting." />
-        <ErrorPopUp ref="error_popup" message="Error while deleting account!" :showOnCreation="false" />
     </div>
 </template>
 
@@ -273,8 +270,6 @@ import GraphQLService from "@/services/graphql.service";
 
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import InputModal from "@/components/global/InputModal.vue";
-import SuccessPopUp from "@/components/Popups/SuccessPopUp.vue";
-import ErrorPopUp from "@/components/Popups/ErrorPopUp.vue";
 
 export default {
     data() {
@@ -287,8 +282,6 @@ export default {
     components: {
         ProfilePicture,
         InputModal,
-        SuccessPopUp,
-        ErrorPopUp,
     },
     props: {
         mainUserObject: Object,
@@ -297,8 +290,8 @@ export default {
         logout() {
             GraphQLService.logoutUser().then((response) => {
                 if (response.errors) {
-                    alert("Unable to logout");
                     console.error(response.errors);
+                    this.$store.dispatch("alertUser", { msg: "Unable to logout", type: "error", title: "Error" });
                 } else {
                     this.$router.push("/");
                 }
@@ -325,6 +318,7 @@ export default {
                 })
                 .catch((e) => {
                     console.error(e);
+                    this.$store.dispatch("alertUser", { msg: "Something went wrong", type: "error", title: "Error" });
                 });
         },
         openConfirmation() {
@@ -349,13 +343,10 @@ export default {
                             this.$router.push("/");
                         }, 2500);
                     } else {
-                        this.$refs.error_popup.show();
-                        this.$refs.deleteProfileConfirmation.showError("Something went wrong");
+                        this.$store.dispatch("alertUser", { msg: "Something went wrong", type: "error", title: "Error" });
                     }
                 } else {
-                    console.error(res.errors);
-                    this.$refs.error_popup.show();
-                    this.$refs.deleteProfileConfirmation.showError("Incorrect password");
+                    this.$store.dispatch("alertUser", { msg: "Incorrect password", type: "error", title: "Error" });
                 }
             }
         },
