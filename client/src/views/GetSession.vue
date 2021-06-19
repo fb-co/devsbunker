@@ -7,16 +7,12 @@
 <script>
 export default {
     async created() {
-        // TODO: WHYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY STOOPIDDDDDDD AUTHHH
-        // this shite doesnt work ive tried everything
+        // ! OKAY THIS WORKS BUT FOR SOME REASON THE REFRESH TOKEN DOESNT WORK, IT DOESNT AUTOMATICALLY REFRESH THE ACCESS TOKEN
+        // ! NVM ITS A GLOBAL ISSUE !!!!!!!
+        this.$store.commit("refreshAccessToken", this.$route.query.token);
+        this.$store.dispatch("setLoggedInState");
 
-        await this.$store.commit("refreshAccessToken", this.$route.query.token);
-        await this.$store.commit("changeLoggedInState", true);
-        await this.$store.commit("changeUsername", "Bob");
-
-        console.log("Here we have it!", this.$store.getters.accessToken);
         await this.$store.dispatch("autoRefreshAccessToken");
-        await this.$store.dispatch("setLoggedInState");
 
         setTimeout(() => {
             this.$router.push("/");

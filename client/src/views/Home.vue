@@ -50,8 +50,6 @@ export default {
 
         SharedMethods.loadPage();
 
-        console.log("But here we dont have it:(", this.$store.getters.accessToken);
-
         // get the notifications
         if (this.$store.getters.accessToken) {
             const res = await GraphQLService.getUnreadNotificationsData(this.$store.getters.accessToken);
