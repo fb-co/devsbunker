@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import User from "../user/user.model.js";
+import TokenHandler from "../tokens/TokenHandler.js";
 
 async function getToken(code) {
     const data = {
@@ -21,7 +22,28 @@ async function getToken(code) {
     return token_json.access_token;
 }
 
-export async function authorize({ query: { code } }, res, next) {
+function craftUserSession(user, res) {
+    const accessToken = TokenHandler.createAccessToken(user);
+    const refreshToken = TokenHandler.createRefreshToken(user);
+
+    if (accessToken && refreshToken) {
+        // setting refresh cookie
+        res.cookie("jid", refreshToken, {
+            httpOnly: true,
+            expires: new Date(Date.now() + 561600000), // cookie expires after 6.5 days
+            path: "/user/refresh_token",
+            sameSite: "Lax",
+        });
+
+        return accessToken;
+    } else {
+        res.status(422);
+
+        throw new AuthenticationError("Unable to create token.");
+    }
+}
+
+export async function authorize({ query: { code } }, res) {
     const token = await getToken(code);
 
     const user_res = await fetch("https://api.github.com/user", {
@@ -47,7 +69,6 @@ export async function authorize({ query: { code } }, res, next) {
 
         if (user) {
             if (!user.enabled) throw new Error("User is banned");
-            // TODO: reply with our tokens
         } else {
             user = new User({
                 username: user_json.login,
@@ -57,13 +78,12 @@ export async function authorize({ query: { code } }, res, next) {
                 isGitHubUser: true,
             });
             await user.save();
-
-            // TODO: reply with our tokens
         }
     } catch (err) {
         res.send({ error: err });
         return;
     }
 
-    res.send(user);
+    const accessToken = craftUserSession(user, res);
+    res.redirect(`http://devsbunker.com:8080/get_session?token=${accessToken}`);
 }
