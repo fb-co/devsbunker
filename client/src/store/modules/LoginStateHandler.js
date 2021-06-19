@@ -60,20 +60,3 @@ export default {
     mutations,
     actions,
 };
-
-/*
-
-note:
-i think we can do something like this instead of having two actions
-
-    const result = await UserService.isLoggedIn();
-
-    if (result.user) {
-        commit('changeUsername', result.user.username);
-        commit('changeLoggedInState', true);
-    } else {
-        commit('changeUsername', undefined);
-        commit('changeLoggedInState', false);
-    }
-
-*/

@@ -2,10 +2,9 @@
 // per page load. This includes stuff like the users pfp link, unread notifications, etc.
 import GraphQLService from "@/services/graphql.service.js";
 
-
 const state = {
     pfpLink: undefined,
-    unreadNotificationsAmt: undefined
+    unreadNotificationsAmt: undefined,
 };
 
 const getters = {
@@ -14,7 +13,7 @@ const getters = {
     },
     unread_notifications: (state) => {
         return state.unreadNotificationsAmt;
-    }
+    },
 };
 
 const mutations = {
@@ -30,7 +29,7 @@ const mutations = {
 };
 
 const actions = {
-    async fetchPageLoadData ({ commit, rootState }) {
+    async fetchPageLoadData({ commit, rootState }) {
         const storedLink = localStorage.getItem("profile_pic_link");
         let dataToFetch = ["unreadNotificationAmt"];
 
@@ -43,13 +42,17 @@ const actions = {
         }
 
         const res = await GraphQLService.fetchPersonalDetails(rootState.LoginStateHandler.accessToken, dataToFetch);
-        
+
         commit("cachePersonalPfpLink", pfpLink || process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
         commit("cacheUnreadNotificationsAmt", res.data.getPersonalDetails.unreadNotificationAmt);
 
         // add the pfp link to localstorage if its not already in there
         if (!storedLink) {
-            localStorage.setItem("profile_pic_link", process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
+            if (/avatars.githubusercontent.com/.test(res.data.getPersonalDetails.profile_pic)) {
+                localStorage.setItem("profile_pic_link", res.data.getPersonalDetails.profile_pic);
+            } else {
+                localStorage.setItem("profile_pic_link", process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
+            }
         }
     },
     flush_user_data({ commit }) {
@@ -62,7 +65,7 @@ const actions = {
         if (storedLink) {
             commit("cachePersonalPfpLink", storedLink);
         }
-    }
+    },
 };
 
 export default {
@@ -71,5 +74,3 @@ export default {
     mutations,
     actions,
 };
-
-

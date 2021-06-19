@@ -85,5 +85,5 @@ export async function authorize({ query: { code } }, res) {
     }
 
     const accessToken = craftUserSession(user, res);
-    res.redirect(`http://devsbunker.com:8080/get_session?token=${accessToken}`);
+    res.redirect(`http://devsbunker.com:8080/get_session?token=${accessToken}&username=${user.username}`);
 }
