@@ -9,6 +9,7 @@ export default {
     async created() {
         // ! OKAY THIS WORKS BUT FOR SOME REASON THE REFRESH TOKEN DOESNT WORK, IT DOESNT AUTOMATICALLY REFRESH THE ACCESS TOKEN
         // ! NVM ITS A GLOBAL ISSUE !!!!!!!
+        // ! NVM AGAIN IT AFFECTS ONLY devsbunker.com
         this.$store.commit("refreshAccessToken", this.$route.query.token);
         this.$store.dispatch("setLoggedInState");
 
