@@ -37,22 +37,6 @@ export default {
         fetchedAll: Boolean,
         loaded: Boolean,
     },
-    created() {
-        setTimeout(() => console.log("*** CREATED HOME DESKTOP ***", this.projects), 1000);
-
-        
-        // delete these eventully xD
-
-        this.$store.dispatch("alertUser", { msg: "Hey", type: "error", title: "You smell" });
-
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Leo", type: "error" }); }, 1000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "What", type: "error" }); }, 2000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Is", type: "success" }); }, 3000);
-        setTimeout(() => { this.$store.dispatch("alertUser", { msg: "Up?", type: "success" }); }, 4000);
-    },
-    updated() {
-        setTimeout(() => console.log("*** UPDATED HOME DESKTOP ***", this.projects), 1000);
-    },
     methods: {
         makeNewPost() {
             this.$parent.openPostMenu();

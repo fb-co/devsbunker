@@ -34,8 +34,6 @@
                 <button @click="saveFields()" class="save_button">Save</button>
             </div>
         </div>
-        <ErrorPopup msg="One or more invalid fields" :showOnCreation="false" ref="error_popup" />
-        <SuccessPopup msg="Successfully changed fields" ref="success_popup" />
     </div>
 </template>
 

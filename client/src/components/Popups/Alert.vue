@@ -1,5 +1,5 @@
 <template>
-    <div ref="popup_container" class="alert" :class="{ alert_success: alertData.type==='success', alert_error: alertData.type==='error' }">
+    <div v-if="active" ref="popup_container" class="alert" :class="{ alert_success: alertData.type==='success', alert_error: alertData.type==='error' }">
         <svg
             v-if="alertData.type === 'success'"
             xmlns="http://www.w3.org/2000/svg"
@@ -50,9 +50,21 @@
 
 <script>
 export default {
+    data() {
+        return {
+            active: true
+        }
+    },
     props: {
         alertData: Object,
     },
+    created() {
+        /*
+        setTimeout(() => {
+            this.active = false;
+        }, 3000);
+        */
+    }
     /*
     destroyed() {
         // maybe figure out a way to do a fade out animation at some point (optional)
@@ -73,6 +85,7 @@ export default {
 
 .alert {
     height: 70px;
+    min-height: 70px;
 
     animation: slide 0.3s;
 

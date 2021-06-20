@@ -10,20 +10,20 @@ const getters = {
 const mutations = {
     createAlert(state, alertData) {
         const alert = alertData;
-
+        
         state.alerts.push(alert);
-
+        
         // remove the alert after some "alertDuration"
         setTimeout(() => {
             state.alerts.splice(state.alerts.indexOf(alert), 1);
         }, state.alertDuration);
-    }
+    },
 };
 
 const actions = {
     alertUser({ commit }, alertData) {
         commit("createAlert", alertData);
-    }
+    },
 };
 
 export default {

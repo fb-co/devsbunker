@@ -36,6 +36,8 @@ export default {
     flex-direction: column;
     width: 450px;
     padding: 10px;
+    max-height: 400px;
+    overflow: hidden;
 } 
 .alert_feed_container > * {
     margin-top: 2px;
