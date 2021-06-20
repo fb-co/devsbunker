@@ -31,24 +31,39 @@ const mutations = {
 const actions = {
     async fetchPageLoadData({ commit, rootState }) {
         const storedLink = localStorage.getItem("profile_pic_link");
-        let dataToFetch = ["unreadNotificationAmt"];
 
+        let dataToFetch = ["unreadNotificationAmt"];
         let pfpLink;
 
+        // TODO: I don't really like this if statement
         if (storedLink) {
-            pfpLink = storedLink;
+            const check = storedLink.split("/");
+            if (check[check.length - 1] != "null") {
+                pfpLink = storedLink;
+            } else {
+                dataToFetch.push("profile_pic");
+            }
         } else {
             dataToFetch.push("profile_pic");
         }
 
         const res = await GraphQLService.fetchPersonalDetails(rootState.LoginStateHandler.accessToken, dataToFetch);
 
-        commit("cachePersonalPfpLink", pfpLink || process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
+        console.log("res", res.data);
+
+        if (res.data.getPersonalDetails.profile_pic) {
+            commit(
+                "cachePersonalPfpLink",
+                pfpLink || /http/.test(res.data.getPersonalDetails.profile_pic)
+                    ? res.data.getPersonalDetails.profile_pic
+                    : process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic
+            );
+        }
         commit("cacheUnreadNotificationsAmt", res.data.getPersonalDetails.unreadNotificationAmt);
 
         // add the pfp link to localstorage if its not already in there
         if (!storedLink) {
-            if (/avatars.githubusercontent.com/.test(res.data.getPersonalDetails.profile_pic)) {
+            if (/http/.test(res.data.getPersonalDetails.profile_pic)) {
                 localStorage.setItem("profile_pic_link", res.data.getPersonalDetails.profile_pic);
             } else {
                 localStorage.setItem("profile_pic_link", process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
