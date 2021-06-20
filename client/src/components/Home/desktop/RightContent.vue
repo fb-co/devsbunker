@@ -1,5 +1,5 @@
 <template>
-    <div v-if="notifications" class="right_content">
+    <div v-if="notifications && $store.getters.accessToken" class="right_content">
         <!-- The person who wrote this comment is so dumb (prolly a win user) -- Set the key to the sender and message because or else you get a bunch of duplicate key issues -- WHAT IF A USER LIKES 2 OF YOUR POSTS? SAME SHIT :D -->
         <!-- concatenated an index to the key, this way we dont have duplicate key errors -->
 

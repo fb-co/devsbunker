@@ -135,7 +135,7 @@ export default {
                         this.$store.dispatch("alertUser", { msg: "Error while fetching data", type: "error", title: "Error" });
                         throw new Error("Error while fetching data");
                     }
-                })
+                }) 
                 .catch((e) => {
                     console.error(e);
                 });
