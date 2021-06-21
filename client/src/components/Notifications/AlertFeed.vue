@@ -10,18 +10,11 @@ import Alert from "@/components/Popups/Alert";
 export default {
     data() {
         return {
-            alerts: this.$store.getters.getAlerts
+            alerts: this.$store.getters.getAlerts,
         }
     },
     components: {
         Alert
-    },
-    
-    // this lets the alerts from the store be reactive
-    computed: {
-        storedAlerts() {
-            return this.$store.getters.getAlerts;
-        }
     },
 }
 </script>
@@ -36,8 +29,8 @@ export default {
     flex-direction: column;
     width: 450px;
     padding: 10px;
-    max-height: 400px;
     overflow: hidden;
+    background-color: blue;
 } 
 .alert_feed_container > * {
     margin-top: 2px;

@@ -52,7 +52,7 @@
 export default {
     data() {
         return {
-            active: true
+            active: true,
         }
     },
     props: {
