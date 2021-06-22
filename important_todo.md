@@ -41,6 +41,8 @@
 
 -   [x] Notifications don't get cleared immediatly after logging out
 
+-   [ ] Changing pages with the new post popup open leaves it open so you can't see the page behind it
+
 ## Low Priority
 
 -   [X] Optimize notification bell, and make a standardized component (ill do this)
