@@ -23,7 +23,7 @@
     -   [x] Get rid of email option for foreign user
 
     -   [x] Spruce up the styling or functionality since it seems a little "empty"
-    
+
     -   [x] Add cancel button to field edits (mobile and desktop)
 
 -   [x] Highlight search phrases on post searches
@@ -34,22 +34,23 @@
 
 -   [x] Improve success and error popups
 
-    - [x] Layering is bad on mobile as it falls under the bottom navbar
-    - [x] Both show up in front of the burger menu
+    -   [x] Layering is bad on mobile as it falls under the bottom navbar
+    -   [x] Both show up in front of the burger menu
 
 -   [x] Components which contain calc(100vh - var(--header-height)) need to account for the bottom navbar in mobile views or else two scrollbars show up
 
 -   [x] Notifications don't get cleared immediatly after logging out
 
--   [ ] Changing pages with the new post popup open leaves it open so you can't see the page behind it
+-   [x] Changing pages with the new post popup open leaves it open so you can't see the page behind it
 
 -   [ ] Alert box should have a max height where the newer alerts are prioritized (im struggling so hard with this for some reason)
 
--   [ ] Issues with following people and changing passwords/deleting account authentication
+-   [x] Issues with following people and changing passwords/deleting account authentication
+    -   jac was (and still is) stoopid
 
 ## Low Priority
 
--   [X] Optimize notification bell, and make a standardized component (ill do this)
+-   [x] Optimize notification bell, and make a standardized component (ill do this)
 
 -   [ ] mark as read as soon as user navigates to notification page (hot reload)
 
