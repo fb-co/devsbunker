@@ -27,6 +27,9 @@ export default {
         open() {
             this.isOpen = true;
         },
+        getStatus() {
+            return this.isOpen;
+        },
         propagateEvent(flag) {
             this.$emit("updateFeed", flag);
         },

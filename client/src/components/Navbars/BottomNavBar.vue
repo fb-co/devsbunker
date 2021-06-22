@@ -22,7 +22,7 @@
                     </svg>
                 </router-link>
 
-                <router-link to="#" class="icon">
+                <router-link to="/explore" class="icon">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-brand-safari"
@@ -111,7 +111,15 @@ export default {
                 // if your already at the home page dont re-route and just update the feed from the bottom navbar (this requires going through app.vue)
                 this.$emit("updateFeed"); // this is going to App.vue
             }
-        }
+        },
+    },
+
+    watch: {
+        $route() {
+            if (this.$refs.newPostPopup.getStatus()) {
+                this.$refs.newPostPopup.close();
+            }
+        },
     },
 
     components: {
