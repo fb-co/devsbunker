@@ -1,5 +1,6 @@
 <template>
-    <div v-if="isOpen" class="model_overlay" @mousedown="close()">
+    <div v-if="isOpen">
+        <div class="model_overlay" @mousedown="close()"></div>
         <div class="model_popup" @click.stop="" @mousedown.stop="">
             <div class="close_button">
                 <div style="width: 33.33%"></div>
@@ -119,6 +120,7 @@ export default {
 }
 .model_popup {
     position: fixed;
+    z-index: 13;
     top: 50%;
     left: 50%;
     max-width: 400px;

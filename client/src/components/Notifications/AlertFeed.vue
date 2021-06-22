@@ -22,7 +22,7 @@ export default {
 <style scoped>
 .alert_feed_container {
     position: fixed;
-    z-index: 5;
+    z-index: 12;
     right: 0px;
     bottom: 0px;
     display: flex;

@@ -20,7 +20,6 @@
                 @submitted="resetPwd($event[0], $event[1])"
             />
         </div>
-        <SuccessPopup ref="success_popup" message="Successfully Reset Password" />
     </WrapperMobile>
 </template>
 
@@ -28,27 +27,26 @@
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 import GraphQLService from "@/services/graphql.service";
 import InputModal from "@/components/global/InputModal.vue";
-import SuccessPopup from "@/components/Popups/SuccessPopUp.vue";
 
 export default {
     components: {
         ...GlobalComponents,
         InputModal,
-        SuccessPopup,
     },
     methods: {
         async resetPwd(pwd, pwdConfirm) {
             if (pwd == pwdConfirm) {
                 const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{ field: "password", newValue: pwd }]);
-                console.log(response);
 
                 if (/Successfully/.test(response.data.updateUserDetails.message)) {
                     this.$refs.resetPwd.close();
-                    this.$refs.success_popup.show();
+                    this.$store.dispatch("alertUser", { type: "success", title: "Success", msg: "Successfully Reset Password" });
                 } else {
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Failed to Reset Password" });
                     this.$refs.resetPwd.showError("Invalid credentials", true);
                 }
             } else {
+                this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Failed to Reset Password" });
                 this.$refs.resetPwd.showError("Passwords do not match");
             }
         },
