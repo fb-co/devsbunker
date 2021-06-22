@@ -10,9 +10,9 @@
 
 -   [x] Make the Post thumbnail default placeholder image actully work
 
--   [ ] Some user feedback when creating a post, logging out, etc
+-   [x] Some user feedback when creating a post, logging out, etc
 
-    -   [ ] tried to use SuccessPopUp after logout in navbar but it wasnt working, I don't want to use a stoopid alert
+    -   [x] tried to use SuccessPopUp after logout in navbar but it wasnt working, I don't want to use a stoopid alert
 
 -   [x] Prepare foreign profile page for deployment
 
@@ -32,10 +32,10 @@
 
 -   [x] GraphQLService line that reads "TODO: WE SHOULD NOT DO THIS HERE!!!!" (don't know what it is so ill leave this for you)
 
--   [ ] Improve success and error popups
+-   [x] Improve success and error popups
 
-    - [ ] Layering is bad on mobile as it falls under the bottom navbar
-    - [ ] Both show up in front of the burger menu
+    - [x] Layering is bad on mobile as it falls under the bottom navbar
+    - [x] Both show up in front of the burger menu
 
 -   [x] Components which contain calc(100vh - var(--header-height)) need to account for the bottom navbar in mobile views or else two scrollbars show up
 
