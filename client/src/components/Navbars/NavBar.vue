@@ -228,7 +228,7 @@ export default {
 
 .nav_container {
     position: fixed;
-    z-index: 10;
+    z-index: 6;
     top: 0;
     display: flex;
     flex-direction: row;
@@ -339,7 +339,7 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 10;
+    z-index: 6;
 }
 
 /* Burger Menu Styling */
@@ -351,7 +351,7 @@ body {
     width: 75px;
     height: 100%;
     margin-right: 20px;
-    z-index: 10;
+    z-index: 6;
 }
 #burger_icon_placeholder {
     display: none;
@@ -369,7 +369,7 @@ body {
     position: absolute;
     cursor: pointer;
     opacity: 0; /* hide this */
-    z-index: 11; /* and place it over the hamburger */
+    z-index: 7; /* and place it over the hamburger */
     -webkit-touch-callout: none;
 }
 .burger_menu_subcontainer {

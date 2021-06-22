@@ -284,7 +284,7 @@ export default {
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         padding-bottom: 40px;
-        z-index: 50;
+        z-index: 13;
         animation: moreOptionsSlider 0.5s;
     }
     .more_options_mobile h4 {
@@ -307,7 +307,7 @@ export default {
         height: 100%;
         top: 0px;
         left: 0px;
-        z-index: 49;
+        z-index: 9;
         background-color: rgba(0, 0, 0, 0.5);
     }
 

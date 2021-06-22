@@ -143,7 +143,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: 1;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -153,7 +153,7 @@ export default {
     top: 50%;
     left: 50%;
     width: 350px;
-    z-index: 11;
+    z-index: 2;
     padding-bottom: 10px;
     height: 300px;
     max-height: 50vh;

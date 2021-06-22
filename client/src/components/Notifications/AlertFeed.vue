@@ -30,7 +30,6 @@ export default {
     width: 450px;
     padding: 10px;
     overflow: hidden;
-    background-color: blue;
 } 
 .alert_feed_container > * {
     margin-top: 2px;
