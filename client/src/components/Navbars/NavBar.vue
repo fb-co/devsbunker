@@ -143,10 +143,9 @@ export default {
     methods: {
         async logout() {
             const res = await GraphQLService.logoutUser();
-            console.log("LOGOUT:", res);
 
             if (res.errors) {
-                alert("Unable to logout");
+                this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Unable to logout" });
                 console.error(res.errors);
             } else {
                 if (this.$route.path != "/") {

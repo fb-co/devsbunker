@@ -52,9 +52,6 @@ export default {
         updateFeed() {
             this.$refs.page_content.updateFeed(true);
         },
-        test() {
-            console.log("EYYYYY");
-        }
     },
 };
 </script>
@@ -71,6 +68,7 @@ export default {
 :root {
     --footer-size: 60px;
     --header-height: 80px;
+    --footer-height: 60px; /* this gets toggled between 0 and 60px depending on if your mobile or not */
     --default-mobile-thresh: 950px;
 
     --main-color: #16171b;

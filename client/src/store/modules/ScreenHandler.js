@@ -19,6 +19,7 @@ const actions = {
         commit("isMobile", ScreenType.isMobile(950));
 
         window.addEventListener("resize", () => {
+            document.body.style.setProperty("--footer-height", ScreenType.isMobile(950) ? "60px" : "0px");
             commit("isMobile", ScreenType.isMobile(950));
         });
     },

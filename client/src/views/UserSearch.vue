@@ -25,7 +25,7 @@ export default {
 
 <style scoped>
 .user_search_container {
-    max-height: calc(100vh - var(--header-height));
+    max-height: calc(100vh - var(--header-height) - var(--footer-height));
     overflow: auto;
 }
 .title {

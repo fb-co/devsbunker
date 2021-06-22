@@ -51,7 +51,7 @@ export default {
 <style scoped>
 .main_container {
     padding-bottom: 30px;
-    max-height: calc(100vh - var(--header-height));
+    max-height: calc(100vh - var(--header-height) - var(--footer-height));
     overflow: auto;
 }
 .notification_card_container {
