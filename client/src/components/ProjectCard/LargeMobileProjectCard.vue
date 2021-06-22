@@ -3,14 +3,14 @@
         <div @click.stop="" class="top_text_container" ref="icons">
             <!--Not filled icon -->
             <div class="icon_container">
-                <svg 
-                    v-if="!projectData.isLiked" 
+                <svg
+                    v-if="!projectData.isLiked"
                     @click.stop="likePost(projectData.id)"
-                    width="35" 
-                    height="35" 
-                    viewBox="0 0 16 16" 
+                    width="35"
+                    height="35"
+                    viewBox="0 0 16 16"
                     class="bi bi-heart"
-                    fill="#eb4034" 
+                    fill="#eb4034"
                     xmlns="http://www.w3.org/2000/svg"
                     style="margin-top: 3px"
                 >
@@ -86,7 +86,7 @@ export default {
         return {
             thumbnail_link: undefined,
             isDefault: false,
-        }
+        };
     },
     mixins: [ProjectCardUtils],
     props: {
@@ -98,7 +98,7 @@ export default {
             this.isDefault = true;
         } else {
             this.thumbnail_link = `${process.env.VUE_APP_IMG_STATIC_ASSETS}${this.projectData.thumbnail}`;
-        } 
+        }
     },
     mounted() {
         if (!this.isDefault) {
@@ -121,7 +121,7 @@ export default {
                 for (let i = 0; i < elements.length; i++) {
                     elements[i].innerHTML = elements[i].innerText.replace(new RegExp("<mark>", "ig"), "");
                     elements[i].innerHTML = elements[i].innerText.replace(new RegExp("</mark>", "ig"), "");
-                }     
+                }
             }
         },
     },
@@ -132,9 +132,9 @@ export default {
         highlight_phrase: function(newVal) {
             console.log(newVal);
             this.highlightPhrases();
-        }
+        },
     },
-}
+};
 </script>
 
 <style scoped>
@@ -153,7 +153,8 @@ export default {
     flex-direction: column;
     margin: 10px 5px 10px 5px;
     flex: 1; /* Makes it stretch to fill container */
-    
+    border-bottom: 1px solid var(--soft-text);
+
     min-width: 250px;
     min-height: 250px;
 
@@ -170,20 +171,20 @@ export default {
     top: 0;
     left: 0;
     z-index: 0;
-    background-color: rgba(0, 0, 0, 0); 
+    background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
 }
 .hover_overlay:hover {
     animation: hover_animation 0.4s;
-    background-color: rgba(0, 0, 0, 0.3); 
+    background-color: rgba(0, 0, 0, 0.3);
 }
 .text_container:hover ~ .hover_overlay {
     animation: hover_animation 0.4s;
-    background-color: rgba(0, 0, 0, 0.3); 
+    background-color: rgba(0, 0, 0, 0.3);
 }
 .top_text_container:hover ~ .hover_overlay {
     animation: hover_animation 0.4s;
-    background-color: rgba(0, 0, 0, 0.3); 
+    background-color: rgba(0, 0, 0, 0.3);
 }
 .hover_overlay:hover ~ .top_text_container {
     display: flex;

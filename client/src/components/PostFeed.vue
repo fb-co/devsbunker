@@ -240,8 +240,8 @@ export default {
 .mobile_post_feed {
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: auto;
+    max-width: 500px;
 }
 .desktop_post_feed {
     display: flex;
