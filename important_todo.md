@@ -43,6 +43,10 @@
 
 -   [ ] Changing pages with the new post popup open leaves it open so you can't see the page behind it
 
+-   [ ] Alert box should have a max height where the newer alerts are prioritized (im struggling so hard with this for some reason)
+
+-   [ ] Issues with following people and changing passwords/deleting account authentication
+
 ## Low Priority
 
 -   [X] Optimize notification bell, and make a standardized component (ill do this)
