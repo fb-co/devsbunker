@@ -48,6 +48,8 @@
 -   [x] Issues with following people and changing passwords/deleting account authentication
     -   jac was (and still is) stoopid
 
+-   [ ] Add likeAmt and more options menu to project cards (mobile & desktop)
+
 ## Low Priority
 
 -   [x] Optimize notification bell, and make a standardized component (ill do this)
