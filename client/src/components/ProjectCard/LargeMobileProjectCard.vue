@@ -1,5 +1,5 @@
 <template>
-    <div class="project_box" ref="image_div" @click="$router.push({ path: `/post/${projectData.id}` })" :class="{ default_image: isDefault }">
+    <div v-if="!deleted" class="project_box" ref="image_div" @click="$router.push({ path: `/post/${projectData.id}` })" :class="{ default_image: isDefault }">
         <div @click.stop="" class="top_text_container" ref="icons">
             <!--Not filled icon -->
             <div class="icon_container">
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div class="placeholder" />
-            <div class="more_options_container" @click.stop="" @focus="openMoreOptions()" @blur="closeMoreOptions()" tabindex="0" ref="moreOptionsIcon">
+            <div class="more_options_container" @click.stop="openMoreOptions()" ref="moreOptionsIcon">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="icon icon-tabler icon-tabler-dots-vertical"
@@ -97,7 +97,7 @@
                     height="28"
                     viewBox="0 0 24 24"
                     stroke-width="2"
-                    stroke="var(--soft-text)"
+                    stroke="#fff"
                     fill="none"
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -109,72 +109,77 @@
                 </svg>
             </div>
         </div>
-        <!-- Because of the structure of the html, we need to use js to show the icons when you hover over the overlay -->
-        <div class="hover_overlay" />
-        <div v-if="moreOptions" class="more_options">
-            <div class="option_container" @mousedown="copyPostLink()">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-share"
-                    width="16"
-                    height="16"
-                    style="margin-top: 1px;"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="var(--main-font-color)"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <circle cx="6" cy="12" r="3" />
-                    <circle cx="18" cy="6" r="3" />
-                    <circle cx="18" cy="18" r="3" />
-                    <line x1="8.7" y1="10.7" x2="15.3" y2="7.3" />
-                    <line x1="8.7" y1="13.3" x2="15.3" y2="16.7" />
-                </svg>
+        <MobileMoreOptions ref="more_options_menu">
+            <div @mousedown.stop="copyPostLink()">
+                <div class="vertical_flex_center">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-share"
+                        width="25"
+                        height="25"
+                        style="margin-top: 1px;"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="var(--main-color)"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <circle cx="6" cy="12" r="3" />
+                        <circle cx="18" cy="6" r="3" />
+                        <circle cx="18" cy="18" r="3" />
+                        <line x1="8.7" y1="10.7" x2="15.3" y2="7.3" />
+                        <line x1="8.7" y1="13.3" x2="15.3" y2="16.7" />
+                    </svg>
+                </div>
                 <p>Share</p>
             </div>
-            <div v-if="projectData.author === this.$store.getters.username" class="option_container" @mousedown.stop="deletePost()">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-trash"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="var(--main-font-color)"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <line x1="4" y1="7" x2="20" y2="7" />
-                    <line x1="10" y1="11" x2="10" y2="17" />
-                    <line x1="14" y1="11" x2="14" y2="17" />
-                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                </svg>
+            <div @mousedown.stop="deletePost()">
+                <div class="vertical_flex_center">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-trash"
+                        width="25"
+                        height="25"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="var(--main-color)"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <line x1="4" y1="7" x2="20" y2="7" />
+                        <line x1="10" y1="11" x2="10" y2="17" />
+                        <line x1="14" y1="11" x2="14" y2="17" />
+                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                    </svg>
+                </div>
                 <p>Delete Post</p>
             </div>
-        </div>
+        </MobileMoreOptions>
     </div>
 </template>
 
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import GraphQLService from "../../services/graphql.service";
+import MobileMoreOptions from "@/components/Popups/MobileMoreOptions.vue";
 
 export default {
     data() {
         return {
             thumbnail_link: undefined,
             isDefault: false,
-            moreOptions: false,
-            deleted: false
+            deleted: false,
         };
     },
     mixins: [ProjectCardUtils],
+    components: {
+        MobileMoreOptions
+    },
     props: {
         projectData: Object,
         highlight_phrase: String,
@@ -210,29 +215,29 @@ export default {
                 }
             }
         },
+
         openMoreOptions() {
-            this.moreOptions = true;
-            this.$refs.moreOptionsIcon.focus();
+            this.$refs.more_options_menu.openMenu();
         },
         closeMoreOptions() {
-            this.moreOptions = false;
+            this.$refs.more_options_menu.closeMenu();
         },
 
         deletePost() {
+            this.closeMoreOptions();
             GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
-                console.log(res);
                 if (res.errors) {
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong deleting post" });
                 } else if (!res.data.deletePost.success) {
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong deleting post" });
                 } else {
-                    this.moreOptions = !this.moreOptions;
                     this.deleted = true;
                     this.$store.dispatch("alertUser", { type: "success", title: "Success", msg: "Deleted post" });
                 }
             });
         },
         copyPostLink() {
+            this.closeMoreOptions();
             this.$store.dispatch("alertUser", { type: "success", title: "Copied link to clipboard" });
         }
     },
@@ -367,27 +372,6 @@ export default {
 }
 .more_options_container:focus {
     border: 1px solid var(--main-font-color);
-}
-.more_options {
-    position: absolute;
-    bottom: -75px;
-    right: 0px;
-    z-index: 50;
-    background-color: var(--secondary-color);
-    border-radius: 3px;
-    padding: 5px 15px 5px 15px;
-}
-.option_container {
-    display: flex;
-    cursor: pointer;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-.option_container svg {
-    margin-right: 10px;
-}
-.option_container:hover > p {
-    color: var(--soft-text);
 }
 .like_amount_container {
     display: flex;

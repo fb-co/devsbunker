@@ -102,7 +102,7 @@
                     height="28"
                     viewBox="0 0 24 24"
                     stroke-width="2"
-                    stroke="var(--soft-text)"
+                    stroke="#fff"
                     fill="none"
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -287,6 +287,8 @@ export default {
 
     background-size: cover;
     background-position: center;
+
+    max-width: 500px;
 
 }
 .default_image {

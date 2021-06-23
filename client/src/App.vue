@@ -139,6 +139,15 @@ body {
 .placeholder {
     flex-grow: 1;
 }
+.backdrop {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    background-color: rgba(0, 0, 0, 0.5);
+}
 .bold {
     font-weight: bold;
 }

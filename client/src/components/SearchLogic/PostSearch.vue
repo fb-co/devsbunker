@@ -219,13 +219,13 @@ export default {
         }
     }
     @keyframes moreOptionsSlider {
-    from {
-        transform: translate(50%) translateY(100%);
+        from {
+            transform: translate(50%) translateY(100%);
+        }
+        to {
+            transform: translate(50%) translateY(0%);
+        }
     }
-    to {
-        transform: translate(50%) translateY(0%);
-    }
-}
     .input_loading_cont {
         display: flex;
         flex-direction: row;
