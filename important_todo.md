@@ -43,7 +43,7 @@
 
 -   [x] Changing pages with the new post popup open leaves it open so you can't see the page behind it
 
--   [ ] Alert box should have a max height where the newer alerts are prioritized (im struggling so hard with this for some reason)
+-   [x] Alert box should have a max height where the newer alerts are prioritized (im struggling so hard with this for some reason)
 
 -   [x] Issues with following people and changing passwords/deleting account authentication
     -   jac was (and still is) stoopid
