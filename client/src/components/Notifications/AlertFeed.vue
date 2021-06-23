@@ -34,8 +34,6 @@ export default {
     z-index: 12;
     display: flex;
     flex-direction: column;
-    width: 80%;
-    max-width: 450px;
     padding: 10px;
     overflow: hidden;
 } 
@@ -49,11 +47,15 @@ export default {
     left: 50%;
     max-height: 160px;
     transform: translateX(-50%);
+    width: 95%;
+    max-width: 450px;
 }
 .desktopFeed {
     right: 0px;
     bottom: 10px;
     max-height: 380px;
     overflow-y: scroll;
+    width: 80%;
+    max-width: 450px;
 }
 </style>

@@ -4,7 +4,7 @@
         falls beneath the text and icons. As a result, if you only binded it to the overlay, the icons would be hidden
         every time you hovered over the text container or the icons parent itself
     -->
-    <div class="project_box" ref="image_div" @click="$router.push({ path: `/post/${projectData.id}` })" :class="{ default_image: isDefault }">
+    <div v-if="!deleted" class="project_box" ref="image_div" @click="$router.push({ path: `/post/${projectData.id}` })" :class="{ default_image: isDefault }">
         <div @click.stop="" class="top_text_container" ref="icons" @mouseover="showIcons()" @mouseleave="hideIcons()">
             <!--Not filled icon -->
             <div class="icon_container">
@@ -118,7 +118,7 @@
         <div @mouseover="showIcons()" @mouseleave="hideIcons()" class="hover_overlay" />
         
         <div v-if="moreOptions" class="more_options">
-            <div v-if="projectData.author === this.$store.getters.username" class="option_container">
+            <div class="option_container" @mousedown="copyPostLink()">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="icon icon-tabler icon-tabler-share"
@@ -141,7 +141,7 @@
                 </svg>
                 <p>Share</p>
             </div>
-            <div class="option_container">
+            <div v-if="projectData.author === this.$store.getters.username" class="option_container" @mousedown.stop="deletePost()">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="icon icon-tabler icon-tabler-trash"
@@ -169,6 +169,7 @@
 
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
+import GraphQLService from "../../services/graphql.service";
 
 export default {
     data() {
@@ -176,6 +177,7 @@ export default {
             thumbnail_link: undefined,
             isDefault: false,
             moreOptions: false,
+            deleted: false
         }
     },
     mixins: [ProjectCardUtils],
@@ -226,14 +228,31 @@ export default {
         },
         closeMoreOptions() {
             this.moreOptions = false;
+        },
+
+        deletePost() {
+            GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
+                console.log(res);
+                if (res.errors) {
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong deleting post" });
+                } else if (!res.data.deletePost.success) {
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong deleting post" });
+                } else {
+                    this.moreOptions = !this.moreOptions;
+                    this.deleted = true;
+                    this.$store.dispatch("alertUser", { type: "success", title: "Success", msg: "Deleted post" });
+                }
+            });
+        },
+        copyPostLink() {
+            this.$store.dispatch("alertUser", { type: "success", title: "Copied link to clipboard" });
         }
     },
     watch: {
         projectData: function(newVal) {
             this.thumbnail_link = newVal.thumbnail || "@/assets/project_img_placeholder.png";
         },
-        highlight_phrase: function(newVal) {
-            console.log(newVal);
+        highlight_phrase: function() {
             this.highlightPhrases();
         }
     },
