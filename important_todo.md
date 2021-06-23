@@ -48,7 +48,9 @@
 -   [x] Issues with following people and changing passwords/deleting account authentication
     -   jac was (and still is) stoopid
 
--   [ ] Add likeAmt and more options menu to project cards (mobile & desktop)
+-   [x] Add likeAmt and more options menu to project cards (mobile & desktop)
+
+-   [ ] Add security check (pwd confirmation) when you try and delete a post
 
 ## Low Priority
 
