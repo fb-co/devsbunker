@@ -76,10 +76,94 @@
             <div class="text">
                 <p class="title highlightable">{{ projectData.title }}</p>
                 <p class="author">By: {{ projectData.author }}</p>
+                <div class="like_amount_container">
+                    <div class="vertical_flex_center">
+                        <svg
+                            @click.stop="unlikePost(projectData.id)"
+                            width="15"
+                            height="15"
+                            viewBox="0 0 16 16"
+                            class="bi bi-heart-fill"
+                            fill="#eb4034"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                        </svg>
+                    </div>
+                    <p>{{ projectData.likeAmt }}</p>
+                </div>
+            </div>
+            <div class="placeholder" />
+            <div class="more_options_container" @click.stop="" @focus="openMoreOptions()" @blur="closeMoreOptions()" tabindex="0" ref="moreOptionsIcon">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-dots-vertical"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="var(--soft-text)"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <circle cx="12" cy="12" r="1" />
+                    <circle cx="12" cy="19" r="1" />
+                    <circle cx="12" cy="5" r="1" />
+                </svg>
             </div>
         </div>
         <!-- Because of the structure of the html, we need to use js to show the icons when you hover over the overlay -->
         <div @mouseover="showIcons()" @mouseleave="hideIcons()" class="hover_overlay" />
+        
+        <div v-if="moreOptions" class="more_options">
+            <div v-if="projectData.author === this.$store.getters.username" class="option_container">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-share"
+                    width="16"
+                    height="16"
+                    style="margin-top: 1px;"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="var(--main-font-color)"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="6" r="3" />
+                    <circle cx="18" cy="18" r="3" />
+                    <line x1="8.7" y1="10.7" x2="15.3" y2="7.3" />
+                    <line x1="8.7" y1="13.3" x2="15.3" y2="16.7" />
+                </svg>
+                <p>Share</p>
+            </div>
+            <div class="option_container">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-trash"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="var(--main-font-color)"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <line x1="10" y1="11" x2="10" y2="17" />
+                    <line x1="14" y1="11" x2="14" y2="17" />
+                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                </svg>
+                <p>Delete Post</p>
+            </div>
+        </div>
     </div>    
 </template>
 
@@ -91,6 +175,7 @@ export default {
         return {
             thumbnail_link: undefined,
             isDefault: false,
+            moreOptions: false,
         }
     },
     mixins: [ProjectCardUtils],
@@ -135,6 +220,13 @@ export default {
                 }     
             }
         },
+        openMoreOptions() {
+            this.moreOptions = true;
+            this.$refs.moreOptionsIcon.focus();
+        },
+        closeMoreOptions() {
+            this.moreOptions = false;
+        }
     },
     watch: {
         projectData: function(newVal) {
@@ -230,7 +322,7 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 70px;
+    height: 75px;
     background-color: rgba(0, 0, 0, 0.8);
 }
 .text {
@@ -252,10 +344,53 @@ export default {
 .author {
     color: rgb(189, 189, 189);
     font-size: 13px;
-    padding: 5px 8px 15px 8px;
+    padding: 5px 8px 10px 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
+}
+.more_options_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.more_options_container:focus {
+    border: 1px solid var(--main-font-color);
+}
+.more_options {
+    position: absolute;
+    bottom: -75px;
+    right: 0px;
+    z-index: 50;
+    background-color: var(--secondary-color);
+    border-radius: 3px;
+    padding: 5px 15px 5px 15px;
+}
+.option_container {
+    display: flex;
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.option_container svg {
+    margin-right: 10px;
+}
+.option_container:hover > p {
+    color: var(--soft-text);
+}
+.like_amount_container {
+    display: flex;
+    text-align: left;
+}
+.like_amount_container svg {
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 5px;
+}
+.like_amount_container p {
+    font-size: 12px;
 }
 </style>

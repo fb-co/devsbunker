@@ -72,6 +72,9 @@
                 <p class="title highlightable">{{ projectData.title }}</p>
                 <p class="author">By: {{ projectData.author }}</p>
             </div>
+            <div>
+                {{ asdklfjasd }}
+            </div>
         </div>
         <!-- Because of the structure of the html, we need to use js to show the icons when you hover over the overlay -->
         <div class="hover_overlay" />

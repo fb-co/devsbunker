@@ -52,7 +52,7 @@ export default {
 }
 .desktopFeed {
     right: 0px;
-    bottom: calc(10px + var(--footer-height));
+    bottom: 10px;
     max-height: 380px;
     overflow-y: scroll;
 }
