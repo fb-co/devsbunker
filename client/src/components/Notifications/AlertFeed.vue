@@ -1,6 +1,10 @@
 <template>
-    <div class="alert_feed_container" :class="{mobileFeed: this.$store.getters.mobile, desktopFeed: !this.$store.getters.mobile}">
-        <Alert v-for="(alert, index) in alerts" :key="index" :alertData="alert" />
+    <div
+        ref="alert_feed" 
+        class="alert_feed_container" 
+        :class="{mobileFeed: this.$store.getters.mobile, desktopFeed: !this.$store.getters.mobile}"
+    >
+            <Alert v-for="(alert, index) in alerts" :key="index" :alertData="alert" />
     </div>
 </template>
 
@@ -16,6 +20,11 @@ export default {
     components: {
         Alert
     },
+    watch: {
+        alerts: function() {
+            setTimeout(() => { this.$refs.alert_feed.scrollTop = this.$refs.alert_feed.scrollHeight; }, 20);
+        }
+    }
 }
 </script>
 
@@ -43,6 +52,8 @@ export default {
 }
 .desktopFeed {
     right: 0px;
-    bottom: var(--footer-height);
+    bottom: calc(10px + var(--footer-height));
+    max-height: 380px;
+    overflow-y: scroll;
 }
 </style>

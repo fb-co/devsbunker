@@ -185,6 +185,23 @@ export default {
     margin: auto;
     margin-top: 20px;
 }
+.submit {
+    background-color: var(--error-red);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 125px;
+    height: 40px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: auto;
+    margin-top: 20px;
+}
+.submit:hover {
+    box-shadow: 0px 4px 20px var(--error-red);
+}
 .button_container {
     margin-bottom: 20px;
 }
