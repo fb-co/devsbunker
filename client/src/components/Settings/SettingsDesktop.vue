@@ -121,8 +121,8 @@ export default {
     padding-bottom: 30px;
     margin: 0 auto;
     border-radius: 6px;
-    background-color: var(--secondary-color);
-    box-shadow: 0px 0px 8px var(--drop-shadow);
+    /* background-color: var(--secondary-color); */
+    border: 1px solid var(--soft-text);
 }
 .setting_item {
     display: flex;
