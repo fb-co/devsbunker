@@ -252,7 +252,7 @@
                     type: 'pwd',
                 },
             ]"
-            title="Confirm"
+            title="Delete Account"
             @submitted="deleteProfile($event)"
         />
     </div>

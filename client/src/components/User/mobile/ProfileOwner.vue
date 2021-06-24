@@ -1,12 +1,8 @@
 <template>
     <div class="profileMobile" @click="showMore = false">
         <div class="pfp_backdrop">
-            <ProfilePictureBackdrop :username="this.$store.getters.username" />
-        </div>
-        <div class="profile_card">
-            <!--
             <div class="actions">
-                <div class="back-arrow" @click="$router.go(-1)">
+                <div class="back-arrow action_item vertical_flex_center" @click="$router.go(-1)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-arrow-narrow-left"
@@ -27,7 +23,7 @@
                 </div>
 
                 <div></div>
-                <div class="options" @click.stop.prevent="showMore = !showMore">
+                <div class="options action_item vertical_flex_center" @click.stop.prevent="showMore = !showMore">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-dots-vertical"
@@ -45,12 +41,15 @@
                         <circle cx="12" cy="19" r="1" />
                         <circle cx="12" cy="5" r="1" />
                     </svg>
-                    <div v-if="showMore" id="more-options" @click="downloadUserData()">
-                        <p>Download data</p>
+                    <div v-if="showMore" id="more-options">
+                        <p @click="downloadUserData()">Download data</p>
+                        <p @click="openConfirmation()">Delete Account</p>
                     </div>
                 </div>
             </div>
-            -->
+            <ProfilePictureBackdrop :username="this.$store.getters.username" />
+        </div>
+        <div class="profile_card">
 
             <!--<ProfilePicture v-if="userObject" :username="userObject.username" wrapperSize="120px" class="profile_pic" />-->
 
@@ -91,6 +90,18 @@
             <SavedProjects v-if="activeSection === 'saved'" />
             <General v-if="activeSection === 'general'" :userObject="mainUserObject" />
         </div>
+
+        <InputModal
+            ref="deleteProfileConfirmation"
+            :fields="[
+                {
+                    label: 'Confirm Password',
+                    type: 'pwd',
+                },
+            ]"
+            title="Delete Account"
+            @submitted="deleteProfile($event)"
+        />
     </div>
 </template>
 
@@ -99,6 +110,7 @@ import ProfileSections from "./ProfileSections/mobile.profile.imports.js";
 //import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import GraphQLService from "@/services/graphql.service";
 import ProfilePictureBackdrop from "@/components/User/ProfilePictureBackdrop.vue";
+import InputModal from "@/components/global/InputModal.vue";
 
 export default {
     data() {
@@ -115,7 +127,8 @@ export default {
     components: {
         ...ProfileSections,
         //ProfilePicture,
-        ProfilePictureBackdrop
+        ProfilePictureBackdrop,
+        InputModal,
     },
     methods: {
         navigateTo(elem) {
@@ -148,12 +161,46 @@ export default {
         updateFilter(value) {
             this.$emit("updateFilter", value);
         },
+        openConfirmation() {
+            this.$refs.deleteProfileConfirmation.open();
+        },
+        async deleteProfile(payload) {
+            const password = payload[0];
+
+            if (password) {
+                const res = await GraphQLService.deleteUserAccount(password, this.$store.getters.accessToken);
+                if (!res.errors) {
+                    if (res.data.deleteAccount.success) {
+                        this.accountDeleted = true;
+
+                        this.$store.commit("refreshAccessToken", null);
+                        this.$store.commit("changeLoggedInState", false);
+                        this.$store.commit("changeUsername", null);
+
+                        localStorage.removeItem("profile_pic_link");
+
+                        setTimeout(() => {
+                            this.$router.push("/");
+                        }, 2500);
+                    } else {
+                        this.$store.dispatch("alertUser", { msg: "Something went wrong", type: "error", title: "Error" });
+                    }
+                } else {
+                    this.$store.dispatch("alertUser", { msg: "Incorrect password", type: "error", title: "Error" });
+                }
+            }
+        },
     },
 };
 </script>
 
 <style scoped>
+.pfp_backdrop {
+    position: relative;
+}
 .actions {
+    position: absolute;
+    width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -161,29 +208,41 @@ export default {
     cursor: pointer;
 }
 .actions svg {
-    margin-top: 30px;
     stroke: var(--main-font-color);
+}
+.action_item {
+    padding: 5px;
+    margin-top: 20px;
+    background-color: var(--secondary-color);
+}
+.back-arrow {
+    border-radius: 50%;
+}
+.options {
+    position: relative;
+    border-radius: 10px;
 }
 
 #more-options {
     position: absolute;
-    width: 150px;
-    height: 50px;
+    right: 0px;
+    top: 110%;
+    z-index: 50;
+    width: 200px;
     background: var(--main-color);
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: default;
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    right: 30px;
-    margin-top: 15px;
-    z-index: 3;
 }
 #more-options p {
     color: #db5454;
     font-weight: bold;
     cursor: pointer;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 .profile_card {
     position: relative;

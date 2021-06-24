@@ -3,7 +3,12 @@
         <p class="notifications_header">Notifications</p>
         <div v-if="notifications" class="notification_card_container">
             <!-- Made the key account for many variables to avoid any duplicate key errors -->
-            <LargeNotificationCard v-for="(notification, index) in notifications" :key="index" :data="notification" width="100%" :class="{ unread: unread }" />
+            <LargeNotificationCard
+                v-for="(notification, index) in notifications"
+                :key="index"
+                :data="notification"
+                width="100%"
+            />
         </div>
         <div v-else>
             <svg
@@ -91,7 +96,6 @@ export default {
     data() {
         return {
             notifications: undefined,
-            unread: false,
         };
     },
     components: {
@@ -100,24 +104,16 @@ export default {
     created() {
         SharedMethods.loadPage();
 
-        GraphQLService.getAndReadNotifications(this.$store.getters.accessToken).then((res) => {
+        GraphQLService.getAndReadNotifications(
+            this.$store.getters.accessToken
+        ).then((res) => {
             this.notifications = res.data.getAndReadNotifications;
 
             // make any like or follow notifications read
             this.notifications.forEach((item) => {
-                if (!item.read) {
-                    this.unread = true;
-                }
-
                 if (item.type == "like" || item.type == "follow") {
-                    // mark as read after 5 seconds
-                    setTimeout(() => {
-                        item.read = true;
-                        this.unread = false;
-                    }, 5000);
+                    item.read = true;
                 }
-
-                // TODO: shall we remove notifications from the user document after they get read? otherwise just dont display them
             });
         });
     },
@@ -141,9 +137,5 @@ export default {
     font-weight: bold;
     margin: 0 auto;
     padding-top: 30px;
-}
-
-.unread {
-    border: 1px solid var(--main-font-color);
 }
 </style>

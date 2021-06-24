@@ -1,11 +1,11 @@
 <template>
     <div v-if="isOpen">
         <div class="model_overlay" @mousedown="close()"></div>
-        <div class="model_popup" @click.stop="" @mousedown.stop="">
+        <div class="model_popup" @click.stop="" @mousedown.stop="" :class="{ model_popup_desktop: !this.$store.getters.mobile, model_popup_mobile: this.$store.getters.mobile }">
             <div class="close_button">
-                <div style="width: 33.33%"></div>
+                <div style="width: 17%;"></div>
                 <p v-if="title" class="main_title vertical_flex_center">{{ title }}</p>
-                <div style="width: 33.33%">
+                <div style="width: 17%">
                     <svg
                         @click="close()"
                         xmlns="http://www.w3.org/2000/svg"
@@ -78,6 +78,9 @@ export default {
     methods: {
         open() {
             this.isOpen = true;
+
+            // auto focus on the first input (needs to be delayed slightly so the component can render)
+            setTimeout(() => { this.$refs.main_input[0].focus() }, 100);
         },
         close() {
             this.clearInputs();
@@ -115,6 +118,15 @@ export default {
 </script>
 
 <style scoped>
+@keyframes slideAnimation {
+    from {
+        top: -100%;
+    }
+    to {
+        top: 50%;
+    }
+}
+
 .model_overlay {
     position: fixed;
     top: 0;
@@ -130,10 +142,19 @@ export default {
     top: 50%;
     left: 50%;
     max-width: 400px;
-    width: 60%;
     background-color: var(--secondary-color);
     transform: translate(-50%, -50%);
     border-radius: 10px;
+    animation: slideAnimation 0.5s;
+}
+.model_popup_mobile > .close_button > .main_title {
+    font-size: 17px;
+}
+.model_popup_mobile {
+    width: 90%;
+}
+.model_popup_desktop {
+    width: 60%;
 }
 .close_button {
     display: flex;
@@ -158,6 +179,7 @@ export default {
 }
 .input_field {
     width: 250px;
+    max-width: 80%;
     margin: 0px auto 10px auto;
     border: 1px solid transparent;
 }

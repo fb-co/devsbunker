@@ -536,11 +536,8 @@ export default {
 
                     // the save() func is present (check by printing)
                     const saved = await user.save();
-                    
-                    // this is just a precaution in case somehow people have more than thirty notification
-                    const noticiationsToReturn = user.notifications.length > 30 ? user.notifications.splice(0, 30) : user.notifications;
 
-                    return noticiationsToReturn;
+                    return user.notifications;
                 } else {
                     return null;
                 }
