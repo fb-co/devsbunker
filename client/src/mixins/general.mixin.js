@@ -6,6 +6,7 @@ const GeneralProperties = {
     data() {
         return {
             darkTheme: localStorage.getItem("theme") === "dark-theme" ? true : false,
+            betterDesign: localStorage.getItem("betterDesign") === "true" ? true : false,
         };
     },
 };

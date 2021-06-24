@@ -46,6 +46,13 @@
                     @submitted="resetPwd($event[0], $event[1])"
                 />
             </div>
+
+            <div class="setting_item">
+                <p class="label">Better feed :P</p>
+                <div class="reset_pwd_container" @click="switchFeedTheme()">
+                    <p class="reset_pwd">lol</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -95,6 +102,17 @@ export default {
         },
         openResetPwdModal() {
             this.$refs.resetPwd.open();
+        },
+        switchFeedTheme() {
+            let current = localStorage.getItem("betterDesign");
+            current = current === "true" ? true : false;
+
+            console.log(current);
+            if (!current) {
+                localStorage.setItem("betterDesign", true);
+            } else {
+                localStorage.setItem("betterDesign", !current);
+            }
         },
     },
 };
