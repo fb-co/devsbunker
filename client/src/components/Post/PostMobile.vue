@@ -175,6 +175,7 @@ export default {
         }
     },
     mounted() {
+        console.log(this.postThumbnail);
         this.$refs.image_div.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) ), url('${this.postThumbnail}')`;
     },
     methods: {

@@ -1,9 +1,14 @@
 <template>
     <div id="otherUserMobile">
         <div class="profileMobile">
+            <div>
+                <ProfilePictureBackdrop :username="userObject.username" />
+            </div>
             <div class="profile_card">
+                <!--
                 <div class="space"></div>
                 <ProfilePicture v-if="userObject" :username="userObject.username" wrapperSize="120px" class="profile_pic" />
+                -->
                 <div class="card_container">
                     <p class="card_name">{{ userObject.username }}</p>
                     <p class="card_desc">{{ userObject.desc }}</p>
@@ -41,9 +46,10 @@
 </template>
 
 <script>
-import ProfilePicture from "@/components/User/ProfilePicture.vue";
+//import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import PostFeed from "@/components/PostFeed.vue";
 import GraphQLService from "@/services/graphql.service";
+import ProfilePictureBackdrop from "@/components/User/ProfilePictureBackdrop.vue";
 
 export default {
     data() {
@@ -52,8 +58,9 @@ export default {
         };
     },
     components: {
-        ProfilePicture,
+        //ProfilePicture,
         PostFeed,
+        ProfilePictureBackdrop
     },
     props: {
         mainUserObject: Object,
@@ -88,6 +95,7 @@ export default {
 }
 .profile_card {
     position: relative;
+    top: -100px;
     width: 93%;
     max-width: 500px;
     min-width: 250px;
@@ -98,7 +106,6 @@ export default {
     border-radius: 20px;
     z-index: 2;
     margin-bottom: 100px;
-    margin-top: 25px;
 }
 .card_container {
     padding-bottom: 30px;
@@ -145,7 +152,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: -60px;
+    margin-top: -125px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;

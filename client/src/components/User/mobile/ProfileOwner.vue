@@ -1,7 +1,10 @@
 <template>
     <div class="profileMobile" @click="showMore = false">
+        <div class="pfp_backdrop">
+            <ProfilePictureBackdrop :username="this.$store.getters.username" />
+        </div>
         <div class="profile_card">
-            <div class="space"></div>
+            <!--
             <div class="actions">
                 <div class="back-arrow" @click="$router.go(-1)">
                     <svg
@@ -47,9 +50,9 @@
                     </div>
                 </div>
             </div>
-            <div class="space"></div>
+            -->
 
-            <ProfilePicture v-if="userObject" :username="userObject.username" wrapperSize="120px" class="profile_pic" />
+            <!--<ProfilePicture v-if="userObject" :username="userObject.username" wrapperSize="120px" class="profile_pic" />-->
 
             <div class="card_container">
                 <p class="card_name">{{ $store.getters.username }}</p>
@@ -93,8 +96,9 @@
 
 <script>
 import ProfileSections from "./ProfileSections/mobile.profile.imports.js";
-import ProfilePicture from "@/components/User/ProfilePicture.vue";
+//import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import GraphQLService from "@/services/graphql.service";
+import ProfilePictureBackdrop from "@/components/User/ProfilePictureBackdrop.vue";
 
 export default {
     data() {
@@ -110,7 +114,8 @@ export default {
     },
     components: {
         ...ProfileSections,
-        ProfilePicture,
+        //ProfilePicture,
+        ProfilePictureBackdrop
     },
     methods: {
         navigateTo(elem) {
@@ -148,9 +153,6 @@ export default {
 </script>
 
 <style scoped>
-.space {
-    height: 25px;
-}
 .actions {
     display: flex;
     flex-direction: row;
@@ -185,6 +187,7 @@ export default {
 }
 .profile_card {
     position: relative;
+    top: -100px;
     width: 93%;
     max-width: 500px;
     min-width: 250px;
@@ -193,7 +196,6 @@ export default {
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
     margin-bottom: 50px;
-    margin-top: 25px;
     border-radius: 20px;
     z-index: 2;
 }
@@ -241,6 +243,7 @@ export default {
     width: 80%;
     max-width: 500px;
     min-width: 250px;
+    margin-top: -100px;
     margin-left: auto;
     margin-right: auto;
     height: 50px;

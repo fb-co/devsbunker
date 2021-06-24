@@ -5,7 +5,7 @@
             <p class="user_desc">{{ authorData.description }}</p>
             <div class="placeholder"></div>
             <div class="user_details">
-                <div v-if="$store.getters.accessToken && authorData.username !== $store.getters.username">
+                <div v-if="$store.getters.accessToken && authorData.username !== $store.getters.username" class="follow_btn_container">
                     <button v-if="!authorData.isFollowing" @click.stop="followUser(authorData.username)" class="follow_btn">Follow</button>
                     <button v-else @click.stop="unfollowUser(authorData.username)" class="follow_btn">Unfollow</button>
                 </div>
@@ -76,8 +76,7 @@ export default {
     flex-direction: row;
 }
 .user_details_followers {
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 15px;
 }
 
 .placeholder {
@@ -111,6 +110,9 @@ export default {
 .follow_btn:hover {
     box-shadow: 0px 4px 40px var(--main-accent);
 }
+.follow_btn_container {
+    margin-right: 20px;
+}
 
 .info {
     display: flex;
@@ -127,7 +129,7 @@ export default {
 /* mobile styles */
 @media only screen and (max-width: 950px) {
     .user_name {
-        font-size: 14px;
+        font-size: 20px;
     }
     .info {
         font-size: 11px;
