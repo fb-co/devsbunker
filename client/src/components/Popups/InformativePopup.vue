@@ -1,12 +1,12 @@
 <template>
     <div class="more_information_container" @mousedown.prevent="open()">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-question-mark" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-question-mark" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M8 8a3.5 3 0 0 1 3.5 -3h1a3.5 3 0 0 1 3.5 3a3 3 0 0 1 -2 3a3 4 0 0 0 -2 4" />
             <line x1="12" y1="19" x2="12" y2="19.01" />
         </svg>
         <div @click.stop="close()" v-if="informationOpen" class="backdrop" />
-        <div @click.stop="" v-if="informationOpen" class="information_container">
+        <div @click.stop="" v-if="informationOpen" class="information_container" :class="{ information_container_desktop: !this.$store.getters.mobile, information_container_mobile: this.$store.getters.mobile }">
             <div class="cont_header">
                 <div class="close_btn_container vertical_flex_center">
                     <svg @click="close()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -86,19 +86,28 @@ export default {
     position: fixed;
     top: 50%;
     left: 50%;
-    z-index: 13;
     transform: translateX(-50%) translateY(-50%);
-    width: 40%;
-    max-width: 600px;
-    max-height: 80vh;
-    min-height: 300px;
+    z-index: 13;
     overflow-y: auto;
     background-color: var(--secondary-color);
     border-radius: 5px;
     box-shadow: 0px 0px 15px var(--drop-shadow);
-
     animation: slideAnimation 0.4s;
 }
+.information_container_mobile {
+    width: 95%;
+    max-width: 400px;
+    max-height: 95vh;
+    min-height: 300px;
+}
+.information_container_desktop {
+    width: 40%;
+    min-width: 600px;
+    max-width: 600px;
+    max-height: 80vh;
+    min-height: 300px;
+}
+
 .cont_header {
     display: flex;
     flex-direction: row;

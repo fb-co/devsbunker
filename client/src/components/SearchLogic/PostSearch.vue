@@ -73,7 +73,21 @@
             </div>
             <div v-else>
                 <div v-if="moreOptionsMenu" class="more_options_mobile">
-                    <h4>Search By</h4>
+                    <div class="more_opt_header" style="margin-top: 20px;">
+                        <div class="mark_container vertical_flex_center" style="width: 60px;">
+                            <InformativePopup title="Search help" style="margin: 0 auto;">
+                                <p>The tag option allows you to find posts which include one or more tags.</p>
+                                <p style="margin-top: 15px; margin-bottom: 5px"><strong>Ex.</strong></p>
+                                <p style="font-size: 18px;">tag: java, python</p>
+                                <div class="line" style="width: 100%; margin-top: 20px; margin-bottom: 20px;" />
+                                <p>The author option allows you to find posts created by a certain author.</p>
+                                <p style="margin-top: 15px; margin-bottom: 5px"><strong>Ex.</strong></p>
+                                <p style="font-size: 18px;">author: John</p>
+                            </InformativePopup>
+                        </div>
+                        <p class="list_title vertical_flex_center" style="color: var(--main-color)">Search By:</p>
+                        <div style="width: 60px;" />
+                    </div>
                     <p @mousedown.stop="addToInput('tag:')">Tag</p>
                     <p @mousedown.stop="addToInput('author:')">Author</p>
                 </div>
@@ -236,10 +250,10 @@ export default {
     }
     @keyframes moreOptionsSlider {
         from {
-            transform: translate(50%) translateY(100%);
+            bottom: -100%;
         }
         to {
-            transform: translate(50%) translateY(0%);
+            bottom: 0px;
         }
     }
     .input_loading_cont {
@@ -290,7 +304,7 @@ export default {
     }
     .more_opt_header {
         display: flex;
-        margin-top: 5px;
+        margin-top: 10px;
     }
     .main_input {
         font-size: 18px;
@@ -302,21 +316,19 @@ export default {
         display: flex;
         flex-direction: column;
         background-color: var(--burger-menu-bg);
-        color: var(--main-color);
         bottom: 0px;
-        right: 50%;
-        transform: translateX(50%);
+        right: 0px;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         padding-bottom: 40px;
         z-index: 13;
-        animation: moreOptionsSlider 0.5s;
+        animation: moreOptionsSlider 0.4s;
     }
-    .more_options_mobile h4 {
+    .more_options_mobile > h4 {
         margin-top: 20px;
         margin-bottom: 20px;
     }
-    .more_options_mobile p {
+    .more_options_mobile > p {
         cursor: pointer;
         width: 100%;
         padding-top: 13px;
