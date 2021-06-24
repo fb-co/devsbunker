@@ -52,7 +52,21 @@
             
             <div v-if="!$store.getters.mobile">
                 <div v-if="moreOptionsMenu" class="more_options">
-                    <p class="list_title">Search By:</p>
+                    <div class="more_opt_header">
+                        <div class="mark_container">
+                            <InformativePopup title="Search help">
+                                <p>The tag option allows you to find posts which include one or more tags.</p>
+                                <p style="margin-top: 15px; margin-bottom: 5px"><strong>Ex.</strong></p>
+                                <p style="font-size: 18px;">tag: java, python</p>
+                                <div class="line" style="width: 100%; margin-top: 20px; margin-bottom: 20px;" />
+                                <p>The author option allows you to find posts created by a certain author.</p>
+                                <p style="margin-top: 15px; margin-bottom: 5px"><strong>Ex.</strong></p>
+                                <p style="font-size: 18px;">author: John</p>
+                            </InformativePopup>
+                        </div>
+                        <p class="list_title vertical_flex_center">Search By:</p>
+                        <div style="width: 40px;" />
+                    </div>
                     <p class="more_option" @mousedown.stop="addToInput('tag:')">Tag</p>
                     <p class="more_option" @mousedown.stop="addToInput('author:')">Author</p>
                 </div>
@@ -72,6 +86,7 @@
 <script>
 import GraphQLService from '@/services/graphql.service';
 import SpicyInput from "@/components/global/SpicyInput.vue";
+import InformativePopup from "@/components/Popups/InformativePopup.vue";
 //import ScreenType from "@/utils/screenType.js";
 
 export default {
@@ -116,7 +131,8 @@ export default {
         },
     },
     components: {
-        SpicyInput
+        SpicyInput,
+        InformativePopup
     },
     methods: {
         // needs to be a function because safari has tabindex disabled by default
@@ -246,9 +262,14 @@ export default {
 
     .list_title {
         font-weight: bold;
-        margin-top: 10px;
-        margin-bottom: 15px;
         color: var(--main-font-color);
+        flex-grow: 1;
+        text-align: center;
+    }
+    .mark_container {
+        display: flex; 
+        justify-content: center; 
+        width: 40px; 
     }
     .more_options {
         position: absolute;
@@ -266,6 +287,10 @@ export default {
     }
     .more_option:hover {
         color: var(--soft-text);
+    }
+    .more_opt_header {
+        display: flex;
+        margin-top: 5px;
     }
     .main_input {
         font-size: 18px;

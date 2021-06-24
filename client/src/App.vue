@@ -158,6 +158,21 @@ body {
     margin: 0 auto;
     border-radius: 5px;
 }
+.general_button {
+    background-color: var(--main-accent);
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    width: 75px;
+    height: 40px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.general_button:hover {
+    box-shadow: 0px 4px 20px var(--main-accent);
+}
 .relative_vertical_center {
     position: relative;
     top: 50%;
