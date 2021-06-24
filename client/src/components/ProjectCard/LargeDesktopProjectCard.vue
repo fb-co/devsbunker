@@ -383,12 +383,14 @@ export default {
 }
 .more_options {
     position: absolute;
-    bottom: -75px;
+    top: 98%;
     right: 0px;
     z-index: 50;
     background-color: var(--secondary-color);
     border-radius: 3px;
     padding: 5px 15px 5px 15px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--soft-text);
 }
 .option_container {
     display: flex;
