@@ -35,7 +35,6 @@
                     </div>
                     <div class="main_links_container row_item">
                         <div
-                            @click="$router.push({ name: 'userInformation' })"
                             class="option-wrapper link_item"
                             :class="{
                                 active_link: $route.path.includes('information'),
@@ -63,7 +62,6 @@
                         </div>
 
                         <div
-                            @click="$router.push({ name: 'userProjects' })"
                             class="option-wrapper link_item"
                             :class="{
                                 active_link: $route.path.includes('projects'),
@@ -90,11 +88,7 @@
                             <router-link :to="{ name: 'userProjects' }">Your Projects</router-link>
                         </div>
 
-                        <div
-                            @click="$router.push({ name: 'userSavedProjects' })"
-                            class="option-wrapper link_item"
-                            :class="{ active_link: $route.path.includes('saved') }"
-                        >
+                        <div class="option-wrapper link_item" :class="{ active_link: $route.path.includes('saved') }">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-bookmark"
@@ -115,7 +109,6 @@
                         </div>
 
                         <div
-                            @click="$router.push({ name: 'userPurchases' })"
                             class="option-wrapper link_item"
                             :class="{
                                 active_link: $route.path.includes('purchases'),

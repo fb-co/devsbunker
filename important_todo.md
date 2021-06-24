@@ -46,10 +46,10 @@
 -   [x] Alert box should have a max height where the newer alerts are prioritized (im struggling so hard with this for some reason)
 
 -   [x] Issues with following people and changing passwords/deleting account authentication
+
     -   jac was (and still is) stoopid
 
 -   [x] Add likeAmt and more options menu to project cards (mobile & desktop)
-
 
 ## Low Priority
 
@@ -57,7 +57,7 @@
 
 -   [ ] mark as read as soon as user navigates to notification page (hot reload)
 
--   [ ] Redundant navigation errors for some reason in the User pages (try clicking around the tabs a bit and you should see them)
+-   [x] Redundant navigation errors for some reason in the User pages (try clicking around the tabs a bit and you should see them)
 
 -   [ ] Right after you create a post and it hot reloads, you can't like or save it until you refresh (doesn't show graphically)
 
@@ -66,3 +66,4 @@
 -   [x] Post view should have static left and right content (maybe)
 
 -   [ ] Add security check (pwd confirmation) when you try and delete a post
+    -   No.
