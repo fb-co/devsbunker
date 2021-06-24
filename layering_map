@@ -15,10 +15,13 @@ Navbars --------------------------- 5
 Backdrops ------------------------- 9
  - Input modal backdrop 9
  - Post search more options 9
+ - MobileMoreOptions 9
 
 Primary Popups -> 13
  - Input modal popup 13
  - Post search more options popup 13
+ - mobile more options menu 13
+ - Informative info 13
 
 ALWAYS VISIBLE (mostly used for focus based popups) -> 50
  - Post search desktop more options 50
