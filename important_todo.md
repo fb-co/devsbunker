@@ -50,7 +50,6 @@
 
 -   [x] Add likeAmt and more options menu to project cards (mobile & desktop)
 
--   [ ] Add security check (pwd confirmation) when you try and delete a post
 
 ## Low Priority
 
@@ -65,3 +64,5 @@
 -   [ ] Remove all follow buttons for yourself since they don't work it can be confusing
 
 -   [x] Post view should have static left and right content (maybe)
+
+-   [ ] Add security check (pwd confirmation) when you try and delete a post
