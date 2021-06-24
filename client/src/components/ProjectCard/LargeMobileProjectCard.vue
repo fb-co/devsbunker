@@ -348,7 +348,7 @@ export default {
     color: #fff;
     font-size: 17px;
     font-weight: bold;
-    padding: 15px 8px 5px 8px;
+    padding: 10px 8px 8px 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -371,7 +371,7 @@ export default {
     cursor: pointer;
 }
 .more_options_container:focus {
-    border: 1px solid var(--main-font-color);
+    border: 1px solid #fff;
 }
 .like_amount_container {
     display: flex;
@@ -384,5 +384,6 @@ export default {
 }
 .like_amount_container p {
     font-size: 12px;
+    color: rgb(189, 189, 189);
 }
 </style>

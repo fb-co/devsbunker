@@ -26,8 +26,16 @@ export default async function getPostByPartial(partial_name, filter, userToFilte
 
         // see if there is an inline filter (search by tag, author, etc)
         if (partial_name.substring(0, 4) === "tag:") {
-            customQueries.push({ tags: new RegExp(partial_name.substring(4), "i"), enabled: true });
-            console.log(customQueries);
+
+            // process the taglist into an array and strip any whitespace and convert to regExp
+            const tagList = partial_name.substring(4).split(",");
+
+            for (let i = 0; i < tagList.length; i++) {
+                tagList[i] = new RegExp(tagList[i].trim(), "i");
+            }
+            
+            // find all posts which contain all the tags
+            customQueries.push({ tags: { $all: tagList }, enabled: true });
         } else if (partial_name.substring(0, 7) === "author:") {
             customQueries.push({ author: new RegExp(partial_name.substring(7), "i"), enabled: true });
         } else {
