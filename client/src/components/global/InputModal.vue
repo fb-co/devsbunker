@@ -27,7 +27,13 @@
             </div>
             <div class="fields_container">
                 <SpicyInput v-for="(input, index) in fields" :key="index" class="input_field">
-                    <input :type="input.type == 'pwd' ? 'password' : 'text'" :label="input.label" :placeholder="input.label" ref="main_input" v-model="inputFields[index]" />
+                    <input
+                        :type="input.type == 'pwd' ? 'password' : 'text'"
+                        :label="input.label"
+                        :placeholder="input.label"
+                        ref="main_input"
+                        v-model="inputFields[index]"
+                    />
                 </SpicyInput>
             </div>
             <p class="error_msg" ref="error">Invalid Credentials</p>
@@ -53,7 +59,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: "Confirm"
+            default: "Confirm",
         },
         btnText: {
             type: String,
@@ -84,9 +90,9 @@ export default {
         clearInputs() {
             this.inputFields = [];
         },
-        showError(message, clearFields=false) {
+        showError(message, clearFields = false) {
             const errorMsg = this.$refs.error;
-            
+
             if (clearFields) {
                 this.clearInputs();
             }
@@ -100,7 +106,7 @@ export default {
                 this.$refs.main_input[i].style.color = "red";
                 this.$refs.main_input[i].style.border = "1px solid red";
             }
-        }
+        },
     },
     components: {
         SpicyInput,
@@ -140,16 +146,18 @@ export default {
     margin: 10px;
 }
 .close_button svg:hover {
-    background-color: var(--error-red);
+    stroke-width: 2px;
 }
 .fields_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 .input_field {
-    width: 200px;
+    width: 250px;
     margin: 0px auto 10px auto;
     border: 1px solid transparent;
 }
@@ -166,41 +174,28 @@ export default {
 
 .main_title {
     text-align: center;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     flex-grow: 1;
 }
 
 .submit {
-    background-color: var(--error-red);
-    border: none;
-    outline: none;
+    border: 2px solid var(--error-red);
     border-radius: 5px;
     width: 125px;
     height: 40px;
-    color: #fff;
+    color: var(--error-red);
     font-size: 15px;
     font-weight: bold;
     cursor: pointer;
     margin: auto;
     margin-top: 20px;
-}
-.submit {
-    background-color: var(--error-red);
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    width: 125px;
-    height: 40px;
-    color: #fff;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    margin: auto;
-    margin-top: 20px;
+
+    transition: 0.3s;
 }
 .submit:hover {
-    box-shadow: 0px 4px 20px var(--error-red);
+    background-color: var(--error-red);
+    color: #fff;
 }
 .button_container {
     margin-bottom: 20px;
