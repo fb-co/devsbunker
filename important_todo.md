@@ -51,6 +51,8 @@
 
 -   [x] Add likeAmt and more options menu to project cards (mobile & desktop)
 
+-   [ ] new notifications are immediately marked as read for some reason. Ive tried to login with account X, like Y's post, logout and login as Y. The notification of the like was already marked as read
+
 ## Low Priority
 
 -   [x] Optimize notification bell, and make a standardized component (ill do this)
@@ -66,4 +68,7 @@
 -   [x] Post view should have static left and right content (maybe)
 
 -   [ ] Add security check (pwd confirmation) when you try and delete a post
+
     -   No.
+
+-   [ ] add better types to Mongoose documents. For example "Array" should be replaced with something like `[SomeSpecificObject]`
