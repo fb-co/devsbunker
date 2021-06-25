@@ -37,7 +37,12 @@ const LoadMore = {
             }
 
             if (this.queryType === "all") {
-                const res = await GraphQLService.fetchPosts(filter || this.sortingType, this.getLastPostId(), this.getLastPostUniqueField(), this.$store.getters.accessToken);
+                const res = await GraphQLService.fetchPosts(
+                    filter || this.sortingType,
+                    this.getLastPostId(),
+                    this.getLastPostUniqueField(),
+                    this.$store.getters.accessToken
+                );
                 this.posts = this.posts.concat(res.data.getPosts.posts);
                 this.fetchedAll = res.data.getPosts.fetchedAll;
 
@@ -55,7 +60,12 @@ const LoadMore = {
 
                 this.$store.commit("appendPosts", res.data.getPostsByAuthor.posts);
             } else if (this.queryType === "saved") {
-                const res = await GraphQLService.fetchSavedPosts(this.getLastPostId(), this.getLastPostUniqueField(), filter || this.sortingType, this.$store.getters.accessToken);
+                const res = await GraphQLService.fetchSavedPosts(
+                    this.getLastPostId(),
+                    this.getLastPostUniqueField(),
+                    filter || this.sortingType,
+                    this.$store.getters.accessToken
+                );
                 this.posts = this.posts.concat(res.data.getSavedPosts.posts);
                 this.fetchedAll = res.data.getSavedPosts.fetchedAll;
 
@@ -70,7 +80,6 @@ const LoadMore = {
 
             // unshift newly chached post into this.posts
             if (newPost) {
-                console.log(newPost);
                 this.posts.unshift(newPost);
             }
         },

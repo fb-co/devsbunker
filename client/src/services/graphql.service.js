@@ -76,7 +76,7 @@ const GraphQLService = {
                 .then((res) => res.json())
                 .catch(console.error);
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -101,7 +101,7 @@ const GraphQLService = {
                 .then((res) => res.json())
                 .catch(console.error);
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -165,7 +165,7 @@ const GraphQLService = {
                 .then((res) => res.json())
                 .catch(console.error);
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -190,7 +190,7 @@ const GraphQLService = {
                 .then((res) => res.json())
                 .catch(console.error);
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -232,7 +232,7 @@ const GraphQLService = {
                     console.error(err);
                 });
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -270,7 +270,7 @@ const GraphQLService = {
                 .then((res) => res.json())
                 .catch(console.error);
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -303,7 +303,7 @@ const GraphQLService = {
                 })
                 .catch(console.error);
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -332,7 +332,7 @@ const GraphQLService = {
                 })
                 .catch(console.error);
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -366,7 +366,7 @@ const GraphQLService = {
                 })
                 .catch(console.error);
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -397,7 +397,7 @@ const GraphQLService = {
                 })
                 .catch(console.error);
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -429,7 +429,7 @@ const GraphQLService = {
                     })
                     .catch(console.error);
             } catch (err) {
-                return console.log(err);
+                return console.error(err);
             }
         }
     },
@@ -493,7 +493,7 @@ const GraphQLService = {
                 })
                 .catch(console.error);
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -536,7 +536,7 @@ const GraphQLService = {
                 })
                 .catch(console.error);
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -562,7 +562,7 @@ const GraphQLService = {
             });
             return res.json();
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -588,7 +588,7 @@ const GraphQLService = {
             });
             return res.json();
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -619,7 +619,7 @@ const GraphQLService = {
             });
             return res.json();
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -644,7 +644,7 @@ const GraphQLService = {
             });
             return res.json();
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
     unSavePost: async function(token, postId) {
@@ -668,7 +668,7 @@ const GraphQLService = {
             });
             return res.json();
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -695,7 +695,7 @@ const GraphQLService = {
 
             return res.json();
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -722,7 +722,7 @@ const GraphQLService = {
 
             return res.json();
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -735,9 +735,22 @@ const GraphQLService = {
                     author
                     description
                     thumbnail
+                    images {
+                        ogname
+                        dbname
+                    }
                     links
                     collaborators
                     tags
+                    likes
+                    likeAmt
+                    createdAt
+                    price
+                    comments {
+                        commenter
+                        comment
+                        timestamp
+                    }
                 }
             }
         `;
@@ -761,7 +774,7 @@ const GraphQLService = {
 
             return res.json();
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -800,7 +813,7 @@ const GraphQLService = {
             });
             return res.json();
         } catch (err) {
-            return console.log(err);
+            return console.error(err);
         }
     },
 
@@ -881,7 +894,7 @@ const GraphQLService = {
                 credentials: "include",
                 body: JSON.stringify({ query }),
             });
-            
+
             const json = await res.json();
 
             if (!json.errors) {
@@ -920,7 +933,7 @@ const GraphQLService = {
 
                 // get rid of any localstorage cache
                 localStorage.removeItem("profile_pic_link");
-                
+
                 // get rid of any user specific data in the store
                 store.dispatch("flush_user_data");
 

@@ -14,33 +14,37 @@ export default async function uploadMedia(req, res, next) {
             // if user is authorized, proceed with handling files
             if (!(files.length > 0)) {
                 // if no files were attached proceed to create the post anyway
-                
+
                 const post = await Posts.findOne({
                     _id: postId,
                 });
-                
+
                 if (post && post.author === req.user.username) {
                     post.thumbnail = "@/assets/project_img_placeholder.png";
 
-                    // shall we add a limit?
                     await post.save();
 
+                    // NOTE: after a post is saved to the db it obv has 0 likes so we set the isLiked and isSaved fields to false.
+                    // remember that these fields ARE not present in the mongoose post document, they are independent fields needed for the UI
                     res.json({
                         message: "Successfully uploaded 0 files.",
                         post: {
                             id: post._id,
-                            author: post.author,
-                            collaborators: post.collaborators,
-                            comments: post.comments,
-                            createdAt: post.createdAt,
-                            description: post.description,
-                            images: post.images,
-                            likeAmt: post.likeAmt,
-                            likes: post.likes,
-                            links: post.links,
-                            tags: post.tags,
-                            thumbnail: post.thumbnail,
                             title: post.title,
+                            author: post.author,
+                            description: post.description,
+                            thumbnail: post.thumbnail,
+                            images: post.images,
+                            links: post.links,
+                            collaborators: post.collaborators,
+                            tags: post.tags,
+                            likes: post.likes,
+                            likeAmt: post.likeAmt,
+                            isLiked: false,
+                            isSaved: false,
+                            price: post.price,
+                            createdAt: post.createdAt,
+                            comments: post.comments,
                         },
                     });
                 } else {
@@ -75,6 +79,8 @@ export default async function uploadMedia(req, res, next) {
                         _id: postId,
                     });
 
+                    console.log(post);
+
                     if (post && post.author === req.user.username) {
                         post.images = data;
                         post.thumbnail = data[0].dbname;
@@ -87,18 +93,21 @@ export default async function uploadMedia(req, res, next) {
                             data: data,
                             post: {
                                 id: post._id,
+                                title: post.title,
                                 author: post.author,
-                                collaborators: post.collaborators,
-                                comments: post.comments,
-                                createdAt: post.createdAt,
                                 description: post.description,
                                 images: post.images,
-                                likeAmt: post.likeAmt,
-                                likes: post.likes,
                                 links: post.links,
-                                tags: post.tags,
                                 thumbnail: post.thumbnail,
-                                title: post.title,
+                                collaborators: post.collaborators,
+                                tags: post.tags,
+                                likes: post.likes,
+                                likeAmt: post.likeAmt,
+                                isLiked: false,
+                                isSaved: false,
+                                price: post.price,
+                                createdAt: post.createdAt,
+                                comments: post.comments,
                             },
                         });
                     } else {

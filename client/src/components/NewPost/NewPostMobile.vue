@@ -433,17 +433,12 @@ export default {
                             }
 
                             FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then(async (res) => {
-                                // TODO: add error  checking
                                 if (!/Successfully/.test(res.message)) {
                                     this.$store.dispatch("alertUser", { msg: res.message, type: "error", title: "Error" });
                                     return;
                                 }
 
                                 this.$store.dispatch("alertUser", { msg: "Created post!", type: "success", title: "Success" });
-
-                                const newPost = res.post;
-                                newPost.isLiked = false;
-                                newPost.isSaved = false;
 
                                 await this.$store.dispatch("cacheNewlyMadePost", res.post);
 

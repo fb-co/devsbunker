@@ -219,11 +219,10 @@ export default {
                     links: post.links,
                     collaborators: payload.collaborators,
                     tags: payload.tags,
-                    likes: [],
-                    likeAmt: 0,
-                    isLiked: false,
-                    isSaved: false,
+                    likes: post.likes,
+                    likeAmt: post.likeAmt,
                     price: payload.price,
+                    createdAt: post.createdAt,
                     comments: [],
                 };
             } catch (err) {
