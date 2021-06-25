@@ -28,7 +28,7 @@
 
 -   [x] Highlight search phrases on post searches
 
--   [ ] @focus and @blur does not work on iphone making a lot of the dropdowns and focus based menues not work
+-   [x] @focus and @blur does not work on iphone making a lot of the dropdowns and focus based menues not work
 
 -   [x] GraphQLService line that reads "TODO: WE SHOULD NOT DO THIS HERE!!!!" (don't know what it is so ill leave this for you)
 
