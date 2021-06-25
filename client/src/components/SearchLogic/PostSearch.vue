@@ -50,7 +50,7 @@
                 </svg>
             </SpicyInput>
             
-            <div v-if="!$store.getters.mobile">
+            <div v-if="!$store.getters.mobile" style="position: relative;">
                 <div v-if="moreOptionsMenu" class="more_options">
                     <div class="more_opt_header">
                         <div class="mark_container">
@@ -334,9 +334,6 @@ export default {
         padding-top: 13px;
         padding-bottom: 13px;
         color: var(--main-color);
-    }
-    .more_options_mobile p:hover {
-        color: var(--soft-text);
     }
     .more_options_backdrop {
         position: fixed;

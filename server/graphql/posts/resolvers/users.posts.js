@@ -267,11 +267,16 @@ export default {
 
                         await user.save();
 
-                        const userToNotify = await User.findOne({
-                            username: post.author,
-                            enabled: true,
-                        });
-
+                        let userToNotify;
+                        
+                        // only notify the user if the post is not theirs
+                        if (jwtPayload.username !== post.author) {
+                            userToNotify = await User.findOne({
+                                username: post.author,
+                                enabled: true,
+                            });
+                        } 
+                        
                         if (userToNotify) {
                             // only notify the user if there is not already an identical notification.
                             // this is to prevent people from spamming notifications & duplicate key error
