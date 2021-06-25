@@ -61,14 +61,12 @@
 
 -   [x] Redundant navigation errors for some reason in the User pages (try clicking around the tabs a bit and you should see them)
 
--   [ ] Right after you create a post and it hot reloads, you can't like or save it until you refresh (doesn't show graphically)
+-   [x] Right after you create a post and it hot reloads, you can't like or save it until you refresh (doesn't show graphically)
 
 -   [ ] Remove all follow buttons for yourself since they don't work it can be confusing
 
 -   [x] Post view should have static left and right content (maybe)
 
--   [ ] Add security check (pwd confirmation) when you try and delete a post
-
-    -   No.
+-   [ ] Add confirmation when you try and delete a post
 
 -   [ ] add better types to Mongoose documents. For example "Array" should be replaced with something like `[SomeSpecificObject]`
