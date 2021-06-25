@@ -43,6 +43,7 @@ const LoadMore = {
                     this.getLastPostUniqueField(),
                     this.$store.getters.accessToken
                 );
+                console.log(res);
                 this.posts = this.posts.concat(res.data.getPosts.posts);
                 this.fetchedAll = res.data.getPosts.fetchedAll;
 
