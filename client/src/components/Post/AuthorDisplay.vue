@@ -8,7 +8,7 @@
         <div v-if="showFollowButton" class="follow_btn_container">
             <div style="flex-grow: 1;"></div>
             <!-- Placeholder -->
-            <button v-if="$store.getters.accessToken" class="follow_btn" @click.stop="$emit('followAction')">{{ isFollowing ? "Unfollow" : "Follow" }}</button>
+            <button v-if="$store.getters.accessToken && $store.getters.username !== username" class="follow_btn" @click.stop="$emit('followAction')">{{ isFollowing ? "Unfollow" : "Follow" }}</button>
         </div>
     </div>
 </template>

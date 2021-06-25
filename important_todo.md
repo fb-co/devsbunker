@@ -73,7 +73,7 @@
 
 -   [x] Right after you create a post and it hot reloads, you can't like or save it until you refresh (doesn't show graphically)
 
--   [ ] Remove all follow buttons for yourself since they don't work it can be confusing
+-   [x] Remove all follow buttons for yourself since they don't work it can be confusing
 
 -   [x] Post view should have static left and right content (maybe)
 
