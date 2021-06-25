@@ -9,6 +9,16 @@ export default {
             unread_amount: this.$store.getters.unread_notifications || 0,
         }
     },
+    computed: {
+        unread() {
+            return this.$store.getters.unread_notifications;
+        }
+    },
+    watch: {
+        unread(newUnread) {
+            this.unread_amount = newUnread;
+        }
+    }
 }
 </script>
 

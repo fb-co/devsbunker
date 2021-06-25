@@ -26,6 +26,9 @@ const mutations = {
     removePersonalPfpLink(state) {
         state.pfpLink = null;
     },
+    readNotifications(state) {
+        state.unreadNotificationsAmt = 0;
+    }
 };
 
 const actions = {

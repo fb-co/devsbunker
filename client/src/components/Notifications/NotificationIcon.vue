@@ -33,6 +33,16 @@ export default {
             default: "var(--main-font-color)"
         },
     },
+    computed: {
+        unread() {
+            return this.$store.getters.unread_notifications;
+        }
+    },
+    watch: {
+        unread(newUnread) {
+            this.unread_notifications = newUnread;
+        }
+    }
 }
 </script>
 
