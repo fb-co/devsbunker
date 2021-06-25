@@ -77,7 +77,7 @@
 
 -   [x] Post view should have static left and right content (maybe)
 
--   [ ] Add confirmation when you try and delete a post
+-   [x] Add confirmation when you try and delete a post
 
 -   [ ] add better types to Mongoose documents. For example "Array" should be replaced with something like `[SomeSpecificObject]`
 
