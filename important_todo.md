@@ -53,6 +53,14 @@
 
 -   [x] new notifications are immediately marked as read for some reason. Ive tried to login with account X, like Y's post, logout and login as Y. The notification of the like was already marked as read
 
+-   [ ] avoid sending notification if users like their own posts
+
+-   [ ] when u view a post the links should display the link itself and not just the favicon of that site (maybe make a list)
+
+-   [ ] fix that troll commit
+
+-   [ ] update Detailed proj cards to work with latest progress and polish them
+
 ## Low Priority
 
 -   [x] Optimize notification bell, and make a standardized component (ill do this)
@@ -70,3 +78,5 @@
 -   [ ] Add confirmation when you try and delete a post
 
 -   [ ] add better types to Mongoose documents. For example "Array" should be replaced with something like `[SomeSpecificObject]`
+
+-   [ ] remove console logs from everywhere before production
