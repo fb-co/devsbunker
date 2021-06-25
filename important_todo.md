@@ -53,7 +53,7 @@
 
 -   [x] new notifications are immediately marked as read for some reason. Ive tried to login with account X, like Y's post, logout and login as Y. The notification of the like was already marked as read
 
--   [ ] avoid sending notification if users like their own posts
+-   [x] avoid sending notification if users like their own posts
 
 -   [ ] when u view a post the links should display the link itself and not just the favicon of that site (maybe make a list)
 
