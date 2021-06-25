@@ -70,6 +70,7 @@ const LoadMore = {
 
             // unshift newly chached post into this.posts
             if (newPost) {
+                console.log(newPost);
                 this.posts.unshift(newPost);
             }
         },

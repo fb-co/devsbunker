@@ -440,7 +440,11 @@ export default {
                                 }
 
                                 this.$store.dispatch("alertUser", { msg: "Created post!", type: "success", title: "Success" });
-                                
+
+                                const newPost = res.post;
+                                newPost.isLiked = false;
+                                newPost.isSaved = false;
+
                                 await this.$store.dispatch("cacheNewlyMadePost", res.post);
 
                                 if (this.$route.name == "Home") {

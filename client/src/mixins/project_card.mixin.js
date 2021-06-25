@@ -14,6 +14,7 @@ const projectCard = {
             }
 
             GraphQLService.savePost(this.$store.getters.accessToken, id).then((savedPost) => {
+                console.log(savedPost);
                 this.projectData.isSaved = savedPost.data.savePost;
             });
         },
