@@ -48,10 +48,11 @@
             </div>
 
             <div class="setting_item">
-                <p class="label">Better feed :P</p>
-                <div class="reset_pwd_container" @click="switchFeedTheme()">
-                    <p class="reset_pwd">lol</p>
-                </div>
+                <p class="label">Post feed theme</p>
+                <Dropdown :label="feedTheme" fontSize="12px" linkHeight="40px" @itemSelected="switchFeedTheme">
+                    <button>Simple</button>
+                    <button>Descriptive</button>
+                </Dropdown>
             </div>
         </div>
     </div>
@@ -77,12 +78,16 @@ import GraphQLService from "@/services/graphql.service";
 
 import ThemeSwitcher from "@/components/global/ThemeSwitcher.vue";
 import InputModal from "@/components/global/InputModal.vue";
+import Dropdown from "@/components/global/Dropdown.vue";
+import GeneralProperties from "@/mixins/general.mixin";
 
 export default {
     components: {
         ThemeSwitcher,
         InputModal,
+        Dropdown,
     },
+    mixins: [GeneralProperties],
     methods: {
         async resetPwd(pwd, pwdConfirm) {
             if (pwd == pwdConfirm) {
@@ -103,15 +108,11 @@ export default {
         openResetPwdModal() {
             this.$refs.resetPwd.open();
         },
-        switchFeedTheme() {
-            let current = localStorage.getItem("betterDesign");
-            current = current === "true" ? true : false;
+        switchFeedTheme(value) {
+            let current = localStorage.getItem("feedTheme");
 
-            console.log(current);
-            if (!current) {
-                localStorage.setItem("betterDesign", true);
-            } else {
-                localStorage.setItem("betterDesign", !current);
+            if (!current || current !== value) {
+                localStorage.setItem("feedTheme", value);
             }
         },
     },

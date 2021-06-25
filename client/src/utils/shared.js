@@ -17,8 +17,7 @@ const Themes = {
         mainAccent: "#49CCE5",
         generalCard: "#e3e8ef",
         profileOptionColor: "#656565",
-        hoverEffect:
-            "linear-gradient(90deg, rgba(255, 255, 255, 1) 3%, rgba(1, 135, 175, 0) 100%)",
+        hoverEffect: "linear-gradient(90deg, rgba(255, 255, 255, 1) 3%, rgba(1, 135, 175, 0) 100%)",
         dropdownHoverColor: "#7a7a7a",
         dropShadow: "rgba(0, 0, 0, 0.1)",
     },
@@ -59,9 +58,11 @@ const SharedMethods = {
     },
     initTheme: function() {
         const currentTheme = localStorage.getItem("theme");
+        const feedTheme = localStorage.getItem("feedTheme");
 
-        if (currentTheme === null) {
+        if (currentTheme === null && feedTheme === null) {
             localStorage.setItem("theme", "light-theme");
+            localStorage.setItem("feedTheme", "Simple");
         }
         this.setTheme(currentTheme);
     },
@@ -69,43 +70,22 @@ const SharedMethods = {
         const themeObj = Themes.getTheme(theme);
 
         document.body.style.setProperty("--main-color", themeObj.mainColor);
-        document.body.style.setProperty(
-            "--secondary-color",
-            themeObj.secondaryColor
-        );
-        document.body.style.setProperty(
-            "--main-font-color",
-            themeObj.mainFontColor
-        );
+        document.body.style.setProperty("--secondary-color", themeObj.secondaryColor);
+        document.body.style.setProperty("--main-font-color", themeObj.mainFontColor);
         document.body.style.setProperty("--error-red", themeObj.errorRed);
         document.body.style.setProperty("--accent", themeObj.accent);
         document.body.style.setProperty("--vue-green", themeObj.vueGreen);
         document.body.style.setProperty("--link-color", themeObj.linkColor);
         document.body.style.setProperty("--selection", themeObj.selection);
         document.body.style.setProperty("--soft-text", themeObj.softText);
-        document.body.style.setProperty(
-            "--settings-mobile-card",
-            themeObj.settingsMobileCard
-        );
-        document.body.style.setProperty(
-            "--burger-menu-bg",
-            themeObj.burgerMenuBG
-        );
-        document.body.style.setProperty(
-            "--burger-textColor",
-            themeObj.burgerTextColor
-        );
+        document.body.style.setProperty("--settings-mobile-card", themeObj.settingsMobileCard);
+        document.body.style.setProperty("--burger-menu-bg", themeObj.burgerMenuBG);
+        document.body.style.setProperty("--burger-textColor", themeObj.burgerTextColor);
         document.body.style.setProperty("--main-accent", themeObj.mainAccent);
         document.body.style.setProperty("--general-card", themeObj.generalCard);
-        document.body.style.setProperty(
-            "--profile-option-color",
-            themeObj.profileOptionColor
-        );
+        document.body.style.setProperty("--profile-option-color", themeObj.profileOptionColor);
         document.body.style.setProperty("--hover-effect", themeObj.hoverEffect);
-        document.body.style.setProperty(
-            "--dropdown-hover-color",
-            themeObj.dropdownHoverColor
-        );
+        document.body.style.setProperty("--dropdown-hover-color", themeObj.dropdownHoverColor);
         document.body.style.setProperty("--drop-shadow", themeObj.dropShadow);
     },
     changeTheme: function(theme) {

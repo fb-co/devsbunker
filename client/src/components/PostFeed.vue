@@ -106,12 +106,12 @@
                         <!-- <MobileProjectCard class="mobile_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" /> -->
                         <LargeMobileProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
                     </div>
-                    <div v-if="desktop && !betterDesign" class="desktop_post_feed">
+                    <div v-if="desktop && feedTheme === 'Simple'" class="desktop_post_feed">
                         <!-- <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" /> -->
                         <LargeDesktopProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
                         <!-- <DetailedDesktopProjCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" /> -->
                     </div>
-                    <div v-if="desktop && betterDesign" class="desktop_post_feed">
+                    <div v-if="desktop && feedTheme === 'Descriptive'" class="desktop_post_feed">
                         <DetailedDesktopProjCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
                     </div>
                     <p v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</p>
