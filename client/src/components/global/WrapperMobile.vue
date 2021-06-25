@@ -1,14 +1,14 @@
 <template>
-    <div class='no_select'>
+    <div class="no_select">
         <slot></slot>
     </div>
 </template>
-
 
 <style scoped>
 #section {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     width: 100%;
     height: 100%;
 }
@@ -21,7 +21,6 @@
 }
 
 .setting_label {
-    margin: 0px;
     margin-left: 5px;
     text-align: left;
     font-weight: 500;

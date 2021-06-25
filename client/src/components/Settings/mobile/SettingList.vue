@@ -30,7 +30,8 @@ export default {
 <style scoped>
 .setting-content {
     padding-left: 25px;
-    height: 150px;
+    height: 50px;
     width: 80%;
+    margin-bottom: 50px;
 }
 </style>

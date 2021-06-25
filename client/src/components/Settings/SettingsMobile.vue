@@ -22,7 +22,6 @@
             <input type="text" name="search" placeholder="Search a setting..." />
         </CustomInput>
         -->
-        <div class="line" style="margin-top: 30px; margin-bottom: 60px;" />
 
         <div v-if="username" class="profile-banner">
             <ProfilePicture :username="username" wrapperSize="75px" class="profile-pic" />
@@ -78,10 +77,11 @@ export default {
 
 .title {
     font-weight: bold;
-    font-size: 24px;
+    font-size: 40px;
     color: var(--main-font-color);
 
     margin-top: 30px;
+    margin-bottom: 80px;
 }
 
 .profile-banner {
@@ -101,7 +101,7 @@ export default {
 .username {
     text-align: left;
     margin-top: 10px;
-    font-size: 15px;
+    font-size: 25px;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
@@ -114,7 +114,7 @@ export default {
 }
 
 .settings {
-    width: 90%;
+    width: 85%;
     max-width: 450px;
     height: 100%;
 
@@ -123,6 +123,10 @@ export default {
     background: var(--settings-mobile-card);
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 40px;
 }
 
 /* space at very top of the settings card */
