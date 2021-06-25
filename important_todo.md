@@ -57,7 +57,7 @@
 
 -   [ ] when u view a post the links should display the link itself and not just the favicon of that site (maybe make a list)
 
--   [ ] fix that troll commit
+-   [x] fix that troll commit
 
 -   [ ] update Detailed proj cards to work with latest progress and polish them
 
