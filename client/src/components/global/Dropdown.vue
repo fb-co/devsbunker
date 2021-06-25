@@ -112,6 +112,13 @@ export default {
             }
         }
     },
+    created() {
+        // this is so the blur event works on mobile
+        document.body.addEventListener("touchend", () => { 
+            this.closeMenu(); 
+            this.$refs.options.blur(); 
+        });
+    },
     computed: {
         cssProps() {
             return {

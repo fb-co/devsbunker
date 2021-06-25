@@ -1,5 +1,5 @@
 <template>
-    <div class="profileMobile" @click="showMore = false">
+    <div class="profileMobile">
         <div class="pfp_backdrop">
             <div class="actions">
                 <div class="back-arrow action_item vertical_flex_center" @click="$router.go(-1)">
@@ -23,7 +23,7 @@
                 </div>
 
                 <div></div>
-                <div class="options action_item vertical_flex_center" @click.stop.prevent="showMore = !showMore">
+                <div ref="more_options_icon" class="options action_item vertical_flex_center" tabindex="0" @focus="showMore=true" @blur="showMore=false">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-dots-vertical"
@@ -130,6 +130,13 @@ export default {
         ProfilePictureBackdrop,
         InputModal,
     },
+    mounted() {
+        // this is so the blur event works on mobile
+        document.body.addEventListener("touchend", () => { 
+            this.showMore = false; 
+            this.$refs.more_options_icon.blur(); 
+        });
+    },
     methods: {
         navigateTo(elem) {
             this.activeSection = elem;
@@ -157,6 +164,7 @@ export default {
                 .catch((e) => {
                     console.error(e);
                 });
+            this.showMore = false;
         },
         updateFilter(value) {
             this.$emit("updateFilter", value);
@@ -189,6 +197,7 @@ export default {
                     this.$store.dispatch("alertUser", { msg: "Incorrect password", type: "error", title: "Error" });
                 }
             }
+            this.showMore = false;
         },
     },
 };
@@ -214,6 +223,9 @@ export default {
     padding: 5px;
     margin-top: 20px;
     background-color: var(--secondary-color);
+}
+.action_item:focus {
+    outline: none;
 }
 .back-arrow {
     border-radius: 50%;
