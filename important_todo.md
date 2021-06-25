@@ -57,7 +57,7 @@
 
 -   [x] Optimize notification bell, and make a standardized component (ill do this)
 
--   [ ] mark as read as soon as user navigates to notification page (hot reload)
+-   [x] mark as read as soon as user navigates to notification page (hot reload)
 
 -   [x] Redundant navigation errors for some reason in the User pages (try clicking around the tabs a bit and you should see them)
 
