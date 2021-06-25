@@ -51,7 +51,7 @@
 
 -   [x] Add likeAmt and more options menu to project cards (mobile & desktop)
 
--   [ ] new notifications are immediately marked as read for some reason. Ive tried to login with account X, like Y's post, logout and login as Y. The notification of the like was already marked as read
+-   [x] new notifications are immediately marked as read for some reason. Ive tried to login with account X, like Y's post, logout and login as Y. The notification of the like was already marked as read
 
 ## Low Priority
 
