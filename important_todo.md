@@ -61,6 +61,8 @@
 
 -   [ ] update Detailed proj cards to work with latest progress and polish them
 
+-   [ ] desktop settings page needs some polishing, especially if you reduce the screen size
+
 ## Low Priority
 
 -   [x] Optimize notification bell, and make a standardized component (ill do this)
