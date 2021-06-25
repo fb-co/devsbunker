@@ -61,7 +61,7 @@
 
 -   [ ] update Detailed proj cards to work with latest progress and polish them
 
--   [ ] desktop and mobile settings page needs some polishing
+-   [x] desktop and mobile settings page needs some polishing
 
 ## Low Priority
 
