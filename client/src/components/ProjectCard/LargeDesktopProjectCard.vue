@@ -141,7 +141,7 @@
                 </svg>
                 <p>Share</p>
             </div>
-            <div v-if="projectData.author === this.$store.getters.username" class="option_container" @mousedown.stop="deletePost()">
+            <div v-if="projectData.author === this.$store.getters.username" class="option_container" @mousedown.stop="openDeleteConfirmation()">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="icon icon-tabler icon-tabler-trash"
@@ -164,12 +164,18 @@
                 <p>Delete Post</p>
             </div>
         </div>
+        <ConfirmationPopup 
+            ref="delete_confirmation" 
+            msg="Are you sure you want to delete this post?" 
+            @confirm="deletePost()"
+        />
     </div>    
 </template>
 
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import GraphQLService from "../../services/graphql.service";
+import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 
 export default {
     data() {
@@ -196,6 +202,9 @@ export default {
         if (!this.isDefault) {
             this.$refs.image_div.style.backgroundImage = `url('${this.thumbnail_link}')`;
         }
+    },
+    components: {
+        ConfirmationPopup
     },
     methods: {
         showIcons() {
@@ -228,6 +237,9 @@ export default {
         },
         closeMoreOptions() {
             this.moreOptions = false;
+        },
+        openDeleteConfirmation() {
+            this.$refs.delete_confirmation.open();
         },
 
         deletePost() {

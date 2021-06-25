@@ -160,6 +160,11 @@
                 <p>Delete Post</p>
             </div>
         </MobileMoreOptions>
+        <ConfirmationPopup 
+            ref="delete_confirmation" 
+            msg="Are you sure you want to delete this post?" 
+            @confirm="deletePost()"
+        />
     </div>
 </template>
 
@@ -167,6 +172,7 @@
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import GraphQLService from "../../services/graphql.service";
 import MobileMoreOptions from "@/components/Popups/MobileMoreOptions.vue";
+import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 
 export default {
     data() {
@@ -178,7 +184,8 @@ export default {
     },
     mixins: [ProjectCardUtils],
     components: {
-        MobileMoreOptions
+        MobileMoreOptions,
+        ConfirmationPopup
     },
     props: {
         projectData: Object,
@@ -221,6 +228,9 @@ export default {
         },
         closeMoreOptions() {
             this.$refs.more_options_menu.closeMenu();
+        },
+        openDeleteConfirmation() {
+            this.$refs.delete_confirmation.open();
         },
 
         deletePost() {

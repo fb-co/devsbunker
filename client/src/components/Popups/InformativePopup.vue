@@ -41,7 +41,7 @@ export default {
         title: {
             type: String,
             default: "Information"
-        }
+        },
     },
     methods: {
         close() {
