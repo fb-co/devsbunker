@@ -212,6 +212,7 @@ export default {
     cursor: pointer;
     margin: auto;
     margin-top: 20px;
+    background-color: var(--secondary-color);
 
     transition: 0.3s;
 }

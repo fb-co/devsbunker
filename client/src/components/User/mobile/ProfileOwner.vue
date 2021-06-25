@@ -134,8 +134,10 @@ export default {
         // this is so the blur event works on mobile
         document.body.addEventListener("touchend", () => { 
             this.showMore = false; 
-            this.$refs.more_options_icon.blur(); 
         });
+    },
+    destroyed() {
+        document.body.removeEventListener("touchend", () => {});
     },
     methods: {
         navigateTo(elem) {
@@ -264,7 +266,7 @@ export default {
     min-width: 250px;
     height: auto;
     background-color: var(--general-card);
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 5px var(--drop-shadow);
     margin: 0 auto;
     margin-bottom: 50px;
     border-radius: 20px;

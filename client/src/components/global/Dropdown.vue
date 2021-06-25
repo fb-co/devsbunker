@@ -16,7 +16,7 @@
                 </svg>
             </div>
         </div>
-        <div @mousedown="handleClick" class="menu_cont" ref="options">
+        <div @mousedown.stop="handleClick" class="menu_cont" ref="options">
             <slot>
 
             </slot>
@@ -116,8 +116,11 @@ export default {
         // this is so the blur event works on mobile
         document.body.addEventListener("touchend", () => { 
             this.closeMenu(); 
-            this.$refs.options.blur(); 
+            //this.$refs.options.blur(); 
         });
+    },
+    destroyed() {
+        document.body.removeEventListener("touchend", () => {});
     },
     computed: {
         cssProps() {

@@ -48,11 +48,13 @@
             </div>
 
             <div class="setting_item">
-                <p class="label">Post feed theme</p>
-                <Dropdown :label="feedTheme" fontSize="12px" linkHeight="40px" @itemSelected="switchFeedTheme">
-                    <button>Simple</button>
-                    <button>Descriptive</button>
-                </Dropdown>
+                <p class="label">Project Cards</p>
+                <div class="setting_item_option_container">
+                    <Dropdown :label="feedTheme" fontSize="12px" linkHeight="40px" height="40px" @itemSelected="switchFeedTheme" class="proj_card_dropdown">
+                        <button>Simple</button>
+                        <button>Descriptive</button>
+                    </Dropdown>
+                </div>
             </div>
         </div>
     </div>
@@ -140,13 +142,18 @@ export default {
     padding-bottom: 30px;
     margin: 0 auto;
     border-radius: 6px;
-    /* background-color: var(--secondary-color); */
-    border: 1px solid var(--soft-text);
+    background-color: var(--secondary-color);
+    box-shadow: 0px 0px 10px var(--drop-shadow);
+    /* border: 1px solid var(--soft-text); */
+}
+.setting_item_option_container {
+    flex-grow: 1;
 }
 .setting_item {
     display: flex;
     flex-direction: row;
-    width: 50%;
+    width: 80%;
+    max-width: 400px;
     margin: 30px auto 0px auto;
 }
 .label {
@@ -159,6 +166,9 @@ export default {
 }
 .theme_switcher {
     margin: 0 auto;
+}
+.proj_card_dropdown {
+    width: 100%;
 }
 .placeholder {
     flex-grow: 1;

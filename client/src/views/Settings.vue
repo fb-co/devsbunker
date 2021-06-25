@@ -24,4 +24,7 @@ export default {
 </script>
 
 <style scoped>
+#settings {
+    height: calc(100vh - var(--header-height) - var(--footer-height));
+}
 </style>

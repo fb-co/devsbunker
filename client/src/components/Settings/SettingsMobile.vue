@@ -1,5 +1,5 @@
 <template>
-    <div id="SettingsPage">
+    <div class="settings_page">
         <h1 class="title">Settings</h1>
         <!--
         <CustomInput class="search_input">
@@ -29,15 +29,12 @@
         </div>
 
         <div class="settings">
-            <div class="margin-top"></div>
             <SettingList />
         </div>
     </div>
 </template>
 
 <script>
-import GlobalComponents from "@/components/global/GlobalComponents.js";
-import MobileSettingsComponents from "@/components/Settings/mobile/SettingSections/mobile.import.settings";
 import SettingList from "./mobile/SettingList";
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 
@@ -45,8 +42,6 @@ import UserService from "@/services/user.service";
 
 export default {
     components: {
-        ...GlobalComponents,
-        ...MobileSettingsComponents,
         SettingList,
         ProfilePicture,
     },
@@ -67,6 +62,10 @@ export default {
 </script>
 
 <style scoped>
+.settings_page {
+    height: 100%;
+    overflow: auto;
+}
 .search_input {
     width: 80%;
     margin: 0 auto;
@@ -79,8 +78,7 @@ export default {
     font-weight: bold;
     font-size: 40px;
     color: var(--main-font-color);
-
-    margin-top: 30px;
+    padding-top: 30px;
     margin-bottom: 80px;
 }
 
@@ -107,37 +105,9 @@ export default {
     max-width: 100%;
 }
 
-.user-mail {
-    color: #a7a7a7;
-    text-align: left;
-    margin-top: 5px;
-}
-
 .settings {
     width: 85%;
     max-width: 450px;
-    height: 100%;
-
-    margin: auto;
-    margin-top: 40px;
-    background: var(--settings-mobile-card);
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 40px;
-}
-
-/* space at very top of the settings card */
-.margin-top {
-    width: 100%;
-    height: 20px;
-}
-
-.setting-content {
-    padding-left: 25px;
-    height: 150px;
-    margin: auto;
+    margin: 30px auto 20px auto;
 }
 </style>
