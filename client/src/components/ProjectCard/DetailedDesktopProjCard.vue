@@ -1,26 +1,49 @@
 <template>
-    <div class="main_container">
+    <div class="main_container" @click="$router.push({ path: `/post/${projectData.id}` })">
         <div class="top_container">
             <div class="icons_container">
                 <div class="icon_box" style="margin-bottom: 10px;">
-                    <svg width="33" height="33" viewBox="0 0 16 16" class="bi bi-heart" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                        v-if="!projectData.isLiked"
+                        @click.stop="likePost(projectData.id)"
+                        width="35"
+                        height="35"
+                        viewBox="0 0 16 16"
+                        class="bi bi-heart"
+                        fill="#eb4034"
+                        xmlns="http://www.w3.org/2000/svg"
+                        style="margin-top: 3px"
+                    >
                         <path
                             fill-rule="evenodd"
                             d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
                         />
+                    </svg>
+                    <svg
+                        v-else
+                        @click.stop="unlikePost(projectData.id)"
+                        width="35"
+                        height="35"
+                        viewBox="0 0 16 16"
+                        class="bi bi-heart-fill"
+                        fill="#eb4034"
+                        xmlns="http://www.w3.org/2000/svg"
+                        style="margin-top: 3px"
+                    >
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                     </svg>
                 </div>
                 <div class="icon_box">
                     <svg
                         @click.stop="savePost(projectData.id)"
                         v-if="!projectData.isSaved"
-                        width="25"
-                        height="25"
+                        width="30"
+                        height="30"
                         stroke-width="0.7"
                         stroke="var(--soft-text)"
                         viewBox="0 0 16 16"
-                        class="bi bi-bookmark"
-                        fill="currentColor"
+                        class="bi bi-bookmark save_btn"
+                        fill="#fff"
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
@@ -28,19 +51,42 @@
                             d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
                         />
                     </svg>
+                    <svg
+                        @click.stop="unsavePost(projectData.id)"
+                        v-else
+                        width="30"
+                        height="30"
+                        stroke-width="0.7"
+                        stroke="var(--soft-text)"
+                        viewBox="0 0 16 16"
+                        class="bi bi-bookmark-fill save_btn"
+                        fill="#fff"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z" />
+                    </svg>
                 </div>
             </div>
             <div class="main_text_container">
                 <p class="title">{{ projectData.title }}</p>
+                <p class="tag" :style="cssProps">{{ projectData.tags[0] }}</p>
                 <p class="description">{{ projectData.description }}</p>
                 <DynamicPicture class="thumbnail" :image_link="projectData.thumbnail" />
             </div>
         </div>
         <div class="seperator_line" />
         <div class="bottom_container">
-            <ProfilePicture :username="projectData.author" wrapperSize="30px" class="author_pfp" />
-            <p class="by">by:</p>
-            <p class="author">{{ projectData.author }}</p>
+            <div class="left">
+                <ProfilePicture :username="projectData.author" wrapperSize="30px" class="author_pfp" />
+                <p class="by">by:</p>
+                <p class="author">{{ projectData.author }}</p>
+            </div>
+            <div class="right">
+                <p class="like_amt">{{ projectData.likeAmt }}</p>
+                <svg width="18" height="18" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                </svg>
+            </div>
         </div>
     </div>
 </template>
@@ -48,14 +94,24 @@
 <script>
 import DynamicPicture from "@/components/DynamicPicture.vue";
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
+import ProjectCardUtils from "@/mixins/project_card.mixin.js";
+import Languages from "@/templates/Languages.js";
 
 export default {
     props: {
         projectData: Object,
     },
+    mixins: [ProjectCardUtils],
     components: {
         DynamicPicture,
         ProfilePicture,
+    },
+    computed: {
+        cssProps() {
+            return {
+                "--card-color": Languages.getColor(this.projectData.tags[0]) || "var(--main-font-color)",
+            };
+        },
     },
 };
 </script>
@@ -77,6 +133,8 @@ export default {
 
     /* version 2 */
     /* background-color: var(--secondary-color); */
+
+    user-select: none;
 }
 
 .main_container:hover {
@@ -142,6 +200,28 @@ export default {
 
     margin-top: 10px;
 }
+
+.left {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    height: 100%;
+}
+
+.right {
+    width: 30%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.like_amt {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
 .author_pfp {
     margin: 10px 10px 10px 20px;
 }
@@ -157,5 +237,15 @@ export default {
     flex-direction: column;
     justify-content: center;
     padding-right: 10px;
+}
+
+.tag {
+    color: var(--card-color);
+    text-align: left;
+    font-weight: 700;
+    font-size: 18px;
+
+    margin-left: 10px;
+    margin-top: 15px;
 }
 </style>
