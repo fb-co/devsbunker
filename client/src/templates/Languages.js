@@ -43,7 +43,7 @@ const Languages = {
         },
         {
             name: "Javascript",
-            color: "#b32020",
+            color: "#f7df1e",
         },
         {
             name: "C++",
