@@ -315,6 +315,12 @@ export default {
             compressedFiles: [],
         };
     },
+    components: {
+        GeneralInput,
+        CreateTag,
+        LinkBlock,
+        NewTagPopup,
+    },
     mounted() {
         this.$refs.postTitle.focusInput();
         this.$refs.main_container.style.transform = "translateY(0%)";
@@ -500,12 +506,6 @@ export default {
                 this.files.splice(index, 1);
             }
         },
-    },
-    components: {
-        GeneralInput,
-        CreateTag,
-        LinkBlock,
-        NewTagPopup,
     },
 };
 </script>

@@ -42,6 +42,10 @@ export default {
             type: String,
             default: "Information"
         },
+        openOnPress: {
+            type: Boolean,
+            default: true
+        }
     },
     methods: {
         close() {

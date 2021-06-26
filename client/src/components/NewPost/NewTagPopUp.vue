@@ -70,6 +70,10 @@ export default {
             selected_entries: this.entries,
         };
     },
+    components: {
+        QueryInput,
+        CreateTag,
+    },
     props: {
         name: String,
         label: String,
@@ -117,23 +121,20 @@ export default {
             if (!value) {
                 value = this.$refs.tag_search.getValue();
             }
+            if (value !== "" && value != null) {
+                for (let i = 0; i < this.selected_entries.length; i++) {
+                    if (this.selected_entries[i] == value) {
+                        duplicate = true;
+                    }
+                }
 
-            for (let i = 0; i < this.selected_entries.length; i++) {
-                if (this.selected_entries[i] == value) {
-                    duplicate = true;
+                if (!duplicate) {
+                    this.$refs.tag_search.queryData();
+                    this.selected_entries.push(value);
+                    this.$refs.tag_search.clearValue();
                 }
             }
-
-            if (!duplicate) {
-                this.$refs.tag_search.queryData();
-                this.selected_entries.push(value);
-                this.$refs.tag_search.clearValue();
-            }
         },
-    },
-    components: {
-        QueryInput,
-        CreateTag
     },
 };
 </script>
