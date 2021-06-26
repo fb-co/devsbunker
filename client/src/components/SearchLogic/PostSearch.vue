@@ -154,6 +154,10 @@ export default {
             this.moreOptionsMenu = true;
             this.$refs.moreOptionsIcon.focus();
         },
+        closeMoreMenu() {
+            this.moreOptionsMenu = false;
+            this.$refs.moreOptionsIcon.blur();
+        },
         queryData() {
             this.documents = [];
             if (this.$refs.general_input.value != "" && this.$refs.general_input.value.length > 2) {
@@ -286,7 +290,7 @@ export default {
         width: 40px; 
     }
     .more_options {
-        position: absolute;
+        position: fixed;
         border-radius: 5px;
         width: 200px;
         background-color: var(--secondary-color);

@@ -1,5 +1,5 @@
 <template>
-    <div id="main_container">
+    <div id="main_container" ref="scrollable_container">
         <p v-if="title" class="title">{{ title }}</p>
         <div class="filter_dropdown_container">
             <PostSearch
@@ -192,6 +192,12 @@ export default {
         LargeDesktopProjectCard,
         LargeMobileProjectCard,
         DetailedDesktopProjCard,
+    },
+    mounted() {
+        // don't need to destroy on destroyed() because its attached to an element and will get removed anyway
+        this.$refs.scrollable_container.addEventListener('scroll', () => {
+            this.$refs.post_search.closeMoreMenu();
+        });
     },
     methods: {
         loadNew() {
