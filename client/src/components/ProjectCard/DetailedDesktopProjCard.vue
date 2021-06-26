@@ -246,7 +246,7 @@ export default {
     min-height: 520px;
 
     /* version 1 */
-    background-color: #202020;
+    background-color: var(--detailed-projcard-bg);
     border: 1px solid #343536;
 
     /* version 2 */

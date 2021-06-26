@@ -28,7 +28,7 @@ export default {
         Loading,
         Navbar,
         BottomNavBar,
-        AlertFeed
+        AlertFeed,
     },
 
     destroyed() {
@@ -84,6 +84,7 @@ export default {
     --burger-menu-bg: #2a2a2a;
     --main-accent: #49cce5;
     --drop-shadow: rgba(0, 0, 0, 0.1);
+    --detailed-projcard-bg: #202020;
 
     /* profile page */
     --profile-option-color: #656565;
