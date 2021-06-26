@@ -198,6 +198,17 @@ export default {
             this.moreOptions = false;
         },
         copyPostLink() {
+            // there's also a ClipBoard API but it doesnt work on firefox
+            // ! NOTE: this still doesnt work
+
+            const tmp = document.createElement("input");
+            tmp.value = `${process.env.VUE_APP_MAIN_URL}/post/${this.projectData.id}`;
+
+            tmp.select();
+            tmp.setSelectionRange(0, 99999); // this junk is needed for mobile devices and I dont know why
+
+            document.execCommand("copy");
+
             this.$store.dispatch("alertUser", { type: "success", title: "Copied link to clipboard" });
         },
         openDeleteConfirmation() {
