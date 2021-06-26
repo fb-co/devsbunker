@@ -1,5 +1,5 @@
 <template>
-    <div class="main_container" @click="$router.push({ path: `/post/${projectData.id}` })">
+    <div v-if="!deleted" class="main_container" @click="$router.push({ path: `/post/${projectData.id}` })">
         <div class="top_container">
             <div class="icons_container">
                 <div class="icon_box" style="margin-bottom: 10px;">
@@ -66,6 +66,72 @@
                         <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z" />
                     </svg>
                 </div>
+                <div class="more_options_container" @click.stop="" @focus="openMoreOptions()" @blur="closeMoreOptions()" tabindex="0" ref="moreOptionsIcon">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-dots"
+                        width="28"
+                        height="28"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="#ffffff"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <circle cx="5" cy="12" r="1" />
+                        <circle cx="12" cy="12" r="1" />
+                        <circle cx="19" cy="12" r="1" />
+                    </svg>
+                </div>
+                <div v-if="moreOptions" class="more_options">
+                    <div class="option_container" @mousedown="copyPostLink()">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-share"
+                            width="16"
+                            height="16"
+                            style="margin-top: 1px;"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="var(--main-font-color)"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <circle cx="6" cy="12" r="3" />
+                            <circle cx="18" cy="6" r="3" />
+                            <circle cx="18" cy="18" r="3" />
+                            <line x1="8.7" y1="10.7" x2="15.3" y2="7.3" />
+                            <line x1="8.7" y1="13.3" x2="15.3" y2="16.7" />
+                        </svg>
+                        <p>Share</p>
+                    </div>
+                    <div v-if="projectData.author === this.$store.getters.username" class="option_container" @mousedown.stop="openDeleteConfirmation()">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-trash"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="var(--main-font-color)"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="4" y1="7" x2="20" y2="7" />
+                            <line x1="10" y1="11" x2="10" y2="17" />
+                            <line x1="14" y1="11" x2="14" y2="17" />
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                        </svg>
+                        <p>Delete Post</p>
+                    </div>
+                </div>
             </div>
             <div class="main_text_container">
                 <p class="title">{{ projectData.title }}</p>
@@ -88,6 +154,7 @@
                 </svg>
             </div>
         </div>
+        <ConfirmationPopup ref="delete_confirmation" msg="Are you sure you want to delete this post?" @confirm="deletePost()" />
     </div>
 </template>
 
@@ -96,8 +163,16 @@ import DynamicPicture from "@/components/DynamicPicture.vue";
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import Languages from "@/templates/Languages.js";
+import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
+import GraphQLService from "../../services/graphql.service";
 
 export default {
+    data() {
+        return {
+            moreOptions: false,
+            deleted: false,
+        };
+    },
     props: {
         projectData: Object,
     },
@@ -105,6 +180,7 @@ export default {
     components: {
         DynamicPicture,
         ProfilePicture,
+        ConfirmationPopup,
     },
     computed: {
         cssProps() {
@@ -113,11 +189,42 @@ export default {
             };
         },
     },
+    methods: {
+        openMoreOptions() {
+            this.moreOptions = true;
+            this.$refs.moreOptionsIcon.focus();
+        },
+        closeMoreOptions() {
+            this.moreOptions = false;
+        },
+        copyPostLink() {
+            this.$store.dispatch("alertUser", { type: "success", title: "Copied link to clipboard" });
+        },
+        openDeleteConfirmation() {
+            this.$refs.delete_confirmation.open();
+        },
+        deletePost() {
+            GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
+                console.log(res);
+                if (res.errors) {
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong deleting post" });
+                } else if (!res.data.deletePost.success) {
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong deleting post" });
+                } else {
+                    this.moreOptions = !this.moreOptions;
+                    this.deleted = true;
+                    this.$store.dispatch("alertUser", { type: "success", title: "Success", msg: "Deleted post" });
+                }
+            });
+        },
+    },
 };
 </script>
 
 <style scoped>
 .main_container {
+    position: relative;
+
     padding-top: 15px;
     border-radius: 10px;
     display: flex;
@@ -247,5 +354,40 @@ export default {
 
     margin-left: 10px;
     margin-top: 15px;
+}
+.more_options_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    cursor: pointer;
+
+    margin-top: 20px;
+}
+.more_options_container:focus {
+    border: 1px solid #fff;
+}
+.more_options {
+    position: absolute;
+    top: 30%;
+    z-index: 50;
+    background-color: var(--secondary-color);
+    border-radius: 3px;
+    padding: 5px 15px 5px 15px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--soft-text);
+}
+.option_container {
+    display: flex;
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.option_container svg {
+    margin-right: 10px;
+}
+.option_container:hover > p {
+    color: var(--soft-text);
 }
 </style>
