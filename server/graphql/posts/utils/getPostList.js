@@ -9,7 +9,7 @@ export default async function getPostList(sortingMethod, loadAmt, lastPostId, la
         if (sortingMethod == "Newest") {
             // start the post finding from the lastId, or if its null, -1
             if (lastPostId != 0) {
-                Posts.find({ _id: { $lt: lastPostId, enabled: true } })
+                Posts.find({ _id: { $lt: lastPostId }, enabled: true })
                     .sort({ _id: -1 })
                     .limit(loadIncrement + 1)
                     .then((posts) => {
