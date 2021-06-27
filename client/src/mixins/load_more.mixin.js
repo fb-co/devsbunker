@@ -34,47 +34,49 @@ const LoadMore = {
 
             if (alreadyLoadedPosts) {
                 this.posts = alreadyLoadedPosts.posts;
+            } else {
+                if (this.queryType === "all") {
+                    //console.log(filter || this.sortingType);
+                    //console.log(this.getLastPostId());
+                    //console.log(this.getLastPostUniqueField());
+                    const res = await GraphQLService.fetchPosts(
+                        filter || this.sortingType,
+                        this.getLastPostId(),
+                        this.getLastPostUniqueField(),
+                        this.$store.getters.accessToken
+                    );
+                    console.log(res);
+                    this.posts = this.posts.concat(res.data.getPosts.posts);
+                    this.fetchedAll = res.data.getPosts.fetchedAll;
+
+                    this.$store.commit("appendPosts", res.data.getPosts.posts);
+                } else if (this.queryType === "projects") {
+                    const res = await GraphQLService.fetchPostsByAuthor(
+                        this.otherData.foreignUserToFilter || this.$store.getters.username,
+                        this.getLastPostId(),
+                        this.getLastPostUniqueField(),
+                        this.filter || this.sortingType,
+                        this.$store.getters.accessToken
+                    );
+                    this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
+                    this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
+
+                    this.$store.commit("appendPosts", res.data.getPostsByAuthor.posts);
+                } else if (this.queryType === "saved") {
+                    const res = await GraphQLService.fetchSavedPosts(
+                        this.getLastPostId(),
+                        this.getLastPostUniqueField(),
+                        filter || this.sortingType,
+                        this.$store.getters.accessToken
+                    );
+                    this.posts = this.posts.concat(res.data.getSavedPosts.posts);
+                    this.fetchedAll = res.data.getSavedPosts.fetchedAll;
+
+                    this.$store.commit("appendPosts", res.data.getSavedPosts.posts);
+                }
+                // add the posts to a temp memory if they havent been fetched
+                this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
             }
-
-            if (this.queryType === "all") {
-                const res = await GraphQLService.fetchPosts(
-                    filter || this.sortingType,
-                    this.getLastPostId(),
-                    this.getLastPostUniqueField(),
-                    this.$store.getters.accessToken
-                );
-                console.log(res);
-                this.posts = this.posts.concat(res.data.getPosts.posts);
-                this.fetchedAll = res.data.getPosts.fetchedAll;
-
-                this.$store.commit("appendPosts", res.data.getPosts.posts);
-            } else if (this.queryType === "projects") {
-                const res = await GraphQLService.fetchPostsByAuthor(
-                    this.otherData.foreignUserToFilter || this.$store.getters.username,
-                    this.getLastPostId(),
-                    this.getLastPostUniqueField(),
-                    this.filter || this.sortingType,
-                    this.$store.getters.accessToken
-                );
-                this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
-                this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
-
-                this.$store.commit("appendPosts", res.data.getPostsByAuthor.posts);
-            } else if (this.queryType === "saved") {
-                const res = await GraphQLService.fetchSavedPosts(
-                    this.getLastPostId(),
-                    this.getLastPostUniqueField(),
-                    filter || this.sortingType,
-                    this.$store.getters.accessToken
-                );
-                this.posts = this.posts.concat(res.data.getSavedPosts.posts);
-                this.fetchedAll = res.data.getSavedPosts.fetchedAll;
-
-                this.$store.commit("appendPosts", res.data.getSavedPosts.posts);
-            }
-
-            // add the posts to a temp memory
-            this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
         },
         async updateFeedAfterNewPost() {
             const newPost = store.getters.cachedNewlyMadePost;
@@ -130,6 +132,7 @@ const LoadMore = {
         getPostsInMemory(queryType, filter) {
             for (let i = 0; i < this.postsInMemory.length; i++) {
                 if (this.postsInMemory[i].queryType == queryType && this.postsInMemory[i].filter == filter) {
+                    console.log(this.postsInMemory[i]);
                     return this.postsInMemory[i];
                 }
             }
