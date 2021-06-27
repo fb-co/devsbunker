@@ -30,7 +30,15 @@ const LoadMore = {
          * clearCurrent if given as true will clear the current post feed, usually used for things like switching filters (NOT FOR LOADING MORE OBV)
          */
         async getPosts(filter) {
+            /*
+            // if posts were already loaded before, make sure to update the cache with anything that changed
+            if (this.posts.length > 0) {
+                this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
+            }
+
             const alreadyLoadedPosts = this.getPostsInMemory(this.queryType, filter || this.sortingType);
+            */
+            const alreadyLoadedPosts = false;
 
             if (alreadyLoadedPosts) {
                 this.posts = alreadyLoadedPosts.posts;
@@ -74,7 +82,7 @@ const LoadMore = {
 
                     this.$store.commit("appendPosts", res.data.getSavedPosts.posts);
                 }
-                // add the posts to a temp memory if they havent been fetched
+                // add the posts to a temp memory (this adds the just fetched ones)
                 this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
             }
         },
@@ -104,7 +112,7 @@ const LoadMore = {
                     SearchUtilities.setSavedPostFilter(value);
                     this.sortingType = SearchUtilities.getSavedPostFilter();
             }
-
+            
             this.getPosts(value);
         },
 

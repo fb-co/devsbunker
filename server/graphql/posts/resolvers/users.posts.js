@@ -253,6 +253,8 @@ export default {
                         post.likes.push(jwtPayload.username);
                         post.likeAmt++;
 
+                        console.log(post);
+
                         await post.save();
 
                         // save post id in users db entry as "liked posts"
@@ -270,7 +272,7 @@ export default {
                         let userToNotify;
 
                         // only notify the user if the post is not theirs
-                        if (jwtPayload.username !== post.author) {
+                        if (jwtPayload.username != post.author) {
                             userToNotify = await User.findOne({
                                 username: post.author,
                                 enabled: true,
@@ -354,6 +356,7 @@ export default {
                     if (index !== -1) {
                         post.likes.splice(index, 1);
                         post.likeAmt--;
+                        console.log(post);
 
                         await post.save();
 
