@@ -30,7 +30,6 @@ export default {
                 const loadAmt = LoadAmounts.mainPostFeed;
                 let posts = await getPostList(args.sortingType, loadAmt, args.lastPostId, args.lastUniqueField);
                 let fetchedAll = false;
-
                 let user;
 
                 // if the user was logged in, evaluate if the post requested has been liked or saved before
@@ -51,6 +50,7 @@ export default {
                 }
 
                 const finalPosts = AddDynamicData.addAll(posts, user);
+                console.log(finalPosts);
 
                 const finalResponse = {
                     posts: finalPosts,
@@ -201,6 +201,7 @@ export default {
                 collaborators: payload.collaborators,
                 tags: payload.tags,
                 likes: [],
+                likeAmt: 0,
                 price: payload.price,
                 comments: [],
             });
@@ -219,7 +220,7 @@ export default {
                     collaborators: payload.collaborators,
                     tags: payload.tags,
                     likes: post.likes,
-                    likeAmt: 0,
+                    likeAmt: post.likeAmt,
                     price: payload.price,
                     createdAt: post.createdAt,
                     comments: [],
@@ -250,7 +251,7 @@ export default {
                         throw new Error("You have already liked this post");
                     } else {
                         post.likes.push(jwtPayload.username);
-                        post.likeAmt++;
+                        post.likeAmt = post.likes.length;
 
                         console.log(post);
 
@@ -354,8 +355,7 @@ export default {
 
                     if (index !== -1) {
                         post.likes.splice(index, 1);
-                        post.likeAmt--;
-                        console.log(post);
+                        post.likeAmt = post.likes.length;
 
                         await post.save();
 
