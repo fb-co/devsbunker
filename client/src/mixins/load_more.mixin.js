@@ -35,25 +35,20 @@ const LoadMore = {
             if (this.posts.length > 0) {
                 this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
             }
-
-            const alreadyLoadedPosts = this.getPostsInMemory(this.queryType, filter || this.sortingType);
             */
-            const alreadyLoadedPosts = false;
+           
+            const alreadyLoadedPosts = this.getPostsInMemory(this.queryType, filter || this.sortingType);
 
             if (alreadyLoadedPosts) {
                 this.posts = alreadyLoadedPosts.posts;
             } else {
                 if (this.queryType === "all") {
-                    //console.log(filter || this.sortingType);
-                    //console.log(this.getLastPostId());
-                    //console.log(this.getLastPostUniqueField());
                     const res = await GraphQLService.fetchPosts(
                         filter || this.sortingType,
                         this.getLastPostId(),
                         this.getLastPostUniqueField(),
                         this.$store.getters.accessToken
                     );
-                    console.log(res);
                     this.posts = this.posts.concat(res.data.getPosts.posts);
                     this.fetchedAll = res.data.getPosts.fetchedAll;
 

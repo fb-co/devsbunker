@@ -253,8 +253,6 @@ export default {
                         post.likes.push(jwtPayload.username);
                         post.likeAmt = post.likes.length;
 
-                        console.log(post);
-
                         await post.save();
 
                         // save post id in users db entry as "liked posts"
