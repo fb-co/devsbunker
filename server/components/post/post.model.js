@@ -31,9 +31,6 @@ const postSchema = new mongoose.Schema(
         likes: {
             type: Array,
         },
-        likeAmt: {
-            type: Number,
-        },
         price: {
             type: Number,
         },
