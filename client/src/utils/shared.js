@@ -21,6 +21,7 @@ const Themes = {
         dropdownHoverColor: "#7a7a7a",
         dropShadow: "rgba(0, 0, 0, 0.1)",
         detailedProjCardBg: "#efefef",
+        detailedProjCardBorder: "#B8B8B8",
     },
     dark: {
         mainColor: "#171717",
@@ -42,6 +43,7 @@ const Themes = {
         dropdownHoverColor: "#7a7a7a",
         dropShadow: "#828282",
         detailedProjCardBg: "#202020",
+        detailedProjCardBorder: "#343536",
     },
     getTheme: function(themeString) {
         if (themeString === "dark-theme") {
@@ -90,6 +92,7 @@ const SharedMethods = {
         document.body.style.setProperty("--dropdown-hover-color", themeObj.dropdownHoverColor);
         document.body.style.setProperty("--drop-shadow", themeObj.dropShadow);
         document.body.style.setProperty("--detailed-projcard-bg", themeObj.detailedProjCardBg);
+        document.body.style.setProperty("--detailed-projcard-border", themeObj.detailedProjCardBorder);
     },
     changeTheme: function(theme) {
         localStorage.setItem("theme", theme);

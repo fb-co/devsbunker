@@ -39,11 +39,11 @@
                         v-if="!projectData.isSaved"
                         width="30"
                         height="30"
-                        stroke-width="0.7"
+                        stroke-width="0.2"
                         stroke="var(--soft-text)"
+                        fill="var(--main-font-color)"
                         viewBox="0 0 16 16"
                         class="bi bi-bookmark save_btn"
-                        fill="#fff"
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
@@ -56,11 +56,11 @@
                         v-else
                         width="30"
                         height="30"
-                        stroke-width="0.7"
+                        stroke-width="0.2"
                         stroke="var(--soft-text)"
+                        fill="var(--main-font-color)"
                         viewBox="0 0 16 16"
                         class="bi bi-bookmark-fill save_btn"
-                        fill="#fff"
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z" />
@@ -73,9 +73,8 @@
                         width="28"
                         height="28"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="#ffffff"
-                        fill="none"
+                        stroke-width="1"
+                        stroke="var(--main-font-color)"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     >
@@ -136,7 +135,10 @@
             <div class="main_text_container">
                 <p class="title">{{ projectData.title }}</p>
                 <p class="tag" :style="cssProps">{{ projectData.tags[0] }}</p>
-                <p class="description">{{ projectData.description }}</p>
+                <div style="position: relative">
+                    <div class="desc_fade"></div>
+                    <pre class="preserveText"><p class="description">{{ projectData.description }}</p></pre>
+                </div>
                 <DynamicPicture class="thumbnail" :image_link="projectData.thumbnail" />
             </div>
         </div>
@@ -247,7 +249,7 @@ export default {
 
     /* version 1 */
     background-color: var(--detailed-projcard-bg);
-    border: 1px solid #343536;
+    border: 1px solid var(--detailed-projcard-border);
 
     /* version 2 */
     /* background-color: var(--secondary-color); */
@@ -297,6 +299,20 @@ export default {
     text-align: left;
     padding: 25px 10px 20px 10px;
 }
+
+.desc_fade {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, transparent 20%, var(--detailed-projcard-bg) 90%);
+}
+.preserveText {
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
 .thumbnail {
     width: 380px;
     height: 300px;
@@ -309,7 +325,7 @@ export default {
     height: 2px;
     margin: auto;
     margin-top: 20px;
-    background-color: #343536;
+    /* background-color: #343536; */
 }
 .bottom_container {
     display: flex;
