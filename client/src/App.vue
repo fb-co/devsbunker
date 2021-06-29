@@ -85,6 +85,7 @@ export default {
     --main-accent: #49cce5;
     --drop-shadow: rgba(0, 0, 0, 0.1);
     --detailed-projcard-bg: #202020;
+    --detailed-projcard-border: #343536;
 
     /* profile page */
     --profile-option-color: #656565;
