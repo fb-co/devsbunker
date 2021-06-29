@@ -63,6 +63,8 @@
 
 -   [x] desktop and mobile settings page needs some polishing
 
+-   [ ] carousel broken when there are no images
+
 ## Low Priority
 
 -   [x] Optimize notification bell, and make a standardized component (ill do this)
