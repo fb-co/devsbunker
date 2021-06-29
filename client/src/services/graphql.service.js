@@ -627,6 +627,7 @@ const GraphQLService = {
         const mutation = `
             mutation {
                 savePost(postId: "${postId}") {
+                    isSaved
                     id
                 }
             }

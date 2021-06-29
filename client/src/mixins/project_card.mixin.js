@@ -14,14 +14,15 @@ const projectCard = {
             }
 
             GraphQLService.savePost(this.$store.getters.accessToken, id).then((savedPost) => {
-                console.log(savedPost);
-                this.projectData.isSaved = savedPost.data.savePost;
+                this.projectData.isSaved = savedPost.data.savePost.isSaved;
+                this.$store.dispatch("updatePostInCache", this.projectData); // update the post in cache
             });
         },
         unsavePost(id) {
             GraphQLService.unSavePost(this.$store.getters.accessToken, id).then((unSavedPost) => {
                 if (unSavedPost.data.unSavePost) {
                     this.projectData.isSaved = false;
+                    this.$store.dispatch("updatePostInCache", this.projectData); // update the post in cache
                 }
             });
         },
@@ -34,14 +35,12 @@ const projectCard = {
                 this.$store.getters.accessToken,
                 id
             ).then((res) => {
-                console.log(res);
                 if (res.data.likePost) {
                     this.projectData.likeAmt = res.data.likePost.likeAmt;
                     this.projectData.isLiked = res.data.likePost.isLiked;
-                    //GraphQLService.notifyUser()
-                } else {
-                    // add a message here that you already liked the post
-                }  
+
+                    this.$store.dispatch("updatePostInCache", this.projectData); // update post in cache
+                }
             });
         },
         unlikePost(id) {
@@ -49,9 +48,10 @@ const projectCard = {
                 this.$store.getters.accessToken,
                 id
             ).then((res) => {
-                console.log(res);
                 this.projectData.likeAmt = res.data.unlikePost.likeAmt;
                 this.projectData.isLiked = res.data.unlikePost.isLiked;
+
+                this.$store.dispatch("updatePostInCache", this.projectData); // update post in cache
             });
         }
     }

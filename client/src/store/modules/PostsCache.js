@@ -66,7 +66,6 @@ const mutations = {
         let ret = null;
 
         for (let i = 0; i < state.posts.length; i++) {
-            console.log(`*** DEBUG *** ${id} == ${state.posts[i].id} ?`);
             if (state.posts[i].id == id) {
                 ret = state.posts[i];
                 break;
@@ -92,6 +91,13 @@ const mutations = {
 
         this.commit("appendPosts", [post]);
     },
+    updatePost(state, post) {
+        for (let i = 0; i < state.posts.length; i++) {
+            if (post.id == state.posts[i].id) {
+                state.posts[i] = post;
+            }
+        }
+    }
 };
 
 const actions = {
@@ -104,6 +110,9 @@ const actions = {
     cacheNewlyMadePost({ commit }, post) {
         commit("cacheNewPost", post);
     },
+    updatePostInCache({ commit }, post) {
+        commit("updatePost", post);
+    }
 };
 
 export default {

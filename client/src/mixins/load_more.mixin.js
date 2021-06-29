@@ -36,7 +36,6 @@ const LoadMore = {
                 this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
             }
             */
-           
             const alreadyLoadedPosts = this.getPostsInMemory(this.queryType, filter || this.sortingType);
 
             if (alreadyLoadedPosts) {
@@ -135,7 +134,6 @@ const LoadMore = {
         getPostsInMemory(queryType, filter) {
             for (let i = 0; i < this.postsInMemory.length; i++) {
                 if (this.postsInMemory[i].queryType == queryType && this.postsInMemory[i].filter == filter) {
-                    console.log(this.postsInMemory[i]);
                     return this.postsInMemory[i];
                 }
             }
