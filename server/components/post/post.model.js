@@ -104,4 +104,12 @@ postSchema.path("tags").validate((tags) => {
     return valid;
 }, "Invalid language tag.");
 
+postSchema.path("title").validate((title) => {
+    return title.length <= 128;
+}, "The maximum length for the title is 100.");
+
+postSchema.path("description").validate((desc) => {
+    return desc.length <= 512;
+}, "The maximum length for the description is 512.");
+
 export default mongoose.model("Post", postSchema);

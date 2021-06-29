@@ -227,12 +227,18 @@ export default {
                 };
             } catch (err) {
                 // best error handling I ever made
+                console.error(err.errors.description);
+
                 throw new Error(
                     `Unable to create post: ${
                         err.errors.tags
                             ? err.errors.tags.properties.message
-                            : err.errors.links.properties.message
+                            : err.errors.links
                             ? err.errors.links.properties.message
+                            : err.errors.title
+                            ? err.errors.title.properties.message
+                            : err.errors.description
+                            ? err.errors.description.properties.message
                             : "Internal Error"
                     }`
                 );
