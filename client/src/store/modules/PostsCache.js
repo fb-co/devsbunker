@@ -11,6 +11,21 @@ const getters = {
     cachedPostById: (state) => state.neededPost,
     cachedNewlyMadePost: (state) => state.newlyMadePost,
     cachedFullPosts: (state) => state.fullPosts,
+    getMultiplePostsById: (state) => (postIds) => {
+        // takes an array of post ids, and returns any that are cached
+        // we should optimize this probably 
+        let cachedPosts = [];
+
+        for (let i = 0; i < postIds.length; i++) {
+            for (let j = 0; j < state.posts.length; j++) {
+                if (postIds[i] == state.posts[j].id) {
+                    cachedPosts.push(state.posts[j]);
+                    break;
+                }  
+            }
+        }
+        return cachedPosts;
+    }
 };
 
 const mutations = {

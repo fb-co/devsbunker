@@ -15,7 +15,7 @@ const LoadMore = {
         return {
             // variables
             posts: [], // array of all posts meant to be currently shown
-            postsInMemory: [], // array of objects not posts
+            postsInMemory: [], // array of objects which contain -> filter, sortingType, postIDs
             sortingType: null,
             fetchedAll: false,
             otherData: {}, // add any other data the mixing might need for a specific case here
@@ -30,16 +30,10 @@ const LoadMore = {
          * clearCurrent if given as true will clear the current post feed, usually used for things like switching filters (NOT FOR LOADING MORE OBV)
          */
         async getPosts(filter) {
-            /*
-            // if posts were already loaded before, make sure to update the cache with anything that changed
-            if (this.posts.length > 0) {
-                this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
-            }
-            */
             const alreadyLoadedPosts = this.getPostsInMemory(this.queryType, filter || this.sortingType);
-
+            
             if (alreadyLoadedPosts) {
-                this.posts = alreadyLoadedPosts.posts;
+                this.posts = alreadyLoadedPosts;
             } else {
                 if (this.queryType === "all") {
                     const res = await GraphQLService.fetchPosts(
@@ -89,9 +83,6 @@ const LoadMore = {
             }
         },
         updateFilterDropdown(value) {
-            // update the mixin local post cache to contain any local changes that were made to the posts
-            this.addPostsToMemory(this.queryType, value, this.posts);
-
             this.posts = [];
 
             // update and get the approprate filter in localstorage
@@ -112,35 +103,34 @@ const LoadMore = {
             
             this.getPosts(value);
         },
-
-        // the parameters need to stay, if it gets the data from local variables it will break
-        addPostsToMemory(queryType, filter, posts) {
-            if (queryType && filter && posts) {
-                for (let i = 0; i < this.postsInMemory.length; i++) {
-                    // if the posts with the specifications are already in memory, just update the posts, otherwise add a new entry
-                    if (this.postsInMemory[i].queryType == queryType && this.postsInMemory[i].filter == filter) {
-                        this.postsInMemory[i].posts = posts;
-                        return; // break out of the function
-                    }
+        getPostsInMemory(queryType, sortingType) {
+            for (let i = 0; i < this.postsInMemory.length; i++) {
+                if (this.postsInMemory[i].queryType == queryType && this.postsInMemory[i].sortingType == sortingType) {
+                    return this.$store.getters.getMultiplePostsById(this.postsInMemory[i].posts);
                 }
-
-                // if there was no entry for the current specifications (function would have been exited), add a new entry
-                this.postsInMemory.push({
-                    queryType: queryType,
-                    filter: filter,
-                    posts: posts,
-                });
             }
         },
+        addPostsToMemory(queryType, sortingType, posts) {
+            let postIds = [];
 
-        // checks if a type of posts have some already loaded, returns the posts object if true
-        getPostsInMemory(queryType, filter) {
+            // upack post array into array of postIds
+            for (let i = 0; i < posts.length; i++) {
+                postIds.push(posts[i].id);
+            }
+
             for (let i = 0; i < this.postsInMemory.length; i++) {
-                if (this.postsInMemory[i].queryType == queryType && this.postsInMemory[i].filter == filter) {
-                    return this.postsInMemory[i];
+                if (this.postsInMemory[i].queryType == queryType && this.postsInMemory[i].sortingType == sortingType) {
+                    this.postsInMemory[i].posts = postIds;
+                    return; // break out of function
                 }
             }
-            return false;
+
+            // if its made it to this point in the function it means that this type of filter and queryType is not yet in memory and should add it
+            this.postsInMemory.push({
+                queryType: queryType,
+                sortingType: sortingType,
+                posts: postIds,
+            });
         },
 
         // misc functions
