@@ -35,6 +35,7 @@ const projectCard = {
                 this.$store.getters.accessToken,
                 id
             ).then((res) => {
+                console.log(res);
                 if (res.data.likePost) {
                     this.projectData.likeAmt = res.data.likePost.likeAmt;
                     this.projectData.isLiked = res.data.likePost.isLiked;
@@ -48,6 +49,7 @@ const projectCard = {
                 this.$store.getters.accessToken,
                 id
             ).then((res) => {
+                console.log(res);
                 this.projectData.likeAmt = res.data.unlikePost.likeAmt;
                 this.projectData.isLiked = res.data.unlikePost.isLiked;
 

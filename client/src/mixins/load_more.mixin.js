@@ -89,6 +89,9 @@ const LoadMore = {
             }
         },
         updateFilterDropdown(value) {
+            // update the mixin local post cache to contain any local changes that were made to the posts
+            this.addPostsToMemory(this.queryType, value, this.posts);
+
             this.posts = [];
 
             // update and get the approprate filter in localstorage
