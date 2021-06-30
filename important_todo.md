@@ -63,7 +63,7 @@
 
 -   [x] desktop and mobile settings page needs some polishing
 
--   [ ] carousel broken when there are no images
+-   [x] carousel broken when there are no images
 
 ## Low Priority
 

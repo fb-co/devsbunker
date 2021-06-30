@@ -115,7 +115,7 @@
         <div class="links_container">
             <LinkItem v-for="link in projectData.links" :key="link" :link="link" class="link_item" />
         </div>
-        <CarouselMobile :images="postImages" />
+        <CarouselMobile v-if="projectData.images.length > 0" :images="postImages" />
 
         <CommentSection @postComment="$parent.postComment" :mobile="true" :comments="projectData.comments" style="margin-top: 30px;" />
     </div>
@@ -155,14 +155,16 @@ export default {
 
         this.tags = Object.values(this.projectData.tags);
 
-        this.postThumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
+        if (this.projectData.images.length > 0) {
+            this.postThumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
 
-        // avoiding to push the thumbnail
-        for (let i = 0; i < this.projectData.images.length; i++) {
-            if (this.projectData.images[i].dbname) {
-                this.postImages.push(
-                    `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[i].dbname}`
-                );
+            // avoiding to push the thumbnail
+            for (let i = 0; i < this.projectData.images.length; i++) {
+                if (this.projectData.images[i].dbname) {
+                    this.postImages.push(
+                        `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[i].dbname}`
+                    );
+                }
             }
         }
 
@@ -175,8 +177,12 @@ export default {
         }
     },
     mounted() {
-        console.log(this.postThumbnail);
-        this.$refs.image_div.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) ), url('${this.postThumbnail}')`;
+        if (this.postThumbnail) {
+            // set the banner only if the post thumbnail exists
+            this.$refs.image_div.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) ), url('${this.postThumbnail}')`;
+        } else {
+            this.$refs.image_div.style.backgroundColor = `var(--accent)`;
+        }   
     },
     methods: {
         back() {

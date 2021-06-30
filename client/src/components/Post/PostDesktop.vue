@@ -25,7 +25,7 @@
                     <Link v-for="(link, index) in projectData.links" :key="index" :link="link" class="desktop_link" />
                 </div>
 
-                <Carousel class="main_carousel" :images="postImages" minWidth="100%" />
+                <Carousel v-if="projectData.images.length > 0" class="main_carousel" :images="postImages" minWidth="100%" />
 
                 <CommentSection @postComment="$parent.postComment" :comments="projectData.comments" />
             </div>
@@ -71,14 +71,16 @@ export default {
         };
     },
     created() {
-        this.thumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
+        if (this.projectData.images.length > 0) {
+            this.thumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
 
-        // avoiding to push the thumbnail
-        for (let i = 0; i < this.projectData.images.length; i++) {
-            if (this.projectData.images[i].dbname) {
-                this.postImages.push(
-                    `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[i].dbname}`
-                );
+            // avoiding to push the thumbnail
+            for (let i = 0; i < this.projectData.images.length; i++) {
+                if (this.projectData.images[i].dbname) {
+                    this.postImages.push(
+                        `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[i].dbname}`
+                    );
+                }
             }
         }
 
