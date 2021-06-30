@@ -385,6 +385,9 @@ export default {
 
             */
 
+            if (payload.title.length > 100) return { success: false, err: "The maximum length for the title is 100 chars." };
+            if (payload.description.length > 512) return { success: false, err: "The maximum length for the description is 512 chars." };
+
             // had to break this down because of async pain (i think)
             let errmsg = null;
             if (payload.title && payload.description && payload.links.length && payload.tags.length) {
