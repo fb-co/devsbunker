@@ -1,6 +1,6 @@
 <template>
     <div v-if="open" class="backdrop" @click.stop="closeMenu()">
-        <div class="more_options_mobile" @click.stop="">
+        <div class="more_options_mobile" @click.stop="closeMenu()">
             <slot>
 
             </slot>

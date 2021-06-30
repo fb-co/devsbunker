@@ -169,7 +169,7 @@
                         </div>
                         -->
 
-                        <div @click="downloadUserData()" class="option-wrapper link_item">
+                        <div @click="openDownloadDataConfirmation()" class="option-wrapper link_item">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-download"
@@ -255,6 +255,13 @@
             title="Delete Account"
             @submitted="deleteProfile($event)"
         />
+        <ConfirmationPopup 
+            ref="download_data_confirmation"
+            title="Download Data" 
+            msg="This will download all the data associated with your account into a JSON file." 
+            confirmButton="Download" 
+            @confirm="downloadUserData()"
+        />
     </div>
 </template>
 
@@ -263,6 +270,7 @@ import GraphQLService from "@/services/graphql.service";
 
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import InputModal from "@/components/global/InputModal.vue";
+import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 
 export default {
     data() {
@@ -275,6 +283,7 @@ export default {
     components: {
         ProfilePicture,
         InputModal,
+        ConfirmationPopup
     },
     props: {
         mainUserObject: Object,
@@ -289,6 +298,9 @@ export default {
                     this.$router.push("/");
                 }
             });
+        },
+        openDownloadDataConfirmation() {
+            this.$refs.download_data_confirmation.open();
         },
         downloadUserData() {
             GraphQLService.downloadUserData(this.$store.getters.accessToken)

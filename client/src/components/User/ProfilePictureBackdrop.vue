@@ -26,8 +26,6 @@ export default {
             this.$refs.image_div.style.backgroundImage = 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) )';
             this.$refs.image_div.style.backgroundColor = "var(--accent)";
         }
-        
-        console.log(this.image_link);
     },
     computed: {
         yourPfpLink() {

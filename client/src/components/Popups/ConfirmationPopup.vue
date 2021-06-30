@@ -15,7 +15,7 @@
             <p>{{ msg }}</p>
             <div class="actions_container">
                 <button class="cancel" @click="close()">{{ cancelButton }}</button>
-                <button class="confirm" @click="$emit('confirm')">{{ confirmButton }}</button>
+                <button class="confirm" @click="close(); $emit('confirm')">{{ confirmButton }}</button>
             </div>
         </div>
     </div>
@@ -78,12 +78,12 @@ export default {
     border-radius: 5px;
     box-shadow: 0px 0px 20px var(--drop-shadow);
     background-color: var(--main-color);
-    height: 200px;
     animation: slideAnimation 0.4s;
+    padding: 10px;
 }
 .popup_container > p {
     flex-grow: 1;
-    padding-top: 30px;
+    padding: 40px;
 }
 .container_mobile {
     width: 95%;
@@ -121,7 +121,7 @@ export default {
     cursor: pointer;
 }
 .confirm:hover {
-    box-shadow: 0px 4px 20px var(--main-accent);
+    box-shadow: 0px 0px 10px var(--main-accent);
 }
 
 .cancel {
@@ -138,6 +138,6 @@ export default {
     cursor: pointer;
 }
 .cancel:hover {
-    box-shadow: 0px 4px 20px var(--error-red);
+    box-shadow: 0px 0px 10px var(--error-red);
 }
 </style>
