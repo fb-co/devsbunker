@@ -5,12 +5,9 @@
         <div class="nav_container">
             <div class="burger_blur" id="burger_menu_blur" @click="hideBurgerMenu()"></div>
             <!-- Darkens the screen for the burger menu -->
-            <div class="logo_container">
-                <div class="menu_logo" @click.prevent="routeOrReload()">
-                    <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
-                    <img src="../../assets/templogo.png" alt="Logo" />
-                    <p><span style="font-weight: bold">DEVS</span>BUNKER</p>
-                </div>
+            <div class="menu_logo" @click.prevent="routeOrReload()">
+                <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
+                <img src="../../assets/LOGO.svg" alt="Logo" />
             </div>
             <!-- Static menu items (dont go into burger menu) -->
             <div class="nav_links_container">
@@ -252,29 +249,13 @@ body {
     height: var(--header-height);
     background-color: var(--secondary-color);
 }
-.logo_container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
 
 .menu_logo {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     cursor: pointer;
-    margin-left: 25px;
 }
 .menu_logo img {
-    max-height: 40px;
-    max-width: 100px;
-    flex-shrink: 0;
-    margin-right: 10px;
-}
-.menu_logo p {
-    font-weight: 400;
-    letter-spacing: 0.5px;
+    height: 100%;
+    margin-left: 30px;
 }
 .nav_links_container {
     display: flex;
@@ -282,7 +263,6 @@ body {
     justify-content: flex-end;
     flex-grow: 1;
 }
-
 /* Static Links Styling */
 
 .static_nav_links {
