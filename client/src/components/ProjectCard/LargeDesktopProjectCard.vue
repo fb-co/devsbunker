@@ -287,7 +287,8 @@ export default {
     flex-direction: column;
     margin: 10px;
     flex: 1; /* Makes it stretch to fill container */
-    border-bottom: 1px solid var(--soft-text);
+
+    box-shadow: 0px 0px 7px var(--drop-shadow);
     
     /*
     min-width: 250px;

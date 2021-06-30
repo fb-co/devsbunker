@@ -2,13 +2,14 @@
     <div @click="$router.push('/user/' + username)" class="card_container">
         <ProfilePicture :username="username" wrapperSize="70px" />
         <div class="text_container">
-            <h2 class="username">{{ username }}</h2>
+            <h2 class="username">{{ username +  (isYou ? " (You)" : "") }}</h2>
             <p v-if="showFollowerAmt" class="followerAmt">{{ followerAmt + (followerAmt == 1 ? " Follower" : " Followers") }}</p>
         </div>
         <div v-if="showFollowButton" class="follow_btn_container">
             <div style="flex-grow: 1;"></div>
             <!-- Placeholder -->
-            <button v-if="$store.getters.accessToken && $store.getters.username !== username" class="follow_btn" @click.stop="$emit('followAction')">{{ isFollowing ? "Unfollow" : "Follow" }}</button>
+            <button v-if="!isYou" class="follow_btn" @click.stop="$emit('followAction')">{{ isFollowing ? "Unfollow" : "Follow" }}</button>
+            <button v-else class="follow_btn" @click.stop="$router.push('/user/' + username)">Edit</button>
         </div>
     </div>
 </template>
@@ -17,6 +18,16 @@
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 
 export default {
+    data() {
+        return {
+            isYou: false,
+        }
+    },
+    created() {
+        if (this.$store.getters.username === this.username) {
+            this.isYou = true;
+        }
+    },
     props: {
         username: String,
         isFollowing: {
@@ -50,14 +61,14 @@ export default {
     margin-top: 40px;
     margin-bottom: 40px;
     border-radius: 10px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 5px var(--drop-shadow);
     border: 1px solid transparent;
     display: flex;
     flex-direction: row;
-    border: 1px solid transparent;
 }
 .card_container:hover {
     border: 1px solid var(--accent);
+    cursor: pointer;
 }
 .text_container {
     flex-grow: 1;

@@ -13,10 +13,11 @@
 
                 <AuthorDisplay v-if="authorData" :username="projectData.author" :followerAmt="authorData.followerAmt" :isFollowing="authorData.isFollowing" @followAction="followAuthor" />
 
-                <h2 v-if="projectData.collaborators.length > 0" style="margin-top: 10px; margin-bottom: 20px;">Contributers</h2>
+                <h2 v-if="projectData.collaborators.length > 0" style="margin-top: 10px; margin-bottom: 20px;">Other Contributers</h2>
                 
                 <div>
-                    <AuthorDisplay v-for="(contributer, index) in projectData.collaborators" :key="index" :username="contributer" :showFollowerAmt="false" :showFollowButton="false" />
+                    <!--<AuthorDisplay v-for="(contributer, index) in projectData.collaborators" :key="index" :username="contributer" :showFollowerAmt="false" :showFollowButton="false" /> -->
+                    <SecondaryAuthorDisplay v-for="(contributer, index) in projectData.collaborators" :key="index" :username="contributer" />
                 </div>
                 <p id="description"><pre>{{ projectData.description }}</pre></p>
                 
@@ -42,6 +43,7 @@ import CommentSection from "@/components/Comments/CommentSection.vue";
 import Carousel from "@/components/Carousel/Carousel.vue";
 import Link from "./Link.vue";
 import AuthorDisplay from "./AuthorDisplay.vue";
+import SecondaryAuthorDisplay from "./SecondaryAuthorDisplay.vue";
 
 import LeftContent from "@/components/Home/desktop/LeftContent.vue";
 import RightContent from "@/components/Home/desktop/RightContent.vue";
@@ -63,6 +65,7 @@ export default {
         CommentSection,
         Link,
         AuthorDisplay,
+        SecondaryAuthorDisplay
     },
     data() {
         return {
@@ -98,10 +101,15 @@ export default {
             return CommonUtils.renderUsername(username, maxLen);
         },
         followAuthor() {
-            if (!this.authorData.isFollowing) {
-                this.followUser(this.projectData.author);
+            if (this.$store.getters.accessToken) {
+                if (!this.authorData.isFollowing) {
+                    this.followUser(this.projectData.author);
+                } else {
+                    this.unfollowUser(this.projectData.author);
+                }
             } else {
-                this.unfollowUser(this.projectData.author);
+                this.$router.push("/login");
+                this.$store.dispatch("alertUser", { type: "error", msg: "Login to follow people" });
             }
         }
     }

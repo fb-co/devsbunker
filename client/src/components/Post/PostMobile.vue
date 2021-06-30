@@ -100,7 +100,7 @@
         <div ref="tags" class="tag_container" v-if="tags">
             <CreateTag v-for="tag in tags" :key="tag" :label="tag" tagType="lang" />
         </div>
-        <p v-if="projectData.collaborators.length > 0" class="newPostTag">Contributers</p>
+        <p v-if="projectData.collaborators.length > 0" class="newPostTag">Other Contributers</p>
         <div class="contributers_container">
             <router-link v-for="(contributer, index) in projectData.collaborators" :key="index" :to="'/user/' + contributer" class="contributer">
                 <ProfilePicture class="contributer_pfp" :username="contributer" wrapperSize="40px" />
