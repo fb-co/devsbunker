@@ -15,12 +15,12 @@
             <p ref="static_description" class="desc_not_editing">{{ userObject.desc }}</p>
 
             <div class="other_cont_container">
-                <div class="other_cont_item">
+                <div v-if="!isExternal" class="other_cont_item">
                     <p class="bold other_item_label">Email</p>
                     <p>{{ userObject.email }}</p>
                 </div>
             </div>
-            <button @click="editFields()" class="save_button">Edit</button>
+            <button v-if="!isExternal" @click="editFields()" class="save_button">Edit</button>
         </div>
         <div v-else>
             <textarea maxlength="400" class="desc_editing" ref="edit_desc" :value="userObject.desc" placeholder="Description..." />

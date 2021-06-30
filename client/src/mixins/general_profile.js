@@ -51,6 +51,7 @@ const GeneralProfile = {
 
             if (fields.length > 0) {
                 GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
+                    console.log(res);
                     if (!res.errors) {
                         const data = res.data.updateUserDetails.changedData;
                         
