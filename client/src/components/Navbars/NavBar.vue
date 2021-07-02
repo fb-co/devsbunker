@@ -5,9 +5,20 @@
         <div class="nav_container">
             <div class="burger_blur" id="burger_menu_blur" @click="hideBurgerMenu()"></div>
             <!-- Darkens the screen for the burger menu -->
-            <div class="menu_logo" @click.prevent="routeOrReload()">
+            <div @click.prevent="routeOrReload()" class="menu_logo">
                 <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
-                <img src="../../assets/LOGO.svg" alt="Logo" />
+                <img 
+                    v-if="!$store.getters.mobile" 
+                    src="../../assets/LOGO.svg" 
+                    alt="Logo" 
+                    class="logo_desktop"
+                />
+                <img 
+                    v-else 
+                    src="../../assets/LOGOSIMPLE.svg" 
+                    alt="Logo" 
+                    class="logo_mobile"
+                />
             </div>
             <!-- Static menu items (dont go into burger menu) -->
             <div class="nav_links_container">
@@ -181,6 +192,7 @@ export default {
             document.getElementById("burger_menu_checkbox").click();
         },
         routeOrReload() {
+            console.log("bruh");
             if (this.$route.path == "/") {
                 this.$emit("refreshPosts", true);
             } else {
@@ -249,12 +261,20 @@ body {
     height: var(--header-height);
     background-color: var(--secondary-color);
 }
-
 .menu_logo {
     cursor: pointer;
+    width: 200px;
+    height: 100%;
+    text-align: left;
 }
 .menu_logo img {
     height: 100%;
+}
+.logo_mobile {
+    padding: 10px;
+    margin-left: 15px;
+}
+.logo_desktop {
     margin-left: 30px;
 }
 .nav_links_container {
