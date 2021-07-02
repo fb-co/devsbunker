@@ -28,7 +28,8 @@ const LoadMore = {
         /*
          * you can also specify a filter to force it query with the given filter instead of the local data
          * clearCurrent if given as true will clear the current post feed, usually used for things like switching filters (NOT FOR LOADING MORE OBV)
-         */
+         * Force new will ignore cache and get new from server (mainly used for the load more option) 
+        */
         async getPosts(filter) {
             const alreadyLoadedPosts = this.getPostsInMemory(this.queryType, filter || this.sortingType);
             
@@ -74,6 +75,45 @@ const LoadMore = {
                 this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
             }
         },
+        async loadNewPosts(filter) {
+            if (this.queryType === "all") {
+                const res = await GraphQLService.fetchPosts(
+                    filter || this.sortingType,
+                    this.getLastPostId(),
+                    this.getLastPostUniqueField(),
+                    this.$store.getters.accessToken
+                );
+                this.posts = this.posts.concat(res.data.getPosts.posts);
+                this.fetchedAll = res.data.getPosts.fetchedAll;
+
+                this.$store.commit("appendPosts", res.data.getPosts.posts);
+            } else if (this.queryType === "projects") {
+                const res = await GraphQLService.fetchPostsByAuthor(
+                    this.otherData.foreignUserToFilter || this.$store.getters.username,
+                    this.getLastPostId(),
+                    this.getLastPostUniqueField(),
+                    this.filter || this.sortingType,
+                    this.$store.getters.accessToken
+                );
+                this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
+                this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
+
+                this.$store.commit("appendPosts", res.data.getPostsByAuthor.posts);
+            } else if (this.queryType === "saved") {
+                const res = await GraphQLService.fetchSavedPosts(
+                    this.getLastPostId(),
+                    this.getLastPostUniqueField(),
+                    filter || this.sortingType,
+                    this.$store.getters.accessToken
+                );
+                this.posts = this.posts.concat(res.data.getSavedPosts.posts);
+                this.fetchedAll = res.data.getSavedPosts.fetchedAll;
+
+                this.$store.commit("appendPosts", res.data.getSavedPosts.posts);
+            }
+            // add the posts to a temp memory (this adds the just fetched ones)
+            this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
+        },
         async updateFeedAfterNewPost() {
             const newPost = store.getters.cachedNewlyMadePost;
 
@@ -82,7 +122,7 @@ const LoadMore = {
                 this.posts.unshift(newPost);
             }
         },
-        updateFilterDropdown(value) {
+        async updateFilterDropdown(value) {
             this.posts = [];
 
             // update and get the approprate filter in localstorage
@@ -101,7 +141,7 @@ const LoadMore = {
                     this.sortingType = SearchUtilities.getSavedPostFilter();
             }
             
-            this.getPosts(value);
+            await this.getPosts(value);
         },
         getPostsInMemory(queryType, sortingType) {
             for (let i = 0; i < this.postsInMemory.length; i++) {

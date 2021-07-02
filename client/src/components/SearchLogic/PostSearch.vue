@@ -217,8 +217,8 @@ export default {
                 });
             }
         },
-        loadMoreResults() {
-            GraphQLService.fetchPostsByPartial(
+        async loadMoreResults() {
+            const res = await GraphQLService.fetchPostsByPartial(
                 this.$refs.general_input.value, 
                 this.filter, 
                 this.userToFilter, 
@@ -226,11 +226,11 @@ export default {
                 this.documents.length > 0 ? this.documents[this.documents.length-1].id : 0,  // last post id
                 this.documents.length > 0 ? this.documents[this.documents.length-1].likeAmt : -1, // last unique field (only for most popular queries)
                 this.$store.getters.accessToken
-            ).then((res) => {
-                this.fetchedAllResults = res.data.partial_post.fetchedAll;
-                this.documents = this.documents.concat(res.data.partial_post.posts);
-                this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
-            });
+            );
+            
+            this.fetchedAllResults = res.data.partial_post.fetchedAll;
+            this.documents = this.documents.concat(res.data.partial_post.posts);
+            this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
         },
         getSearchedPhrase() {
             return this.$refs.general_input.value;
