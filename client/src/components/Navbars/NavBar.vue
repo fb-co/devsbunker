@@ -7,18 +7,8 @@
             <!-- Darkens the screen for the burger menu -->
             <div @click.prevent="routeOrReload()" class="menu_logo">
                 <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
-                <img 
-                    v-if="!$store.getters.mobile" 
-                    src="../../assets/LOGO.svg" 
-                    alt="Logo" 
-                    class="logo_desktop"
-                />
-                <img 
-                    v-else 
-                    src="../../assets/LOGOSIMPLE.svg" 
-                    alt="Logo" 
-                    class="logo_mobile"
-                />
+                <img v-if="!$store.getters.mobile" src="../../assets/LOGO.svg" alt="Logo" class="logo_desktop" />
+                <img v-else src="../../assets/LOGOSIMPLE.svg" alt="Logo" class="logo_mobile" />
             </div>
             <!-- Static menu items (dont go into burger menu) -->
             <div class="nav_links_container">
@@ -273,7 +263,10 @@ body {
 .logo_mobile {
     padding: 10px;
     margin-left: 15px;
+    transform: scale(0.8);
+    margin-top: -4px;
 }
+
 .logo_desktop {
     margin-left: 30px;
 }
