@@ -1,5 +1,10 @@
 <template>
-    <div v-if="!deleted" class="main_container" @click="$router.push({ path: `/post/${projectData.id}` })">
+    <div
+        v-if="!deleted"
+        class="main_container"
+        :class="{ main_container_lock: /@\/assets/.test(projectData.thumbnail) }"
+        @click="$router.push({ path: `/post/${projectData.id}` })"
+    >
         <div class="top_container">
             <div class="icons_container">
                 <div class="icon_box" style="margin-bottom: 10px;">
@@ -84,7 +89,7 @@
                         <circle cx="19" cy="12" r="1" />
                     </svg>
                 </div>
-                <div v-if="moreOptions" class="more_options">
+                <div v-if="moreOptions" class="more_options" :class="{ move_down_for_small_post: /@\/assets/.test(projectData.thumbnail) }">
                     <div class="option_container" @mousedown="copyPostLink()">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +144,7 @@
                     <div class="desc_fade"></div>
                     <pre class="preserveText"><p class="description">{{ projectData.description }}</p></pre>
                 </div>
-                <DynamicPicture class="thumbnail" :image_link="projectData.thumbnail" />
+                <DynamicPicture v-if="!/@\/assets/.test(projectData.thumbnail)" class="thumbnail" :image_link="projectData.thumbnail" />
             </div>
         </div>
         <div class="seperator_line" />
@@ -191,6 +196,9 @@ export default {
                 "--card-color": Languages.getColor(this.projectData.tags[0]) || "var(--main-font-color)",
             };
         },
+    },
+    created() {
+        console.log(this.projectData);
     },
     methods: {
         openMoreOptions() {
@@ -271,7 +279,6 @@ export default {
     margin: 10px;
     padding: 20px;
     width: 510px;
-    min-height: 520px;
 
     /* version 1 */
     background-color: var(--detailed-projcard-bg);
@@ -279,6 +286,10 @@ export default {
 
     /* version 2 */
     /* background-color: var(--secondary-color); */
+}
+
+.main_container_lock {
+    max-height: 463px;
 }
 
 .main_container:hover {
@@ -304,7 +315,6 @@ export default {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    height: 100%; /* Delete this after */
     margin-left: 15px;
 }
 .title {
@@ -336,6 +346,8 @@ export default {
     white-space: -pre-wrap; /* Opera 4-6 */
     white-space: -o-pre-wrap; /* Opera 7 */
     word-wrap: break-word; /* Internet Explorer 5.5+ */
+
+    font-family: "Rubik";
 }
 .thumbnail {
     width: 380px;
@@ -428,6 +440,10 @@ export default {
     padding: 5px 15px 5px 15px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--soft-text);
+}
+
+.move_down_for_small_post {
+    top: 39%;
 }
 .option_container {
     display: flex;
