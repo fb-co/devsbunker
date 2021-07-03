@@ -4,6 +4,8 @@
 
 -   [ ] switch to text area for post description instead of div with contenteditable
 
+-   [ ] port detailed proj cards to mobile
+
 -   [ ] LOGO
 
 -   [x] Auto-update profile pics when you upload a new one
