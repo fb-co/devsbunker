@@ -3,7 +3,15 @@
         <p v-if="label!='' && !labelIsPlaceholder">{{ label }}</p>
 
         <input @click.stop @input="queryData()" v-if="!isTextArea" ref="general_input" class="main_query_input" :placeholder="labelIsPlaceholder ? label : ''" />
-        <div v-else ref="general_input" contenteditable="true" class="general_textarea"></div>
+        
+        <div v-else class="grow_area">
+            <textarea  
+                ref="general_input" 
+                onInput="this.parentNode.dataset.replicatedValue = this.value"
+                class="general_textarea"
+                rows="1"
+            />
+        </div>
         <!-- Acts like a text area -->
 
         <div class="form_line_container">
@@ -71,9 +79,7 @@ export default {
     methods: {
         // this ternary operator is important because if the input is a textarea (div with contenteditable), it does not have the .value attribute
         getValue() {
-            return this.isTextArea
-                ? this.$refs.general_input.innerText
-                : this.$refs.general_input.value;
+            return  this.$refs.general_input.value;
         },
         clearValue() {
             this.$refs.general_input.value = "";
@@ -144,11 +150,38 @@ export default {
     color: var(--soft-text);
     font-size: 14px;
 }
-.general_input_container input,
-.general_textarea {
-    width: 100%;
+.grow_area {
+    display: grid;
+}
+.grow_area::after {
+    content: attr(data-replicated-value) " ";
+
+    white-space: pre-wrap;
+
+    visibility: hidden;
+}
+.grow_area > textarea {
+    resize: none;
+
+    overflow: hidden;
+    font-family: rubik;
+    color: var(--main-font-color);
+    font-size: 15px;
+    background-color: inherit;
     border: none;
     padding: 3px;
+    margin-bottom: 5px;
+}
+.grow_area > textarea,
+.grow_area::after {
+    height: 100%;
+
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.general_input_container input {
+    width: 100%;
+    border: none;
     background-color: inherit;
     margin: 0px auto 5px auto;
     font-family: rubik;
@@ -156,6 +189,7 @@ export default {
     text-align: left;
     font-size: 15px;
 }
+
 .general_input_container input:focus,
 .general_textarea:focus {
     outline: none;
@@ -180,8 +214,12 @@ export default {
     );
     opacity: 0.3;
 }
-.general_input_container input:focus + .form_line_container > div,
-.general_textarea:focus + .form_line_container > div {
+.general_input_container input:focus + .form_line_container > div {
+    animation: form_field_animation 1s;
+    width: 100%;
+    height: 1.5px;
+}
+.grow_area textarea + .form_line_container > div {
     animation: form_field_animation 1s;
     width: 100%;
     height: 1.5px;
