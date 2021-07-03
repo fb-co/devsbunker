@@ -2,6 +2,8 @@
 
 ## High Priority
 
+-   [ ] switch to text area for post description instead of div with contenteditable
+
 -   [ ] LOGO
 
 -   [x] Auto-update profile pics when you upload a new one
@@ -59,7 +61,7 @@
 
 -   [x] fix that troll commit
 
--   [ ] update Detailed proj cards to work with latest progress and polish them
+-   [x] update Detailed proj cards to work with latest progress and polish them
 
 -   [x] desktop and mobile settings page needs some polishing
 
