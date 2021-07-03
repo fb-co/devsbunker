@@ -104,27 +104,15 @@
                 <div v-if="rootComponent.posts.length > 0" class="post_wrapper">
                     <div v-if="!desktop" class="mobile_post_feed">
                         <!-- <MobileProjectCard class="mobile_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" /> -->
-                        <LargeMobileProjectCard 
-                            v-for="project in rootComponent.posts" 
-                            :key="project.id" 
-                            :projectData="project" 
-                        />
+                        <LargeMobileProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
                     </div>
                     <div v-if="desktop && feedTheme === 'Simple'" class="desktop_post_feed">
                         <!-- <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" /> -->
-                        <LargeDesktopProjectCard 
-                            v-for="project in rootComponent.posts" 
-                            :key="project.id" 
-                            :projectData="project" 
-                        />
+                        <LargeDesktopProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
                         <!-- <DetailedDesktopProjCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" /> -->
                     </div>
                     <div v-if="desktop && feedTheme === 'Descriptive'" class="desktop_post_feed">
-                        <DetailedDesktopProjCard 
-                            v-for="project in rootComponent.posts" 
-                            :key="project.id" 
-                            :projectData="project" 
-                        />
+                        <DetailedDesktopProjCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
                     </div>
                     <p v-if="!rootComponent.fetchedAll && !awaitingResults" @click="loadNew()" class="load_more_btn">Load More</p>
                 </div>
@@ -154,10 +142,11 @@
                     </div>
                     <div v-if="desktop && feedTheme === 'Descriptive'" class="desktop_post_feed">
                         <!-- <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" /> -->
-                        <DetailedDesktopProjCard 
-                            v-for="searchResult in searchResults" 
-                            :key="searchResult.id" 
-                            :projectData="searchResult" 
+                        <DetailedDesktopProjCard
+                            v-for="searchResult in searchResults"
+                            :key="searchResult.id"
+                            :projectData="searchResult"
+                            :highlight_phrase="searchPhrase"
                         />
                     </div>
                     <p v-if="!fetchedAllSearchResults && !awaitingResults" @click="loadNew()" class="load_more_btn">Load More</p>
@@ -288,7 +277,7 @@ export default {
     },
     mounted() {
         // don't need to destroy on destroyed() because its attached to an element and will get removed anyway
-        this.$refs.scrollable_container.addEventListener('scroll', () => {
+        this.$refs.scrollable_container.addEventListener("scroll", () => {
             this.$refs.post_search.closeMoreMenu();
         });
     },

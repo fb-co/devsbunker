@@ -133,7 +133,7 @@
                 </div>
             </div>
             <div class="main_text_container">
-                <p class="title">{{ projectData.title }}</p>
+                <p class="title highlightable">{{ projectData.title }}</p>
                 <p class="tag" :style="cssProps">{{ projectData.tags[0] }}</p>
                 <div style="position: relative">
                     <div class="desc_fade"></div>
@@ -177,6 +177,7 @@ export default {
     },
     props: {
         projectData: Object,
+        highlight_phrase: String,
     },
     mixins: [ProjectCardUtils],
     components: {
@@ -230,6 +231,31 @@ export default {
                 }
             });
         },
+        highlightPhrases() {
+            if (this.highlight_phrase != null) {
+                const elements = document.getElementsByClassName("highlightable");
+
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp(this.highlight_phrase, "ig"), `<mark>${this.highlight_phrase}</mark>`);
+                }
+            } else {
+                // remove all highlights if the highlight phrase is null
+                const elements = document.getElementsByClassName("highlightable");
+
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp("<mark>", "ig"), "");
+                    elements[i].innerHTML = elements[i].innerText.replace(new RegExp("</mark>", "ig"), "");
+                }
+            }
+        },
+    },
+    watch: {
+        projectData: function(newVal) {
+            this.thumbnail_link = newVal.thumbnail || "@/assets/project_img_placeholder.png";
+        },
+        highlight_phrase: function() {
+            this.highlightPhrases();
+        },
     },
 };
 </script>
@@ -253,8 +279,6 @@ export default {
 
     /* version 2 */
     /* background-color: var(--secondary-color); */
-
-    user-select: none;
 }
 
 .main_container:hover {
