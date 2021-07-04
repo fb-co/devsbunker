@@ -105,7 +105,8 @@
 organize in the following way:
 
 ```
-[
+type: stuffToCache {
+
   {
     fiter
     sortintype
@@ -117,7 +118,7 @@ organize in the following way:
     posts
   }
 
-]
+}
 ```
 
 3. if user changes filter --> ask cache
@@ -129,3 +130,14 @@ organize in the following way:
 
 1. Make a different array
 2. ask to that array when u open a post
+
+### Methods
+
+```
+* addPosts(filter: string, sortingType: string, posts: Array<Post>) --> MUTATION
+* getPosts(filter: string, sortingType: string) ---> GETTER
+* updatePost(id: string, entireObject: Post) --> this requires looping  tiem complexity: O(n) where n is the length of the posts arrays --> MUTATION
+* cacheFullPost(post: Post) --> MUTATION
+* getFullPost(id: string) --> GETTER
+
+```
