@@ -33,7 +33,6 @@ const LoadMore = {
             const alreadyLoadedPosts = this.$store.getters.getPosts(filter || this.sortingType, this.queryType);
             
             if (alreadyLoadedPosts) {
-                console.log("using cache");
                 this.posts = alreadyLoadedPosts;
             } else {
                 if (this.queryType === "all") {

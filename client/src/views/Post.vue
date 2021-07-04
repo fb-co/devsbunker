@@ -26,66 +26,52 @@ export default {
     async created() {
         SharedMethods.loadPage();
 
-        // TODO: first thing to do is checking if we have already fetched all the project details
-        // TODO: by using the new API call in the posts cache "extractCachedFullPostById"
-        // TODO: if we get a match then we dont need to run the code below
+        const cachedPost = this.$store.getters.getFullPost(this.$route.params.postid);
 
-        await this.$store.dispatch("extractCachedPostById", this.$route.params.postid);
-
-        const cachedPost = this.$store.getters.cachedPostById;
-
-        if (this.$store.getters.cachedNewlyMadePost && cachedPost.id === this.$store.getters.cachedNewlyMadePost.id) {
-            this.postData = this.$store.getters.cachedNewlyMadePost;
+        if (cachedPost) {
+            this.postData = cachedPost;
+            this.authorData = cachedPost.authorData; // this is hidden in here when the post is cached
         } else {
-            let toFetch = [];
-
-            if (cachedPost) {
-                // we can use the cached data
-                toFetch = [
-                    `images {
-                        ogname
+            const toFetch = [
+                "author",
+                "title",
+                "description",
+                "id",
+                `images {
+                    ogname
                     dbname
                 }`,
-                    "links",
-                    "tags",
-                    "collaborators",
-                    "createdAt",
-                    `comments {
-                        commenter
+                "isLiked",
+                "isSaved",
+                "likeAmt",
+                "price",
+                "links",
+                "collaborators",
+                "tags",
+                "createdAt",
+                `comments {
+                    commenter
                     comment
                     timestamp
                 }`,
-                ];
-            } else {
-                toFetch = [
-                    "author",
-                    "title",
-                    "description",
-                    "id",
-                    `images {
-                        ogname
-                    dbname
-                }`,
-                    "isLiked",
-                    "isSaved",
-                    "likeAmt",
-                    "price",
-                    "links",
-                    "collaborators",
-                    "tags",
-                    "createdAt",
-                    `comments {
-                        commenter
-                    comment
-                    timestamp
-                }`,
-                ];
-            }
-
+            ];
+            
+            // fetch the post data
             const pData = await GraphQLService.fetchPostById(this.$route.params.postid, toFetch, this.$store.getters.accessToken);
-
             this.postData = pData.data.getPostById;
 
+            // fetch the author details
+            const authorData = await this.getAuthorData(this.postData.author);
+            this.authorData = authorData.data.user;
+            
+            // kinda strange, but hide the author data into the post object so that you can avoid re-asking the server for that too when the post is cached
+            let postToCache = pData.data.getPostById;
+            postToCache.authorData = authorData.data.user;
+
+            this.$store.dispatch("cacheFullPost", postToCache);
+        }
+    
+        /* We might need to add this back in the future, im not sure
             if (cachedPost) {
                 // we need to merge the new data to the cached post
                 this.postData = Object.assign(this.postData, cachedPost);
@@ -95,15 +81,11 @@ export default {
                 // so DONT REMOVE THIS EVEN IF IT LOOKS STUPID
                 this.postData = Object.assign({}, this.postData);
             }
-        }
-
-        this.getAuthorData(this.postData.author);
+        */
     },
     methods: {
-        getAuthorData(author) {
-            GraphQLService.fetchUserDetails(author, ["followerAmt", "isFollowing"], this.$store.getters.username).then((res) => {
-                this.authorData = res.data.user;
-            });
+        async getAuthorData(author) {
+            return await GraphQLService.fetchUserDetails(author, ["followerAmt", "isFollowing"], this.$store.getters.username);
         },
         async postComment(value) {
             const response = await GraphQLService.commentOnPost(this.postData.id, value, this.$store.getters.accessToken);

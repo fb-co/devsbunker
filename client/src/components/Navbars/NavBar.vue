@@ -182,7 +182,6 @@ export default {
             document.getElementById("burger_menu_checkbox").click();
         },
         routeOrReload() {
-            console.log("bruh");
             if (this.$route.path == "/") {
                 this.$emit("refreshPosts", true);
             } else {
