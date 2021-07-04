@@ -165,6 +165,7 @@ export default {
 #title {
     font-size: 45px;
     font-weight: 700;
+    word-wrap: break-word;
 }
 
 #author span {
@@ -202,6 +203,8 @@ export default {
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+
+    font-family: "Rubik";
 }
 /* this is causing issues
 #description::first-letter {

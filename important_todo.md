@@ -2,11 +2,13 @@
 
 ## High Priority
 
--   [ ] switch to text area for post description instead of div with contenteditable
+-   [x] switch to text area for post description instead of div with contenteditable
 
 -   [ ] port detailed proj cards to mobile
 
--   [ ] LOGO
+-   [x] LOGO
+
+    -   [ ] maybe
 
 -   [x] Auto-update profile pics when you upload a new one
 
@@ -88,3 +90,42 @@
 -   [ ] add better types to Mongoose documents. For example "Array" should be replaced with something like `[SomeSpecificObject]`
 
 -   [ ] remove console logs from everywhere before production
+
+## Post cache improvement
+
+-   2 arrays, one for full posts and the other one for cards
+    -   cards should be cached according to their filter
+
+### Project cards
+
+1. Fetch posts
+2. cache everything
+   if we change filter for the first time we just ask the server
+
+organize in the following way:
+
+```
+[
+  {
+    fiter
+    sortintype
+    posts
+  },
+  {
+    differentfilter
+    differentsortingType
+    posts
+  }
+
+]
+```
+
+3. if user changes filter --> ask cache
+   if cache says no ask server
+
+4. update cache on like, save, delete
+
+### Full post
+
+1. Make a different array
+2. ask to that array when u open a post

@@ -109,7 +109,7 @@ postSchema.path("title").validate((title) => {
 }, "The maximum length for the title is 100.");
 
 postSchema.path("description").validate((desc) => {
-    return desc.length <= 512;
-}, "The maximum length for the description is 512.");
+    return desc.length <= 20000;
+}, "The maximum length for the description is 20000.");
 
 export default mongoose.model("Post", postSchema);

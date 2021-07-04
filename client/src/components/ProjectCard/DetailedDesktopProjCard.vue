@@ -316,6 +316,7 @@ export default {
     flex-direction: column;
     flex-grow: 1;
     margin-left: 15px;
+    width: 90%;
 }
 .title {
     font-weight: 800;
@@ -327,11 +328,15 @@ export default {
     /* fix me */
     margin-top: -5.5px;
     margin-left: 10px;
+
+    word-wrap: break-word;
 }
 .description {
     color: var(--soft-text);
     text-align: left;
     padding: 25px 10px 20px 10px;
+
+    word-wrap: break-word;
 }
 
 .desc_fade {
