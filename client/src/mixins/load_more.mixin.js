@@ -33,7 +33,9 @@ const LoadMore = {
             const alreadyLoadedPosts = this.$store.getters.getPosts(filter || this.sortingType, this.queryType);
             
             if (alreadyLoadedPosts) {
-                this.posts = alreadyLoadedPosts;
+                console.log("used cache!");
+                this.posts = alreadyLoadedPosts.posts;
+                this.fetchedAll = alreadyLoadedPosts.fetchedAll;
             } else {
                 if (this.queryType === "all") {
                     const res = await GraphQLService.fetchPosts(
@@ -48,6 +50,7 @@ const LoadMore = {
                     this.$store.dispatch("addPosts", {
                         filter: filter || this.sortingType,
                         queryType: this.queryType,
+                        fetchedAll: this.fetchedAll,
                         posts: this.posts,
                     });
                 } else if (this.queryType === "projects") {
@@ -64,6 +67,7 @@ const LoadMore = {
                     this.$store.dispatch("addPosts", {
                         filter: filter || this.sortingType,
                         queryType: this.queryType,
+                        fetchedAll: this.fetchedAll,
                         posts: this.posts,
                     });
                 } else if (this.queryType === "saved") {
@@ -79,6 +83,7 @@ const LoadMore = {
                     this.$store.dispatch("addPosts", {
                         filter: filter || this.sortingType,
                         queryType: this.queryType,
+                        fetchedAll: this.fetchedAll,
                         posts: this.posts,
                     });
                 }
@@ -98,6 +103,7 @@ const LoadMore = {
                 this.$store.dispatch("addPosts", {
                     filter: filter || this.sortingType,
                     queryType: this.queryType,
+                    fetchedAll: this.fetchedAll,
                     posts: this.posts,
                 });
             } else if (this.queryType === "projects") {
@@ -114,6 +120,7 @@ const LoadMore = {
                 this.$store.dispatch("addPosts", {
                     filter: filter || this.sortingType,
                     queryType: this.queryType,
+                    fetchedAll: this.fetchedAll,
                     posts: this.posts,
                 });
             } else if (this.queryType === "saved") {
@@ -129,6 +136,7 @@ const LoadMore = {
                 this.$store.dispatch("addPosts", {
                     filter: filter || this.sortingType,
                     queryType: this.queryType,
+                    fetchedAll: this.fetchedAll,
                     posts: this.posts,
                 });
             }

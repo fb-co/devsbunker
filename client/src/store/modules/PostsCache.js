@@ -5,10 +5,14 @@ const state = {
 
 const getters = {
     // get only the posts in memory based on queryType and filter (returns null if they arent in memory)
+    // if the posts are in memory return an object with { posts: <all the posts>, fetchedAll: <were all posts fetched?> }
     getPosts: (state) => (filter, queryType) => {
         for (let i = 0; i < state.posts.length; i++) {
             if (state.posts[i].filter === filter && state.posts[i].queryType === queryType) {
-                return state.posts[i].posts;
+                return {
+                    fetchedAll: state.posts[i].fetchedAll,
+                    posts: state.posts[i].posts
+                };
             }
         }
         return null;
@@ -21,10 +25,6 @@ const getters = {
             }
         }
     },
-    // mostly for dev purposes
-    showAllPosts: (state) => {
-        return state.posts;
-    }
 };
 
 const mutations = {
@@ -34,6 +34,7 @@ const mutations = {
         for (let i = 0; i < state.posts.length; i++) {
             if (state.posts[i].filter === payload.filter && state.posts[i].queryType === payload.queryType) {
                 state.posts[i].posts = payload.posts;
+                state.posts[i].fetchedAll = payload.fetchedAll;
                 return; // break out of function if this is true
             }
         }
@@ -42,6 +43,7 @@ const mutations = {
         state.posts.push({
             filter: payload.filter,
             queryType: payload.queryType,
+            fetchedAll: payload.fetchedAll,
             posts: payload.posts,
         });
     },
