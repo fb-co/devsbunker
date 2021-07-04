@@ -140,7 +140,7 @@ type: stuffToCache {
 ```
 * addPosts(filter: string, sortingType: string, posts: Array<Post>) --> MUTATION
 * getPosts(filter: string, sortingType: string) ---> GETTER
-* updatePost(id: string, entireObject: Post) --> this requires looping  tiem complexity: O(n) where n is the length of the posts arrays --> MUTATION
+* updatePost(fieldsToUpdate: [{ field: fieldName, newValue: theNewValue }, {more fields}]) --> Can't use full post obj since not all values are return 
 * cacheFullPost(post: Post) --> MUTATION
 * getFullPost(id: string) --> GETTER
 

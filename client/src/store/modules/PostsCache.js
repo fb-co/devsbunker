@@ -1,133 +1,88 @@
 const state = {
-    posts: [],
-    fullPosts: [],
-    neededPost: null,
-    maxCacheSize: 50,
-    newlyMadePost: null,
+    posts: [], // array of objects (containing filter, queryType, and posts)
+    fullPosts: [], // array of post ids
 };
 
 const getters = {
-    cachedPosts: (state) => state.posts,
-    cachedPostById: (state) => state.neededPost,
-    cachedNewlyMadePost: (state) => state.newlyMadePost,
-    cachedFullPosts: (state) => state.fullPosts,
-    getMultiplePostsById: (state) => (postIds) => {
-        // takes an array of post ids, and returns any that are cached
-        // we should optimize this probably 
-        let cachedPosts = [];
-
-        for (let i = 0; i < postIds.length; i++) {
-            for (let j = 0; j < state.posts.length; j++) {
-                if (postIds[i] == state.posts[j].id) {
-                    cachedPosts.push(state.posts[j]);
-                    break;
-                }  
+    // get only the posts in memory based on queryType and filter (returns null if they arent in memory)
+    getPosts: (state) => (filter, queryType) => {
+        for (let i = 0; i < state.posts.length; i++) {
+            if (state.posts[i].filter === filter && state.posts[i].queryType === queryType) {
+                return state.posts[i].posts;
             }
         }
-        return cachedPosts;
+        return null;
+    },
+    // returns null if the full post is not in the cache
+    getFullPost: (state) => (id) => {
+        for (let i = 0; i < state.fullPosts.length; i++) {
+            if (state.fullPosts[i].id === id) {
+                return state.fullPosts[i];
+            }
+        }
+    },
+    // mostly for dev purposes
+    showAllPosts: (state) => {
+        return state.posts;
     }
 };
 
 const mutations = {
-    appendPosts(state, postsToCache) {
-        // here we store the posts that pass the check below
-        let tmp = [];
+    // will update the posts if the entry already exists
+    addPostsToCache(state, payload) {
+        //console.log(filter, queryType, posts);
+        for (let i = 0; i < state.posts.length; i++) {
+            if (state.posts[i].filter === payload.filter && state.posts[i].queryType === payload.queryType) {
+                state.posts[i].posts = payload.posts;
+                return; // break out of function if this is true
+            }
+        }
 
-        if (state.posts.length > 0) {
-            if (state.posts.length > state.maxCacheSize) {
-                // making room for the posts we must cache by removing the oldest posts in cache
-                state.posts.filter((_, index) => {
-                    if (index <= postsToCache.length) {
-                        state.posts.shift();
+        // if the entry is not already in memory, add it
+        state.posts.push({
+            filter: payload.filter,
+            queryType: payload.queryType,
+            posts: payload.posts,
+        });
+    },
+    updatePostInCache(state, payload) {
+        for (let i = 0; i < state.posts.length; i++) {
+            for (let j = 0; j < state.posts[i].posts.length; j++) {
+                if (state.posts[i].posts[j].id === payload.id) {
+                    for (let q = 0; q < payload.fieldsToUpdate.length; q++) {
+                        state.posts[i].posts[j][payload.fieldsToUpdate[q].field] = payload.fieldsToUpdate[q].newVal;
                     }
-                });
-            }
-
-            // building an hash-table to map the posts in the cache to their respective IDs
-            let cache_map = {};
-            state.posts.forEach((post) => {
-                cache_map[post.id] = post;
-            });
-
-            postsToCache.forEach((post) => {
-                // if the post to cache isn't already in the cache
-                if (!cache_map[post.id]) {
-                    tmp.push(post);
+                    break;
                 }
-            });
-
-            state.posts = state.posts.concat(tmp);
-        } else {
-            state.posts = state.posts.concat(postsToCache);
+            }
         }
     },
-    cacheFullPost(state, fullPostToCache) {
-        if (state.fullPosts.length > state.maxCacheSize) {
-            // splitting in half note-> (KEEP IN MIND THAT THIS WONT BE HALF IF YOU EVER CHANGE MAXCACHESIZE)
-            state.fullPosts.splice(0, 10);
-        }
+    cacheEntirePostInCache(state, postObj) {
+        let alreadyCached = false;
 
-        let dup = false;
-        for (let i = 0; i < state.fullPosts.length; i++) {
-            if (state.fullPosts[i].id === fullPostToCache.id) {
-                dup = true;
+        for (let i = 0 ; i < state.fullPosts.length; i++) {
+            if (state.fullPosts[i].id === postObj.id) {
+                alreadyCached = true;
                 break;
             }
         }
 
-        !dup ? state.fullPosts.push(fullPostToCache) : {};
-    },
-    getCachedPostById: function(state, id) {
-        let ret = null;
-
-        for (let i = 0; i < state.posts.length; i++) {
-            if (state.posts[i].id == id) {
-                ret = state.posts[i];
-                break;
-            }
+        if (!alreadyCached) {
+            state.fullPosts.push(postObj);
         }
-
-        state.neededPost = ret;
     },
-    getCachedFullPostById(state, id) {
-        let ret = null;
-
-        for (let i = 0; i < state.fullPosts.length; i++) {
-            if (state.fullPosts[i].id == id) {
-                ret = state.fullPosts[i];
-                break;
-            }
-        }
-
-        state.neededPost = ret;
-    },
-    cacheNewPost(state, post) {
-        state.newlyMadePost = post;
-
-        this.commit("appendPosts", [post]);
-    },
-    updatePost(state, post) {
-        for (let i = 0; i < state.posts.length; i++) {
-            if (post.id == state.posts[i].id) {
-                state.posts[i] = post;
-            }
-        }
-    }
 };
 
 const actions = {
-    extractCachedPostById({ commit }, id) {
-        commit("getCachedPostById", id);
+    addPosts({ commit }, payload) {
+        commit("addPostsToCache", payload);
     },
-    extractCachedFullPostById({ commit }, id) {
-        commit("getCachedFullPostById", id);
+    updatePost({ commit }, payload) {
+        commit("updatePostInCache", payload);
     },
-    cacheNewlyMadePost({ commit }, post) {
-        commit("cacheNewPost", post);
+    cacheFullPost({ commit }, postObj) {
+        commit("cacheEntirePostInCache", postObj);
     },
-    updatePostInCache({ commit }, post) {
-        commit("updatePost", post);
-    }
 };
 
 export default {

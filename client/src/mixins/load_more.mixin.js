@@ -15,7 +15,6 @@ const LoadMore = {
         return {
             // variables
             posts: [], // array of all posts meant to be currently shown
-            postsInMemory: [], // array of objects which contain -> filter, sortingType, postIDs
             sortingType: null,
             fetchedAll: false,
             otherData: {}, // add any other data the mixing might need for a specific case here
@@ -31,9 +30,10 @@ const LoadMore = {
          * Force new will ignore cache and get new from server (mainly used for the load more option) 
         */
         async getPosts(filter) {
-            const alreadyLoadedPosts = this.getPostsInMemory(this.queryType, filter || this.sortingType);
+            const alreadyLoadedPosts = this.$store.getters.getPosts(filter || this.sortingType, this.queryType);
             
             if (alreadyLoadedPosts) {
+                console.log("using cache");
                 this.posts = alreadyLoadedPosts;
             } else {
                 if (this.queryType === "all") {
@@ -45,8 +45,12 @@ const LoadMore = {
                     );
                     this.posts = this.posts.concat(res.data.getPosts.posts);
                     this.fetchedAll = res.data.getPosts.fetchedAll;
-
-                    this.$store.commit("appendPosts", res.data.getPosts.posts);
+                    
+                    this.$store.dispatch("addPosts", {
+                        filter: filter || this.sortingType,
+                        queryType: this.queryType,
+                        posts: this.posts,
+                    });
                 } else if (this.queryType === "projects") {
                     const res = await GraphQLService.fetchPostsByAuthor(
                         this.otherData.foreignUserToFilter || this.$store.getters.username,
@@ -58,7 +62,11 @@ const LoadMore = {
                     this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
                     this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
 
-                    this.$store.commit("appendPosts", res.data.getPostsByAuthor.posts);
+                    this.$store.dispatch("addPosts", {
+                        filter: filter || this.sortingType,
+                        queryType: this.queryType,
+                        posts: this.posts,
+                    });
                 } else if (this.queryType === "saved") {
                     const res = await GraphQLService.fetchSavedPosts(
                         this.getLastPostId(),
@@ -69,10 +77,12 @@ const LoadMore = {
                     this.posts = this.posts.concat(res.data.getSavedPosts.posts);
                     this.fetchedAll = res.data.getSavedPosts.fetchedAll;
 
-                    this.$store.commit("appendPosts", res.data.getSavedPosts.posts);
+                    this.$store.dispatch("addPosts", {
+                        filter: filter || this.sortingType,
+                        queryType: this.queryType,
+                        posts: this.posts,
+                    });
                 }
-                // add the posts to a temp memory (this adds the just fetched ones)
-                this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
             }
         },
         async loadNewPosts(filter) {
@@ -86,7 +96,11 @@ const LoadMore = {
                 this.posts = this.posts.concat(res.data.getPosts.posts);
                 this.fetchedAll = res.data.getPosts.fetchedAll;
 
-                this.$store.commit("appendPosts", res.data.getPosts.posts);
+                this.$store.dispatch("addPosts", {
+                    filter: filter || this.sortingType,
+                    queryType: this.queryType,
+                    posts: this.posts,
+                });
             } else if (this.queryType === "projects") {
                 const res = await GraphQLService.fetchPostsByAuthor(
                     this.otherData.foreignUserToFilter || this.$store.getters.username,
@@ -98,7 +112,11 @@ const LoadMore = {
                 this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
                 this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
 
-                this.$store.commit("appendPosts", res.data.getPostsByAuthor.posts);
+                this.$store.dispatch("addPosts", {
+                    filter: filter || this.sortingType,
+                    queryType: this.queryType,
+                    posts: this.posts,
+                });
             } else if (this.queryType === "saved") {
                 const res = await GraphQLService.fetchSavedPosts(
                     this.getLastPostId(),
@@ -109,10 +127,12 @@ const LoadMore = {
                 this.posts = this.posts.concat(res.data.getSavedPosts.posts);
                 this.fetchedAll = res.data.getSavedPosts.fetchedAll;
 
-                this.$store.commit("appendPosts", res.data.getSavedPosts.posts);
+                this.$store.dispatch("addPosts", {
+                    filter: filter || this.sortingType,
+                    queryType: this.queryType,
+                    posts: this.posts,
+                });
             }
-            // add the posts to a temp memory (this adds the just fetched ones)
-            this.addPostsToMemory(this.queryType, filter || this.sortingType, this.posts);
         },
         async updateFeedAfterNewPost() {
             const newPost = store.getters.cachedNewlyMadePost;
@@ -142,35 +162,6 @@ const LoadMore = {
             }
             
             await this.getPosts(value);
-        },
-        getPostsInMemory(queryType, sortingType) {
-            for (let i = 0; i < this.postsInMemory.length; i++) {
-                if (this.postsInMemory[i].queryType == queryType && this.postsInMemory[i].sortingType == sortingType) {
-                    return this.$store.getters.getMultiplePostsById(this.postsInMemory[i].posts);
-                }
-            }
-        },
-        addPostsToMemory(queryType, sortingType, posts) {
-            let postIds = [];
-
-            // upack post array into array of postIds
-            for (let i = 0; i < posts.length; i++) {
-                postIds.push(posts[i].id);
-            }
-
-            for (let i = 0; i < this.postsInMemory.length; i++) {
-                if (this.postsInMemory[i].queryType == queryType && this.postsInMemory[i].sortingType == sortingType) {
-                    this.postsInMemory[i].posts = postIds;
-                    return; // break out of function
-                }
-            }
-
-            // if its made it to this point in the function it means that this type of filter and queryType is not yet in memory and should add it
-            this.postsInMemory.push({
-                queryType: queryType,
-                sortingType: sortingType,
-                posts: postIds,
-            });
         },
 
         // misc functions
