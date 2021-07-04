@@ -2,6 +2,10 @@
 
 ## High Priority
 
+-   [ ] comments
+-   [ ] links
+-   [ ] cache
+
 -   [x] switch to text area for post description instead of div with contenteditable
 
 -   [ ] port detailed proj cards to mobile
