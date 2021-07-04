@@ -4,20 +4,16 @@
 
         <input @click.stop @input="queryData()" v-if="!isTextArea" ref="general_input" class="main_query_input" :placeholder="labelIsPlaceholder ? label : ''" />
         
-        <div v-else class="grow_area">
-            <textarea  
-                ref="general_input" 
-                onInput="this.parentNode.dataset.replicatedValue = this.value"
-                class="general_textarea"
-                rows="1"
-            />
-            <div class="form_line_container">
-                <div class="bottom_line"></div>
-            </div>
-        </div>
+        <textarea  
+            v-else
+            @input="textarea_autoresize"
+            ref="general_input" 
+            class="general_textarea"
+            rows="1"
+        />
         
         <!-- In order to animate the form line, the text area version needs to be in the container, so this should only be rendered if its an input -->
-        <div v-if="!isTextArea" class="form_line_container">
+        <div class="form_line_container">
             <div class="bottom_line"></div>
         </div>
 
@@ -34,6 +30,7 @@
 
 <script>
 import GraphQLService from "@/services/graphql.service";
+import TextAreaAutoResize from "@/mixins/textarea_autoresize.js";
 
 export default {
     data() {
@@ -46,6 +43,7 @@ export default {
             canClose: false, // Important because you need to make sure when you blur the input that the click binding on the options can be triggered
         };
     },
+    mixins: [TextAreaAutoResize],
     props: {
         label: {
             type: String,
@@ -154,35 +152,8 @@ export default {
     color: var(--soft-text);
     font-size: 14px;
 }
-.grow_area {
-    display: grid;
-}
-.grow_area::after {
-    content: attr(data-replicated-value) " ";
 
-    white-space: pre-wrap;
-
-    visibility: hidden;
-}
-.grow_area > textarea {
-    resize: none;
-
-    overflow: hidden;
-    font-family: rubik;
-    color: var(--main-font-color);
-    font-size: 15px;
-    background-color: inherit;
-    border: none;
-    padding: 3px;
-    margin-bottom: 5px;
-}
-.grow_area > textarea,
-.grow_area::after {
-    height: 100%;
-
-    grid-area: 1 / 1 / 2 / 2;
-}
-
+.general_input_container textarea,
 .general_input_container input {
     width: 100%;
     border: none;
@@ -192,6 +163,7 @@ export default {
     color: var(--main-font-color);
     text-align: left;
     font-size: 15px;
+    resize: none;
 }
 
 .general_input_container input:focus,
