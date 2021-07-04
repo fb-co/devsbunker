@@ -23,7 +23,7 @@
             </div>
             <GeneralInput :isQuery="false" ref="postTitle" class="field" label="Post Title" />
 
-            <GeneralInput :isQuery="false" class="field" label="Post Description" ref="postDesc" :isTextArea="true" />
+            <GeneralInput :isQuery="false" class="field" label="Post Description" ref="postDesc" :showLength="true" :isTextArea="true" />
             <div class="tag_container">
                 <p style="margin-top: 20px;">Images</p>
             </div>
@@ -386,7 +386,7 @@ export default {
             */
 
             if (payload.title.length > 100) return { success: false, err: "The maximum length for the title is 100 chars." };
-            if (payload.description.length > 512) return { success: false, err: "The maximum length for the description is 512 chars." };
+            if (payload.description.length > 20000) return { success: false, err: "The maximum length for the description is 20,000 chars." };
 
             // had to break this down because of async pain (i think)
             let errmsg = null;

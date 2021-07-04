@@ -1,6 +1,6 @@
 <template>
     <div class="general_input_container" :style="cssProps">
-        <p v-if="label!='' && !labelIsPlaceholder">{{ label }}</p>
+        <p v-if="label!='' && !labelIsPlaceholder">{{ label + (showLength ? "(" + message.length + ")" : "")}}</p>
 
         <input @click.stop @input="queryData()" v-if="!isTextArea" ref="general_input" class="main_query_input" :placeholder="labelIsPlaceholder ? label : ''" />
         
@@ -10,6 +10,7 @@
             ref="general_input" 
             class="general_textarea"
             rows="1"
+            v-model="message"
         />
         
         <!-- In order to animate the form line, the text area version needs to be in the container, so this should only be rendered if its an input -->
@@ -39,7 +40,7 @@ export default {
             selectedDocument: -1,
             queryThresh: 1000, // amount of time in between query queue times
             queryQueued: false, // flag to make sure queries are not spammed
-
+            message: "",
             canClose: false, // Important because you need to make sure when you blur the input that the click binding on the options can be triggered
         };
     },
@@ -69,7 +70,11 @@ export default {
         isQuery: {
             type: Boolean,
             default: true
-        }
+        },
+        showLength: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         cssProps() {
