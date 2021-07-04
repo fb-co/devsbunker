@@ -11,12 +11,16 @@
                 class="general_textarea"
                 rows="1"
             />
+            <div class="form_line_container">
+                <div class="bottom_line"></div>
+            </div>
         </div>
-        <!-- Acts like a text area -->
-
-        <div class="form_line_container">
+        
+        <!-- In order to animate the form line, the text area version needs to be in the container, so this should only be rendered if its an input -->
+        <div v-if="!isTextArea" class="form_line_container">
             <div class="bottom_line"></div>
         </div>
+
         <div class="main_query_results" ref="results">
             <div v-if="searchFor=='users'">
                 <p v-for="document in documents" :key="document.username" class="document_item">{{ document.username }}</p>
@@ -219,7 +223,7 @@ export default {
     width: 100%;
     height: 1.5px;
 }
-.grow_area textarea + .form_line_container > div {
+.general_textarea:focus + .form_line_container > div {
     animation: form_field_animation 1s;
     width: 100%;
     height: 1.5px;
