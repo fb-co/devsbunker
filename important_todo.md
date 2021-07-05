@@ -3,8 +3,10 @@
 ## High Priority
 
 -   [ ] comments
+-   [see this](https://stackoverflow.com/questions/29078753/how-to-reference-another-schema-in-my-mongoose-schema)
+-   [ ] comments are still broken if you view a post after a comment is made. This is due to the fact that we need to use the .populate() thing while fetching the entire post since I've used refs in the schema
 -   [ ] links
--   [ ] cache
+-   [x] cache
 
 -   [x] switch to text area for post description instead of div with contenteditable
 
@@ -140,7 +142,7 @@ type: stuffToCache {
 ```
 * addPosts(filter: string, sortingType: string, posts: Array<Post>) --> MUTATION
 * getPosts(filter: string, sortingType: string) ---> GETTER
-* updatePost(fieldsToUpdate: [{ field: fieldName, newValue: theNewValue }, {more fields}]) --> Can't use full post obj since not all values are return 
+* updatePost(fieldsToUpdate: [{ field: fieldName, newValue: theNewValue }, {more fields}]) --> Can't use full post obj since not all values are return
 * cacheFullPost(post: Post) --> MUTATION
 * getFullPost(id: string) --> GETTER
 
