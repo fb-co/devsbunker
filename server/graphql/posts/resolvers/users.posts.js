@@ -251,6 +251,7 @@ export default {
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
             try {
+                // NOTE: here we avoid performing the populate op on comments because we dont need comments
                 const post = await Posts.findOne({ _id: id_payload, enabled: true });
 
                 if (post) {
@@ -353,6 +354,7 @@ export default {
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
             try {
+                // NOTE: here we avoid performing the populate op on comments because we dont need comments
                 const post = await Posts.findOne({ _id: id_payload, enabled: true });
 
                 if (post) {
@@ -421,6 +423,7 @@ export default {
 
                     // make sure the user commeting exists
                     if (user) {
+                        // NOTE: here we avoid performing the populate op on comments because we dont need comments
                         const post = await Posts.findOne({ _id: id_payload, enabled: true });
 
                         if (post) {
@@ -462,6 +465,7 @@ export default {
 
             try {
                 // make sure the post exists
+                // NOTE: here we avoid performing the populate op on comments because we dont need comments
                 const post = await Posts.findOne({ _id: id_payload, enabled: true });
 
                 if (post) {
@@ -539,6 +543,7 @@ export default {
         deletePost: async function (_, args, { req, res }) {
             if (req.user) {
                 try {
+                    // NOTE: here we avoid performing the populate op on comments because we dont need comments
                     const post = await Posts.findOne({ _id: args.postId, enabled: true });
 
                     if (!post) {

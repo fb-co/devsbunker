@@ -268,6 +268,7 @@ export default {
                 if (!user.enabled) throw new Error("User is banned");
 
                 const posts = await getAllPostsByAuthor(jwtPayload.username);
+
                 return {
                     user: {
                         username: user.username,

@@ -15,6 +15,7 @@ export default async function uploadMedia(req, res, next) {
             if (!(files.length > 0)) {
                 // if no files were attached proceed to create the post anyway
 
+                // NOTE: here we avoid performing the populate op on comments because the array is going to be empty
                 const post = await Posts.findOne({
                     _id: postId,
                 });
@@ -75,11 +76,11 @@ export default async function uploadMedia(req, res, next) {
 
                 if (valid) {
                     // adding those images to the post document
+
+                    // NOTE: here we avoid performing the populate op on comments because the array is going to be empty
                     const post = await Posts.findOne({
                         _id: postId,
                     });
-
-                    console.log(post);
 
                     if (post && post.author === req.user.username) {
                         post.images = data;

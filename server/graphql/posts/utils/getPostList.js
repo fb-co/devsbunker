@@ -2,6 +2,8 @@ import Posts from "../../../components/post/post.model.js";
 
 // The reason you fetch load amount + 1 is because you need to make sure that you havent fetched all the posts yet.
 // So by getting the loadInc+1, you can see if that extra post exists or not to see if they have all been fetched or nots
+
+// NOTE: we dont need comments so we dont' populate().exec()
 export default async function getPostList(sortingMethod, loadAmt, lastPostId, lastUniqueField) {
     return new Promise((resolve, reject) => {
         const loadIncrement = loadAmt; // how many posts are to be loaded at once

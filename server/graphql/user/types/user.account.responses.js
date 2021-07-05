@@ -59,6 +59,13 @@ export default gql`
         profile_pic: String
     }
 
+    type CommentResponse {
+        id: String!
+        userId: String!
+        payload: String!
+        createdAt: String!
+    }
+
     type FetchablePost {
         id: String!
         title: String!
@@ -74,6 +81,7 @@ export default gql`
         isLiked: Boolean
         isSaved: Boolean
         price: Float
+        comments: [CommentResponse]
         createdAt: String!
     }
 

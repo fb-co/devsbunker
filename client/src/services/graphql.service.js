@@ -58,6 +58,12 @@ const GraphQLService = {
                         isSaved
                         links
                         likeAmt
+                        comments {
+                            id
+                            userId
+                            payload
+                            createdAt
+                        }
                     }
                 }
             }

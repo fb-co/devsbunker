@@ -3,6 +3,8 @@ import Posts from "../../../components/post/post.model.js";
 export default async function getUserPost(postId, postAuthor) {
     return new Promise((resolve, reject) => {
         Posts.findOne({ _id: postId, author: postAuthor, enabled: true })
+            .populate("comments")
+            .exec()
             .then((post) => {
                 if (post) {
                     resolve(post);
