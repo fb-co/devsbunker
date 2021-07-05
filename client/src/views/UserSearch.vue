@@ -1,5 +1,5 @@
 <template>
-    <div class="user_search_container">
+    <div class="user_search_container" :class="{ calculated_height: !$store.getters.mobile }">
         <p class="title">Find People</p>
         <UserFeed :rootComponent="this" />
     </div>
@@ -25,7 +25,6 @@ export default {
 
 <style scoped>
 .user_search_container {
-    max-height: calc(100vh - var(--header-height) - var(--footer-height));
     overflow: auto;
 }
 .title {

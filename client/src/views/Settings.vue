@@ -1,5 +1,5 @@
 <template>
-    <div id="settings">
+    <div :class="{ calculated_height: !$store.getters.mobile }">
         <SettingsMobile v-if="$store.getters.mobile" />
         <SettingsDesktop v-else />
     </div>
@@ -24,7 +24,4 @@ export default {
 </script>
 
 <style scoped>
-#settings {
-    height: calc(100vh - var(--header-height) - var(--footer-height));
-}
 </style>

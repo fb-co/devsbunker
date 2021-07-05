@@ -1,5 +1,5 @@
 <template>
-    <div class="main_container">
+    <div class="main_container" :class="{ calculated_height: !$store.getters.mobile }">
         <p class="notifications_header">Notifications</p>
         <div v-if="notifications" class="notification_card_container">
             <!-- Made the key account for many variables to avoid any duplicate key errors -->
@@ -125,7 +125,6 @@ export default {
 <style scoped>
 .main_container {
     padding-bottom: 30px;
-    max-height: calc(100vh - var(--header-height) - var(--footer-height));
     overflow: auto;
 }
 .notification_card_container {
