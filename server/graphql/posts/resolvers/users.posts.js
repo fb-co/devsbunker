@@ -5,6 +5,7 @@ import sanitizeHtml from "sanitize-html";
 
 import Posts from "../../../components/post/post.model.js";
 import User from "../../../components/user/user.model.js";
+import Comment from "../../../components/post/post.comment.model.js";
 import AddDynamicData from "../misc/addDynamicData.js";
 
 import getUserPost from "../utils/getUserPost.js";
@@ -423,18 +424,23 @@ export default {
                         const post = await Posts.findOne({ _id: id_payload, enabled: true });
 
                         if (post) {
-                            const comment = {
-                                commenter: jwtPayload.username,
-                                comment: commentMessage,
-                                timestamp: args.timestamp,
-                            };
+                            const comment = new Comment({
+                                userId: user._id,
+                                payload: commentMessage,
+                            });
 
                             // add the new comment and save the document
                             post.comments.push(comment);
 
+                            await comment.save();
                             await post.save();
 
-                            return comment;
+                            return {
+                                id: comment._id,
+                                userId: comment.userId,
+                                payload: comment.payload,
+                                createdAt: comment.createdAt,
+                            };
                         } else {
                             return null;
                         }

@@ -83,6 +83,28 @@ export default {
 
             return finalResponse;
         },
+        getUserById: async function (_, args, { res }) {
+            const user = await User.findOne({
+                _id: args.id,
+            });
+
+            if (user) {
+                return {
+                    id: user._id,
+                    username: user.username,
+                    desc: user.description,
+                    tag: user.tag,
+                    followers: user.followers,
+                    following: user.following,
+                    followerAmt: user.followers.length,
+                    followingAmt: user.following.length,
+                    liked_posts: user.liked_post,
+                    profile_pic: user.profile_pic,
+                };
+            } else {
+                throw new Error("Unable to find user");
+            }
+        },
         loginUser: async function (_, args, { res }) {
             let user;
 

@@ -113,18 +113,9 @@ export default gql`
 
         getPersonalDetails: PersonalUserDetails
 
-        partial_user(
-            partial_username: String!
-            sortMethod: String!
-            lastUserId: String!
-            lastUniqueField: String!
-        ): LoadUsersResponse!
+        partial_user(partial_username: String!, sortMethod: String!, lastUserId: String!, lastUniqueField: String!): LoadUsersResponse!
 
-        loginUser(
-            username: String
-            email: String
-            password: String!
-        ): UserAccountAction!
+        loginUser(username: String, email: String, password: String!): UserAccountAction!
 
         logoutUser: LogoutResponse!
 
@@ -133,23 +124,18 @@ export default gql`
         getUnreadNotificationsData: [Notification]!
 
         downloadUserData: downloadableUserData
+
+        getUserById(id: String!): FetchableUser
     }
 
     type Mutation {
-        signupUser(
-            username: String!
-            email: String!
-            password: String!
-        ): UserAccountAction!
+        signupUser(username: String!, email: String!, password: String!): UserAccountAction!
 
         revokeUserSession: Boolean!
 
         updateUserDetails(fields: [UpdateUserPayload!]!): UpdateDetailsResponse!
 
-        notifyUser(
-            userToNotify: String!
-            notification: NotificationPayload!
-        ): Boolean
+        notifyUser(userToNotify: String!, notification: NotificationPayload!): Boolean
 
         followPerson(person: String!): FetchableUser
 

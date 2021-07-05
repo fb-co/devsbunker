@@ -38,9 +38,10 @@ export default gql`
     }
 
     type CommentResponse {
-        commenter: String!
-        comment: String!
-        timestamp: String!
+        id: String!
+        userId: String!
+        payload: String!
+        createdAt: String!
     }
 
     # we dont need the author because the username is alredy in the token
@@ -64,27 +65,14 @@ export default gql`
         # I am going to keep the author even if technically it's not needed, we will see later on
         userPost(postId: String!, postAuthor: String!): FetchablePost
 
-        getPosts(
-            sortingType: String!
-            lastPostId: String
-            lastUniqueField: String
-        ): LoadPostsResponse!
+        getPosts(sortingType: String!, lastPostId: String, lastUniqueField: String): LoadPostsResponse!
 
-        getPostsByAuthor(
-            author: String!
-            lastPostId: String!
-            lastUniqueField: String!
-            filter: String
-        ): LoadPostsResponse!
+        getPostsByAuthor(author: String!, lastPostId: String!, lastUniqueField: String!, filter: String): LoadPostsResponse!
 
         # not sure if we should make the return required since I dont want it to crash if you give it an invalid post id
         getPostById(postId: String!): FetchablePost
 
-        getSavedPosts(
-            lastPostId: String!
-            lastUniqueField: String!
-            filter: String
-        ): LoadPostsResponse!
+        getSavedPosts(lastPostId: String!, lastUniqueField: String!, filter: String): LoadPostsResponse!
 
         partial_post(
             partial_name: String!
@@ -102,11 +90,7 @@ export default gql`
         unlikePost(postId: String!): FetchablePost
         savePost(postId: String!): FetchablePost
         unSavePost(postId: String!): savedPostOutput
-        commentOnPost(
-            postId: String!
-            comment: String!
-            timestamp: String!
-        ): CommentResponse
+        commentOnPost(postId: String!, comment: String!, timestamp: String!): CommentResponse
         deletePost(postId: String!): GeneralActionStatus!
     }
 `;

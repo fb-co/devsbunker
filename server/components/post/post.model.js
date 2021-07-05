@@ -37,9 +37,8 @@ const postSchema = new mongoose.Schema(
         price: {
             type: Number,
         },
-        comments: {
-            type: Array,
-        },
+        // Array<Comment>
+        comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
         enabled: {
             type: Boolean,
             required: true,
