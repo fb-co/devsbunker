@@ -1,13 +1,13 @@
 <template>
-    <div class="comment_container">
+    <div class="comment_container" v-if="loaded">
         <div class="commentPFP_container">
-            <ProfilePicture :username="commentData.commenter" :wrapperSize="mobile ? '40px' : '60px'" />
+            <ProfilePicture :username="username" :wrapperSize="mobile ? '40px' : '60px'" />
         </div>
         <div class="commentMessage_container">
             <p :class="{ comment_author: mobile, comment_author_desktop: !mobile }">
-                {{ commentData.commenter }} <span class="timestamp">{{ commentData.timestamp }}</span>
+                {{ username }} <span class="timestamp">{{ commentData.createdAt }}</span>
             </p>
-            <p :class="{ comment_message: mobile, comment_message_desktop: !mobile }">{{ commentData.comment }}</p>
+            <p :class="{ comment_message: mobile, comment_message_desktop: !mobile }">{{ commentData.payload }}</p>
         </div>
     </div>
 </template>
@@ -15,15 +15,23 @@
 <script>
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import CommonUtils from "@/utils/common_utils.js";
+import GraphQLService from "@/services/graphql.service.js";
 
 export default {
     data() {
         return {
             mobile: this.$store.getters.mobile,
+            username: null,
+            loaded: false,
         };
     },
     props: {
         commentData: Object,
+    },
+    async created() {
+        const res = await GraphQLService.fetchUserById(this.commentData.userId, ["username"]);
+        this.username = res.data.getUserById.username;
+        this.loaded = true;
     },
     components: {
         ProfilePicture,

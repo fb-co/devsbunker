@@ -33,6 +33,9 @@ export default {
         Comment,
         GeneralInput,
     },
+    created() {
+        console.warn(this.comments);
+    },
     methods: {
         postComment() {
             const comment = this.$refs.comment_input.getValue();

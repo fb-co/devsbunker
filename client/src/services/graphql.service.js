@@ -434,6 +434,33 @@ const GraphQLService = {
         }
     },
 
+    fetchUserById: function(id, fields) {
+        const query = `
+            query {
+                getUserById(id: "${id}") {
+                    ${fields}
+                }
+            }
+        `;
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .catch(console.error);
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+
     // enter lastPstId as zero if you havent fetched any yet, and -1 if they have all been fetched
     fetchPosts: function(sortMethod, lastPostId, lastUniqueField, token) {
         let query;
@@ -600,9 +627,10 @@ const GraphQLService = {
         const mutation = `
             mutation {
                 commentOnPost(postId: "${postId}", comment: "${comment}", timestamp: "${finalTimeStamp}") {
-                    commenter
-                    comment
-                    timestamp
+                    id
+                    userId
+                    payload
+                    createdAt
                 }
             }
         `;
@@ -748,9 +776,10 @@ const GraphQLService = {
                     createdAt
                     price
                     comments {
-                        commenter
-                        comment
-                        timestamp
+                        id
+                        userId
+                        payload
+                        createdAt
                     }
                 }
             }

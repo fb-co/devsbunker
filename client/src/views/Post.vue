@@ -50,12 +50,13 @@ export default {
                 "tags",
                 "createdAt",
                 `comments {
-                    commenter
-                    comment
-                    timestamp
+                    id
+                    userId
+                    payload
+                    createdAt
                 }`,
             ];
-            
+
             // fetch the post data
             const pData = await GraphQLService.fetchPostById(this.$route.params.postid, toFetch, this.$store.getters.accessToken);
             this.postData = pData.data.getPostById;
@@ -63,14 +64,15 @@ export default {
             // fetch the author details
             const authorData = await this.getAuthorData(this.postData.author);
             this.authorData = authorData.data.user;
-            
+
             // kinda strange, but hide the author data into the post object so that you can avoid re-asking the server for that too when the post is cached
             let postToCache = pData.data.getPostById;
             postToCache.authorData = authorData.data.user;
 
             this.$store.dispatch("cacheFullPost", postToCache);
+            console.warn(this.postData);
         }
-    
+
         /* We might need to add this back in the future, im not sure
             if (cachedPost) {
                 // we need to merge the new data to the cached post
@@ -91,7 +93,7 @@ export default {
             const response = await GraphQLService.commentOnPost(this.postData.id, value, this.$store.getters.accessToken);
 
             // if it was successfull
-            if (response.data.commentOnPost.commenter != null) {
+            if (response.data.commentOnPost.userId != null) {
                 this.postData.comments.push(response.data.commentOnPost);
             }
         },

@@ -74,6 +74,7 @@ export default {
         };
     },
     created() {
+        console.warn(this.projectData.comments);
         if (this.projectData.images.length > 0) {
             this.thumbnail = `${process.env.VUE_APP_IMG_STATIC_ASSETS}/${this.projectData.images[0].dbname}`;
 
