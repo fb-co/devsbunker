@@ -70,7 +70,6 @@ export default {
             postToCache.authorData = authorData.data.user;
 
             this.$store.dispatch("cacheFullPost", postToCache);
-            console.warn(this.postData);
         }
 
         /* We might need to add this back in the future, im not sure
