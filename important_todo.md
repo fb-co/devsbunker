@@ -1,12 +1,22 @@
 # Before-Deployment
 
+## Maybe?
+
+-   [ ] consider switching to `refs` like i did for the comments, this implies a ton of refactoring tho
+
 ## High Priority
+
+-   [ ] convert timestamps to actual dates (like in comments)
 
 -   [ ] comments
 -   [see this](https://stackoverflow.com/questions/29078753/how-to-reference-another-schema-in-my-mongoose-schema)
--   [ ] comments are still broken if you view a post after a comment is made. This is due to the fact that we need to use the .populate() thing while fetching the entire post since I've used refs in the schema
+-   [x] comments are still broken if you view a post after a comment is made. This is due to the fact that we need to use the .populate() thing while fetching the entire post since I've used refs in the schema
+-   [ ] migrate remaining (if any) routes to use the new method, right now ive only migrated getPostById. Basically EVERYWHERE we ask for comments we must perform that operation
+
 -   [ ] links
+
 -   [x] cache
+-   [ ] hot reloading after a new post is made doesnt work anymore
 
 -   [x] switch to text area for post description instead of div with contenteditable
 
