@@ -41,6 +41,7 @@ export default {
         position: absolute;
         width: 100vw;
         bottom: 0;
+        min-height: 250px;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         background-color: var(--burger-menu-bg);

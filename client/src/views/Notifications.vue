@@ -116,7 +116,6 @@ export default {
                 }
             });
             this.$store.commit("readNotifications");
-            console.log(this.$store.getters.unread_notifications);
         });
     },
 };

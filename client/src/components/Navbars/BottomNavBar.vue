@@ -66,7 +66,7 @@
                     <NotificationIcon bellColor="var(--soft-text)" />
                 </router-link>
 
-                <router-link :to="$store.getters.username ? `/user/${$store.getters.username}` : '/login'" class="icon">
+                <router-link :to="$store.getters.username ? `/user/${$store.getters.username}` : '/login'" class="icon" :class="{ active_link: $route.path.includes('/user/') }">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-user"
@@ -113,7 +113,6 @@ export default {
             }
         },
     },
-
     watch: {
         $route() {
             if (this.$refs.newPostPopup.getStatus()) {
@@ -130,8 +129,12 @@ export default {
 </script>
 
 <style scoped>
-.router-link-exact-active > svg {
-    stroke-width: 3px;
+.router-link-exact-active {
+    background-color: var(--secondary-color);
+}
+
+.active_link {
+    background-color: var(--secondary-color);
 }
 
 .nav_placeholder {

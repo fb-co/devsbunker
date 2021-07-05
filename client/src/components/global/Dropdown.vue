@@ -115,17 +115,19 @@ export default {
     created() {
         // this is so the blur event works on mobile
         document.body.addEventListener("touchend", (e) => { 
-            // handle the touch click
-            if (this.$refs.options.contains(e.target)) {
-                // only bold the option that is selected (clear all then assign bold to the one)
-                for (let i = 0; i < this.$refs.options.children.length; i++) {
-                    this.$refs.options.children[i].style.fontWeight = "normal";
+            // handle the touch click only if it exists
+            if (this.$refs.options) {
+                if (this.$refs.options.contains(e.target)) {
+                    // only bold the option that is selected (clear all then assign bold to the one)
+                    for (let i = 0; i < this.$refs.options.children.length; i++) {
+                        this.$refs.options.children[i].style.fontWeight = "normal";
+                    }
+                    e.target.style.fontWeight = "bold";
+
+
+                    this.activeLabel = e.target.innerText;
+                    this.$emit('itemSelected', this.activeLabel);
                 }
-                e.target.style.fontWeight = "bold";
-
-
-                this.activeLabel = e.target.innerText;
-                this.$emit('itemSelected', this.activeLabel);
             }
             this.closeMenu(); 
         });
