@@ -21,6 +21,15 @@
 
 -   [ ] hot reloading after a new post is made doesnt work anymore
 
+-   [ ] Improved loading everywhere
+
+    -   [ ] When you click post on newpostmobile
+    -   [ ] On the post feed page when posts could be loading (right now just says no posts found)
+    -   [ ] Notifications page should show 'no new notifications when there are none'
+    -   [ ] when saving new options
+
+-   [ ] Add informative popup to new post query tags (contributers, links, tags, etc.)
+
 -   [x] switch to text area for post description instead of div with contenteditable
 
 -   [ ] port detailed proj cards to mobile
