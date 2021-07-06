@@ -31,7 +31,8 @@
                 <CommentSection 
                     @postComment="$parent.postComment"
                     @loadMoreComments="$parent.getMoreComments" 
-                    :comments="projectData.comments" 
+                    :comments="projectData.comments"
+                    :fetchedAllComments="projectData.fetchedAllComments" 
                 />
             </div>
             <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->

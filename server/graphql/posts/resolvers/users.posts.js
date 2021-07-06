@@ -67,7 +67,17 @@ export default {
         getPostById: async function (_, args, { req }) {
             try {
                 let post = await getPostById(args.postId, args.commentOffSet, LoadAmounts.commentIncrements);
+                
+                // check if all comments were fetched
 
+                post.fetchedAllComments = false;
+                if (post.comments[LoadAmounts.commentIncrements] === undefined) {
+                    post.fetchedAllComments = true;
+                } else {
+                    post.comments.pop();
+                }
+                
+                // add any user data
                 let user;
 
                 if (req.user) {
@@ -433,7 +443,7 @@ export default {
                             });
 
                             // add the new comment and save the document
-                            post.comments.unshift(comment);
+                            post.comments.push(comment);
 
                             await comment.save();
                             await post.save();

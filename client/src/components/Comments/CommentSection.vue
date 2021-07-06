@@ -9,7 +9,10 @@
         <router-link to="/login" class="login_prompt" v-else>Login</router-link>
         <div style="margin-top: 20px;">
             <Comment v-for="(comment, index) in comments" :key="index" :commentData="comment" />
-            <button @click="$emit('loadMoreComments')">Load More</button>
+            <div v-if="!fetchedAllComments">
+                <button v-if="!loading" @click="$emit('loadMoreComments')" class="load_more_comments">Show More Comments</button>
+                <LoadingGif v-else :show="true" style="margin: 0;" />
+            </div>
         </div>
     </div>
     <div v-else>
@@ -35,6 +38,10 @@ export default {
     },
     props: {
         comments: Array,
+        fetchedAllComments: {
+            type: Boolean,
+            default: false,
+        },
         mobile: {
             type: Boolean,
             default: false,
@@ -47,20 +54,24 @@ export default {
     },
     methods: {
         postComment() {
-            const comment = this.$refs.comment_input.getValue();
+            if (!this.loading) {
+                this.loading = true;
+                const comment = this.$refs.comment_input.getValue();
 
-            if (comment != "" && comment != null) {
-                // the null check is done also server side
-                this.loadingNewComment = true;
-                this.$emit("postComment", comment);
-                this.$refs.comment_input.clearValue();
+                if (comment != "" && comment != null) {
+                    // the null check is done also server side
+                    this.loadingNewComment = true;
+                    this.$emit("postComment", comment);
+                    this.$refs.comment_input.clearValue();
+                }
             }
         },
     },
     watch: {
+        // little janky, but basically when you try and make a new comment, it waits for the array to change before setting the loading gif back to false
         comments: function() {
-            // little janky, but basically when you try and make a new comment, it waits for the array to change before setting the loading gif back to false
             this.loadingNewComment = false;
+            this.loading = false;
         }
     }
 };
@@ -129,5 +140,21 @@ export default {
 }
 .login_prompt:hover {
     box-shadow: 0px 4px 20px var(--main-accent);
+}
+
+.load_more_comments {
+    padding: 5px 15px 5px 15px;
+    background-color: var(--main-accent);
+    color: #fff;
+    margin: 0 auto;
+    border: none;
+    border-radius: 3px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+.load_more_comments:hover {
+    box-shadow: 0px 0px 10px var(--main-accent);
+    cursor: pointer;
 }
 </style>

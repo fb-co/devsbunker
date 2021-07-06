@@ -30,6 +30,7 @@ export default gql`
         price: Float
         createdAt: String!
         comments: [CommentResponse]!
+        fetchedAllComments: Boolean
     }
 
     type LoadPostsResponse {

@@ -117,7 +117,13 @@
         </div>
         <CarouselMobile v-if="projectData.images.length > 0" :images="postImages" />
 
-        <CommentSection @postComment="$parent.postComment" :mobile="true" :comments="projectData.comments" style="margin-top: 30px;" />
+        <CommentSection 
+            @postComment="$parent.postComment" 
+            @loadMoreComments="$parent.getMoreComments"
+            :fetchedAllComments="projectData.fetchedAllComments" 
+            :mobile="true" :comments="projectData.comments" 
+            style="margin-top: 30px;" 
+        />
     </div>
 </template>
 

@@ -7,7 +7,7 @@ export default async function getUserPost(postId, commentOffSet, commentIncremen
                 path: 'comments',
                 options: {
                     skip: commentOffSet,
-                    limit: commentIncrement,
+                    limit: commentIncrement + 1,
                 }
             })
             .exec()

@@ -75,7 +75,6 @@ export default {
             this.postData = pData.data.getPostById;
 
             // fetch the author details
-            console.log(pData);
             const authorData = await this.getAuthorData(this.postData.author);
             this.authorData = authorData.data.user;
 
@@ -107,7 +106,7 @@ export default {
 
             // if it was successfull
             if (response.data.commentOnPost.userId != null) {
-                this.postData.comments.unshift(response.data.commentOnPost);
+                this.postData.comments.push(response.data.commentOnPost);
             }
         },
         async getMoreComments() {
@@ -119,9 +118,11 @@ export default {
                     payload
                     createdBy
                     createdAt
-                }`
+                }`,
+                "fetchedAllComments",
             ], this.$store.getters.accessToken);
 
+            this.postData.fetchedAllComments = commentData.data.getPostById.fetchedAllComments;
             this.postData.comments = this.postData.comments.concat(commentData.data.getPostById.comments);
         },
         openPostMenu() {
