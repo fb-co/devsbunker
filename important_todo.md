@@ -6,17 +6,19 @@
 
 ## High Priority
 
--   [ ] convert timestamps to actual dates (like in comments)
+-   [x] convert timestamps to actual dates (like in comments) (Im checking this off because its been done for a while, check TimeStampService.js)
 
 -   [ ] comments
 -   [see this](https://stackoverflow.com/questions/29078753/how-to-reference-another-schema-in-my-mongoose-schema)
 -   [x] comments are still broken if you view a post after a comment is made. This is due to the fact that we need to use the .populate() thing while fetching the entire post since I've used refs in the schema
 -   [x] migrate remaining (if any) routes to use the new method, right now ive only migrated getPostById. Basically EVERYWHERE we ask for comments we must perform that operation
 -   [ ] add reply field to comment
+-   [ ] Delete comments when deleting posts (remember to delete them when the user deletes their account too)
 
--   [ ] links
+-   [ ] when you view a post the links should display the link itself and not just the favicon of that site (maybe make a list)
 
 -   [x] cache
+
 -   [ ] hot reloading after a new post is made doesnt work anymore
 
 -   [x] switch to text area for post description instead of div with contenteditable
@@ -77,8 +79,6 @@
 -   [x] new notifications are immediately marked as read for some reason. Ive tried to login with account X, like Y's post, logout and login as Y. The notification of the like was already marked as read
 
 -   [x] avoid sending notification if users like their own posts
-
--   [ ] when u view a post the links should display the link itself and not just the favicon of that site (maybe make a list)
 
 -   [x] fix that troll commit
 
