@@ -41,6 +41,7 @@ export default gql`
         id: String!
         userId: String!
         payload: String!
+        createdBy: String!
         createdAt: String!
     }
 

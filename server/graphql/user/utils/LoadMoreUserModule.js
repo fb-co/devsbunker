@@ -25,7 +25,6 @@ export default function LoadMoreUserModule(sortingType, lastUserId, lastUniqueFi
         } else if (customQueries.length === 0) {
             delete postQuery.$and;
         }
-        console.log(postQuery, sortFilter, "LoadAmt: " + loadAmt);
         // query the db
         User.find(postQuery, { email: 0, password: 0, tokenVersion: 0 }) // filter out sensitive data
             .sort(sortFilter)

@@ -8,6 +8,10 @@ const commentSchema = new mongoose.Schema(
             ref: "User",
             required: true,
         },
+        createdBy: {
+            type: String,
+            required: true,
+        },
         // can't make an empty comment
         payload: {
             type: String,

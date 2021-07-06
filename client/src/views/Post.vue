@@ -1,7 +1,7 @@
 <template>
     <div class="main_post_container">
         <div v-if="postData">
-            <PostMobile v-if="$store.getters.mobile" :projectData="postData" />
+            <PostMobile v-if="$store.getters.mobile" :projectData="postData" @postComment="postComment" />
             <PostDesktop v-if="!$store.getters.mobile" :projectData="postData" :authorData="authorData" :notifications="[]" @postComment="postComment" />
         </div>
         <NewPostMenu ref="newPostMenu" />
@@ -53,6 +53,7 @@ export default {
                     id
                     userId
                     payload
+                    createdBy
                     createdAt
                 }`,
             ];
@@ -93,6 +94,7 @@ export default {
 
             // if it was successfull
             if (response.data.commentOnPost.userId != null) {
+                console.log(response);
                 this.postData.comments.push(response.data.commentOnPost);
             }
         },

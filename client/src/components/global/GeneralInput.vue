@@ -1,6 +1,6 @@
 <template>
     <div class="general_input_container" :style="cssProps">
-        <p v-if="label!='' && !labelIsPlaceholder">{{ label + (showLength ? "(" + message.length + ")" : "")}}</p>
+        <p v-if="label!='' && !labelIsPlaceholder">{{ label + (showLength ? " (" + message.length + "/20,000)" : "")}}</p>
 
         <input @click.stop @input="queryData()" v-if="!isTextArea" ref="general_input" class="main_query_input" :placeholder="labelIsPlaceholder ? label : ''" />
         

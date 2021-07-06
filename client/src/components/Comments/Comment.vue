@@ -17,7 +17,6 @@
 
 <script>
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
-import GraphQLService from "@/services/graphql.service.js";
 import TimeStampService from "@/services/timestamp.service.js";
 
 export default {
@@ -34,8 +33,7 @@ export default {
     },
     async created() {
         this.usableTimestamp = TimeStampService.convertToDate(this.commentData.createdAt, true, false, true);
-        const res = await GraphQLService.fetchUserById(this.commentData.userId, ["username"]);
-        this.username = res.data.getUserById.username;
+        this.username = this.commentData.createdBy;
         this.loaded = true;
     },
     components: {

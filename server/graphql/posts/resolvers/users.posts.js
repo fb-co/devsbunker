@@ -51,7 +51,6 @@ export default {
                 }
 
                 const finalPosts = AddDynamicData.addAll(posts, user);
-                console.log(finalPosts);
 
                 const finalResponse = {
                     posts: finalPosts,
@@ -80,7 +79,7 @@ export default {
                     post.isLiked = post.likes.includes(user.username);
                     post.isSaved = user.saved_posts.includes(post.id);
                 }
-
+console.log(post);
                 return post;
             } catch (err) {
                 return err;
@@ -429,6 +428,7 @@ export default {
                         if (post) {
                             const comment = new Comment({
                                 userId: user._id,
+                                createdBy: user.username,
                                 payload: commentMessage,
                             });
 
@@ -437,11 +437,12 @@ export default {
 
                             await comment.save();
                             await post.save();
-
+                            
                             return {
                                 id: comment._id,
                                 userId: comment.userId,
                                 payload: comment.payload,
+                                createdBy: comment.createdBy,
                                 createdAt: comment.createdAt,
                             };
                         } else {
