@@ -5,6 +5,7 @@ const LoadAmounts = {
     postSearch: 12,
     savedPosts: 12,
     personalPosts: 12,
+    commentIncrements: 10,
 };
 
 export default LoadAmounts;

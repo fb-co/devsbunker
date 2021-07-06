@@ -71,7 +71,7 @@ export default gql`
         getPostsByAuthor(author: String!, lastPostId: String!, lastUniqueField: String!, filter: String): LoadPostsResponse!
 
         # not sure if we should make the return required since I dont want it to crash if you give it an invalid post id
-        getPostById(postId: String!): FetchablePost
+        getPostById(postId: String!, commentOffSet: Int): FetchablePost
 
         getSavedPosts(lastPostId: String!, lastUniqueField: String!, filter: String): LoadPostsResponse!
 

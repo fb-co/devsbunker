@@ -28,7 +28,11 @@
 
                 <Carousel v-if="projectData.images.length > 0" class="main_carousel" :images="postImages" minWidth="100%" />
 
-                <CommentSection @postComment="$parent.postComment" :comments="projectData.comments" />
+                <CommentSection 
+                    @postComment="$parent.postComment"
+                    @loadMoreComments="$parent.getMoreComments" 
+                    :comments="projectData.comments" 
+                />
             </div>
             <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->
             <RightContent class="right_content" :notifications="notifications" />

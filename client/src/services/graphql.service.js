@@ -149,10 +149,10 @@ const GraphQLService = {
         }
     },
 
-    fetchPostById: function(postId, fields, token) {
+    fetchPostById: function(postId, commentOffSet, fields, token) {
         const query = `
             query {
-                getPostById(postId: "${postId}") {
+                getPostById(postId: "${postId}", commentOffSet: ${commentOffSet}) {
                     ${fields}
                 }
             }

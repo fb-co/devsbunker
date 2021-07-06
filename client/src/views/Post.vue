@@ -1,8 +1,20 @@
 <template>
     <div class="main_post_container">
         <div v-if="postData">
-            <PostMobile v-if="$store.getters.mobile" :projectData="postData" @postComment="postComment" />
-            <PostDesktop v-if="!$store.getters.mobile" :projectData="postData" :authorData="authorData" :notifications="[]" @postComment="postComment" />
+            <PostMobile 
+                v-if="$store.getters.mobile" 
+                :projectData="postData" 
+                @postComment="postComment" 
+                @loadMoreComments="getMoreComments"
+            />
+            <PostDesktop 
+                v-if="!$store.getters.mobile" 
+                :projectData="postData" 
+                :authorData="authorData" 
+                :notifications="[]" 
+                @postComment="postComment" 
+                @loadMoreComments="getMoreComments"
+            />
         </div>
         <NewPostMenu ref="newPostMenu" />
     </div>
@@ -58,11 +70,12 @@ export default {
                 }`,
             ];
 
-            // fetch the post data
-            const pData = await GraphQLService.fetchPostById(this.$route.params.postid, toFetch, this.$store.getters.accessToken);
+            // fetch the post data (start with comment offset of 0)
+            const pData = await GraphQLService.fetchPostById(this.$route.params.postid, 0, toFetch, this.$store.getters.accessToken);
             this.postData = pData.data.getPostById;
 
             // fetch the author details
+            console.log(pData);
             const authorData = await this.getAuthorData(this.postData.author);
             this.authorData = authorData.data.user;
 
@@ -94,9 +107,22 @@ export default {
 
             // if it was successfull
             if (response.data.commentOnPost.userId != null) {
-                console.log(response);
-                this.postData.comments.push(response.data.commentOnPost);
+                this.postData.comments.unshift(response.data.commentOnPost);
             }
+        },
+        async getMoreComments() {
+            // get the next comments
+            const commentData = await GraphQLService.fetchPostById(this.$route.params.postid, this.postData.comments.length || 0, [
+                `comments {
+                    id
+                    userId
+                    payload
+                    createdBy
+                    createdAt
+                }`
+            ], this.$store.getters.accessToken);
+
+            this.postData.comments = this.postData.comments.concat(commentData.data.getPostById.comments);
         },
         openPostMenu() {
             this.$refs.newPostMenu.open();

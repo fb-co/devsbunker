@@ -66,7 +66,8 @@ export default {
         // return a post by the id
         getPostById: async function (_, args, { req }) {
             try {
-                let post = await getPostById(args.postId);
+                let post = await getPostById(args.postId, args.commentOffSet, LoadAmounts.commentIncrements);
+
                 let user;
 
                 if (req.user) {
@@ -79,7 +80,6 @@ export default {
                     post.isLiked = post.likes.includes(user.username);
                     post.isSaved = user.saved_posts.includes(post.id);
                 }
-console.log(post);
                 return post;
             } catch (err) {
                 return err;
@@ -433,7 +433,7 @@ console.log(post);
                             });
 
                             // add the new comment and save the document
-                            post.comments.push(comment);
+                            post.comments.unshift(comment);
 
                             await comment.save();
                             await post.save();

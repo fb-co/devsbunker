@@ -3,25 +3,36 @@
         <p class="comments_title">{{ comments.length + (comments.length == 1 ? " Comment" : " Comments") }}</p>
         <div v-if="$store.getters.accessToken">
             <GeneralInput ref="comment_input" :labelIsPlaceholder="true" :isQuery="false" label="Leave a comment" width="100%" class="comment_field" />
-            <button @click="postComment()" class="leave_comment_button">Post</button>
+            <button v-if="!loadingNewComment" @click="postComment()" class="leave_comment_button">Post</button>
+            <LoadingGif v-else :show="true" style="margin: 0;" />
         </div>
         <router-link to="/login" class="login_prompt" v-else>Login</router-link>
         <div style="margin-top: 20px;">
             <Comment v-for="(comment, index) in comments" :key="index" :commentData="comment" />
+            <button @click="$emit('loadMoreComments')">Load More</button>
         </div>
     </div>
     <div v-else>
         <p class="comments_title">0 comments</p>
         <GeneralInput ref="comment_input" :labelIsPlaceholder="true" :isQuery="false" label="Leave a comment" width="100%" class="comment_field" />
-        <button @click="postComment()" class="leave_comment_button">Post</button>
+        
+        <button v-if="!loadingNewComment" @click="postComment()" class="leave_comment_button">Post</button>
+        <LoadingGif v-else :show="true" style="margin: 0;" />
     </div>
 </template>
 
 <script>
 import Comment from "@/components/Comments/Comment.vue";
 import GeneralInput from "@/components/global/GeneralInput.vue";
+import LoadingGif from "@/components/global/LoadingGif.vue";
 
 export default {
+    data() {
+        return {
+            loadingNewComment: false,
+            loading: false,
+        }
+    },
     props: {
         comments: Array,
         mobile: {
@@ -32,6 +43,7 @@ export default {
     components: {
         Comment,
         GeneralInput,
+        LoadingGif,
     },
     methods: {
         postComment() {
@@ -39,11 +51,18 @@ export default {
 
             if (comment != "" && comment != null) {
                 // the null check is done also server side
+                this.loadingNewComment = true;
                 this.$emit("postComment", comment);
                 this.$refs.comment_input.clearValue();
             }
         },
     },
+    watch: {
+        comments: function() {
+            // little janky, but basically when you try and make a new comment, it waits for the array to change before setting the loading gif back to false
+            this.loadingNewComment = false;
+        }
+    }
 };
 </script>
 
