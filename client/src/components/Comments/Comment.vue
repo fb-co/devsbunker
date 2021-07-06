@@ -4,9 +4,12 @@
             <ProfilePicture :username="username" :wrapperSize="mobile ? '40px' : '60px'" />
         </div>
         <div class="commentMessage_container">
-            <p :class="{ comment_author: mobile, comment_author_desktop: !mobile }">
-                {{ username }} <span class="timestamp">{{ commentData.createdAt }}</span>
-            </p>
+            <div class="comment_header">
+                <p :class="{ comment_author: mobile, comment_author_desktop: !mobile }">
+                    {{ username }}
+                </p>
+                <div class="timestamp">{{ usableTimestamp }}</div>
+            </div>
             <p :class="{ comment_message: mobile, comment_message_desktop: !mobile }">{{ commentData.payload }}</p>
         </div>
     </div>
@@ -14,8 +17,8 @@
 
 <script>
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
-import CommonUtils from "@/utils/common_utils.js";
 import GraphQLService from "@/services/graphql.service.js";
+import TimeStampService from "@/services/timestamp.service.js";
 
 export default {
     data() {
@@ -23,23 +26,20 @@ export default {
             mobile: this.$store.getters.mobile,
             username: null,
             loaded: false,
+            usableTimestamp: this.commentData.createdAt,
         };
     },
     props: {
         commentData: Object,
     },
     async created() {
+        this.usableTimestamp = TimeStampService.convertToDate(this.commentData.createdAt, true, false, true);
         const res = await GraphQLService.fetchUserById(this.commentData.userId, ["username"]);
         this.username = res.data.getUserById.username;
         this.loaded = true;
     },
     components: {
         ProfilePicture,
-    },
-    methods: {
-        renderUsername(username, max) {
-            return CommonUtils.renderUsername(username, max);
-        },
     },
 };
 </script>
@@ -51,6 +51,7 @@ export default {
 
     padding: 15px;
     width: 100%;
+    margin-bottom: 5px;
 }
 .commentPFP_container {
     max-width: 6%;
@@ -62,13 +63,25 @@ export default {
     flex-direction: column;
     width: 90%;
 }
+.comment_header {
+    display: flex;
+    width: 100%;
+}
 .comment_author {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
     padding-left: 15px;
+    max-width: calc(100% - 110px); /* Make sure it doesnt crush the timestamp */
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.timestamp {
+    font-weight: normal;
+    color: var(--soft-text);
+    font-size: 12px;
+    width: 100px;
+    margin-left: 10px;
 }
 .comment_author_desktop {
     font-size: 16px;
@@ -89,11 +102,5 @@ export default {
     word-wrap: break-word;
     padding-left: 15px;
     font-size: 15px;
-}
-.timestamp {
-    font-weight: normal;
-    color: var(--soft-text);
-    font-size: 12px;
-    margin-left: 10px;
 }
 </style>

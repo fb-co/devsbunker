@@ -23,6 +23,8 @@ const TimeStampService = {
             dateObj = new Date(parseInt(timestamp));
         }
 
+        console.log(showMonth);
+
         let finalTimeStamp = 
             (showMonth ? this.monthNames[dateObj.getMonth()] : "") + " " + 
             (showDay ? dateObj.getDate() : "") + ", " + 
