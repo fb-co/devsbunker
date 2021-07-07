@@ -6,6 +6,10 @@
 
 ## High Priority
 
+-   [ ] after u delete your account there's a delay where nothing happens, we should add some visual feedback there
+
+    -   [ ] posts also still appear after account deletion, you need to rerefsh (this doesnt seem a big deal but maybe we could remove them from the cache after this happens)
+
 -   [x] convert timestamps to actual dates (like in comments) (Im checking this off because its been done for a while, check TimeStampService.js)
 
 -   [ ] comments
