@@ -23,7 +23,7 @@
 
 -   [x] cache
 
--   [ ] hot reloading after a new post is made doesnt work anymore
+-   [x] hot reloading after a new post is made doesnt work anymore
 
 -   [ ] Improved loading everywhere
 
