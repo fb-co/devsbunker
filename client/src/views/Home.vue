@@ -80,7 +80,7 @@ export default {
             this.$refs.newPostMenu.close();
         },
 
-        updateFeed(flag) {
+        updateFeed(post) {
             /**
              * After creating a new post, we don't want to grab the lastPostId and start fetching from there, we instead want to fetch the latest 3 posts.
              * If we grab the lastPostId this happens:
@@ -108,13 +108,9 @@ export default {
              */
 
             this.loaded = false;
+        
+            this.updateFeedAfterNewPost(post);
 
-            // leaving this even tho right now flag is always true, maybe in the future we'll need to propagate a failed attempt
-            if (flag) {
-                // this.clearPosts();
-                // await this.getPosts();
-                this.updateFeedAfterNewPost();
-            }
             this.loaded = true;
         },
     },

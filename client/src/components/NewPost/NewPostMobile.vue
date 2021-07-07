@@ -449,10 +449,8 @@ export default {
 
                                 this.$store.dispatch("alertUser", { msg: "Created post!", type: "success", title: "Success" });
 
-                                await this.$store.dispatch("cacheNewlyMadePost", res.post);
-
                                 if (this.$route.name == "Home") {
-                                    this.$emit("updateFeed", true);
+                                    this.$emit("updateFeed", returnPost.data.makePost);
                                 } else {
                                     this.$router.push("/");
                                 }

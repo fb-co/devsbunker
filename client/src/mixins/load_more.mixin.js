@@ -8,7 +8,6 @@
 
 import GraphQLService from "@/services/graphql.service";
 import SearchUtilities from "../utils/search_utilities.js";
-import { store } from "../store/store.js";
 
 const LoadMore = {
     data() {
@@ -141,13 +140,8 @@ const LoadMore = {
                 });
             }
         },
-        async updateFeedAfterNewPost() {
-            const newPost = store.getters.cachedNewlyMadePost;
-
-            // unshift newly chached post into this.posts
-            if (newPost) {
-                this.posts.unshift(newPost);
-            }
+        async updateFeedAfterNewPost(post) {
+            this.posts.unshift(post);
         },
         async updateFilterDropdown(value) {
             this.posts = [];

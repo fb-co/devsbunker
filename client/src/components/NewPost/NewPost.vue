@@ -30,8 +30,8 @@ export default {
         getStatus() {
             return this.isOpen;
         },
-        propagateEvent(flag) {
-            this.$emit("updateFeed", flag);
+        propagateEvent(post) {
+            this.$emit("updateFeed", post);
         },
     },
 };

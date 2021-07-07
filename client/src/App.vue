@@ -49,8 +49,8 @@ export default {
     },
 
     methods: {
-        updateFeed() {
-            this.$refs.page_content.updateFeed(true);
+        updateFeed(post) {
+            this.$refs.page_content.updateFeed(post);
         },
     },
 };
