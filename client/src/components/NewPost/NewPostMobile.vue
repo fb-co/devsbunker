@@ -275,7 +275,8 @@
                 </div>
             -->
 
-            <button @click="createPost()" class="create_post_button">Post</button>
+            <button v-if="!creatingPost" @click="createPost()" class="create_post_button">Post</button>
+            <LoadingGif :show="true" v-else />
         </div>
 
         <!-- Sub-Popups -->
@@ -298,6 +299,7 @@ import GeneralInput from "../global/GeneralInput";
 import CreateTag from "./CreateTag";
 import LinkBlock from "./LinkBlock";
 import NewTagPopup from "./NewTagPopUp";
+import LoadingGif from "@/components/global/LoadingGif.vue";
 import GraphQLService from "@/services/graphql.service";
 import FileUploadService from "@/services/fileUpload.service.js";
 import Languages from "../../templates/Languages";
@@ -311,6 +313,7 @@ export default {
             tags: [],
             links: [],
             isOnStore: false,
+            creatingPost: false,
             files: [],
             compressedFiles: [],
         };
@@ -320,6 +323,7 @@ export default {
         CreateTag,
         LinkBlock,
         NewTagPopup,
+        LoadingGif
     },
     mounted() {
         this.$refs.postTitle.focusInput();
@@ -434,23 +438,32 @@ export default {
                 this.$store.dispatch("alertUser", { msg: "You can upload 5 files max.", type: "error", title: "Error" });
             } else {
                 if (check.success) {
+                    // display loading gif and hide button if all fields were validated properly clientside
+                    this.creatingPost = true;
+                        
                     GraphQLService.createNewPost(this.$store.getters.accessToken, post)
                         .then((returnPost) => {
                             if (returnPost.errors?.length) {
+                                // hide loading gif even if there are errors
+                                this.creatingPost = false;
+
                                 this.$store.dispatch("alertUser", { msg: returnPost.errors[0].message, type: "error", title: "Error" });
                                 return;
                             }
 
                             FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then(async (res) => {
+                                // hide loading gif if it reaches this point
+                                this.creatingPost = false;
+                                
                                 if (!/Successfully/.test(res.message)) {
                                     this.$store.dispatch("alertUser", { msg: res.message, type: "error", title: "Error" });
                                     return;
                                 }
-
                                 this.$store.dispatch("alertUser", { msg: "Created post!", type: "success", title: "Success" });
 
                                 if (this.$route.name == "Home") {
-                                    this.$emit("updateFeed", returnPost.data.makePost);
+                                    console.log(res);
+                                    this.$emit("updateFeed", res.post);
                                 } else {
                                     this.$router.push("/");
                                 }

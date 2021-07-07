@@ -27,78 +27,7 @@
                 <button>Most Popular</button>
             </Dropdown>
         </div>
-        <div v-if="loading">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                style="margin:auto;background:none;display:block;"
-                width="100px"
-                height="100px"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="xMidYMid"
-            >
-                <g transform="rotate(0 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(30 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(60 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(90 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(120 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(150 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(180 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(210 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(240 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(270 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(300 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(330 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-            </svg>
-        </div>
+        <LoadingGif v-if="loading || rootComponent.awaitingPosts" :show="true" />
         <div v-else>
             <div v-if="!showSearchResults" class="project_list">
                 <div v-if="rootComponent.posts.length > 0" class="post_wrapper">
@@ -156,78 +85,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="awaitingResults">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                style="margin:auto;background:none;display:block;"
-                width="100px"
-                height="100px"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="xMidYMid"
-            >
-                <g transform="rotate(0 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(30 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(60 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(90 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(120 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(150 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(180 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(210 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(240 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(270 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(300 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-                <g transform="rotate(330 50 50)">
-                    <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#93dbe9">
-                        <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
-                    </rect>
-                </g>
-            </svg>
-        </div>
+        <LoadingGif v-if="awaitingResults" :show="true" />
         <!-- Just a placeholder to add some space beneath the results even after the load more button is gone -->
         <div v-if="(showSearchResults && fetchedAllSearchResults) || (!fetchedAllSearchResults && rootComponent.fetchedAll)" style="height: 60px;" />
     </div>
@@ -236,8 +94,7 @@
 <script>
 import PostSearch from "@/components/SearchLogic/PostSearch.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
-//import MobileProjectCard from "@/components/ProjectCard/MobileProjectCard.vue";
-//import DesktopProjectCard from "@/components/ProjectCard/DesktopProjectCard.vue";
+import LoadingGif from "@/components/global/LoadingGif.vue";
 import LargeDesktopProjectCard from "@/components/ProjectCard/LargeDesktopProjectCard.vue";
 import LargeMobileProjectCard from "@/components/ProjectCard/LargeMobileProjectCard.vue";
 import DetailedDesktopProjCard from "@/components/ProjectCard/DetailedDesktopProjCard.vue";
@@ -269,8 +126,7 @@ export default {
     components: {
         PostSearch,
         Dropdown,
-        //MobileProjectCard,
-        //DesktopProjectCard,
+        LoadingGif,
         LargeDesktopProjectCard,
         LargeMobileProjectCard,
         DetailedDesktopProjCard,

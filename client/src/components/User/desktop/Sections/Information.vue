@@ -33,6 +33,7 @@
             <div class="field_edit_buttons_container">
                 <button @click="cancelFields()" class="cancel_button">Cancel</button>
                 <button @click="saveFields()" class="save_button">Save</button>
+                <LoadingGif v-if="savingResults" :show="true" />
             </div>
         </div>
     </div>
@@ -41,6 +42,7 @@
 <script>
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import GeneralProfile from "@/mixins/general_profile.js";
+import LoadingGif from "@/components/global/LoadingGif.vue";
 
 // TODO: check why userObject is undefined
 export default {
@@ -59,6 +61,7 @@ export default {
     },
     components: {
         ProfilePicture,
+        LoadingGif,
     },
     /*
     beforeRouteLeave(to, from, next) {

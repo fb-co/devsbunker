@@ -14,6 +14,7 @@ const LoadMore = {
         return {
             // variables
             posts: [], // array of all posts meant to be currently shown
+            awaitingPosts: false,
             sortingType: null,
             fetchedAll: false,
             otherData: {}, // add any other data the mixing might need for a specific case here
@@ -29,12 +30,15 @@ const LoadMore = {
          * Force new will ignore cache and get new from server (mainly used for the load more option) 
         */
         async getPosts(filter) {
+            this.awaitingPosts = true; // set loading flag to true
             const alreadyLoadedPosts = this.$store.getters.getPosts(filter || this.sortingType, this.queryType);
             
             if (alreadyLoadedPosts) {
-                console.log("used cache!");
                 this.posts = alreadyLoadedPosts.posts;
                 this.fetchedAll = alreadyLoadedPosts.fetchedAll;
+
+                // set loading flag to false 
+                this.awaitingPosts = false;
             } else {
                 if (this.queryType === "all") {
                     const res = await GraphQLService.fetchPosts(
@@ -86,6 +90,8 @@ const LoadMore = {
                         posts: this.posts,
                     });
                 }
+                // set loading flag to false 
+                this.awaitingPosts = false;
             }
         },
         async loadNewPosts(filter) {
@@ -141,6 +147,7 @@ const LoadMore = {
             }
         },
         async updateFeedAfterNewPost(post) {
+            console.log(post); 
             this.posts.unshift(post);
         },
         async updateFilterDropdown(value) {

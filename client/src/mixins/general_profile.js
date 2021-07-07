@@ -14,6 +14,7 @@ const GeneralProfile = {
         return {
             editing: false,
             invalidEmail: false,
+            savingResults: false,
         }
     },
     methods: {
@@ -50,8 +51,13 @@ const GeneralProfile = {
             }
 
             if (fields.length > 0) {
+                // set loading flag to true
+                this.savingResults = true;
+
                 GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
-                    console.log(res);
+                    // set loading flag to false
+                    this.savingResults = false;
+
                     if (!res.errors) {
                         const data = res.data.updateUserDetails.changedData;
                         

@@ -32,6 +32,7 @@
             <div class="field_edit_buttons_container">
                 <button @click="cancelFields()" class="cancel_button">Cancel</button>
                 <button @click="saveFields()" class="save_button">Save</button>
+                <LoadingGif v-if="savingResults" :show="true" />
             </div>
         </div>
     </div>
@@ -40,6 +41,7 @@
 <script>
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import GeneralProfile from "@/mixins/general_profile.js";
+import LoadingGif from "@/components/global/LoadingGif.vue";
 
 export default {
     data() {
@@ -53,6 +55,7 @@ export default {
     mixins: [GeneralProfile],
     components: {
         ProfilePicture,
+        LoadingGif
     },
 };
 </script>
