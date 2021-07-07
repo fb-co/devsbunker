@@ -1,4 +1,5 @@
 import Posts from "../../../components/post/post.model.js";
+import Comment from "../../../components/post/post.comment.model.js";
 import FilesHandler from "../../../middlewares/FilesHandler.js";
 
 const fh = new FilesHandler();
@@ -19,6 +20,10 @@ export default async function deletePost(postAuthor, postId) {
                             post.images.forEach((asset) => {
                                 buf.push(`${process.env.UPLOAD_FILES_PATH}/${asset.dbname}`);
                             });
+
+                            // remove comments
+                            Comment.remove({ _id: { $in: post.comments } });
+
                             post.remove();
                         });
 
@@ -43,6 +48,9 @@ export default async function deletePost(postAuthor, postId) {
                         deleted.images.forEach((asset) => {
                             buf.push(`${process.env.UPLOAD_FILES_PATH}/${asset.dbname}`);
                         });
+
+                        // remove comments
+                        Comment.remove({ _id: { $in: deleted.comments } });
 
                         fh.deleteFiles(buf);
                         resolve(deleted);

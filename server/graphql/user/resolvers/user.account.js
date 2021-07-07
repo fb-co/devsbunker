@@ -631,8 +631,10 @@ export default {
                     // delete the posts
                     await deletePost(user.username, null);
 
-                    // delete profile picture
-                    fh.deleteFiles([`${process.env.UPLOAD_PROFILE_PIC}/${user.profile_pic}`]);
+                    if (!/placeholder/.test(user.profile_pic)) {
+                        // delete profile picture
+                        fh.deleteFiles([`${process.env.UPLOAD_PROFILE_PIC}/${user.profile_pic}`]);
+                    }
 
                     // delete user
                     await User.deleteOne({
