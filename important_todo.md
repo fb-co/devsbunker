@@ -6,18 +6,18 @@
 
 ## High Priority
 
--   [ ] after u delete your account there's a delay where nothing happens, we should add some visual feedback there
+-   [x] after u delete your account there's a delay where nothing happens, we should add some visual feedback there
 
     -   [ ] posts also still appear after account deletion, you need to rerefsh (this doesnt seem a big deal but maybe we could remove them from the cache after this happens)
 
 -   [x] convert timestamps to actual dates (like in comments) (Im checking this off because its been done for a while, check TimeStampService.js)
 
--   [ ] comments
+-   [x] comments
 -   [see this](https://stackoverflow.com/questions/29078753/how-to-reference-another-schema-in-my-mongoose-schema)
 -   [x] comments are still broken if you view a post after a comment is made. This is due to the fact that we need to use the .populate() thing while fetching the entire post since I've used refs in the schema
 -   [x] migrate remaining (if any) routes to use the new method, right now ive only migrated getPostById. Basically EVERYWHERE we ask for comments we must perform that operation
 -   [ ] add reply field to comment
--   [ ] Delete comments when deleting posts (remember to delete them when the user deletes their account too)
+-   [x] Delete comments when deleting posts (remember to delete them when the user deletes their account too)
 
 -   [ ] when you view a post the links should display the link itself and not just the favicon of that site (maybe make a list)
 
