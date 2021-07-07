@@ -69,7 +69,6 @@ export default {
                     createdAt
                 }`,
                 "fetchedAllComments",
-                "commentAmt",
             ];
 
             // fetch the post data (start with comment offset of 0)

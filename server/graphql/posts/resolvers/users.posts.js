@@ -71,8 +71,7 @@ export default {
                 // check if all comments were fetched
 
                 post.fetchedAllComments = false;
-                console.log(post.comments);
-                post.commentAmt = post.comments.length;
+                
                 if (post.comments[LoadAmounts.commentIncrements] === undefined) {
                     post.fetchedAllComments = true;
                 } else {

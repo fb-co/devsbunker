@@ -121,7 +121,6 @@
             @postComment="$parent.postComment" 
             @loadMoreComments="$parent.getMoreComments"
             :fetchedAllComments="projectData.fetchedAllComments" 
-            :commentAmt="projectData.commentAmt"
             :comments="projectData.comments"
             :mobile="true" 
             style="margin-top: 30px;" 
