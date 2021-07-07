@@ -68,6 +68,8 @@ export default {
                     createdBy
                     createdAt
                 }`,
+                "fetchedAllComments",
+                "commentAmt",
             ];
 
             // fetch the post data (start with comment offset of 0)
@@ -107,6 +109,7 @@ export default {
             // if it was successfull
             if (response.data.commentOnPost.userId != null) {
                 this.postData.comments.push(response.data.commentOnPost);
+                this.postData.commentAmt++;
             }
         },
         async getMoreComments() {

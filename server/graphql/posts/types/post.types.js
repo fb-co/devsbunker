@@ -31,6 +31,7 @@ export default gql`
         createdAt: String!
         comments: [CommentResponse]!
         fetchedAllComments: Boolean
+        commentAmt: Int
     }
 
     type LoadPostsResponse {

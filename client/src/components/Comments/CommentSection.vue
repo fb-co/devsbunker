@@ -1,6 +1,6 @@
 <template>
     <div :class="{ comment_section_desktop: !mobile, comment_section_mobile: mobile }" v-if="comments">
-        <p class="comments_title">{{ comments.length + (comments.length == 1 ? " Comment" : " Comments") }}</p>
+        <p class="comments_title">{{ commentAmt + (commentAmt == 1 ? " Comment" : " Comments") }}</p>
         <div v-if="$store.getters.accessToken">
             <GeneralInput ref="comment_input" :labelIsPlaceholder="true" :isQuery="false" label="Leave a comment" width="100%" class="comment_field" />
             <button v-if="!loadingNewComment" @click="postComment()" class="leave_comment_button">Post</button>
@@ -41,6 +41,10 @@ export default {
         fetchedAllComments: {
             type: Boolean,
             default: false,
+        },
+        commentAmt: {
+            type: Number,
+            default: 0,
         },
         mobile: {
             type: Boolean,
