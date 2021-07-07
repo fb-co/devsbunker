@@ -255,11 +255,11 @@
             title="Delete Account"
             @submitted="deleteProfile($event)"
         />
-        <ConfirmationPopup 
+        <ConfirmationPopup
             ref="download_data_confirmation"
-            title="Download Data" 
-            msg="This will download all the data associated with your account into a JSON file." 
-            confirmButton="Download" 
+            title="Download Data"
+            msg="This will download all the data associated with your account into a JSON file."
+            confirmButton="Download"
             @confirm="downloadUserData()"
         />
     </div>
@@ -283,7 +283,7 @@ export default {
     components: {
         ProfilePicture,
         InputModal,
-        ConfirmationPopup
+        ConfirmationPopup,
     },
     props: {
         mainUserObject: Object,
@@ -344,9 +344,10 @@ export default {
 
                         localStorage.removeItem("profile_pic_link");
 
+                        this.$store.dispatch("alertUser", { msg: "Successfully delete account. Redirecting...", type: "success", title: "Done" });
                         setTimeout(() => {
                             this.$router.push("/");
-                        }, 2500);
+                        }, 2000);
                     } else {
                         this.$store.dispatch("alertUser", { msg: "Something went wrong", type: "error", title: "Error" });
                     }
