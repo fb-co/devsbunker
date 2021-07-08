@@ -6,9 +6,9 @@ const state = {
 const getters = {
     // get only the posts in memory based on queryType and filter (returns null if they arent in memory)
     // if the posts are in memory return an object with { posts: <all the posts>, fetchedAll: <were all posts fetched?> }
-    getPosts: (state) => (filter, queryType) => {
+    getPosts: (state) => (filter, queryType, authorAffiliation) => {
         for (let i = 0; i < state.posts.length; i++) {
-            if (state.posts[i].filter === filter && state.posts[i].queryType === queryType) {
+            if (state.posts[i].filter === filter && state.posts[i].queryType === queryType && state.posts[i].authorAffiliation === authorAffiliation) {
                 return {
                     fetchedAll: state.posts[i].fetchedAll,
                     posts: state.posts[i].posts
@@ -32,7 +32,7 @@ const mutations = {
     addPostsToCache(state, payload) {
         //console.log(filter, queryType, posts);
         for (let i = 0; i < state.posts.length; i++) {
-            if (state.posts[i].filter === payload.filter && state.posts[i].queryType === payload.queryType) {
+            if (state.posts[i].filter === payload.filter && state.posts[i].queryType === payload.queryType && state.posts[i].authorAffiliation === payload.authorAffiliation) {
                 state.posts[i].posts = payload.posts;
                 state.posts[i].fetchedAll = payload.fetchedAll;
                 return; // break out of function if this is true
@@ -44,6 +44,7 @@ const mutations = {
             filter: payload.filter,
             queryType: payload.queryType,
             fetchedAll: payload.fetchedAll,
+            authorAffiliation: payload.authorAffiliation,
             posts: payload.posts,
         });
     },

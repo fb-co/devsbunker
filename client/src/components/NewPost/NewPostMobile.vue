@@ -313,6 +313,8 @@
         <InformativePopupBare ref="links_info">
             <p>Include any links to repositories or relevant sites that pertain to your project.</p>
         </InformativePopupBare>
+
+        <ConfirmationPopup ref="confirm_leave" title="Confirm" msg="Are you sure you want to leave? All progress on this post will be lost." />
     </div>
 </template>
 
@@ -323,6 +325,7 @@ import LinkBlock from "./LinkBlock";
 import NewTagPopup from "./NewTagPopUp";
 import LoadingGif from "@/components/global/LoadingGif.vue";
 import InformativePopupBare from "@/components/Popups/InformativePopupBare.vue";
+import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 import QuestionMark from "@/components/Popups/QuestionMark.vue";
 import GraphQLService from "@/services/graphql.service";
 import FileUploadService from "@/services/fileUpload.service.js";
@@ -350,6 +353,7 @@ export default {
         LoadingGif,
         InformativePopupBare,
         QuestionMark,
+        ConfirmationPopup,
     },
     mounted() {
         this.$refs.postTitle.focusInput();

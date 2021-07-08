@@ -90,7 +90,7 @@ export default {
     animation: slide 0.3s;
 
     background: var(--secondary-color);
-    /* box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.25); */
+    box-shadow: 0px 0px 10px var(--drop-shadow);
 
     border-radius: 10px;
     /* border-left: 10px solid var(--vue-green); */
