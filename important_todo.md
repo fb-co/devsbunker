@@ -23,6 +23,9 @@
 
 -   [x] cache
 
+-   [ ] Add very small box shadow to notifications to give them a bit more contrast
+-   [ ] Make the share option on a post actully copy the url
+
 -   [x] hot reloading after a new post is made doesnt work anymore
 
 -   [x] Improved loading everywhere
