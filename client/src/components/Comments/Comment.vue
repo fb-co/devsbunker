@@ -5,12 +5,22 @@
         </div>
         <div class="commentMessage_container">
             <div class="comment_header">
-                <p :class="{ comment_author: mobile, comment_author_desktop: !mobile }">
+                <p class="vertical_flex_center" :class="{ comment_author: mobile, comment_author_desktop: !mobile }">
                     {{ username }}
                 </p>
-                <div class="timestamp">{{ usableTimestamp }}</div>
+                <div class="timestamp vertical_flex_center">{{ usableTimestamp }}</div>
             </div>
             <p :class="{ comment_message: mobile, comment_message_desktop: !mobile }">{{ commentData.payload }}</p>
+            <div class="placeholder" />
+            <div class="more_options" :class="{ more_options_desktop: !mobile }">
+                <div class="more_option">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-corner-down-left" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--soft-text)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M18 6v6a3 3 0 0 1 -3 3h-10l4 -4m0 8l-4 -4" />
+                    </svg>
+                    <p class="vertical_flex_center">Reply</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -47,7 +57,7 @@ export default {
     display: flex;
     flex-direction: row;
 
-    padding: 15px;
+    padding: 15px 15px 0px 15px;
     width: 100%;
     margin-bottom: 5px;
 }
@@ -66,26 +76,27 @@ export default {
     width: 100%;
 }
 .comment_author {
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
     padding-left: 15px;
-    max-width: calc(100% - 110px); /* Make sure it doesnt crush the timestamp */
+    max-width: calc(100% - 115px); /* Make sure it doesnt crush the timestamp */
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.comment_author_desktop {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-left: 15px;
+    height: 100%;
 }
 .timestamp {
     font-weight: normal;
     color: var(--soft-text);
     font-size: 12px;
     width: 100px;
-    margin-left: 10px;
-}
-.comment_author_desktop {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    padding-left: 15px;
+    margin-left: 15px;
 }
 .comment_message {
     color: var(--soft-text);
@@ -99,6 +110,37 @@ export default {
     overflow-wrap: break-word;
     word-wrap: break-word;
     padding-left: 15px;
-    font-size: 15px;
+    font-size: 17px;
+}
+.comment_container:hover .more_options {
+    visibility: visible;
+}
+.more_options {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.more_options_desktop {
+    visibility: hidden;
+}
+.more_option {
+    display: flex;
+    border-radius: 3px;
+    padding: 5px;
+    cursor: pointer;
+}
+.more_option:hover {
+    background-color: var(--secondary-color);
+}
+.more_option svg {
+    margin-left: 15px;
+}
+.more_option p {
+    margin-left: 5px;
+    margin-right: 15px;
+    font-size: 14px;
+    color: var(--soft-text);
 }
 </style>

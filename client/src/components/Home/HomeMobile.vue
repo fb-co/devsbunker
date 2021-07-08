@@ -1,5 +1,10 @@
 <template>
-    <PostFeed :rootComponent="$parent" :desktop="false" v-if="loaded" />
+    <PostFeed 
+        :rootComponent="$parent" 
+        :desktop="false" 
+        v-if="loaded" 
+        title="Discover Projects" 
+    />
 </template>
 <script>
 import PostFeed from "@/components/PostFeed.vue";
