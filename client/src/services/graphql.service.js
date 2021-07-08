@@ -657,10 +657,10 @@ const GraphQLService = {
             return console.error(err);
         }
     },
-    replyToComment: async function(token, postId, commentId, reply) {
+    replyToComment: async function(token, commentId, reply) {
         const mutation = `
             mutation {
-                replyToComment(postId: "${postId}", commentId: "${commentId}", reply: "${reply}") {
+                replyToComment(commentId: "${commentId}", reply: "${reply}") {
                     reply
                     replier
                 }

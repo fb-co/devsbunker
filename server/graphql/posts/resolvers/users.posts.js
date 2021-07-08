@@ -67,17 +67,17 @@ export default {
         getPostById: async function (_, args, { req }) {
             try {
                 let post = await getPostById(args.postId, args.commentOffSet, LoadAmounts.commentIncrements);
-                
+
                 // check if all comments were fetched
 
                 post.fetchedAllComments = false;
-                
+
                 if (post.comments[LoadAmounts.commentIncrements] === undefined) {
                     post.fetchedAllComments = true;
                 } else {
                     post.comments.pop();
                 }
-                
+
                 // add any user data
                 let user;
 
@@ -413,32 +413,55 @@ export default {
                 return null;
             } catch (err) {}
         },
-        replyToComment: async function(_, args, { req }) {
-            const postId = args.postId;
+        replyToComment: async function (_, args, { req }) {
             const commentId = args.commentId;
 
             const reg0 = new RegExp("<", "g");
             const reg1 = new RegExp(">", "g");
             const replyMessage = sanitizeHtml(args.reply).replace(reg0, "").replace(reg1, ""); // ultimate nesting cuz im lazy
-            
+
             const jwtPayload = req.user;
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
 
-            try {
-                if (replyMessage != "" && replyMessage != null) {
-                    const post = await Posts.findOne({
-                        _id: postId,
-                        enabled: true,
-                    });
+            if (replyMessage != "" && replyMessage != null) {
+                const user = await User.findOne({
+                    username: jwtPayload.username,
+                    enabled: true,
+                });
 
-                    if (post) {
-                        
+                if (user) {
+                    const commentToReplyTo = await Comment.findById(commentId);
+
+                    if (commentToReplyTo) {
+                        // def value for the field replies is []
+                        try {
+                            const reply = new Comment({
+                                userId: user._id,
+                                createdBy: user.username,
+                                payload: replyMessage,
+                            });
+
+                            await reply.save();
+
+                            commentToReplyTo.replies.push(reply);
+
+                            await commentToReplyTo.save();
+
+                            return {
+                                reply: reply.payload,
+                                replier: reply.userId,
+                            };
+                        } catch (err) {
+                            // I still dont like this catch then throw thing but it's just to clean the error and throw a more general one
+                            console.error(err);
+                            throw new Error("Internal error: Unable to operate on database.");
+                        }
                     } else {
-                        return null;
+                        throw new Error("Internal error: Unable to find comment from provided ID");
                     }
+                } else {
+                    throw new Error("Internal error: Unable to find User from token");
                 }
-            } catch {
-                throw new Error("Internal error. Unable to reply to comment");
             }
         },
         commentOnPost: async function (_, args, { req }) {
@@ -476,7 +499,7 @@ export default {
 
                             await comment.save();
                             await post.save();
-                            
+
                             return {
                                 id: comment._id,
                                 userId: comment.userId,

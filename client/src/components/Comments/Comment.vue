@@ -14,8 +14,19 @@
             <div class="placeholder" />
             <div class="more_options" :class="{ more_options_desktop: !mobile }">
                 <div class="more_option">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-corner-down-left" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--soft-text)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-corner-down-left"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="var(--soft-text)"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M18 6v6a3 3 0 0 1 -3 3h-10l4 -4m0 8l-4 -4" />
                     </svg>
                     <p @click="createReply()" class="vertical_flex_center">Reply</p>
@@ -24,7 +35,7 @@
             <div class="reply_input" ref="reply_field_container">
                 <ProfilePicture :username="this.$store.getters.username" :wrapperSize="mobile ? '30px' : '40px'" />
                 <div class="input_container">
-                    <input placeholder="Type your reply..." ref="reply_field">
+                    <input placeholder="Type your reply..." ref="reply_field" />
                     <div class="reply_line" />
                     <div class="reply_actions">
                         <button @click="cancelReply()" class="reply_cancel">Cancel</button>
@@ -39,6 +50,7 @@
 <script>
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import TimeStampService from "@/services/timestamp.service.js";
+import GraphQLService from "@/services/graphql.service.js";
 
 export default {
     data() {
@@ -70,8 +82,10 @@ export default {
             this.$refs.reply_field.value = "";
         },
         postReply() {
-            // add code to send reply to server here
-        }
+            GraphQLService.replyToComment(this.$store.getters.accessToken, this.commentData.id, this.$refs.reply_field.value).then((res) => {
+                console.warn(res);
+            });
+        },
     },
 };
 </script>
