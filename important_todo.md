@@ -19,7 +19,7 @@
 -   [ ] add reply field to comment
 -   [x] Delete comments when deleting posts (remember to delete them when the user deletes their account too)
 
--   [ ] when you view a post the links should display the link itself and not just the favicon of that site (maybe make a list)
+-   [x] when you view a post the links should display the link itself and not just the favicon of that site (maybe make a list)
 
 -   [x] cache
 
