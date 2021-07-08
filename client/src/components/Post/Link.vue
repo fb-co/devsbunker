@@ -77,9 +77,15 @@ export default {
     .new_link_item > img {
         height: 40px;
     }
+    .new_link_item:hover {
+        cursor: pointer;
+    }
     .shownLink {
         position: absolute;
+        z-index: 50;
         top: 50px;
+        max-width: 500px;
+        word-wrap: break-word;
     }
     .shownLink p {
         background-color: var(--secondary-color);

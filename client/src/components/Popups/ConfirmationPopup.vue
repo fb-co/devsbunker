@@ -9,7 +9,7 @@
                         <line x1="6" y1="6" x2="18" y2="18" />
                     </svg>
                 </div>
-                <p class="vertical_flex_center">{{ title }}</p>
+                <p class="vertical_flex_center" style="font-size: 25px;">{{ title }}</p>
                 <div style="width: 50px;" />
             </div>
             <p>{{ msg }}</p>
