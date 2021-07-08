@@ -18,6 +18,7 @@
                 <slot>
                     <!-- Add the information you want to add here (wherever your adding the component, not literally here) -->
                 </slot>
+                <div class="placeholder" style="flex-grow: 1;" />
                 <div class="horizontal_flex_center">
                     <button @click="close()" class="general_button" style="margin: 30px auto 0px auto;">Ok</button>
                 </div>
@@ -72,6 +73,8 @@ export default {
     border-radius: 5px;
     box-shadow: 0px 0px 15px var(--drop-shadow);
     animation: slideAnimation 0.4s;
+    display: flex;
+    flex-direction: column;
 }
 .information_container_mobile {
     width: 95%;
@@ -103,9 +106,12 @@ export default {
     stroke-width: 2px;
 }
 .main_cont {
+    display: flex;
+    flex-direction: column;
     width: 70%;
     margin: 20px auto 20px auto;
     text-align: justify;
+    flex-grow: 1;
 }
 .main_cont p {
     color: var(--soft-text);

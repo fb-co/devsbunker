@@ -213,7 +213,7 @@
             <div class="tag_container">
                 <div class="tag_header">
                     <p class="vertical_flex_center">Add Tags</p>
-                    <QuestionMark @open="openInfo('tags')" style="margin-left: 20px;"  />
+                    <QuestionMark style="margin-left: 20px;" @open="$refs.tags_info.open()" />
                 </div>
                 <div class="add_tags">
                     <CreateTag v-for="tag in tags" :key="tag" :label="tag" tagType="lang" />
@@ -301,10 +301,18 @@
             style="position: fixed"
         />
 
-        <!-- Informative Popups -->
-        <InformativePopupBare ref="tag_info" />
-        <InformativePopupBare ref="contributer_info" />
-        <InformativePopupBare ref="links_info" />
+        <InformativePopupBare ref="contributer_info">
+            <p>Include any other collaborators registered on the site to give them credit.</p>
+        </InformativePopupBare>
+        <InformativePopupBare ref="tags_info">
+            <p>Include tags which help others find your project.</p>
+            <br.<br>
+            <p style="font-weight: bold;">Example:</p>
+            <p>Javascript, HTML, CSS</p>
+        </InformativePopupBare>
+        <InformativePopupBare ref="links_info">
+            <p>Include any links to repositories or relevant sites that pertain to your project.</p>
+        </InformativePopupBare>
     </div>
 </template>
 
