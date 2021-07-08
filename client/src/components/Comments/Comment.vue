@@ -43,6 +43,15 @@
                     </div>
                 </div>
             </div>
+            <div class="replies_container">
+                <div v-for="(reply, index) in commentData.replies" :key="index" class="reply">
+                    <ProfilePicture :username="reply.replier" :wrapperSize="mobile ? '30px' : '40px'" />
+                    <div class="reply_text_container">
+                        <p class="reply_author">{{ reply.replier }}</p>
+                        <p class="vertical_flex_center reply_body">{{ reply.reply }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -83,7 +92,10 @@ export default {
         },
         postReply() {
             GraphQLService.replyToComment(this.$store.getters.accessToken, this.commentData.id, this.$refs.reply_field.value).then((res) => {
-                console.warn(res);
+                const reply = res.data.replyToComment;
+                this.commentData.replies.push(reply);
+
+                this.cancelReply();
             });
         },
     },
@@ -210,7 +222,7 @@ export default {
 
 .reply_line {
     height: 1.5px;
-    background-color: white;
+    background-color: var(--soft-text);
     width: 100%;
     animation: lineSlide 0.5s;
     border-radius: 5px;
@@ -224,7 +236,7 @@ export default {
     margin-left: 10px;
     margin-top: 5px;
     border: none;
-    color: var(--main-font-color);
+    color: #fff;
     cursor: pointer;
 }
 .reply_cancel {
@@ -238,5 +250,24 @@ export default {
 }
 .reply_confirm:hover {
     box-shadow: 0px 0px 10px var(--main-accent);
+}
+
+/* Replies */
+.replies_container {
+    display: flex;
+    flex-direction: column;
+}
+.reply {
+    display: flex;
+    margin-bottom: 20px;
+}
+.reply_author {
+    margin-left: 15px;
+    color: var(--main-font-color);
+    font-weight: bold;
+}
+.reply_body {
+    margin-left: 15px;
+    color: var(--soft-text);
 }
 </style>

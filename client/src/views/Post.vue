@@ -65,6 +65,10 @@ export default {
                     id
                     userId
                     payload
+                    replies {
+                        replier
+                        reply
+                    }
                     createdBy
                     createdAt
                 }`,
@@ -104,11 +108,11 @@ export default {
         },
         async postComment(value) {
             const response = await GraphQLService.commentOnPost(this.postData.id, value, this.$store.getters.accessToken);
-
+console.log(response);
             // if it was successfull
             if (response.data.commentOnPost.userId != null) {
+                console.log(response);
                 this.postData.comments.push(response.data.commentOnPost);
-                this.postData.commentAmt++;
             }
         },
         async getMoreComments() {

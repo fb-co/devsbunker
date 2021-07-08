@@ -71,6 +71,7 @@ export default {
                 // check if all comments were fetched
 
                 post.fetchedAllComments = false;
+                console.log(post.comments);
 
                 if (post.comments[LoadAmounts.commentIncrements] === undefined) {
                     post.fetchedAllComments = true;
@@ -434,22 +435,16 @@ export default {
                     if (commentToReplyTo) {
                         // def value for the field replies is []
                         try {
-                            const reply = new Comment({
-                                userId: user._id,
-                                createdBy: user.username,
-                                payload: replyMessage,
-                            });
-
-                            await reply.save();
+                            const reply = {
+                                replier: user.username,
+                                reply: replyMessage,
+                            };
 
                             commentToReplyTo.replies.push(reply);
 
                             await commentToReplyTo.save();
 
-                            return {
-                                reply: reply.payload,
-                                replier: reply.userId,
-                            };
+                            return reply;
                         } catch (err) {
                             // I still dont like this catch then throw thing but it's just to clean the error and throw a more general one
                             console.error(err);
@@ -503,6 +498,7 @@ export default {
                                 id: comment._id,
                                 userId: comment.userId,
                                 payload: comment.payload,
+                                replies: [],
                                 createdBy: comment.createdBy,
                                 createdAt: comment.createdAt,
                             };

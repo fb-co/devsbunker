@@ -636,6 +636,10 @@ const GraphQLService = {
                     id
                     userId
                     payload
+                    replies {
+                        reply
+                        replier
+                    }     
                     createdBy
                     createdAt
                 }

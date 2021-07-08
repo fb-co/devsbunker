@@ -37,11 +37,15 @@ export default gql`
         posts: [FetchablePost]!
         fetchedAll: Boolean!
     }
-
+    type CommentReply {
+        reply: String!
+        replier: String!
+    }
     type CommentResponse {
         id: String!
         userId: String!
         payload: String!
+        replies: [CommentReply]!
         createdBy: String!
         createdAt: String!
     }
