@@ -413,6 +413,34 @@ export default {
                 return null;
             } catch (err) {}
         },
+        replyToComment: async function(_, args, { req }) {
+            const postId = args.postId;
+            const commentId = args.commentId;
+
+            const reg0 = new RegExp("<", "g");
+            const reg1 = new RegExp(">", "g");
+            const replyMessage = sanitizeHtml(args.reply).replace(reg0, "").replace(reg1, ""); // ultimate nesting cuz im lazy
+            
+            const jwtPayload = req.user;
+            if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+            try {
+                if (replyMessage != "" && replyMessage != null) {
+                    const post = await Posts.findOne({
+                        _id: postId,
+                        enabled: true,
+                    });
+
+                    if (post) {
+                        
+                    } else {
+                        return null;
+                    }
+                }
+            } catch {
+                throw new Error("Internal error. Unable to reply to comment");
+            }
+        },
         commentOnPost: async function (_, args, { req }) {
             const id_payload = args.postId;
 

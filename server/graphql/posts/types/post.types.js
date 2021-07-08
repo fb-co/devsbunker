@@ -45,6 +45,10 @@ export default gql`
         createdBy: String!
         createdAt: String!
     }
+    type CommentReplyResponse {
+        reply: String!
+        replier: String!
+    }
 
     # we dont need the author because the username is alredy in the token
     input makePostInput {
@@ -93,6 +97,7 @@ export default gql`
         savePost(postId: String!): FetchablePost
         unSavePost(postId: String!): savedPostOutput
         commentOnPost(postId: String!, comment: String!, timestamp: String!): CommentResponse
+        replyToComment(postId: String!, commentId: String!, reply: String!): CommentReplyResponse
         deletePost(postId: String!): GeneralActionStatus!
     }
 `;

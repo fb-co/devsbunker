@@ -657,6 +657,31 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    replyToComment: async function(token, postId, commentId, reply) {
+        const mutation = `
+            mutation {
+                replyToComment(postId: "${postId}", commentId: "${commentId}", reply: "${reply}") {
+                    reply
+                    replier
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
 
     savePost: async function(token, postId) {
         const mutation = `
