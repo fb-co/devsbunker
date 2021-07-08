@@ -23,7 +23,7 @@
                 
                 <p class="links_label">Links</p>
                 <div class="links_container">
-                    <Link v-for="(link, index) in projectData.links" :key="index" :link="link" class="desktop_link" />
+                    <Link v-for="(link, index) in projectData.links" :key="index" :link="link" :hoverEffect="true" class="desktop_link" />
                 </div>
 
                 <Carousel v-if="projectData.images.length > 0" class="main_carousel" :images="postImages" minWidth="100%" />
@@ -279,9 +279,6 @@ export default {
 .author_followerAmt {
     color: var(--soft-text);
 }
-.follow_btn_container {
-    background-color: red;
-}
 .desktop_link {
     display: flex;
     flex-direction: row;
@@ -293,6 +290,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
 }
 .links_label {
     margin-top: 75px;

@@ -1,24 +1,43 @@
 <template>
     <div style="position: relative;">
-        <a @mouseover="showLink()" @mouseleave="hideLink()" :href="usableLink" target="_blank" class="new_link_item">
-            <img v-if="!isGithubLink" :src="'https://api.statvoo.com/favicon/?url=' + link" class="link_item">
-            <img v-else src="@/assets/github-logo.png" class="link_item">
-        </a>
+        <div @mouseover="showLink()" @mouseleave="hideLink()" @click.stop="openConfirmation()" target="_blank" class="new_link_item">
+            <img v-if="!isGithubLink" :src="'https://api.statvoo.com/favicon/?url=' + link" class="link_item" @load="doneLoading=true">
+            <img v-else src="@/assets/github-logo.png" class="link_item" @load="doneLoading=true">
+            <LoadingGif v-if="!doneLoading" :show="true" size="50px" class="loading_gif" />
+        </div>
+
         <div v-if="hoverEffect && showLinkOnHover" class="shownLink">
             <div></div>
             <p>{{ link }}</p>
         </div>
+
+        <ConfirmationPopup 
+            ref="confirmRedirect"
+            title="Warning" 
+            msg="The intended destination is not part of this site. Proceed at your own risk."
+            :subMsg="link"
+            confirmButton="Proceed"
+            @confirm="redirect()"
+        />
     </div>
 </template>
 
 <script>
+import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
+import LoadingGif from "@/components/global/LoadingGif.vue";
+
 export default {
     data() {
         return {
             usableLink: this.link,
             isGithubLink: false,
-            showLinkOnHover: false
+            showLinkOnHover: false,
+            doneLoading: false,
         }
+    },
+    components: {
+        ConfirmationPopup,
+        LoadingGif
     },
     props: {
         link: String,
@@ -42,6 +61,13 @@ export default {
         },
         hideLink() {
             this.showLinkOnHover = false;
+        },
+        openConfirmation() {
+            this.$refs.confirmRedirect.open();
+        },
+        redirect() {
+            this.$refs.confirmRedirect.close();
+            window.open(this.usableLink, '_blank')
         }
     }
 }
@@ -67,5 +93,12 @@ export default {
         border-left: 25px solid transparent;
         border-right: 25px solid transparent;
         width: 50px;
+    }
+
+    .loading_gif {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
     }
 </style>

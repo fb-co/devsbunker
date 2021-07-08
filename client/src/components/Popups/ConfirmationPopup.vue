@@ -13,6 +13,7 @@
                 <div style="width: 50px;" />
             </div>
             <p>{{ msg }}</p>
+            <p class="sub_message">{{ subMsg }}</p>
             <div class="actions_container">
                 <button class="cancel" @click="close()">{{ cancelButton }}</button>
                 <button class="confirm" @click="close(); $emit('confirm')">{{ confirmButton }}</button>
@@ -44,6 +45,10 @@ export default {
         msg: {
             type: String,
             default: "Are you sure?"
+        },
+        subMsg: {
+            type: String,
+            default: "",
         },
         confirmButton: {
             type: String,
@@ -80,6 +85,9 @@ export default {
     background-color: var(--main-color);
     animation: slideAnimation 0.4s;
     padding: 10px;
+    text-align: center;
+    max-height: 95vh;
+    overflow: auto;
 }
 .popup_container > p {
     flex-grow: 1;
@@ -99,6 +107,10 @@ export default {
     flex-grow: 1;
     font-weight: bold;
     font-size: 18px;
+}
+.sub_message {
+    word-break: break-word;
+    padding-top: 10px !important;
 }
 .close_btn_container {
     width: 50px;

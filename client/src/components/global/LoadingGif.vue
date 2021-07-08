@@ -4,8 +4,8 @@
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
         style="margin:auto;background:none;display:block;"
-        width="100px"
-        height="100px"
+        :width="size"
+        :height="size"
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
     >
@@ -78,6 +78,10 @@ export default {
         show: {
             type: Boolean,
             default: false,
+        },
+        size: {
+            type: String,
+            default: "100px"
         }
     }
 }

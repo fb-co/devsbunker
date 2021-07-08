@@ -113,7 +113,7 @@
         <p class="post_description"><pre>{{projectData.description}}</pre></p>
         <p class="newPostTag">Links</p>
         <div class="links_container">
-            <LinkItem v-for="link in projectData.links" :key="link" :link="link" class="link_item" />
+            <Link v-for="link in projectData.links" :key="link" :link="link" class="link_item" />
         </div>
         <CarouselMobile v-if="projectData.images.length > 0" :images="postImages" />
 
@@ -130,7 +130,7 @@
 
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
-import LinkItem from "./Link.vue";
+import Link from "./Link.vue";
 import CarouselMobile from "@/components/Carousel/CarouselMobile.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 import CommentSection from "@/components/Comments/CommentSection.vue";
@@ -151,7 +151,7 @@ export default {
     },
     mixins: [ProjectCardUtils],
     components: {
-        LinkItem,
+        Link,
         CarouselMobile,
         CreateTag,
         CommentSection,
@@ -342,6 +342,7 @@ export default {
 .links_container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     width: 100%;
     height: 100px;
@@ -352,5 +353,6 @@ export default {
     display: inline-block;
     margin-left: 4%;
     margin-right: 4%;
+    margin-top: 15px;
 }
 </style>
