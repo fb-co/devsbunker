@@ -180,7 +180,10 @@
             </div>
 
             <div class="tag_container">
-                <p>Add Collaborators</p>
+                <div class="tag_header">
+                    <p class="vertical_flex_center">Add Collaborators</p>
+                    <QuestionMark style="margin-left: 20px;" @open="openInfo('contributers')" />
+                </div>
                 <div class="add_tags">
                     <CreateTag v-for="contributer in contributers" :key="contributer" :label="contributer" tagType="user" />
 
@@ -208,7 +211,10 @@
             </div>
 
             <div class="tag_container">
-                <p>Add Tags</p>
+                <div class="tag_header">
+                    <p class="vertical_flex_center">Add Tags</p>
+                    <QuestionMark @open="openInfo('tags')" style="margin-left: 20px;"  />
+                </div>
                 <div class="add_tags">
                     <CreateTag v-for="tag in tags" :key="tag" :label="tag" tagType="lang" />
 
@@ -236,7 +242,10 @@
             </div>
 
             <div class="tag_container">
-                <p style="margin-bottom: 25px">Add Links</p>
+                <div class="tag_header">
+                    <p class="vertical_flex_center">Add Links</p>
+                    <QuestionMark style="margin-left: 20px;" @open="$refs.links_info.open()" />
+                </div>
                 <div class="link">
                     <LinkBlock v-for="link in links" :key="link" :link="link" />
                     <!--
@@ -291,6 +300,11 @@
             inputPlaceholder="Paste URL..."
             style="position: fixed"
         />
+
+        <!-- Informative Popups -->
+        <InformativePopupBare ref="tag_info" />
+        <InformativePopupBare ref="contributer_info" />
+        <InformativePopupBare ref="links_info" />
     </div>
 </template>
 
@@ -300,6 +314,8 @@ import CreateTag from "./CreateTag";
 import LinkBlock from "./LinkBlock";
 import NewTagPopup from "./NewTagPopUp";
 import LoadingGif from "@/components/global/LoadingGif.vue";
+import InformativePopupBare from "@/components/Popups/InformativePopupBare.vue";
+import QuestionMark from "@/components/Popups/QuestionMark.vue";
 import GraphQLService from "@/services/graphql.service";
 import FileUploadService from "@/services/fileUpload.service.js";
 import Languages from "../../templates/Languages";
@@ -323,7 +339,9 @@ export default {
         CreateTag,
         LinkBlock,
         NewTagPopup,
-        LoadingGif
+        LoadingGif,
+        InformativePopupBare,
+        QuestionMark,
     },
     mounted() {
         this.$refs.postTitle.focusInput();
@@ -336,6 +354,19 @@ export default {
         }
     },
     methods: {
+        openInfo(type) {
+            switch (type) {
+                case "tags":
+                    this.$refs.tag_info.open()
+                    break;
+                case "contributers":
+                    this.$refs.contributer_info.open();
+                    break;
+                case "links":
+                    this.$refs.links_info.open();
+                    break;
+            }
+        },
         close() {
             this.$parent.close();
         },
@@ -583,12 +614,16 @@ export default {
     margin: 0px auto 50px auto;
     padding: 5px;
 }
-.tag_container > p {
+.tag_container p {
     font-size: 16px;
     font-weight: bold;
     text-align: left;
     color: var(--main-font-color);
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+}
+.tag_header {
+    display: flex;
+    height: auto;
 }
 .add_tags {
     display: flex;
