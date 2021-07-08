@@ -32,7 +32,7 @@
     -   [x] Notifications page should show 'no new notifications when there are none'
     -   [x] when saving new options
 
--   [ ] Add informative popup to new post query tags (contributers, links, tags, etc.)
+-   [x] Add informative popup to new post query tags (contributers, links, tags, etc.)
 
 -   [x] switch to text area for post description instead of div with contenteditable
 
