@@ -109,7 +109,7 @@
                 </svg>
             </div>
         </div>
-        <MobileMoreOptions ref="more_options_menu">
+        <MobileMoreOptions ref="more_options_menu" @mousedown.stop="">
             <div @mousedown.stop="copyPostLink()">
                 <div class="vertical_flex_center">
                     <svg
@@ -135,7 +135,7 @@
                 </div>
                 <p>Share</p>
             </div>
-            <div @mousedown.stop="deletePost()">
+            <div @click.stop="openDeleteConfirmation()">
                 <div class="vertical_flex_center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
