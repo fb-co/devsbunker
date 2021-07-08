@@ -18,7 +18,18 @@
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                         <path d="M18 6v6a3 3 0 0 1 -3 3h-10l4 -4m0 8l-4 -4" />
                     </svg>
-                    <p class="vertical_flex_center">Reply</p>
+                    <p @click="createReply()" class="vertical_flex_center">Reply</p>
+                </div>
+            </div>
+            <div class="reply_input" ref="reply_field_container">
+                <ProfilePicture :username="this.$store.getters.username" :wrapperSize="mobile ? '30px' : '40px'" />
+                <div class="input_container">
+                    <input placeholder="Type your reply..." ref="reply_field">
+                    <div class="reply_line" />
+                    <div class="reply_actions">
+                        <button @click="cancelReply()" class="reply_cancel">Cancel</button>
+                        <button @click="postReply()" class="reply_confirm">Reply</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,10 +60,32 @@ export default {
     components: {
         ProfilePicture,
     },
+    methods: {
+        createReply() {
+            this.$refs.reply_field_container.style.display = "flex";
+            this.$refs.reply_field.focus();
+        },
+        cancelReply() {
+            this.$refs.reply_field_container.style.display = "none";
+            this.$refs.reply_field.value = "";
+        },
+        postReply() {
+            // add code to send reply to server here
+        }
+    },
 };
 </script>
 
 <style scoped>
+@keyframes lineSlide {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
 .comment_container {
     display: flex;
     flex-direction: row;
@@ -112,9 +145,6 @@ export default {
     padding-left: 15px;
     font-size: 17px;
 }
-.comment_container:hover .more_options {
-    visibility: visible;
-}
 .more_options {
     display: flex;
     flex-direction: row;
@@ -122,17 +152,15 @@ export default {
     margin-top: 15px;
     margin-bottom: 10px;
 }
-.more_options_desktop {
-    visibility: hidden;
-}
 .more_option {
+    position: relative;
     display: flex;
     border-radius: 3px;
     padding: 5px;
     cursor: pointer;
 }
 .more_option:hover {
-    background-color: var(--secondary-color);
+    font-weight: bold;
 }
 .more_option svg {
     margin-left: 15px;
@@ -142,5 +170,59 @@ export default {
     margin-right: 15px;
     font-size: 14px;
     color: var(--soft-text);
+}
+.reply_input {
+    display: none;
+}
+.reply_input input {
+    background-color: transparent;
+    border: none;
+    color: var(--min-font-color);
+    flex-grow: 1;
+    font-size: 15px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-bottom: 3px;
+}
+.reply_input input:focus {
+    outline: none;
+}
+.input_container {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+}
+
+.reply_line {
+    height: 1.5px;
+    background-color: white;
+    width: 100%;
+    animation: lineSlide 0.5s;
+    border-radius: 5px;
+}
+
+.reply_actions {
+    text-align: right;
+}
+.reply_actions button {
+    padding: 5px 10px 5px 10px;
+    margin-left: 10px;
+    margin-top: 5px;
+    border: none;
+    color: var(--main-font-color);
+    cursor: pointer;
+}
+.reply_cancel {
+    background-color: var(--error-red);
+}
+.reply_cancel:hover {
+    box-shadow: 0px 0px 10px var(--error-red);
+}
+.reply_confirm {
+    background-color: var(--main-accent);
+}
+.reply_confirm:hover {
+    box-shadow: 0px 0px 10px var(--main-accent);
 }
 </style>
