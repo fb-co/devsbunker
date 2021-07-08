@@ -260,101 +260,100 @@ export default {
             const jwtPayload = req.user;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
-            try {
-                // NOTE: here we avoid performing the populate op on comments because we dont need comments
-                const post = await Posts.findOne({ _id: id_payload, enabled: true });
+            // NOTE: here we avoid performing the populate op on comments because we dont need comments
+            const post = await Posts.findOne({ _id: id_payload, enabled: true });
 
-                if (post) {
-                    if (post.likes.includes(jwtPayload.username)) {
-                        throw new Error("You have already liked this post");
-                    } else {
-                        post.likes.push(jwtPayload.username);
-                        post.likeAmt = post.likes.length;
+            if (post) {
+                if (post.likes.includes(jwtPayload.username)) {
+                    throw new Error("You have already liked this post");
+                } else {
+                    post.likes.push(jwtPayload.username);
+                    post.likeAmt = post.likes.length;
 
-                        await post.save();
+                    await post.save();
 
-                        // save post id in users db entry as "liked posts"
-                        const user = await User.findOne({
-                            username: jwtPayload.username,
+                    // save post id in users db entry as "liked posts"
+                    const user = await User.findOne({
+                        username: jwtPayload.username,
+                        enabled: true,
+                    });
+
+                    if (user) {
+                        user.liked_posts.push(post.id);
+                    }
+
+                    await user.save();
+
+                    let userToNotify;
+
+                    // only notify the user if the post is not theirs
+                    if (jwtPayload.username != post.author) {
+                        userToNotify = await User.findOne({
+                            username: post.author,
                             enabled: true,
                         });
+                    }
 
-                        if (user) {
-                            user.liked_posts.push(post.id);
-                        }
+                    if (userToNotify) {
+                        // only notify the user if there is not already an identical notification.
+                        // this is to prevent people from spamming notifications & duplicate key error
 
-                        await user.save();
+                        const notification = {
+                            read: false,
+                            sender: jwtPayload.username,
+                            message: `liked your post!`,
+                            type: "like",
+                            target: post.title,
+                            timestamp: new Date(),
+                        };
 
-                        let userToNotify;
+                        let shouldNotify = true;
 
-                        // only notify the user if the post is not theirs
-                        if (jwtPayload.username != post.author) {
-                            userToNotify = await User.findOne({
-                                username: post.author,
-                                enabled: true,
-                            });
-                        }
+                        // the forEach loop was being stoopid, so im using a regular loop
+                        for (let i = 0; i < userToNotify.notifications.length; i++) {
+                            const oldNotification = userToNotify.notifications[i];
 
-                        if (userToNotify) {
-                            // only notify the user if there is not already an identical notification.
-                            // this is to prevent people from spamming notifications & duplicate key error
-
-                            const notification = {
-                                read: false,
-                                sender: jwtPayload.username,
-                                message: `liked your post!`,
-                                type: "like",
-                                target: post.title,
-                                timestamp: new Date(),
-                            };
-
-                            let shouldNotify = true;
-
-                            // the forEach loop was being stoopid, so im using a regular loop
-                            for (let i = 0; i < userToNotify.notifications.length; i++) {
-                                const oldNotification = userToNotify.notifications[i];
-
-                                if (
-                                    oldNotification.sender == jwtPayload.username &&
-                                    oldNotification.message == notification.message &&
-                                    oldNotification.target == notification.target
-                                ) {
-                                    shouldNotify = false;
-                                }
-                            }
-                            if (userToNotify == jwtPayload.username) {
+                            if (
+                                oldNotification.sender == jwtPayload.username &&
+                                oldNotification.message == notification.message &&
+                                oldNotification.target == notification.target
+                            ) {
                                 shouldNotify = false;
                             }
-
-                            if (shouldNotify) {
-                                userToNotify.notifications.unshift(notification);
-                            }
-                            await userToNotify.save();
+                        }
+                        if (userToNotify == jwtPayload.username) {
+                            shouldNotify = false;
                         }
 
-                        return {
-                            id: post._id,
-                            title: post.title,
-                            author: post.author,
-                            description: post.description,
-                            thumbnail: post.thumbnail,
-                            images: post.images,
-                            links: post.links,
-                            collaborators: post.collaborators,
-                            tags: post.tags,
-                            likes: post.likes,
-                            likeAmt: post.likes.length,
-                            isSaved: user.saved_posts.includes(jwtPayload.username),
-                            isLiked: true,
-                            price: post.price,
-                        };
+                        if (shouldNotify) {
+                            userToNotify.notifications.unshift(notification);
+                        }
+                        try {
+                            await userToNotify.save();
+                        } catch {
+                            throw new Error("Internal error: Unable to save to database");
+                        }
                     }
-                } else {
-                    return null;
+
+                    return {
+                        id: post._id,
+                        title: post.title,
+                        author: post.author,
+                        description: post.description,
+                        thumbnail: post.thumbnail,
+                        images: post.images,
+                        links: post.links,
+                        collaborators: post.collaborators,
+                        tags: post.tags,
+                        likes: post.likes,
+                        likeAmt: post.likes.length,
+                        isSaved: user.saved_posts.includes(jwtPayload.username),
+                        isLiked: true,
+                        price: post.price,
+                    };
                 }
-            } catch (err) {
-                if (/Cast/.test(err.message)) throw new Error("Couldn't find the post you were looking for");
-                throw err;
+            } else {
+                throw new Error("Unable to find post from given ID");
             }
         },
         unlikePost: async function (_, args, { req }) {
@@ -409,9 +408,9 @@ export default {
                         }
                     }
                 }
-
-                return null;
-            } catch (err) {}
+            } catch (err) {
+                throw new Error(err);
+            }
         },
         replyToComment: async function (_, args, { req }) {
             const commentId = args.commentId;
@@ -508,13 +507,13 @@ export default {
                                 createdAt: comment.createdAt,
                             };
                         } else {
-                            return null;
+                            throw new Error("Unable to find post from given ID");
                         }
                     } else {
-                        return null;
+                        throw new Error("Unable to find user from given username");
                     }
                 } else {
-                    return null;
+                    throw new Error("Comment is null");
                 }
             } catch {
                 throw new Error("Internal error. Unable to comment on post");
@@ -558,11 +557,11 @@ export default {
                                 price: post.price,
                             };
                         } else {
-                            return null;
+                            throw new Error("User saved posts list already includes the given post");
                         }
                     }
                 } else {
-                    return null;
+                    throw new Error("Unable to find post from given ID");
                 }
             } catch {
                 throw new Error("Internal error. Unable to save post");
@@ -597,7 +596,7 @@ export default {
                         success: true,
                     }; // only returns whether or not it worked
                 } else {
-                    return null;
+                    throw new Error("Unable to find user from provided username");
                 }
             } catch {
                 throw new Error("Internal error. Unable to unsave post");
