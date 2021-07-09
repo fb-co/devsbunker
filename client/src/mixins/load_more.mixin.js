@@ -34,7 +34,7 @@ const LoadMore = {
             const alreadyLoadedPosts = this.$store.getters.getPosts(
                 filter || this.sortingType, 
                 this.queryType, 
-                this.queryType==='all' ? undefined : this.otherData.foreignUserToFilter || this.$store.getters.username,
+                this.otherData,
             );
             
             if (alreadyLoadedPosts) {
@@ -58,7 +58,7 @@ const LoadMore = {
                         filter: filter || this.sortingType,
                         queryType: this.queryType,
                         fetchedAll: this.fetchedAll,
-                        authorAffiliation: undefined,
+                        otherData: this.otherData,
                         posts: this.posts,
                     });
                 } else if (this.queryType === "projects") {
@@ -76,7 +76,7 @@ const LoadMore = {
                         filter: filter || this.sortingType,
                         queryType: this.queryType,
                         fetchedAll: this.fetchedAll,
-                        authorAffiliation: this.otherData.foreignUserToFilter || this.$store.getters.username,
+                        otherData: this.otherData,
                         posts: this.posts,
                     });
                 } else if (this.queryType === "saved") {
@@ -93,7 +93,7 @@ const LoadMore = {
                         filter: filter || this.sortingType,
                         queryType: this.queryType,
                         fetchedAll: this.fetchedAll,
-                        authorAffiliation: this.otherData.foreignUserToFilter || this.$store.getters.username,
+                        otherData: this.otherData,
                         posts: this.posts,
                     });
                 }
@@ -116,7 +116,7 @@ const LoadMore = {
                     filter: filter || this.sortingType,
                     queryType: this.queryType,
                     fetchedAll: this.fetchedAll,
-                    authorAffiliation: undefined,
+                    otherData: this.otherData,
                     posts: this.posts,
                 });
             } else if (this.queryType === "projects") {
@@ -134,7 +134,7 @@ const LoadMore = {
                     filter: filter || this.sortingType,
                     queryType: this.queryType,
                     fetchedAll: this.fetchedAll,
-                    authorAffiliation: this.otherData.foreignUserToFilter || this.$store.getters.username,
+                    otherData: this.otherData,
                     posts: this.posts,
                 });
             } else if (this.queryType === "saved") {
@@ -151,13 +151,12 @@ const LoadMore = {
                     filter: filter || this.sortingType,
                     queryType: this.queryType,
                     fetchedAll: this.fetchedAll,
-                    authorAffiliation: this.otherData.foreignUserToFilter || this.$store.getters.username,
+                    otherData: this.otherData,
                     posts: this.posts,
                 });
             }
         },
         async updateFeedAfterNewPost(post) {
-            console.log(post); 
             this.posts.unshift(post);
         },
         async updateFilterDropdown(value) {

@@ -255,8 +255,7 @@ export default {
         projectData: function(newVal) {
             this.thumbnail_link = newVal.thumbnail || "@/assets/project_img_placeholder.png";
         },
-        highlight_phrase: function(newVal) {
-            console.log(newVal);
+        highlight_phrase: function() {
             this.highlightPhrases();
         },
     },

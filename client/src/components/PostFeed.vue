@@ -8,7 +8,7 @@
                 @loading="loading = true"
                 @doneLoading="loading = false"
                 :sortingType="rootComponent.sortingType"
-                :userToFilter="rootComponent.otherData.foreignUserToFilter"
+                :otherData="rootComponent.otherData"
                 :filter="rootComponent.queryType"
                 :moreOptions="true"
                 width="50%"

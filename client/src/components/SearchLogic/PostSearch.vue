@@ -112,7 +112,7 @@ export default {
             selectedDocument: -1,
             queryThresh: 1000, // amount of time in between query queue times
             queryQueued: false, // flag to make sure queries are not spammed
-            userToFilter: this.userToFilterProp || this.$store.getters.username,
+            userToFilter: this.otherData.foreignUserToFilter || this.$store.getters.username,
 
             //canClose: false // Important because you need to make sure when you blur the input that the click binding on the options can be triggered
         }
@@ -127,7 +127,7 @@ export default {
             type: String,
             default: "none"
         },
-        userToFilterProp: String,
+        otherData: Object,
         sortingType: {
             type: String,
             default: "Newest"
@@ -168,27 +168,52 @@ export default {
                     setTimeout(() => {
                         if (this.$refs.general_input.value != "") {
                             const initialSearchPhrase = this.$refs.general_input.value;
-                            GraphQLService.fetchPostsByPartial(
-                                this.$refs.general_input.value, 
-                                this.filter, 
-                                this.userToFilter, 
-                                this.sortingType, 
-                                this.documents.length > 0 ? this.documents[this.documents.length-1].id : 0,  // last post id
-                                this.documents.length > 0 ? this.documents[this.documents.length-1].likeAmt : -1, // last unique field (only for most popular queries)
-                                this.$store.getters.accessToken
-                            ).then((res) => {
-                                this.$emit("highlightPhrases", initialSearchPhrase);
-
-                                this.fetchedAllResults = res.data.partial_post.fetchedAll;
-                                this.documents = res.data.partial_post.posts;
+                            let otherDataCopy = Object.assign({}, this.otherData);
+                            otherDataCopy.searchPhrase  = initialSearchPhrase;
+                            const postsInCache = this.$store.getters.getPosts(this.sortingType, this.filter, otherDataCopy);
+                        
+                            if (postsInCache) {
+                                setTimeout(() => { this.$emit("highlightPhrases", initialSearchPhrase); }, 100); // need small wait for cards to render
+                                this.documents = postsInCache.posts;
+                                this.fetchedAllResults = postsInCache.fetchedAll;
                                 this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
-                            });
+                            } else {
+                                GraphQLService.fetchPostsByPartial(
+                                    this.$refs.general_input.value, 
+                                    this.filter, 
+                                    this.userToFilter, 
+                                    this.sortingType, 
+                                    this.documents.length > 0 ? this.documents[this.documents.length-1].id : 0,  // last post id
+                                    this.documents.length > 0 ? this.documents[this.documents.length-1].likeAmt : -1, // last unique field (only for most popular queries)
+                                    this.$store.getters.accessToken
+                                ).then((res) => {
+                                    this.$emit("highlightPhrases", initialSearchPhrase);
+
+                                    this.fetchedAllResults = res.data.partial_post.fetchedAll;
+                                    this.documents = res.data.partial_post.posts;
+                                    this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
+
+                                    // put results in the cache
+
+                                    let otherDataCopy = Object.assign({}, this.otherData);
+                                    otherDataCopy.searchPhrase  = initialSearchPhrase;
+
+                                    this.$store.dispatch("addPosts", {
+                                        filter: this.sortingType,
+                                        queryType: this.filter,
+                                        fetchedAll: this.fetchedAllResults,
+                                        otherData: otherDataCopy,
+                                        posts: this.documents,
+                                    });
+                                });
+                            }
                         }
                         this.queryQueued = false;
                         this.$emit("doneLoading");
                     }, this.queryThresh);
                 }
             } else {
+                this.$emit("highlightPhrases", ""); //reset the search phrase
                 this.$parent.updateSearchComponent([], true, true); // update the parent component to go back to original feed (find the function to understand parms)
                 this.documents = [];
             }
@@ -215,6 +240,8 @@ export default {
                     this.documents = res.data.partial_post.posts;
                     this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
                 });
+            } else {
+                this.$emit("highlightPhrases", ""); // reset the search phrase
             }
         },
         async loadMoreResults() {
