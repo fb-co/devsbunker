@@ -4,6 +4,33 @@
             <LeftContent class="left_content" />
             <div class="left_content_placeholder" />
             <div class="center_content">
+                <div class="actions_container">
+                    <div class="back_arrow_container">
+                        <svg
+                            @click="back()"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-arrow-left"
+                            width="30"
+                            height="30"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.2"
+                            stroke="var(--main-font-color)"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <line x1="5" y1="12" x2="11" y2="18" />
+                            <line x1="5" y1="12" x2="11" y2="6" />
+                        </svg>
+                    </div>
+                    <div class="placeholder" />
+                    <div class="post_actions_container">
+                    
+                    </div>
+                </div>
+
                 <div class="tags_container">
                     <CreateTag v-for="tag in projectData.tags" :key="tag" :label="tag" tagType="lang" />
                 </div>
@@ -165,6 +192,19 @@ export default {
     min-width: 150px;
     max-width: 250px;
     width: 20%;
+}
+
+.actions_container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50px;
+    background-color: red;
+}
+.post_actions_container {
+    width: 150px;
+    height: 100%;
+    background-color: blue;
 }
 
 #title {
