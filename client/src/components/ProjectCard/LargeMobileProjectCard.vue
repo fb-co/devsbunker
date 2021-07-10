@@ -190,6 +190,7 @@ export default {
     props: {
         projectData: Object,
         highlight_phrase: String,
+        search_phrase: String,
     },
     created() {
         if (this.projectData.thumbnail === "@/assets/project_img_placeholder.png") {

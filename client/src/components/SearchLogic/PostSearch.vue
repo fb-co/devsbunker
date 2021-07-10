@@ -149,6 +149,11 @@ export default {
         InformativePopup
     },
     methods: {
+        // fills in input with term
+        forceSearchTerm(term) {
+            this.$refs.general_input.value = term;
+            this.queryData();
+        },
         // needs to be a function because safari has tabindex disabled by default
         openMoreMenu() {
             this.moreOptionsMenu = true;

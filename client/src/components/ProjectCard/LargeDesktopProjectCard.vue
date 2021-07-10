@@ -4,7 +4,7 @@
         falls beneath the text and icons. As a result, if you only binded it to the overlay, the icons would be hidden
         every time you hovered over the text container or the icons parent itself
     -->
-    <div v-if="!deleted" class="project_box" ref="image_div" @click="$router.push({ path: `/post/${projectData.id}` })" :class="{ default_image: isDefault }">
+    <div v-if="!deleted" class="project_box" ref="image_div" @click="routeToPost()" :class="{ default_image: isDefault }">
         <div @click.stop="" class="top_text_container" ref="icons" @mouseover="showIcons()" @mouseleave="hideIcons()">
             <!--Not filled icon -->
             <div class="icon_container">
@@ -190,6 +190,7 @@ export default {
     props: {
         projectData: Object,
         highlight_phrase: String,
+        search_phrase: String,
     },
     created() {
         if (this.projectData.thumbnail === "@/assets/project_img_placeholder.png") {
@@ -207,6 +208,13 @@ export default {
         ConfirmationPopup
     },
     methods: {
+        routeToPost() {
+            // cache the search phrase so it can outo fill it when you come back
+            if (this.search_phrase) {
+                this.$store.dispatch("cacheSearchTerm", this.search_phrase);
+            }
+            this.$router.push({ path: `/post/${this.projectData.id}` });
+        },
         showIcons() {
             this.$refs.icons.style.display = "flex";
         },

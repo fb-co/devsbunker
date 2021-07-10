@@ -58,6 +58,7 @@
                             :key="searchResult.id"
                             :projectData="searchResult"
                             :highlight_phrase="searchPhrase"
+                            :search_phrase="searchPhrase"
                         />
                     </div>
                     <div v-if="desktop && feedTheme === 'Simple'" class="desktop_post_feed">
@@ -67,6 +68,7 @@
                             :key="searchResult.id"
                             :projectData="searchResult"
                             :highlight_phrase="searchPhrase"
+                            :search_phrase="searchPhrase"
                         />
                     </div>
                     <div v-if="desktop && feedTheme === 'Descriptive'" class="desktop_post_feed">
@@ -132,6 +134,11 @@ export default {
         DetailedDesktopProjCard,
     },
     mounted() {
+        if (this.$store.getters.postSearchData.returnToTerm) {
+            this.$refs.post_search.forceSearchTerm(this.$store.getters.postSearchData.searchTerm);
+            this.$store.dispatch("clearSearchTerm");
+        }
+
         // don't need to destroy on destroyed() because its attached to an element and will get removed anyway
         this.$refs.scrollable_container.addEventListener("scroll", () => {
             this.$refs.post_search.closeMoreMenu();

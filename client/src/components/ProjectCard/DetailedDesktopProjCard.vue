@@ -183,6 +183,7 @@ export default {
     props: {
         projectData: Object,
         highlight_phrase: String,
+        search_phrase: String,
     },
     mixins: [ProjectCardUtils],
     components: {
@@ -196,9 +197,6 @@ export default {
                 "--card-color": Languages.getColor(this.projectData.tags[0]) || "var(--main-font-color)",
             };
         },
-    },
-    created() {
-        console.log(this.projectData);
     },
     methods: {
         openMoreOptions() {
