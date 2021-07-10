@@ -72,7 +72,7 @@
                 <svg
                     v-if="hidePassword"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-eye selectable_icon"
+                    class="icon icon-tabler icon-tabler-eye selectable_icon fix_random_highlights"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -92,7 +92,7 @@
                 <svg
                     v-if="!hidePassword"
                     @click="togglePassword()"
-                    class="selectable_icon"
+                    class="selectable_icon fix_random_highlights"
                     xmlns:dc="http://purl.org/dc/elements/1.1/"
                     xmlns:cc="http://creativecommons.org/ns#"
                     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"

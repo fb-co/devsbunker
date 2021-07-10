@@ -4,7 +4,7 @@
             <LeftContent class="left_content" />
             <div class="left_content_placeholder" />
             <div class="center_content">
-                <div class="actions_container">
+                <div class="header_actions">
                     <div class="back_arrow_container">
                         <svg
                             @click="back()"
@@ -25,9 +25,73 @@
                             <line x1="5" y1="12" x2="11" y2="6" />
                         </svg>
                     </div>
-                    <div class="placeholder" />
-                    <div class="post_actions_container">
-                    
+
+                    <!-- Placeholder -->
+                    <div style="flex-grow: 1"></div>
+
+                    <div class="actions_container fix_random_highlights">
+                        <div class="save_post_container">
+                            <svg
+                                @click="savePost(projectData.id)"
+                                v-if="!projectData.isSaved"
+                                width="35"
+                                height="35"
+                                stroke-width="0.7"
+                                stroke="var(--ssoft-text)"
+                                viewBox="0 0 16 16"
+                                class="bi bi-bookmark save_btn"
+                                fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg"
+                                
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
+                                />
+                            </svg>
+                            <svg
+                                @click="unsavePost(projectData.id)"
+                                v-else
+                                width="35"
+                                height="35"
+                                stroke-width="0.7"
+                                stroke="var(--ssoft-text)"
+                                viewBox="0 0 16 16"
+                                class="bi bi-bookmark-fill save_btn"
+                                fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg"
+                                
+                            >
+                                <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5V2z" />
+                            </svg>
+                        </div>
+                        <svg
+                            v-if="!projectData.isLiked"
+                            @click="likePost(projectData.id)"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 16 16"
+                            class="bi bi-heart"
+                            fill="#eb4034"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
+                            />
+                        </svg>
+                        <svg 
+                            v-else 
+                            @click="unlikePost(projectData.id)" 
+                            width="40" 
+                            height="40" 
+                            viewBox="0 0 16 16"
+                            class="bi bi-heart-fill" 
+                            fill="#eb4034" 
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                        </svg>
                     </div>
                 </div>
 
@@ -37,6 +101,20 @@
 
                 <!--<h3 id="tags">{{ projectData.tags }}</h3>-->
                 <h1 id="title">{{ projectData.title }}</h1>
+
+                <div class="likeAmt_container">
+                    <svg   
+                            width="30" 
+                            height="30" 
+                            viewBox="0 0 16 16"
+                            class="bi bi-heart-fill" 
+                            fill="#eb4034" 
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                        </svg>
+                    <p class="vertical_flex_center">{{ projectData.likeAmt }}</p>
+                </div>
 
                 <AuthorDisplay v-if="authorData" :username="projectData.author" :followerAmt="authorData.followerAmt" :isFollowing="authorData.isFollowing" @followAction="followAuthor" />
 
@@ -82,6 +160,7 @@ import RightContent from "@/components/Home/desktop/RightContent.vue";
 
 import CommonUtils from "@/utils/common_utils.js";
 import UserUtils from "@/mixins/user_card.mixin.js";
+import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 
 export default {
     props: {
@@ -127,8 +206,11 @@ export default {
             }
         }
     },
-    mixins: [UserUtils],
+    mixins: [UserUtils, ProjectCardUtils],
     methods: {
+        back() {
+            this.$router.go(-1);
+        },
         renderUsername(username, maxLen) {
             return CommonUtils.renderUsername(username, maxLen);
         },
@@ -194,23 +276,65 @@ export default {
     width: 20%;
 }
 
+.header_actions {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 40px;
+    padding-right: 10px;
+    max-width: 1200px;
+}
+.post_header_details {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    color: #fff;
+}
+
+.save_post_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 20px;
+}
+.back_arrow_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: var(--secondary-color);
+    box-shadow: 0px 0px 1px var(--drop-shadow);
+}
+.back_arrow_container:hover {
+    box-shadow: 0px 0px 5px var(--drop-shadow);
+}
+.back_arrow_container > svg {
+    cursor: pointer;
+    margin: 0 auto;
+}
 .actions_container {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    height: 50px;
-    background-color: red;
-}
-.post_actions_container {
-    width: 150px;
-    height: 100%;
-    background-color: blue;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+    box-shadow: 0px 0px 5px var(--drop-shadow);
 }
 
 #title {
     font-size: 45px;
     font-weight: 700;
     word-wrap: break-word;
+}
+
+.likeAmt_container {
+    margin-top: 15px;
+    display: flex;
+}
+.likeAmt_container p {
+    padding-left: 15px;
 }
 
 #author span {
@@ -302,7 +426,6 @@ export default {
     border: 1px solid transparent;
     color: var(--main-font-color);
     text-decoration: none;
-    background-color: blue;
 }
 .author_info_card:hover {
     cursor: pointer;
@@ -314,7 +437,6 @@ export default {
     display: flex;
     flex-direction: column;
     margin-left: 25px;
-    background-color: green;
 }
 .author_followerAmt {
     color: var(--soft-text);

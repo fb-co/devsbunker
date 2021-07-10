@@ -1,5 +1,5 @@
 <template>
-    <div v-on:click="switchTheme()" id="theme-switcher-container">
+    <div v-on:click="switchTheme()" id="theme-switcher-container" class="fix_random_highlights">
         <svg v-if="!darkTheme" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun theme-switcher-icon" :width="width" :height="height" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" />
             <circle cx="12" cy="12" r="4" />

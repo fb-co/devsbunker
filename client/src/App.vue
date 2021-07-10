@@ -160,6 +160,9 @@ body {
     margin: 0 auto;
     border-radius: 5px;
 }
+.fix_random_highlights {
+    user-select: none;
+}
 /* conditionally add this to pages since mobile does not support this type of calculation (but also does not need it) */
 .calculated_height {
     max-height: calc(100vh - var(--header-height) - var(--footer-height));
