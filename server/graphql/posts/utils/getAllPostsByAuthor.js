@@ -13,7 +13,7 @@ export default function getAllPostsByAuthor(postAuthor) {
                 }
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
                 reject(err);
             });
     });

@@ -2,7 +2,7 @@
     <div class="signup">
         <div class="signupForm" v-if="!submitted">
             <p v-if="!errMessage" class="cardTitle">Sign-up</p>
-            <p v-if="errMessage" class="cardTitle err">{{ errMessage}}</p>
+            <p v-if="errMessage" class="cardTitle err">{{ errMessage }}</p>
 
             <form name="signup" v-on:submit.prevent="submitForm">
                 <svg
@@ -23,7 +23,7 @@
                     <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                 </svg>
                 <input
-                    @click="errMessage ? errMessage = '' : {}"
+                    @click="errMessage ? (errMessage = '') : {}"
                     ref="username_field"
                     class="form_field"
                     type="text"
@@ -36,7 +36,7 @@
                     required
                 />
 
-                <div v-bind:class="{errLine: !/match/.test(errMessage) && errMessage}" class="bottomLine-1 form_field_line"></div>
+                <div v-bind:class="{ errLine: !/match/.test(errMessage) && errMessage }" class="bottomLine-1 form_field_line"></div>
 
                 <svg
                     id="emailIcon"
@@ -57,7 +57,7 @@
                 </svg>
 
                 <input
-                    @click="errMessage ? errMessage = '' : {}"
+                    @click="errMessage ? (errMessage = '') : {}"
                     class="form_field"
                     type="email"
                     id="email"
@@ -68,7 +68,7 @@
                     placeholder="Email"
                     required
                 />
-                <div v-bind:class="{errLine: !/match/.test(errMessage) && errMessage}" class="bottomLine-2 form_field_line"></div>
+                <div v-bind:class="{ errLine: !/match/.test(errMessage) && errMessage }" class="bottomLine-2 form_field_line"></div>
 
                 <svg
                     id="passIcon"
@@ -89,9 +89,18 @@
                     <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
                 </svg>
 
-                <input @click="errMessage ? errMessage = '' : {}" class="form_field" type="password" id="password" name="password" v-model="password" placeholder="Password" required />
+                <input
+                    @click="errMessage ? (errMessage = '') : {}"
+                    class="form_field"
+                    type="password"
+                    id="password"
+                    name="password"
+                    v-model="password"
+                    placeholder="Password"
+                    required
+                />
 
-                <div v-bind:class="{errLine: errMessage}" class="bottomLine-3 form_field_line"></div>
+                <div v-bind:class="{ errLine: errMessage }" class="bottomLine-3 form_field_line"></div>
 
                 <svg
                     id="passIcon2"
@@ -113,7 +122,7 @@
                 </svg>
 
                 <input
-                    @click="errMessage ? errMessage = '' : {}"
+                    @click="errMessage ? (errMessage = '') : {}"
                     class="form_field"
                     type="password"
                     id="confirm-password"
@@ -123,7 +132,7 @@
                     required
                 />
 
-                <div v-bind:class="{errLine: errMessage}" class="bottomLine-4 form_field_line"></div>
+                <div v-bind:class="{ errLine: errMessage }" class="bottomLine-4 form_field_line"></div>
 
                 <input type="submit" value="Sign-up" />
             </form>
@@ -282,24 +291,15 @@ export default {
                 this.errMessage = "Passwords don't match!";
             } else {
                 // we validate even client-side (same thing as server-side)
-                const valid = UserService.validateCreds(
-                    this.username,
-                    this.email,
-                    this.password
-                );
+                const valid = UserService.validateCreds(this.username, this.email, this.password);
 
                 if (valid) {
                     this.submitted = true;
 
-                    const response = await GraphQLService.signupUser(
-                        this.username,
-                        this.email,
-                        this.password
-                    );
+                    const response = await GraphQLService.signupUser(this.username, this.email, this.password);
 
                     if (response.errors) {
                         const message = response.errors[0].message;
-                        console.log(message);
 
                         if (/Credentials/.test(message)) {
                             this.errMessage = "Credentials are already taken.";
@@ -318,8 +318,7 @@ export default {
                                 this.submitted = false;
                             }, 1500);
                         } else {
-                            this.errMessage =
-                                "Internal error. Please try again later.";
+                            this.errMessage = "Internal error. Please try again later.";
                             setTimeout(() => {
                                 this.submitted = false;
                             }, 1500);
@@ -334,10 +333,7 @@ export default {
                             }, 1500);
                         } else {
                             this.errMessage = "";
-                            this.$store.commit(
-                                "refreshAccessToken",
-                                result.accessToken
-                            );
+                            this.$store.commit("refreshAccessToken", result.accessToken);
                             this.$store.commit("changeLoggedInState", true);
                             this.$store.commit("changeUsername", this.username);
                             this.$router.push("/");

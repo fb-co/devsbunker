@@ -29,7 +29,7 @@ export default async function getSavedPosts(author, loadAmt, lastPostId, filter,
                 }
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
                 reject(err);
             });
     });

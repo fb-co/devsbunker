@@ -54,7 +54,7 @@ export default function loadMoreModule(sortingType, lastPostId, lastUniqueField,
                 }
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
                 reject(err);
             });
     });

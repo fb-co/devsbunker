@@ -109,9 +109,7 @@ export default {
                                         this.documents = res.data.partialUser;
                                     });
                                 } else if (this.searchFor === "posts") {
-                                    console.log("step1");
                                     GraphQLService.fetchPostByPartial(this.$refs.general_input.value).then((res) => {
-                                        console.log(res);
                                         this.documents = res.data.partial_post;
                                     });
                                 }

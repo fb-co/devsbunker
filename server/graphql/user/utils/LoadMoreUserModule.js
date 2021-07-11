@@ -3,9 +3,9 @@ import User from "../../../components/user/user.model.js"; // the db
 export default function LoadMoreUserModule(sortingType, lastUserId, lastUniqueField, loadAmt, customQueries) {
     return new Promise((resolve) => {
         let sortFilter = { _id: -1 };
-        
+
         let postQuery = {
-            $and: customQueries
+            $and: customQueries,
         };
 
         if (sortingType === "Most Popular") {
@@ -33,7 +33,7 @@ export default function LoadMoreUserModule(sortingType, lastUserId, lastUniqueFi
                 resolve(results);
             })
             .catch((err) => {
-                console.log(err);
-            })
+                console.error(err);
+            });
     });
 }

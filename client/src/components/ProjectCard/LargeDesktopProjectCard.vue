@@ -8,14 +8,14 @@
         <div @click.stop="" class="top_text_container" ref="icons" @mouseover="showIcons()" @mouseleave="hideIcons()">
             <!--Not filled icon -->
             <div class="icon_container">
-                <svg 
-                    v-if="!projectData.isLiked" 
+                <svg
+                    v-if="!projectData.isLiked"
                     @click.stop="likePost(projectData.id)"
-                    width="35" 
-                    height="35" 
-                    viewBox="0 0 16 16" 
+                    width="35"
+                    height="35"
+                    viewBox="0 0 16 16"
                     class="bi bi-heart"
-                    fill="#eb4034" 
+                    fill="#eb4034"
                     xmlns="http://www.w3.org/2000/svg"
                     style="margin-top: 3px"
                 >
@@ -116,7 +116,7 @@
         </div>
         <!-- Because of the structure of the html, we need to use js to show the icons when you hover over the overlay -->
         <div @mouseover="showIcons()" @mouseleave="hideIcons()" class="hover_overlay" />
-        
+
         <div v-if="moreOptions" class="more_options">
             <div class="option_container" @mousedown="copyPostLink()">
                 <svg
@@ -164,12 +164,8 @@
                 <p>Delete Post</p>
             </div>
         </div>
-        <ConfirmationPopup 
-            ref="delete_confirmation" 
-            msg="Are you sure you want to delete this post?" 
-            @confirm="deletePost()"
-        />
-    </div>    
+        <ConfirmationPopup ref="delete_confirmation" msg="Are you sure you want to delete this post?" @confirm="deletePost()" />
+    </div>
 </template>
 
 <script>
@@ -183,8 +179,8 @@ export default {
             thumbnail_link: undefined,
             isDefault: false,
             moreOptions: false,
-            deleted: false
-        }
+            deleted: false,
+        };
     },
     mixins: [ProjectCardUtils],
     props: {
@@ -197,7 +193,7 @@ export default {
             this.isDefault = true;
         } else {
             this.thumbnail_link = `${process.env.VUE_APP_IMG_STATIC_ASSETS}${this.projectData.thumbnail}`;
-        }  
+        }
     },
     mounted() {
         if (!this.isDefault) {
@@ -205,7 +201,7 @@ export default {
         }
     },
     components: {
-        ConfirmationPopup
+        ConfirmationPopup,
     },
     methods: {
         routeToPost() {
@@ -236,7 +232,7 @@ export default {
                 for (let i = 0; i < elements.length; i++) {
                     elements[i].innerHTML = elements[i].innerText.replace(new RegExp("<mark>", "ig"), "");
                     elements[i].innerHTML = elements[i].innerText.replace(new RegExp("</mark>", "ig"), "");
-                }     
+                }
             }
         },
         openMoreOptions() {
@@ -252,7 +248,6 @@ export default {
 
         deletePost() {
             GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
-                console.log(res);
                 if (res.errors) {
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong deleting post" });
                 } else if (!res.data.deletePost.success) {
@@ -266,7 +261,7 @@ export default {
         },
         copyPostLink() {
             this.$store.dispatch("alertUser", { type: "success", title: "Copied link to clipboard" });
-        }
+        },
     },
     watch: {
         projectData: function(newVal) {
@@ -274,9 +269,9 @@ export default {
         },
         highlight_phrase: function() {
             this.highlightPhrases();
-        }
+        },
     },
-}
+};
 </script>
 
 <style scoped>
@@ -297,7 +292,7 @@ export default {
     flex: 1; /* Makes it stretch to fill container */
 
     box-shadow: 0px 0px 7px var(--drop-shadow);
-    
+
     /*
     min-width: 250px;
     max-width: 300px;
@@ -310,7 +305,6 @@ export default {
     background-position: center;
 
     max-width: 500px;
-
 }
 .default_image {
     background-color: var(--accent);
@@ -322,20 +316,20 @@ export default {
     top: 0;
     left: 0;
     z-index: 0;
-    background-color: rgba(0, 0, 0, 0); 
+    background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
 }
 .hover_overlay:hover {
     animation: hover_animation 0.4s;
-    background-color: rgba(0, 0, 0, 0.3); 
+    background-color: rgba(0, 0, 0, 0.3);
 }
 .text_container:hover ~ .hover_overlay {
     animation: hover_animation 0.4s;
-    background-color: rgba(0, 0, 0, 0.3); 
+    background-color: rgba(0, 0, 0, 0.3);
 }
 .top_text_container:hover ~ .hover_overlay {
     animation: hover_animation 0.4s;
-    background-color: rgba(0, 0, 0, 0.3); 
+    background-color: rgba(0, 0, 0, 0.3);
 }
 .hover_overlay:hover ~ .top_text_container {
     display: flex;

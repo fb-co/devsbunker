@@ -28,7 +28,7 @@ const mutations = {
     },
     readNotifications(state) {
         state.unreadNotificationsAmt = 0;
-    }
+    },
 };
 
 const actions = {
@@ -51,8 +51,6 @@ const actions = {
         }
 
         const res = await GraphQLService.fetchPersonalDetails(rootState.LoginStateHandler.accessToken, dataToFetch);
-
-        console.log("res", res.data);
 
         if (res.data.getPersonalDetails.profile_pic) {
             commit(

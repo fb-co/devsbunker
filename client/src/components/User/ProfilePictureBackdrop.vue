@@ -23,7 +23,7 @@ export default {
         if (!this.default_image) {
             this.$refs.image_div.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) ), url(${this.image_link})`;
         } else {
-            this.$refs.image_div.style.backgroundImage = 'linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) )';
+            this.$refs.image_div.style.backgroundImage = "linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) )";
             this.$refs.image_div.style.backgroundColor = "var(--accent)";
         }
     },
@@ -65,7 +65,7 @@ export default {
                         localStorage.setItem("profile_pic_link", this.image_link);
                         this.$store.dispatch("check_and_cache_pfp"); // cache what is in the localstorage
                     } else {
-                        console.log("err");
+                        this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong while fetching user details" });
                     }
                 });
             };
@@ -96,7 +96,7 @@ export default {
                             }
                             this.$store.commit("cachePfpLink", { username: this.username, link: this.image_link });
                         } else {
-                            console.log("err");
+                            this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong while fetching user details" });
                         }
                     });
                 }

@@ -38,7 +38,7 @@ export default async function getUserEntry(name, requester) {
                 }
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
             });
     });
 }

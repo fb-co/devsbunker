@@ -34,7 +34,7 @@ export default async function deletePost(postAuthor, postId) {
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                     reject(err);
                 });
         });
@@ -59,7 +59,7 @@ export default async function deletePost(postAuthor, postId) {
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                     reject(err);
                 });
         });

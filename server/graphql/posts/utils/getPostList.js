@@ -22,7 +22,7 @@ export default async function getPostList(sortingMethod, loadAmt, lastPostId, la
                         }
                     })
                     .catch((err) => {
-                        console.log(err);
+                        console.error(err);
                         reject(err);
                     });
             } else {
@@ -37,7 +37,7 @@ export default async function getPostList(sortingMethod, loadAmt, lastPostId, la
                         }
                     })
                     .catch((err) => {
-                        console.log(err);
+                        console.error(err);
                         reject(err);
                     });
             }
@@ -64,7 +64,7 @@ export default async function getPostList(sortingMethod, loadAmt, lastPostId, la
                         }
                     })
                     .catch((err) => {
-                        console.log(err);
+                        console.error(err);
                         reject(err);
                     });
             } else {
@@ -80,7 +80,7 @@ export default async function getPostList(sortingMethod, loadAmt, lastPostId, la
                         }
                     })
                     .catch((err) => {
-                        console.log(err);
+                        console.error(err);
                         reject(err);
                     });
             }

@@ -237,13 +237,11 @@ export default {
         },
         deletePost() {
             GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
-                console.log(res);
                 if (res.errors) {
                     console.error(res.errors);
                 } else if (!res.data.deletePost.success) {
                     console.error(res.data.deletePost.message);
                 } else {
-                    console.log("POST DELETED");
                     this.moreOptions = !this.moreOptions;
                     this.deleted = true;
                 }

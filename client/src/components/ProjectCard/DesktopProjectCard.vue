@@ -236,14 +236,13 @@ export default {
             console.log("post id:", this.projectData.id);
         },
         deletePost() {
-            console.log("deleting post...");
-
             GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
-                console.log(res);
                 if (res.errors) {
                     console.error(res.errors);
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong while deleting post. Check console" });
                 } else if (!res.data.deletePost.success) {
                     console.error(res.data.deletePost.message);
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.data.deletePost.message });
                 } else {
                     this.moreOptions = !this.moreOptions;
                     this.deleted = true;

@@ -505,7 +505,6 @@ export default {
                                 this.$store.dispatch("alertUser", { msg: "Created post!", type: "success", title: "Success" });
 
                                 if (this.$route.name == "Home") {
-                                    console.log(res);
                                     this.$emit("updateFeed", res.post);
                                 } else {
                                     this.$router.push("/");
@@ -548,7 +547,8 @@ export default {
                         tmp.push(result);
                     },
                     error(err) {
-                        console.log(err.message);
+                        console.error(err.message);
+                        this.$store.dispatch("alertUser", {type: "error", title: "Error", msg: "Errors while compressing assets"});
                     },
                 });
             }

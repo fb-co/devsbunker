@@ -159,7 +159,7 @@ export default {
                         localStorage.setItem("profile_pic_link", this.image_link);
                         this.$store.dispatch("check_and_cache_pfp"); // cache what is in the localstorage
                     } else {
-                        console.log("err");
+                        this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong while fetching user details" });
                     }
                 });
             };
@@ -190,7 +190,7 @@ export default {
                             }
                             this.$store.commit("cachePfpLink", { username: this.username, link: this.image_link });
                         } else {
-                            console.log("err");
+                            this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong while fetching user details" });
                         }
                     });
                 }
@@ -211,7 +211,7 @@ export default {
                     }
                 } else {
                     // This is a fallback in case for some random reason the pfp wasent placed in the store (if everything goes right, it should never reach this point)
-                    console.log("reached critical point, pfp wasn't in the store, fetching");
+                    console.log("IMPORTANT: pfp wasn't in the store, fetching");
                     callAPI();
                 }
             }

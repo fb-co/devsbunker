@@ -4,11 +4,11 @@ export default async function getUserPost(postId, commentOffSet, commentIncremen
     return new Promise((resolve, reject) => {
         Posts.findOne({ _id: postId, enabled: true })
             .populate({
-                path: 'comments',
+                path: "comments",
                 options: {
                     skip: commentOffSet,
                     limit: commentIncrement + 1,
-                }
+                },
             })
             .exec()
             .then((post) => {
@@ -19,7 +19,7 @@ export default async function getUserPost(postId, commentOffSet, commentIncremen
                 }
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
                 reject(err);
             });
     });

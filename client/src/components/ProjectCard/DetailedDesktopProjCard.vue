@@ -225,7 +225,6 @@ export default {
         },
         deletePost() {
             GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
-                console.log(res);
                 if (res.errors) {
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong deleting post" });
                 } else if (!res.data.deletePost.success) {

@@ -233,7 +233,6 @@ export default {
                 this.fetchedAllResults = res.data.partialUser.fetchedAll;
                 this.documents = this.documents.concat(res.data.partialUser.users);
                 this.$parent.updateSearchComponent(this.documents);
-                //console.log(this.documents);
             });
         },
         getLastUserId() {

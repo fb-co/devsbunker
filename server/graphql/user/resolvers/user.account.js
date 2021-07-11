@@ -193,7 +193,7 @@ export default {
                         profile_pic: user.profile_pic,
                     };
                 } else {
-                    console.log(err);
+                    console.error(err);
                     throw new Error("Unable to find user details");
                 }
             } catch (err) {
@@ -250,7 +250,7 @@ export default {
                         amount: unreadNotifications,
                     };
                 } else {
-                    console.log(err);
+                    console.error(err);
                     throw new Error("Failed to get user from token");
                 }
             } catch (err) {
@@ -567,7 +567,7 @@ export default {
                     return null;
                 }
             } catch (err) {
-                console.log(err);
+                console.error(err);
                 throw new Error("Failed to get notifications");
             }
         },
