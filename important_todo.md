@@ -6,6 +6,8 @@
 
 ## High Priority
 
+-   [ ] better error handling EVERYWHERE, check [this](https://dev.to/andre/handling-errors-in-graphql--2ea3)
+
 -   [x] after u delete your account there's a delay where nothing happens, we should add some visual feedback there
 
     -   [ ] posts also still appear after account deletion, you need to rerefsh (this doesnt seem a big deal but maybe we could remove them from the cache after this happens)
