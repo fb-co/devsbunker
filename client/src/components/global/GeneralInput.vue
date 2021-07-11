@@ -1,25 +1,25 @@
 <template>
     <div class="general_input_container" :style="cssProps">
-        <p v-if="label!='' && !labelIsPlaceholder">{{ label + (showLength ? " (" + message.length + "/20,000)" : "")}}</p>
+        <p v-if="label != '' && !labelIsPlaceholder">{{ label + (showLength ? " (" + message.length + "/20,000)" : "") }}</p>
 
-        <input @click.stop @input="queryData()" v-if="!isTextArea" ref="general_input" class="main_query_input" :placeholder="labelIsPlaceholder ? label : ''" />
-        
-        <textarea  
-            v-else
-            @input="textarea_autoresize"
-            ref="general_input" 
-            class="general_textarea"
-            rows="1"
-            v-model="message"
+        <input
+            @click.stop
+            @input="queryData()"
+            v-if="!isTextArea"
+            ref="general_input"
+            class="main_query_input"
+            :placeholder="labelIsPlaceholder ? label : ''"
         />
-        
+
+        <textarea v-else @input="textarea_autoresize" ref="general_input" class="general_textarea" rows="1" v-model="message" />
+
         <!-- In order to animate the form line, the text area version needs to be in the container, so this should only be rendered if its an input -->
         <div class="form_line_container">
             <div class="bottom_line"></div>
         </div>
 
         <div class="main_query_results" ref="results">
-            <div v-if="searchFor=='users'">
+            <div v-if="searchFor == 'users'">
                 <p v-for="document in documents" :key="document.username" class="document_item">{{ document.username }}</p>
             </div>
             <div v-else>
@@ -69,7 +69,7 @@ export default {
         },
         isQuery: {
             type: Boolean,
-            default: true
+            default: true,
         },
         showLength: {
             type: Boolean,
@@ -86,7 +86,7 @@ export default {
     methods: {
         // this ternary operator is important because if the input is a textarea (div with contenteditable), it does not have the .value attribute
         getValue() {
-            return  this.$refs.general_input.value;
+            return this.$refs.general_input.value;
         },
         clearValue() {
             this.$refs.general_input.value = "";
@@ -98,26 +98,19 @@ export default {
 
         queryData() {
             if (this.isQuery) {
-                if (
-                    this.$refs.general_input.value != "" &&
-                    this.$refs.general_input.value.length > 2
-                ) {
+                if (this.$refs.general_input.value != "" && this.$refs.general_input.value.length > 2) {
                     if (!this.queryQueued) {
                         this.queryQueued = true;
 
                         setTimeout(() => {
                             if (this.$refs.general_input.value != "") {
                                 if (this.searchFor === "users") {
-                                    GraphQLService.fetchUserByPartial(
-                                        this.$refs.general_input.value
-                                    ).then((res) => {
-                                        this.documents = res.data.partial_user;
+                                    GraphQLService.fetchUserByPartial(this.$refs.general_input.value).then((res) => {
+                                        this.documents = res.data.partialUser;
                                     });
                                 } else if (this.searchFor === "posts") {
                                     console.log("step1");
-                                    GraphQLService.fetchPostByPartial(
-                                        this.$refs.general_input.value
-                                    ).then((res) => {
+                                    GraphQLService.fetchPostByPartial(this.$refs.general_input.value).then((res) => {
                                         console.log(res);
                                         this.documents = res.data.partial_post;
                                     });
@@ -186,13 +179,7 @@ export default {
 .form_line_container > div {
     width: 98%;
     height: 1px;
-    background-image: linear-gradient(
-        to right,
-        var(--secondary-color) 0%,
-        var(--main-font-color) 2%,
-        var(--main-font-color) 98%,
-        var(--secondary-color) 100%
-    );
+    background-image: linear-gradient(to right, var(--secondary-color) 0%, var(--main-font-color) 2%, var(--main-font-color) 98%, var(--secondary-color) 100%);
     opacity: 0.3;
 }
 .general_input_container input:focus + .form_line_container > div {

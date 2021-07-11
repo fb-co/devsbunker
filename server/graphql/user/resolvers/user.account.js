@@ -56,32 +56,36 @@ export default {
                 return err;
             }
         },
-        partial_user: async function (_, args, { req }) {
-            const loadAmt = LoadAmounts.userSearch;
+        partialUser: async function (_, args, { req }) {
+            try {
+                const loadAmt = LoadAmounts.userSearch;
 
-            let fetchedAll = false;
-            let requester;
+                let fetchedAll = false;
+                let requester;
 
-            if (req.user) {
-                requester = req.user.username;
+                if (req.user) {
+                    requester = req.user.username;
+                }
+
+                let users = await getUserByPartial(args.partialUsername, args.sortMethod, args.lastUserId, args.lastUniqueField, loadAmt);
+
+                if (users[loadAmt] === undefined) {
+                    fetchedAll = true;
+                } else {
+                    users.pop();
+                }
+
+                const finalUsers = requester ? AddDynamicData.addAll(users, req.user.username) : users;
+
+                const finalResponse = {
+                    users: finalUsers,
+                    fetchedAll: fetchedAll,
+                };
+
+                return finalResponse;
+            } catch (err) {
+                return err;
             }
-
-            let users = await getUserByPartial(args.partial_username, args.sortMethod, args.lastUserId, args.lastUniqueField, loadAmt);
-
-            if (users[loadAmt] === undefined) {
-                fetchedAll = true;
-            } else {
-                users.pop();
-            }
-
-            const finalUsers = requester ? AddDynamicData.addAll(users, req.user.username) : users;
-
-            const finalResponse = {
-                users: finalUsers,
-                fetchedAll: fetchedAll,
-            };
-
-            return finalResponse;
         },
         getUserById: async function (_, args, { res }) {
             const user = await User.findOne({
@@ -148,9 +152,7 @@ export default {
                     message: "Successfully logged out",
                 };
             } catch (err) {
-                return {
-                    message: err.message,
-                };
+                return err;
             }
         },
 

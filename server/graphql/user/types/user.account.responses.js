@@ -121,7 +121,7 @@ export default gql`
 
         getPersonalDetails: PersonalUserDetails
 
-        partial_user(partial_username: String!, sortMethod: String!, lastUserId: String!, lastUniqueField: String!): LoadUsersResponse!
+        partialUser(partialUsername: String!, sortMethod: String!, lastUserId: String!, lastUniqueField: String!): LoadUsersResponse!
 
         loginUser(username: String, email: String, password: String!): UserAccountAction!
 
