@@ -205,10 +205,6 @@ export default {
     },
     methods: {
         routeToPost() {
-            // cache the search phrase so it can outo fill it when you come back
-            if (this.search_phrase) {
-                this.$store.dispatch("cacheSearchTerm", this.search_phrase);
-            }
             this.$router.push({ path: `/post/${this.projectData.id}` });
         },
         showIcons() {

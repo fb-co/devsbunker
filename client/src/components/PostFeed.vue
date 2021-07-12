@@ -111,6 +111,7 @@ export default {
             loading: false,
             awaitingResults: false,
             searchPhrase: undefined,
+            residingPath: this.$route.path
         };
     },
     mixins: [GeneralProperties],
@@ -134,9 +135,12 @@ export default {
         DetailedDesktopProjCard,
     },
     mounted() {
-        if (this.$store.getters.postSearchData.returnToTerm) {
-            this.$refs.post_search.forceSearchTerm(this.$store.getters.postSearchData.searchTerm);
-            this.$store.dispatch("clearSearchTerm");
+        // update with any data in the cache
+        const cachedPostFeedData = this.$store.getters.getCachedPostFeedData;
+        
+        if (cachedPostFeedData.searchPhrase) {
+            this.$refs.post_search.forceSearchTerm(cachedPostFeedData.searchPhrase);
+            this.$store.dispatch("clearPostFeedData");
         }
 
         // don't need to destroy on destroyed() because its attached to an element and will get removed anyway
@@ -189,6 +193,12 @@ export default {
             this.searchPhrase = phrase;
         },
     },
+    beforeDestroy() {
+        this.$store.dispatch("cachePostFeedData", {
+            path: this.residingPath,
+            searchPhrase: this.$refs.post_search.getSearchedPhrase(),
+        });
+    }
 };
 </script>
 

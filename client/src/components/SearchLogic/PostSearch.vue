@@ -271,7 +271,7 @@ export default {
             this.$refs.general_input.value = value;
             setTimeout(() => {this.$refs.general_input.focus(); }, 100); // since the binding is on keydown you need to do this (I know its a little janky)
         },
-    }
+    },
 }
 </script>
 

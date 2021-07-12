@@ -53,6 +53,18 @@ export default {
             this.$refs.page_content.updateFeed(post);
         },
     },
+
+    watch: {
+        // this is deal with the post feed cache
+        $route (to) {
+            const currentCachedPostFeedData = this.$store.getters.getCachedPostFeedData;
+        
+            // if the path is different from the post feed cache path, clear it since its no longer relevant
+            if (currentCachedPostFeedData.path !== to.path) {
+                this.$store.dispatch("clearPostFeedData");
+            }
+        }
+    } 
 };
 </script>
 

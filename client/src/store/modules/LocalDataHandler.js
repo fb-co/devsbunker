@@ -1,41 +1,42 @@
 const state = {
     cacheIsSupported: true,
 
-    postSearchData: {
-        returnToTerm: false,
-        searchTerm: "",
-    }
+    cachedPostFeedData: {
+        path: "",
+        searchPhrase: "",
+    },
 };
 
 const getters = {
     cacheIsSupported: (state) => state.cacheIsSupported,
-    postSearchData: (state) => state.postSearchData,
+    getCachedPostFeedData: (state) => state.cachedPostFeedData,
 };
 
 const mutations = {
     isCacheSupported(state, isSupported) {
         state.cacheIsSupported = isSupported;
     },
-    cacheBrowsingSearchTerm(state, term) {
-        state.postSearchData.searchTerm = term;
-        state.postSearchData.returnToTerm = true;
+    cachePostFeed(state, postFeedData) {
+        state.cachedPostFeedData = postFeedData;
     },
-    clearBrowsingSearchTerm(state) {
-        state.postSearchData.searchTerm = "";
-        state.postSearchData.returnToTerm = false;
-    }
+    clearPostFeed(state) {
+        state.cachedPostFeedData = {
+            path: "",
+            searchPhrase: "",
+        };
+    },
 };
 
 const actions = {
     checkCacheSupport({ commit }) {
         commit("isCacheSupported", 'caches' in window);
     },
-    cacheSearchTerm({ commit }, term) {
-        commit("cacheBrowsingSearchTerm", term);
+    cachePostFeedData({ commit }, payload) {
+        commit("cachePostFeed", payload);
     },
-    clearSearchTerm({ commit }) {
-        commit("clearBrowsingSearchTerm");
-    }
+    clearPostFeedData({ commit }) {
+        commit("clearPostFeed");
+    },
 };
 
 export default {
