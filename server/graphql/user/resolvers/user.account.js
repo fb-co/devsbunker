@@ -341,7 +341,7 @@ export default {
                 }
             } else {
                 res.status(400);
-                throw new AuthenticationError("Invalid credentials. Try again.");
+                throw new InvalidCredentialsError();
             }
         },
 
@@ -350,7 +350,7 @@ export default {
 
             let editedData = [];
 
-            if (!jwtPayload) return { success: false, message: "Invalid token" };
+            if (!jwtPayload) throw new UnauthorizedError();
 
             const user = await User.findOne({
                 _id: jwtPayload._id,
@@ -387,7 +387,7 @@ export default {
                             }
                         } else {
                             if (payload.field == "email") {
-                                if (!/\S+@\S+\.\S+/.test(payload.newValue)) throw new Error("Invalid email");
+                                if (!/\S+@\S+\.\S+/.test(payload.newValue)) throw new InvalidCredentialsError();
                             }
 
                             editedData.push({

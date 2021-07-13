@@ -95,12 +95,16 @@ export default {
             if (pwd == pwdConfirm) {
                 const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{ field: "password", newValue: pwd }]);
 
-                if (/Successfully/.test(response.data.updateUserDetails.message)) {
-                    this.$refs.resetPwd.close();
-                    this.$store.dispatch("alertUser", { type: "success", title: "Success", msg: "Successfully Reset Password" });
+                if (response.errors) {
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: response.errors[0].message });
                 } else {
-                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Failed to Reset Password" });
-                    this.$refs.resetPwd.showError("Invalid credentials", true);
+                    if (/Successfully/.test(response.data.updateUserDetails.message)) {
+                        this.$refs.resetPwd.close();
+                        this.$store.dispatch("alertUser", { type: "success", title: "Success", msg: "Successfully Reset Password" });
+                    } else {
+                        this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Failed to Reset Password" });
+                        this.$refs.resetPwd.showError("Invalid credentials", true);
+                    }
                 }
             } else {
                 this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Failed to Reset Password" });

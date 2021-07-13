@@ -306,7 +306,7 @@ export default {
                             setTimeout(() => {
                                 this.submitted = false;
                             }, 1500);
-                        } else if (/Invalid/.test(message)) {
+                        } else if (/invalid/.test(message)) {
                             // we are going to do this even here just to add another layer of security
                             this.errMessage = "Invalid credentials.";
                             setTimeout(() => {
