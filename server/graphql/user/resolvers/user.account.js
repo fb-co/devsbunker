@@ -162,7 +162,7 @@ export default {
         getPersonalDetails: async function (_, args, { req }) {
             const jwtPayload = req.user;
 
-            if (!jwtPayload) return { success: false, message: "Invalid token" };
+            if (!jwtPayload) throw new UnauthorizedError();
 
             try {
                 const user = await User.findOne({
