@@ -197,7 +197,7 @@ export default {
             this.$refs.download_data_confirmation.open();
         },
         downloadUserData() {
-            GraphQLService.downloadUserData(this.$store.getters.accessToken)
+            GraphQLService.downloadUserData(this.$store.getters.accssToken)
                 .then((res) => {
                     if (!res.errors) {
                         const data = res.data.downloadUserData;
@@ -212,8 +212,7 @@ export default {
                         downloadAnchorNode.click();
                         downloadAnchorNode.remove();
                     } else {
-                        this.$store.dispatch("alertUser", { msg: "Error while fetching data", type: "error", title: "Error" });
-                        throw new Error("Error while fetching data");
+                        this.$store.dispatch("alertUser", { msg: res.errors[0].message, type: "error", title: "Error" });
                     }
                 })
                 .catch((e) => {

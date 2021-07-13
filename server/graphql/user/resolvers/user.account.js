@@ -229,7 +229,7 @@ export default {
         getUnreadNotifications: async function (_, args, { req }) {
             const jwtPayload = req.user;
 
-            if (!jwtPayload) throw new Error("Unauthenticated");
+            if (!jwtPayload) throw new UnauthorizedError();
 
             try {
                 const user = await User.findOne({
@@ -259,7 +259,7 @@ export default {
         downloadUserData: async function (_, args, { req }) {
             const jwtPayload = req.user;
 
-            if (!jwtPayload) throw new Error("Unauthenticated");
+            if (!jwtPayload) throw new UnauthorizedError();
 
             try {
                 const user = await User.findOne({
