@@ -306,13 +306,13 @@ export default {
 
             if (response.errors) {
                 const message = response.errors[0].message;
-                if (/Incorrect/.test(message)) {
+                if (/incorrect/.test(message)) {
                     this.errMessage = "Incorrect credentials.";
                     setTimeout(() => {
                         this.submitted = false;
                     }, 1500);
                 } else {
-                    this.errMessage = "Internal error. Try again later";
+                    this.errMessage = response.errors[0].message || "Internal error. Try again later";
                     setTimeout(() => {
                         this.submitted = false;
                     }, 1500);

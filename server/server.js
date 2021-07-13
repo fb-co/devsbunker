@@ -3,6 +3,7 @@ const { config } = dotenv;
 config();
 
 import ApolloServerExpress from "apollo-server-express";
+import { formatError } from "apollo-errors";
 const { ApolloServer } = ApolloServerExpress;
 
 import morgan from "morgan";
@@ -58,6 +59,7 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: ({ req, res }) => ({ req, res }),
+    formatError,
 });
 
 server.applyMiddleware({ app, cors: false });

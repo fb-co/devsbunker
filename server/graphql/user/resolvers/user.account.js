@@ -18,6 +18,8 @@ import getAllPostsByAuthor from "../../posts/utils/getAllPostsByAuthor.js";
 import deletePost from "../../posts/utils/deletePost.js";
 import fetchUsers from "../utils/fetchUsers.js";
 
+import { InvalidCredentialsError } from "../errors/invalid.credentials.js";
+
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
 
@@ -125,16 +127,13 @@ export default {
                     enabled: true,
                 });
             } else {
-                return {
-                    message: "Please provide a valid username or email",
-                    accessToken: null,
-                };
+                throw new InvalidCredentialsError();
             }
 
             if (user) {
                 return loginValidUser(user, args.password, res);
             } else {
-                throw new AuthenticationError("Incorrect credentials.");
+                throw new InvalidCredentialsError();
             }
         },
 
