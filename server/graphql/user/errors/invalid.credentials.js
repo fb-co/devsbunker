@@ -4,4 +4,8 @@ const InvalidCredentialsError = createError("InvalidCredentialsError", {
     message: "The provided credentials are invalid or incorrect.",
 });
 
-export { InvalidCredentialsError };
+const UnauthorizedError = createError("UnauthorizedError", {
+    message: "Unauthorized",
+});
+
+export { InvalidCredentialsError, UnauthorizedError };

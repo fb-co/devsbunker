@@ -18,7 +18,7 @@ import getAllPostsByAuthor from "../../posts/utils/getAllPostsByAuthor.js";
 import deletePost from "../../posts/utils/deletePost.js";
 import fetchUsers from "../utils/fetchUsers.js";
 
-import { InvalidCredentialsError } from "../errors/invalid.credentials.js";
+import { InvalidCredentialsError, UnauthorizedError } from "../errors/invalid.credentials.js";
 
 import ApolloServer from "apollo-server-express";
 const { AuthenticationError } = ApolloServer;
@@ -203,7 +203,7 @@ export default {
         getUnreadNotificationsData: async function (_, args, { req }) {
             const jwtPayload = req.user;
 
-            if (!jwtPayload) throw new Error("Unauthenticated");
+            if (!jwtPayload) throw new UnauthorizedError();
 
             try {
                 const user = await User.findOne({

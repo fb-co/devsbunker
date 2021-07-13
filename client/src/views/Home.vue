@@ -53,7 +53,9 @@ export default {
         // get the notifications
         if (this.$store.getters.accessToken) {
             const res = await GraphQLService.getUnreadNotificationsData(this.$store.getters.accessToken);
-            this.notifications = res.data.getUnreadNotificationsData;
+            if (!res.errors) {
+                this.notifications = res.data.getUnreadNotificationsData;
+            }
         } else {
             this.notifications = [];
         }
@@ -108,7 +110,7 @@ export default {
              */
 
             this.loaded = false;
-        
+
             this.updateFeedAfterNewPost(post);
 
             this.loaded = true;
