@@ -25,7 +25,7 @@
     <div class="post_search_bar" :style="cssProps">
         <div class="input_loading_cont">
             <SpicyInput class="post_search">
-                <input @input="queryData()" class="main_input" ref="general_input" placeholder='search...'>
+                <input @input="queryData(); toggleTypingState();" class="main_input" ref="general_input" placeholder='search...'>
                 <svg 
                     v-if="moreOptions"
                     ref="moreOptionsIcon"
@@ -113,6 +113,11 @@ export default {
             queryThresh: 1000, // amount of time in between query queue times
             queryQueued: false, // flag to make sure queries are not spammed
             userToFilter: this.otherData.foreignUserToFilter || this.$store.getters.username,
+            
+            // this is a feature which kinda cleans up the user experience by tweaking when queries are sent from the input after typing
+            typingTimer: null,
+            typing: false,
+            typingCooldown: 500, // in ms
 
             //canClose: false // Important because you need to make sure when you blur the input that the click binding on the options can be triggered
         }
@@ -163,26 +168,38 @@ export default {
             this.moreOptionsMenu = false;
             this.$refs.moreOptionsIcon.blur();
         },
+        toggleTypingState() {
+            if (!this.typing) {
+                this.typing = true;
+
+                this.typingTimer = setTimeout(() => { this.typing = false; this.queryData(); }, this.typingCooldown);
+            } else {
+                clearTimeout(this.typingTimer);
+                this.typingTimer = setTimeout(() => { this.typing = false; this.queryData(); }, this.typingCooldown);
+            }
+        },
         queryData() {
             this.documents = [];
             if (this.$refs.general_input.value != "" && this.$refs.general_input.value.length > 2) {
-                if (!this.queryQueued) {
+                if (!this.queryQueued && !this.typing) {
                     this.queryQueued = true;
                     this.$emit("loading");
+
+                    const initialSearchPhrase = this.$refs.general_input.value;
+                    let otherDataCopy = Object.assign({}, this.otherData);
+                    otherDataCopy.searchPhrase  = initialSearchPhrase;
+                    const postsInCache = this.$store.getters.getPosts(this.sortingType, this.filter, otherDataCopy);
                     
-                    setTimeout(() => {
-                        if (this.$refs.general_input.value != "") {
-                            const initialSearchPhrase = this.$refs.general_input.value;
-                            let otherDataCopy = Object.assign({}, this.otherData);
-                            otherDataCopy.searchPhrase  = initialSearchPhrase;
-                            const postsInCache = this.$store.getters.getPosts(this.sortingType, this.filter, otherDataCopy);
-                        
-                            if (postsInCache) {
-                                setTimeout(() => { this.$emit("highlightPhrases", initialSearchPhrase); }, 100); // need small wait for cards to render
-                                this.documents = postsInCache.posts;
-                                this.fetchedAllResults = postsInCache.fetchedAll;
-                                this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
-                            } else {
+                    if (postsInCache) {
+                        setTimeout(() => { this.$emit("highlightPhrases", initialSearchPhrase); }, 100); // need small wait for cards to render
+                        this.documents = postsInCache.posts;
+                        this.fetchedAllResults = postsInCache.fetchedAll;
+                        this.$parent.updateSearchComponent(this.documents, this.fetchedAllResults);
+                        this.queryQueued = false;
+                        this.$emit("doneLoading");
+                    } else {
+                        setTimeout(() => {
+                            if (this.$refs.general_input.value != "") {
                                 GraphQLService.fetchPostsByPartial(
                                     this.$refs.general_input.value, 
                                     this.filter, 
@@ -202,7 +219,7 @@ export default {
 
                                     let otherDataCopy = Object.assign({}, this.otherData);
                                     otherDataCopy.searchPhrase  = initialSearchPhrase;
-
+                                    
                                     this.$store.dispatch("addPosts", {
                                         filter: this.sortingType,
                                         queryType: this.filter,
@@ -212,10 +229,10 @@ export default {
                                     });
                                 });
                             }
-                        }
-                        this.queryQueued = false;
-                        this.$emit("doneLoading");
-                    }, this.queryThresh);
+                            this.queryQueued = false;
+                            this.$emit("doneLoading");
+                        }, this.queryThresh);
+                    }
                 }
             } else {
                 this.$emit("highlightPhrases", ""); //reset the search phrase

@@ -4,6 +4,7 @@ const state = {
     cachedPostFeedData: {
         path: "",
         searchPhrase: "",
+        scrollAmt: 0,
     },
 };
 

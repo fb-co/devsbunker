@@ -29,7 +29,7 @@
         </div>
         <LoadingGif v-if="loading || rootComponent.awaitingPosts" :show="true" />
         <div v-else>
-            <div v-if="!showSearchResults" class="project_list">
+            <div v-if="!showSearchResults" class="project_list" ref="test">
                 <div v-if="rootComponent.posts.length > 0" class="post_wrapper">
                     <div v-if="!desktop" class="mobile_post_feed">
                         <!-- <MobileProjectCard class="mobile_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" /> -->
@@ -111,7 +111,8 @@ export default {
             loading: false,
             awaitingResults: false,
             searchPhrase: undefined,
-            residingPath: this.$route.path
+            residingPath: this.$route.path,
+            mostRecentScrollAmt: 0, // save the scroll position so you can return to it after viewing a post
         };
     },
     mixins: [GeneralProperties],
@@ -137,6 +138,9 @@ export default {
     mounted() {
         // update with any data in the cache
         const cachedPostFeedData = this.$store.getters.getCachedPostFeedData;
+
+        // scroll to point wherever the user was (since the main page itself is not scrolling this does not get saved on desktop)
+        this.$refs.scrollable_container.scrollTop = cachedPostFeedData.scrollAmt;
         
         if (cachedPostFeedData.searchPhrase) {
             this.$refs.post_search.forceSearchTerm(cachedPostFeedData.searchPhrase);
@@ -145,6 +149,7 @@ export default {
 
         // don't need to destroy on destroyed() because its attached to an element and will get removed anyway
         this.$refs.scrollable_container.addEventListener("scroll", () => {
+            this.mostRecentScrollAmt = this.$refs.scrollable_container.scrollTop;
             this.$refs.post_search.closeMoreMenu();
         });
     },
@@ -197,6 +202,7 @@ export default {
         this.$store.dispatch("cachePostFeedData", {
             path: this.residingPath,
             searchPhrase: this.$refs.post_search.getSearchedPhrase(),
+            scrollAmt: this.mostRecentScrollAmt,
         });
     }
 };
