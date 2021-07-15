@@ -5,9 +5,8 @@
             <div class="left_content_placeholder" />
             <div class="center_content">
                 <div class="header_actions">
-                    <div class="back_arrow_container">
+                    <div class="back_arrow_container" @click="back()">
                         <svg
-                            @click="back()"
                             xmlns="http://www.w3.org/2000/svg"
                             class="icon icon-tabler icon-tabler-arrow-left"
                             width="30"
@@ -306,12 +305,12 @@ export default {
     height: 50px;
     background-color: var(--secondary-color);
     box-shadow: 0px 0px 1px var(--drop-shadow);
+    cursor: pointer;
 }
 .back_arrow_container:hover {
     box-shadow: 0px 0px 5px var(--drop-shadow);
 }
 .back_arrow_container > svg {
-    cursor: pointer;
     margin: 0 auto;
 }
 .actions_container {
