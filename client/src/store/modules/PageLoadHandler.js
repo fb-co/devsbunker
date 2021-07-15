@@ -52,22 +52,23 @@ const actions = {
 
         const res = await GraphQLService.fetchPersonalDetails(rootState.LoginStateHandler.accessToken, dataToFetch);
 
-        if (res.data.getPersonalDetails.profile_pic) {
-            commit(
-                "cachePersonalPfpLink",
-                pfpLink || /http/.test(res.data.getPersonalDetails.profile_pic)
-                    ? res.data.getPersonalDetails.profile_pic
-                    : process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic
-            );
-        }
-        commit("cacheUnreadNotificationsAmt", res.data.getPersonalDetails.unreadNotificationAmt);
-
-        // add the pfp link to localstorage if its not already in there
-        if (!storedLink) {
-            if (/http/.test(res.data.getPersonalDetails.profile_pic)) {
-                localStorage.setItem("profile_pic_link", res.data.getPersonalDetails.profile_pic);
-            } else {
-                localStorage.setItem("profile_pic_link", process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
+        if (!res.errors) {
+            if (res.data.getPersonalDetails.profile_pic) {
+                commit(
+                    "cachePersonalPfpLink",
+                    pfpLink || /http/.test(res.data.getPersonalDetails.profile_pic)
+                        ? res.data.getPersonalDetails.profile_pic
+                        : process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic
+                );
+            }
+            commit("cacheUnreadNotificationsAmt", res.data.getPersonalDetails.unreadNotificationAmt);
+            // add the pfp link to localstorage if its not already in there
+            if (!storedLink) {
+                if (/http/.test(res.data.getPersonalDetails.profile_pic)) {
+                    localStorage.setItem("profile_pic_link", res.data.getPersonalDetails.profile_pic);
+                } else {
+                    localStorage.setItem("profile_pic_link", process.env.VUE_APP_PROFILE_PICTURES + res.data.getPersonalDetails.profile_pic);
+                }
             }
         }
     },
