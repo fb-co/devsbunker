@@ -26,7 +26,7 @@
 -   [x] cache
 
 -   [x] Add very small box shadow to notifications to give them a bit more contrast
--   [ ] Make the share option on a post actully copy the url
+-   [x] Make the share option on a post actully copy the url
 -   [x] Looking at search results, and going into a post, then going back again should save the search and search results
 -   [x] Add caching to the search results
 -   [x] Add back arrow, like, and save button to post view desktop
