@@ -27,9 +27,9 @@
 
 -   [x] Add very small box shadow to notifications to give them a bit more contrast
 -   [ ] Make the share option on a post actully copy the url
--   [ ] Looking at search results, and going into a post, then going back again should save the search and search results
--   [ ] Add caching to the search results
--   [ ] Add back arrow, like, and save button to post view desktop
+-   [x] Looking at search results, and going into a post, then going back again should save the search and search results
+-   [x] Add caching to the search results
+-   [x] Add back arrow, like, and save button to post view desktop
 
 -   [x] hot reloading after a new post is made doesnt work anymore
 
