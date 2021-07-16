@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import PostLimits from "./post_limits.js";
 
 // we dont store the postId here to avoid redundancy, it's a one to many relationship (post with many comments)
 const commentSchema = new mongoose.Schema(
@@ -25,5 +26,10 @@ const commentSchema = new mongoose.Schema(
         timestamps: true,
     }
 );
+
+// limit the max comment length
+commentSchema.path("payload").validate((payload) => {
+    return payload.length <= PostLimits.maxCommentLength;
+}, `The maximum comment length is ${PostLimits.maxCommentLength}`);
 
 export default mongoose.model("Comment", commentSchema);

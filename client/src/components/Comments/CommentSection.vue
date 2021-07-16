@@ -28,6 +28,7 @@
 import Comment from "@/components/Comments/Comment.vue";
 import GeneralInput from "@/components/global/GeneralInput.vue";
 import LoadingGif from "@/components/global/LoadingGif.vue";
+import Limits from "@/templates/Limits.js";
 
 export default {
     data() {
@@ -59,10 +60,15 @@ export default {
                 const comment = this.$refs.comment_input.getValue();
 
                 if (comment != "" && comment != null) {
-                    // the null check is done also server side
-                    this.loadingNewComment = true;
-                    this.$emit("postComment", comment);
-                    this.$refs.comment_input.clearValue();
+                    if (comment.length > Limits.maxComment) {
+                        this.loading = false;
+                        this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: "Comment length must be less than 5,000 characters" });
+                    } else {
+                        // the null check is done also server side
+                        this.loadingNewComment = true;
+                        this.$emit("postComment", comment);
+                        this.$refs.comment_input.clearValue();
+                    }
                 }
             }
         },

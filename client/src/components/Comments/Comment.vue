@@ -91,12 +91,18 @@ export default {
             this.$refs.reply_field.value = "";
         },
         postReply() {
-            GraphQLService.replyToComment(this.$store.getters.accessToken, this.commentData.id, this.$refs.reply_field.value).then((res) => {
-                const reply = res.data.replyToComment;
-                this.commentData.replies.push(reply);
+            if (this.$refs.reply_field.value !== "" && this.$refs.reply_field.value != null) {
+                if (this.$refs.reply_field.value.length > 5000) {
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Comment length must be less than 5,000 characters" });
+                } else {
+                    GraphQLService.replyToComment(this.$store.getters.accessToken, this.commentData.id, this.$refs.reply_field.value).then((res) => {
+                        const reply = res.data.replyToComment;
+                        this.commentData.replies.push(reply);
 
-                this.cancelReply();
-            });
+                        this.cancelReply();
+                    });
+                }
+            }
         },
     },
 };

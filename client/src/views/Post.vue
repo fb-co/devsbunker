@@ -103,6 +103,7 @@ export default {
         },
         async postComment(value) {
             const response = await GraphQLService.commentOnPost(this.postData.id, value, this.$store.getters.accessToken);
+            
             // if it was successfull
             if (response.data.commentOnPost.userId != null) {
                 this.postData.comments.push(response.data.commentOnPost);

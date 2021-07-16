@@ -330,6 +330,7 @@ import QuestionMark from "@/components/Popups/QuestionMark.vue";
 import GraphQLService from "@/services/graphql.service";
 import FileUploadService from "@/services/fileUpload.service.js";
 import Languages from "../../templates/Languages";
+import Limits from "../../templates/Limits";
 
 import Compressor from "compressorjs";
 
@@ -432,8 +433,8 @@ export default {
 
             */
 
-            if (payload.title.length > 100) return { success: false, err: "The maximum length for the title is 100 chars." };
-            if (payload.description.length > 20000) return { success: false, err: "The maximum length for the description is 20,000 chars." };
+            if (payload.title.length > Limits.maxPostTitle) return { success: false, err: `The maximum length for the title is ${Limits.maxPostTitle} chars.` };
+            if (payload.description.length > Limits.maxPostDesc) return { success: false, err: "The maximum length for the description is 20,000 chars." };
 
             // had to break this down because of async pain (i think)
             let errmsg = null;

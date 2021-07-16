@@ -1,5 +1,6 @@
 import Languages from "../languages/languages.list.js";
 import mongoose from "mongoose";
+import PostLimits from "./post_limits.js";
 
 const requiredString = {
     type: String,
@@ -104,11 +105,11 @@ postSchema.path("tags").validate((tags) => {
 }, "Invalid language tag.");
 
 postSchema.path("title").validate((title) => {
-    return title.length <= 128;
-}, "The maximum length for the title is 100.");
+    return title.length <= PostLimits.maxTitleLength;
+}, `The maximum length for the title is ${PostLimits.maxTitleLength}.`);
 
 postSchema.path("description").validate((desc) => {
-    return desc.length <= 20000;
-}, "The maximum length for the description is 20000.");
+    return desc.length <= PostLimits.maxDescLength;
+}, `The maximum length for the description is ${PostLimits.maxDescLength}.`);
 
 export default mongoose.model("Post", postSchema);
