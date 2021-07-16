@@ -1,12 +1,13 @@
+import { matchSorter } from 'match-sorter';
+
 const Languages = {
     searchByPartial: function(partial) {
-        let matches = [];
-
-        this.list.forEach((lang) => {
-            if (lang.name.toLocaleLowerCase().includes(partial.toLowerCase())) {
-                matches.push(lang);
-            }
-        });
+        let matches = matchSorter(this.list, partial, { keys: ['name'] });
+        console.log(matches);
+    
+        if (matches.length > 5) {
+            matches.splice(5);
+        }
 
         return matches;
     },
