@@ -6,6 +6,10 @@
 
 ## High Priority
 
+-   [ ] fix more options layout in descriptive cards
+
+-   [ ] remove that vue config before deploy
+
 -   [ ] better error handling EVERYWHERE, check [this](https://dev.to/andre/handling-errors-in-graphql--2ea3)
 
 -   [x] after u delete your account there's a delay where nothing happens, we should add some visual feedback there
