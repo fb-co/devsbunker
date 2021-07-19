@@ -1,10 +1,5 @@
 <template>
-    <div
-        v-if="!deleted"
-        class="main_container"
-        :class="{ main_container_lock: /@\/assets/.test(projectData.thumbnail) }"
-        @click="$router.push({ path: `/post/${projectData.id}` })"
-    >
+    <div v-if="!deleted" class="main_container" :class="{ main_container_lock: isSmall }" @click="$router.push({ path: `/post/${projectData.id}` })">
         <div class="top_container">
             <div class="icons_container">
                 <div class="icon_box" style="margin-bottom: 10px;">
@@ -89,7 +84,13 @@
                         <circle cx="19" cy="12" r="1" />
                     </svg>
                 </div>
-                <div v-if="moreOptions" class="more_options" :class="{ move_down_for_small_post: /@\/assets/.test(projectData.thumbnail) }">
+                <div
+                    v-if="moreOptions"
+                    :class="{
+                        more_options_small_card: isSmall,
+                        more_options: !isSmall,
+                    }"
+                >
                     <div class="option_container" @mousedown="copyPostLink()">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +145,7 @@
                     <div class="desc_fade"></div>
                     <pre class="preserveText"><p class="description">{{ projectData.description }}</p></pre>
                 </div>
-                <DynamicPicture v-if="!/@\/assets/.test(projectData.thumbnail)" class="thumbnail" :image_link="projectData.thumbnail" />
+                <DynamicPicture v-if="!isSmall" class="thumbnail" :image_link="projectData.thumbnail" />
             </div>
         </div>
         <div class="seperator_line" />
@@ -178,7 +179,13 @@ export default {
         return {
             moreOptions: false,
             deleted: false,
+            isSmall: false,
         };
+    },
+    created() {
+        if (/@\/assets/.test(this.projectData.thumbnail)) {
+            this.isSmall = true;
+        }
     },
     props: {
         projectData: Object,
@@ -444,9 +451,17 @@ export default {
     border: 1px solid var(--soft-text);
 }
 
-.move_down_for_small_post {
-    top: 39%;
+.more_options_small_card {
+    position: absolute;
+    top: 65%;
+    z-index: 50;
+    background-color: var(--secondary-color);
+    border-radius: 3px;
+    padding: 5px 15px 5px 15px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--soft-text);
 }
+
 .option_container {
     display: flex;
     cursor: pointer;
