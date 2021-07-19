@@ -190,7 +190,7 @@ export default {
     vertical-align: top;
 }
 .document_item:hover {
-    color: var(--soft-text);
+    font-weight: bold;
 }
 .selected {
     background-color: var(--main-accent);
