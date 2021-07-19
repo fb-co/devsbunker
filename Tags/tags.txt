@@ -1,0 +1,149 @@
+3d modeling
+abap
+actionscript
+ada
+ai programming
+algol
+alice
+apl
+art
+asp
+assembly
+awk
+backbonejs
+bash
+books
+bootstrap
+brainfuck
+c
+c#
+c++
+cakephp
+cgi
+chyrp
+cobol
+cocoa
+codelgniter
+cookies
+corba
+css
+cvs
+d
+delphi
+dom
+dreamweaver
+drupal coding standards
+elixir
+engineering
+erlang
+f#
+ffmpeg
+forth
+fortran
+gate
+git
+gnustep
+go
+haskell
+html
+idl
+imagemagick
+intercal
+java
+javascript
+jquery
+json
+julia
+kotlin
+labview
+laravel
+linked lists
+linux programming
+lisp
+logo
+machine learning
+mandriva linux
+mantisbt
+matlab
+mdn
+mercurial
+metaquotes
+ml
+modula-3
+mpi
+ms-dos
+msxml
+ncurses
+netcdf
+network programming
+nodejs
+nxt-g
+oauth
+objective c
+ocaml
+opencl
+openid
+openssl
+os development
+pascal
+pc building
+perl
+php
+php
+postscript
+project management
+prolog
+python
+r
+rapidweaver
+raspberry pi
+raspbian
+ravendb
+regex
+rexx
+robots
+ruby
+rust
+s-plus
+sas
+scala
+sed
+sgml
+simula
+smalltalk
+smil
+snobol
+soap
+sorting algorithms
+sql
+ssh
+ssl
+stata
+subversion
+swift
+tcl
+ubuntu
+umbraco
+unified modeling language
+unity
+unix programming
+unreal
+url
+verilog
+vhdl
+vim
+visual basic
+visual foxpro
+vrml
+wap
+wcf
+web development
+web standards
+webkit web inspector
+windows
+wsgi
+xaraya
+xml
+xsl
+yui
+zikula
