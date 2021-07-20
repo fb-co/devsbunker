@@ -20,6 +20,15 @@ const Languages = {
         } 
         return null;
     },
+    // checks if tag exists
+    check: function(language) {
+        for (let i = 0; i < this.list.length; i++) {
+            if (this.list[i].name.toLowerCase() === language.toLowerCase()) {
+                return true;
+            }
+        } 
+        return false;
+    }
 };
 
 export default Languages;

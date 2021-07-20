@@ -484,7 +484,6 @@ export default {
                 if (check.success) {
                     // display loading gif and hide button if all fields were validated properly clientside
                     this.creatingPost = true;
-                        
                     GraphQLService.createNewPost(this.$store.getters.accessToken, post)
                         .then((returnPost) => {
                             if (returnPost.errors?.length) {
@@ -582,13 +581,13 @@ export default {
     display: flex;
     flex-direction: column;
     width: 95%;
-    max-width: 450px;
+    max-width: 600px;
     border-radius: 25px;
-    margin: 0px auto 70px auto;
+    margin: 0px auto 40px auto;
     /* box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); */
     /*box-shadow: 0px 4px 20px var(--main-font-color);*/
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
     background-color: var(--secondary-color);
     margin-top: 20px;
 
@@ -618,7 +617,6 @@ export default {
 }
 .field {
     margin: 0px auto 50px auto;
-    max-width: 400px;
 }
 
 .tag_container {
@@ -626,6 +624,7 @@ export default {
     max-width: 400px;
     margin: 0px auto 50px auto;
     padding: 5px;
+    max-width: 550px;
 }
 .tag_container p {
     font-size: 16px;
@@ -672,8 +671,13 @@ export default {
     color: #fff;
     font-size: 18px;
     font-weight: bold;
-    margin: 0px auto 40px auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 0px auto 30px auto;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .create_post_button:hover {
     box-shadow: 0px 4px 20px var(--main-accent);
@@ -689,24 +693,7 @@ export default {
     color: var(--main-font-color);
 }
 
-/* mobile styles */
-@media only screen and (max-width: 950px) {
-    .new_post_container {
-        max-width: 450px;
-    }
-}
-/* desktop styles */
-@media only screen and (min-width: 950px) {
-    .new_post_container {
-        max-width: 600px;
-    }
-    .field {
-        max-width: 550px;
-    }
-    .tag_container {
-        max-width: 550px;
-    }
-}
+
 
 /* ROBBED SECTION, copyright f0lg0 xD*/
 .upload-card {

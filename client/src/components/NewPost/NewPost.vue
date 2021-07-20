@@ -1,7 +1,6 @@
 <!-- Leaving this component in case we ever want to change to a different post view for desktop versions -->
 <template>
-    <div v-if="isOpen" class="main_new_post_container">
-        <div class="backdrop"></div>
+    <div v-if="isOpen" class="backdrop" style="overflow: auto;">
         <NewPostMobile v-on:updateFeed="propagateEvent($event)" class="new_post_box" />
         <!--<NewPostDesktop v-else />-->
     </div>
@@ -22,9 +21,11 @@ export default {
 
     methods: {
         close() {
+            document.body.style.overflow = "auto";
             this.isOpen = false;
         },
         open() {
+            document.body.style.overflow = "hidden";
             this.isOpen = true;
         },
         getStatus() {
@@ -38,28 +39,10 @@ export default {
 </script>
 
 <style scoped>
-.main_new_post_container {
-    position: absolute;
-    top: calc(var(--header-height));
-    width: 100%;
-    z-index: 3;
-}
 .new_post_box {
-    position: fixed;
-    width: 100%;
-    z-index: 3;
     overflow: auto;
-    max-height: calc(100% - var(--header-height));
-
     -ms-overflow-style: none; /* IE and Edge (scrollbar hide)*/
-    scrollbar-width: none; /* Firefox (scrollbar hide)*/
-}
-.backdrop {
-    position: fixed;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    background-color: var(--main-color);
+    scrollbar-width: none; /* Firefox (scrollbar hide)*/   
 }
 
 .new_post_box::-webkit-scrollbar {
