@@ -6,7 +6,15 @@
 
 ## High Priority
 
--   [ ] fix more options layout in descriptive cards
+-   [ ] rate-limiting on other routes such as GraphQL stuff (only critical ones, for less critical routes we should add a less strict rate limiter)
+
+    -   check out configs/RateLimiter to add rules
+
+-   [ ] some languages tags like Javascript throw Invalid Language Tag error
+
+    -   must be something related to the serverside langiages list, havent been able to fully check out your latest progress for tags
+
+-   [x] fix more options layout in descriptive cards
 
 -   [ ] remove that vue config before deploy
 
