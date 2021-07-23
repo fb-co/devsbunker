@@ -667,16 +667,14 @@ export default {
     outline: none;
     border-radius: 12px;
     width: 75%;
-    height: 40px;
     color: #fff;
     font-size: 18px;
     font-weight: bold;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     margin: 0px auto 30px auto;
     cursor: pointer;
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 .create_post_button:hover {

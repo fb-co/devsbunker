@@ -1,33 +1,15 @@
-/* in the future we will get these dynamically */
-const Languages = [
-    "Python",
-    "Javascript",
-    "C++",
-    "C",
-    "C#",
-    "Kotlin",
-    "Java",
-    "HTML",
-    "CSS",
-    "SQL",
-    "PHP",
-    "Swift",
-    "Objective C",
-    "Julia",
-    "Rust",
-    "Bash",
-    "Haskell",
-    "Rust",
-    "Unity",
-    "3D Modeling",
-    "Art",
-    "Unreal",
-    "Matlab",
-    "Go",
-    "Assembly",
-    "COBOL",
-    "Brainfuck",
-    "Lua",
-];
+import LanguagesList from "../languages/LanguagesData.json";
+
+const Languages = {
+    list: LanguageData,
+    isValid: function(tag) {
+        this.list.forEach(tag => {
+            if (tag.name === tag) {
+                return true;
+            }
+        });
+        return false;
+    }
+};
 
 export default Languages;

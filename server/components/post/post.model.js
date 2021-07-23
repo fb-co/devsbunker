@@ -99,7 +99,7 @@ postSchema.path("links").validate((urls) => {
 postSchema.path("tags").validate((tags) => {
     let valid = true;
     tags.forEach((tag) => {
-        valid = Languages.includes(tag);
+        valid = Languages.isValid(tag);
     });
     return valid;
 }, "Invalid language tag.");
