@@ -1,6 +1,7 @@
 import Languages from "../languages/languages.list.js";
 import mongoose from "mongoose";
 import PostLimits from "./post_limits.js";
+import Users from "../user/user.model.js";
 
 const requiredString = {
     type: String,
@@ -96,11 +97,22 @@ postSchema.path("links").validate((urls) => {
     return valid;
 }, "Invalid URL.");
 
-postSchema.path("tags").validate((tags) => {
+postSchema.path("tags").validate(async (tags) => {
     let valid = true;
-    tags.forEach((tag) => {
-        valid = Languages.isValid(tag);
-    });
+    let canMakeCustomTags = false;
+    
+    const authorObject = await Users.findOne({ username: postSchema.path("author") });
+console.log(authorObject);
+    if (authorObject.posts.length >= 5) {
+        canMakeCustomTags = true;
+    }
+
+    if (!canMakeCustomTags) {
+        tags.forEach((tag) => {
+            valid = Languages.isValid(tag);
+        });
+    }
+
     return valid;
 }, "Invalid language tag.");
 
