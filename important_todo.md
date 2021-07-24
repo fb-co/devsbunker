@@ -10,9 +10,9 @@
 
     -   check out configs/RateLimiter to add rules
 
--   [ ] some languages tags like Javascript throw Invalid Language Tag error
+-   [x] some languages tags like Javascript throw Invalid Language Tag error
 
-    -   must be something related to the serverside langiages list, havent been able to fully check out your latest progress for tags
+    - [x] must be something related to the serverside langiages list, havent been able to fully check out your latest progress for tags
 
 -   [x] fix more options layout in descriptive cards
 

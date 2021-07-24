@@ -5,7 +5,7 @@
         every time you hovered over the text container or the icons parent itself
     -->
     <div v-if="!deleted" class="project_box" ref="image_div" @click="routeToPost()" :class="{ default_image: isDefault }">
-        <div @click.stop="" class="top_text_container" ref="icons" @mouseover="showIcons()" @mouseleave="hideIcons()">
+        <div @click.stop="" class="top_text_container fix_random_highlights" ref="icons" @mouseover="showIcons()" @mouseleave="hideIcons()">
             <!--Not filled icon -->
             <div class="icon_container">
                 <svg
