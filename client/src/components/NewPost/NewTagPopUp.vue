@@ -27,6 +27,7 @@
             </div>
 
             <QueryInput ref="tag_search" :placeholder="inputPlaceholder" :searchFor="searchFor" />
+            <p class="add_cust_tag_btn">Add Custom Tag</p>
             <button @click="add_entry()" v-if="searchFor==='links'" class="add_link_btn">Add</button>
 
             <div v-for="entry in selected_entries" :key="entry" class="contributer">
@@ -215,6 +216,23 @@ export default {
 }
 .add_link_btn:hover {
     box-shadow: 0px 4px 20px var(--main-accent);
+}
+
+.add_cust_tag_btn {
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    font-size: 12px;
+    width: 125px;
+    margin: 15px auto 0px auto;
+    border: none;
+    border-radius: 3px;
+    padding: 5px;
+    background-color: var(--main-accent);
+    cursor: pointer;
+}
+.add_cust_tag_btn:hover {
+    box-shadow: 0px 0px 10px var(--main-accent);
 }
 
 .remove_cont_container {
