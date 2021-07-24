@@ -27,7 +27,7 @@
             </div>
 
             <QueryInput ref="tag_search" :placeholder="inputPlaceholder" :searchFor="searchFor" />
-            <p class="add_cust_tag_btn">Add Custom Tag</p>
+            <p v-if="searchFor==='languages'" @click="add_custom_tag()" class="add_cust_tag_btn">Add Custom Tag</p>
             <button @click="add_entry()" v-if="searchFor==='links'" class="add_link_btn">Add</button>
 
             <div v-for="entry in selected_entries" :key="entry" class="contributer">
@@ -57,12 +57,14 @@
                 </div>
             </div>
         </div>
+        <AddCustomTagPopup @addedTag="add_entry" :addedTags="entries" ref="add_cust_tag" />
     </div>
 </template>
 
 <script>
 import QueryInput from "@/components/QueryInput.vue";
 import CreateTag from "./CreateTag";
+import AddCustomTagPopup from "./AddCustomTagPopup.vue";
 
 export default {
     data() {
@@ -74,6 +76,7 @@ export default {
     components: {
         QueryInput,
         CreateTag,
+        AddCustomTagPopup,
     },
     props: {
         name: String,
@@ -116,6 +119,10 @@ export default {
             }
         },
 
+        add_custom_tag() {
+            this.$refs.add_cust_tag.open();
+        },
+
         add_entry(value) {
             let duplicate = false;
 
@@ -124,7 +131,7 @@ export default {
             }
             if (value !== "" && value != null) {
                 for (let i = 0; i < this.selected_entries.length; i++) {
-                    if (this.selected_entries[i] == value) {
+                    if (this.selected_entries[i].toLowerCase() == value.toLowerCase()) {
                         duplicate = true;
                     }
                 }
