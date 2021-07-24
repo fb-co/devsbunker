@@ -5,6 +5,7 @@
 -   [ ] consider switching to `refs` like i did for the comments, this implies a ton of refactoring tho
 
 ## High Priority
+-   [ ] Limit length of things like email
 
 -   [ ] rate-limiting on other routes such as GraphQL stuff (only critical ones, for less critical routes we should add a less strict rate limiter)
 
