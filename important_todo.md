@@ -6,9 +6,9 @@
 
 ## High Priority
 
--   [ ] make sure to toggle back on clientside post validation
+-   [x] make sure to toggle back on clientside post validation
 
-    -   [ ] links should not be mandatory
+-   [ ] links should not be mandatory
 
 -   [ ] Limit length of things like email
 

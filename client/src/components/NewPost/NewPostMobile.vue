@@ -444,17 +444,15 @@ export default {
                 }
 
                 if (valid) {
-                    for (const tag of payload.tags) {
-                        valid = Languages.check(tag);
-                        if (!valid) {
-                            errmsg = "Invalid tag. Please select a valid language";
-                            break;
+                    if (this.$store.getters.posts_amt < 5) { // validate tags if the user has less than five posts
+                        for (const tag of payload.tags) {
+                            valid = Languages.check(tag);
+                            if (!valid) {
+                                errmsg = "Invalid tag. Please select a valid language";
+                                break;
+                            }
                         }
                     }
-                    // let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
-                    // if (findDuplicates(payload.tags).length) {
-                    //     errmsg = "Duplicate tags are not allowed.";
-                    // }
                 } else {
                     errmsg = "The entered URL is not a valid URL.";
                 }
@@ -476,8 +474,8 @@ export default {
                 tags: this.tags,
             };
 
-            // const check = this.validatePostPayload(post);
-            const check = {success: true};
+            const check = this.validatePostPayload(post);
+            
             if (this.files.length > 5) {
                 this.$store.dispatch("alertUser", { msg: "You can upload 5 files max.", type: "error", title: "Error" });
             } else {
