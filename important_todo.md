@@ -5,15 +5,22 @@
 -   [ ] consider switching to `refs` like i did for the comments, this implies a ton of refactoring tho
 
 ## High Priority
+
+-   [ ] make sure to toggle back on clientside post validation
+
+    -   [ ] links should not be mandatory
+
 -   [ ] Limit length of things like email
 
 -   [ ] rate-limiting on other routes such as GraphQL stuff (only critical ones, for less critical routes we should add a less strict rate limiter)
 
     -   check out configs/RateLimiter to add rules
 
+    -   i couldnt find a ratelimiter for GraphQL that worked with Apollo, might need more time/help/make a custom one
+
 -   [x] some languages tags like Javascript throw Invalid Language Tag error
 
-    - [x] must be something related to the serverside langiages list, havent been able to fully check out your latest progress for tags
+    -   [x] must be something related to the serverside langiages list, havent been able to fully check out your latest progress for tags
 
 -   [x] fix more options layout in descriptive cards
 
