@@ -476,8 +476,8 @@ export default {
                 tags: this.tags,
             };
 
-            const check = this.validatePostPayload(post);
-
+            // const check = this.validatePostPayload(post);
+            const check = {success: true};
             if (this.files.length > 5) {
                 this.$store.dispatch("alertUser", { msg: "You can upload 5 files max.", type: "error", title: "Error" });
             } else {
@@ -486,6 +486,8 @@ export default {
                     this.creatingPost = true;
                     GraphQLService.createNewPost(this.$store.getters.accessToken, post)
                         .then((returnPost) => {
+                            console.warn(returnPost);
+
                             if (returnPost.errors?.length) {
                                 // hide loading gif even if there are errors
                                 this.creatingPost = false;
