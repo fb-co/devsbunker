@@ -57,6 +57,7 @@ export default gql`
         following: [String]!
         liked_posts: [String]!
         profile_pic: String
+        postsAmt: Int
     }
 
     type CommentResponse {

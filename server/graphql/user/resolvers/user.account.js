@@ -1,4 +1,5 @@
 import User from "../../../components/user/user.model.js";
+import Posts from "../../../components/post/post.model.js";
 import bcrypt from "bcrypt";
 import SessionRevoker from "../../../components/tokens/SessionRevoker.js";
 import TokenHandler from "../../../components/tokens/TokenHandler.js";
@@ -171,12 +172,14 @@ export default {
 
                 if (user && user.enabled) {
                     let unreadAmt = 0;
-
+                    
                     for (let i = 0; i < user.notifications.length; i++) {
                         if (!user.notifications[i].read) {
                             unreadAmt++;
                         }
                     }
+                    
+                    const postsAmt = await Posts.find({ author: user.username }).countDocuments();
 
                     return {
                         username: user.username,
@@ -190,6 +193,7 @@ export default {
                         followers: user.followers,
                         following: user.following,
                         profile_pic: user.profile_pic,
+                        postsAmt: postsAmt,
                     };
                 } else {
                     console.error(err);

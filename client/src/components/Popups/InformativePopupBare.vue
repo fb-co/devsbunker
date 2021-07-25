@@ -1,6 +1,6 @@
 <!-- This is basically just the informative popup, except whithought the question mark so you can control it from some other click binding -->
 <template>
-    <div>
+    <div @mousedown.stop="">
         <div @click.stop="close()" v-if="informationOpen" class="backdrop" />
         <div @click.stop="" v-if="informationOpen" class="information_container" :class="{ information_container_desktop: !this.$store.getters.mobile, information_container_mobile: this.$store.getters.mobile }">
             <div class="cont_header">

@@ -59,7 +59,7 @@ export default {
         } else {
             this.notifications = [];
         }
-
+        
         /*
         const cache = await caches.open("devsCache");
         cache.match("http://localhost:5000/graphql").then((result) => {

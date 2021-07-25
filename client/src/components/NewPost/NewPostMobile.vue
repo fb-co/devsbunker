@@ -486,8 +486,6 @@ export default {
                     this.creatingPost = true;
                     GraphQLService.createNewPost(this.$store.getters.accessToken, post)
                         .then((returnPost) => {
-                            console.warn(returnPost);
-
                             if (returnPost.errors?.length) {
                                 // hide loading gif even if there are errors
                                 this.creatingPost = false;
@@ -504,6 +502,10 @@ export default {
                                     this.$store.dispatch("alertUser", { msg: res.message, type: "error", title: "Error" });
                                     return;
                                 }
+                                
+                                // code for when the post was successfully created
+                                
+                                this.$store.commit("addPostToCount"); // update the total post count in the store
                                 this.$store.dispatch("alertUser", { msg: "Created post!", type: "success", title: "Success" });
 
                                 if (this.$route.name == "Home") {

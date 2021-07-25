@@ -5,6 +5,7 @@ import GraphQLService from "@/services/graphql.service.js";
 const state = {
     pfpLink: undefined,
     unreadNotificationsAmt: undefined,
+    postsAmt: undefined,
 };
 
 const getters = {
@@ -13,6 +14,9 @@ const getters = {
     },
     unread_notifications: (state) => {
         return state.unreadNotificationsAmt;
+    },
+    posts_amt: (state) => {
+        return state.postsAmt;
     },
 };
 
@@ -23,11 +27,19 @@ const mutations = {
     cacheUnreadNotificationsAmt(state, amt) {
         state.unreadNotificationsAmt = amt;
     },
+    cachePostsAmt(state, amt) {
+        state.postsAmt = amt;
+    },
     removePersonalPfpLink(state) {
         state.pfpLink = null;
     },
     readNotifications(state) {
         state.unreadNotificationsAmt = 0;
+    },
+
+    // will just increment the amount of posts by one, saves server resources by not asking it to count them all again
+    addPostToCount(state) {
+        state.postsAmt++;
     },
 };
 
@@ -35,7 +47,7 @@ const actions = {
     async fetchPageLoadData({ commit, rootState }) {
         const storedLink = localStorage.getItem("profile_pic_link");
 
-        let dataToFetch = ["unreadNotificationAmt"];
+        let dataToFetch = ["unreadNotificationAmt", "postsAmt"];
         let pfpLink;
 
         // TODO: I don't really like this if statement
@@ -62,6 +74,7 @@ const actions = {
                 );
             }
             commit("cacheUnreadNotificationsAmt", res.data.getPersonalDetails.unreadNotificationAmt);
+            commit("cachePostsAmt", res.data.getPersonalDetails.postsAmt);
             // add the pfp link to localstorage if its not already in there
             if (!storedLink) {
                 if (/http/.test(res.data.getPersonalDetails.profile_pic)) {
@@ -75,6 +88,7 @@ const actions = {
     flush_user_data({ commit }) {
         commit("cachePersonalPfpLink", undefined);
         commit("cacheUnreadNotificationsAmt", undefined);
+        commit("cachePostsAmt", undefined);
     },
     check_and_cache_pfp({ commit }) {
         const storedLink = localStorage.getItem("profile_pic_link");

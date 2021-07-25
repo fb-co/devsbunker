@@ -58,6 +58,9 @@
             </div>
         </div>
         <AddCustomTagPopup @addedTag="add_entry" :addedTags="entries" ref="add_cust_tag" />
+        <InformativePopupBare title="Custom Tags" ref="not_enough_posts">
+            <p>Custom tags are only available to users with five or more posts.</p>
+        </InformativePopupBare>
     </div>
 </template>
 
@@ -65,6 +68,7 @@
 import QueryInput from "@/components/QueryInput.vue";
 import CreateTag from "./CreateTag";
 import AddCustomTagPopup from "./AddCustomTagPopup.vue";
+import InformativePopupBare from "@/components/Popups/InformativePopupBare.vue";
 
 export default {
     data() {
@@ -77,6 +81,7 @@ export default {
         QueryInput,
         CreateTag,
         AddCustomTagPopup,
+        InformativePopupBare,
     },
     props: {
         name: String,
@@ -120,7 +125,11 @@ export default {
         },
 
         add_custom_tag() {
-            this.$refs.add_cust_tag.open();
+            if (this.$store.getters.posts_amt >= 5) {
+                this.$refs.add_cust_tag.open();
+            } else {
+                this.$refs.not_enough_posts.open();
+            }
         },
 
         add_entry(value) {
