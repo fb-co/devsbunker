@@ -238,7 +238,6 @@ export default {
                 };
             } catch (err) {
                 // best error handling I ever made
-                console.error(err.errors.description);
 
                 throw new Error(
                     `Unable to create post: ${

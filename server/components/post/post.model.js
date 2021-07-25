@@ -1,7 +1,6 @@
 import Languages from "../languages/languages.list.js";
 import mongoose from "mongoose";
 import PostLimits from "./post_limits.js";
-import Users from "../user/user.model.js";
 
 const requiredString = {
     type: String,
@@ -29,6 +28,27 @@ const postSchema = new mongoose.Schema(
         },
         tags: {
             type: Array,
+            validate: {
+                validator: async function (tags) {
+                    let valid = true;
+                    let canMakeCustomTags = false;
+
+                    const postsMade = await mongoose.model("Post", postSchema).find({ author: this.author });
+                    if (postsMade.length >= 5) {
+                        canMakeCustomTags = true;
+                    }
+
+                    if (!canMakeCustomTags) {
+                        for (const tag of tags) {
+                            valid = Languages.isValid(tag);
+                            if (!valid) break;
+                        }
+                    }
+
+                    return valid;
+                },
+                message: (props) => `${props.value} is not a valid tag.`,
+            },
         },
         likes: {
             type: Array,
@@ -96,25 +116,6 @@ postSchema.path("links").validate((urls) => {
 
     return valid;
 }, "Invalid URL.");
-
-postSchema.path("tags").validate(async (tags) => {
-    let valid = true;
-    let canMakeCustomTags = false;
-    
-    const authorObject = await Users.findOne({ username: postSchema.path("author") });
-console.log(authorObject);
-    if (authorObject.posts.length >= 5) {
-        canMakeCustomTags = true;
-    }
-
-    if (!canMakeCustomTags) {
-        tags.forEach((tag) => {
-            valid = Languages.isValid(tag);
-        });
-    }
-
-    return valid;
-}, "Invalid language tag.");
 
 postSchema.path("title").validate((title) => {
     return title.length <= PostLimits.maxTitleLength;
