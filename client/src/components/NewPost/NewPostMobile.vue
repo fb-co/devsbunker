@@ -438,7 +438,7 @@ export default {
 
             // had to break this down because of async pain (i think)
             let errmsg = null;
-            if (payload.title && payload.description && payload.links.length && payload.tags.length) {
+            if (payload.title && payload.description && payload.tags.length) {
                 for (const link of payload.links) {
                     valid = regex.test(link);
                 }

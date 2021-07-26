@@ -125,9 +125,11 @@
                 </div>
                 <p id="description"><pre>{{ projectData.description }}</pre></p>
                 
-                <p class="links_label">Links</p>
-                <div class="links_container">
-                    <Link v-for="(link, index) in projectData.links" :key="index" :link="link" :hoverEffect="true" class="desktop_link" />
+                <div v-if="projectData.links.length > 0">
+                    <p class="links_label">Links</p>
+                    <div class="links_container">
+                        <Link v-for="(link, index) in projectData.links" :key="index" :link="link" :hoverEffect="true" class="desktop_link" />
+                    </div>
                 </div>
 
                 <Carousel v-if="projectData.images.length > 0" class="main_carousel" :images="postImages" minWidth="100%" />

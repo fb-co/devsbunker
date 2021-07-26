@@ -111,9 +111,11 @@
         </div>
         <p class="newPostTag">Description</p>
         <p class="post_description"><pre>{{projectData.description}}</pre></p>
-        <p class="newPostTag">Links</p>
-        <div class="links_container">
-            <Link v-for="link in projectData.links" :key="link" :link="link" class="link_item" />
+        <div v-if="projectData.links.length > 0">
+            <p class="newPostTag">Links</p>
+            <div class="links_container">
+                <Link v-for="link in projectData.links" :key="link" :link="link" class="link_item" />
+            </div>
         </div>
         <CarouselMobile v-if="projectData.images.length > 0" :images="postImages" />
 

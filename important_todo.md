@@ -8,7 +8,7 @@
 
 -   [x] make sure to toggle back on clientside post validation
 
--   [ ] links should not be mandatory
+-   [x] links should not be mandatory
 
 -   [ ] Limit length of things like email
 
