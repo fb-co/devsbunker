@@ -8,6 +8,12 @@ const userSchema = new mongoose.Schema(
             required: [true, "can't be blank"],
             match: [/^[a-zA-Z0-9_-]+$/, "is invalid"],
             index: true,
+            validate: {
+                validator: function(username) {
+                    return username.length < 60; 
+                },
+                message: () => `Username is too long.`,
+            },
         },
         email: {
             type: String,
@@ -15,6 +21,12 @@ const userSchema = new mongoose.Schema(
             unique: true,
             match: [/\S+@\S+\.\S+/, "is invalid"],
             index: true,
+            validate: {
+                validator: function(email) {
+                    return email.length < 70; 
+                },
+                message: () => `Email is too long.`,
+            },
         },
 
         desc: {

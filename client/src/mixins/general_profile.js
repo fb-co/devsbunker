@@ -41,10 +41,12 @@ const GeneralProfile = {
                 });
             }
             if (newEmail != this.userObject.email) {
-                fields.push({
-                    field: "email",
-                    newValue: newEmail
-                });
+                //if (newEmail.length <= 70) {
+                    fields.push({
+                        field: "email",
+                        newValue: newEmail
+                    });
+                //}
             } else {
                 this.emailInInput = newEmail; // override vue's value binding
                 this.invalidEmail = false;
