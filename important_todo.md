@@ -6,6 +6,7 @@
 
 ## High Priority
 
+-   [ ] Stoopid ass notifications stopped working randomly (check console)
 -   [x] make sure to toggle back on clientside post validation
 
 -   [x] links should not be mandatory
