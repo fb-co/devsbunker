@@ -495,14 +495,13 @@ export default {
                             FileUploadService.addPostImages(this.files, returnPost.data.makePost.id, this.$store.getters.accessToken).then(async (res) => {
                                 // hide loading gif if it reaches this point
                                 this.creatingPost = false;
-                                
+
                                 if (!/Successfully/.test(res.message)) {
                                     this.$store.dispatch("alertUser", { msg: res.message, type: "error", title: "Error" });
                                     return;
                                 }
                                 
                                 // code for when the post was successfully created
-                                
                                 this.$store.commit("addPostToCount"); // update the total post count in the store
                                 this.$store.dispatch("alertUser", { msg: "Created post!", type: "success", title: "Success" });
 

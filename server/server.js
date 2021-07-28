@@ -32,6 +32,8 @@ const corsOptions = {
     credentials: true,
 };
 
+import { createRateLimitDirective, createRateLimitTypeDef } from "graphql-rate-limit-directive";
+
 import express from "express";
 const app = express();
 
@@ -56,10 +58,13 @@ import typeDefs from "./graphql/typeDefs.js";
 import resolvers from "./graphql/resolvers.js";
 
 const server = new ApolloServer({
-    typeDefs,
+    typeDefs: [createRateLimitTypeDef(), typeDefs],
     resolvers,
     context: ({ req, res }) => ({ req, res }),
     formatError,
+    schemaDirectives: {
+        rateLimit: createRateLimitDirective(),
+    },
 });
 
 server.applyMiddleware({ app, cors: false });
