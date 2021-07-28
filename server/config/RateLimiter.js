@@ -4,17 +4,17 @@ import rateLimit from "express-rate-limit";
 // see https://expressjs.com/en/guide/behind-proxies.html
 // app.set('trust proxy', 1);
 
-const LimiterOneReq15Min = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 1,
-    message: {
-        error: true,
-        type: "rate limit",
-        message: "Too many requests",
-        handler: function (_, res) {
-            res.status(options.statusCode).json(options.message);
+export default function craftRateLimiter(timeInMins, reqsAmt) {
+    return rateLimit({
+        windowMs: timeInMins * 60 * 1000,
+        max: reqsAmt,
+        message: {
+            error: true,
+            type: "rate limit",
+            message: "Too many requests",
+            handler: function (_, res) {
+                res.status(options.statusCode).json(options.message);
+            },
         },
-    },
-});
-
-export { LimiterOneReq15Min };
+    });
+}

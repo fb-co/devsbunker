@@ -96,13 +96,13 @@ export default gql`
     }
 
     type Mutation {
-        makePost(data: makePostInput): FetchablePost! @rateLimit(limit: 1, duration: 900)
-        likePost(postId: String!): FetchablePost
-        unlikePost(postId: String!): FetchablePost
-        savePost(postId: String!): FetchablePost
-        unSavePost(postId: String!): savedPostOutput
-        commentOnPost(postId: String!, comment: String!, timestamp: String!): CommentResponse
-        replyToComment(commentId: String!, reply: String!): CommentReplyResponse
-        deletePost(postId: String!): GeneralActionStatus!
+        makePost(data: makePostInput): FetchablePost! @rateLimit(limit: 3, duration: 900)
+        likePost(postId: String!): FetchablePost @rateLimit(limit: 50, duration: 5)
+        unlikePost(postId: String!): FetchablePost @rateLimit(limit: 50, duration: 5)
+        savePost(postId: String!): FetchablePost @rateLimit(limit: 50, duration: 5)
+        unSavePost(postId: String!): savedPostOutput @rateLimit(limit: 50, duration: 5)
+        commentOnPost(postId: String!, comment: String!, timestamp: String!): CommentResponse @rateLimit(limit: 10, duration: 5)
+        replyToComment(commentId: String!, reply: String!): CommentReplyResponse @rateLimit(limit: 10, duration: 5)
+        deletePost(postId: String!): GeneralActionStatus! @rateLimit(limit: 50, duration: 5)
     }
 `;

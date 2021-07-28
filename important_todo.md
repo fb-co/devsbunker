@@ -6,18 +6,20 @@
 
 ## High Priority
 
--   [ ] Stoopid ass notifications stopped working randomly (check console)
+-   [x] Stoopid ass notifications stopped working randomly (check console)
 -   [x] make sure to toggle back on clientside post validation
 
 -   [x] links should not be mandatory
 
 -   [x] Limit length of things like email
 
--   [ ] rate-limiting on other routes such as GraphQL stuff (only critical ones, for less critical routes we should add a less strict rate limiter)
+-   [x] rate-limiting on other routes such as GraphQL stuff (only critical ones, for less critical routes we should add a less strict rate limiter)
 
     -   check out configs/RateLimiter to add rules
 
     -   i couldnt find a ratelimiter for GraphQL that worked with Apollo, might need more time/help/make a custom one
+
+    -   [ ] test it by also adding feedback
 
 -   [x] some languages tags like Javascript throw Invalid Language Tag error
 
