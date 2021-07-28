@@ -5,7 +5,7 @@
         <!-- Weirdly this doesn't work, data here is fetched correctly but the props are undefined -->
         <ProfileMobile v-if="$store.getters.mobile && userObject" :mainUserObject="userObject" />
         <ProfileDesktop v-if="!$store.getters.mobile && userObject" :mainUserObject="userObject" />
-        <GeneralError v-if="userObject === undefined" :error="error" />
+        <GeneralError v-if="userObject === false" :error="error" />
     </div>
 </template>
 
@@ -41,6 +41,7 @@ export default {
             this.userObject = res.data.getPersonalDetails;
         } else {
             this.error = res.errors[0].message;
+            this.userObject = false;
         }
     },
     methods: {
