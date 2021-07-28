@@ -338,10 +338,14 @@ export default {
 
                         throw new AuthenticationError("Unable to create token.");
                     }
-                } catch {
-                    res.status(401);
+                } catch (err) {
+                    res.status(401); // why is it throwing unauthed here?
 
-                    throw new AuthenticationError("Credentials are already taken.");
+                    if (/duplicate/.test(err.message)) {
+                        throw new AuthenticationError("Credentials are already taken.");
+                    } else if (/too long/.test(err.message)) {
+                        throw new AuthenticationError(err.message.substring(24));
+                    }
                 }
             } else {
                 res.status(400);

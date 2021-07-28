@@ -59,7 +59,6 @@ const GeneralProfile = {
                 GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
                     // set loading flag to false
                     this.savingResults = false;
-
                     if (!res.errors) {
                         const data = res.data.updateUserDetails.changedData;
                         
@@ -81,19 +80,23 @@ const GeneralProfile = {
                         this.cancelFieldsEdit();
                     } else {
                         const editedValue = newEmail;
+                        let failedEmailMessage = "Invalid Email";
 
                         // todo: make better invalid field or error handling
                         for (let i = 0; i < res.errors.length; i++) {
                             if (res.errors[i].message === "Invalid email") {
                                 this.invalidEmail = true;
+                            } else if (res.errors[i].message.includes('too long')) {
+                                this.invalidEmail = true;
+                                failedEmailMessage = "Email Is Too Long";
                             }
                         }
 
                         this.emailInInput = editedValue; // override vue's value binding
-
-                        // add success feedback here
+                        
+                        // add failiure feedback here
                         if (this.invalidEmail) {
-                            this.$store.dispatch("alertUser", { msg: "Invalid email", type: "error", title: "Error" });
+                            this.$store.dispatch("alertUser", { msg: failedEmailMessage, type: "error", title: "Error" });
                         } else {
                             this.$store.dispatch("alertUser", { msg: "Something went wrong updating details.", type: "error", title: "Error" });
                         }

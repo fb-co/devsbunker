@@ -317,6 +317,11 @@ export default {
                             setTimeout(() => {
                                 this.submitted = false;
                             }, 1500);
+                        } else if (/too long/.test(message)) {
+                            this.errMessage = message.substring(message.indexOf(":")+2); //best code I ever wrote
+                            setTimeout(() => {
+                                this.submitted = false;
+                            }, 1500);
                         } else {
                             this.errMessage = "Internal error. Please try again later.";
                             setTimeout(() => {
