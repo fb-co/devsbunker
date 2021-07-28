@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
             default: "No Description",
             validate: {
                 validator: function(desc) {
-                    return email.length < 20000; // maybe load in this number from the limits file
+                    return desc.length < 20000; // maybe load in this number from the limits file
                 },
                 message: () => `Description is too long.`,
             },
