@@ -155,7 +155,7 @@
             <div class="otherOption">
                 <p class="otherOption">Or login with</p>
 
-                <a style="cursor: pointer;" href="http://devsbunker.com:5000/auth/github">
+                <a style="cursor: pointer;" :href="auth_url">
                     <svg
                         v-if="darkTheme"
                         xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -294,6 +294,7 @@ export default {
             errMessage: "",
             hidePassword: "",
             submitted: false,
+            auth_url: process.env.VUE_APP_GITHUB_AUTH_URL,
         };
     },
     components: {
