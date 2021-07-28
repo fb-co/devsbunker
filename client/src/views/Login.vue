@@ -1,8 +1,7 @@
 <template>
     <div class="login">
         <div class="loginForm" v-if="!submitted">
-            <p v-if="!errMessage" class="cardTitle">Login</p>
-            <p v-if="errMessage" class="cardTitle err">{{ errMessage }}</p>
+            <p class="cardTitle" :class="{ err: errMessage != '' }">Login</p>
 
             <form name="login" v-on:submit.prevent="submitForm">
                 <svg
@@ -318,6 +317,7 @@ export default {
                         this.submitted = false;
                     }, 1500);
                 }
+                this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: this.errMessage });
             } else {
                 const result = response.data.loginUser;
 
