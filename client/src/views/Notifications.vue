@@ -44,16 +44,19 @@ export default {
         GraphQLService.getAndReadNotifications(
             this.$store.getters.accessToken
         ).then((res) => {
-            console.log(res);
-            this.notifications = res.data.getAndReadNotifications;
+            if (!res.errors) {
+                this.notifications = res.data.getAndReadNotifications;
 
-            // make any like or follow notifications read
-            this.notifications.forEach((item) => {
-                if (item.type == "like" || item.type == "follow") {
-                    item.read = true;
-                }
-            });
-            this.$store.commit("readNotifications");
+                // make any like or follow notifications read
+                this.notifications.forEach((item) => {
+                    if (item.type == "like" || item.type == "follow") {
+                        item.read = true;
+                    }
+                });
+                this.$store.commit("readNotifications");
+            } else {
+                this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.errors[0].message });
+            }  
         });
     },
 };
