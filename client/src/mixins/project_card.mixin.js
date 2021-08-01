@@ -28,7 +28,8 @@ const projectCard = {
         },
         unsavePost(id) {
             GraphQLService.unSavePost(this.$store.getters.accessToken, id).then((unSavedPost) => {
-                if (unSavedPost.errors) {
+                console.log(unSavedPost);
+                if (!unSavedPost.errors) {
                     this.projectData.isSaved = false;
                     this.$store.dispatch("updatePost", {
                         id: id,
