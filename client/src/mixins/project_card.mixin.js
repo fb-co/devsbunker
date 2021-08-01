@@ -14,22 +14,28 @@ const projectCard = {
             }
 
             GraphQLService.savePost(this.$store.getters.accessToken, id).then((savedPost) => {
-                this.projectData.isSaved = savedPost.data.savePost.isSaved;
+                if (!savedPost.errors) {
+                    this.projectData.isSaved = savedPost.data.savePost.isSaved;
 
-                this.$store.dispatch("updatePost", {
-                    id: id,
-                    fieldsToUpdate: [{ field: "isSaved", newVal: savedPost.data.savePost.isSaved }],
-                }); // update post in cache
+                    this.$store.dispatch("updatePost", {
+                        id: id,
+                        fieldsToUpdate: [{ field: "isSaved", newVal: savedPost.data.savePost.isSaved }],
+                    }); // update post in cache
+                } else {
+                    this.$store.dispatch("alertUser", { msg: savedPost.errors[0].message, type: "error", title: "Error" });
+                }
             });
         },
         unsavePost(id) {
             GraphQLService.unSavePost(this.$store.getters.accessToken, id).then((unSavedPost) => {
-                if (unSavedPost.data.unSavePost) {
+                if (unSavedPost.errors) {
                     this.projectData.isSaved = false;
                     this.$store.dispatch("updatePost", {
                         id: id,
                         fieldsToUpdate: [{ field: "isSaved", newVal: unSavedPost.data.unSavePost.isSaved }],
                     }); // update post in cache
+                } else {
+                    this.$store.dispatch("alertUser", { msg: unSavedPost.errors[0].message, type: "error", title: "Error" });
                 }
             });
         },
