@@ -60,7 +60,7 @@ export default {
     flex-direction: column;
     text-align: left;
     padding: 10px;
-    max-width: 70%;
+    max-width: 60%;
 }
 .user_card_profile_pic {
     display: flex;
