@@ -160,11 +160,7 @@
                 <p>Delete Post</p>
             </div>
         </MobileMoreOptions>
-        <ConfirmationPopup 
-            ref="delete_confirmation" 
-            msg="Are you sure you want to delete this post?" 
-            @confirm="deletePost()"
-        />
+        <ConfirmationPopup ref="delete_confirmation" msg="Are you sure you want to delete this post?" @confirm="deletePost()" />
     </div>
 </template>
 
@@ -185,7 +181,7 @@ export default {
     mixins: [ProjectCardUtils],
     components: {
         MobileMoreOptions,
-        ConfirmationPopup
+        ConfirmationPopup,
     },
     props: {
         projectData: Object,
@@ -238,9 +234,9 @@ export default {
             this.closeMoreOptions();
             GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
                 if (res.errors) {
-                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong deleting post" });
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
                 } else if (!res.data.deletePost.success) {
-                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong deleting post" });
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
                 } else {
                     this.deleted = true;
                     this.$store.dispatch("alertUser", { type: "success", title: "Success", msg: "Deleted post" });
@@ -250,7 +246,7 @@ export default {
         copyPostLink() {
             this.closeMoreOptions();
             this.$store.dispatch("alertUser", { type: "success", title: "Copied link to clipboard" });
-        }
+        },
     },
     watch: {
         projectData: function(newVal) {
@@ -280,7 +276,7 @@ export default {
     margin: 10px;
     flex: 1; /* Makes it stretch to fill container */
     box-shadow: 0px 0px 7px var(--drop-shadow);
-    
+
     /*
     min-width: 250px;
     max-width: 300px;
@@ -291,7 +287,6 @@ export default {
 
     background-size: cover;
     background-position: center;
-
 }
 .default_image {
     background-color: var(--accent);
@@ -303,20 +298,20 @@ export default {
     top: 0;
     left: 0;
     z-index: 0;
-    background-color: rgba(0, 0, 0, 0); 
+    background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
 }
 .hover_overlay:hover {
     animation: hover_animation 0.4s;
-    background-color: rgba(0, 0, 0, 0.3); 
+    background-color: rgba(0, 0, 0, 0.3);
 }
 .text_container:hover ~ .hover_overlay {
     animation: hover_animation 0.4s;
-    background-color: rgba(0, 0, 0, 0.3); 
+    background-color: rgba(0, 0, 0, 0.3);
 }
 .top_text_container:hover ~ .hover_overlay {
     animation: hover_animation 0.4s;
-    background-color: rgba(0, 0, 0, 0.3); 
+    background-color: rgba(0, 0, 0, 0.3);
 }
 .hover_overlay:hover ~ .top_text_container {
     display: flex;
