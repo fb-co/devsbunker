@@ -96,10 +96,14 @@ export default {
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Comment length must be less than 5,000 characters" });
                 } else {
                     GraphQLService.replyToComment(this.$store.getters.accessToken, this.commentData.id, this.$refs.reply_field.value).then((res) => {
-                        const reply = res.data.replyToComment;
-                        this.commentData.replies.push(reply);
+                        if (!res.errors) {
+                            const reply = res.data.replyToComment;
+                            this.commentData.replies.push(reply);
 
-                        this.cancelReply();
+                            this.cancelReply();
+                        } else {
+                            this.$store.dispatch("alertUser", { msg: res.errors[0].message, type: "error", title: "Error" });
+                        }
                     });
                 }
             }

@@ -103,10 +103,14 @@ export default {
         },
         async postComment(value) {
             const response = await GraphQLService.commentOnPost(this.postData.id, value, this.$store.getters.accessToken);
-            
+
             // if it was successfull
-            if (response.data.commentOnPost.userId != null) {
+            if (!response.errors) {
                 this.postData.comments.push(response.data.commentOnPost);
+            } else {
+                this.$store.dispatch("alertUser", { msg: response.errors[0].message, type: "error", title: "Error" });
+                // forcing comments update to hide the loading gif
+                this.postData.comments.push();
             }
         },
         async getMoreComments() {
