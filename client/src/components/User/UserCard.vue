@@ -37,9 +37,6 @@ export default {
     components: {
         ProfilePicture,
     },
-    created() {
-        console.log(this.authorData);
-    },
 };
 </script>
 

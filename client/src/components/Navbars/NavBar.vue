@@ -10,7 +10,6 @@
                 class="menu_logo"
                 :class="{ menu_logo_desktop: !$store.getters.mobile, menu_logo_mobile: $store.getters.mobile }"
             >
-                <div v-if="!$store.getters.mobile" style="flex-grow: 1;" />
                 <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
                 <img v-if="!$store.getters.mobile" src="../../assets/LOGO.svg" alt="Logo" class="logo_desktop" />
                 <img v-else src="../../assets/LOGOSIMPLE.svg" alt="Logo" class="logo_mobile" />
@@ -260,27 +259,24 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 .menu_logo_desktop {
-    width: 300px;
+    width: 250px;
 }
 .menu_logo_mobile {
     width: 100px;
 }
+
 .menu_logo img {
-    height: 90%;
-    margin: 0 auto;
+    height: 85%;
 }
 .logo_mobile {
     padding: 10px;
     margin-left: 15px;
-    transform: scale(0.8);
     margin-top: -4px;
 }
 
-.logo_desktop {
-    margin-left: 30px;
-}
 .nav_links_container {
     display: flex;
     flex-direction: row;
