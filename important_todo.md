@@ -19,7 +19,7 @@
 
     -   i couldnt find a ratelimiter for GraphQL that worked with Apollo, might need more time/help/make a custom one
 
-    -   [ ] test it by also adding feedback
+    -   [x] test it by also adding feedback
 
 -   [x] some languages tags like Javascript throw Invalid Language Tag error
 

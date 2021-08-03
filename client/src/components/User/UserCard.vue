@@ -2,7 +2,7 @@
     <div class="user_card_container" @click="routeToUser()">
         <div class="user_card_info">
             <p class="user_name">{{ authorData.username }}</p>
-            <p class="user_desc">{{ authorData.description }}</p>
+            <p class="user_desc">{{ authorData.desc }}</p>
             <div class="placeholder"></div>
             <div class="user_details">
                 <div v-if="$store.getters.accessToken && authorData.username !== $store.getters.username" class="follow_btn_container">
@@ -37,6 +37,9 @@ export default {
     components: {
         ProfilePicture,
     },
+    created() {
+        console.log(this.authorData);
+    },
 };
 </script>
 
@@ -60,7 +63,7 @@ export default {
     flex-direction: column;
     text-align: left;
     padding: 10px;
-    max-width: 70%;
+    max-width: 60%;
 }
 .user_card_profile_pic {
     display: flex;

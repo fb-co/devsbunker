@@ -98,7 +98,7 @@ const GeneralProfile = {
                         if (this.invalidEmail) {
                             this.$store.dispatch("alertUser", { msg: failedEmailMessage, type: "error", title: "Error" });
                         } else {
-                            this.$store.dispatch("alertUser", { msg: "Something went wrong updating details.", type: "error", title: "Error" });
+                            this.$store.dispatch("alertUser", { msg: res.errors[0].message, type: "error", title: "Error" });
                         }
                     }
                 });

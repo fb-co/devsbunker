@@ -116,26 +116,26 @@ export default gql`
     }
 
     type Query {
-        user(username: String!, requester: String): FetchableUser @rateLimit(limit: 50, duration: 5)
+        user(username: String!, requester: String): FetchableUser @rateLimit(limit: 50, duration: 300)
 
-        getUsers(sortMethod: String!, lastUserId: String!, lastUniqueField: String): LoadUsersResponse! @rateLimit(limit: 50, duration: 5)
+        getUsers(sortMethod: String!, lastUserId: String!, lastUniqueField: String): LoadUsersResponse! @rateLimit(limit: 50, duration: 300)
 
-        getPersonalDetails: PersonalUserDetails @rateLimit(limit: 50, duration: 5)
+        getPersonalDetails: PersonalUserDetails @rateLimit(limit: 50, duration: 300)
 
         partialUser(partialUsername: String!, sortMethod: String!, lastUserId: String!, lastUniqueField: String!): LoadUsersResponse!
-            @rateLimit(limit: 50, duration: 5)
+            @rateLimit(limit: 50, duration: 300)
 
-        loginUser(username: String, email: String, password: String!): UserAccountAction! @rateLimit(limit: 10, duration: 3600)
+        loginUser(username: String, email: String, password: String!): UserAccountAction! @rateLimit(limit: 10 , duration: 3600)
 
         logoutUser: LogoutResponse!
 
-        getUnreadNotifications: UnreadNotificationsAmtResponse! @rateLimit(limit: 50, duration: 5)
+        getUnreadNotifications: UnreadNotificationsAmtResponse! @rateLimit(limit: 50, duration: 300)
 
-        getUnreadNotificationsData: [Notification]! @rateLimit(limit: 50, duration: 5)
+        getUnreadNotificationsData: [Notification]! @rateLimit(limit: 50, duration: 300)
 
         downloadUserData: downloadableUserData @rateLimit(limit: 2, duration: 86400)
 
-        getUserById(id: String!): FetchableUser @rateLimit(limit: 50, duration: 5)
+        getUserById(id: String!): FetchableUser @rateLimit(limit: 50, duration: 300)
     }
 
     type Mutation {
@@ -143,15 +143,15 @@ export default gql`
 
         revokeUserSession: Boolean! @rateLimit(limit: 1, duration: 60)
 
-        updateUserDetails(fields: [UpdateUserPayload!]!): UpdateDetailsResponse! @rateLimit(limit: 3, duration: 15)
+        updateUserDetails(fields: [UpdateUserPayload!]!): UpdateDetailsResponse! @rateLimit(limit: 3, duration: 600)
 
         notifyUser(userToNotify: String!, notification: NotificationPayload!): Boolean
 
-        followPerson(person: String!): FetchableUser @rateLimit(limit: 50, duration: 5)
+        followPerson(person: String!): FetchableUser @rateLimit(limit: 50, duration: 300)
 
-        unfollowPerson(person: String!): FetchableUser @rateLimit(limit: 50, duration: 5)
+        unfollowPerson(person: String!): FetchableUser @rateLimit(limit: 50, duration: 300)
 
-        getAndReadNotifications: [Notification]! @rateLimit(limit: 50, duration: 5)
+        getAndReadNotifications: [Notification]! @rateLimit(limit: 50, duration: 300)
 
         deleteAccount(password: String!): GeneralActionStatus! @rateLimit(limit: 2, duration: 86400)
     }
