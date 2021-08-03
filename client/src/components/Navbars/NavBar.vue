@@ -5,7 +5,12 @@
         <div class="nav_container">
             <div class="burger_blur" id="burger_menu_blur" @click="hideBurgerMenu()"></div>
             <!-- Darkens the screen for the burger menu -->
-            <div @click.prevent="routeOrReload()" class="menu_logo">
+            <div 
+                @click.prevent="routeOrReload()" 
+                class="menu_logo"
+                :class="{ menu_logo_desktop: !$store.getters.mobile, menu_logo_mobile: $store.getters.mobile }"
+            >
+                <div v-if="!$store.getters.mobile" style="flex-grow: 1;" />
                 <!-- Added inline style so that the router-link-active will not change the background-color of the logo when you navigate to the home page -->
                 <img v-if="!$store.getters.mobile" src="../../assets/LOGO.svg" alt="Logo" class="logo_desktop" />
                 <img v-else src="../../assets/LOGOSIMPLE.svg" alt="Logo" class="logo_mobile" />
@@ -232,7 +237,6 @@ export default {
     width: 100%;
     height: var(--header-height);
     background-color: var(--secondary-color);
-    background-color: red !important;
 }
 
 body {
@@ -254,13 +258,18 @@ body {
 .menu_logo {
     cursor: pointer;
     height: 100%;
-    text-align: left;
-    padding-top: 20px;
-    background-color: blue;
+    display: flex;
+    flex-direction: column;
+}
+.menu_logo_desktop {
+    width: 300px;
+}
+.menu_logo_mobile {
+    width: 100px;
 }
 .menu_logo img {
-    height: 100% !important;
-    background-color: green;
+    height: 90%;
+    margin: 0 auto;
 }
 .logo_mobile {
     padding: 10px;

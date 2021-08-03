@@ -1,6 +1,6 @@
 <template>
     <div class="pageContainer">
-        <p>Vuex Logged In State: {{ $store.getters.isLoggedIn }}</p>
+        
     </div>
 </template>
 
