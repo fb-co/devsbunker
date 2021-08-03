@@ -232,6 +232,7 @@ export default {
     width: 100%;
     height: var(--header-height);
     background-color: var(--secondary-color);
+    background-color: red !important;
 }
 
 body {
@@ -252,12 +253,14 @@ body {
 }
 .menu_logo {
     cursor: pointer;
-    width: 200px;
     height: 100%;
     text-align: left;
+    padding-top: 20px;
+    background-color: blue;
 }
 .menu_logo img {
-    height: 100%;
+    height: 100% !important;
+    background-color: green;
 }
 .logo_mobile {
     padding: 10px;
