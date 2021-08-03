@@ -271,6 +271,10 @@ body {
 .menu_logo img {
     height: 85%;
 }
+.menu_logo img:hover {
+    transform: scale(1.02);
+}
+
 .logo_mobile {
     padding: 10px;
     margin-left: 15px;
