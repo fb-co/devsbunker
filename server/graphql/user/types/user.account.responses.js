@@ -110,6 +110,10 @@ export default gql`
         message: String
     }
 
+    type InteractWithTagsResponse {
+        success: Boolean!
+    }
+
     input UpdateUserPayload {
         field: String!
         newValue: String!

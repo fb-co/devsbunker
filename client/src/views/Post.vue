@@ -131,8 +131,12 @@ export default {
                 this.$store.getters.accessToken
             );
 
-            this.postData.fetchedAllComments = commentData.data.getPostById.fetchedAllComments;
-            this.postData.comments = this.postData.comments.concat(commentData.data.getPostById.comments);
+            if (!commentData.errors) {
+                this.postData.fetchedAllComments = commentData.data.getPostById.fetchedAllComments;
+                this.postData.comments = this.postData.comments.concat(commentData.data.getPostById.comments);
+            } else {
+                this.$store.dispatch("alertUser", {type: "error", title: "Error", msg: "Something went wrong."});
+            }   
         },
         openPostMenu() {
             this.$refs.newPostMenu.open();

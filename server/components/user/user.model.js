@@ -70,6 +70,12 @@ const userSchema = new mongoose.Schema(
             default: [],
         },
 
+        // tags that the user interacts with commonly
+        common_tags: {
+            type: Array,
+            default: [],
+        },
+
         password: {
             type: String,
         },
