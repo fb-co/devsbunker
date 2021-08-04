@@ -4,6 +4,13 @@
 
 -   [ ] consider switching to `refs` like i did for the comments, this implies a ton of refactoring tho
 
+## About page
+
+-   [ ] use light cards for light mode
+-   [ ] use more assets in page body (svgs made in Figma and text, not just text)
+-   [ ] increase subtitles size
+-   [ ] apply animations and size adjustements to smaller screens
+
 ## High Priority
 
 -   [x] Stoopid ass notifications stopped working randomly (check console)
