@@ -11,9 +11,6 @@ import PostFeed from "@/components/PostFeed.vue";
 
 export default {
     props: {
-        projects: Array,
-        fetchedAll: Boolean,
-        postFeedFilter: String,
         loaded: Boolean,
     },
     methods: {

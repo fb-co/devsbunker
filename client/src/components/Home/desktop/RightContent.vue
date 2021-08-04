@@ -21,8 +21,10 @@
 import SmallNotificationCard from "@/components/Notifications/SmallNotificationCard.vue";
 
 export default {
-    props: {
-        notifications: Array,
+    data() {
+        return {
+            notifications: this.$store.getters.full_unread_notifications,
+        }
     },
     components: {
         SmallNotificationCard,

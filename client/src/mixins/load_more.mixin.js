@@ -96,6 +96,23 @@ const LoadMore = {
                         otherData: this.otherData,
                         posts: this.posts,
                     });
+                } else if (this.queryType === "explore") {
+                    const res = await GraphQLService.fetchPosts(
+                        filter || this.sortingType,
+                        this.getLastPostId(),
+                        this.getLastPostUniqueField(),
+                        this.$store.getters.accessToken
+                    );
+                    this.posts = this.posts.concat(res.data.getPosts.posts);
+                    this.fetchedAll = res.data.getPosts.fetchedAll;
+                    
+                    this.$store.dispatch("addPosts", {
+                        filter: filter || this.sortingType,
+                        queryType: this.queryType,
+                        fetchedAll: this.fetchedAll,
+                        otherData: this.otherData,
+                        posts: this.posts,
+                    });
                 }
                 // set loading flag to false 
                 this.awaitingPosts = false;
@@ -154,6 +171,23 @@ const LoadMore = {
                     otherData: this.otherData,
                     posts: this.posts,
                 });
+            } else if (this.queryType === "explore") {
+                const res = await GraphQLService.fetchPosts(
+                    filter || this.sortingType,
+                    this.getLastPostId(),
+                    this.getLastPostUniqueField(),
+                    this.$store.getters.accessToken
+                );
+                this.posts = this.posts.concat(res.data.getPosts.posts);
+                this.fetchedAll = res.data.getPosts.fetchedAll;
+
+                this.$store.dispatch("addPosts", {
+                    filter: filter || this.sortingType,
+                    queryType: this.queryType,
+                    fetchedAll: this.fetchedAll,
+                    otherData: this.otherData,
+                    posts: this.posts,
+                });
             }
         },
         async updateFeedAfterNewPost(post) {
@@ -168,6 +202,10 @@ const LoadMore = {
                 case "all":
                     SearchUtilities.setHomePostFilter(value);
                     this.sortingType = SearchUtilities.getHomePostFilter();
+                    break;
+                case "explore":
+                    SearchUtilities.setExplorePostFilter(value);
+                    this.sortingType = SearchUtilities.getExplorePostFilter();
                     break;
                 case "saved":
                     SearchUtilities.setSavedPostFilter(value);

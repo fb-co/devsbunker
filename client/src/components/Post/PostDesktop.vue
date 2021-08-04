@@ -141,8 +141,7 @@
                     :fetchedAllComments="projectData.fetchedAllComments" 
                 />
             </div>
-            <!-- at the moment im passing an empty array, we should avoid re-fetching the notification object tho (maybe we can put it in the store) -->
-            <RightContent class="right_content" :notifications="notifications" />
+            <RightContent class="right_content" />
             <div class="right_content_placeholder" />
         </div>
     </div>
@@ -167,7 +166,6 @@ export default {
     props: {
         projectData: Object,
         authorData: Object,
-        notifications: Array,
     },
     components: {
         RightContent,

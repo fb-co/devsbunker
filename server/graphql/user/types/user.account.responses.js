@@ -50,6 +50,7 @@ export default gql`
         username: String!
         email: String!
         notifications: [Notification]
+        unreadNotifications: [Notification]
         unreadNotificationAmt: Int
         desc: String!
         tag: String!

@@ -1,12 +1,16 @@
 <template>
     <div class="main_post_container">
         <div v-if="postData">
-            <PostMobile v-if="$store.getters.mobile" :projectData="postData" @postComment="postComment" @loadMoreComments="getMoreComments" />
+            <PostMobile 
+                v-if="$store.getters.mobile" 
+                :projectData="postData" 
+                @postComment="postComment" 
+                @loadMoreComments="getMoreComments" 
+            />
             <PostDesktop
                 v-if="!$store.getters.mobile"
                 :projectData="postData"
                 :authorData="authorData"
-                :notifications="[]"
                 @postComment="postComment"
                 @loadMoreComments="getMoreComments"
             />

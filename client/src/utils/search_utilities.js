@@ -18,6 +18,15 @@ const SearchUtilities = {
     },
     getHomePostFilter: function() {
         return localStorage.getItem("home_post_filter") || this.setHomePostFilter("Newest");
+    },
+
+    // EXPLORE POST FILTER
+    setExplorePostFilter: function(filter) {
+        localStorage.setItem("explore_post_filter", filter);
+        return localStorage.getItem("explore_post_filter");
+    },
+    getExplorePostFilter: function() {
+        return localStorage.getItem("explore_post_filter") || this.setExplorePostFilter("Newest");
     }
 }
 

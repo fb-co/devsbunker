@@ -45,6 +45,8 @@ export default {
         // fetches any data that should be readily available on page load
         await this.$store.dispatch("fetchPageLoadData");
 
+        console.log(this.$store.getters.full_unread_notifications);
+
         this.isFetching = false;
     },
 

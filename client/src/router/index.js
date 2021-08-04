@@ -80,6 +80,12 @@ const routes = [
     },
 
     {
+        path: "/explore",
+        name: "Explore",
+        component: () => import("../views/Explore.vue"),
+    },
+
+    {
         path: "/post/:postid",
         name: "Post",
         props: true,

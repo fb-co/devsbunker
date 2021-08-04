@@ -172,9 +172,11 @@ export default {
 
                 if (user && user.enabled) {
                     let unreadAmt = 0;
+                    let unreadNotifications = [];
                     
                     for (let i = 0; i < user.notifications.length; i++) {
                         if (!user.notifications[i].read) {
+                            unreadNotifications.push(user.notifications[i]);
                             unreadAmt++;
                         }
                     }
@@ -186,6 +188,7 @@ export default {
                         desc: user.desc,
                         email: user.email,
                         notifications: user.notifications,
+                        unreadNotifications: unreadNotifications,
                         unreadNotificationAmt: unreadAmt,
                         tag: user.tag,
                         liked_posts: user.liked_posts,

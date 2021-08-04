@@ -2,19 +2,12 @@
     <div>
         <div class="home">
             <HomeMobile
-                :projects="posts"
                 v-if="$store.getters.mobile"
-                :fetchedAll="fetchedAll"
-                :postFeedFilter="sortingType"
                 @updateFilterDropdown="updateFilterDropdown"
                 :loaded="loaded"
             />
             <HomeDesktop
-                :projects="posts"
-                :notifications="notifications"
                 v-if="!$store.getters.mobile"
-                :fetchedAll="fetchedAll"
-                :postFeedFilter="sortingType"
                 @updateFilterDropdown="updateFilterDropdown"
                 :loaded="loaded"
             />
@@ -27,7 +20,6 @@
 import SharedMethods from "../utils/shared";
 import SearchUtilities from "../utils/search_utilities.js";
 import GeneralProperties from "../mixins/general.mixin";
-import GraphQLService from "@/services/graphql.service";
 
 import HomeMobile from "@/components/Home/HomeMobile.vue";
 import HomeDesktop from "@/components/Home/HomeDesktop.vue";
@@ -40,7 +32,6 @@ export default {
     data() {
         return {
             loaded: true,
-            notifications: undefined,
         };
     },
     async created() {
@@ -49,16 +40,6 @@ export default {
         this.getPosts();
 
         SharedMethods.loadPage();
-
-        // get the notifications
-        if (this.$store.getters.accessToken) {
-            const res = await GraphQLService.getUnreadNotificationsData(this.$store.getters.accessToken);
-            if (!res.errors) {
-                this.notifications = res.data.getUnreadNotificationsData;
-            }
-        } else {
-            this.notifications = [];
-        }
         
         /*
         const cache = await caches.open("devsCache");
