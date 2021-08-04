@@ -17,7 +17,7 @@ export default {
     created() {
         SharedMethods.loadPage();
 
-        this.queryType = "explore";
+        this.queryType = "all";
         this.sortingType = SearchUtilities.getExplorePostFilter();
         this.getPosts();
     },

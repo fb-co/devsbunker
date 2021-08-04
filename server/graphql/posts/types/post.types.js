@@ -85,6 +85,8 @@ export default gql`
 
         getSavedPosts(lastPostId: String!, lastUniqueField: String!, filter: String): LoadPostsResponse!
 
+        getTargetedPosts(lastPostId: String!, lastUniqueField: String!): LoadPostsResponse!
+
         partial_post(
             partial_name: String!
             filter: String!

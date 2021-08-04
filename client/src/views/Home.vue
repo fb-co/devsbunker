@@ -18,7 +18,6 @@
 
 <script>
 import SharedMethods from "../utils/shared";
-import SearchUtilities from "../utils/search_utilities.js";
 import GeneralProperties from "../mixins/general.mixin";
 
 import HomeMobile from "@/components/Home/HomeMobile.vue";
@@ -35,8 +34,8 @@ export default {
         };
     },
     async created() {
-        this.queryType = "all";
-        this.sortingType = SearchUtilities.getHomePostFilter();
+        this.queryType = "targeted";
+        this.sortingType = "Newest";
         this.getPosts();
 
         SharedMethods.loadPage();

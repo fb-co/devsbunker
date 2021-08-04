@@ -1,4 +1,3 @@
-import Posts from "../../../components/post/post.model.js";
 import User from "../../../components/user/user.model.js";
 import AddDynamicData from "../misc/addDynamicData.js";
 import LoadMoreModule from "./LoadMoreModule.js";

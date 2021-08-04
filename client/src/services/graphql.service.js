@@ -149,6 +149,44 @@ const GraphQLService = {
         }
     },
 
+    fetchTargetedPosts: function(lastPostId, lastUniqueField, token) {
+        const query = `
+            query {
+                getTargetedPosts(lastPostId: "${lastPostId}", lastUniqueField: "${lastUniqueField}") {
+                    posts {
+                        title
+                        author
+                        description
+                        thumbnail
+                        likeAmt
+                        isLiked
+                        isSaved
+                        tags
+                        price
+                        id
+                    }
+                    fetchedAll
+                }
+            }
+        `;
+
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => res.json())
+                .catch(console.error);
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+
     fetchPostById: function(postId, commentOffSet, fields, token) {
         const query = `
             query {

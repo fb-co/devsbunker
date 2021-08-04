@@ -51,16 +51,20 @@ const LoadMore = {
                         this.getLastPostUniqueField(),
                         this.$store.getters.accessToken
                     );
-                    this.posts = this.posts.concat(res.data.getPosts.posts);
-                    this.fetchedAll = res.data.getPosts.fetchedAll;
-                    
-                    this.$store.dispatch("addPosts", {
-                        filter: filter || this.sortingType,
-                        queryType: this.queryType,
-                        fetchedAll: this.fetchedAll,
-                        otherData: this.otherData,
-                        posts: this.posts,
-                    });
+                    if (!res.errors) {
+                        this.posts = this.posts.concat(res.data.getPosts.posts);
+                        this.fetchedAll = res.data.getPosts.fetchedAll;
+                        
+                        this.$store.dispatch("addPosts", {
+                            filter: filter || this.sortingType,
+                            queryType: this.queryType,
+                            fetchedAll: this.fetchedAll,
+                            otherData: this.otherData,
+                            posts: this.posts,
+                        });
+                    } else {
+                        this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
+                    }
                 } else if (this.queryType === "projects") {
                     const res = await GraphQLService.fetchPostsByAuthor(
                         this.otherData.foreignUserToFilter || this.$store.getters.username,
@@ -69,16 +73,21 @@ const LoadMore = {
                         this.filter || this.sortingType,
                         this.$store.getters.accessToken
                     );
-                    this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
-                    this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
 
-                    this.$store.dispatch("addPosts", {
-                        filter: filter || this.sortingType,
-                        queryType: this.queryType,
-                        fetchedAll: this.fetchedAll,
-                        otherData: this.otherData,
-                        posts: this.posts,
-                    });
+                    if (!res.errors) {
+                        this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
+                        this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
+
+                        this.$store.dispatch("addPosts", {
+                            filter: filter || this.sortingType,
+                            queryType: this.queryType,
+                            fetchedAll: this.fetchedAll,
+                            otherData: this.otherData,
+                            posts: this.posts,
+                        });
+                    } else {
+                        this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
+                    }
                 } else if (this.queryType === "saved") {
                     const res = await GraphQLService.fetchSavedPosts(
                         this.getLastPostId(),
@@ -86,33 +95,41 @@ const LoadMore = {
                         filter || this.sortingType,
                         this.$store.getters.accessToken
                     );
-                    this.posts = this.posts.concat(res.data.getSavedPosts.posts);
-                    this.fetchedAll = res.data.getSavedPosts.fetchedAll;
+                    if (!res.errors) {
+                        this.posts = this.posts.concat(res.data.getSavedPosts.posts);
+                        this.fetchedAll = res.data.getSavedPosts.fetchedAll;
 
-                    this.$store.dispatch("addPosts", {
-                        filter: filter || this.sortingType,
-                        queryType: this.queryType,
-                        fetchedAll: this.fetchedAll,
-                        otherData: this.otherData,
-                        posts: this.posts,
-                    });
-                } else if (this.queryType === "explore") {
-                    const res = await GraphQLService.fetchPosts(
-                        filter || this.sortingType,
+                        this.$store.dispatch("addPosts", {
+                            filter: filter || this.sortingType,
+                            queryType: this.queryType,
+                            fetchedAll: this.fetchedAll,
+                            otherData: this.otherData,
+                            posts: this.posts,
+                        });
+                    } else {
+                        this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
+                    }
+                } else if (this.queryType === "targeted") {
+                    const res = await GraphQLService.fetchTargetedPosts(
                         this.getLastPostId(),
                         this.getLastPostUniqueField(),
                         this.$store.getters.accessToken
                     );
-                    this.posts = this.posts.concat(res.data.getPosts.posts);
-                    this.fetchedAll = res.data.getPosts.fetchedAll;
-                    
-                    this.$store.dispatch("addPosts", {
-                        filter: filter || this.sortingType,
-                        queryType: this.queryType,
-                        fetchedAll: this.fetchedAll,
-                        otherData: this.otherData,
-                        posts: this.posts,
-                    });
+                    console.log(res);
+                    if (!res.errors) {
+                        this.posts = this.posts.concat(res.data.getTargetedPosts.posts);
+                        this.fetchedAll = res.data.getTargetedPosts.fetchedAll;
+                        
+                        this.$store.dispatch("addPosts", {
+                            filter: "Newest",
+                            queryType: this.queryType,
+                            fetchedAll: this.fetchedAll,
+                            otherData: this.otherData,
+                            posts: this.posts,
+                        });
+                    } else {
+                        this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
+                    }
                 }
                 // set loading flag to false 
                 this.awaitingPosts = false;
@@ -126,16 +143,20 @@ const LoadMore = {
                     this.getLastPostUniqueField(),
                     this.$store.getters.accessToken
                 );
-                this.posts = this.posts.concat(res.data.getPosts.posts);
-                this.fetchedAll = res.data.getPosts.fetchedAll;
+                if (!res.errors) {
+                    this.posts = this.posts.concat(res.data.getPosts.posts);
+                    this.fetchedAll = res.data.getPosts.fetchedAll;
 
-                this.$store.dispatch("addPosts", {
-                    filter: filter || this.sortingType,
-                    queryType: this.queryType,
-                    fetchedAll: this.fetchedAll,
-                    otherData: this.otherData,
-                    posts: this.posts,
-                });
+                    this.$store.dispatch("addPosts", {
+                        filter: filter || this.sortingType,
+                        queryType: this.queryType,
+                        fetchedAll: this.fetchedAll,
+                        otherData: this.otherData,
+                        posts: this.posts,
+                    });
+                } else {
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
+                }
             } else if (this.queryType === "projects") {
                 const res = await GraphQLService.fetchPostsByAuthor(
                     this.otherData.foreignUserToFilter || this.$store.getters.username,
@@ -144,16 +165,20 @@ const LoadMore = {
                     this.filter || this.sortingType,
                     this.$store.getters.accessToken
                 );
-                this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
-                this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
+                if (!res.errors) {
+                    this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
+                    this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
 
-                this.$store.dispatch("addPosts", {
-                    filter: filter || this.sortingType,
-                    queryType: this.queryType,
-                    fetchedAll: this.fetchedAll,
-                    otherData: this.otherData,
-                    posts: this.posts,
-                });
+                    this.$store.dispatch("addPosts", {
+                        filter: filter || this.sortingType,
+                        queryType: this.queryType,
+                        fetchedAll: this.fetchedAll,
+                        otherData: this.otherData,
+                        posts: this.posts,
+                    });
+                } else {
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
+                }
             } else if (this.queryType === "saved") {
                 const res = await GraphQLService.fetchSavedPosts(
                     this.getLastPostId(),
@@ -161,33 +186,40 @@ const LoadMore = {
                     filter || this.sortingType,
                     this.$store.getters.accessToken
                 );
-                this.posts = this.posts.concat(res.data.getSavedPosts.posts);
-                this.fetchedAll = res.data.getSavedPosts.fetchedAll;
+                if (!res.errors) {
+                    this.posts = this.posts.concat(res.data.getSavedPosts.posts);
+                    this.fetchedAll = res.data.getSavedPosts.fetchedAll;
 
-                this.$store.dispatch("addPosts", {
-                    filter: filter || this.sortingType,
-                    queryType: this.queryType,
-                    fetchedAll: this.fetchedAll,
-                    otherData: this.otherData,
-                    posts: this.posts,
-                });
-            } else if (this.queryType === "explore") {
-                const res = await GraphQLService.fetchPosts(
-                    filter || this.sortingType,
+                    this.$store.dispatch("addPosts", {
+                        filter: filter || this.sortingType,
+                        queryType: this.queryType,
+                        fetchedAll: this.fetchedAll,
+                        otherData: this.otherData,
+                        posts: this.posts,
+                    });
+                } else {
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
+                }
+            } else if (this.queryType === "targeted") {
+                const res = await GraphQLService.fetchTargetedPosts(
                     this.getLastPostId(),
                     this.getLastPostUniqueField(),
                     this.$store.getters.accessToken
                 );
-                this.posts = this.posts.concat(res.data.getPosts.posts);
-                this.fetchedAll = res.data.getPosts.fetchedAll;
-
-                this.$store.dispatch("addPosts", {
-                    filter: filter || this.sortingType,
-                    queryType: this.queryType,
-                    fetchedAll: this.fetchedAll,
-                    otherData: this.otherData,
-                    posts: this.posts,
-                });
+                if (!res.errors) {
+                    this.posts = this.posts.concat(res.data.getTargetedPosts.posts);
+                    this.fetchedAll = res.data.getTargetedPosts.fetchedAll;
+                    
+                    this.$store.dispatch("addPosts", {
+                        filter: "Newest",
+                        queryType: this.queryType,
+                        fetchedAll: this.fetchedAll,
+                        otherData: this.otherData,
+                        posts: this.posts,
+                    });
+                } else {
+                    this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
+                }
             }
         },
         async updateFeedAfterNewPost(post) {
@@ -200,10 +232,6 @@ const LoadMore = {
             // also, for now were going to use the same localStorage variable as saved for the projects tab
             switch (this.queryType) {
                 case "all":
-                    SearchUtilities.setHomePostFilter(value);
-                    this.sortingType = SearchUtilities.getHomePostFilter();
-                    break;
-                case "explore":
                     SearchUtilities.setExplorePostFilter(value);
                     this.sortingType = SearchUtilities.getExplorePostFilter();
                     break;

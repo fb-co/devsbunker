@@ -2,6 +2,7 @@
 
 const LoadAmounts = {
     mainPostFeed: 12,
+    targetedPostFeed: 12,
     postSearch: 12,
     savedPosts: 12,
     personalPosts: 12,

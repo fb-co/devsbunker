@@ -13,6 +13,7 @@ import getUserPost from "../utils/getUserPost.js";
 import getPostByPartial from "../utils/getPostByPartial.js";
 import getPostById from "../utils/getPostById.js";
 import getPostList from "../utils/getPostList.js";
+import getTargetedPostList from "../utils/getTargetedPostList.js";
 import getPostsByAuthor from "../utils/getPostsByAuthor.js";
 import getSavedPosts from "../utils/getSavedPosts.js";
 import deletePost from "../utils/deletePost.js";
@@ -55,6 +56,34 @@ export default {
 
                 const finalResponse = {
                     posts: finalPosts,
+                    fetchedAll: fetchedAll,
+                };
+
+                return finalResponse;
+            } catch (err) {
+                return err;
+            }
+        },
+
+        getTargetedPosts: async function(_, args, { req }) {
+            try {
+                const jwtPayload = req.user;
+                if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+                const loadAmt = LoadAmounts.targetedPostFeed;
+                let posts = await getTargetedPostList(jwtPayload.username, args.lastPostId, args.lastUniqueField, loadAmt);
+                let fetchedAll = false;
+                
+                // check if the last post exists, if it does, it means you havent fetched them all yet and vise versa, remove that post after
+                if (posts[loadAmt] === undefined) {
+                    fetchedAll = true;
+                } else {
+                    // remove the test post fetch only if you havent reached the end yet and are getting rid of the test post
+                    posts.pop();
+                }
+
+                const finalResponse = {
+                    posts: posts,
                     fetchedAll: fetchedAll,
                 };
 
