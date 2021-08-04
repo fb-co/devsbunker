@@ -172,6 +172,13 @@ body {
     margin: 0 auto;
     border-radius: 5px;
 }
+.fancy_line {
+    width: 200px;
+    height: 2.5px;
+    margin: 30px auto 0px auto;
+    background-color: var(--main-accent);
+    border-radius: 10px;
+}
 .fix_random_highlights {
     user-select: none;
 }

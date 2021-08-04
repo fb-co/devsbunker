@@ -9,13 +9,13 @@
                 <svg width="671" height="554" viewBox="0 0 671 554" fill="none" xmlns="http://www.w3.org/2000/svg" class="dummy_cards">
                     <g clip-path="url(#clip0)">
                     <g filter="url(#filter0_d)">
-                    <rect x="96" y="201.617" width="290" height="121" rx="12" transform="rotate(-37.7684 96 201.617)" fill="#2E2E2E"/>
+                    <rect x="96" y="201.617" width="290" height="121" rx="12" transform="rotate(-37.7684 96 201.617)" fill="#0D0D0D"/>
                     </g>
                     <g filter="url(#filter1_d)">
-                    <rect x="183.789" y="317.021" width="290" height="121" rx="12" transform="rotate(-37.7684 183.789 317.021)" fill="#2E2E2E"/>
+                    <rect x="183.789" y="317.021" width="290" height="121" rx="12" transform="rotate(-37.7684 183.789 317.021)" fill="#0D0D0D"/>
                     </g>
                     <g filter="url(#filter2_d)">
-                    <rect x="272.788" y="434.017" width="290" height="121" rx="12" transform="rotate(-37.7684 272.788 434.017)" fill="#2E2E2E"/>
+                    <rect x="272.788" y="434.017" width="290" height="121" rx="12" transform="rotate(-37.7684 272.788 434.017)" fill="#0D0D0D"/>
                     </g>
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M174.555 259.81L173.442 259.616C170.827 259.161 168.65 261.705 169.224 264.378C169.494 265.635 170.421 267.035 172.531 268.102C174.564 269.13 177.68 269.832 182.223 269.707C183.479 265.339 183.577 262.146 183.091 259.921C182.584 257.61 181.461 256.363 180.311 255.788C177.865 254.564 174.858 256.037 174.645 258.682L174.555 259.81ZM183.06 270.786C163.148 271.687 166.572 257.697 173.293 258.486C173.382 258.497 173.471 258.509 173.56 258.525C173.566 258.436 173.576 258.347 173.59 258.258C174.501 251.551 188.905 251.73 183.06 270.786Z" fill="#FF5A5A"/>
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M262.344 375.214L261.23 375.02C258.616 374.566 256.438 377.109 257.012 379.782C257.283 381.039 258.209 382.439 260.32 383.507C262.352 384.534 265.469 385.236 270.012 385.111C271.268 380.743 271.366 377.55 270.879 375.325C270.372 373.014 269.249 371.768 268.099 371.192C265.654 369.969 262.647 371.441 262.434 374.086L262.344 375.214ZM270.849 386.191C250.937 387.092 254.361 373.101 261.082 373.891C261.171 373.901 261.26 373.914 261.349 373.929C261.355 373.84 261.365 373.751 261.378 373.663C262.289 366.955 276.693 367.134 270.849 386.191Z" fill="#FF5A5A"/>
@@ -78,16 +78,41 @@
         </div>
 
         <!-- The text -->
-        <div class="text_container">
+        <div v-if="!$store.getters.mobile" class="text_container">
             <p class="title">About</p>
             <div class="section_one_cols">
                 <p class="col1">
-                    Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi, hendrerit vel pharetra vel, dictum sed ligula. Nulla vitae aliquet turpis. Sed vestibulum egestas cursus. Cras cursus tellus dui, non facilisis dui rhoncus varius. 
+                    Devsbunker is a project meant for developers of any kind to promote and share their work. 
                 </p>
                 <p class="col2">
                     Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi, hendrerit vel pharetra vel, dictum sed ligula. Nulla vitae aliquet turpis. Sed vestibulum egestas cursus. Cras cursus tellus dui, non facilisis dui rhoncus varius. 
                 </p>
             </div>
+
+            <div class="fancy_line" />
+            <p class="title" style="margin-top: 70px;">Future</p>
+
+            <div class="section_one_cols">
+                <p>
+                    Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi, hendrerit vel pharetra vel, dictum sed ligula. Nulla vitae aliquet turpis. Sed vestibulum egestas cursus. Cras cursus tellus dui, non facilisis dui rhoncus varius. 
+                </p>
+                <p>
+                    Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi, hendrerit vel pharetra vel, dictum sed ligula. Nulla vitae aliquet turpis. Sed vestibulum egestas cursus. Cras cursus tellus dui, non facilisis dui rhoncus varius. 
+                </p>
+            </div>
+        </div>
+        <div v-else style="padding-bottom: 50px;">
+            <p class="title" style="margin-top: 50px; font-size: 30px;">About</p>
+
+            <p class="mobile_text_section">
+                Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi, hendrerit vel pharetra vel, dictum sed ligula. Nulla vitae aliquet turpis. Sed vestibulum egestas cursus. Cras cursus tellus dui, non facilisis dui rhoncus varius.
+            </p>
+
+            <p class="title" style="margin-top: 50px; font-size: 30px;">Future</p>
+
+            <p class="mobile_text_section">
+                Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi, hendrerit vel pharetra vel, dictum sed ligula. Nulla vitae aliquet turpis. Sed vestibulum egestas cursus. Cras cursus tellus dui, non facilisis dui rhoncus varius.
+            </p>
         </div>
     </div>
 </template>
@@ -106,6 +131,8 @@ export default {
 .header_container {
     display: flex;
     flex-direction: row;
+    height: 650px;
+    background-color: var(--secondary-color);
 }
 .logo_container {
     width: 100%;
@@ -133,7 +160,15 @@ export default {
     right: -200px;
     top: -70px;
     transform: scale(1.2);
-    z-index: -1;
+    z-index: 1;
+}
+.mobile_text_section {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 2;
+    font-size: 18px;
+    text-align: left;
 }
 .title {
     font-weight: bold;
@@ -145,8 +180,7 @@ export default {
 }
 
 .text_container {
-    margin-top: 350px;
-    background-color: var(--secondary-color);
+    margin-top: 50px;
 }
 .section_one_cols {
     display: flex;
@@ -158,10 +192,12 @@ export default {
     margin-top: 30px;
 }
 .section_one_cols p {
+    width: 50%;
     padding: 30px;
     line-height: 2;
     font-size: 18px;
     text-align: left;
+    margin-right: 1px;
 }
 
 @media only screen and (min-width: 1230px) {
