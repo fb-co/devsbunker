@@ -91,7 +91,6 @@ export default {
 
                     const finalTags = UserIntrestData.viewedTags(user.common_tags, post.tags);
                     user.common_tags = finalTags;
-                    console.log(user.common_tags);
 
                     await user.save();
 
