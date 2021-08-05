@@ -7,6 +7,7 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
         User.findOne({ username: username, enabled: true }).then((user) => {
             if (user) {
                 let customQueries = [];
+                let customSorting = {};
 
                 // get the users intrested tags in a simple array
                 let tagList = [];
@@ -14,10 +15,13 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
                 for (let i = 0; i < user.common_tags.length; i++) {
                     tagList.push(user.common_tags[i].tag);
                 }
+                console.log(user.common_tags);
 
                 customQueries.push({ tags: { $in: tagList }, enabled: true });
-                
+                customSorting["common_tags.interactions"] = 1;
 
+                console.log(customSorting);
+                
                 LoadMoreModule("Newest", lastPostId, lastUniqueField, loadAmt, customQueries).then((res) => {
                     const finalPosts = AddDynamicData.addAll(res, user);
                     resolve(finalPosts);

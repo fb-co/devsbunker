@@ -72,6 +72,11 @@
                 </svg>
             </div>
         </div>
+        <div ref="tag" class="tags_container">
+            <div class="tag">
+                <CreateTag :label="projectData.tags[0]" tagType="lang" />
+            </div>
+        </div>
         <div class="text_container" @mouseover="showIcons()" @mouseleave="hideIcons()">
             <div class="text">
                 <p class="title highlightable">{{ projectData.title }}</p>
@@ -174,6 +179,9 @@ import GraphQLService from "../../services/graphql.service";
 import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 import TextCopier from "@/mixins/text_copier.js";
 
+import CreateTag from "@/components/NewPost/CreateTag.vue";
+import Languages from "@/templates/Languages.js";
+
 export default {
     data() {
         return {
@@ -203,6 +211,7 @@ export default {
     },
     components: {
         ConfirmationPopup,
+        CreateTag,
     },
     methods: {
         routeToPost() {
@@ -210,9 +219,11 @@ export default {
         },
         showIcons() {
             this.$refs.icons.style.display = "flex";
+            this.$refs.tag.style.display = "flex";
         },
         hideIcons() {
             this.$refs.icons.style.display = "none";
+            this.$refs.tag.style.display = "none";
         },
         // highlights the given prop called "highlight_phrase" to any occurance under any html content with the class "highlightable"
         highlightPhrases() {
@@ -267,6 +278,13 @@ export default {
         },
         highlight_phrase: function() {
             this.highlightPhrases();
+        },
+    },
+    computed: {
+        cssProps() {
+            return {
+                "--card-color": Languages.getColor(this.projectData.tags[0]) || "var(--main-font-color)",
+            };
         },
     },
 };
@@ -332,6 +350,9 @@ export default {
 .hover_overlay:hover ~ .top_text_container {
     display: flex;
 }
+.hover_overlay:hover ~ .tags_container {
+    display: flex;
+}
 .top_text_container {
     display: none;
     position: absolute;
@@ -342,12 +363,30 @@ export default {
     flex-direction: row;
     background-color: rgba(0, 0, 0, 0.8);
 }
+.tags_container {
+    display: none;
+    position: absolute;
+    right: 0px;
+    z-index: 1;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.tag {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.tag > div {
+    margin: 0px;
+}
 .icon_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 10px;
 }
+
 .text_container {
     /* position absolute so the overlay wont darken the text or icons */
     position: absolute;
@@ -356,7 +395,7 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 75px;
+    height: 100px;
     background-color: rgba(0, 0, 0, 0.8);
 }
 .text {

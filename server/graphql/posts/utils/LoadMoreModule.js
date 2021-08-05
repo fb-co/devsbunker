@@ -3,9 +3,9 @@
 import Posts from "../../../components/post/post.model.js";
 
 // custom queries is an array of what exactly you want these posts to be relating to, specific user (REQUIRES AT LEAST ONE)
-export default function loadMoreModule(sortingType, lastPostId, lastUniqueField, loadAmt, customQueries) {
+export default function loadMoreModule(sortingType, lastPostId, lastUniqueField, loadAmt, customQueries, customSorting) {
     return new Promise((resolve, reject) => {
-        let sortFilter = {};
+        let sortFilter = customSorting || {};
 
         // the initial query, reeguardless of filter, will always be the same with the sortFilter being the differentiator
         let postQuery = {

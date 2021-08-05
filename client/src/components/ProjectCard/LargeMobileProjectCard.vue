@@ -67,6 +67,11 @@
                 </svg>
             </div>
         </div>
+        <div ref="tag" class="tags_container">
+            <div class="tag">
+                <CreateTag :label="projectData.tags[0]" tagType="lang" />
+            </div>
+        </div>
         <div class="text_container">
             <div class="text">
                 <p class="title highlightable">{{ projectData.title }}</p>
@@ -170,6 +175,9 @@ import GraphQLService from "../../services/graphql.service";
 import MobileMoreOptions from "@/components/Popups/MobileMoreOptions.vue";
 import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 
+import CreateTag from "@/components/NewPost/CreateTag.vue";
+import Languages from "@/templates/Languages.js";
+
 export default {
     data() {
         return {
@@ -182,6 +190,7 @@ export default {
     components: {
         MobileMoreOptions,
         ConfirmationPopup,
+        CreateTag,
     },
     props: {
         projectData: Object,
@@ -325,6 +334,23 @@ export default {
     margin: 5px;
     flex-direction: row;
     background-color: rgba(0, 0, 0, 0.8);
+}
+.tags_container {
+    display: flex;
+    position: absolute;
+    right: 0px;
+    z-index: 1;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.tag {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.tag > div {
+    margin: 0px;
 }
 .icon_container {
     display: flex;
