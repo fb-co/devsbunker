@@ -395,7 +395,7 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 100px;
+    height: 80px;
     background-color: rgba(0, 0, 0, 0.8);
 }
 .text {
