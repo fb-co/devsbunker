@@ -24,13 +24,14 @@ export default function loadMoreModuleAggregation(sortingType, lastPostId, lastU
 
         // -----------------------------------------
         
-        
         Posts.aggregate(finalPipelineOperators).then((res) => {
             if (res) {
                 // dont even ask me why you need this
                 for (let i = 0; i < res.length; i++) {
                     res[i].id = res[i]._id;
                 }
+
+                console.log(res);
 
                 resolve(res);
             } else {
