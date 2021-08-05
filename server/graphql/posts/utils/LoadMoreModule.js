@@ -3,10 +3,8 @@
 import Posts from "../../../components/post/post.model.js";
 
 // custom queries is an array of what exactly you want these posts to be relating to, specific user (REQUIRES AT LEAST ONE)
-export default function loadMoreModule(sortingType, lastPostId, lastUniqueField, loadAmt, customQueries, customSorting) {
+export default function loadMoreModule(sortingType, lastPostId, lastUniqueField, loadAmt, customQueries) {
     return new Promise((resolve, reject) => {
-        let sortFilter = customSorting || {};
-
         // the initial query, reeguardless of filter, will always be the same with the sortFilter being the differentiator
         let postQuery = {
             $and: customQueries,
@@ -14,7 +12,7 @@ export default function loadMoreModule(sortingType, lastPostId, lastUniqueField,
         };
 
         if (sortingType === "Newest") {
-            sortFilter = { _id: -1 };
+            sortFilter["_id"] = -1;
 
             if (lastPostId != 0) {
                 postQuery = {
@@ -23,7 +21,8 @@ export default function loadMoreModule(sortingType, lastPostId, lastUniqueField,
                 };
             }
         } else if (sortingType === "Most Popular") {
-            sortFilter = { likeAmt: -1, _id: -1 };
+            sortFilter["likeAmt"] = -1;
+            sortFilter["_id"] = -1;
 
             if (lastPostId != 0 && lastUniqueField != -1) {
                 postQuery = {

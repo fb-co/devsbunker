@@ -115,7 +115,7 @@ const LoadMore = {
                         this.getLastPostUniqueField(),
                         this.$store.getters.accessToken
                     );
-                    
+                    console.log(res);
                     if (!res.errors) {
                         this.posts = this.posts.concat(res.data.getTargetedPosts.posts);
                         this.fetchedAll = res.data.getTargetedPosts.fetchedAll;

@@ -53,7 +53,6 @@ export default {
                 }
 
                 const finalPosts = AddDynamicData.addAll(posts, user);
-
                 const finalResponse = {
                     posts: finalPosts,
                     fetchedAll: fetchedAll,
@@ -81,7 +80,7 @@ export default {
                     // remove the test post fetch only if you havent reached the end yet and are getting rid of the test post
                     posts.pop();
                 }
-
+                console.log(posts);
                 const finalResponse = {
                     posts: posts,
                     fetchedAll: fetchedAll,
