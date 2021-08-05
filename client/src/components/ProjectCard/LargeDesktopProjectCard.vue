@@ -72,7 +72,7 @@
                 </svg>
             </div>
         </div>
-        <div ref="tag" class="tags_container">
+        <div ref="tag" class="tags_container" @mouseover="showIcons()" @mouseleave="hideIcons()">
             <div class="tag">
                 <CreateTag :label="projectData.tags[0]" tagType="lang" />
             </div>
