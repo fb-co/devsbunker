@@ -6,7 +6,7 @@
 
 ## About page
 
--   [ ] use light cards for light mode
+-   [x] use light cards for light mode
 -   [ ] use more assets in page body (svgs made in Figma and text, not just text)
 -   [ ] increase subtitles size
 -   [ ] apply animations and size adjustements to smaller screens
