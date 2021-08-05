@@ -176,7 +176,6 @@ import MobileMoreOptions from "@/components/Popups/MobileMoreOptions.vue";
 import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 
 import CreateTag from "@/components/NewPost/CreateTag.vue";
-import Languages from "@/templates/Languages.js";
 
 export default {
     data() {
