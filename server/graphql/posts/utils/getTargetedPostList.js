@@ -7,29 +7,32 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
     return new Promise((resolve, reject) => {
         User.findOne({ username: username, enabled: true }).then((user) => {
             if (user) {
-                /*
-                let customQueries = [];
-                
+                // because the tags in the db are sorted by interaction amount, we can assume the user will be more intrested in the first ones
+                const tagList = [];
 
-                // account for their followers posts
-                customQueries.push({ author: { $in: user.following } });
-                customQueries.push({ tags: { $in: user.tags }, enabled: true });
-
+                for (let i = 0; i < user.common_tags.length; i++) {
+                    tagList.push(user.common_tags[i].tag);
+                }
+            
                 
-                LoadMoreModule("Newest", lastPostId, lastUniqueField, loadAmt, customQueries).then((res) => {
+                const pipelineOperators = [
+                    {$addFields: {
+                        comparedTag: "$tags",
+                    }},
+                    {$unwind: "$comparedTag"},
+                    {$addFields: {
+                        sortType: {
+                            $indexOfArray: [tagList, "$comparedTag"]
+                        }
+                    }},
+                    {$sort: {sortType: -1}}
+                ];
+                
+                LoadMoreModuleAggregation("Newest", lastPostId, lastUniqueField, loadAmt, pipelineOperators).then((res) => {
                     const finalPosts = AddDynamicData.addAll(res, user);
                     resolve(finalPosts);
                 });
-                */
-
-                LoadMoreModuleAggregation("Newest", lastPostId, lastUniqueField, loadAmt, []).then((res) => {
-                    const finalPosts = AddDynamicData.addAll(res, user);
-
-                    console.log(finalPosts);
-                    resolve(finalPosts);
-                });
-
-
+                
             } else {
                 reject(new Error("Unable to find user"));
             }
