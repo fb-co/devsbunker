@@ -3,6 +3,27 @@ import AddDynamicData from "../misc/addDynamicData.js";
 import LoadMoreModule from "./LoadMoreModule.js";
 import LoadMoreModuleAggregation from "./LoadMoreModuleAggregation.js";
 
+
+function addTagCondition(remainingTags, index) {
+    if (remainingTags.length > 0) {
+        let expression = {};
+        let tagToAdd = remainingTags[0];
+        
+        remainingTags.shift();
+
+        expression['$cond'] = [
+            { $eq: ['$comparedTag', tagToAdd] },
+            index,
+            addTagCondition(remainingTags, index+1)
+        ];
+        
+        return expression;
+    } else {
+        return index+1;
+    }
+}
+
+
 export default async function getTargetedPostList(username, lastPostId, lastUniqueField, loadAmt) {
     return new Promise((resolve, reject) => {
         User.findOne({ username: username, enabled: true }).then((user) => {
@@ -13,22 +34,28 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
                 for (let i = 0; i < user.common_tags.length; i++) {
                     tagList.push(user.common_tags[i].tag);
                 }
-            
                 
+                
+                // create the condition list
+                let expression = {};
+
+                expression = addTagCondition(tagList, 0);
+                
+            
                 const pipelineOperators = [
                     {$addFields: {
-                        comparedTag: "$tags",
+                        comparedTag: '$tags'
                     }},
-                    {$unwind: "$comparedTag"},
+                    {$unwind: '$comparedTag'},
                     {$addFields: {
                         sortType: {
-                            $indexOfArray: [tagList, "$comparedTag"]
+                            expression
                         }
                     }},
-                    {$sort: {sortType: -1}}
+                    {$sort: {sortType: 1}}
                 ];
                 
-                LoadMoreModuleAggregation("Newest", lastPostId, lastUniqueField, loadAmt, pipelineOperators).then((res) => {
+                LoadMoreModuleAggregation("none", lastPostId, lastUniqueField, loadAmt, pipelineOperators).then((res) => {
                     const finalPosts = AddDynamicData.addAll(res, user);
                     resolve(finalPosts);
                 });

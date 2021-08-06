@@ -9,11 +9,10 @@ export default function loadMoreModuleAggregation(sortingType, lastPostId, lastU
     return new Promise((resolve, reject) => {
         let finalPipelineOperators = pipelineOperators;
         
+        if (sortingType === "Newest") {
+            finalPipelineOperators.push({ $sort: { _id: -1 } }); // sort dataset by newest
+        }
 
-        // THIS LOGIC PAGINATES NEWEST FILTERS -----
-
-        finalPipelineOperators.push({ $sort: { _id: -1 } }); // sort dataset by newest
-            
         // if the last post id is not zero, match only results with ids less than the last post id
         if (lastPostId != 0) {
             finalPipelineOperators.push({ $match: { _id: { $lt: mongoose.Types.ObjectId(lastPostId) } } }); 
@@ -21,8 +20,7 @@ export default function loadMoreModuleAggregation(sortingType, lastPostId, lastU
 
         // limit the data set to the load amt plus one for fetchedAll reasons
         finalPipelineOperators.push({ $limit: loadAmt+1 });
-
-        // -----------------------------------------
+        
         
         Posts.aggregate(finalPipelineOperators).then((res) => {
             if (res) {
@@ -30,8 +28,6 @@ export default function loadMoreModuleAggregation(sortingType, lastPostId, lastU
                 for (let i = 0; i < res.length; i++) {
                     res[i].id = res[i]._id;
                 }
-
-                console.log(res);
 
                 resolve(res);
             } else {
