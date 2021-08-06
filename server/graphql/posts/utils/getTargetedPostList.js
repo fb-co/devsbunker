@@ -3,27 +3,6 @@ import AddDynamicData from "../misc/addDynamicData.js";
 import LoadMoreModule from "./LoadMoreModule.js";
 import LoadMoreModuleAggregation from "./LoadMoreModuleAggregation.js";
 
-/*
-function addTagCondition(remainingTags, index) {
-    if (remainingTags.length > 0) {
-        let expression = {};
-        let tagToAdd = remainingTags[0];
-        
-        remainingTags.shift();
-
-        expression['$cond'] = [
-            { $eq: ['$comparedTag', tagToAdd] },
-            index,
-            addTagCondition(remainingTags, index+1)
-        ];
-        
-        return expression;
-    } else {
-        return index+1;
-    }
-}
-*/
-
 
 export default async function getTargetedPostList(username, lastPostId, lastUniqueField, loadAmt) {
     return new Promise((resolve, reject) => {
@@ -36,6 +15,30 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
                     tagList.push(user.common_tags[i].tag);
                 }
 
+                const pipelineOperators = [
+                    {$match: {$or: [
+                        {"tags": {$in: tagList}},
+                        {"author": {$in: user.followers}}
+                    ]}},
+                ];
+                
+                LoadMoreModuleAggregation("Newest", lastPostId, lastUniqueField, loadAmt, pipelineOperators).then((res) => {
+                    console.log(res);
+                    const finalPosts = AddDynamicData.addAll(res, user);
+                    resolve(finalPosts);
+                });
+                
+            } else {
+                reject(new Error("Unable to find user"));
+            }
+        }).catch((err) => {
+            console.error(err);
+            reject(err);
+        });
+    });
+}
+
+/* If you want to add the old sorting system back
                 const pipelineOperators = [
                     {$match: {"tags": {$in: tagList}}},
 
@@ -55,19 +58,4 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
                     
                     {$sort: {"sortingOrder": 1}}
                 ];
-                
-                LoadMoreModuleAggregation("none", lastPostId, lastUniqueField, loadAmt, pipelineOperators).then((res) => {
-                    console.log(res);
-                    const finalPosts = AddDynamicData.addAll(res, user);
-                    resolve(finalPosts);
-                });
-                
-            } else {
-                reject(new Error("Unable to find user"));
-            }
-        }).catch((err) => {
-            console.error(err);
-            reject(err);
-        });
-    });
-}
+*/

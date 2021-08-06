@@ -7,6 +7,7 @@ const state = {
     unreadNotificationsAmt: undefined,
     unreadNotifications: [],
     postsAmt: undefined,
+    followingList: [],
 };
 
 const getters = {
@@ -21,6 +22,9 @@ const getters = {
     },
     posts_amt: (state) => {
         return state.postsAmt;
+    },
+    following_list: (state) => {
+        return state.followingList;
     },
 };
 
@@ -37,6 +41,10 @@ const mutations = {
     cachePostsAmt(state, amt) {
         state.postsAmt = amt;
     },
+    cacheFollowingList(state, following) {
+        state.followingList = following;
+    },
+
     removePersonalPfpLink(state) {
         state.pfpLink = null;
     },
@@ -55,7 +63,7 @@ const actions = {
     async fetchPageLoadData({ commit, rootState }) {
         const storedLink = localStorage.getItem("profile_pic_link");
 
-        let dataToFetch = ["unreadNotificationAmt", "unreadNotifications { read sender message type target timestamp }", "postsAmt"];
+        let dataToFetch = ["unreadNotificationAmt", "unreadNotifications { read sender message type target timestamp }", "postsAmt", "following"];
         let pfpLink;
 
         // TODO: I don't really like this if statement
@@ -83,6 +91,7 @@ const actions = {
             }
             commit("cacheUnreadNotificationsAmt", res.data.getPersonalDetails.unreadNotificationAmt);
             commit("cachePostsAmt", res.data.getPersonalDetails.postsAmt);
+            commit("cacheFollowingList", res.data.getPersonalDetails.following);
             commit("cacheUnreadNotifications", res.data.getPersonalDetails.unreadNotifications);
 
             // add the pfp link to localstorage if its not already in there
@@ -100,6 +109,7 @@ const actions = {
         commit("cacheUnreadNotificationsAmt", undefined);
         commit("cachePostsAmt", undefined);
         commit("cacheUnreadNotifications", undefined);
+        commit("cacheFollowingList", []);
     },
     check_and_cache_pfp({ commit }) {
         const storedLink = localStorage.getItem("profile_pic_link");

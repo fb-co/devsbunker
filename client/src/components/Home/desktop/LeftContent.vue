@@ -86,17 +86,23 @@
         <p v-if="$store.getters.isLoggedIn" @click="logout()" class="logout_button">
             Logout
         </p>
+        <div class="sep_line" />
+        <FollowingList />
     </div>
 </template>
 
 <script>
 import GraphQLService from "@/services/graphql.service";
+import FollowingList from "./FollowingList.vue";
 
 export default {
     data() {
         return {
             userRoute: "",
         };
+    },
+    components: {
+        FollowingList
     },
     methods: {
         logout() {
@@ -224,5 +230,14 @@ export default {
 }
 .new_button > svg {
     margin: 0 auto;
+}
+
+.sep_line {
+    width: 80%;
+    margin: 0 auto;
+    height: 2px;
+    background-color: var(--secondary-color);
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 </style>
