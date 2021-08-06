@@ -3,7 +3,7 @@ import AddDynamicData from "../misc/addDynamicData.js";
 import LoadMoreModule from "./LoadMoreModule.js";
 import LoadMoreModuleAggregation from "./LoadMoreModuleAggregation.js";
 
-
+/*
 function addTagCondition(remainingTags, index) {
     if (remainingTags.length > 0) {
         let expression = {};
@@ -22,6 +22,7 @@ function addTagCondition(remainingTags, index) {
         return index+1;
     }
 }
+*/
 
 
 export default async function getTargetedPostList(username, lastPostId, lastUniqueField, loadAmt) {
@@ -35,7 +36,7 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
                     tagList.push(user.common_tags[i].tag);
                 }
                 
-                
+                /*
                 // create the condition list
                 let expression = {};
 
@@ -54,8 +55,30 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
                     }},
                     {$sort: {sortType: 1}}
                 ];
+                */
+
+                const pipelineOperators = [
+                    {$match: {"tags": {$in: tagList}}},
+
+                    {$addFields: {
+                        commonTags: { $setIntersection: [tagList, "$tags"] }, 
+                    }},
+                    {$addFields: {
+                        mappedTags: { $map: {
+                            input: "$commonTags",
+                            as: "tag",
+                            in: { $indexOfArray: [tagList, "$$tag"] },
+                        }},
+                    }},
+                    {$addFields: {
+                        sortingOrder: { $min: "$mappedTags" },
+                    }},
+                    
+                    {$sort: {"sortingOrder": 1}}
+                ];
                 
                 LoadMoreModuleAggregation("none", lastPostId, lastUniqueField, loadAmt, pipelineOperators).then((res) => {
+                    console.log(res);
                     const finalPosts = AddDynamicData.addAll(res, user);
                     resolve(finalPosts);
                 });
