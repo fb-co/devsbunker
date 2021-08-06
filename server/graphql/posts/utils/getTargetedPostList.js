@@ -35,27 +35,6 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
                 for (let i = 0; i < user.common_tags.length; i++) {
                     tagList.push(user.common_tags[i].tag);
                 }
-                
-                /*
-                // create the condition list
-                let expression = {};
-
-                expression = addTagCondition(tagList, 0);
-                
-            
-                const pipelineOperators = [
-                    {$addFields: {
-                        comparedTag: '$tags'
-                    }},
-                    {$unwind: '$comparedTag'},
-                    {$addFields: {
-                        sortType: {
-                            expression
-                        }
-                    }},
-                    {$sort: {sortType: 1}}
-                ];
-                */
 
                 const pipelineOperators = [
                     {$match: {"tags": {$in: tagList}}},

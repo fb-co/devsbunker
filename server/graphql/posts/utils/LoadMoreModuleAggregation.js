@@ -1,6 +1,8 @@
 // The concept here is the same as the LoadMoreModule, except it uses the aggregation pipeline to produce results
 // For now the aggregation load more ONLY supports "newest" queries (using "most popular" just wont work)
 
+// NOTE: Your pipeline operators should always include a $match query as early as possible for optimization
+
 import Posts from "../../../components/post/post.model.js";
 import mongoose from "mongoose";
 
@@ -11,16 +13,17 @@ export default function loadMoreModuleAggregation(sortingType, lastPostId, lastU
         
         if (sortingType === "Newest") {
             finalPipelineOperators.push({ $sort: { _id: -1 } }); // sort dataset by newest
+
+            // if the last post id is not zero, match only results with ids less than the last post id
+            if (lastPostId != 0) {
+                finalPipelineOperators.push({ $match: { _id: { $lt: mongoose.Types.ObjectId(lastPostId) } } }); 
+            }
         }
-        /*
-        // if the last post id is not zero, match only results with ids less than the last post id
-        if (lastPostId != 0) {
-            finalPipelineOperators.push({ $match: { _id: { $lt: mongoose.Types.ObjectId(lastPostId) } } }); 
-        }
+        
 
         // limit the data set to the load amt plus one for fetchedAll reasons
         finalPipelineOperators.push({ $limit: loadAmt+1 });
-        */
+        
         
         Posts.aggregate(finalPipelineOperators).then((res) => {
             if (res) {
