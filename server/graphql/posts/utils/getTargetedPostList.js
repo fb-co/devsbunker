@@ -14,15 +14,16 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
                 for (let i = 0; i < user.common_tags.length; i++) {
                     tagList.push(user.common_tags[i].tag);
                 }
-
+                console.log(user.followers);
                 const pipelineOperators = [
                     {$match: {$or: [
-                        {"tags": {$in: tagList}},
+                        {"tags": {$in: tagList.splice(0, 2)}},
                         {"author": {$in: user.followers}}
                     ]}},
                 ];
                 
                 LoadMoreModuleAggregation("Newest", lastPostId, lastUniqueField, loadAmt, pipelineOperators).then((res) => {
+                    //console.log(res);
                     const finalPosts = AddDynamicData.addAll(res, user);
                     resolve(finalPosts);
                 });
