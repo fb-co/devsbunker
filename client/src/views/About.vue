@@ -95,10 +95,38 @@ export default {
 </script>
 
 <style scoped>
+/* 
+    multiple animaitons because we have different elements positions for different screen sizes
+    Some JS would avoid copy and pasting CSS but Im lazy so here we go
+*/
+@keyframes animation_small_screen {
+    from {
+        margin-left: -1000px;
+    }
+    to {
+        margin-left: 3%;
+    }
+}
+@keyframes cards_animation_small_screen {
+    from {
+        right: -1000px;
+    }
+    to {
+        right: -200px;
+    }
+}
+@keyframes cards_animation_medium_screen {
+    from {
+        right: -1000px;
+    }
+    to {
+        right: -150px;
+    }
+}
 .header_container {
     display: flex;
     flex-direction: row;
-    height: 650px;
+    height: 480px;
     background-color: var(--secondary-color);
 }
 .logo_container {
@@ -115,12 +143,14 @@ export default {
     font-size: 25px;
     line-height: 1.5;
     color: var(--soft-text);
+    animation: animation_small_screen 1s;
 }
 .logo_container img {
     margin-left: 3%;
     margin-top: 50px;
     width: 40%;
     max-width: 600px;
+    animation: animation_small_screen 1s;
 }
 .main_btn {
     display: flex;
@@ -138,6 +168,7 @@ export default {
     cursor: pointer;
     border: 1px solid var(--main-accent);
     transition: 0.3s;
+    animation: animation_small_screen 1s;
 }
 
 .main_btn:hover {
@@ -157,6 +188,7 @@ export default {
     top: -70px;
     transform: scale(1.2);
     z-index: 1;
+    animation: cards_animation_small_screen 1s;
 }
 .mobile_text_section {
     width: 90%;
@@ -196,13 +228,6 @@ export default {
     margin-right: 1px;
 }
 
-@media only screen and (min-width: 1230px) {
-    .dummy_cards {
-        right: -150px;
-        top: -70px;
-        transform: scale(1.5);
-    }
-}
 @keyframes cards_animation {
     from {
         right: -1000px;
@@ -229,6 +254,24 @@ export default {
         margin-left: 5.5%;
     }
 }
+
+@media only screen and (max-width: 1350px) {
+    .main_btn {
+        width: 150px;
+        height: 60px;
+    }
+}
+@media only screen and (min-width: 1230px) {
+    .dummy_cards {
+        right: -150px;
+        top: -70px;
+        transform: scale(1.5);
+        animation: cards_animation_medium_screen 1s;
+    }
+    .header_container {
+        height: 565px;
+    }
+}
 @media only screen and (min-width: 1550px) {
     .dummy_cards {
         animation: cards_animation 1s;
@@ -249,6 +292,9 @@ export default {
         margin-left: 5%;
         padding-left: 10px;
         font-size: 32px;
+    }
+    .header_container {
+        height: 620px;
     }
 }
 </style>
