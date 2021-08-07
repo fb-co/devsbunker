@@ -75,12 +75,16 @@
                 varius.
             </p>
         </div>
+        <div class="exampple_section">
+            <ExampleCard :dark="true" />
+        </div>
     </div>
 </template>
 
 <script>
 import SharedMethods from "../utils/shared";
 import DummyCards from "../assets/dummy_cards/DummyCardsWrapper.vue";
+import ExampleCard from "../assets/dummy_cards/ExampleCardWrapper.vue";
 import GeneralProperties from "@/mixins/general.mixin";
 
 export default {
@@ -89,6 +93,7 @@ export default {
     },
     components: {
         DummyCards,
+        ExampleCard,
     },
     mixins: [GeneralProperties],
 };
