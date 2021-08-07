@@ -1,7 +1,7 @@
 <template>
     <div class="main_container">
         <LeftContent class="left_content" />
-        <PostFeed :rootComponent="$parent" title="Discover Projects" class="post_feed" v-if="loaded" />
+        <PostFeed :rootComponent="$parent" :showFilter="false" title="Discover Projects" class="post_feed" v-if="loaded" />
         <RightContent class="right_content" />
     </div>
 </template>

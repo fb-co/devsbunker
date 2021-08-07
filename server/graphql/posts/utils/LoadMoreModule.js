@@ -10,6 +10,7 @@ export default function loadMoreModule(sortingType, lastPostId, lastUniqueField,
             $and: customQueries,
             enabled: true,
         };
+        let sortFilter = {};
 
         if (sortingType === "Newest") {
             sortFilter["_id"] = -1;

@@ -23,7 +23,6 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
                 ];
                 
                 LoadMoreModuleAggregation("Newest", lastPostId, lastUniqueField, loadAmt, pipelineOperators).then((res) => {
-                    console.log(res);
                     const finalPosts = AddDynamicData.addAll(res, user);
                     resolve(finalPosts);
                 });

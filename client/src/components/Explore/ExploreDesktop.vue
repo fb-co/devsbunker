@@ -1,7 +1,7 @@
 <template>
     <div class="explore_desktop">
         <LeftContent class="left_content" />
-        <PostFeed :rootComponent="$parent" title="Discover Projects" class="feed" />
+        <PostFeed :rootComponent="$parent" title="All Projects" class="feed" />
         <RightContent class="right_content" />
     </div>
 </template>

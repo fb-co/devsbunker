@@ -16,6 +16,7 @@
             />
 
             <Dropdown
+                v-if="showFilter"
                 :label="rootComponent.sortingType"
                 fontSize="12px"
                 linkHeight="40px"
@@ -126,6 +127,11 @@ export default {
         },
 
         title: String,
+        
+        showFilter: {
+            type: Boolean,
+            default: true,
+        },
     },
     components: {
         PostSearch,
