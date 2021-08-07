@@ -80,10 +80,11 @@
                             <!-- make sure not to make that function have '()' because I not giving the directive the return value! -->
                             <div class="burger_cont_links" @click="hideBurgerMenu()">
                                 <!--<router-link to="/">Home</router-link>-->
-                                <router-link to="/market">Market</router-link>
-                                <router-link to="/users">People</router-link>
-                                <router-link to="/about">About</router-link>
-
+                                <p @click="$router.push({ path: `/` })" class="nav_link" :class="{ activeLink: this.$route.path == '/' }">Home</p>
+                                <router-link to="/explore">All Projects</router-link>
+                                <router-link v-if="$store.getters.isLoggedIn" :to="`/user/${this.$store.getters.username}/`" class="static_link profile_pic">
+                                    <p>Profile</p>
+                                </router-link>
                                 <router-link v-if="$store.getters.isLoggedIn" to="/notifications" class="static_link">
                                     <p style="position: relative;">
                                         Notifications
@@ -91,11 +92,11 @@
                                         <UnreadNumber v-else style="bottom: -10px; right: 80px;" />
                                     </p>
                                 </router-link>
-                                <router-link v-if="$store.getters.isLoggedIn" :to="`/user/${this.$store.getters.username}/`" class="static_link profile_pic">
-                                    <p>Profile</p>
-                                </router-link>
-
                                 <router-link to="/settings/account">Settings</router-link>
+                                <router-link to="/users">People</router-link>
+                                <router-link to="/market">Market</router-link>
+                                <router-link to="/about">About</router-link>
+
 
                                 <router-link v-if="!$store.getters.isLoggedIn" to="/login">Login</router-link>
                                 <router-link v-if="!$store.getters.isLoggedIn" to="/signup">Sign-up</router-link>
@@ -138,7 +139,6 @@ export default {
         NotificationIcon,
         UnreadNumber,
     },
-
     destroyed() {
         document.body.style.overflow = "auto";
     },
@@ -247,6 +247,11 @@ body {
     font-weight: bold;
     background-color: var(--main-accent);
 }
+.activeLink {
+    text-decoration: none;
+    font-weight: bold !important;
+    background-color: var(--main-accent);
+}
 .menu_container {
     display: flex;
     flex-direction: row;
@@ -279,6 +284,23 @@ body {
     padding: 10px;
     margin-left: 15px;
     margin-top: -4px;
+}
+
+.nav_link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: 100;
+    font-size: 18px;
+    color: var(--burger-textColor);
+    width: 100%;
+    height: 55px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+.nav_link:hover {
+    font-weight: bold;
 }
 
 .nav_links_container {
