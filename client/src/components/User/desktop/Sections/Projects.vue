@@ -1,5 +1,7 @@
 <template>
-    <PostFeed :rootComponent="$parent.$parent" />
+    <div class="general_container">
+        <PostFeed :rootComponent="$parent.$parent" />
+    </div>
 </template>
 
 <script>
@@ -17,5 +19,12 @@ export default {
 </script>
 
 <style scoped>
-
+.general_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow: auto;
+}
 </style>

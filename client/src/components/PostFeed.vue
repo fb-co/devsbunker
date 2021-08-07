@@ -38,7 +38,26 @@
                     </div>
                     <div v-if="desktop && feedTheme === 'Simple'" class="desktop_post_feed">
                         <!-- <DesktopProjectCard class="desktop_project_card" v-for="project in rootComponent.posts" :key="project.id" :projectData="project" width="70%" /> -->
-                        <LargeDesktopProjectCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" />
+                        <LargeDesktopProjectCard 
+                            v-for="project in rootComponent.posts" 
+                            :key="project.id" :projectData="project" 
+                        />
+
+                        <!--These placeholders basically make the last row of a grid layout appear to be centered left -->
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
                         <!-- <DetailedDesktopProjCard v-for="project in rootComponent.posts" :key="project.id" :projectData="project" /> -->
                     </div>
                     <div v-if="desktop && feedTheme === 'Descriptive'" class="desktop_post_feed">
@@ -204,6 +223,7 @@ export default {
             this.searchPhrase = phrase;
         },
     },
+
     beforeDestroy() {
         this.$store.dispatch("cachePostFeedData", {
             path: this.residingPath,
@@ -225,6 +245,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    
 }
 .post_wrapper {
     width: 100%;
@@ -238,9 +259,8 @@ export default {
 }
 .desktop_post_feed {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .filter_dropdown_container {
@@ -292,5 +312,12 @@ export default {
 .load_more_btn:hover {
     font-weight: bold;
     box-shadow: 0px 4px 20px var(--main-accent);
+}
+.dummy_placeholder {
+    min-width: 300px;
+    max-width: 500px;
+    flex: 1;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 </style>

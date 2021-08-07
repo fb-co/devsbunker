@@ -98,7 +98,7 @@ export default gql`
     }
 
     type Mutation {
-        makePost(data: makePostInput): FetchablePost! @rateLimit(limit: 3, duration: 900)
+        makePost(data: makePostInput): FetchablePost! 
         likePost(postId: String!): FetchablePost @rateLimit(limit: 50, duration: 300)
         unlikePost(postId: String!): FetchablePost @rateLimit(limit: 50, duration: 300)
         savePost(postId: String!): FetchablePost @rateLimit(limit: 50, duration: 300)

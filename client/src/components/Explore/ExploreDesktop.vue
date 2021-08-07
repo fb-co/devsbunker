@@ -25,6 +25,7 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
+    max-height: calc(100vh - var(--header-height));
 }
 .left_content {
     width: 20%;
