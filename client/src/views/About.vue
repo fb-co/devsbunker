@@ -76,7 +76,7 @@
             </p>
         </div>
         <div class="exampple_section">
-            <ExampleCard :dark="true" />
+            <ExampleCard :dark="darkTheme" />
         </div>
     </div>
 </template>
