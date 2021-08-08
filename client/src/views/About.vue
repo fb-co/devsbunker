@@ -77,6 +77,7 @@
         </div>
         <div class="exampple_section">
             <ExampleCard :dark="darkTheme" />
+            <MarketAsset :dark="darkTheme" />
         </div>
     </div>
 </template>
@@ -85,6 +86,7 @@
 import SharedMethods from "../utils/shared";
 import DummyCards from "../assets/dummy_cards/DummyCardsWrapper.vue";
 import ExampleCard from "../assets/dummy_cards/ExampleCardWrapper.vue";
+import MarketAsset from "../assets/dummy_cards/MarketAsset.vue";
 import GeneralProperties from "@/mixins/general.mixin";
 
 export default {
@@ -94,6 +96,7 @@ export default {
     components: {
         DummyCards,
         ExampleCard,
+        MarketAsset,
     },
     mixins: [GeneralProperties],
 };

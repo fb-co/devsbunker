@@ -14,13 +14,13 @@
                 </Dropdown>
             </div>
         </div>
-        <div class="setting_section" style="margin-bottom: 10px;">
+        <div class="setting_section" style="margin-bottom: 10px;" v-if="$store.getters.isLoggedIn">
             <h4>Privacy</h4>
             <div class="setting_section_item_container">
                 <p class="setting_label vertical_flex_center">Change Password</p>
                 <p @click="openResetPwdModal()" class="reset_pwd">Reset</p>
             </div>
-    
+
             <InputModal
                 ref="resetPwd"
                 :fields="[
@@ -49,13 +49,13 @@ import GraphQLService from "@/services/graphql.service";
 export default {
     data() {
         return {
-            feedTheme: localStorage.getItem("feedTheme") || "Simple"
-        }
+            feedTheme: localStorage.getItem("feedTheme") || "Simple",
+        };
     },
     components: {
         ThemeSwitcher,
         Dropdown,
-        InputModal
+        InputModal,
     },
     methods: {
         switchFeedTheme(value) {

@@ -26,6 +26,15 @@
                 <ThemeSwitcher class="theme_switcher vertical_flex_center" width="30px" />
             </div>
             <div class="setting_item">
+                <p class="label">Project Cards</p>
+                <div class="setting_item_option_container">
+                    <Dropdown :label="feedTheme" fontSize="12px" linkHeight="40px" height="40px" @itemSelected="switchFeedTheme" class="proj_card_dropdown">
+                        <button>Simple</button>
+                        <button>Descriptive</button>
+                    </Dropdown>
+                </div>
+            </div>
+            <div class="setting_item" v-if="$store.getters.isLoggedIn">
                 <p class="label">Change Password</p>
                 <div class="reset_pwd_container">
                     <p @click="openResetPwdModal()" class="reset_pwd">Reset</p>
@@ -45,16 +54,6 @@
                     title="Reset"
                     @submitted="resetPwd($event[0], $event[1])"
                 />
-            </div>
-
-            <div class="setting_item">
-                <p class="label">Project Cards</p>
-                <div class="setting_item_option_container">
-                    <Dropdown :label="feedTheme" fontSize="12px" linkHeight="40px" height="40px" @itemSelected="switchFeedTheme" class="proj_card_dropdown">
-                        <button>Simple</button>
-                        <button>Descriptive</button>
-                    </Dropdown>
-                </div>
             </div>
         </div>
     </div>
