@@ -14,7 +14,7 @@
 ## High Priority
 
 -   [ ] hitting enter doesnt send comment and throws error
--   [ ] hide reset pwd setting if not logged in
+-   [x] hide reset pwd setting if not logged in
 
 -   [x] Stoopid ass notifications stopped working randomly (check console)
 -   [x] make sure to toggle back on clientside post validation
