@@ -124,12 +124,14 @@ export default {
 .left_content {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 .username_box {
     font-size: 20px;
     width: 90%;
     font-weight: bold;
     margin-top: 20px;
+    margin-bottom: 20px;
     text-align: left;
     padding: 25px 0px 25px 15%;
     overflow: hidden;
@@ -175,7 +177,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     width: 100px;
-    height: 30px;
+    min-height: 30px;
     margin-top: 20px;
     margin-left: 15%;
     color: var(--error-red);
@@ -235,7 +237,7 @@ export default {
 .sep_line {
     width: 80%;
     margin: 0 auto;
-    height: 2px;
+    min-height: 2px;
     background-color: var(--secondary-color);
     margin-top: 30px;
     margin-bottom: 30px;
