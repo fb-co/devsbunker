@@ -114,6 +114,12 @@ export default gql`
     type InteractWithTagsResponse {
         success: Boolean!
     }
+    type CommonTagsResponse {
+        tag: String!
+        interactions: Int!
+        lastInteraction: Int!
+        manuallyAdded: Boolean!
+    }
 
     input UpdateUserPayload {
         field: String!
@@ -157,6 +163,8 @@ export default gql`
         unfollowPerson(person: String!): FetchableUser @rateLimit(limit: 50, duration: 300)
 
         getAndReadNotifications: [Notification]! @rateLimit(limit: 50, duration: 300)
+
+        setCommonTags(tags: [String]!): [CommonTagsResponse]! @rateLimit(limit: 50, duration: 300)
 
         deleteAccount(password: String!): GeneralActionStatus! @rateLimit(limit: 2, duration: 86400)
     }

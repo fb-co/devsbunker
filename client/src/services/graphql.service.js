@@ -148,7 +148,6 @@ const GraphQLService = {
                 .catch(console.error);
         }
     },
-
     fetchTargetedPosts: function(lastPostId, lastUniqueField, token) {
         const query = `
             query {
@@ -312,6 +311,36 @@ const GraphQLService = {
                 body: JSON.stringify({ query }),
             })
                 .then((res) => res.json())
+                .catch(console.error);
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+
+    setCommonTags: function(tags, token) {
+        const mutation = `
+            mutation {
+                setCommonTags(tags) {
+                    tag
+                    interactions
+                    lastInteraction
+                    manuallyAdded
+                }
+            }
+        `;
+        try {
+            return fetch(URL, {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            })
+                .then((res) => {
+                    return res.json();
+                })
                 .catch(console.error);
         } catch (err) {
             return console.error(err);

@@ -13,6 +13,7 @@ const UserIntrestDataManager = {
                 tag: current_tags[i].tag,
                 interactions: current_tags[i].interactions,
                 lastInteraction: current_tags[i].lastInteraction,
+                manuallyAdded: false,
             });
         }
 
@@ -36,6 +37,7 @@ const UserIntrestDataManager = {
                     tag: viewed_tags[i],
                     interactions: 1,
                     lastInteraction: Date.now(),
+                    manuallyAdded: false,
                 });
             }
         }
@@ -56,38 +58,56 @@ const UserIntrestDataManager = {
                 tag: current_tags[i].tag,
                 interactions: current_tags[i].interactions,
                 lastInteraction: current_tags[i].lastInteraction,
+                manuallyAdded: current_tags[i].manuallyAdded, 
             });
         }
 
         for (let i = 0; i < finalTags.length; i++) {
-            const currentTime = Date.now();
-            const elapsedMilliseconds = currentTime - finalTags[i].lastInteraction;
-            
-            const elapsedDays = elapsedMilliseconds/86400000;
-            
-            if (elapsedDays > 365) {
-                finalTags[i] = 0;
-            } else if (elapsedDays >= 120) {
-                finalTags[i].interactions -= 60;
-            } else if (elapsedDays >= 60) {
-                finalTags[i].interactions -= 30;
-            } else if (elapsedDays >= 28) {
-                finalTags[i].interactions -= 15;
-            } else if (elapsedDays >= 21) {
-                finalTags[i].interactions -= 10;
-            } else if (elapsedDays >= 14) {
-                finalTags[i].interactions -= 5;
-            } else if (elapsedDays >= 7) {
-                finalTags[i].interactions -= 1;
-            } 
+            if (!finalTags[i].manuallyAdded) {
+                const currentTime = Date.now();
+                const elapsedMilliseconds = currentTime - finalTags[i].lastInteraction;
+                
+                const elapsedDays = elapsedMilliseconds/86400000;
+                
+                if (elapsedDays > 365) {
+                    finalTags[i] = 0;
+                } else if (elapsedDays >= 120) {
+                    finalTags[i].interactions -= 60;
+                } else if (elapsedDays >= 60) {
+                    finalTags[i].interactions -= 30;
+                } else if (elapsedDays >= 28) {
+                    finalTags[i].interactions -= 15;
+                } else if (elapsedDays >= 21) {
+                    finalTags[i].interactions -= 10;
+                } else if (elapsedDays >= 14) {
+                    finalTags[i].interactions -= 5;
+                } else if (elapsedDays >= 7) {
+                    finalTags[i].interactions -= 1;
+                } 
 
-            if (finalTags[i].interactions < 1) {
-                finalTags.splice(i, 1);
-                i--;
+                if (finalTags[i].interactions < 1) {
+                    finalTags.splice(i, 1);
+                    i--;
+                }
             }
         }
 
         return finalTags;
+    },
+
+    // this returns an array with only the tags you want to add, youll need to concat the current tags
+    // onto the end of this from wherever it gets called
+    manuallyAddTags: function(tagsToAdd) {
+        let finalTags = [];
+
+        for (let i = 0; i < tagsToAdd.length; i++) {
+            finalTags.push({
+                tag: tagsToAdd[i],
+                interactions: 10000,
+                lastInteraction: Date.now(),
+                manuallyAdded: true,
+            });
+        }
     },
 
     // returns -1 if the array does not contain the tag

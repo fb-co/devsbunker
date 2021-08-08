@@ -13,6 +13,7 @@ import getUserByPartial from "../utils/getUserByPartial.js";
 import loginValidUser from "../utils/loginValidUser.js";
 import AddDynamicData from "../misc/addDynamicData.js";
 import LoadAmounts from "../misc/loadAmounts.js";
+import UserInterestData from "../../posts/misc/userInterestData.js";
 import NotificationData from "../misc/notificationData.js";
 
 import getAllPostsByAuthor from "../../posts/utils/getAllPostsByAuthor.js";
@@ -419,6 +420,33 @@ export default {
                 changedData: editedData,
                 message: "Successfully updated user details",
             };
+        },
+
+        setCommonTags: async function (_, args, { req }) {
+            const jwtPayload = req.user;
+            const tagsPayload = args.tags;
+
+            if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
+
+            try {
+                let user = User.findOne({
+                    username: jwtPayload.username,
+                });
+
+                if (user) {
+                    const newTags = UserInterestData.manuallyAddTags(tagsPayload); 
+                
+                    user.common_tags = newTags.concat(user.common_tags);
+
+                    await user.save();
+
+                    return user.common_tags;
+                } else {
+                    return null;
+                }
+            } catch (err) {
+                throw new Error("Something went wrong following " + err);
+            }
         },
 
         // will add a follower to "person" and add a following to follower
