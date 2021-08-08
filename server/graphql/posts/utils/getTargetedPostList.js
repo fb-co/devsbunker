@@ -1,13 +1,18 @@
 import User from "../../../components/user/user.model.js";
 import AddDynamicData from "../misc/addDynamicData.js";
-import LoadMoreModule from "./LoadMoreModule.js";
+import UserInterestData from "../misc/userInterestData.js";
 import LoadMoreModuleAggregation from "./LoadMoreModuleAggregation.js";
 
 
 export default async function getTargetedPostList(username, lastPostId, lastUniqueField, loadAmt) {
-    return new Promise((resolve, reject) => {
-        User.findOne({ username: username, enabled: true }).then((user) => {
+    return new Promise(async (resolve, reject) => {
+        User.findOne({ username: username, enabled: true }).then(async (user) => {
             if (user) {
+                // update the users interaction tags based on elapsed time
+                user.common_tags = UserInterestData.checkTagTimestamps(user.common_tags);
+                await user.save();
+                console.log(user.common_tags);
+
                 // because the tags in the db are sorted by interaction amount, we can assume the user will be more intrested in the first ones
                 const tagList = [];
 

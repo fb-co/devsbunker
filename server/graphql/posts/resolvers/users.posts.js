@@ -7,7 +7,7 @@ import Posts from "../../../components/post/post.model.js";
 import User from "../../../components/user/user.model.js";
 import Comment from "../../../components/post/post.comment.model.js";
 import AddDynamicData from "../misc/addDynamicData.js";
-import UserIntrestData from "../misc/userIntrestData.js";
+import UserInterestData from "../misc/userInterestData.js";
 
 import getUserPost from "../utils/getUserPost.js";
 import getPostByPartial from "../utils/getPostByPartial.js";
@@ -116,7 +116,7 @@ export default {
                         enabled: true,
                     });
 
-                    const finalTags = UserIntrestData.viewedTags(user.common_tags, post.tags);
+                    const finalTags = UserInterestData.viewedTags(user.common_tags, post.tags);
                     user.common_tags = finalTags;
 
                     await user.save();
