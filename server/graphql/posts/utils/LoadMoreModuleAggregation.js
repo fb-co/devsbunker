@@ -11,6 +11,8 @@ export default function loadMoreModuleAggregation(sortingType, lastPostId, lastU
     return new Promise((resolve, reject) => {
         let finalPipelineOperators = pipelineOperators;
         
+        finalPipelineOperators.push({ $match: { enabled: true } }); // filter out not enabled posts no matter the sort type
+
         if (sortingType === "Newest") {
             finalPipelineOperators.push({ $sort: { _id: -1 } }); // sort dataset by newest
 

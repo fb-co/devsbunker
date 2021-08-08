@@ -12,6 +12,8 @@ export default function loadMoreModule(sortingType, lastPostId, lastUniqueField,
         };
         let sortFilter = {};
 
+        customQueries.push({ enabled: true }); // filter out disabled posts
+
         if (sortingType === "Newest") {
             sortFilter["_id"] = -1;
 

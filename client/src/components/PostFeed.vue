@@ -90,6 +90,21 @@
                             :highlight_phrase="searchPhrase"
                             :search_phrase="searchPhrase"
                         />
+                        <!--These placeholders basically make the last row of a grid layout appear to be centered left -->
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
+                        <div class="dummy_placeholder" />
                     </div>
                     <div v-if="desktop && feedTheme === 'Descriptive'" class="desktop_post_feed">
                         <!-- <DesktopProjectCard class="desktop_project_card" v-for="project in searchResults" :key="project.id" :projectData="project" width="70%" :highlight_phrase="$refs.post_search.getSearchedPhrase()" /> -->
