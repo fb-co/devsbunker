@@ -7,13 +7,14 @@
 ## About page
 
 -   [x] use light cards for light mode
--   [ ] use more assets in page body (svgs made in Figma and text, not just text)
+-   [x] use more assets in page body (svgs made in Figma and text, not just text)
 -   [ ] increase subtitles size
 -   [x] apply animations and size adjustements to smaller screens
 
 ## High Priority
 
 -   [ ] hitting enter doesnt send comment and throws error
+-   [ ] hide reset pwd setting if not logged in
 
 -   [x] Stoopid ass notifications stopped working randomly (check console)
 -   [x] make sure to toggle back on clientside post validation
