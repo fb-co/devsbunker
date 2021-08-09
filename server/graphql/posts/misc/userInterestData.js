@@ -25,10 +25,12 @@ const UserIntrestDataManager = {
             const currentTagIndex = this.contains(finalTags, viewed_tags[i]);
 
             if (currentTagIndex !== -1) {
-                // limit interactions to 5000
-                if (finalTags[currentTagIndex].interactions < 5000) {
-                    finalTags[currentTagIndex].interactions++;
-                } 
+                if (!finalTags[currentTagIndex].manuallyAdded) {
+                    // limit interactions to 5000
+                    if (finalTags[currentTagIndex].interactions < 5000) {
+                        finalTags[currentTagIndex].interactions++;
+                    } 
+                }
 
                 // set last interaction time even if they have reached the int limit
                 finalTags[currentTagIndex].lastInteraction = Date.now();
@@ -97,17 +99,31 @@ const UserIntrestDataManager = {
 
     // this returns an array with only the tags you want to add, youll need to concat the current tags
     // onto the end of this from wherever it gets called
-    manuallyAddTags: function(tagsToAdd) {
+    // also: any new tags are assumed to be added manually
+    manuallyAddTags: function(oldTagList, tagsToAdd) {
         let finalTags = [];
 
         for (let i = 0; i < tagsToAdd.length; i++) {
-            finalTags.push({
-                tag: tagsToAdd[i],
-                interactions: 10000,
-                lastInteraction: Date.now(),
-                manuallyAdded: true,
-            });
+            const index = this.contains(oldTagList, tagsToAdd[i]);
+            
+            if (index !== -1) {
+                finalTags.push({
+                    tag: oldTagList[index].tag,
+                    interactions: oldTagList[index].interactions,
+                    lastInteraction: oldTagList[index].lastInteraction,
+                    manuallyAdded: oldTagList[index].manuallyAdded,
+                });
+            } else {
+                finalTags.push({
+                    tag: tagsToAdd[i],
+                    interactions: 1000,
+                    lastInteraction: Date.now(),
+                    manuallyAdded: true,
+                });
+            }
         }
+
+        return finalTags;
     },
 
     // returns -1 if the array does not contain the tag

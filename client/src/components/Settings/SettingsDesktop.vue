@@ -55,6 +55,17 @@
                     @submitted="resetPwd($event[0], $event[1])"
                 />
             </div>
+            <div class="setting_item">
+                <p class="label tag_suggest" style="display: flex; flex-direction: row;">
+                    Tags to suggest: 
+                    <InformativePopup title="Tag Suggestion" style="margin-left: 10px; margin-top: -2px; text-align: center;">
+                        <p style="margin-bottom: 100px; text-align: center;">These include tags that interest you. You will be suggested posts which include them.</p>
+                    </InformativePopup>
+                </p>
+                <div class="setting_item_option_container">
+                    <TagSuggestion />
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -81,12 +92,16 @@ import ThemeSwitcher from "@/components/global/ThemeSwitcher.vue";
 import InputModal from "@/components/global/InputModal.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import GeneralProperties from "@/mixins/general.mixin";
+import TagSuggestion from "./TagSuggestion.vue";
+import InformativePopup from "@/components/Popups/InformativePopup.vue";
 
 export default {
     components: {
         ThemeSwitcher,
         InputModal,
         Dropdown,
+        TagSuggestion,
+        InformativePopup,
     },
     mixins: [GeneralProperties],
     methods: {
@@ -166,6 +181,9 @@ export default {
     font-size: 18px;
     width: 70%;
     text-align: left;
+}
+.tag_suggest {
+    justify-content: start !important;
 }
 .theme_switcher {
     margin: 0 auto;

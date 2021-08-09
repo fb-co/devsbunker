@@ -317,31 +317,37 @@ const GraphQLService = {
         }
     },
 
-    setCommonTags: function(tags, token) {
+    setCommonTags: async function(tags, token) {
+        //console.log(tags);
         const mutation = `
-            mutation {
-                setCommonTags(tags) {
+            mutation Update($tags: [String]!) {
+                setCommonTags(tags: $tags) {
                     tag
                     interactions
-                    lastInteraction
                     manuallyAdded
                 }
             }
         `;
+        
+        // defining variables which are later added to the request alongside the query
+        const variables = {
+            tags: tags,
+        };
+
         try {
-            return fetch(URL, {
+            const res = await fetch(URL, {
                 method: "POST",
                 headers: {
-                    "content-Type": "application/json",
+                    "Content-Type": "application/json",
                     authorization: `Bearer ${token}`,
                 },
                 credentials: "include",
-                body: JSON.stringify({ query: mutation }),
-            })
-                .then((res) => {
-                    return res.json();
-                })
-                .catch(console.error);
+                body: JSON.stringify({
+                    query: mutation,
+                    variables: variables, // adding variables
+                }),
+            });
+            return res.json();
         } catch (err) {
             return console.error(err);
         }

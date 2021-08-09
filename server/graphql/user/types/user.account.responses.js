@@ -46,6 +46,13 @@ export default gql`
         fetchedAll: Boolean
     }
 
+    type TagResponse {
+        tag: String
+        interactions: Int
+        lastInteraction: Int
+        manuallyAdded: Boolean
+    }
+
     type PersonalUserDetails {
         username: String!
         email: String!
@@ -59,6 +66,7 @@ export default gql`
         liked_posts: [String]!
         profile_pic: String
         postsAmt: Int
+        common_tags: [TagResponse]
     }
 
     type CommentResponse {
@@ -117,8 +125,11 @@ export default gql`
     type CommonTagsResponse {
         tag: String!
         interactions: Int!
-        lastInteraction: Int!
         manuallyAdded: Boolean!
+    }
+
+    input TagRequest {
+        tag: String!
     }
 
     input UpdateUserPayload {
@@ -164,7 +175,7 @@ export default gql`
 
         getAndReadNotifications: [Notification]! @rateLimit(limit: 50, duration: 300)
 
-        setCommonTags(tags: [String]!): [CommonTagsResponse]! @rateLimit(limit: 50, duration: 300)
+        setCommonTags(tags: [String]!): [CommonTagsResponse]!
 
         deleteAccount(password: String!): GeneralActionStatus! @rateLimit(limit: 2, duration: 86400)
     }

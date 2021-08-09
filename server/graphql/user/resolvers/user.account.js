@@ -198,6 +198,7 @@ export default {
                         following: user.following,
                         profile_pic: user.profile_pic,
                         postsAmt: postsAmt,
+                        common_tags: user.common_tags,
                     };
                 } else {
                     console.error(err);
@@ -427,18 +428,20 @@ export default {
             const tagsPayload = args.tags;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
-
+            
             try {
-                let user = User.findOne({
+                let user = await User.findOne({
                     username: jwtPayload.username,
                 });
 
                 if (user) {
-                    const newTags = UserInterestData.manuallyAddTags(tagsPayload); 
+                    const newTags = UserInterestData.manuallyAddTags(user.common_tags, tagsPayload); 
                 
-                    user.common_tags = newTags.concat(user.common_tags);
+                    user.common_tags = newTags;
 
                     await user.save();
+
+                    console.log(user.common_tags);
 
                     return user.common_tags;
                 } else {
