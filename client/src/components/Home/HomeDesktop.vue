@@ -1,7 +1,13 @@
 <template>
     <div class="main_container">
         <LeftContent class="left_content" />
-        <PostFeed :rootComponent="$parent" :showFilter="false" title="Discover Projects" class="post_feed" v-if="loaded" />
+        <PostFeed 
+            v-if="loaded" 
+            :rootComponent="$parent" 
+            :showFilter="false" 
+            title="Discover Projects" 
+            class="post_feed" 
+        />
         <RightContent class="right_content" />
     </div>
 </template>

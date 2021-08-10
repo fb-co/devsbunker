@@ -1,6 +1,7 @@
 <template>
     <PostFeed 
         :rootComponent="$parent" 
+        :showFilter="false"
         :desktop="false" 
         v-if="loaded" 
         title="Discover Projects" 
