@@ -218,6 +218,7 @@ export default {
                             finalUserSuggestions.push(userStr);
                         }
                     }
+                    finalUserSuggestions.splice(10); // limit to only ten user suggestions
 
                     return {
                         username: user.username,
