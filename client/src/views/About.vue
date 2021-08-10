@@ -25,7 +25,7 @@
 
         <!-- The text -->
         <div v-if="!$store.getters.mobile" class="text_container">
-            <p class="title">About</p>
+            <p class="title" style="margin-top: 140px;">About</p>
             <div class="section_one_cols">
                 <p class="col1">
                     Devsbunker is a project meant for developers of any kind to promote and share their work.
@@ -39,45 +39,23 @@
             </div>
 
             <div class="fancy_line" />
-            <p class="title" style="margin-top: 70px;">Future</p>
 
-            <div class="section_one_cols">
-                <p>
-                    Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus nunc
-                    augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi, hendrerit vel
-                    pharetra vel, dictum sed ligula. Nulla vitae aliquet turpis. Sed vestibulum egestas cursus. Cras cursus tellus dui, non facilisis dui
-                    rhoncus varius.
-                </p>
-                <p>
-                    Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus nunc
-                    augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi, hendrerit vel
-                    pharetra vel, dictum sed ligula. Nulla vitae aliquet turpis. Sed vestibulum egestas cursus. Cras cursus tellus dui, non facilisis dui
-                    rhoncus varius.
-                </p>
+            <div class="future">
+                <div class="wrapper">
+                    <MarketAsset :dark="darkTheme" />
+                </div>
+                <div class="wrapper">
+                    <h1>Coming Soon</h1>
+                    <p>
+                        Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus
+                        nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi,
+                        hendrerit vel
+                    </p>
+                </div>
             </div>
-        </div>
-        <div v-else style="padding-bottom: 50px;">
-            <p class="title" style="margin-top: 50px; font-size: 30px;">About</p>
-
-            <p class="mobile_text_section">
-                Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus nunc
-                augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi, hendrerit vel
-                pharetra vel, dictum sed ligula. Nulla vitae aliquet turpis. Sed vestibulum egestas cursus. Cras cursus tellus dui, non facilisis dui rhoncus
-                varius.
-            </p>
-
-            <p class="title" style="margin-top: 50px; font-size: 30px;">Future</p>
-
-            <p class="mobile_text_section">
-                Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus nunc
-                augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi, hendrerit vel
-                pharetra vel, dictum sed ligula. Nulla vitae aliquet turpis. Sed vestibulum egestas cursus. Cras cursus tellus dui, non facilisis dui rhoncus
-                varius.
-            </p>
         </div>
         <div class="exampple_section">
             <ExampleCard :dark="darkTheme" />
-            <MarketAsset :dark="darkTheme" />
         </div>
     </div>
 </template>
@@ -208,11 +186,16 @@ export default {
 }
 .title {
     font-weight: bold;
-    font-size: 40px;
+    font-size: 75px;
     line-height: 65px;
 
-    margin-top: px;
+    margin-bottom: 100px;
     text-align: center;
+}
+
+.fancy_line {
+    margin-bottom: 150px;
+    margin-top: 150px;
 }
 
 .text_container {
@@ -234,6 +217,45 @@ export default {
     font-size: 18px;
     text-align: left;
     margin-right: 1px;
+}
+
+.future {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 200px;
+}
+
+.wrapper {
+    flex: 0.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: left;
+
+    height: 500px;
+}
+
+.wrapper svg {
+    transform: scale(1.2);
+}
+
+.wrapper h1 {
+    font-size: 75px;
+    margin-bottom: 40px;
+}
+
+.wrapper p {
+    font-size: 22px;
+    line-height: 40px;
+}
+
+.wrapper p,
+.wrapper h1 {
+    width: 100%;
 }
 
 @keyframes cards_animation {
