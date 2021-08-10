@@ -1,8 +1,7 @@
 <template>
     <div class="signup">
         <div class="signupForm" v-if="!submitted">
-            <p v-if="!errMessage" class="cardTitle">Sign-up</p>
-            <p v-if="errMessage" class="cardTitle err">{{ errMessage }}</p>
+            <p :class="{ err: errMessage != '' }" class="cardTitle">Sign-up</p>
 
             <form name="signup" v-on:submit.prevent="submitForm">
                 <svg
@@ -290,6 +289,7 @@ export default {
         async submitForm() {
             if (this.password != this.confirmedPassword) {
                 this.errMessage = "Passwords don't match!";
+                this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: this.errMessage });
             } else {
                 // we validate even client-side (same thing as server-side)
                 const valid = UserService.validateCreds(this.username, this.email, this.password);
@@ -324,11 +324,12 @@ export default {
                                 this.submitted = false;
                             }, 1500);
                         } else {
-                            this.errMessage = "Internal error. Please try again later.";
+                            this.errMessage = message;
                             setTimeout(() => {
                                 this.submitted = false;
                             }, 1500);
                         }
+                        this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: this.errMessage });
                     } else {
                         const result = response.data.signupUser;
 
