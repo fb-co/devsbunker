@@ -11,7 +11,6 @@ export default async function getTargetedPostList(username, lastPostId, lastUniq
                 // update the users interaction tags based on elapsed time
                 user.common_tags = UserInterestData.checkTagTimestamps(user.common_tags);
                 await user.save();
-                console.log(user.common_tags);
 
                 // because the tags in the db are sorted by interaction amount, we can assume the user will be more intrested in the first ones
                 const tagList = [];

@@ -67,6 +67,7 @@ export default gql`
         profile_pic: String
         postsAmt: Int
         common_tags: [TagResponse]
+        user_suggestions: [String]
     }
 
     type CommentResponse {

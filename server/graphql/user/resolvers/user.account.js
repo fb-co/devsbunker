@@ -174,6 +174,7 @@ export default {
                 if (user && user.enabled) {
                     let unreadAmt = 0;
                     let unreadNotifications = [];
+                    let common_taglist = [];
                     
                     for (let i = 0; i < user.notifications.length; i++) {
                         if (!user.notifications[i].read) {
@@ -181,7 +182,35 @@ export default {
                             unreadAmt++;
                         }
                     }
+
+                    // get the users tags of interest
+                    for (let i = 0; i < user.common_tags.length; i++) {
+                        common_taglist.push(user.common_tags[i].tag);
+                    }
                     
+                    // Mongodb magic using the $facet operator to optimize
+                    const postDataRes = await Posts.aggregate([           
+                        {$facet: {
+                            "suggested_users": [
+                                { $match: { tags: { $in: common_taglist } } },
+                                {$project: {
+                                    author: 1,
+                                }}
+                            ],
+                            "posts_amt": [
+                                {$match: { author: user.username }},
+                                {$count: "posts_amt"}
+                            ],
+                        }}
+                    ]);
+
+                    const finalPostsAmt = postDataRes[0].posts_amt[0].posts_amt;
+                    const finalUserSuggestions = postDataRes[0].suggested_users;
+
+                    console.log(finalUserSuggestions, finalPostsAmt);
+                    console.log(postDataRes[0]); // bro dont even ask, ok
+
+
                     const postsAmt = await Posts.find({ author: user.username }).countDocuments();
 
                     return {
@@ -199,6 +228,7 @@ export default {
                         profile_pic: user.profile_pic,
                         postsAmt: postsAmt,
                         common_tags: user.common_tags,
+                        //user_suggestions: user 
                     };
                 } else {
                     console.error(err);
@@ -440,8 +470,6 @@ export default {
                     user.common_tags = newTags;
 
                     await user.save();
-
-                    console.log(user.common_tags);
 
                     return user.common_tags;
                 } else {

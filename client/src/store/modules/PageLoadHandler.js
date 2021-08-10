@@ -8,6 +8,7 @@ const state = {
     unreadNotifications: [],
     postsAmt: undefined,
     followingList: [],
+    userSuggestions: [],
     commonTags: [],
 };
 
@@ -26,6 +27,9 @@ const getters = {
     },
     following_list: (state) => {
         return state.followingList;
+    },
+    user_suggestions: (state) => {
+        return state.userSuggestions;
     },
     common_tags: (state) => {
         return state.commonTags;
@@ -50,6 +54,9 @@ const mutations = {
     },
     cacheCommonTags(state, commonTags) {
         state.commonTags = commonTags;
+    },
+    cacheUserSuggestions(state, suggestions) {
+        state.userSuggestions = suggestions;
     },
 
     removePersonalPfpLink(state) {
@@ -119,6 +126,7 @@ const actions = {
         commit("cacheUnreadNotifications", undefined);
         commit("cacheFollowingList", []);
         commit("cacheCommonTags", []);
+        commit("cacheUserSuggestions", []);
     },
     check_and_cache_pfp({ commit }) {
         const storedLink = localStorage.getItem("profile_pic_link");

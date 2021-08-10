@@ -88,6 +88,7 @@
         </p>
         <div class="sep_line" />
         <FollowingList />
+        <FollowingList title="Suggestions" :areSuggestions="true" />
     </div>
 </template>
 

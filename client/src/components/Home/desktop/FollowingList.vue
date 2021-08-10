@@ -1,6 +1,7 @@
+<!-- I also use this for the user suggestions -->
 <template>
     <div class="following_list_container">
-        <p class="title">Following</p>
+        <p class="title">{{title}}</p>
         
         <div v-if="following_list.length > 0">
             <div class="following_list">
@@ -43,11 +44,21 @@ import ProfilePicture from "@/components/User/ProfilePicture.vue";
 export default {
     data() {
         return {
-            following_list: this.$store.getters.following_list,
+            following_list: this.areSuggestions ? this.$store.getters.user_suggestions : this.$store.getters.following_list,
             show_list: undefined,
             isMore: true,
             showLess: false,
             initialShowAmt: 15,
+        }
+    },
+    props: {
+        title: {
+            type: String,
+            default: "Following",
+        },
+        areSuggestions: {
+            type: Boolean,
+            default: false
         }
     },
     created() {
@@ -75,7 +86,7 @@ export default {
 <style scoped>
 .following_list_container {
     width: 100%;
-    height: 400px;
+    margin-bottom: 50px;
 }
 .title {
     font-size: 20px;
