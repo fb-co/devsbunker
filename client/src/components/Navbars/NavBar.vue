@@ -5,8 +5,8 @@
         <div class="nav_container">
             <div class="burger_blur" id="burger_menu_blur" @click="hideBurgerMenu()"></div>
             <!-- Darkens the screen for the burger menu -->
-            <div 
-                @click.prevent="routeOrReload()" 
+            <div
+                @click.prevent="routeOrReload()"
                 class="menu_logo"
                 :class="{ menu_logo_desktop: !$store.getters.mobile, menu_logo_mobile: $store.getters.mobile }"
             >
@@ -80,7 +80,7 @@
                             <!-- make sure not to make that function have '()' because I not giving the directive the return value! -->
                             <div class="burger_cont_links" @click="hideBurgerMenu()">
                                 <!--<router-link to="/">Home</router-link>-->
-                                <p @click="$router.push({ path: `/` })" class="nav_link" :class="{ activeLink: this.$route.path == '/' }">Home</p>
+                                <p @click="$router.push({ path: `/` })" class="nav_link" :class="{ activeLink: $route.path == '/' }">Home</p>
                                 <router-link to="/explore">All Projects</router-link>
                                 <router-link v-if="$store.getters.isLoggedIn" :to="`/user/${this.$store.getters.username}/`" class="static_link profile_pic">
                                     <p>Profile</p>
@@ -96,7 +96,6 @@
                                 <router-link to="/users">People</router-link>
                                 <router-link to="/market">Market</router-link>
                                 <router-link to="/about">About</router-link>
-
 
                                 <router-link v-if="!$store.getters.isLoggedIn" to="/login">Login</router-link>
                                 <router-link v-if="!$store.getters.isLoggedIn" to="/signup">Sign-up</router-link>
@@ -246,11 +245,13 @@ body {
 .burger_cont_links > .router-link-active {
     font-weight: bold;
     background-color: var(--main-accent);
+    color: #fff;
 }
 .activeLink {
-    text-decoration: none;
+    text-decoration: none !important;
     font-weight: bold !important;
-    background-color: var(--main-accent);
+    background-color: var(--main-accent) !important;
+    color: #fff !important;
 }
 .menu_container {
     display: flex;
@@ -292,7 +293,7 @@ body {
     justify-content: center;
     text-decoration: none;
     font-weight: 100;
-    font-size: 18px;
+    font-size: 22px;
     color: var(--burger-textColor);
     width: 100%;
     height: 55px;
@@ -411,7 +412,7 @@ body {
     width: 33px;
     margin-bottom: 5px;
     border-radius: 3px;
-    background: var(--main-font-color);
+    background: var(--main-font-color) !important;
     transform-origin: 4px 0px;
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
 }
@@ -443,14 +444,15 @@ body {
     justify-content: center;
     text-decoration: none;
     font-weight: 100;
-    font-size: 18px;
+    font-size: 22px;
     color: var(--burger-textColor);
     width: 100%;
     height: 55px;
-    margin-top: 30px;
+    margin-top: 35px;
+    transition: 0.3s;
 }
 .burger_cont_links a:hover {
-    font-weight: bold;
+    color: #fff;
 }
 
 .burger_cont_links input {
@@ -500,7 +502,7 @@ body {
 .logout_btn {
     text-decoration: none;
     font-weight: 100;
-    font-size: 18px;
+    font-size: 22px;
     color: var(--error-red);
     width: 100%;
     height: 55px;
@@ -536,6 +538,15 @@ body {
     .burger_menu_cont {
         width: 225px;
         animation: burger_animation_mobile 0.5s;
+    }
+    .burger_cont_links a {
+        font-size: 20px;
+    }
+    .nav_link {
+        font-size: 20px;
+    }
+    .logout_btn {
+        font-size: 20px;
     }
 }
 @media only screen and (min-width: 950px) {
