@@ -77,7 +77,14 @@ const actions = {
     async fetchPageLoadData({ commit, rootState }) {
         const storedLink = localStorage.getItem("profile_pic_link");
 
-        let dataToFetch = ["unreadNotificationAmt", "unreadNotifications { read sender message type target timestamp }", "postsAmt", "following", "common_tags { tag }"];
+        let dataToFetch = [
+            "unreadNotificationAmt", 
+            "unreadNotifications { read sender message type target timestamp }", 
+            "postsAmt", 
+            "following", 
+            "common_tags { tag }", 
+            "user_suggestions"
+        ];
         let pfpLink;
 
         // TODO: I don't really like this if statement
@@ -93,7 +100,7 @@ const actions = {
         }
 
         const res = await GraphQLService.fetchPersonalDetails(rootState.LoginStateHandler.accessToken, dataToFetch);
-
+        
         if (!res.errors) {
             if (res.data.getPersonalDetails.profile_pic) {
                 commit(
@@ -108,6 +115,7 @@ const actions = {
             commit("cacheFollowingList", res.data.getPersonalDetails.following);
             commit("cacheUnreadNotifications", res.data.getPersonalDetails.unreadNotifications);
             commit("cacheCommonTags", res.data.getPersonalDetails.common_tags);
+            commit("cacheUserSuggestions", res.data.getPersonalDetails.user_suggestions);
 
             // add the pfp link to localstorage if its not already in there
             if (!storedLink) {

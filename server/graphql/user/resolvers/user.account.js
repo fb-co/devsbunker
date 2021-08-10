@@ -187,31 +187,37 @@ export default {
                     for (let i = 0; i < user.common_tags.length; i++) {
                         common_taglist.push(user.common_tags[i].tag);
                     }
-                    
                     // Mongodb magic using the $facet operator to optimize
                     const postDataRes = await Posts.aggregate([           
                         {$facet: {
-                            "suggested_users": [
-                                { $match: { tags: { $in: common_taglist } } },
-                                {$project: {
-                                    author: 1,
-                                }}
-                            ],
                             "posts_amt": [
                                 {$match: { author: user.username }},
-                                {$count: "posts_amt"}
+                                {$count: "amount"}
+                            ],
+                            "suggested_users": [
+                                {$match: { tags: { $in: common_taglist } }},
+                                {$project: {
+                                    author: 1,
+                                }},
+                                {$limit: 100}
                             ],
                         }}
                     ]);
 
-                    const finalPostsAmt = postDataRes[0].posts_amt[0].posts_amt;
-                    const finalUserSuggestions = postDataRes[0].suggested_users;
+                    const finalPostsAmt = postDataRes[0].posts_amt[0].amount;
+                    const userSuggestions = postDataRes[0].suggested_users;
 
-                    console.log(finalUserSuggestions, finalPostsAmt);
-                    console.log(postDataRes[0]); // bro dont even ask, ok
+                    // convert user suggestions into something graphql can return
+                    let finalUserSuggestions = [];
 
-
-                    const postsAmt = await Posts.find({ author: user.username }).countDocuments();
+                    for (let i = 0; i < userSuggestions.length; i++) {
+                        const userStr = userSuggestions[i].author;
+                        
+                        // this is to avoid dups and suggesting users that you already followed and/or are you
+                        if (!finalUserSuggestions.includes(userStr) && !user.following.includes(userStr) && userStr !== user.username) {
+                            finalUserSuggestions.push(userStr);
+                        }
+                    }
 
                     return {
                         username: user.username,
@@ -226,9 +232,9 @@ export default {
                         followers: user.followers,
                         following: user.following,
                         profile_pic: user.profile_pic,
-                        postsAmt: postsAmt,
+                        postsAmt: finalPostsAmt,
                         common_tags: user.common_tags,
-                        //user_suggestions: user 
+                        user_suggestions: finalUserSuggestions, 
                     };
                 } else {
                     console.error(err);
