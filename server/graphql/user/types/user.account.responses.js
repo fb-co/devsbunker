@@ -148,7 +148,7 @@ export default gql`
         partialUser(partialUsername: String!, sortMethod: String!, lastUserId: String!, lastUniqueField: String!): LoadUsersResponse!
             @rateLimit(limit: 50, duration: 300)
 
-        loginUser(username: String, email: String, password: String!): UserAccountAction! @rateLimit(limit: 10 , duration: 3600)
+        loginUser(username: String, email: String, password: String!): UserAccountAction! @rateLimit(limit: 20, duration: 3600)
 
         logoutUser: LogoutResponse!
 

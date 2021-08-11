@@ -1,10 +1,12 @@
 <template>
     <div class="main_container">
         <LeftContent class="left_content" />
+
+        <!-- is logged in will only show the filter if the user is not logged in -->
         <PostFeed 
             v-if="loaded" 
             :rootComponent="$parent" 
-            :showFilter="false" 
+            :showFilter="!$store.getters.isLoggedIn" 
             title="Discover Projects" 
             class="post_feed" 
         />

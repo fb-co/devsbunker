@@ -326,7 +326,7 @@ export default {
                 // this fetches again the server but its the only way since we dont know if the user logs in with the email or the username
                 // alternative would be to call the mutations manually
                 this.$store.dispatch("setLoggedInState");
-                this.$store.dispatch("fetchPageLoadData");
+                await this.$store.dispatch("fetchPageLoadData");
                 this.$router.push("/");
             }
         },

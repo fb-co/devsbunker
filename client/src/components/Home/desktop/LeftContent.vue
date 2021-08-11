@@ -87,8 +87,10 @@
             Logout
         </p>
         <div class="sep_line" />
-        <FollowingList />
-        <FollowingList title="Suggestions" :areSuggestions="true" />
+        <div v-if="$store.getters.accessToken">
+            <FollowingList />
+            <FollowingList title="Suggestions" :areSuggestions="true" />
+        </div>
     </div>
 </template>
 

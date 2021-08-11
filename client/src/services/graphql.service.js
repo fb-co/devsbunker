@@ -1075,6 +1075,7 @@ const GraphQLService = {
 
                 // get rid of any user specific data in the store
                 store.dispatch("flush_user_data");
+                store.dispatch("flushPostCache");
 
                 store.dispatch("alertUser", { title: "Success", type: "success", msg: "Successfully logged out" });
             }

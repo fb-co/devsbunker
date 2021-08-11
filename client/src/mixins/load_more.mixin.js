@@ -257,6 +257,14 @@ const LoadMore = {
         clearPosts() {
             this.posts = [];
         },
+        changeFeedType(queryType, sortingType) {
+            this.clearPosts();
+
+            this.queryType = queryType;
+            this.sortingType = sortingType;
+
+            this.getPosts();
+        }
     },
 };
 

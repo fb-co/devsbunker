@@ -4,9 +4,11 @@
             <MobileFollowingList />
             <div class="custom_line" />
         </div>
+
+        <!-- is logged in will only show the filter if the user is not logged in -->
         <PostFeed 
             :rootComponent="$parent" 
-            :showFilter="false"
+            :showFilter="!$store.getters.isLoggedIn"
             :desktop="false" 
             v-if="loaded" 
             title="Discover Projects" 

@@ -33,7 +33,7 @@ export default {
     computed: {
         cssProps() {
             return {
-                "--card-color": Languages.getColor(this.label) || "var(--main-font-color)",
+                "--card-color": Languages.getColor(this.label) || "#fff",
             };
         },
     },

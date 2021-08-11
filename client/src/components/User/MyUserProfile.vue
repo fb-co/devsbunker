@@ -38,10 +38,8 @@ export default {
             "username",
         ]);
         if (!res.errors) {
-            console.log(res);
             this.userObject = res.data.getPersonalDetails;
         } else {
-            console.log(res);
             this.error = res.errors[0].message;
             this.userObject = false;
         }

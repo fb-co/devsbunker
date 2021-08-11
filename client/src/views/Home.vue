@@ -33,9 +33,26 @@ export default {
             loaded: true,
         };
     },
+    computed: {
+        loggedInState() {
+            return !this.$store.getters.isLoggedIn;
+        }
+    },
+    watch: {
+        loggedInState: function() {
+            this.changeFeedType("all", "Newest");
+        }
+    },
     async created() {
-        this.queryType = "targeted";
-        this.sortingType = "Newest";
+        // show a regular post feed if your not logged in
+        if (this.$store.getters.isLoggedIn) {
+            this.queryType = "targeted";
+            this.sortingType = "Newest";
+        } else {
+            this.queryType = "all";
+            this.sortingType = "Newest";
+        }
+            
         this.getPosts();
 
         SharedMethods.loadPage();
@@ -54,6 +71,7 @@ export default {
         HomeDesktop,
         NewPost,
     },
+    
     methods: {
         openPostMenu() {
             this.$refs.newPostMenu.open();

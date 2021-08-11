@@ -94,6 +94,10 @@ const mutations = {
             state.fullPosts.push(postObj);
         }
     },
+    flushPostCacheMutation(state) {
+        state.posts = [];
+        state.fullPosts = [];
+    },
 };
 
 const actions = {
@@ -106,6 +110,9 @@ const actions = {
     cacheFullPost({ commit }, postObj) {
         commit("cacheEntirePostInCache", postObj);
     },
+    flushPostCache({ commit }) {
+        commit("flushPostCacheMutation");
+    }
 };
 
 export default {
