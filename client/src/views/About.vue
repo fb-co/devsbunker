@@ -26,7 +26,7 @@
         <!-- The text -->
         <div v-if="!$store.getters.mobile" class="text_container">
             <p class="title" style="margin-top: 140px;">About</p>
-            <div class="section_one_cols">
+            <!--             <div class="section_one_cols">
                 <p class="col1">
                     Devsbunker is a project meant for developers of any kind to promote and share their work.
                 </p>
@@ -36,7 +36,11 @@
                     pharetra vel, dictum sed ligula. Nulla vitae aliquet turpis. Sed vestibulum egestas cursus. Cras cursus tellus dui, non facilisis dui
                     rhoncus varius.
                 </p>
-            </div>
+            </div> -->
+            <p class="main_desc">
+                Devsbunker is a project meant for developers of any kind <br />
+                to promote and share their work.
+            </p>
 
             <div class="fancy_line" />
 
@@ -234,6 +238,14 @@ export default {
 
     margin-bottom: 100px;
     text-align: center;
+}
+
+.main_desc {
+    font-size: 30px;
+    text-align: center;
+    line-height: 50px;
+
+    font-weight: 100;
 }
 
 .fancy_line {
