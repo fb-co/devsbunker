@@ -40,6 +40,22 @@
 
             <div class="fancy_line" />
 
+            <div class="example_section">
+                <div class="wrapper">
+                    <h1>Promote</h1>
+                    <p>
+                        Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus
+                        nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi,
+                        hendrerit vel
+                    </p>
+                </div>
+                <div class="wrapper">
+                    <ExampleCard :dark="darkTheme" />
+                </div>
+            </div>
+
+            <div class="fancy_line" />
+
             <div class="future">
                 <div class="wrapper">
                     <MarketAsset :dark="darkTheme" />
@@ -54,8 +70,32 @@
                 </div>
             </div>
         </div>
-        <div class="exampple_section">
-            <ExampleCard :dark="darkTheme" />
+        <div class="footer">
+            <div class="footer_section">
+                <h3>Created by</h3>
+                <p>Jacopo Folgoni Borsa</p>
+                <p>Leonardo Folgoni</p>
+            </div>
+            <div class="footer_section">
+                <div class="footer_links">
+                    <div>
+                        <router-link to="/">Home</router-link>
+                    </div>
+                    <div>
+                        <router-link to="/">About</router-link>
+                    </div>
+                    <div>
+                        <router-link to="/">Market</router-link>
+                    </div>
+                    <div>
+                        <router-link to="/">Contact</router-link>
+                    </div>
+                </div>
+            </div>
+            <div class="footer_section">
+                <h3>Contact us:</h3>
+                <a href="mailto:folgoni.co@gmail.com">folgoni.co@gmail.com</a>
+            </div>
         </div>
     </div>
 </template>
@@ -81,6 +121,9 @@ export default {
 </script>
 
 <style scoped>
+.pageContainer {
+    width: 100%;
+}
 /* 
     multiple animaitons because we have different elements positions for different screen sizes
     Some JS would avoid copy and pasting CSS but Im lazy so here we go
@@ -219,7 +262,8 @@ export default {
     margin-right: 1px;
 }
 
-.future {
+.future,
+.example_section {
     display: flex;
     flex-direction: row;
     width: 80%;
@@ -256,6 +300,64 @@ export default {
 .wrapper p,
 .wrapper h1 {
     width: 100%;
+}
+
+.example_section {
+    padding-bottom: 50px;
+    padding-top: 80px;
+}
+
+.example_section .wrapper svg {
+    transform: scale(1.1);
+}
+
+.footer {
+    width: 100%;
+    height: 500px;
+    background-color: var(--secondary-color);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    padding: 100px;
+    margin-top: 220px;
+}
+
+.footer_section {
+    flex: 0.3;
+    height: 90%;
+
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.footer_section h3 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.footer_section p {
+    margin-bottom: 15px;
+    color: var(--soft-text);
+    font-size: 18px;
+}
+
+.footer_links div {
+    margin-bottom: 30px;
+}
+
+.footer_links a {
+    text-decoration: none;
+    color: var(--soft-text);
+    transition: 0.3s;
+
+    font-size: 28px;
+}
+.footer_links a:hover {
+    color: var(--main-font-color);
 }
 
 @keyframes cards_animation {
