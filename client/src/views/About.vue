@@ -9,7 +9,19 @@
                         promote their work for free.
                     </p>
 
-                    <div class="main_btn">
+                    <div 
+                        v-if="$store.getters.isLoggedIn"
+                        @click="$router.push({ path: `/` })" 
+                        class="main_btn"
+                    >
+                        <!-- had to use h3 cuz jac uses Ps everywhere and his css was messing with mine -->
+                        <h3>Start</h3>
+                    </div>
+                    <div
+                        v-else
+                        @click="$router.push({ path: `/login` })" 
+                        class="main_btn"
+                    >
                         <!-- had to use h3 cuz jac uses Ps everywhere and his css was messing with mine -->
                         <h3>Start</h3>
                     </div>
@@ -18,8 +30,28 @@
             </div>
         </div>
         <div v-else>
-            <div class="logo_container_mobile">
+            <div class="mobile_header_container">
                 <img src="../assets/LOGO.svg" alt="Logo" />
+                <p>
+                    A platform where developers can <br />
+                    promote their work for free.
+                </p>
+                <div 
+                    v-if="$store.getters.isLoggedIn"
+                    @click="$router.push({ path: `/` })" 
+                    class="main_btn_mobile"
+                >
+                    <!-- had to use h3 cuz jac uses Ps everywhere and his css was messing with mine -->
+                    <h3>Start</h3>
+                </div>
+                <div
+                    v-else
+                    @click="$router.push({ path: `/login` })" 
+                    class="main_btn_mobile"
+                >
+                    <!-- had to use h3 cuz jac uses Ps everywhere and his css was messing with mine -->
+                    <h3>Start</h3>
+                </div>
             </div>
         </div>
 
@@ -74,7 +106,33 @@
                 </div>
             </div>
         </div>
-        <div class="footer">
+        <div v-else class="mobile_text_container">
+            <p class="mobile_title">About</p>
+            <p class="main_desc_mobile">
+                Devsbunker is a project meant for <br> developers of any kind
+                to<br> promote and share their work.
+            </p>
+            <div class="fancy_line" style="margin-top: 50px; margin-bottom: 50px;" />
+
+            <ExampleCard :dark="darkTheme" style="max-width: 80%; height: auto; margin-bottom: 40px; margin-top: 10px;" />
+            <p class="mobile_text_block">
+                Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus
+                nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi,
+                hendrerit vel
+            </p>
+
+            <div class="fancy_line" style="margin-top: 50px; margin-bottom: 50px;" />
+
+            <p class="mobile_title">Coming Soon</p>
+            <MarketAsset :dark="darkTheme" style="max-width: 90%; height: auto; margin-bottom: 40px; margin-top: 10px;" />
+            <p class="mobile_text_block">
+                Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus
+                nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi,
+                hendrerit vel
+            </p>
+        </div>
+
+        <div v-if="!$store.getters.mobile" class="footer">
             <div class="footer_section">
                 <h3>Created by</h3>
                 <p>Jacopo Folgoni Borsa</p>
@@ -127,6 +185,7 @@ export default {
 <style scoped>
 .pageContainer {
     width: 100%;
+    height: auto;
 }
 /* 
     multiple animaitons because we have different elements positions for different screen sizes
@@ -468,5 +527,68 @@ export default {
     .header_container {
         height: 620px;
     }
+}
+
+
+/* Mobile Only Styles */
+.mobile_header_container {
+    max-width: 100vw;
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 30px;
+}
+.mobile_header_container > img {
+    width: 80%;
+}
+.mobile_header_container > p {
+    margin-top: 10px;
+    color: var(--soft-text);
+    line-height: 1.5;
+    font-size: 18px;
+}
+
+.main_btn_mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 150px;
+    height: 60px;
+    background-color: var(--main-accent);
+
+    border-radius: 12px;
+    margin-top: 35px;
+
+    cursor: pointer;
+    border: 1px solid var(--main-accent);
+    transition: 0.3s;
+    color: #fff;
+    font-size: 18px;
+}
+
+.mobile_text_container {
+    max-width: 100vw;
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+.mobile_title {
+    font-size: 40px;
+    font-weight: bold;
+}
+.main_desc_mobile {
+    font-size: 20px;
+    text-align: center;
+    font-weight: 100;
+    
+    line-height: 1.5;
+    margin: 20px auto;
+}
+.mobile_text_block {
+    width: 75%;
+    font-weight: 20;
+    margin: 0 auto;
+    font-size: 18px;
+    text-align: left;
+    line-height: 1.5;
 }
 </style>

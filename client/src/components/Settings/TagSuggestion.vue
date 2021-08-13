@@ -201,14 +201,6 @@ export default {
     box-shadow: 0px 0px 5px var(--drop-shadow);
     animation: slideAnimation 0.5s;
 }
-.popup_container_desktop {
-    min-width: 400px;
-    width: 40%;
-    max-width: 500px;
-}
-.popup_container_mobile {
-
-}
 .popup_header {
     display: flex;
 }
