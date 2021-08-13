@@ -36,6 +36,14 @@
                 title="Reset"
                 @submitted="resetPwd($event[0], $event[1])"
             />
+
+            <div class="setting_section_item_container">
+                <p class="setting_label vertical_flex_center" style="margin-bottom: 30px; !important">Tags to suggest:</p>
+                <InformativePopup title="Tag Suggestion" style="margin-top: -2px; text-align: center;">
+                    <p style="margin-bottom: 100px; text-align: center;">These include tags that interest you. You will be suggested posts which include them.</p>
+                </InformativePopup>
+            </div>
+            <TagSuggestion />
         </div>
     </div>
 </template>
@@ -44,6 +52,8 @@
 import ThemeSwitcher from "@/components/global/ThemeSwitcher.vue";
 import Dropdown from "@/components/global/Dropdown.vue";
 import InputModal from "@/components/global/InputModal.vue";
+import TagSuggestion from "../TagSuggestion.vue";
+import InformativePopup from "@/components/Popups/InformativePopup.vue";
 import GraphQLService from "@/services/graphql.service";
 
 export default {
@@ -56,6 +66,8 @@ export default {
         ThemeSwitcher,
         Dropdown,
         InputModal,
+        TagSuggestion,
+        InformativePopup,
     },
     methods: {
         switchFeedTheme(value) {

@@ -186,7 +186,7 @@ export default {
 }
 
 .popup_container {
-    min-width: 400px;
+    min-width: 300px;
     width: 40%;
     max-width: 500px;
     min-height: 300px;
@@ -200,6 +200,14 @@ export default {
     border-radius: 5px;
     box-shadow: 0px 0px 5px var(--drop-shadow);
     animation: slideAnimation 0.5s;
+}
+.popup_container_desktop {
+    min-width: 400px;
+    width: 40%;
+    max-width: 500px;
+}
+.popup_container_mobile {
+
 }
 .popup_header {
     display: flex;
