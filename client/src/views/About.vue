@@ -404,6 +404,34 @@ export default {
         width: 150px;
         height: 60px;
     }
+    .example_section .wrapper svg {
+        transform: scale(0.9);
+    }
+    .wrapper svg {
+        transform: scale(0.9);
+    }
+    .wrapper p {
+        font-size: 19px;
+    }
+    .wrapper h1 {
+        font-size: 60px;
+    }
+}
+@media only screen and (max-width: 1000px) {
+    .future,
+    .example_section {
+        width: 90%;
+    }
+    .example_section .wrapper svg {
+        transform: scale(0.8);
+    }
+    .wrapper svg {
+        transform: scale(0.8);
+    }
+
+    .wrapper p {
+        line-height: 30px;
+    }
 }
 @media only screen and (min-width: 1230px) {
     .dummy_cards {
