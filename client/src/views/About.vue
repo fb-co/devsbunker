@@ -80,9 +80,12 @@
                 <div class="wrapper">
                     <h1>Promote</h1>
                     <p>
-                        Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus
-                        nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi,
-                        hendrerit vel
+                        Devsbunker provides developers a way to share and advertise their work in a free and easy way.
+                        While it is mainly designed for software developers, it's certainly not limited to that.
+                        Graphic design, 3D modeling, photo editing, and game development are a few examples of valid contributions. 
+                        <br><br>
+                        We felt like there was no good place to share your projects whenever you wanted, while making it easy for others
+                        to find them. 
                     </p>
                 </div>
                 <div class="wrapper">
@@ -99,9 +102,9 @@
                 <div class="wrapper">
                     <h1>Coming Soon</h1>
                     <p>
-                        Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus
-                        nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi,
-                        hendrerit vel
+                        We are planning on expanding the platform to include a market section where users will be able to 
+                        sell their work in an simple and easy way. Payments will be handled with Stripe, and everything will
+                        be done on this site.  
                     </p>
                 </div>
             </div>
@@ -116,9 +119,12 @@
 
             <ExampleCard :dark="darkTheme" style="max-width: 80%; height: auto; margin-bottom: 40px; margin-top: 10px;" />
             <p class="mobile_text_block">
-                Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus
-                nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi,
-                hendrerit vel
+                Devsbunker provides developers a way to share and advertise their work in a free and easy way.
+                While it is mainly designed for software developers, it's certainly not limited to that.
+                Graphic design, 3D modeling, photo editing, and game development are a few examples of valid contributions. 
+                <br><br>
+                We felt like there was no good place to share your projects whenever you wanted, while making it easy for others
+                to find them. 
             </p>
 
             <div class="fancy_line" style="margin-top: 50px; margin-bottom: 50px;" />
@@ -126,9 +132,9 @@
             <p class="mobile_title">Coming Soon</p>
             <MarketAsset :dark="darkTheme" style="max-width: 90%; height: auto; margin-bottom: 40px; margin-top: 10px;" />
             <p class="mobile_text_block">
-                Nunc libero ipsum, tristique ac euismod sed, faucibus elementum diam. Proin quis libero quis quam congue pellentesque. Quisque rhoncus
-                nunc augue, in fringilla augue rutrum a. Sed sollicitudin est et nibh maximus, non ornare lectus ullamcorper. Quisque tellus mi,
-                hendrerit vel
+                We are planning on expanding the platform to include a market section where users will be able to 
+                sell their work in an simple and easy way. Payments will be handled with Stripe, and everything will
+                be done on this site.  
             </p>
         </div>
 
@@ -144,13 +150,10 @@
                         <router-link to="/">Home</router-link>
                     </div>
                     <div>
-                        <router-link to="/">About</router-link>
+                        <router-link to="/market">Market</router-link>
                     </div>
                     <div>
-                        <router-link to="/">Market</router-link>
-                    </div>
-                    <div>
-                        <router-link to="/">Contact</router-link>
+                        <router-link to="/policy">Privacy Policy</router-link>
                     </div>
                 </div>
             </div>
@@ -533,7 +536,7 @@ export default {
 /* Mobile Only Styles */
 .mobile_header_container {
     max-width: 100vw;
-    text-align: left;
+    text-align: center;
     padding-left: 20px;
     padding-top: 30px;
 }
@@ -551,6 +554,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0 auto;
 
     width: 150px;
     height: 60px;

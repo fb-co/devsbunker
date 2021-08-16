@@ -96,6 +96,7 @@
                                 <router-link to="/users">People</router-link>
                                 <router-link to="/market">Market</router-link>
                                 <router-link to="/about">About</router-link>
+                                <router-link to="/policy">Privacy Policy</router-link>
 
                                 <router-link v-if="!$store.getters.isLoggedIn" to="/login">Login</router-link>
                                 <router-link v-if="!$store.getters.isLoggedIn" to="/signup">Sign-up</router-link>

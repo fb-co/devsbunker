@@ -211,7 +211,6 @@ export default {
                     }
                 } else {
                     // This is a fallback in case for some random reason the pfp wasent placed in the store (if everything goes right, it should never reach this point)
-                    console.log("IMPORTANT: pfp wasn't in the store, fetching");
                     callAPI();
                 }
             }

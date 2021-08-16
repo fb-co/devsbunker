@@ -5,6 +5,13 @@
             <router-view ref="page_content" />
             <BottomNavBar v-if="$store.getters.mobile" @updateFeed="updateFeed($event)" />
             <AlertFeed />
+
+            <InformativePopupBare title="Cookies" ref="cookie_popup">
+                <p>By using this site, you agree to all cookies and our <router-link to="/policy">privacy policy.</router-link></p>
+                <br>
+                <p>(Cookies are only used to handle login sessions and nothing else)</p>
+                <div style="height: 100px;" />
+            </InformativePopupBare>
         </div>
 
         <Loading v-if="isFetching" />
@@ -16,11 +23,14 @@ import Loading from "./components/Loading";
 import Navbar from "./components/Navbars/NavBar.vue";
 import BottomNavBar from "./components/Navbars/BottomNavBar.vue";
 import AlertFeed from "./components/Notifications/AlertFeed.vue";
+import InformativePopupBare from "./components/Popups/InformativePopup.vue";
 
 export default {
     data() {
         return {
             isFetching: true,
+            hasVisited: false,
+            agreedToPolicy: false,
         };
     },
 
@@ -29,6 +39,7 @@ export default {
         Navbar,
         BottomNavBar,
         AlertFeed,
+        InformativePopupBare
     },
 
     destroyed() {
@@ -47,11 +58,24 @@ export default {
 
         this.isFetching = false;
     },
+    updated() {
+        this.handleFirstVisit();
+    },
 
     methods: {
         updateFeed(post) {
             this.$refs.page_content.updateFeed(post);
         },
+
+        handleFirstVisit() {
+            const visitState = localStorage.getItem("firstVisit");
+            const agreedToPolicy = localStorage.getItem("agreedToPolicy");
+
+            if (!visitState) {
+                this.$refs.cookie_popup.open();
+                
+            }
+        }
     },
 
     watch: {

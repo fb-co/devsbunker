@@ -68,6 +68,12 @@ const routes = [
     },
 
     {
+        path: "/policy",
+        name: "Privacy Policy",
+        component: () => import("../views/PrivacyPolicy.vue"),
+    },
+
+    {
         path: "/notifications",
         name: "Notifications",
         component: () => import("../views/Notifications.vue"),
