@@ -107,13 +107,14 @@ export default {
     justify-content: center;
     align-items: center;
     width: 70%;
-    text-align: justify;
+    text-align: center;
 
     margin: auto;
 }
 .main_cont p {
     color: var(--soft-text);
     font-size: 16px;
+    line-height: 22px;
 }
 .btns {
     width: 100%;

@@ -16,7 +16,9 @@
                 </template>
 
                 <template v-slot:message>
-                    <p>This is a test message</p>
+                    <p>
+                        By using this website you agree to our Privacy Policy and you let us use cookies. To clarify, cookies are only used to handle sessions
+                    </p>
                 </template>
             </InteractivePopup>
         </div>
