@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <svg
             version="1.1"
             id="Layer_1"
@@ -241,4 +241,13 @@
 export default {};
 </script>
 
-<style scoped></style>
+<style scoped>
+.container {
+    width: 100%;
+    height: 100%;
+}
+.container svg {
+    width: 100%;
+    height: 100%;
+}
+</style>

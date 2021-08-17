@@ -8,39 +8,15 @@
             :class="{ information_container_desktop: !this.$store.getters.mobile, information_container_mobile: this.$store.getters.mobile }"
         >
             <div class="cont_header">
-                <div class="close_btn_container vertical_flex_center">
-                    <svg
-                        @click="close()"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon icon-tabler icon-tabler-x"
-                        width="40"
-                        height="40"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="var(--main-font-color)"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
+                <div class="title">
+                    <slot name="title"></slot>
                 </div>
-                <h4 class="vertical_flex_center">{{ title }}</h4>
-                <div style="width: 50px;" />
-                <div>
+                <div class="illustration">
                     <slot name="illustration"></slot>
                 </div>
             </div>
             <div class="main_cont">
-                <slot>
-                    <!-- Add the information you want to add here (wherever your adding the component, not literally here) -->
-                </slot>
-                <div class="placeholder" style="flex-grow: 1;" />
-                <div class="horizontal_flex_center">
-                    <button @click="close()" class="general_button" style="margin: 30px auto 0px auto;">Ok</button>
-                </div>
+                <slot name="message"> </slot>
             </div>
         </div>
     </div>
@@ -52,12 +28,6 @@ export default {
         return {
             display: false,
         };
-    },
-    props: {
-        title: {
-            type: String,
-            default: "Information",
-        },
     },
     methods: {
         close() {
@@ -102,37 +72,39 @@ export default {
 }
 .information_container_desktop {
     width: 40%;
-    min-width: 600px;
-    max-width: 600px;
+    max-width: 400px;
     max-height: 80vh;
-    min-height: 300px;
+    min-height: 450px;
 }
 
 .cont_header {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-.cont_header h4 {
-    font-size: 23px;
-    flex-grow: 1;
+.cont_header h1 {
+    font-size: 25px;
+    margin-top: 20px;
 }
-.close_btn_container {
-    padding: 10px;
-    width: 50px;
-}
-.close_btn_container svg:hover {
-    stroke-width: 2px;
+.illustration {
+    width: 150px;
+    height: 150px;
+
+    margin-top: 35px;
 }
 .main_cont {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 70%;
-    margin: 20px auto 20px auto;
     text-align: justify;
-    flex-grow: 1;
+
+    margin: auto;
 }
 .main_cont p {
     color: var(--soft-text);
-    font-size: 1000px;
+    font-size: 16px;
 }
 </style>

@@ -6,14 +6,18 @@
             <BottomNavBar v-if="$store.getters.mobile" @updateFeed="updateFeed($event)" />
             <AlertFeed />
 
-            <InteractivePopup title="Cookies" ref="cookie_popup">
+            <InteractivePopup ref="cookie_popup">
+                <template v-slot:title>
+                    <h1>Cookies!</h1>
+                </template>
+
                 <template v-slot:illustration>
                     <CookieIllustration />
                 </template>
-                <p>By using this site, you agree to all cookies and our <router-link to="/policy">privacy policy.</router-link></p>
-                <br />
-                <p>(Cookies are only used to handle login sessions and nothing else)</p>
-                <div style="height: 100px;" />
+
+                <template v-slot:message>
+                    <p>This is a test message</p>
+                </template>
             </InteractivePopup>
         </div>
 
