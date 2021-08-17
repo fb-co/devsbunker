@@ -23,7 +23,7 @@
                     <p>Privacy policy</p>
                 </div>
                 <div class="btn" style="background-color: var(--main-accent); color: var(--main-color)" @click="agree()">
-                    <p>Agree</p>
+                    <p>OK</p>
                 </div>
             </div>
         </div>
