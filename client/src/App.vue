@@ -79,11 +79,9 @@ export default {
         },
 
         handleFirstVisit() {
-            const visitState = localStorage.getItem("firstVisit");
             const agreedToPolicy = localStorage.getItem("agreedToPolicy");
 
-            console.log(this.$refs.cookie_popup);
-            if (!visitState) {
+            if (!agreedToPolicy) {
                 this.$refs.cookie_popup.open();
             }
         },

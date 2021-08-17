@@ -1,6 +1,6 @@
 <template>
     <div @mousedown.stop="">
-        <div @click.stop="close()" v-if="display" class="backdrop" />
+        <div v-if="display" class="backdrop" />
         <div
             @click.stop=""
             v-if="display"
@@ -19,10 +19,10 @@
                 <slot name="message"> </slot>
             </div>
             <div class="btns">
-                <div class="btn">
+                <div class="btn" @click="routeToPolicy()">
                     <p>Privacy policy</p>
                 </div>
-                <div class="btn" style="background-color: var(--main-accent); color: var(--main-color)">
+                <div class="btn" style="background-color: var(--main-accent); color: var(--main-color)" @click="agree()">
                     <p>Agree</p>
                 </div>
             </div>
@@ -43,6 +43,18 @@ export default {
         },
         open() {
             this.display = true;
+        },
+        routeToPolicy() {
+            this.$router.push("/policy");
+
+            // hacky, fix me
+            setTimeout(() => {
+                this.display = false;
+            }, 100);
+        },
+        agree() {
+            localStorage.setItem("agreedToPolicy", true);
+            this.display = false;
         },
     },
 };
