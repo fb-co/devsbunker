@@ -1,10 +1,9 @@
-<!-- This is basically just the informative popup, except whithought the question mark so you can control it from some other click binding -->
 <template>
     <div @mousedown.stop="">
-        <div @click.stop="close()" v-if="informationOpen" class="backdrop" />
+        <div @click.stop="close()" v-if="display" class="backdrop" />
         <div
             @click.stop=""
-            v-if="informationOpen"
+            v-if="display"
             class="information_container"
             :class="{ information_container_desktop: !this.$store.getters.mobile, information_container_mobile: this.$store.getters.mobile }"
         >
@@ -30,7 +29,9 @@
                 </div>
                 <h4 class="vertical_flex_center">{{ title }}</h4>
                 <div style="width: 50px;" />
-                <!-- Placeholder -->
+                <div>
+                    <slot name="illustration"></slot>
+                </div>
             </div>
             <div class="main_cont">
                 <slot>
@@ -49,7 +50,7 @@
 export default {
     data() {
         return {
-            informationOpen: false,
+            display: false,
         };
     },
     props: {
@@ -60,10 +61,10 @@ export default {
     },
     methods: {
         close() {
-            this.informationOpen = false;
+            this.display = false;
         },
         open() {
-            this.informationOpen = true;
+            this.display = true;
         },
     },
 };

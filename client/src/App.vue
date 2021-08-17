@@ -6,12 +6,15 @@
             <BottomNavBar v-if="$store.getters.mobile" @updateFeed="updateFeed($event)" />
             <AlertFeed />
 
-            <InformativePopupBare title="Cookies" ref="cookie_popup">
+            <InteractivePopup title="Cookies" ref="cookie_popup">
+                <template v-slot:illustration>
+                    <CookieIllustration />
+                </template>
                 <p>By using this site, you agree to all cookies and our <router-link to="/policy">privacy policy.</router-link></p>
-                <br>
+                <br />
                 <p>(Cookies are only used to handle login sessions and nothing else)</p>
                 <div style="height: 100px;" />
-            </InformativePopupBare>
+            </InteractivePopup>
         </div>
 
         <Loading v-if="isFetching" />
@@ -23,7 +26,8 @@ import Loading from "./components/Loading";
 import Navbar from "./components/Navbars/NavBar.vue";
 import BottomNavBar from "./components/Navbars/BottomNavBar.vue";
 import AlertFeed from "./components/Notifications/AlertFeed.vue";
-import InformativePopupBare from "./components/Popups/InformativePopup.vue";
+import InteractivePopup from "./components/Popups/InteractivePopup.vue";
+import CookieIllustration from "./assets/CookieIllustration.vue";
 
 export default {
     data() {
@@ -39,7 +43,8 @@ export default {
         Navbar,
         BottomNavBar,
         AlertFeed,
-        InformativePopupBare
+        InteractivePopup,
+        CookieIllustration,
     },
 
     destroyed() {
@@ -71,24 +76,24 @@ export default {
             const visitState = localStorage.getItem("firstVisit");
             const agreedToPolicy = localStorage.getItem("agreedToPolicy");
 
+            console.log(this.$refs.cookie_popup);
             if (!visitState) {
                 this.$refs.cookie_popup.open();
-                
             }
-        }
+        },
     },
 
     watch: {
         // this is deal with the post feed cache
-        $route (to) {
+        $route(to) {
             const currentCachedPostFeedData = this.$store.getters.getCachedPostFeedData;
-        
+
             // if the path is different from the post feed cache path, clear it since its no longer relevant
             if (currentCachedPostFeedData.path !== to.path) {
                 this.$store.dispatch("clearPostFeedData");
             }
-        }
-    } 
+        },
+    },
 };
 </script>
 
