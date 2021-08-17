@@ -7,12 +7,12 @@
             <AlertFeed />
 
             <InteractivePopup ref="cookie_popup">
-                <template v-slot:title>
-                    <h1>Cookies!</h1>
-                </template>
-
                 <template v-slot:illustration>
                     <CookieIllustration />
+                </template>
+
+                <template v-slot:title>
+                    <h1>Cookies!</h1>
                 </template>
 
                 <template v-slot:message>

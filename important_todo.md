@@ -13,6 +13,9 @@
 
 ## High Priority
 
+-   [ ] put this somewhere if we use freepik svgs
+-   `<a href="https://www.freepik.com/vectors/food">Food vector created by gstudioimagen - www.freepik.com</a>`
+
 -   [ ] hitting enter doesnt send comment and throws error
 -   [x] hide reset pwd setting if not logged in
 

@@ -8,15 +8,23 @@
             :class="{ information_container_desktop: !this.$store.getters.mobile, information_container_mobile: this.$store.getters.mobile }"
         >
             <div class="cont_header">
-                <div class="title">
-                    <slot name="title"></slot>
-                </div>
                 <div class="illustration">
                     <slot name="illustration"></slot>
+                </div>
+                <div class="title">
+                    <slot name="title"></slot>
                 </div>
             </div>
             <div class="main_cont">
                 <slot name="message"> </slot>
+            </div>
+            <div class="btns">
+                <div class="btn">
+                    <p>Privacy policy</p>
+                </div>
+                <div class="btn" style="background-color: var(--main-accent); color: var(--main-color)">
+                    <p>Agree</p>
+                </div>
             </div>
         </div>
     </div>
@@ -85,7 +93,7 @@ export default {
 }
 .cont_header h1 {
     font-size: 25px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 .illustration {
     width: 150px;
@@ -106,5 +114,31 @@ export default {
 .main_cont p {
     color: var(--soft-text);
     font-size: 16px;
+}
+.btns {
+    width: 100%;
+    height: 70px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    flex: 0.5;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.btn p {
+    font-size: 18px;
+    font-weight: 400;
 }
 </style>
