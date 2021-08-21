@@ -162,3 +162,26 @@
 
 -   [ ] make sure not to include path details in gql errors
 -   [ ] add NSFW image filter
+
+### Privacy Policy
+
+We must disclose any information we gather to the website visitors.
+```
+Ideally, you’d enlist the help of a lawyer to help you draft your privacy policy. However, that’s not a practical option for the vast majority of site owners.
+
+Don’t trust just any generator you find in a Google search.
+```
+
+Things the policy should include:
+
+- [ ] how you collect information
+- [ ] what you do with collected information
+- [ ] what cookies, pizels, and other trackers your site uses and their purpose
+- [ ] any adverstising networks and their methods of data collection and ad delivery
+- [ ] how users can opt-in and opt-out of you collecting and storing data
+- [ ] how users can request that you delete and/or turn their data be over to them
+- [ ] contact information for site administrators
+
+```
+These are the standard issues that make up most privacy policies. Ideally, visitors would take a look at your policy and decide if they’re comfortable using your services. More realistically, it covers you legally because the majority of people click agree without even glancing at it. In case someone ever comes back with a dispute about how you used their information or data, you have a document indicating that they opted in for that usage.
+```
