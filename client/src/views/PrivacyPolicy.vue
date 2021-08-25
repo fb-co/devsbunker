@@ -2,7 +2,7 @@
     <div class="policy_container">
         <div class="intro">
             <h1>Privacy Policy</h1>
-            <p>Add an introduction here</p>
+            <!-- <p>By using this site, you agree to this privacy policy</p> -->
         </div>
 
         <h2>What and how we collect data</h2>
@@ -26,7 +26,7 @@
 
         <h2>How users can opt-in opt-out from data collection</h2>
         <p>
-            Users <span>can not</span> opt-out of our data collection system if they whish to create an account. By visiting our website, users
+            Users <span>cannot</span> opt-out of our data collection system if they whish to create an account. By visiting our website, users
             <span>must agree</span> to this privacy policy even though they don't plan on creating an account.
         </p>
 
@@ -37,17 +37,23 @@
         </p>
 
         <h2>How to contact us</h2>
-        <p>Users can directly contact the developers and mainteiners of the project at <a href="mailto:folgoni.co@gmail.com">folgoni.co@gmail.com</a></p>
+        <p>Users can directly contact the developers and maintainers of the project at <a href="mailto:folgoni.co@gmail.com">folgoni.co@gmail.com</a></p>
     </div>
 </template>
 
 <script>
-export default {};
+import SharedMethods from "../utils/shared";
+
+export default {
+    created() {
+        SharedMethods.loadPage();
+    }
+};
 </script>
 
 <style scoped>
 .policy_container {
-    width: 80%;
+    width: 65%;
     margin: auto;
     margin-top: 80px;
 
@@ -71,6 +77,8 @@ export default {};
 
 .policy_container h2 {
     font-size: 35px;
+    margin-top: 100px;
+    text-align: left;
 }
 
 .policy_container p {
