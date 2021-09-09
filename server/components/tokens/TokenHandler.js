@@ -35,7 +35,6 @@ class TokenHandler {
     }
 
     static createVerifyEmailToken(user) {
-        // todo: what to add more?
         const payload = {
             _id: user._id,
             type: "verify",
@@ -77,6 +76,8 @@ class TokenHandler {
         }
     }
 
+    // TODO: i dont really like the following methods
+
     static verifyRefreshToken(token) {
         let decoded = null;
 
@@ -92,6 +93,15 @@ class TokenHandler {
 
         try {
             decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        } catch {}
+
+        return decoded;
+    }
+    static verifyVerificationToken(token) {
+        let decoded = null;
+
+        try {
+            decoded = jwt.verify(token, process.env.VERIFY_TOKEN_SECRET);
         } catch {}
 
         return decoded;

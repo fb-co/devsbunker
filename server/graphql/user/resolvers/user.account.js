@@ -378,6 +378,7 @@ export default {
                             userId: user._id,
                             email: user.email,
                             token: verificationToken,
+                            pending: true,
                         });
 
                         await verification.save();
@@ -415,11 +416,51 @@ export default {
                     message: "Please provide the necessary arguments: userId, email and token",
                 };
             }
-            // todo
-            return {
-                success: false,
-                message: `Trying to verify ${args.userId} with email ${args.email} and token ${args.token}`,
-            };
+
+            // using all the fields jus to be sure
+            const match = await UserVerification.findOne({
+                userId: args.userId,
+                email: args.email,
+                token: args.token,
+                pending: true,
+            });
+
+            if (match) {
+                if (TokenHandler.verifyVerificationToken(match.token)) {
+                    const user = await User.findOne({
+                        _id: match.userId,
+                    });
+
+                    if (user) {
+                        user.isVerified = true;
+                        user.save();
+
+                        match.pending = false;
+                        match.save();
+
+                        return {
+                            success: true,
+                            message: "Successfully verified user",
+                        };
+                    } else {
+                        // technically unreachable code
+                        return {
+                            success: false,
+                            message: "Fatal internal error.",
+                        };
+                    }
+                } else {
+                    return {
+                        success: false,
+                        message: "Invalid verification token. You must get a new one.",
+                    };
+                }
+            } else {
+                return {
+                    success: false,
+                    message: "Failed to verify user.",
+                };
+            }
         },
 
         updateUserDetails: async function (_, args, { req }) {

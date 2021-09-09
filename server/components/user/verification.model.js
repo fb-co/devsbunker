@@ -18,6 +18,11 @@ const verificationSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
+        pending: {
+            type: Boolean,
+            required: true,
+            default: true,
+        },
     },
     {
         timestamps: true,
