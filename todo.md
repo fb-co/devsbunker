@@ -8,6 +8,7 @@
     -   [ ] only for normal users, not github ones
 -   [ ] Create a /robots.txt route
 -   [ ] better error handling
+-   [ ] add rate limiting to email verification route
 
 ## Frontend
 

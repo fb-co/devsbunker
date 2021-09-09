@@ -179,5 +179,7 @@ export default gql`
         setCommonTags(tags: [String]!): [CommonTagsResponse]!
 
         deleteAccount(password: String!): GeneralActionStatus! @rateLimit(limit: 2, duration: 86400)
+
+        verifyUser(userId: String!, email: String!, token: String!): GeneralActionStatus!
     }
 `;

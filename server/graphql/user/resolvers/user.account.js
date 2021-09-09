@@ -91,7 +91,7 @@ export default {
                 return err;
             }
         },
-        getUserById: async function (_, args, { res }) {
+        getUserById: async function (_, args) {
             const user = await User.findOne({
                 _id: args.id,
             });
@@ -175,7 +175,7 @@ export default {
                     let unreadAmt = 0;
                     let unreadNotifications = [];
                     let common_taglist = [];
-                    
+
                     for (let i = 0; i < user.notifications.length; i++) {
                         if (!user.notifications[i].read) {
                             unreadNotifications.push(user.notifications[i]);
@@ -188,20 +188,21 @@ export default {
                         common_taglist.push(user.common_tags[i].tag);
                     }
                     // Mongodb magic using the $facet operator to optimize
-                    const postDataRes = await Posts.aggregate([           
-                        {$facet: {
-                            "posts_amt": [
-                                {$match: { author: user.username }},
-                                {$count: "amount"}
-                            ],
-                            "suggested_users": [
-                                {$match: { tags: { $in: common_taglist } }},
-                                {$project: {
-                                    author: 1,
-                                }},
-                                {$limit: 100}
-                            ],
-                        }}
+                    const postDataRes = await Posts.aggregate([
+                        {
+                            $facet: {
+                                posts_amt: [{ $match: { author: user.username } }, { $count: "amount" }],
+                                suggested_users: [
+                                    { $match: { tags: { $in: common_taglist } } },
+                                    {
+                                        $project: {
+                                            author: 1,
+                                        },
+                                    },
+                                    { $limit: 100 },
+                                ],
+                            },
+                        },
                     ]);
 
                     const finalPostsAmt = postDataRes[0].posts_amt[0].amount;
@@ -212,7 +213,7 @@ export default {
 
                     for (let i = 0; i < userSuggestions.length; i++) {
                         const userStr = userSuggestions[i].author;
-                        
+
                         // this is to avoid dups and suggesting users that you already followed and/or are you
                         if (!finalUserSuggestions.includes(userStr) && !user.following.includes(userStr) && userStr !== user.username) {
                             finalUserSuggestions.push(userStr);
@@ -235,7 +236,7 @@ export default {
                         profile_pic: user.profile_pic,
                         postsAmt: finalPostsAmt,
                         common_tags: user.common_tags,
-                        user_suggestions: finalUserSuggestions, 
+                        user_suggestions: finalUserSuggestions,
                     };
                 } else {
                     console.error(err);
@@ -395,6 +396,20 @@ export default {
             }
         },
 
+        verifyUser: async function (_, args) {
+            if (!args.userId || !args.email || !args.token) {
+                return {
+                    success: false,
+                    message: "Please provide the necessary arguments: userId, email and token",
+                };
+            }
+            // todo
+            return {
+                success: false,
+                message: `Trying to verify ${args.userId} with email ${args.email} and token ${args.token}`,
+            };
+        },
+
         updateUserDetails: async function (_, args, { req }) {
             const jwtPayload = req.user;
 
@@ -465,15 +480,15 @@ export default {
             const tagsPayload = args.tags;
 
             if (!jwtPayload) throw new AuthenticationError("Unauthorized.");
-            
+
             try {
                 let user = await User.findOne({
                     username: jwtPayload.username,
                 });
 
                 if (user) {
-                    const newTags = UserInterestData.manuallyAddTags(user.common_tags, tagsPayload); 
-                
+                    const newTags = UserInterestData.manuallyAddTags(user.common_tags, tagsPayload);
+
                     user.common_tags = newTags;
 
                     await user.save();
