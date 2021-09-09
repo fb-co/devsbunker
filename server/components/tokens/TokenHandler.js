@@ -26,7 +26,7 @@ class TokenHandler {
         };
 
         try {
-            return jwt.sign(payload, process.env.VERIFY_TOKEN_SECRET, {
+            return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
                 expiresIn: "7d",
             });
         } catch {
@@ -42,7 +42,7 @@ class TokenHandler {
         };
 
         try {
-            return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
+            return jwt.sign(payload, process.env.VERIFY_TOKEN_SECRET, {
                 expiresIn: "1d",
             });
         } catch {
