@@ -76,8 +76,6 @@ class TokenHandler {
         }
     }
 
-    // TODO: i dont really like the following methods
-
     static verifyRefreshToken(token) {
         let decoded = null;
 

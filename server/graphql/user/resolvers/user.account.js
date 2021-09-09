@@ -376,13 +376,13 @@ export default {
 
                         const verification = new UserVerification({
                             userId: user._id,
-                            email: user.email,
                             token: verificationToken,
                             pending: true,
                         });
 
                         await verification.save();
 
+                        // todo: send email
                         // todo: block registration until user verifies email
 
                         return {
@@ -410,7 +410,7 @@ export default {
         },
 
         verifyUser: async function (_, args) {
-            if (!args.userId || !args.email || !args.token) {
+            if (!args.userId || !args.token) {
                 return {
                     success: false,
                     message: "Please provide the necessary arguments: userId, email and token",
@@ -420,7 +420,6 @@ export default {
             // using all the fields jus to be sure
             const match = await UserVerification.findOne({
                 userId: args.userId,
-                email: args.email,
                 token: args.token,
                 pending: true,
             });
@@ -435,6 +434,7 @@ export default {
                         user.isVerified = true;
                         user.save();
 
+                        // we could also delete the entry completely
                         match.pending = false;
                         match.save();
 

@@ -26,6 +26,11 @@ const routes = [
         component: () => import("../views/GetSession.vue"),
     },
     {
+        path: "/user/verify/:userId/:token",
+        name: "UserVerification",
+        component: () => import("../views/UserVerification.vue"),
+    },
+    {
         path: "/about",
         name: "About",
         component: () => import("../views/About.vue"),

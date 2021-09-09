@@ -37,6 +37,7 @@ export default {
             "tag",
             "username",
         ]);
+
         if (!res.errors) {
             this.userObject = res.data.getPersonalDetails;
         } else {

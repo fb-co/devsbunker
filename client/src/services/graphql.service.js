@@ -328,7 +328,7 @@ const GraphQLService = {
                 }
             }
         `;
-        
+
         // defining variables which are later added to the request alongside the query
         const variables = {
             tags: tags,
@@ -1079,6 +1079,30 @@ const GraphQLService = {
 
                 store.dispatch("alertUser", { title: "Success", type: "success", msg: "Successfully logged out" });
             }
+
+            return json;
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+    verifyUser: async function(userId, token) {
+        const mutation = `
+            mutation {
+                verifyUser(userId: "${userId}", token: "${token}") {
+                    success
+                    message
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query: mutation }),
+            });
+
+            const json = await res.json();
 
             return json;
         } catch (err) {
