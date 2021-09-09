@@ -173,7 +173,7 @@ export default {
                 const user = await User.findOne({
                     username: jwtPayload.username,
                 });
-
+                
                 if (user && user.enabled) {
                     let unreadAmt = 0;
                     let unreadNotifications = [];
@@ -190,6 +190,7 @@ export default {
                     for (let i = 0; i < user.common_tags.length; i++) {
                         common_taglist.push(user.common_tags[i].tag);
                     }
+
                     // Mongodb magic using the $facet operator to optimize
                     const postDataRes = await Posts.aggregate([
                         {
@@ -208,7 +209,13 @@ export default {
                         },
                     ]);
 
-                    const finalPostsAmt = postDataRes[0].posts_amt[0].amount;
+                    const finalPostsAmt = 0;
+                
+                    // if they have no posts, posts_amt[0] won't exist so you have to check
+                    if (postDataRes[0].posts_amt.length > 0) {
+                        postDataRes[0].posts_amt[0].amount
+                    }
+                    
                     const userSuggestions = postDataRes[0].suggested_users;
 
                     // convert user suggestions into something graphql can return
