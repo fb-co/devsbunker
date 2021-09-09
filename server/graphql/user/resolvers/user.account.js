@@ -387,8 +387,10 @@ export default {
                             from: "Folgoni Borsa Company",
                             to: user.email,
                             subject: "Account verification",
-                            html: `In order to verify your account, visit <a href="https://${process.env.HOST}:${process.env.PORT}/user/verify/${verification.userId}/${verification.token}">this</a> link. Thanks`,
+                            html: `In order to verify your account, visit <a href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/verify/${verification.userId}/${verification.token}">this</a> link. <br><b>If you think you have received this email due to an error, please ignore. We are testing a web application xD</b>`,
                         };
+
+                        // todo: decide what to do if we get an error/success
                         Transporter.sendMail(mail, function (err, res) {
                             if (err) {
                                 console.error(err);
@@ -396,6 +398,7 @@ export default {
                                 console.log(res);
                             }
                         });
+
                         // todo: block registration until user verifies email
 
                         return {
