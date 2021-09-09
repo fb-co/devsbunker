@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import SessionRevoker from "../../../components/tokens/SessionRevoker.js";
 import TokenHandler from "../../../components/tokens/TokenHandler.js";
 import Transporter from "../../../config/Nodemailer.js";
+import { generateVerificationEmailTemplate } from "../../../templates/email.html.js";
 
 import FilesHandler from "../../../middlewares/FilesHandler.js";
 const fh = new FilesHandler();
@@ -387,7 +388,7 @@ export default {
                             from: "Folgoni Borsa Company",
                             to: user.email,
                             subject: "Account verification",
-                            html: `In order to verify your account, visit <a href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/verify/${verification.userId}/${verification.token}">this</a> link. <br><b>If you think you have received this email due to an error, please ignore. We are testing a web application xD</b>`,
+                            html: generateVerificationEmailTemplate(user.username, verification.userId, verification.token),
                         };
 
                         // todo: decide what to do if we get an error/success
