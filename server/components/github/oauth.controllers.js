@@ -76,6 +76,7 @@ export async function authorize({ query: { code } }, res) {
                 profile_pic: user_json.avatar_url,
                 desc: user_json.bio || "No description",
                 isGitHubUser: true,
+                isVerified: true,
             });
             await user.save();
         }
