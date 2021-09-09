@@ -1,5 +1,4 @@
-import merge from "@graphql-tools/merge";
-const { mergeResolvers } = merge;
+import { mergeResolvers } from "@graphql-tools/merge";
 
 // user
 import UserResolvers from "./user/resolvers/user.account.js";

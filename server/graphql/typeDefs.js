@@ -1,5 +1,4 @@
-import merge from "@graphql-tools/merge";
-const { mergeTypeDefs } = merge;
+import { mergeTypeDefs } from "@graphql-tools/merge";
 
 // user
 import UserAccountTypes from "./user/types/user.account.responses.js";
