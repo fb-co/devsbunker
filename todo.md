@@ -9,6 +9,7 @@
 -   [ ] Create a /robots.txt route
 -   [ ] better error handling
 -   [ ] add rate limiting to email verification route
+-   [ ] new users cant view their profile, there's a bug realted to the posts aggregation
 
 ## Frontend
 
