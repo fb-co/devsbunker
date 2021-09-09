@@ -4,6 +4,7 @@ import Posts from "../../../components/post/post.model.js";
 import bcrypt from "bcrypt";
 import SessionRevoker from "../../../components/tokens/SessionRevoker.js";
 import TokenHandler from "../../../components/tokens/TokenHandler.js";
+import Transporter from "../../../config/Nodemailer.js";
 
 import FilesHandler from "../../../middlewares/FilesHandler.js";
 const fh = new FilesHandler();
@@ -382,7 +383,19 @@ export default {
 
                         await verification.save();
 
-                        // todo: send email
+                        const mail = {
+                            from: "Folgoni Borsa Company",
+                            to: user.email,
+                            subject: "Account verification",
+                            html: `In order to verify your account, visit <a href="https://${process.env.HOST}:${process.env.PORT}/user/verify/${verification.userId}/${verification.token}">this</a> link. Thanks`,
+                        };
+                        Transporter.sendMail(mail, function (err, res) {
+                            if (err) {
+                                console.error(err);
+                            } else {
+                                console.log(res);
+                            }
+                        });
                         // todo: block registration until user verifies email
 
                         return {
