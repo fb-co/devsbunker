@@ -38,7 +38,6 @@ export default {
             "username",
         ]);
 
-        console.log(res.errors);
 
         if (!res.errors) {
             this.userObject = res.data.getPersonalDetails;
