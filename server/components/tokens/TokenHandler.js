@@ -26,6 +26,21 @@ class TokenHandler {
         };
 
         try {
+            return jwt.sign(payload, process.env.VERIFY_TOKEN_SECRET, {
+                expiresIn: "1d",
+            });
+        } catch {
+            return undefined;
+        }
+    }
+
+    static createVerifyEmailToken(user) {
+        // todo: what to add more?
+        const payload = {
+            _id: user._id,
+            type: "verify",
+        };
+        try {
             return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
                 expiresIn: "7d",
             });
@@ -43,20 +58,16 @@ class TokenHandler {
 
             if (token) {
                 // verify the token
-                jwt.verify(
-                    token,
-                    process.env.ACCESS_TOKEN_SECRET,
-                    (err, user) => {
-                        // this can be avoided but it is more readable
-                        if (err) {
-                            req.user = undefined;
-                            next();
-                        } else {
-                            req.user = user; // we can access the user in every req
-                            next();
-                        }
+                jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+                    // this can be avoided but it is more readable
+                    if (err) {
+                        req.user = undefined;
+                        next();
+                    } else {
+                        req.user = user; // we can access the user in every req
+                        next();
                     }
-                );
+                });
             } else {
                 next();
             }
