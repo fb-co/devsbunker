@@ -27,7 +27,7 @@ class TokenHandler {
 
         try {
             return jwt.sign(payload, process.env.VERIFY_TOKEN_SECRET, {
-                expiresIn: "1d",
+                expiresIn: "7d",
             });
         } catch {
             return undefined;
@@ -40,9 +40,10 @@ class TokenHandler {
             _id: user._id,
             type: "verify",
         };
+
         try {
             return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-                expiresIn: "7d",
+                expiresIn: "1d",
             });
         } catch {
             return undefined;
