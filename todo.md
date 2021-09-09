@@ -43,20 +43,20 @@
 
 ### Resources
 
-- [Email verification in Nodejs and JWTs (PROBABLY WHAT WE WANT)](https://stackoverflow.com/questions/51336641/email-verification-using-nodejs)
-- [Email verification in Nodejs with Nodemailer (I'D USE A JWT INSTEAD OF A RAND STRING)](https://safwan-du16.medium.com/email-verification-with-node-js-and-nodemailer-3a6363b31060)
-- [How to implement Email Verification feature in your NodeJS app using Express, SendGrid, Sequelize ORM(MySQL).](https://medium.com/the-andela-way/how-to-implement-email-verification-feature-in-your-nodejs-app-using-express-sendgrid-sequelize-e5b255bf92a2)
-- [How to verify an email address using nodejs (USING THIRD PARTY API)](https://medium.com/whois-api/how-to-verify-an-email-address-using-node-js-449330a47a7e)
-- [Verification email templates](https://www.liveagent.com/templates/verification/)
-- [Email verification in Firebase (WE DON'T USE FIREBASE BUT MAYBE IT'S USEFUL)](https://www.section.io/engineering-education/email-authentication-and-verification-nodejs-firebase/)
+-   [Email verification in Nodejs and JWTs (PROBABLY WHAT WE WANT)](https://stackoverflow.com/questions/51336641/email-verification-using-nodejs)
+-   [Email verification in Nodejs with Nodemailer (I'D USE A JWT INSTEAD OF A RAND STRING)](https://safwan-du16.medium.com/email-verification-with-node-js-and-nodemailer-3a6363b31060)
+-   [How to implement Email Verification feature in your NodeJS app using Express, SendGrid, Sequelize ORM(MySQL).](https://medium.com/the-andela-way/how-to-implement-email-verification-feature-in-your-nodejs-app-using-express-sendgrid-sequelize-e5b255bf92a2)
+-   [How to verify an email address using nodejs (USING THIRD PARTY API)](https://medium.com/whois-api/how-to-verify-an-email-address-using-node-js-449330a47a7e)
+-   [Verification email templates](https://www.liveagent.com/templates/verification/)
+-   [Email verification in Firebase (WE DON'T USE FIREBASE BUT MAYBE IT'S USEFUL)](https://www.section.io/engineering-education/email-authentication-and-verification-nodejs-firebase/)
 
 ### Process
 
 This is how I'd do email verification after reading stuff online.
 
-- [ ] Add `isVerified` to the user model
-- [ ] Create a new Mongo document (table) where we store the `userId` (to avoid duplicates), the `email` and a new `JWT` that we are going to use for email verification. Still gotta decide the `exp` date on this one.
-- [ ] Setup a route to verify email addresses such as `/user/verify/:userId/:JWT`. We gotta decide if this route will be protected (must login to view it) or not. I think we can leave this open so users can verify (for example) from their phone where they don't have a session on devsBunker
-- [ ] In that route we just go `findOne({userId, JWT})` from the previously created table. If we find a match and the JWT is not expired we modify the `isVerified` field in the user document. If the JTW is expired we put a button to send another email
-- [ ] We gotta decide what happens when the user doesn't verify the email address. We could block the user from logging in after something like 2 days of not being verified or, to avoid spammers, we could allow logins ONLY if you become verified (I think I prefer this one). Basically we delay issuing JWTs after signup.
-
+-   [ ] Add `isVerified` to the user model
+-   [ ] Create a new Mongo document (table) where we store the `userId` (to avoid duplicates), the `email` and a new `JWT` that we are going to use for email verification. Still gotta decide the `exp` date on this one.
+-   [ ] Setup a route to verify email addresses such as `/user/verify/:userId/:JWT`. We gotta decide if this route will be protected (must login to view it) or not. I think we can leave this open so users can verify (for example) from their phone where they don't have a session on devsBunker
+    -   there will be 2 routes, on the clientside in the form of `user/verify/:userId/:token` and one on the serverside in the form of `/user/verify` (JSON POST REQUEST) or a graphql route
+-   [ ] In that route we just go `findOne({userId, JWT})` from the previously created table. If we find a match and the JWT is not expired we modify the `isVerified` field in the user document. If the JTW is expired we put a button to send another email
+-   [ ] We gotta decide what happens when the user doesn't verify the email address. We could block the user from logging in after something like 2 days of not being verified or, to avoid spammers, we could allow logins ONLY if you become verified (I think I prefer this one). Basically we delay issuing JWTs after signup.
