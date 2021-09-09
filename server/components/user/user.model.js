@@ -9,8 +9,8 @@ const userSchema = new mongoose.Schema(
             match: [/^[a-zA-Z0-9_-]+$/, "is invalid"],
             index: true,
             validate: {
-                validator: function(username) {
-                    return username.length < 60; 
+                validator: function (username) {
+                    return username.length < 60;
                 },
                 message: () => `Username is too long.`,
             },
@@ -22,8 +22,8 @@ const userSchema = new mongoose.Schema(
             match: [/\S+@\S+\.\S+/, "is invalid"],
             index: true,
             validate: {
-                validator: function(email) {
-                    return email.length < 70; 
+                validator: function (email) {
+                    return email.length < 70;
                 },
                 message: () => `Email is too long.`,
             },
@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: "No Description",
             validate: {
-                validator: function(desc) {
+                validator: function (desc) {
                     return desc.length < 20000; // maybe load in this number from the limits file
                 },
                 message: () => `Description is too long.`,
@@ -100,6 +100,11 @@ const userSchema = new mongoose.Schema(
         isGitHubUser: {
             type: Boolean,
             required: true,
+        },
+        isVerified: {
+            type: Boolean,
+            required: true,
+            default: false,
         },
     },
     {
