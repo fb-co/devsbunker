@@ -1,128 +1,25 @@
 # TODO
 
-## Vulns
-
--   [x] **XSS** ---> we must filter titles and descs, can't get js to run but content doesn't get added if it contains < and >
-    -   [ ] filtering v1 done, dont really like it tho
-
-## General
-
--   [x] we should not let users put duplicated tags and links in post such as Python, Python, JS, Java, Java and www.google.com www.google.com
-
--   [x] **Critical**: updating the password with the graphql route lets you set a single character password (i believe it doesnt acutally get set in the db but the route says that the operation was successfull) [sorry for the spaghetti english but I gotta eat lunch, this was a quick note before I totally forgot about it]
-
 ## Backend
 
--   [x] **IMPORTANT** we might need to adjust the path passed in deleteFiles calls now that we have nested folders in the uploads/ one
-
 -   [ ] better post sanitazation
-
 -   [ ] serverside thumbnail compression
-
-    -   i dont want to do this clientside because I still want og quality post images and i dont want to send more data over the internet, so we could handle this serverside by making a copy of the first asset and compressing that
-
--   [x] delete all images related to account when deleting account or post
-
-    -   [x] this was already implemented, now implementing a function to delete also the profile pic
-
 -   [ ] send confirmation email for signup
     -   [ ] only for normal users, not github ones
--   [x] implement login system
-    -   [x] better error handling for both login and signup
--   [x] implement the auth route
--   [x] add more informations to the about and home page
--   [x] make Schema for posts
--   [x] make Schema for bunkers
--   [x] provide the current user email where needed (?)
--   [x] cosnider switching to ES modules
--   [ ] multiple devices logged into one account
-    -   [ ] profile pictures are broken
--   [x] delete all REST endpoints
-    -   [x] except refresh_token and auth
--   [x] use AuthErrors in Signup (GraphQL)
--   [ ] rate limit making posts
--   [x] move the auth middleware to GraphQL
--   [x] better post validation: errors are not thrown [see](https://mongoosejs.com/docs/api.html#schematype_SchemaType-validate)
--   [x] add error handling to the like mutation
-    -   [x] same user cant like twice
-    -   [x] (DONE IN A DIFFERENT WAY) the mutation response will have an error object (can be null) and a post object (can be null). In case of success errors will be null
--   [x] add dislike mutation
--   [x] serve back images
-    -   [x] 1. moving everything inside server/static and serve them as static assets
-        -   [x] organize the upload folder
-    -   [x] 2. making another server just for those static assets
-    -   [x] 3. using res.sendFile(\_\_dirname + /images/ + path); or something like this (PATH TRAVERSAL?
--   [x] The home post feed and presumably many others use the post name as the v-for key, which will cause errors if two posts have the same name (switch to something like id)
--   [x] Creating a post on the home page wont refresh the post feed since it auto avoids redundant routing
 -   [ ] Create a /robots.txt route
+-   [ ] better error handling
 
 ## Frontend
 
--   [ ] add visual feedback to actions like deleting the account and making posts, a popup or something that displays the status of the action (success or failure)
--   [x] redirect to login when an authorized user tries to make a post
--   [x] deleting a post on mobile doesnt hide the post from the home
--   [x] i think that the posts hot reload thing isnt implemented yet for the mobile version... maybe im wrong
--   [x] posts cache stores duplicate posts after user creates a new one
--   [x] display links while viewing posts on desktop
 -   [x] handle non existing users by showing a 404
-
     -   [ ] do it better
-
 -   [ ] don't update Vuex in the logoutUser function in graphqlService
--   [x] check if the post we want is the newlyMade one in Post.vue, if so we don't need to fetch extra data
--   [x] once we fetch the extra data of a post we should merge that into
-        the object in cache, so if the user clicks again on the same post we don't need to fetch it again
-        -implemented, we just need to use it
--   [x] replace UserService.isLoggedIn in User.vue with $store.getters.username
-
-    -   can't be done
-
--   [x] viewing other people's posts in their profile is broken
-    -   [x] need to add load more btn to mobile view
--   [x] get rid of DevBunkerTag and clip fields
--   [x] just noting down (otherwise I forget it) that we could optimize the fetching process due to the change in your latest commit. We should fetch less data when fetching post details for the project cards and then fetching everything in the Post view. We should also cache the first fetched details.
-
-    -   [x] my idea is to create a dedicated query for the project cards and to implement a cache system clientside simply in Vuex
-        -   [x] on project card click we cache that specific card details in Vuex and we clear it if the user goes back
-        -   made it different, there's room for improvements
-
--   [x] I feel that there's a lot of repeated code in the frontend, like the function to check if the user is using a mobile phone or a lot of includes of the same component in multiple pages. We could improve this:
-
-    -   [x] include NavBar in App.vue
-    -   [x] check for mobile in App.vue?
-    -   [x] bottom navbar in App.vue
-    -   [x] use mixins to avoid re-typing code
-    -   [x] Sharemethods.loadPage could be used in a better way without repeating it everytime?
-
--   [x] home page
--   [ ] about page
--   [x] login page
--   [x] signup page
--   [x] profile page
-    -   [x] redirect here from login/signup in case of already present valid token
-    -   [x] make a delete token method (logout)
--   [x] handle 404 errors
--   [x] make a post page
--   [x] use .env
--   [x] fix mobile view scrolling bug
--   [x] add delay between form submission and server response (like a loading gif) to slow down potentials brute force attacks to the login and signup page
--   [x] error handling for the settings: if we pass a non valid setting like /settings/test it still displays stuff and not a 404
--   [x] change url dynamically based on selected setting option
--   [x] The theme changin icon (sun and moon) should be inverted to denote which theme the user is currently using
--   [x] Make the first field in the login and signup pages be auto focused on when thep age is loaded
-    -   [x] **why is this so hard im crying** (this was sooper EZ u just smull braine)
 -   [ ] add the eye button thing to signup card
--   [x] Error handling and validation for making posts
--   [x] make sure that the heart icon is filled even after refresh if user has already liked a post
 -   [ ] Project card author link spans 100% of card (even if you cant see it, you can still click it)
--   [x] attach images to DOM after retreiving them (like a preview)
 -   [ ] mod email in user page doesn't work (the save btn doesn't work)
--   [x] add unfollow btn
--   [x] if I visit someone else profile I am able to see a field to modify my profile (if admin visits test_account he can see a field with its username in the information tab)
--   [x] opening the NewPostTagPopup on a new post page, the input should auto-select itself
--   [x] multiple 404s while fetching the pfp placeholder. After login the image doesn't get fetched, must refresh the page
 -   [ ] add the possibility to see users that we follow
 -   [ ] add option to switch project card theme
+-   [ ] hitting enter doesnt send comment and throws error
 
 ### Things to optimize
 
@@ -130,58 +27,14 @@
 
 ## Glitches
 
--   [x] if a logged in user refreshes the page the profile link in the navbar and in the burger disappears, Login and Signup take its place (like if the user was not logged in)
--   [x] Fix browser back arrow button in some pages after 404
--   [x] Fix Hamburger Menu
--   [x] Random scroll space on bottom of login/signup cards on mobile
--   [x] Cant scroll to the top when resizing vertically
--   [x] if page gets refreshed the theme switches back to Dark
--   [x] Both password field and confirm password field both have id of 'password'
--   [x] Toggling show password icon highlights the 'forgot password' link
--   [x] Tapping or clicking outside burger menu on small screens should close it
--   [x] For a very small horizontal resize range, there are no Nav links or burger menu
--   [x] If burger menu not closed when page is expanded, when you shrink the page again it instantly opens the burger menu again
--   [x] Cant use the back arrow at profile page (sometimes)
--   [x] Cant Highlight text inside navbar and burger menu search inputs only on dark theme
--   [x] Profile page mobile support stopped working for some reason
--   [x] When visiting someone elses profile, and clicking on the profile picture in the navbar, it wont bring you back to your own profile
--   [x] Logout button in the left sidebar routing does not work
--   [x] Look at the console when you switch themes in mobile mode :(
 -   [ ] settings sections (account, privacy, etc) are still available in mobile version. This is not a real glitch but we have to decide what to do with it
--   [x] avoid refreshing access token if user is not logged in (not really possible)
--   [x] Cant scroll on mobile settings page
 
 ## Deployment
 
+-   [ ] remove that vue config file
 -   [ ] Set Prod env variable to true
 -   [ ] Remove all the console logs, including the one on Logout event
 -   [ ] use a more accurate regex for emails
--   [ ] clean the code (in some cases we used snake_case and in others camelCase)
-
-    -   [ ] add comments of functions following a standard notation
-
+-   [ ] clean the code
 -   [ ] make sure not to include path details in gql errors
 -   [ ] add NSFW image filter
-
-### Privacy Policy
-
-We must disclose any information we gather to the website visitors.
-```
-Ideally, you’d enlist the help of a lawyer to help you draft your privacy policy. However, that’s not a practical option for the vast majority of site owners.
-
-Don’t trust just any generator you find in a Google search.
-```
-
-Things the policy should include:
-
-- [ ] how you collect information
-- [ ] what you do with collected information
-- [ ] what cookies, pizels, and other trackers your site uses and their purpose
-- [ ] any adverstising networks and their methods of data collection and ad delivery
-- [ ] how users can opt-in and opt-out of you collecting and storing data
-- [ ] how users can request that you delete and/or turn their data be over to them
-- [ ] contact information for site administrators
-
-```
-These are the standard issues that make up most privacy policies. Ideally, visitors would take a look at your policy and decide if they’re comfortable using your services. More realistically, it covers you legally because the majority of people click agree without even glancing at it. In case someone ever comes back with a dispute about how you used their information or data, you have a document indicating that they opted in for that usage.
-```
