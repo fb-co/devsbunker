@@ -1,4 +1,5 @@
 import User from "../../../components/user/user.model.js";
+import UserVerification from "../../../components/user/verification.model.js";
 import Posts from "../../../components/post/post.model.js";
 import bcrypt from "bcrypt";
 import SessionRevoker from "../../../components/tokens/SessionRevoker.js";
@@ -362,8 +363,9 @@ export default {
 
                     const accessToken = TokenHandler.createAccessToken(user);
                     const refreshToken = TokenHandler.createRefreshToken(user);
+                    const verificationToken = TokenHandler.createVerifyEmailToken(user);
 
-                    if (accessToken && refreshToken) {
+                    if (accessToken && refreshToken && verificationToken) {
                         // setting refresh cookie
                         res.cookie("jid", refreshToken, {
                             httpOnly: true,
@@ -371,6 +373,16 @@ export default {
                             sameSite: "Lax",
                             expires: new Date(Date.now() + 561600000), // cookie expires after 6.5 days
                         });
+
+                        const verification = new UserVerification({
+                            userId: user._id,
+                            email: user.email,
+                            token: verificationToken,
+                        });
+
+                        await verification.save();
+
+                        // todo: block registration until user verifies email
 
                         return {
                             message: "Successfully signed up.",
