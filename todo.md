@@ -4,12 +4,13 @@
 
 -   [ ] better post sanitazation
 -   [ ] serverside thumbnail compression
--   [ ] send confirmation email for signup
-    -   [ ] only for normal users, not github ones
+-   [x] send confirmation email for signup
+    -   [x] only for normal users, not github ones
 -   [ ] Create a /robots.txt route
 -   [ ] better error handling
 -   [ ] add rate limiting to email verification route
--   [ ] new users cant view their profile, there's a bug realted to the posts aggregation
+-   [x] new users cant view their profile, there's a bug realted to the posts aggregation
+-   [ ] if the user changes its email we need to send a verification mail again ( consider removing this option)
 
 ## Frontend
 
@@ -22,6 +23,7 @@
 -   [ ] add the possibility to see users that we follow
 -   [ ] add option to switch project card theme
 -   [ ] hitting enter doesnt send comment and throws error
+-   [ ] duplicate key errors in postfeed
 
 ### Things to optimize
 
