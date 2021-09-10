@@ -407,7 +407,7 @@ export default {
                             }
                         });
 
-                        // todo: block registration until user verifies email
+                        // todo: block registration until user verifies email or leave the user logged in 
 
                         return {
                             message: "Successfully signed up.",

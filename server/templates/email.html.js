@@ -93,7 +93,7 @@ function generateVerificationEmailTemplate(username, userId, token) {
 																	<a
 																		href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/verify/${userId}/${token}"
 																		style="
-																			background-color: #000;
+																			background-color: #8040E9;
 																			border-radius: 5px;
 																			color: #fff;
 																			display: inline-block;

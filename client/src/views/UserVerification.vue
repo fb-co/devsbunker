@@ -1,32 +1,56 @@
 <template>
-    <div>
-        <p>User verification page</p>
-        <p>{{ $route.params }}</p>
+    <div class="wrapper">
+        <div class="box">
+            <h1>Verify account</h1>
 
-        <div v-if="success">
-            <h1>Verified!</h1>
+            <p>
+                We are trying to verify your account, wait patiently.
+            </p>
+
+            <div v-if="loading" class="loading">
+                <LoadingGif :show="true" />
+            </div>
+
+            <div v-if="success">
+                <h2>Done!</h2>
+            </div>
+
+            <div v-if="!success && !loading" class="failure">
+                <h3>{{ message }}</h3>
+
+                <div class="btn" v-if="/token/.test(message)">
+                    <p>NEW TOKEN</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import GraphQLService from "../services/graphql.service";
+import LoadingGif from "../components/global/LoadingGif.vue";
+
 export default {
     data() {
         return {
             success: false,
+            loading: true,
+            message: null
         };
     },
     async created() {
         if (this.$route.params.userId && this.$route.params.token) {
             const res = await GraphQLService.verifyUser(this.$route.params.userId, this.$route.params.token);
-            console.log(res);
 
+            this.loading = false;
             if (!res.errors) {
                 if (res.data.verifyUser.success) {
                     this.success = true;
+                    setTimeout(() => {
+                        this.$router.push('/');
+                    }, 1500);
                 } else {
-                    this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.data.verifyUser.message });
+                    this.message = res.data.verifyUser.message;
                 }
             } else {
                 this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.errors[0].message });
@@ -35,7 +59,92 @@ export default {
             this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: "'userId' and 'token' params are missing." });
         }
     },
+    components: {
+        LoadingGif
+    }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.wrapper {
+    width: 100%;
+    padding-top: 75px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.box {
+    border-radius: 5px;
+    border: 1px solid var(--soft-text);
+
+    max-width: 700px;
+    width: 100%;
+    height: 400px;
+}
+
+.box h1 {
+    font-size: 40px;
+    margin-top: 50px;
+}
+
+.box p {
+    font-size: 18px;
+    color: var(--soft-text);
+
+    margin-top: 35px;
+}
+
+.box h2 {
+    color: var(--main-accent);
+    font-size: 40px;
+    margin-top: 60px;
+}
+
+.loading {
+    margin-top: 50px;
+}
+
+.failure {
+    margin-top: 60px;
+}
+.failure h3 {
+    color: var(--error-red);
+    font-weight: 300;
+    font-size: 20px;
+}
+.failure p {
+    color: var(--main-font-color);
+}
+
+.failure .btn {
+    width: 30%;
+    height: 50px;
+    margin: auto;
+    margin-top: 30px;
+
+    border-radius: 12px;
+    border: 1px solid var(--main-accent);
+    background-color: var(--main-accent);
+
+    transition: .5s;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.failure .btn:hover {
+    background-color: transparent;
+}
+.failure .btn:hover p {
+    color: var(--main-accent);
+}
+
+.failure .btn p {
+    font-weight: bold;
+    margin: 0;
+}
+</style>

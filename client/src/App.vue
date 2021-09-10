@@ -127,7 +127,7 @@ export default {
     --soft-text: rgba(242, 242, 242, 0.5);
     --settings-mobile-card: #2e2e2e;
     --burger-menu-bg: #2a2a2a;
-    --main-accent: #49cce5;
+    --main-accent: #8040E9;
     --drop-shadow: rgba(0, 0, 0, 0.1);
     --detailed-projcard-bg: #202020;
     --detailed-projcard-border: #343536;
