@@ -66,7 +66,7 @@
                     <p v-if="!rootComponent.fetchedAll && !awaitingResults" @click="loadNew()" class="load_more_btn">Load More</p>
                 </div>
                 <div v-else class="no_projects">
-                    <p>No projects found</p>
+                    <p style="font-size: 27px;">No projects found</p>
                     
                     <!-- If the user never interacted with anything, nothing will be suggested because it does not know what to suggest -->
                     <p v-if="$route.name == 'Home'" class="no_suggestions">
@@ -316,8 +316,14 @@ export default {
     margin-top: 20px;
 }
 .no_suggestions {
-    font-size: 13px;
+    font-size: 20px;
     margin-top: 20px;
+    font-weight: 100;
+}
+
+.no_suggestions a {
+    color: var(--main-accent);
+    text-decoration: none;
 }
 
 .posts_search_bar {
