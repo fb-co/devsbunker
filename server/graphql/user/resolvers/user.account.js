@@ -365,24 +365,15 @@ export default {
                     email: args.email,
                     password: hashedPass,
                     isGitHubUser: false,
+                    enabled: false,
                 });
 
                 try {
                     await user.save();
 
-                    const accessToken = TokenHandler.createAccessToken(user);
-                    const refreshToken = TokenHandler.createRefreshToken(user);
                     const verificationToken = TokenHandler.createVerifyEmailToken(user);
 
-                    if (accessToken && refreshToken && verificationToken) {
-                        // setting refresh cookie
-                        res.cookie("jid", refreshToken, {
-                            httpOnly: true,
-                            path: "/user/refresh_token",
-                            sameSite: "Lax",
-                            expires: new Date(Date.now() + 561600000), // cookie expires after 6.5 days
-                        });
-
+                    if (verificationToken) {
                         const verification = new UserVerification({
                             userId: user._id,
                             token: verificationToken,
@@ -407,11 +398,8 @@ export default {
                             }
                         });
 
-                        // todo: block registration until user verifies email or leave the user logged in 
-
                         return {
                             message: "Successfully signed up.",
-                            accessToken,
                         };
                     } else {
                         res.status(422);
@@ -433,7 +421,7 @@ export default {
             }
         },
 
-        verifyUser: async function (_, args) {
+        verifyUser: async function (_, args, { res }) {
             if (!args.userId || !args.token) {
                 return {
                     success: false,
@@ -456,7 +444,16 @@ export default {
 
                     if (user) {
                         user.isVerified = true;
-                        user.save();
+                        user.enabled = true;
+                        await user.save();
+
+                        // setting refresh cookie
+                        res.cookie("jid", TokenHandler.createRefreshToken(user), {
+                            httpOnly: true,
+                            path: "/user/refresh_token",
+                            sameSite: "Lax",
+                            expires: new Date(Date.now() + 561600000), // cookie expires after 6.5 days
+                        });
 
                         // we could also delete the entry completely
                         match.pending = false;

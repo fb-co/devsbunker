@@ -41,13 +41,15 @@ export default {
     async created() {
         if (this.$route.params.userId && this.$route.params.token) {
             const res = await GraphQLService.verifyUser(this.$route.params.userId, this.$route.params.token);
+            console.log(res);
 
             this.loading = false;
-            if (!res.errors) {
+            if (res && !res.errors) {
                 if (res.data.verifyUser.success) {
                     this.success = true;
                     setTimeout(() => {
                         this.$router.push('/');
+                        window.location.reload();
                     }, 1500);
                 } else {
                     this.message = res.data.verifyUser.message;

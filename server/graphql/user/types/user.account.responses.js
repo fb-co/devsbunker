@@ -8,9 +8,13 @@ export default gql`
         stacktrace: [String]
     }
 
-    type UserAccountAction {
+    type UserLogin {
         message: String!
         accessToken: String
+    }
+
+    type UserSignup {
+        message: String!
     }
 
     type Notification {
@@ -148,7 +152,7 @@ export default gql`
         partialUser(partialUsername: String!, sortMethod: String!, lastUserId: String!, lastUniqueField: String!): LoadUsersResponse!
             @rateLimit(limit: 50, duration: 300)
 
-        loginUser(username: String, email: String, password: String!): UserAccountAction! @rateLimit(limit: 20, duration: 3600)
+        loginUser(username: String, email: String, password: String!): UserLogin! @rateLimit(limit: 20, duration: 3600)
 
         logoutUser: LogoutResponse!
 
@@ -162,7 +166,7 @@ export default gql`
     }
 
     type Mutation {
-        signupUser(username: String!, email: String!, password: String!): UserAccountAction! @rateLimit(limit: 2, duration: 86400)
+        signupUser(username: String!, email: String!, password: String!): UserSignup! @rateLimit(limit: 2, duration: 86400)
 
         revokeUserSession: Boolean! @rateLimit(limit: 1, duration: 60)
 

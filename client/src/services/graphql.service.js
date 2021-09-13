@@ -961,7 +961,6 @@ const GraphQLService = {
             mutation {
                 signupUser(username: "${username}", email: "${email}", password: "${password}") {
                     message
-                    accessToken
                 }
             }
         `;
@@ -1099,6 +1098,7 @@ const GraphQLService = {
             const res = await fetch(URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ query: mutation }),
             });
 

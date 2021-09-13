@@ -340,9 +340,7 @@ export default {
                             }, 1500);
                         } else {
                             this.errMessage = "";
-                            this.$store.commit("refreshAccessToken", result.accessToken);
-                            this.$store.commit("changeLoggedInState", true);
-                            this.$store.commit("changeUsername", this.username);
+                            this.$store.dispatch("alertUser", { title: "Success", type: "success", msg: "We have sent you an email with a link to verify your account." });
                             this.$router.push("/");
                         }
                     }
