@@ -1064,20 +1064,6 @@ const GraphQLService = {
 
             // consuming json here because othwerwise we'd have to repeat the following code everywhere we wanted to logout
             const json = await res.json();
-            if (!json.errors) {
-                store.commit("refreshAccessToken", null);
-                store.commit("changeLoggedInState", false);
-                store.commit("changeUsername", null);
-
-                // get rid of any localstorage cache
-                localStorage.removeItem("profile_pic_link");
-
-                // get rid of any user specific data in the store
-                store.dispatch("flush_user_data");
-                store.dispatch("flushPostCache");
-
-                store.dispatch("alertUser", { title: "Success", type: "success", msg: "Successfully logged out" });
-            }
 
             return json;
         } catch (err) {

@@ -16,7 +16,7 @@
 
 -   [x] handle non existing users by showing a 404
     -   [ ] do it better
--   [ ] don't update Vuex in the logoutUser function in graphqlService
+-   [x] don't update Vuex in the logoutUser function in graphqlService
 -   [ ] add the eye button thing to signup card
 -   [ ] Project card author link spans 100% of card (even if you cant see it, you can still click it)
 -   [ ] mod email in user page doesn't work (the save btn doesn't work)
@@ -24,7 +24,9 @@
 -   [ ] add option to switch project card theme
 -   [ ] hitting enter doesnt send comment and throws error
 -   [ ] duplicate key errors in postfeed
--   [ ] add information about password requirements for the signup process alongisde some text to inform the user about email verification
+-   [ ] add information about password requirements for the signup process alongisde some text to inform the user about email 
+verification
+-   [ ] Add logo to the little icon in the page tab
 
 ### Things to optimize
 
