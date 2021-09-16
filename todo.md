@@ -26,7 +26,7 @@
 -   [ ] duplicate key errors in postfeed
 -   [ ] add information about password requirements for the signup process alongisde some text to inform the user about email 
 verification
--   [ ] Add logo to the little icon in the page tab
+-   [x] Add logo to the little icon in the page tab
 
 ### Things to optimize
 
