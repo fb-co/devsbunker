@@ -2,6 +2,11 @@
     <div class="signup">
         <div class="signupForm" v-if="!submitted">
             <p :class="{ err: errMessage != '' }" class="cardTitle">Sign-up</p>
+            <InformativePopup title="Credentials requirements" style="margin: auto; margin-top: 30px;">
+                <p style="margin-bottom: 20px; text-align: center;">The only special characters allowed in the username are '_' and '-'.</p>
+                <p style="margin-bottom: 20px; text-align: center;">You will be asked to verify your email address after a successful signup.</p>
+                <p style="margin-bottom: 20px; text-align: center;">The password must be at least 8 characters long</p>
+            </InformativePopup>
 
             <form name="signup" v-on:submit.prevent="submitForm">
                 <svg
@@ -250,9 +255,8 @@
 import UserService from "../services/user.service";
 import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
-
+import InformativePopup from "@/components/Popups/InformativePopup.vue";
 import GraphQLService from "../services/graphql.service";
-
 import Loading from "@/components/Loading";
 
 export default {
@@ -284,6 +288,7 @@ export default {
     },
     components: {
         Loading,
+        InformativePopup
     },
     methods: {
         async submitForm() {
@@ -369,7 +374,7 @@ export default {
     padding: 20px;
     width: 450px;
     max-width: 800px;
-    height: 810px;
+    height: 870px;
     background-color: var(--secondary-color);
     border-radius: 10px;
     margin: 0;
@@ -382,10 +387,6 @@ export default {
     z-index: -2;
 }
 
-form {
-    margin-top: 40px;
-}
-
 input,
 select,
 textarea {
@@ -396,10 +397,18 @@ textarea {
     background-color: var(--secondary-color);
     color: var(--main-font-color);
     box-sizing: border-box;
-    margin-top: 30px;
+    margin-top: 25px;
     margin-bottom: 50px;
     height: 30px;
     font-size: 18px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+#username {
+    margin-top: 20px;
 }
 
 input::placeholder {
@@ -420,7 +429,7 @@ input::placeholder {
 
 .form_field {
     width: 75%;
-    padding-top: 12px;
+    height: 30px;
 }
 .form_field::-webkit-input-placeholder {
     opacity: 0.5;
@@ -475,7 +484,7 @@ input[type="submit"]:hover {
     height: 1px;
     width: 80%;
     position: absolute;
-    top: 197px;
+    top: 215px;
     left: calc(50% - (80% / 2));
 }
 
@@ -484,7 +493,7 @@ input[type="submit"]:hover {
     height: 1px;
     width: 80%;
     position: absolute;
-    top: 305px;
+    top: 320px;
     left: calc(50% - (80% / 2));
 }
 
@@ -493,7 +502,7 @@ input[type="submit"]:hover {
     height: 1px;
     width: 80%;
     position: absolute;
-    top: 415px;
+    top: 425px;
     left: calc(50% - (80% / 2));
 }
 
@@ -502,7 +511,7 @@ input[type="submit"]:hover {
     height: 1px;
     width: 80%;
     position: absolute;
-    top: 525px;
+    top: 529px;
     left: calc(50% - (80% / 2));
 }
 
@@ -513,28 +522,28 @@ input[type="submit"]:hover {
 #userIcon {
     position: absolute;
     left: 37px;
-    top: 150px;
+    top: 170px;
     stroke: var(--main-font-color);
 }
 
 #passIcon {
     position: absolute;
     left: 37px;
-    top: 370px;
+    top: 382px;
     stroke: var(--main-font-color);
 }
 
 #passIcon2 {
     position: absolute;
     left: 37px;
-    top: 479px;
+    top: 486px;
     stroke: var(--main-font-color);
 }
 
 #emailIcon {
     position: absolute;
     left: 37px;
-    top: 259px;
+    top: 280px;
     stroke: var(--main-font-color);
 }
 
