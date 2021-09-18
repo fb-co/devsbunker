@@ -24,7 +24,7 @@
 -   [ ] add option to switch project card theme
 -   [ ] hitting enter doesnt send comment and throws error
 -   [ ] duplicate key errors in postfeed
--   [ ] add information about password requirements for the signup process alongisde some text to inform the user about email 
+-   [x] add information about password requirements for the signup process alongisde some text to inform the user about email 
 verification
 -   [x] Add logo to the little icon in the page tab
 
