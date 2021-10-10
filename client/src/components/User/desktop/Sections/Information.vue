@@ -24,12 +24,6 @@
         </div>
         <div v-else>
             <textarea maxlength="400" class="desc_editing" ref="edit_desc" :value="userObject.desc" placeholder="Description..." />
-            <div class="other_cont_container">
-                <div class="other_cont_item" :class="{ invalid: invalidEmail }">
-                    <p class="bold other_item_label">Email</p>
-                    <input class="cont_field" ref="edit_email" :value="emailInInput" placeholder="Email..." />
-                </div>
-            </div>
             <div class="field_edit_buttons_container">
                 <button @click="cancelFields()" class="cancel_button">Cancel</button>
                 <button @click="saveFields()" class="save_button">Save</button>
@@ -63,11 +57,6 @@ export default {
         ProfilePicture,
         LoadingGif,
     },
-    /*
-    beforeRouteLeave(to, from, next) {
-
-    },
-    */
 };
 </script>
 
@@ -153,6 +142,7 @@ export default {
 .field_edit_buttons_container button {
     margin-left: 10px;
     margin-right: 10px;
+    margin-top: 15px;
 }
 
 .save_button {
