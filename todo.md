@@ -1,32 +1,20 @@
 # TODO
 
+## General
+
+-   [ ] search for keywork "TODO" in the whole codebase
+
 ## Backend
 
 -   [ ] better post sanitazation
--   [ ] serverside thumbnail compression
--   [x] send confirmation email for signup
-    -   [x] only for normal users, not github ones
+-   [ ] serverside thumbnail compression (?)
 -   [ ] Create a /robots.txt route
 -   [ ] better error handling
 -   [ ] add rate limiting to email verification route
--   [x] new users cant view their profile, there's a bug realted to the posts aggregation
--   [ ] if the user changes its email we need to send a verification mail again ( consider removing this option)
 
 ## Frontend
 
--   [x] handle non existing users by showing a 404
-    -   [ ] do it better
--   [x] don't update Vuex in the logoutUser function in graphqlService
--   [ ] add the eye button thing to signup card
 -   [ ] Project card author link spans 100% of card (even if you cant see it, you can still click it)
--   [ ] mod email in user page doesn't work (the save btn doesn't work)
--   [ ] add the possibility to see users that we follow
--   [ ] add option to switch project card theme
--   [ ] hitting enter doesnt send comment and throws error
--   [ ] duplicate key errors in postfeed
--   [x] add information about password requirements for the signup process alongisde some text to inform the user about email 
-verification
--   [x] Add logo to the little icon in the page tab
 
 ### Things to optimize
 
