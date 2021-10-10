@@ -173,7 +173,7 @@ export default {
                 const user = await User.findOne({
                     username: jwtPayload.username,
                 });
-                
+
                 if (user && user.enabled) {
                     let unreadAmt = 0;
                     let unreadNotifications = [];
@@ -210,12 +210,12 @@ export default {
                     ]);
 
                     const finalPostsAmt = 0;
-                
+
                     // if they have no posts, posts_amt[0] won't exist so you have to check
                     if (postDataRes[0].posts_amt.length > 0) {
-                        postDataRes[0].posts_amt[0].amount
+                        postDataRes[0].posts_amt[0].amount;
                     }
-                    
+
                     const userSuggestions = postDataRes[0].suggested_users;
 
                     // convert user suggestions into something graphql can return
@@ -499,7 +499,7 @@ export default {
             if (!user) return { success: false, message: "Internal error" };
             if (!user.enabled) return { success: false, message: "User is banned" };
 
-            const nonMod = ["_id", "id", "tokenVersion", "tag", "createdAt", "updatedAt", "__v", "v"];
+            const nonMod = ["_id", "id", "email", "tokenVersion", "tag", "createdAt", "updatedAt", "__v", "v"];
 
             // loop through all the fields that need to be changed
             for (const payload of args.fields) {
@@ -525,10 +525,6 @@ export default {
                                 throw new Error(`Cannot update field: ${payload.field}, please enter a valid password with no spaces and > than 8 characters.`);
                             }
                         } else {
-                            if (payload.field == "email") {
-                                if (!/\S+@\S+\.\S+/.test(payload.newValue)) throw new InvalidCredentialsError();
-                            }
-
                             editedData.push({
                                 field: payload.field,
                                 newValue: payload.newValue,
