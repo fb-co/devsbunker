@@ -132,6 +132,5 @@ export default {
 }
 .main_cont p {
     color: var(--soft-text);
-    font-size: 1000px;
 }
 </style>
