@@ -51,6 +51,7 @@ const LoadMore = {
                         this.getLastPostUniqueField(),
                         this.$store.getters.accessToken
                     );
+            
                     if (!res.errors) {
                         this.posts = this.posts.concat(res.data.getPosts.posts);
                         this.fetchedAll = res.data.getPosts.fetchedAll;

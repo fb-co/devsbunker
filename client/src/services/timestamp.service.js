@@ -24,8 +24,8 @@ const TimeStampService = {
         }
 
         let finalTimeStamp = 
-            (showMonth ? this.monthNames[dateObj.getMonth()] : "") + " " + 
-            (showDay ? dateObj.getDate() : "") + ", " + 
+            (showMonth ? this.monthNames[dateObj.getMonth()] : "") + 
+            (showDay ? " " + dateObj.getDate() : "") + ", " + 
             (showYear ? dateObj.getFullYear() : "");
 
         return finalTimeStamp;

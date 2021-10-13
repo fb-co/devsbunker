@@ -83,6 +83,7 @@
             <div class="placeholder"></div>
             <!-- Placeholder -->
             <div class="post_header_details">
+                <p class="timestamp">{{ usableTimestamp }}</p>
                 <p class="postname">{{ projectData.title }}</p>
                 <p>
                     <span>By:</span>
@@ -137,6 +138,7 @@ import CarouselMobile from "@/components/Carousel/CarouselMobile.vue";
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 import CommentSection from "@/components/Comments/CommentSection.vue";
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
+import TimestampService from "@/services/timestamp.service.js";
 
 import CommonUtils from "@/utils/common_utils.js";
 
@@ -146,6 +148,7 @@ export default {
             tags: undefined,
             postThumbnail: undefined,
             postImages: [],
+            usableTimestamp: TimestampService.convertToDate(this.projectData.createdAt, true, false, true),
         };
     },
     props: {
@@ -300,6 +303,10 @@ export default {
     justify-content: center;
     height: 30px;
     margin-right: 20px;
+}
+.timestamp {
+    font-size: 10px;
+    margin-bottom: 5px;
 }
 .postname {
     font-size: 20px;

@@ -94,6 +94,8 @@
                     </div>
                 </div>
 
+                <p class="timestamp">{{ usableTimestamp }}</p>
+
                 <div class="tags_container">
                     <CreateTag v-for="tag in projectData.tags" :key="tag" :label="tag" tagType="lang" />
                 </div>
@@ -161,6 +163,7 @@ import RightContent from "@/components/Home/desktop/RightContent.vue";
 import CommonUtils from "@/utils/common_utils.js";
 import UserUtils from "@/mixins/user_card.mixin.js";
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
+import TimestampService from "@/services/timestamp.service.js";
 
 export default {
     props: {
@@ -181,6 +184,7 @@ export default {
         return {
             thumbnail: undefined,
             postImages: [],
+            usableTimestamp: TimestampService.convertToDate(this.projectData.createdAt, true, false, true),
         };
     },
     created() {
@@ -350,6 +354,13 @@ export default {
 
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.timestamp {
+    margin-bottom: 20px;
+    padding-left: 5px;
+    color: var(--soft-text);
+    font-size: 13px;
 }
 
 .tags_container {

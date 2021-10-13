@@ -129,6 +129,7 @@ const GraphQLService = {
                             tags
                             links
                             price
+                            createdAt
                             id
                         }
                         fetchedAll
@@ -162,6 +163,7 @@ const GraphQLService = {
                         isSaved
                         tags
                         price
+                        createdAt
                         id
                     }
                     fetchedAll
@@ -558,6 +560,7 @@ const GraphQLService = {
                             isLiked
                             tags
                             price
+                            createdAt
                             id
                         }
                         fetchedAll
@@ -576,6 +579,7 @@ const GraphQLService = {
                             likeAmt
                             tags
                             price
+                            createdAt
                             id
                         }
                         fetchedAll
@@ -620,6 +624,7 @@ const GraphQLService = {
                         isSaved
                         isLiked
                         price
+                        createdAt
                         id
                     }
                     fetchedAll
