@@ -2,13 +2,16 @@
     <div class="signup">
         <div class="signupForm" v-if="!submitted">
             <p :class="{ err: errMessage != '' }" class="cardTitle">Sign-up</p>
+
+            <!--
             <InformativePopup title="Credentials requirements" style="margin: auto; margin-top: 30px;">
                 <p style="margin-bottom: 20px; text-align: center;">The only special characters allowed in the username are '_' and '-'.</p>
                 <p style="margin-bottom: 20px; text-align: center;">You will be asked to verify your email address after a successful signup.</p>
                 <p style="margin-bottom: 20px; text-align: center;">The password must be at least 8 characters long</p>
             </InformativePopup>
+            -->
 
-            <form name="signup" v-on:submit.prevent="submitForm">
+            <form name="signup" v-on:submit.prevent="submitForm" style="margin-top: 75px;">
                 <svg
                     id="userIcon"
                     xmlns="http://www.w3.org/2000/svg"
