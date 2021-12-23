@@ -21,6 +21,12 @@ export async function getAccessToken(req, res, next) {
                 _id: payload._id,
             });
 
+            if (!user) {
+                next({
+                    message: "User not found",
+                });
+            }
+
             if (user.tokenVersion !== payload.tokenVersion) {
                 next({
                     message: "Token not valid. User revoked the session.",

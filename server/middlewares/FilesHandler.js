@@ -2,23 +2,14 @@ import fs from "fs";
 
 class FilesHandler {
     constructor() {
-        this.allowedMimeTypes = [
-            "image/jpeg",
-            "image/png",
-            "image/svg+xml",
-            "image/gif",
-        ];
+        this.allowedMimeTypes = ["image/jpeg", "image/png", "image/svg+xml", "image/gif"];
         this.allowedExtensions = ["jpeg", "jpg", "png", "gif", "svg"];
     }
 
     validateFiles({ mimetype, size, originalname }) {
-        const extension = originalname.split(".").pop().toLowerCase();
+        const extension = originalname.split(".").pop()?.toLowerCase();
 
-        return (
-            size > 0 &&
-            this.allowedMimeTypes.includes(mimetype) &&
-            this.allowedExtensions.includes(extension)
-        );
+        return size > 0 && this.allowedMimeTypes.includes(mimetype) && this.allowedExtensions.includes(extension);
     }
 
     // deleting files using their path

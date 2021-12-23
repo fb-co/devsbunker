@@ -17,9 +17,7 @@ export default async function uploadProfilePicture(req, res, next) {
                 let valid = true;
                 let pathsCache = [];
 
-                pathsCache.push(
-                    `${process.env.UPLOAD_PROFILE_PIC}/${file.path}`
-                );
+                pathsCache.push(`${process.env.UPLOAD_PROFILE_PIC}/${file.path}`);
 
                 if (filesHandler.validateFiles(file)) {
                     data.push({
@@ -36,11 +34,11 @@ export default async function uploadProfilePicture(req, res, next) {
                         _id: user._id,
                     });
 
+                    if (!userDoc) throw new Error("User not found");
+
                     // if it's not the placeholder, delete it
                     if (userDoc.profile_pic !== "profile_pic_placeholder.png") {
-                        filesHandler.deleteFiles([
-                            `${process.env.UPLOAD_PROFILE_PIC}/${userDoc.profile_pic}`,
-                        ]);
+                        filesHandler.deleteFiles([`${process.env.UPLOAD_PROFILE_PIC}/${userDoc.profile_pic}`]);
                     }
 
                     userDoc.profile_pic = file.filename;

@@ -7,6 +7,8 @@ class SessionRevoker {
                 _id: jwtPayload._id,
             });
 
+            if (!user) return false;
+
             user.tokenVersion += 1;
             user.save();
 
