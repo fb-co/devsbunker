@@ -23,13 +23,3 @@
 ## Glitches
 
 -   [ ] settings sections (account, privacy, etc) are still available in mobile version. This is not a real glitch but we have to decide what to do with it
-
-## Deployment
-
--   [ ] remove that vue config file
--   [ ] Set Prod env variable to true
--   [ ] Remove all the console logs, including the one on Logout event
--   [ ] use a more accurate regex for emails
--   [ ] clean the code
--   [ ] make sure not to include path details in gql errors
--   [ ] add NSFW image filter
