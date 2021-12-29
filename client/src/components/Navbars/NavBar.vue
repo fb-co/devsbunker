@@ -122,6 +122,8 @@ import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import NotificationIcon from "@/components/Notifications/NotificationIcon.vue";
 import UnreadNumber from "@/components/Notifications/UnreadNumber.vue";
 
+import LogoutFunction from "@/mixins/logout_function.js";
+
 export default {
     props: {
         min_width: String,
@@ -142,19 +144,10 @@ export default {
     destroyed() {
         document.body.style.overflow = "auto";
     },
+    mixins: [
+        LogoutFunction
+    ],
     methods: {
-        async logout() {
-            const res = await GraphQLService.logoutUser();
-
-            if (res.errors) {
-                this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Unable to logout" });
-                console.error(res.errors);
-            } else {
-                if (this.$route.path != "/") {
-                    this.$router.push("/");
-                }
-            }
-        },
         toggleMenu() {
             // No idea if they are called grandparents, but its the parent of the parent
             const checkBoxGrandparent = document.getElementById("burger_menu_checkbox").parentElement.parentElement;

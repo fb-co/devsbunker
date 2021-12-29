@@ -55,7 +55,7 @@
                     @submitted="resetPwd($event[0], $event[1])"
                 />
             </div>
-            <div class="setting_item">
+            <div class="setting_item" v-if="$store.getters.isLoggedIn">
                 <p class="label tag_suggest" style="display: flex; flex-direction: row;">
                     Tags to suggest: 
                     <InformativePopup title="Tag Suggestion" style="margin-left: 10px; margin-top: -2px; text-align: center;">
