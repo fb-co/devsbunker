@@ -272,6 +272,8 @@ import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import InputModal from "@/components/global/InputModal.vue";
 import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 
+import LogoutFunction from "@/mixins/logout_function.js";
+
 export default {
     data() {
         return {
@@ -285,20 +287,11 @@ export default {
         InputModal,
         ConfirmationPopup,
     },
+    mixins: [LogoutFunction],
     props: {
         mainUserObject: Object,
     },
     methods: {
-        logout() {
-            GraphQLService.logoutUser().then((response) => {
-                if (response.errors) {
-                    console.error(response.errors);
-                    this.$store.dispatch("alertUser", { msg: "Unable to logout", type: "error", title: "Error" });
-                } else {
-                    this.$router.push("/");
-                }
-            });
-        },
         openDownloadDataConfirmation() {
             this.$refs.download_data_confirmation.open();
         },
