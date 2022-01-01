@@ -73,6 +73,12 @@ prod=true
 CLIENTSIDE_PORT=80
 ```
 
+### frontend env changes
+
+```
+VUE_APP_MAIN_URL=http://devsbunker.com
+```
+
 ## Commands issued to setup test machine (f0lg0 rp3)
 
 ```
