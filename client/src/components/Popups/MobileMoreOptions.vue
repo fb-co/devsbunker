@@ -44,7 +44,7 @@ export default {
         min-height: 200px;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-        background-color: var(--burger-menu-bg);
+        background-color: var(--main-font-color);
         animation: moreOptionsSlider 0.5s;
         display: flex;
         flex-direction: column;
