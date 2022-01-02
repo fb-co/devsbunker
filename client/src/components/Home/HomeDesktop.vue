@@ -7,7 +7,7 @@
             v-if="loaded" 
             :rootComponent="$parent" 
             :showFilter="!$store.getters.isLoggedIn" 
-            title="Discover Projects" 
+            title="Recommended Projects" 
             class="post_feed" 
         />
         <RightContent class="right_content" />
