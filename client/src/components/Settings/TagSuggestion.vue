@@ -12,7 +12,7 @@
             <div @click.stop="" class="popup_container">
                 <div class="popup_header">
                     <div class="close_btn_container" @click="close()">
-                        <svg @click="close()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg @click.stop="close()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                             <line x1="18" y1="6" x2="6" y2="18" />
                             <line x1="6" y1="6" x2="18" y2="18" />
@@ -126,10 +126,10 @@ export default {
                 }
 
                 const res = await GraphQLService.setCommonTags(finalTags, this.$store.getters.accessToken);
+                
                 if (!res.errors) {
                     this.tags = res.data.setCommonTags;
                 } else {
-                    console.log(res);
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong" });
                 }
             }

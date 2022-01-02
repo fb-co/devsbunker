@@ -368,7 +368,7 @@ export default {
         width: 100%;
         display: flex;
         flex-direction: column;
-        background-color: var(--burger-menu-bg);
+        background-color: var(--main-font-color);
         bottom: 0px;
         right: 0px;
         border-top-left-radius: 10px;

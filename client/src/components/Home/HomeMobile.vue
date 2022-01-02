@@ -11,7 +11,7 @@
             :showFilter="!$store.getters.isLoggedIn"
             :desktop="false" 
             v-if="loaded" 
-            title="Discover Projects" 
+            title="Recommended Projects" 
         />
     </div>
 </template>
