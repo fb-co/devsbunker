@@ -22,7 +22,7 @@ const corsOptions = {
             if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
                 callback(null, true);
             } else {
-                console.log(`[!] A unallowed origin has tried to connect: ${origin} [!]`);
+                console.log(`[!] An unallowed origin has tried to connect: ${origin} [!]`);
                 callback(new Error("Not allowed by CORS"));
             }
         } else {
