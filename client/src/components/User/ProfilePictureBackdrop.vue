@@ -132,5 +132,6 @@ export default {
     height: 300px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
+    background-repeat: no-repeat;
 }
 </style>

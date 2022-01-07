@@ -129,7 +129,7 @@ const actions = {
     },
     flush_user_data({ commit }) {
         commit("cachePersonalPfpLink", undefined);
-        commit("cacheUnreadNotificationsAmt", undefined);
+        commit("cacheUnreadNotificationsAmt", 0);
         commit("cachePostsAmt", undefined);
         commit("cacheUnreadNotifications", undefined);
         commit("cacheFollowingList", []);

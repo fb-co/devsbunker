@@ -127,6 +127,27 @@
                 </div>
                 <p>Download Data</p>
             </div>
+            <div @mousedown.stop="logout()">
+                <div class="vertical_flex_center">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-alert-triangle"
+                        width="25"
+                        height="25"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="var(--error-red)"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M12 9v2m0 4v.01" />
+                        <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                    </svg>
+                </div>
+                <p style="color: var(--error-red);">Logout</p>
+            </div>
             <div @mousedown.stop="openConfirmation()">
                 <div class="vertical_flex_center">
                     <svg
@@ -161,6 +182,8 @@ import InputModal from "@/components/global/InputModal.vue";
 import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 import MobileMoreOptions from "@/components/Popups/MobileMoreOptions.vue";
 
+import LogoutFunction from "@/mixins/logout_function.js";
+
 export default {
     data() {
         return {
@@ -172,6 +195,9 @@ export default {
         searchFilter: String,
         mainUserObject: Object,
     },
+    mixins: [
+        LogoutFunction
+    ],
     components: {
         ...ProfileSections,
         //ProfilePicture,

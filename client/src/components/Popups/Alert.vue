@@ -1,5 +1,14 @@
 <template>
-    <div v-if="active" ref="popup_container" class="alert" :class="{ alert_success: alertData.type==='success', alert_error: alertData.type==='error' }">
+    <div 
+        v-if="active" 
+        ref="popup_container" 
+        class="alert" 
+        :class="{
+            alert_neutral: alertData.type==='neutral',
+            aleralert_success: alertData.type==='success', 
+            alert_error: alertData.type==='error' 
+        }"
+    >
         <svg
             v-if="alertData.type === 'success'"
             xmlns="http://www.w3.org/2000/svg"
@@ -108,6 +117,9 @@ export default {
 }
 .alert_error {
     border-left: 10px solid var(--error-red);
+}
+.alert_neutral {
+    border-left: 10px solid var(--main-font-color);
 }
 
 .alert svg {
