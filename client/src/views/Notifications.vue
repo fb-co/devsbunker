@@ -39,25 +39,30 @@ export default {
         LoadingGif
     },
     created() {
-        SharedMethods.loadPage();
+        if (this.$store.getters.isLoggedIn) {
+            SharedMethods.loadPage();
 
-        GraphQLService.getAndReadNotifications(
-            this.$store.getters.accessToken
-        ).then((res) => {
-            if (!res.errors) {
-                this.notifications = res.data.getAndReadNotifications;
+            GraphQLService.getAndReadNotifications(
+                this.$store.getters.accessToken
+            ).then((res) => {
+                if (!res.errors) {
+                    this.notifications = res.data.getAndReadNotifications;
 
-                // make any like or follow notifications read
-                this.notifications.forEach((item) => {
-                    if (item.type == "like" || item.type == "follow") {
-                        item.read = true;
-                    }
-                });
-                this.$store.commit("readNotifications");
-            } else {
-                this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.errors[0].message });
-            }  
-        });
+                    // make any like or follow notifications read
+                    this.notifications.forEach((item) => {
+                        if (item.type == "like" || item.type == "follow") {
+                            item.read = true;
+                        }
+                    });
+                    this.$store.commit("readNotifications");
+                } else {
+                    this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.errors[0].message });
+                }  
+            });
+        } else {
+            this.$store.dispatch("alertUser", { title: "Alert", type: "neutral", msg: 'Login to see your notifications' });
+            this.$router.push('/login');
+        }
     },
 };
 </script>

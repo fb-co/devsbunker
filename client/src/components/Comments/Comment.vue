@@ -83,8 +83,12 @@ export default {
     },
     methods: {
         createReply() {
-            this.$refs.reply_field_container.style.display = "flex";
-            this.$refs.reply_field.focus();
+            if (this.$store.getters.isLoggedIn) {
+                this.$refs.reply_field_container.style.display = "flex";
+                this.$refs.reply_field.focus();
+            } else {
+                this.$store.dispatch("alertUser", { title: "Alert", type: "neutral", msg: 'Login to reply' });
+            }
         },
         cancelReply() {
             this.$refs.reply_field_container.style.display = "none";
