@@ -11,20 +11,20 @@ const projectCard = {
         savePost(id) {
             if (!this.$store.getters.accessToken) {
                 this.$router.push("/login");
+            } else {
+                GraphQLService.savePost(this.$store.getters.accessToken, id).then((savedPost) => {
+                    if (!savedPost.errors) {
+                        this.projectData.isSaved = savedPost.data.savePost.isSaved;
+    
+                        this.$store.dispatch("updatePost", {
+                            id: id,
+                            fieldsToUpdate: [{ field: "isSaved", newVal: savedPost.data.savePost.isSaved }],
+                        }); // update post in cache
+                    } else {
+                        this.$store.dispatch("alertUser", { msg: savedPost.errors[0].message, type: "error", title: "Error" });
+                    }
+                });
             }
-
-            GraphQLService.savePost(this.$store.getters.accessToken, id).then((savedPost) => {
-                if (!savedPost.errors) {
-                    this.projectData.isSaved = savedPost.data.savePost.isSaved;
-
-                    this.$store.dispatch("updatePost", {
-                        id: id,
-                        fieldsToUpdate: [{ field: "isSaved", newVal: savedPost.data.savePost.isSaved }],
-                    }); // update post in cache
-                } else {
-                    this.$store.dispatch("alertUser", { msg: savedPost.errors[0].message, type: "error", title: "Error" });
-                }
-            });
         },
         unsavePost(id) {
             GraphQLService.unSavePost(this.$store.getters.accessToken, id).then((unSavedPost) => {
@@ -42,24 +42,24 @@ const projectCard = {
         likePost(id) {
             if (!this.$store.getters.accessToken) {
                 this.$router.push("/login");
+            } else {
+                GraphQLService.likePost(this.$store.getters.accessToken, id).then((res) => {
+                    if (!res.errors) {
+                        this.projectData.likeAmt = res.data.likePost.likeAmt;
+                        this.projectData.isLiked = res.data.likePost.isLiked;
+    
+                        this.$store.dispatch("updatePost", {
+                            id: id,
+                            fieldsToUpdate: [
+                                { field: "isLiked", newVal: res.data.likePost.isLiked },
+                                { field: "likeAmt", newVal: res.data.likePost.likeAmt },
+                            ],
+                        }); // update post in cache
+                    } else {
+                        this.$store.dispatch("alertUser", { msg: res.errors[0].message, type: "error", title: "Error" });
+                    }
+                });
             }
-
-            GraphQLService.likePost(this.$store.getters.accessToken, id).then((res) => {
-                if (!res.errors) {
-                    this.projectData.likeAmt = res.data.likePost.likeAmt;
-                    this.projectData.isLiked = res.data.likePost.isLiked;
-
-                    this.$store.dispatch("updatePost", {
-                        id: id,
-                        fieldsToUpdate: [
-                            { field: "isLiked", newVal: res.data.likePost.isLiked },
-                            { field: "likeAmt", newVal: res.data.likePost.likeAmt },
-                        ],
-                    }); // update post in cache
-                } else {
-                    this.$store.dispatch("alertUser", { msg: res.errors[0].message, type: "error", title: "Error" });
-                }
-            });
         },
         unlikePost(id) {
             GraphQLService.unlikePost(this.$store.getters.accessToken, id).then((res) => {
