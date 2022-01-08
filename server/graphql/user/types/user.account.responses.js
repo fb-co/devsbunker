@@ -72,6 +72,7 @@ export default gql`
         postsAmt: Int
         common_tags: [TagResponse]
         user_suggestions: [String]
+        isGitHubUser: Boolean!
     }
 
     type CommentResponse {
