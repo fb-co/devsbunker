@@ -247,6 +247,7 @@ export default {
                         postsAmt: finalPostsAmt,
                         common_tags: user.common_tags,
                         user_suggestions: finalUserSuggestions,
+                        isGitHubUser: user.isGitHubUser,
                     };
                 } else {
                     console.error(err);

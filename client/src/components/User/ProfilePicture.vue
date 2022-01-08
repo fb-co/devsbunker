@@ -142,6 +142,11 @@ export default {
             this.$refs.main_image.style.filter = "brightness(100%)";
         },
         fetchImageLink() {
+            if (this.username == undefined) {
+                console.log(this.username);
+                console.log(this.$parent);
+            }     
+
             const callAPI = () => {
                 GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
                     if (obj.data.user.profile_pic) {

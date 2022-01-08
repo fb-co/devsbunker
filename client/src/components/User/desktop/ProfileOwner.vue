@@ -194,7 +194,7 @@
                         <div @click="logout()" class="option-wrapper special_link_item">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-alert-circle"
+                                class="icon icon-tabler icon-tabler-logout"
                                 width="24"
                                 height="24"
                                 viewBox="0 0 24 24"
@@ -204,18 +204,16 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                             >
-                                <path stroke="none" d="M0 0h24v24H0z" />
-                                <circle cx="12" cy="12" r="9" />
-                                <line x1="12" y1="8" x2="12" y2="12" />
-                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                <path d="M7 12h14l-3 -3m0 6l3 -3" />
                             </svg>
-
                             <p class="profile_link">Logout</p>
                         </div>
-                        <div @click="openConfirmation()" class="option-wrapper special_link_item">
+                        <div @click="openConfirmation(0)" class="option-wrapper special_link_item">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-alert-circle"
+                                class="icon icon-tabler icon-tabler-circle-off"
                                 width="24"
                                 height="24"
                                 viewBox="0 0 24 24"
@@ -225,15 +223,34 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                             >
-                                <path stroke="none" d="M0 0h24v24H0z" />
-                                <circle cx="12" cy="12" r="9" />
-                                <line x1="12" y1="8" x2="12" y2="12" />
-                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M20.042 16.045a9 9 0 0 0 -12.087 -12.087m-2.318 1.677a9 9 0 1 0 12.725 12.73" />
+                                <path d="M3 3l18 18" />
+                            </svg>
+                            <p class="profile_link">Disable account</p>
+                        </div>
+                        <div @click="openConfirmation(1)" class="option-wrapper special_link_item">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-trash"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="#656565"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <line x1="4" y1="7" x2="20" y2="7" />
+                                <line x1="10" y1="11" x2="10" y2="17" />
+                                <line x1="14" y1="11" x2="14" y2="17" />
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                             </svg>
 
-                            <p class="profile_link">
-                                Delete profile
-                            </p>
+                            <p class="profile_link">Delete account</p>
                         </div>
                     </div>
                 </div>
@@ -261,6 +278,13 @@
             msg="This will download all the data associated with your account into a JSON file."
             confirmButton="Download"
             @confirm="downloadUserData()"
+        />
+        <ConfirmationPopup
+            ref="disable_account"
+            title="Disable account"
+            msg="This will temporarily disable your account, in order to enable it again you'd need to contact us at folgoni.co@gmail.com with the email address you provided while signing up."
+            confirmButton="Disable"
+            @confirm="disableAccount()"
         />
     </div>
 </template>
@@ -319,8 +343,31 @@ export default {
                     this.$store.dispatch("alertUser", { msg: "Something went wrong", type: "error", title: "Error" });
                 });
         },
-        openConfirmation() {
-            this.$refs.deleteProfileConfirmation.open();
+        async openConfirmation(action) {
+            switch (action) {
+                case 0:
+                    // disable account
+                    this.$refs.disable_account.open();
+                    break;
+                case 1: {
+                    // delete account
+                    const res = await GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, ["isGitHubUser"]);
+                    if (res.errors) {
+                        this.$store.dispatch("alertUser", { msg: "Something went wrong, try again later, try again later.", type: "error", title: "Error" });
+                    } else {
+                        if (res.data.getPersonalDetails.isGitHubUser) {
+                            this.$store.dispatch("alertUser", {
+                                msg: "At the moment, deleting an account created via GitHub is not possible. Try again in the near future.",
+                                type: "error",
+                                title: "Error",
+                            });
+                        } else {
+                            this.$refs.deleteProfileConfirmation.open();
+                        }
+                    }
+                    break;
+                }
+            }
         },
         async deleteProfile(payload) {
             const password = payload[0];
@@ -348,6 +395,10 @@ export default {
                     this.$store.dispatch("alertUser", { msg: "Incorrect password", type: "error", title: "Error" });
                 }
             }
+        },
+
+        async disableAccount() {
+            alert("todo");
         },
     },
 };

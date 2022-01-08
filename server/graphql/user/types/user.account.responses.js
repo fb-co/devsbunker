@@ -72,6 +72,7 @@ export default gql`
         postsAmt: Int
         common_tags: [TagResponse]
         user_suggestions: [String]
+        isGitHubUser: Boolean!
     }
 
     type CommentResponse {
@@ -143,7 +144,7 @@ export default gql`
     }
 
     type Query {
-        user(username: String!, requester: String): FetchableUser @rateLimit(limit: 50, duration: 300)
+        user(username: String!, requester: String): FetchableUser @rateLimit(limit: 300, duration: 300)
 
         getUsers(sortMethod: String!, lastUserId: String!, lastUniqueField: String): LoadUsersResponse! @rateLimit(limit: 50, duration: 300)
 
