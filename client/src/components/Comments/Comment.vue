@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="reply_input" ref="reply_field_container">
-                <ProfilePicture :username="this.$store.getters.username" :wrapperSize="mobile ? '30px' : '40px'" />
+                <ProfilePicture v-if="$store.getters.username" :username="this.$store.getters.username" :wrapperSize="mobile ? '30px' : '40px'" />
                 <div class="input_container">
                     <input placeholder="Type your reply..." ref="reply_field" />
                     <div class="reply_line" />
