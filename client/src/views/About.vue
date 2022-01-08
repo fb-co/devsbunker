@@ -175,6 +175,10 @@ import GeneralProperties from "@/mixins/general.mixin";
 export default {
     created() {
         SharedMethods.loadPage();
+        document.body.style.overflowX = "hidden";
+    },
+    destroyed() {
+        document.body.style.overflowX = "auto";
     },
     components: {
         DummyCards,
