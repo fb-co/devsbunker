@@ -86,10 +86,10 @@
                                     <p>Profile</p>
                                 </router-link>
                                 <router-link v-if="$store.getters.isLoggedIn" to="/notifications" class="static_link">
-                                    <p style="position: relative;">
+                                    <p style="position: relative">
                                         Notifications
-                                        <UnreadNumber v-if="$store.getters.mobile" style="bottom: -10px; right: 40px;" />
-                                        <UnreadNumber v-else style="bottom: -10px; right: 80px;" />
+                                        <UnreadNumber v-if="$store.getters.mobile" style="bottom: -10px; right: 40px" />
+                                        <UnreadNumber v-else style="bottom: -10px; right: 80px" />
                                     </p>
                                 </router-link>
                                 <router-link to="/settings/account">Settings</router-link>
@@ -116,7 +116,6 @@
 <script>
 import GlobalComponents from "@/components/global/GlobalComponents.js";
 // import NavBarSearch from "./NavBarSearch.vue"; might re-add this in the future
-import GraphQLService from "../../services/graphql.service";
 
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import NotificationIcon from "@/components/Notifications/NotificationIcon.vue";
@@ -144,9 +143,7 @@ export default {
     destroyed() {
         document.body.style.overflow = "auto";
     },
-    mixins: [
-        LogoutFunction
-    ],
+    mixins: [LogoutFunction],
     methods: {
         toggleMenu() {
             // No idea if they are called grandparents, but its the parent of the parent
