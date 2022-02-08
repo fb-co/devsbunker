@@ -4,7 +4,8 @@ import Posts from "../../../components/post/post.model.js";
 import bcrypt from "bcrypt";
 import SessionRevoker from "../../../components/tokens/SessionRevoker.js";
 import TokenHandler from "../../../components/tokens/TokenHandler.js";
-import Transporter from "../../../config/Nodemailer.js";
+// import Transporter from "../../../config/Nodemailer.js";
+import EmailManager from "../../../components/emails/EmailManager.js";
 import { generateVerificationEmailTemplate } from "../../../templates/email.html.js";
 
 import FilesHandler from "../../../middlewares/FilesHandler.js";
@@ -382,7 +383,18 @@ export default {
                         });
 
                         await verification.save();
+                        
+                        // send verification email
+                        const mail = {
+                            from: "verification@devsbunker.com",
+                            to: user.email,
+                            subject: "Account verification",
+                            html: generateVerificationEmailTemplate(user.username, verification.userId, verification.token),
+                        };
 
+                        EmailManager.sendEmail(mail);
+
+                        /*
                         const mail = {
                             from: "Folgoni Borsa Company",
                             to: user.email,
@@ -398,6 +410,7 @@ export default {
                                 console.log(res);
                             }
                         });
+                        */
 
                         return {
                             message: "Successfully signed up.",
@@ -408,6 +421,8 @@ export default {
                         throw new AuthenticationError("Unable to create token.");
                     }
                 } catch (err) {
+                    console.log(err);
+
                     res.status(401); // why is it throwing unauthed here?
 
                     if (/duplicate/.test(err.message)) {
