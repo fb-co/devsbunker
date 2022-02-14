@@ -1,14 +1,14 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import MailGunModule from "../../config/MailGun.js";
+import MailGunModule from "../../config/Mailgun.js";
 const domain = process.env.OUTBOUND_EMAIL_DOMAIN;
 
 const EmailManager = {
-    sendEmail: function(email_data) {
+    sendEmail: function (email_data) {
         console.log(email_data);
         MailGunModule.messages.create(domain, email_data);
-    }
+    },
 };
 
 export default EmailManager;
