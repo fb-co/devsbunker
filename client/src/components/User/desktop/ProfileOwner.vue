@@ -355,15 +355,7 @@ export default {
                     if (res.errors) {
                         this.$store.dispatch("alertUser", { msg: "Something went wrong, try again later, try again later.", type: "error", title: "Error" });
                     } else {
-                        if (res.data.getPersonalDetails.isGitHubUser) {
-                            this.$store.dispatch("alertUser", {
-                                msg: "At the moment, deleting an account created via GitHub is not possible. Try again in the near future.",
-                                type: "error",
-                                title: "Error",
-                            });
-                        } else {
-                            this.$refs.deleteProfileConfirmation.open();
-                        }
+                        this.$refs.deleteProfileConfirmation.open();
                     }
                     break;
                 }
