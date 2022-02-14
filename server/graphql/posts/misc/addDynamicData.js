@@ -13,8 +13,9 @@ const dynamicData = {
     },
     addIsLiked: function(posts, requester) {
         posts.forEach(post => {
-            post.isLiked = post.likes.includes( requester.username );
-        });
+            post.isLiked = requester.liked_posts.includes( post._id );
+        }); 
+
         return posts;
     },
     addAll: function(posts, requester) {
@@ -23,7 +24,7 @@ const dynamicData = {
 
             // if there is no requester dont add the isLiked and isSaved fields
             if (requester) {
-                post.isLiked = post.likes.includes( requester.username );
+                post.isLiked = requester.liked_posts.includes( post._id );
                 post.isSaved = requester.saved_posts.includes( post.id );
             }
         });
