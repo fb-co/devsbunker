@@ -4,7 +4,8 @@ import Posts from "../../../components/post/post.model.js";
 import bcrypt from "bcrypt";
 import SessionRevoker from "../../../components/tokens/SessionRevoker.js";
 import TokenHandler from "../../../components/tokens/TokenHandler.js";
-import Transporter from "../../../config/Nodemailer.js";
+// import Transporter from "../../../config/Nodemailer.js";
+import EmailManager from "../../../components/emails/EmailManager.js";
 import { generateVerificationEmailTemplate } from "../../../templates/email.html.js";
 
 import FilesHandler from "../../../middlewares/FilesHandler.js";
@@ -383,6 +384,17 @@ export default {
 
                         await verification.save();
 
+                        // send verification email
+                        const mail = {
+                            from: "verification@devsbunker.com",
+                            to: user.email,
+                            subject: "Account verification",
+                            html: generateVerificationEmailTemplate(user.username, verification.userId, verification.token),
+                        };
+
+                        EmailManager.sendEmail(mail);
+
+                        /*
                         const mail = {
                             from: "Folgoni Borsa Company",
                             to: user.email,
@@ -398,6 +410,7 @@ export default {
                                 console.log(res);
                             }
                         });
+                        */
 
                         return {
                             message: "Successfully signed up.",
@@ -408,6 +421,8 @@ export default {
                         throw new AuthenticationError("Unable to create token.");
                     }
                 } catch (err) {
+                    console.log(err);
+
                     res.status(401); // why is it throwing unauthed here?
 
                     if (/duplicate/.test(err.message)) {
@@ -768,7 +783,6 @@ export default {
             if (req.user) {
                 const user = await User.findOne({
                     _id: req.user._id,
-                    isGitHubUser: false,
                     enabled: true,
                 });
 
@@ -781,6 +795,50 @@ export default {
                     };
                 }
 
+                if (user.isGitHubUser) {
+                    // TODO: check if user has already asked for deletion, if so procede with the deletion
+                    const deletionToken = TokenHandler.createAccountDeletionToken(user);
+
+                    if (deletionToken) {
+                        const verification = new UserVerification({
+                            userId: user._id,
+                            token: deletionToken,
+                            pending: true,
+                        });
+
+                        await verification.save();
+
+                        // send deletion email
+                        const mail = {
+                            from: "verification@devsbunker.com",
+                            to: user.email,
+                            subject: "Account deletion",
+                            html: `
+                                <p>To delete your account, follow this link: </p> 
+                                <a
+                                    href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/delete/${verification.userId}/${verification.token}"
+                                    style="color: #067df7; text-decoration: none"
+                                    target="_blank"
+                                    >http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/delete/${verification.userId}/${verification.token}</a
+                                >
+                            `,
+                        };
+
+                        EmailManager.sendEmail(mail);
+
+                        return {
+                            success: true,
+                            message: "Waiting for user interaction",
+                            stacktrace: null,
+                        };
+                    } else {
+                        res.status(422);
+
+                        throw new AuthenticationError("Unable to create token.");
+                    }
+                }
+
+                console.log("bro");
                 const success = await loginValidUser(user, args.password, res);
                 if (!success.accessToken) {
                     res.status(401);

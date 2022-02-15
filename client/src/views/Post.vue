@@ -15,6 +15,7 @@
                 @loadMoreComments="getMoreComments"
             />
         </div>
+        <Loading v-else />
         <NewPostMenu ref="newPostMenu" />
     </div>
 </template>
@@ -26,6 +27,7 @@ import GraphQLService from "../services/graphql.service";
 import PostMobile from "../components/Post/PostMobile.vue";
 import PostDesktop from "../components/Post/PostDesktop.vue";
 import NewPostMenu from "../components/NewPost/NewPost.vue";
+import Loading from "../components/Loading.vue";
 
 export default {
     data() {
@@ -73,7 +75,7 @@ export default {
                 }`,
                 "fetchedAllComments",
             ];
-
+            
             // fetch the post data (start with comment offset of 0)
             const pData = await GraphQLService.fetchPostById(this.$route.params.postid, 0, toFetch, this.$store.getters.accessToken);
             this.postData = pData.data.getPostById;
@@ -153,6 +155,7 @@ export default {
         PostMobile,
         PostDesktop,
         NewPostMenu,
+        Loading,
     },
 };
 </script>

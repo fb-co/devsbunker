@@ -167,7 +167,7 @@ export default gql`
     }
 
     type Mutation {
-        signupUser(username: String!, email: String!, password: String!): UserSignup! @rateLimit(limit: 2, duration: 86400)
+        signupUser(username: String!, email: String!, password: String!): UserSignup! @rateLimit(limit: 5, duration: 86400)
 
         revokeUserSession: Boolean! @rateLimit(limit: 1, duration: 60)
 

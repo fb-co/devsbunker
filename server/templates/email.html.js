@@ -24,7 +24,7 @@ function generateVerificationEmailTemplate(username, userId, token) {
 															<td align="center">
 																<div>
 																	<img
-																		src="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/img/LOGO.a1787424.svg"
+																		src="http://${process.env.HOST}/img/LOGO.a1787424.svg"
 																		alt="devsBunker logo"
 																		width="400"
 																		height="120"
