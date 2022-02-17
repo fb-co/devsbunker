@@ -796,7 +796,43 @@ export default {
                 }
 
                 if (user.isGitHubUser) {
-                    // TODO: check if user has already asked for deletion, if so procede with the deletion
+                    // check if user has already verified its identity
+                    // if im not wrong, we dont need to check what kind of verification this is because GitHub users dont need verification on signup so 100% this is deletion
+                    const alreadyDone = await UserVerification.findOne({
+                        userId: user._id,
+                        pending: false,
+                    });
+
+                    if (alreadyDone) {
+                        try {
+                            // delete the posts
+                            await deletePost(user.username, null);
+
+                            if (!/placeholder/.test(user.profile_pic)) {
+                                // delete profile picture
+                                fh.deleteFiles([`${process.env.UPLOAD_PROFILE_PIC}/${user.profile_pic}`]);
+                            }
+
+                            // delete user
+                            await User.deleteOne({
+                                _id: user._id,
+                            });
+
+                            return {
+                                success: true,
+                                message: "Successfully deleted the account. Bye!",
+                                stacktrace: null,
+                            };
+                        } catch (e) {
+                            console.error(e);
+                            return {
+                                success: false,
+                                message: e.message,
+                                stacktrace: ["deleteAccount function in user.account module", "internal error"],
+                            };
+                        }
+                    }
+
                     const deletionToken = TokenHandler.createAccountDeletionToken(user);
 
                     if (deletionToken) {
@@ -838,7 +874,6 @@ export default {
                     }
                 }
 
-                console.log("bro");
                 const success = await loginValidUser(user, args.password, res);
                 if (!success.accessToken) {
                     res.status(401);

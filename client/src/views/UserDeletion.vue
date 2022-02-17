@@ -3,9 +3,7 @@
         <div class="box">
             <h1>Delete account</h1>
 
-            <p>
-                We are trying to delete your account, wait patiently.
-            </p>
+            <p>We are trying to delete your account, wait patiently.</p>
 
             <div v-if="loading" class="loading">
                 <LoadingGif :show="true" />
@@ -27,7 +25,7 @@
 </template>
 
 <script>
-// import GraphQLService from "../services/graphql.service";
+import GraphQLService from "../services/graphql.service";
 import LoadingGif from "../components/global/LoadingGif.vue";
 
 export default {
@@ -40,7 +38,31 @@ export default {
     },
     async created() {
         if (this.$route.params.userId && this.$route.params.token) {
-            // TODO: call GraphqlService.deleteUserAccount w/o passing in pwd cuz github users dont have one
+            const res = await GraphQLService.verifyUser(this.$route.params.userId, this.$route.params.token);
+
+            this.loading = false;
+            if (res && !res.errors) {
+                if (res.data.verifyUser.success) {
+                    this.success = true;
+
+                    const deletion = await GraphQLService.deleteUserAccount(null, this.$store.getters.accessToken);
+                    console.log(deletion);
+
+                    if (deletion.data.deleteAccount.success === true) {
+                        this.$store.dispatch("alertUser", { msg: deletion.data.deleteAccount.message, type: "success", title: "Done" });
+                        setTimeout(() => {
+                            this.$router.push("/");
+                            window.location.reload();
+                        }, 1500);
+                    } else {
+                        this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.errors[0].message });
+                    }
+                } else {
+                    this.message = res.data.verifyUser.message;
+                }
+            } else {
+                this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.errors[0].message });
+            }
         } else {
             this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: "'userId' and 'token' params are missing." });
         }

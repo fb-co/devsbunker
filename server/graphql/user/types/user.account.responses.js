@@ -183,7 +183,7 @@ export default gql`
 
         setCommonTags(tags: [String]!): [CommonTagsResponse]!
 
-        deleteAccount(password: String!): GeneralActionStatus! @rateLimit(limit: 2, duration: 86400)
+        deleteAccount(password: String): GeneralActionStatus! @rateLimit(limit: 2, duration: 86400)
 
         verifyUser(userId: String!, token: String!): GeneralActionStatus!
     }
