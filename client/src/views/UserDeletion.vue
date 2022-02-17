@@ -16,9 +16,9 @@
             <div v-if="!success && !loading" class="failure">
                 <h3>{{ message }}</h3>
 
-                <div class="btn" v-if="/token/.test(message)">
+                <!--                 <div class="btn" v-if="/token/.test(message)">
                     <p>NEW TOKEN</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -38,11 +38,12 @@ export default {
     },
     async created() {
         if (this.$route.params.userId && this.$route.params.token) {
-            const res = await GraphQLService.verifyUser(this.$route.params.userId, this.$route.params.token);
+            const res = await GraphQLService.verifyUserDeletion(this.$route.params.userId, this.$route.params.token);
+            console.log(res);
 
             this.loading = false;
             if (res && !res.errors) {
-                if (res.data.verifyUser.success) {
+                if (res.data.verifyUserDeletion.success) {
                     this.success = true;
 
                     const deletion = await GraphQLService.deleteUserAccount(null, this.$store.getters.accessToken);
@@ -58,7 +59,7 @@ export default {
                         this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.errors[0].message });
                     }
                 } else {
-                    this.message = res.data.verifyUser.message;
+                    this.message = res.data.verifyUserDeletion.message;
                 }
             } else {
                 this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.errors[0].message });

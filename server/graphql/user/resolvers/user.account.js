@@ -441,7 +441,7 @@ export default {
             if (!args.userId || !args.token) {
                 return {
                     success: false,
-                    message: "Please provide the necessary arguments: userId, email and token",
+                    message: "Please provide the necessary arguments: userId and token",
                 };
             }
 
@@ -493,6 +493,48 @@ export default {
                     };
                 }
             } else {
+                return {
+                    success: false,
+                    message: "Failed to verify user.",
+                };
+            }
+        },
+        verifyUserDeletion: async function (_, args, { res }) {
+            console.log("called");
+            if (!args.userId || !args.token) {
+                return {
+                    success: false,
+                    message: "Please provide the necessary arguments: userId and token",
+                };
+            }
+
+            console.log("match?");
+
+            // using all the fields jus to be sure
+            const match = await UserVerification.findOne({
+                userId: args.userId,
+                token: args.token,
+                pending: true,
+            });
+
+            if (match) {
+                console.log("yes");
+                if (TokenHandler.verifyVerificationToken(match.token)) {
+                    match.pending = false;
+                    match.save();
+
+                    return {
+                        success: true,
+                        message: "Successfully verified user",
+                    };
+                } else {
+                    return {
+                        success: false,
+                        message: "Invalid verification token. You must get a new one.",
+                    };
+                }
+            } else {
+                console.log("NOPE");
                 return {
                     success: false,
                     message: "Failed to verify user.",
@@ -808,10 +850,7 @@ export default {
                             // delete the posts
                             await deletePost(user.username, null);
 
-                            if (!/placeholder/.test(user.profile_pic)) {
-                                // delete profile picture
-                                fh.deleteFiles([`${process.env.UPLOAD_PROFILE_PIC}/${user.profile_pic}`]);
-                            }
+                            // no need to delete profile picture
 
                             // delete user
                             await User.deleteOne({
@@ -842,7 +881,16 @@ export default {
                             pending: true,
                         });
 
-                        await verification.save();
+                        try {
+                            await verification.save();
+                        } catch (err) {
+                            // duplicate key error? --> user has pressed the button even after having requested the deletion
+                            return {
+                                success: false,
+                                message: "You have already asked for deletion!",
+                                stacktrace: null,
+                            };
+                        }
 
                         // send deletion email
                         const mail = {

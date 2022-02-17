@@ -1100,6 +1100,31 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    verifyUserDeletion: async function (userId, token) {
+        const mutation = `
+            mutation {
+                verifyUserDeletion(userId: "${userId}", token: "${token}") {
+                    success
+                    message
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+
+            const json = await res.json();
+
+            return json;
+        } catch (err) {
+            return console.error(err);
+        }
+    },
     deleteUserAccount: async function (password, token) {
         let mutation = undefined;
 

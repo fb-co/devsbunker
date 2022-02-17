@@ -16,9 +16,9 @@
             <div v-if="!success && !loading" class="failure">
                 <h3>{{ message }}</h3>
 
-                <div class="btn" v-if="/token/.test(message)">
+                <!--                 <div class="btn" v-if="/token/.test(message)">
                     <p>NEW TOKEN</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

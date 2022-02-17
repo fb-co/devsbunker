@@ -390,13 +390,13 @@ export default {
 
                         localStorage.removeItem("profile_pic_link");
 
-                        this.$store.dispatch("alertUser", { msg: "Successfully delete account. Redirecting...", type: "success", title: "Done" });
+                        this.$store.dispatch("alertUser", { msg: "Successfully deleted account. Redirecting...", type: "success", title: "Done" });
                         setTimeout(() => {
                             this.$router.push("/");
                         }, 2000);
                     }
                 } else {
-                    this.$store.dispatch("alertUser", { msg: "Something went wrong", type: "error", title: "Error" });
+                    this.$store.dispatch("alertUser", { msg: res.data.deleteAccount.message, type: "error", title: "Error" });
                 }
             } else {
                 this.$store.dispatch("alertUser", { msg: res.errors[0].message, type: "error", title: "Error" });

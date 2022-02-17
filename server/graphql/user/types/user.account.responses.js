@@ -186,5 +186,6 @@ export default gql`
         deleteAccount(password: String): GeneralActionStatus! @rateLimit(limit: 2, duration: 86400)
 
         verifyUser(userId: String!, token: String!): GeneralActionStatus!
+        verifyUserDeletion(userId: String!, token: String!): GeneralActionStatus!
     }
 `;
