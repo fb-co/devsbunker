@@ -349,6 +349,65 @@ export default {
                 throw new Error("Failed to get user from token");
             }
         },
+        askForPasswordReset: async function (_, args, { req }) {
+            if (!args.email) return { success: false, message: "Please specify an email address", stacktrace: null };
+
+            try {
+                const user = await User.findOne({
+                    email: args.email,
+                });
+
+                if (!user) return { success: false, message: "Couldn't find user", stacktrace: null };
+                if (user.isGitHubUser) return { success: false, message: "Can't reset password of an account created via GitHub signup", stacktrace: null };
+
+                // send reset pwd email
+                const token = TokenHandler.createPasswordResetToken(user);
+
+                if (token) {
+                    const verification = new UserVerification({
+                        userId: user._id,
+                        token,
+                        pending: true,
+                    });
+
+                    await verification.save();
+
+                    // send verification email
+                    const mail = {
+                        from: "verification@devsbunker.com",
+                        to: user.email,
+                        subject: "Password reset",
+                        html: `
+                            <p>To reset your password, follow this link: </p> 
+                            <a
+                                href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/delete/${verification.userId}/${verification.token}"
+                                style="color: #067df7; text-decoration: none"
+                                target="_blank"
+                                >http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/delete/${verification.userId}/${verification.token}</a
+                            >
+                        `,
+                    };
+
+                    EmailManager.sendEmail(mail);
+
+                    return {
+                        success: true,
+                        message: "Successfully sent email for password reset",
+                        stacktrace: null,
+                    };
+                } else {
+                    res.status(422);
+
+                    throw new AuthenticationError("Unable to create token.");
+                }
+            } catch (err) {
+                return {
+                    success: false,
+                    message: "Something went wrong.",
+                    stacktrace: null,
+                };
+            }
+        },
     },
 
     Mutation: {
@@ -534,7 +593,6 @@ export default {
                     };
                 }
             } else {
-                console.log("NOPE");
                 return {
                     success: false,
                     message: "Failed to verify user.",

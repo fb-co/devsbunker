@@ -164,6 +164,8 @@ export default gql`
         downloadUserData: downloadableUserData @rateLimit(limit: 2, duration: 86400)
 
         getUserById(id: String!): FetchableUser @rateLimit(limit: 50, duration: 300)
+
+        askForPasswordReset(email: String!): GeneralActionStatus!
     }
 
     type Mutation {
