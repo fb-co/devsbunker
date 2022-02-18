@@ -352,10 +352,16 @@ export default {
                 case 1: {
                     // delete account
                     const res = await GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, ["isGitHubUser"]);
+
                     if (res.errors) {
                         this.$store.dispatch("alertUser", { msg: "Something went wrong, try again later, try again later.", type: "error", title: "Error" });
                     } else {
-                        this.$refs.deleteProfileConfirmation.open();
+                        if (res.data.getPersonalDetails.isGitHubUser) {
+                            // TODO: make this pretty
+                            this.deleteProfile([null]);
+                        } else {
+                            this.$refs.deleteProfileConfirmation.open();
+                        }
                     }
                     break;
                 }
@@ -364,10 +370,18 @@ export default {
         async deleteProfile(payload) {
             const password = payload[0];
 
-            if (password) {
-                const res = await GraphQLService.deleteUserAccount(password, this.$store.getters.accessToken);
-                if (!res.errors) {
-                    if (res.data.deleteAccount.success) {
+            const res = await GraphQLService.deleteUserAccount(password, this.$store.getters.accessToken);
+            console.log(res);
+            if (!res.errors) {
+                if (res.data.deleteAccount.success) {
+                    if (res.data.deleteAccount.message === "Waiting for user interaction") {
+                        // TODO: better popup
+                        this.$store.dispatch("alertUser", {
+                            msg: "Please confirm your identity by following the instructions sent to you via email.",
+                            type: "success",
+                            title: "Done",
+                        });
+                    } else {
                         this.accountDeleted = true;
 
                         this.$store.commit("refreshAccessToken", null);
@@ -376,16 +390,16 @@ export default {
 
                         localStorage.removeItem("profile_pic_link");
 
-                        this.$store.dispatch("alertUser", { msg: "Successfully delete account. Redirecting...", type: "success", title: "Done" });
+                        this.$store.dispatch("alertUser", { msg: "Successfully deleted account. Redirecting...", type: "success", title: "Done" });
                         setTimeout(() => {
                             this.$router.push("/");
                         }, 2000);
-                    } else {
-                        this.$store.dispatch("alertUser", { msg: "Something went wrong", type: "error", title: "Error" });
                     }
                 } else {
-                    this.$store.dispatch("alertUser", { msg: "Incorrect password", type: "error", title: "Error" });
+                    this.$store.dispatch("alertUser", { msg: res.data.deleteAccount.message, type: "error", title: "Error" });
                 }
+            } else {
+                this.$store.dispatch("alertUser", { msg: res.errors[0].message, type: "error", title: "Error" });
             }
         },
 

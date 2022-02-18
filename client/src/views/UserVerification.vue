@@ -3,9 +3,7 @@
         <div class="box">
             <h1>Verify account</h1>
 
-            <p>
-                We are trying to verify your account, wait patiently.
-            </p>
+            <p>We are trying to verify your account, wait patiently.</p>
 
             <div v-if="loading" class="loading">
                 <LoadingGif :show="true" />
@@ -18,9 +16,9 @@
             <div v-if="!success && !loading" class="failure">
                 <h3>{{ message }}</h3>
 
-                <div class="btn" v-if="/token/.test(message)">
+                <!--                 <div class="btn" v-if="/token/.test(message)">
                     <p>NEW TOKEN</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -35,20 +33,19 @@ export default {
         return {
             success: false,
             loading: true,
-            message: null
+            message: null,
         };
     },
     async created() {
         if (this.$route.params.userId && this.$route.params.token) {
             const res = await GraphQLService.verifyUser(this.$route.params.userId, this.$route.params.token);
-            console.log(res);
 
             this.loading = false;
             if (res && !res.errors) {
                 if (res.data.verifyUser.success) {
                     this.success = true;
                     setTimeout(() => {
-                        this.$router.push('/');
+                        this.$router.push("/");
                         window.location.reload();
                     }, 1500);
                 } else {
@@ -62,8 +59,8 @@ export default {
         }
     },
     components: {
-        LoadingGif
-    }
+        LoadingGif,
+    },
 };
 </script>
 
@@ -129,7 +126,7 @@ export default {
     border: 1px solid var(--main-accent);
     background-color: var(--main-accent);
 
-    transition: .5s;
+    transition: 0.5s;
 
     display: flex;
     align-items: center;

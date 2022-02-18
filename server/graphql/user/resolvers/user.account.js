@@ -441,7 +441,7 @@ export default {
             if (!args.userId || !args.token) {
                 return {
                     success: false,
-                    message: "Please provide the necessary arguments: userId, email and token",
+                    message: "Please provide the necessary arguments: userId and token",
                 };
             }
 
@@ -493,6 +493,48 @@ export default {
                     };
                 }
             } else {
+                return {
+                    success: false,
+                    message: "Failed to verify user.",
+                };
+            }
+        },
+        verifyUserDeletion: async function (_, args, { res }) {
+            console.log("called");
+            if (!args.userId || !args.token) {
+                return {
+                    success: false,
+                    message: "Please provide the necessary arguments: userId and token",
+                };
+            }
+
+            console.log("match?");
+
+            // using all the fields jus to be sure
+            const match = await UserVerification.findOne({
+                userId: args.userId,
+                token: args.token,
+                pending: true,
+            });
+
+            if (match) {
+                console.log("yes");
+                if (TokenHandler.verifyVerificationToken(match.token)) {
+                    match.pending = false;
+                    match.save();
+
+                    return {
+                        success: true,
+                        message: "Successfully verified user",
+                    };
+                } else {
+                    return {
+                        success: false,
+                        message: "Invalid verification token. You must get a new one.",
+                    };
+                }
+            } else {
+                console.log("NOPE");
                 return {
                     success: false,
                     message: "Failed to verify user.",
@@ -796,7 +838,40 @@ export default {
                 }
 
                 if (user.isGitHubUser) {
-                    // TODO: check if user has already asked for deletion, if so procede with the deletion
+                    // check if user has already verified its identity
+                    // if im not wrong, we dont need to check what kind of verification this is because GitHub users dont need verification on signup so 100% this is deletion
+                    const alreadyDone = await UserVerification.findOne({
+                        userId: user._id,
+                        pending: false,
+                    });
+
+                    if (alreadyDone) {
+                        try {
+                            // delete the posts
+                            await deletePost(user.username, null);
+
+                            // no need to delete profile picture
+
+                            // delete user
+                            await User.deleteOne({
+                                _id: user._id,
+                            });
+
+                            return {
+                                success: true,
+                                message: "Successfully deleted the account. Bye!",
+                                stacktrace: null,
+                            };
+                        } catch (e) {
+                            console.error(e);
+                            return {
+                                success: false,
+                                message: e.message,
+                                stacktrace: ["deleteAccount function in user.account module", "internal error"],
+                            };
+                        }
+                    }
+
                     const deletionToken = TokenHandler.createAccountDeletionToken(user);
 
                     if (deletionToken) {
@@ -806,7 +881,16 @@ export default {
                             pending: true,
                         });
 
-                        await verification.save();
+                        try {
+                            await verification.save();
+                        } catch (err) {
+                            // duplicate key error? --> user has pressed the button even after having requested the deletion
+                            return {
+                                success: false,
+                                message: "You have already asked for deletion!",
+                                stacktrace: null,
+                            };
+                        }
 
                         // send deletion email
                         const mail = {
@@ -838,7 +922,6 @@ export default {
                     }
                 }
 
-                console.log("bro");
                 const success = await loginValidUser(user, args.password, res);
                 if (!success.accessToken) {
                     res.status(401);
