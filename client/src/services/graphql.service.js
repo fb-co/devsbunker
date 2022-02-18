@@ -1194,6 +1194,32 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    askForPasswordReset: async function (email) {
+        const query = `
+            query {
+                askForPasswordReset(email: "${email}") {
+                    success
+                    message
+                    stacktrace
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
 };
 
 export default GraphQLService;

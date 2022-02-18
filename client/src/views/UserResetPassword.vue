@@ -25,6 +25,7 @@
 
 <script>
 import SpicyInput from "@/components/global/SpicyInput.vue";
+import GraphQLService from "@/services/graphql.service.js";
 
 export default {
     data() {
@@ -34,14 +35,15 @@ export default {
         };
     },
     methods: {
-        resetPassword() {
+        async resetPassword() {
             if (!this.email0 || !this.email1) {
                 this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: "Please fill in the fields." });
             } else {
                 if (this.email0 !== this.email1) {
                     this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: "Email addresses don't match!" });
                 } else {
-                    console.log("TODO");
+                    const res = await GraphQLService.askForPasswordReset(this.email0);
+                    console.log(res);
                 }
             }
         },

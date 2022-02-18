@@ -380,10 +380,10 @@ export default {
                         html: `
                             <p>To reset your password, follow this link: </p> 
                             <a
-                                href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/delete/${verification.userId}/${verification.token}"
+                                href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}"
                                 style="color: #067df7; text-decoration: none"
                                 target="_blank"
-                                >http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/delete/${verification.userId}/${verification.token}</a
+                                >http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}</a
                             >
                         `,
                     };
