@@ -1220,6 +1220,33 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    resetPassword: async function (password, userId, token) {
+        console.log(password, userId, token);
+        const mutation = `
+            mutation {
+                resetPassword(password: "${password}", userId: "${userId}", token: "${token}") {
+                    success
+                    message
+                    stacktrace
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
 };
 
 export default GraphQLService;

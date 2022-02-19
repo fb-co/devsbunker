@@ -41,6 +41,11 @@ const routes = [
         component: () => import("../views/UserResetPassword.vue"),
     },
     {
+        path: "/user/reset-password/exec/:userId/:token",
+        name: "UserResetPasswordExec",
+        component: () => import("../views/UserResetPasswordExec.vue"),
+    },
+    {
         path: "/about",
         name: "About",
         component: () => import("../views/About.vue"),

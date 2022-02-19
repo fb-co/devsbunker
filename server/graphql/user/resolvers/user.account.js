@@ -560,15 +560,12 @@ export default {
             }
         },
         verifyUserDeletion: async function (_, args, { res }) {
-            console.log("called");
             if (!args.userId || !args.token) {
                 return {
                     success: false,
                     message: "Please provide the necessary arguments: userId and token",
                 };
             }
-
-            console.log("match?");
 
             // using all the fields jus to be sure
             const match = await UserVerification.findOne({
@@ -578,7 +575,6 @@ export default {
             });
 
             if (match) {
-                console.log("yes");
                 if (TokenHandler.verifyVerificationToken(match.token)) {
                     match.pending = false;
                     match.save();
@@ -1021,6 +1017,80 @@ export default {
             } else {
                 res.status(401);
                 throw new Error("Unauthorized");
+            }
+        },
+        resetPassword: async function (_, args, { req }) {
+            if (!args.userId || !args.token) {
+                return {
+                    success: false,
+                    message: "Please provide the necessary arguments: userId and token",
+                };
+            }
+
+            // using all the fields jus to be sure
+            const match = await UserVerification.findOne({
+                userId: args.userId,
+                token: args.token,
+                pending: true,
+            });
+
+            if (match) {
+                if (TokenHandler.verifyVerificationToken(match.token)) {
+                    // get user
+                    const user = await User.findOne({
+                        _id: match.userId,
+                    });
+
+                    if (user) {
+                        // im lazy so im re-validating everything
+                        if (validateCreds({ username: user.username, email: user.email, password: args.password })) {
+                            try {
+                                // hash password
+                                const hashedPass = await bcrypt.hash(args.password, 10);
+                                user.password = hashedPass;
+
+                                await user.save();
+
+                                match.pending = false;
+                                match.save();
+                                return {
+                                    success: true,
+                                    message: "Successfully reset password",
+                                };
+                            } catch (err) {
+                                console.log(err);
+
+                                return {
+                                    success: false,
+                                    message: err.message,
+                                    stacktrace: null,
+                                };
+                            }
+                        } else {
+                            return {
+                                success: false,
+                                message: "Invalid password!",
+                                stacktrace: null,
+                            };
+                        }
+                    } else {
+                        return {
+                            success: false,
+                            message: "Fatal: couldn't find user!",
+                            stacktrace: null,
+                        };
+                    }
+                } else {
+                    return {
+                        success: false,
+                        message: "Invalid verification token. You must get a new one.",
+                    };
+                }
+            } else {
+                return {
+                    success: false,
+                    message: "Failed to reset password.",
+                };
             }
         },
     },
