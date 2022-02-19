@@ -401,9 +401,10 @@ export default {
                     throw new AuthenticationError("Unable to create token.");
                 }
             } catch (err) {
+                console.log(err.message);
                 return {
                     success: false,
-                    message: "Something went wrong.",
+                    message: /\bduplicate\b/.test(err.message) ? "You have already asked for a password reset!" : "Something went wrong.",
                     stacktrace: null,
                 };
             }

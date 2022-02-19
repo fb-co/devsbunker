@@ -44,6 +44,14 @@ export default {
                 } else {
                     const res = await GraphQLService.askForPasswordReset(this.email0);
                     console.log(res);
+                    if (res.data.askForPasswordReset.success) {
+                        this.$store.dispatch("alertUser", { msg: "An email has been sent to you", type: "success", title: "Success" });
+                        setTimeout(() => {
+                            this.$router.push("/");
+                        }, 1000);
+                    } else {
+                        this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.data.askForPasswordReset.message });
+                    }
                 }
             }
         },
