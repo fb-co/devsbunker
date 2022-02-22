@@ -444,33 +444,7 @@ export default {
 
                         await verification.save();
 
-                        // send verification email
-                        const mail = {
-                            from: "verification@devsbunker.com",
-                            to: user.email,
-                            subject: "Account verification",
-                            html: generateVerificationEmailTemplate(user.username, verification.userId, verification.token),
-                        };
-
-                        EmailManager.sendEmail(mail);
-
-                        /*
-                        const mail = {
-                            from: "Folgoni Borsa Company",
-                            to: user.email,
-                            subject: "Account verification",
-                            html: generateVerificationEmailTemplate(user.username, verification.userId, verification.token),
-                        };
-
-                        // todo: decide what to do if we get an error/success
-                        Transporter.sendMail(mail, function (err, res) {
-                            if (err) {
-                                console.error(err);
-                            } else {
-                                console.log(res);
-                            }
-                        });
-                        */
+                        EmailManager.sendAccountVerificationEmail(user, verification);
 
                         return {
                             message: "Successfully signed up.",
@@ -483,7 +457,7 @@ export default {
                 } catch (err) {
                     console.log(err);
 
-                    res.status(401); // why is it throwing unauthed here?
+                    res.status(401); 
 
                     if (/duplicate/.test(err.message)) {
                         throw new AuthenticationError("Credentials are already taken.");

@@ -59,7 +59,6 @@ class TokenHandler {
                 expiresIn: "1d",
             });
         } catch (e) {
-            console.log(e);
             return undefined;
         }
     }
@@ -75,7 +74,6 @@ class TokenHandler {
                 expiresIn: "1d",
             });
         } catch (e) {
-            console.log(e);
             return undefined;
         }
     }
