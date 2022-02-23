@@ -12,6 +12,8 @@
                 :loaded="loaded"
             />
             <NewPost ref="newPostMenu" @updateFeed="updateFeed($event)" />
+
+            <EmailVerificationPopup ref="email_verification" />
         </div>
     </div>
 </template>
@@ -27,6 +29,8 @@ import NewPost from "@/components/NewPost/NewPost.vue";
 import LoadMorePosts from "@/mixins/load_more_posts.mixin";
 import LoadMoreMixin from "@/mixins/load_more.mixin";
 
+import EmailVerificationPopup from "@/components/Popups/EmailVerificationPopup.vue";
+
 export default {
     data() {
         return {
@@ -41,6 +45,14 @@ export default {
     watch: {
         loggedInState: function() {
             this.changeFeedType("all", "Newest");
+        }
+    },
+    mounted() {
+        // if the redirect came from the signup page and contains a user_id, bring the email verification popup
+        if (this.$route.params.user_id) {
+
+        } else {
+            this.$refs.email_verification.open();
         }
     },
     async created() {
@@ -70,6 +82,7 @@ export default {
         HomeMobile,
         HomeDesktop,
         NewPost,
+        EmailVerificationPopup,
     },
     
     methods: {

@@ -15,6 +15,7 @@ export default gql`
 
     type UserSignup {
         message: String!
+        user_id: String!
     }
 
     type Notification {
@@ -185,7 +186,7 @@ export default gql`
 
         setCommonTags(tags: [String]!): [CommonTagsResponse]!
 
-        deleteAccount(password: String): GeneralActionStatus! @rateLimit(limit: 2, duration: 86400)
+        deleteAccount(password: String): GeneralActionStatus! @rateLimit(limit: 10, duration: 86400)
 
         verifyUser(userId: String!, token: String!): GeneralActionStatus!
 

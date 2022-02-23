@@ -447,7 +447,8 @@ export default {
                         EmailManager.sendAccountVerificationEmail(user, verification);
 
                         return {
-                            message: "Successfully signed up.",
+                            message: "Success",
+                            user_id: user._id,
                         };
                     } else {
                         res.status(422);

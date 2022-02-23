@@ -966,6 +966,7 @@ const GraphQLService = {
             mutation {
                 signupUser(username: "${username}", email: "${email}", password: "${password}") {
                     message
+                    user_id
                 }
             }
         `;
