@@ -145,10 +145,11 @@ export default {
             if (this.username == undefined) {
                 console.log(this.username);
                 console.log(this.$parent);
-            }     
+            }
 
             const callAPI = () => {
                 GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
+                    console.log(obj.data.user.profile_pic);
                     if (obj.data.user.profile_pic) {
                         if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
                             this.default_image = true;

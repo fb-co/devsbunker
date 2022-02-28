@@ -9,7 +9,7 @@ const CacheService = {
     cacheName: "devsCache",
 
     // cache support is pushed into the store on refresh, but ill leave this in case we need it for some reason
-    checkIfCacheIsSupported: function() {
+    checkIfCacheIsSupported: function () {
         return "caches" in window;
     },
     /*
@@ -42,35 +42,3 @@ const CacheService = {
 };
 
 export default CacheService;
-
-
-/* FOR REFRENCE
-// CACHE TEST!!!
-            let isCacheSupported = "caches" in window;
-            console.log("is cache supported:", isCacheSupported);
-            if (isCacheSupported) {
-                //let cacheName = "devsCache";
-                // just caching a google req
-
-                const query = `
-                    query {
-                        user(username: "TheJak") {
-                            email
-                            liked_posts
-                        }
-                    }
-                `;
-
-                fetch("http://localhost:5000/graphql", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ query }),
-                }).then(async (res) => {
-                    const cache = await caches.open("devsCache");
-                    cache.put("http://localhost:5000/graphql", res);
-                    cache.match("http://localhost:5000/graphql").then((result) => {
-                        console.log("[CACHE] ", result.json());
-                    });
-                });
-            }
-            */

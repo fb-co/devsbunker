@@ -1,19 +1,11 @@
 <template>
     <div>
         <div class="home">
-            <HomeMobile
-                v-if="$store.getters.mobile"
-                @updateFilterDropdown="updateFilterDropdown"
-                :loaded="loaded"
-            />
-            <HomeDesktop
-                v-if="!$store.getters.mobile"
-                @updateFilterDropdown="updateFilterDropdown"
-                :loaded="loaded"
-            />
+            <HomeMobile v-if="$store.getters.mobile" @updateFilterDropdown="updateFilterDropdown" :loaded="loaded" />
+            <HomeDesktop v-if="!$store.getters.mobile" @updateFilterDropdown="updateFilterDropdown" :loaded="loaded" />
             <NewPost ref="newPostMenu" @updateFeed="updateFeed($event)" />
 
-            <EmailVerificationPopup ref="email_verification" />
+            <EmailVerificationPopup ref="email_verification" v-if="open" />
         </div>
     </div>
 </template>
@@ -35,22 +27,23 @@ export default {
     data() {
         return {
             loaded: true,
+            open: false, // tmp thing cuz jack didnt add the close X
         };
     },
     computed: {
         loggedInState() {
             return !this.$store.getters.isLoggedIn;
-        }
+        },
     },
     watch: {
-        loggedInState: function() {
+        loggedInState: function () {
             this.changeFeedType("all", "Newest");
-        }
+        },
     },
     mounted() {
         // if the redirect came from the signup page and contains a user_id, bring the email verification popup
         if (this.$route.params.user_id) {
-
+            console.log("todo");
         } else {
             this.$refs.email_verification.open();
         }
@@ -64,17 +57,10 @@ export default {
             this.queryType = "all";
             this.sortingType = "Newest";
         }
-            
+
         this.getPosts();
 
         SharedMethods.loadPage();
-        
-        /*
-        const cache = await caches.open("devsCache");
-        cache.match("http://localhost:5000/graphql").then((result) => {
-            console.log("[CACHE] ", result.json());
-        });
-        */
     },
 
     mixins: [GeneralProperties, LoadMorePosts, LoadMoreMixin],
@@ -84,7 +70,7 @@ export default {
         NewPost,
         EmailVerificationPopup,
     },
-    
+
     methods: {
         openPostMenu() {
             this.$refs.newPostMenu.open();
