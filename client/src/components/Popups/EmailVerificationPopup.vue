@@ -2,7 +2,13 @@
     <div v-if="isOpen" class="backdrop">
         <div @click.stop="" class="popup_container">
             <div class="header">
+                <svg @click="close()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x close_btn" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
                 <p class="title">Email Confirmation</p>
+                <div class="header_placeholder" />
             </div>
 
             <p>We have sent you an email with a link to verify your account. Please do so to begin using DevsBunker.</p>
@@ -90,7 +96,7 @@
 export default {
     data() {
         return {
-            isOpen: false,
+            isOpen: true,
             isResending: false,
         }
     },
@@ -130,10 +136,21 @@ export default {
     max-width: 400px;
 }
 
+.header {
+    display: flex;
+    margin-bottom: 30px;
+}
 .title {
     font-weight: bold;
     font-size: 24px;
     margin-bottom: 20px;
+    margin: 0 auto;
+}
+.header_placeholder {
+    width: 30px;
+}
+.close_btn:hover {
+    stroke-width: 2.3px;
 }
 
 .resend_btn {

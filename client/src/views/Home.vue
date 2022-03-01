@@ -5,7 +5,7 @@
             <HomeDesktop v-if="!$store.getters.mobile" @updateFilterDropdown="updateFilterDropdown" :loaded="loaded" />
             <NewPost ref="newPostMenu" @updateFeed="updateFeed($event)" />
 
-            <EmailVerificationPopup ref="email_verification" v-if="open" />
+            <EmailVerificationPopup ref="email_verification" />
         </div>
     </div>
 </template>
@@ -27,7 +27,6 @@ export default {
     data() {
         return {
             loaded: true,
-            open: false, // tmp thing cuz jack didnt add the close X
         };
     },
     computed: {
