@@ -93,22 +93,35 @@
 </template>
 
 <script>
+import GraphQLService from "../../services/graphql.service.js";
+
 export default {
     data() {
         return {
-            isOpen: true,
+            isOpen: false,
             isResending: false,
+            user_id: undefined,
         }
     },
     methods: {
-        open() {
+        open(user_id) {
+            this.user_id = user_id;
             this.isOpen = true;
         },
         close() {
             this.isOpen = false;
         },
-        resendEmail() {
+        async resendEmail() {
             this.isResending = true;
+            const res = await GraphQLService.resendAccountVerificationEmail(this.user_id);
+
+            if (res.data.resendAccountVerificationEmail.success) {
+                this.$store.dispatch("alertUser", { title: "Success", type: "success", msg: 'Email Resent' });
+                this.isResending = false;
+            } else {
+                this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: 'Something went wrong' });
+                this.isResending = false;
+            }
         }
     },
 }

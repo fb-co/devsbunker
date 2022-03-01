@@ -42,9 +42,7 @@ export default {
     mounted() {
         // if the redirect came from the signup page and contains a user_id, bring the email verification popup
         if (this.$route.params.user_id) {
-            console.log("todo");
-        } else {
-            this.$refs.email_verification.open();
+            this.$refs.email_verification.open(this.$route.params.user_id);
         }
     },
     async created() {

@@ -16,6 +16,16 @@ const verificationSchema = new mongoose.Schema(
             required: true,
             default: true,
         },
+        corresponding_email: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        corresponding_username: {
+            type: String,
+            required: true,
+            unique: true,
+        }
     },
     {
         timestamps: true,

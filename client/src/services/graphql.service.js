@@ -1221,8 +1221,31 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    resendAccountVerificationEmail: async function (userId) {
+        const query = `
+            query {
+                resendAccountVerificationEmail(user_id: "${userId}") {
+                    success
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ query: query }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
     resetPassword: async function (password, userId, token) {
-        console.log(password, userId, token);
         const mutation = `
             mutation {
                 resetPassword(password: "${password}", userId: "${userId}", token: "${token}") {

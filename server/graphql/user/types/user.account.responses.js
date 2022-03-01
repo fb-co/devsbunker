@@ -134,6 +134,10 @@ export default gql`
         interactions: Int!
         manuallyAdded: Boolean!
     }
+    type emailResend {
+        success: Boolean!
+        message: String
+    }
 
     input TagRequest {
         tag: String!
@@ -167,6 +171,8 @@ export default gql`
         getUserById(id: String!): FetchableUser @rateLimit(limit: 50, duration: 300)
 
         askForPasswordReset(email: String!): GeneralActionStatus!
+
+        resendAccountVerificationEmail(user_id: String!): emailResend!
     }
 
     type Mutation {

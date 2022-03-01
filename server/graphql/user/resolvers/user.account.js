@@ -401,7 +401,6 @@ export default {
                     throw new AuthenticationError("Unable to create token.");
                 }
             } catch (err) {
-                console.log(err.message);
                 return {
                     success: false,
                     message: /\bduplicate\b/.test(err.message) ? "You have already asked for a password reset!" : "Something went wrong.",
@@ -409,6 +408,23 @@ export default {
                 };
             }
         },
+        resendAccountVerificationEmail: async function(_, args, { req }) {
+            try {
+                const res = await EmailManager.resendAccountVerificationEmail(args.user_id);
+
+                if (res.message === 'Queued. Thank you.') { // TODO think about a better way to do this check in case this phrase ever gets changed by mailgun
+                    return {
+                        success: true,
+                        message: "Email Resent!",
+                    }
+                }
+            } catch (err) {
+                return {
+                    success: false,
+                    message: err.message,
+                }
+            }
+        }
     },
 
     Mutation: {
@@ -439,6 +455,8 @@ export default {
                         const verification = new UserVerification({
                             userId: user._id,
                             token: verificationToken,
+                            corresponding_email: user.email,
+                            corresponding_username: user.username,
                             pending: true,
                         });
 
