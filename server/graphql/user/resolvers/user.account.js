@@ -366,6 +366,8 @@ export default {
                 if (token) {
                     const verification = new UserVerification({
                         userId: user._id,
+                        corresponding_username: user.username,
+                        corresponding_email: user.email,
                         token,
                         pending: true,
                     });
