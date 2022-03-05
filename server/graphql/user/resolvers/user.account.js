@@ -370,7 +370,10 @@ export default {
                         corresponding_email: user.email,
                         token,
                         pending: true,
+                        type: "reset_pwd",
                     });
+
+                    console.log(verification);
 
                     await verification.save();
 
@@ -403,6 +406,7 @@ export default {
                     throw new AuthenticationError("Unable to create token.");
                 }
             } catch (err) {
+                console.log(err);
                 return {
                     success: false,
                     message: /\bduplicate\b/.test(err.message) ? "You have already asked for a password reset!" : "Something went wrong.",
@@ -410,23 +414,24 @@ export default {
                 };
             }
         },
-        resendAccountVerificationEmail: async function(_, args, { req }) {
+        resendAccountVerificationEmail: async function (_, args, { req }) {
             try {
                 const res = await EmailManager.resendAccountVerificationEmail(args.user_id);
 
-                if (res.message === 'Queued. Thank you.') { // TODO think about a better way to do this check in case this phrase ever gets changed by mailgun
+                if (res.message === "Queued. Thank you.") {
+                    // TODO think about a better way to do this check in case this phrase ever gets changed by mailgun
                     return {
                         success: true,
                         message: "Email Resent!",
-                    }
+                    };
                 }
             } catch (err) {
                 return {
                     success: false,
                     message: err.message,
-                }
+                };
             }
-        }
+        },
     },
 
     Mutation: {
@@ -460,6 +465,7 @@ export default {
                             corresponding_email: user.email,
                             corresponding_username: user.username,
                             pending: true,
+                            type: "verify",
                         });
 
                         await verification.save();
@@ -478,7 +484,7 @@ export default {
                 } catch (err) {
                     console.log(err);
 
-                    res.status(401); 
+                    res.status(401);
 
                     if (/duplicate/.test(err.message)) {
                         throw new AuthenticationError("Credentials are already taken.");
@@ -505,6 +511,7 @@ export default {
                 userId: args.userId,
                 token: args.token,
                 pending: true,
+                type: "verify",
             });
 
             if (match) {
@@ -567,6 +574,7 @@ export default {
                 userId: args.userId,
                 token: args.token,
                 pending: true,
+                type: "deletion",
             });
 
             if (match) {
@@ -893,6 +901,7 @@ export default {
                     const alreadyDone = await UserVerification.findOne({
                         userId: user._id,
                         pending: false,
+                        type: "deletion",
                     });
 
                     if (alreadyDone) {
@@ -928,12 +937,17 @@ export default {
                         const verification = new UserVerification({
                             userId: user._id,
                             token: deletionToken,
+                            corresponding_email: user.email,
+                            corresponding_username: user.username,
                             pending: true,
+                            type: "deletion",
                         });
 
+                        console.log(verification);
                         try {
                             await verification.save();
                         } catch (err) {
+                            console.log(err);
                             // duplicate key error? --> user has pressed the button even after having requested the deletion
                             return {
                                 success: false,
@@ -1027,6 +1041,7 @@ export default {
                 userId: args.userId,
                 token: args.token,
                 pending: true,
+                type: "reset_pwd",
             });
 
             if (match) {

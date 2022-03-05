@@ -15,7 +15,6 @@ const EmailManager = {
         return await MailGunModule.messages.create(domain, email_data);
     },
 
-    
     // common essential emails
 
     sendAccountVerificationEmail: async function (user, verification) {
@@ -30,7 +29,7 @@ const EmailManager = {
     },
     // sends another verification email to a user only if there is already a verification document in the database
     resendAccountVerificationEmail: async function (user_id) {
-        const verification = await UserVerification.findOne({ userId: user_id });
+        const verification = await UserVerification.findOne({ userId: user_id, type: "verify" });
 
         if (verification) {
             const mail = {
@@ -47,7 +46,7 @@ const EmailManager = {
                 message: "Failed to resend verification",
             };
         }
-    }
+    },
 };
 
 export default EmailManager;

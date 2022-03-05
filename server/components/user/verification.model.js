@@ -19,13 +19,19 @@ const verificationSchema = new mongoose.Schema(
         corresponding_email: {
             type: String,
             required: true,
-            unique: true,
         },
         corresponding_username: {
             type: String,
             required: true,
-            unique: true,
-        }
+        },
+        // can be:
+        //  - reset_pwd
+        //  - deletion
+        //  - verify
+        type: {
+            type: String,
+            required: true,
+        },
     },
     {
         timestamps: true,
