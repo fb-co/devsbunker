@@ -373,8 +373,6 @@ export default {
                         type: "reset_pwd",
                     });
 
-                    console.log(verification);
-
                     await verification.save();
 
                     // send verification email
