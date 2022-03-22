@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import GraphQLService from "../services/graphql.service";
+import GraphQLUserService from "../services/graphql/gql.user.service.js";
 import Languages from "../templates/Languages.js";
 
 export default {
@@ -88,7 +88,7 @@ export default {
                             if (this.$refs.input_ref.value != "") {
                                 // use different queries to search for different items based on 'searchFor'
                                 if (this.searchFor === "users") {
-                                    GraphQLService.fetchUserByPartial(this.$refs.input_ref.value, "Most Popular", 0, -1, ["username"]).then((res) => {
+                                    GraphQLUserService.fetchUserByPartial(this.$refs.input_ref.value, "Most Popular", 0, -1, ["username"]).then((res) => {
                                         this.documents = res.data.partialUser.users;
                                     });
                                 }
