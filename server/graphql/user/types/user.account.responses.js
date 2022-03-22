@@ -3,6 +3,7 @@ const { gql } = ApolloServer;
 
 export default gql`
     type GeneralActionStatus {
+        userId: String
         success: Boolean!
         message: String
         stacktrace: [String]
@@ -171,6 +172,8 @@ export default gql`
         getUserById(id: String!): FetchableUser @rateLimit(limit: 50, duration: 300)
 
         askForPasswordReset(email: String!): GeneralActionStatus!
+
+        resendAskForPasswordReset(user_id: String!): GeneralActionStatus!
 
         resendAccountVerificationEmail(user_id: String!): emailResend!
     }

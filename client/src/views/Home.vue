@@ -42,7 +42,15 @@ export default {
     mounted() {
         // if the redirect came from the signup page and contains a user_id, bring the email verification popup
         if (this.$route.params.user_id) {
-            this.$refs.email_verification.open(this.$route.params.user_id);
+            let message;
+
+            if (this.$route.params.type === "verify_account") {
+                message = "We have sent you an email with a link to verify your account. Please do so to begin using DevsBunker.";
+            } else if (this.$route.params.type === "reset_pwd") {
+                message = "We have send you an email with a link to reset your password.";
+            }
+
+            this.$refs.email_verification.open(this.$route.params.user_id, message, this.$route.params.type);
         }
     },
     async created() {

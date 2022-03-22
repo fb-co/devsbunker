@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import SharedMethods from "../utils/shared";
 import GraphQLService from "../services/graphql.service";
 import LoadingGif from "../components/global/LoadingGif.vue";
 import SpicyInput from "@/components/global/SpicyInput.vue";
@@ -50,6 +51,9 @@ export default {
             pwd0: null,
             pwd1: null,
         };
+    },
+    created() {
+        SharedMethods.loadPage();
     },
     methods: {
         async resetPassword() {

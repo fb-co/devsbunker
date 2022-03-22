@@ -47,6 +47,54 @@ const EmailManager = {
             };
         }
     },
+
+    askForPasswordReset: async function (user, verification) {
+        // send verification email
+        const mail = {
+            from: "password_reset@devsbunker.com",
+            to: user.email,
+            subject: "Password reset",
+            html: `
+                <p>To reset your password, follow this link: </p> 
+                <a
+                    href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}"
+                    style="color: #067df7; text-decoration: none"
+                    target="_blank"
+                    >http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}</a
+                >
+            `,
+        };
+
+        return await this.sendEmail(mail);
+    },
+
+    resendAskForPasswordReset: async function (user_id) {
+        const verification = await UserVerification.findOne({ userId: user_id, type: "reset_pwd" });
+
+        if (verification) {
+            const mail = {
+                from: "password_reset@devsbunker.com",
+                to: verification.corresponding_email,
+                subject: "Password reset",
+                html: `
+                    <p>To reset your password, follow this link: </p> 
+                    <a
+                        href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}"
+                        style="color: #067df7; text-decoration: none"
+                        target="_blank"
+                        >http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}</a
+                    >
+                `,
+            };
+
+            return await this.sendEmail(mail);
+        } else {
+            return {
+                success: false,
+                message: "Failed to resend verification",
+            };
+        }
+    }
 };
 
 export default EmailManager;

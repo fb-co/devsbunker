@@ -11,7 +11,7 @@
                 <div class="header_placeholder" />
             </div>
 
-            <p>We have sent you an email with a link to verify your account. Please do so to begin using DevsBunker.</p>
+            <p>{{ message }}</p>
             
             <p style="margin-top: 20px; margin-bottom: 20px;">Didn't get an email? Check spam or press resend.</p>
             <button @click="resendEmail()" class="general_button resend_btn">Resend</button>
@@ -101,25 +101,46 @@ export default {
             isOpen: false,
             isResending: false,
             user_id: undefined,
+
+            message: "We have sent you an email with a link to verify your account. Please do so to begin using DevsBunker.",
+            type: "verify_account",
         }
     },
     methods: {
-        open(user_id) {
+        open(user_id, message, type) {
             this.user_id = user_id;
             this.isOpen = true;
+
+            this.message = message;
+            this.type = type;
         },
         close() {
             this.isOpen = false;
         },
         async resendEmail() {
             this.isResending = true;
-            const res = await GraphQLService.resendAccountVerificationEmail(this.user_id);
 
-            if (res.data.resendAccountVerificationEmail.success) {
-                this.$store.dispatch("alertUser", { title: "Success", type: "success", msg: 'Email Resent' });
-                this.isResending = false;
+            if (this.type === 'verify_account') {
+                const res = await GraphQLService.resendAccountVerificationEmail(this.user_id);
+
+                if (res.data.resendAccountVerificationEmail.success) {
+                    this.$store.dispatch("alertUser", { title: "Success", type: "success", msg: 'Email Resent' });
+                    this.isResending = false;
+                } else {
+                    this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: 'Something went wrong' });
+                    this.isResending = false;
+                }
+            } else if (this.type === 'reset_pwd') {
+                const res = await GraphQLService.resendAskForPasswordReset(this.user_id);
+                
+                if (res.data.resendAskForPasswordReset.success) {
+                    this.$store.dispatch("alertUser", { title: "Success", type: "success", msg: 'Email Resent' });
+                    this.isResending = false;
+                } else {
+                    this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: 'Something went wrong' });
+                    this.isResending = false;
+                }
             } else {
-                this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: 'Something went wrong' });
                 this.isResending = false;
             }
         }

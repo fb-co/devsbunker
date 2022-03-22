@@ -375,25 +375,10 @@ export default {
 
                     await verification.save();
 
-                    // send verification email
-                    const mail = {
-                        from: "verification@devsbunker.com",
-                        to: user.email,
-                        subject: "Password reset",
-                        html: `
-                            <p>To reset your password, follow this link: </p> 
-                            <a
-                                href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}"
-                                style="color: #067df7; text-decoration: none"
-                                target="_blank"
-                                >http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}</a
-                            >
-                        `,
-                    };
-
-                    EmailManager.sendEmail(mail);
+                    EmailManager.askForPasswordReset(user, verification);
 
                     return {
+                        userId: user._id,
                         success: true,
                         message: "Successfully sent email for password reset",
                         stacktrace: null,
@@ -404,7 +389,25 @@ export default {
                     throw new AuthenticationError("Unable to create token.");
                 }
             } catch (err) {
-                console.log(err);
+                return {
+                    success: false,
+                    message: /\bduplicate\b/.test(err.message) ? "You have already asked for a password reset!" : "Something went wrong.",
+                    stacktrace: null,
+                };
+            }
+        },
+        resendAskForPasswordReset: async function (_, args, { req }) {
+            try {  
+                const res = await EmailManager.resendAskForPasswordReset(args.user_id);
+                
+                if (res.message === "Queued. Thank you.") {
+                    // TODO think about a better way to do this check in case this phrase ever gets changed by mailgun
+                    return {
+                        success: true,
+                        message: "Email Resent!",
+                    };
+                }
+            } catch (err) {
                 return {
                     success: false,
                     message: /\bduplicate\b/.test(err.message) ? "You have already asked for a password reset!" : "Something went wrong.",

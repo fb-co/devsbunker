@@ -376,7 +376,7 @@ export default {
                             }, 1500);
                         } else {
                             this.errMessage = "";
-                            this.$router.push({ name: "Home", params: { user_id: result.user_id } });
+                            this.$router.push({ name: "Home", params: { user_id: result.user_id, type: "verify_account" } });
                         }
                     }
                 } else {

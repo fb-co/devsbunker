@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import SharedMethods from "../utils/shared";
 import SpicyInput from "@/components/global/SpicyInput.vue";
 import GraphQLService from "@/services/graphql.service.js";
 
@@ -34,6 +35,9 @@ export default {
             email1: null,
         };
     },
+    created() {
+        SharedMethods.loadPage();
+    },
     methods: {
         async resetPassword() {
             if (!this.email0 || !this.email1) {
@@ -43,11 +47,11 @@ export default {
                     this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: "Email addresses don't match!" });
                 } else {
                     const res = await GraphQLService.askForPasswordReset(this.email0);
-                    console.log(res);
+
                     if (res.data.askForPasswordReset.success) {
                         this.$store.dispatch("alertUser", { msg: "An email has been sent to you", type: "success", title: "Success" });
                         setTimeout(() => {
-                            this.$router.push("/");
+                            this.$router.push({ name: "Home", params: { user_id: res.data.askForPasswordReset.userId, type: "reset_pwd" } });
                         }, 1000);
                     } else {
                         this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.data.askForPasswordReset.message });

@@ -1199,6 +1199,7 @@ const GraphQLService = {
         const query = `
             query {
                 askForPasswordReset(email: "${email}") {
+                    userId
                     success
                     message
                     stacktrace
@@ -1206,6 +1207,31 @@ const GraphQLService = {
             }
         `;
 
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+    resendAskForPasswordReset: async function (user_id) {
+        const query = `
+            query {
+                resendAskForPasswordReset(user_id: "${user_id}") {
+                    success
+                    message
+                    stacktrace   
+                }
+            }
+        `;
         try {
             const res = await fetch(URL, {
                 method: "POST",
