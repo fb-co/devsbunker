@@ -1,31 +1,7 @@
 // gql things related to the User
+import { store } from "../../store/store";
+
 const GraphQLUserService = {
-    resetPassword: async function (password, userId, token) {
-        const mutation = `
-            mutation {
-                resetPassword(password: "${password}", userId: "${userId}", token: "${token}") {
-                    success
-                    message
-                    stacktrace
-                }
-            }
-        `;
-
-        try {
-            const res = await fetch(URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({ query: mutation }),
-            });
-
-            return res.json();
-        } catch (err) {
-            return console.error(err);
-        }
-    },
     fetchUserDetails: async function (username, fields, requester) {
         const query = `
             query {

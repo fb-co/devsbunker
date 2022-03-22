@@ -895,7 +895,7 @@ const GraphQLService = {
         }
     },
 
-    // TODO: move to gql.user.service.js
+    // TODO: move to gql.posts.service.js
     createNewPost: async function (token, data) {
         const mutation = `
             mutation Update($data: makePostInput!) {
@@ -1013,7 +1013,7 @@ const GraphQLService = {
         }
     },
 
-    // TODO: move to gql.user.service.js
+    // TODO: move to gql.notifications.service.js
     // Not sure if we should require the access token for this action
     notifyUser: async function (userToNotify, notification) {
         const mutation = `
