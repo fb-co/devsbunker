@@ -142,6 +142,17 @@ export default {
     color: var(--main-color);
 }
 
+/* Animations */
+
+@keyframes slide_down_animation {
+    from { transform: translateX(-50%) translateY(-200%); }
+    to { transform: translateX(-50%) translateY(-50%); }
+}
+@keyframes slide_from_right_animation {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0%); }
+}
+
 body {
     background-color: var(--main-color);
     color: var(--main-font-color);

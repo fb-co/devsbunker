@@ -213,6 +213,13 @@ export default {
     }
 }
 
+
+@keyframes test_animation {
+    from { transform: translateX(100%) translateY(0); }
+    to { transform: translateX(0) translateY(0); }
+}
+
+
 .mobile_spacer {
     height: 100px;
 }
@@ -528,7 +535,7 @@ body {
     }
     .burger_menu_cont {
         width: 225px;
-        animation: burger_animation_mobile 0.5s;
+        animation: test_animation 0.5s;
     }
     .burger_cont_links a {
         font-size: 20px;
@@ -546,7 +553,7 @@ body {
     }
     .burger_menu_cont {
         width: 300px;
-        animation: burger_animation 0.5s;
+        animation: test_animation 0.5s;
     }
 }
 </style>
