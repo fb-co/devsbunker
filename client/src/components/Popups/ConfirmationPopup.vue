@@ -63,15 +63,6 @@ export default {
 </script>
 
 <style scoped>
-@keyframes slideAnimation {
-    from {
-        top: -100%;
-    }
-    to {
-        top: 50%;
-    }
-}
-
 .popup_container {
     position: fixed;
     top: 50%;
@@ -83,7 +74,7 @@ export default {
     border-radius: 5px;
     box-shadow: 0px 0px 20px var(--drop-shadow);
     background-color: var(--main-color);
-    animation: slideAnimation 0.4s;
+    animation: slide_down_animation 0.4s;
     padding: 10px;
     text-align: center;
     max-height: 95vh;
