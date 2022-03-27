@@ -30,7 +30,7 @@
                     v-if="queryQueued"
                     xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                    style="margin:auto;background:none;display:block;"
+                    style="margin: auto; background: none; display: block"
                     width="30px"
                     height="30px"
                     viewBox="0 0 100 100"
@@ -163,7 +163,7 @@
 </template>
 
 <script>
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service";
 
 export default {
     data() {
@@ -200,7 +200,7 @@ export default {
 
                     setTimeout(() => {
                         if (this.$refs.general_input.value != "") {
-                            GraphQLService.fetchUserByPartial(
+                            GraphQLUserService.fetchUserByPartial(
                                 this.$refs.general_input.value,
                                 this.sortingType,
                                 this.getLastUserId(),
@@ -222,7 +222,7 @@ export default {
             }
         },
         loadMoreResults() {
-            GraphQLService.fetchUserByPartial(
+            GraphQLUserService.fetchUserByPartial(
                 this.$refs.general_input.value,
                 this.sortingType,
                 this.getLastUserId(),

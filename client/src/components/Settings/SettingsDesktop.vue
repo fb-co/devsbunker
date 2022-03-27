@@ -56,10 +56,12 @@
                 />
             </div>
             <div class="setting_item" v-if="$store.getters.isLoggedIn">
-                <p class="label tag_suggest" style="display: flex; flex-direction: row;">
-                    Tags to suggest: 
-                    <InformativePopup title="Tag Suggestion" style="margin-left: 10px; margin-top: -2px; text-align: center;">
-                        <p style="margin-bottom: 100px; text-align: center;">These include tags that interest you. You will be suggested posts which include them.</p>
+                <p class="label tag_suggest" style="display: flex; flex-direction: row">
+                    Tags to suggest:
+                    <InformativePopup title="Tag Suggestion" style="margin-left: 10px; margin-top: -2px; text-align: center">
+                        <p style="margin-bottom: 100px; text-align: center">
+                            These include tags that interest you. You will be suggested posts which include them.
+                        </p>
                     </InformativePopup>
                 </p>
                 <div class="setting_item_option_container">
@@ -86,7 +88,7 @@ export default {
     },
 };
 */
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service";
 
 import ThemeSwitcher from "@/components/global/ThemeSwitcher.vue";
 import InputModal from "@/components/global/InputModal.vue";
@@ -107,7 +109,7 @@ export default {
     methods: {
         async resetPwd(pwd, pwdConfirm) {
             if (pwd == pwdConfirm) {
-                const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{ field: "password", newValue: pwd }]);
+                const response = await GraphQLUserService.updateUserDetails(this.$store.getters.accessToken, [{ field: "password", newValue: pwd }]);
 
                 if (response.errors) {
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: response.errors[0].message });

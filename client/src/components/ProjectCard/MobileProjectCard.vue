@@ -16,7 +16,7 @@
             </div>
             <p class="proj_name card_text highlightable">{{ projectData.title }}</p>
 
-            <div style="position: relative;">
+            <div style="position: relative">
                 <div class="desc_fade"></div>
                 <p class="proj_desc card_text highlightable">{{ projectData.description }}</p>
             </div>
@@ -90,7 +90,7 @@
 
                 <div
                     class="vertical_flex_center more_options_button"
-                    style="margin-left: 5px;"
+                    style="margin-left: 5px"
                     tabindex="0"
                     @click.stop=""
                     @focus.stop="moreOptions = true"
@@ -114,7 +114,7 @@
                         <circle cx="12" cy="5" r="1" />
                     </svg>
                 </div>
-                <div style="position: relative;">
+                <div style="position: relative">
                     <!-- make a relative wrapper so absolute works better -->
                     <!--More Options -->
                     <div :class="{ darkThemeMore: darkTheme, lightThemeMore: !darkTheme }" class="more_options no_select" v-if="moreOptions">
@@ -191,7 +191,7 @@
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import DynamicPicture from "@/components/DynamicPicture.vue";
-import GraphQLService from "../../services/graphql.service";
+import GraphQLPostsService from "../../services/graphql/gql.posts.service.js";
 import GeneralMixin from "../../mixins/general.mixin";
 
 export default {
@@ -236,7 +236,7 @@ export default {
             console.log("post id:", this.projectData.id);
         },
         deletePost() {
-            GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
+            GraphQLPostsService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
                 if (res.errors) {
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
                 } else if (!res.data.deletePost.success) {
@@ -264,7 +264,7 @@ export default {
         },
     },
     watch: {
-        highlight_phrase: function() {
+        highlight_phrase: function () {
             this.highlightPhrases();
         },
     },

@@ -327,7 +327,7 @@ import LoadingGif from "@/components/global/LoadingGif.vue";
 import InformativePopupBare from "@/components/Popups/InformativePopupBare.vue";
 import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 import QuestionMark from "@/components/Popups/QuestionMark.vue";
-import GraphQLService from "@/services/graphql.service";
+import GraphQLPostsService from "@/services/graphql/gql.posts.service.js"
 import FileUploadService from "@/services/fileUpload.service.js";
 import Languages from "../../templates/Languages";
 import Limits from "../../templates/Limits";
@@ -482,7 +482,7 @@ export default {
                 if (check.success) {
                     // display loading gif and hide button if all fields were validated properly clientside
                     this.creatingPost = true;
-                    GraphQLService.createNewPost(this.$store.getters.accessToken, post)
+                    GraphQLPostsService.createNewPost(this.$store.getters.accessToken, post)
                         .then((returnPost) => {
                             if (returnPost.errors?.length) {
                                 // hide loading gif even if there are errors

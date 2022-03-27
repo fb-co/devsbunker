@@ -2,8 +2,20 @@
     <div v-if="isOpen" class="backdrop">
         <div @click.stop="" class="popup_container">
             <div class="header">
-                <svg @click="close()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x close_btn" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <svg
+                    @click="close()"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-x close_btn"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="#2c3e50"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <line x1="18" y1="6" x2="6" y2="18" />
                     <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
@@ -12,15 +24,15 @@
             </div>
 
             <p>{{ message }}</p>
-            
-            <p style="margin-top: 20px; margin-bottom: 20px;">Didn't get an email? Check spam or press resend.</p>
+
+            <p style="margin-top: 20px; margin-bottom: 20px">Didn't get an email? Check spam or press resend.</p>
             <button @click="resendEmail()" class="general_button resend_btn">Resend</button>
 
             <div v-if="isResending" class="resend_loading_gif">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                    style="margin:auto;background:none;display:block;"
+                    style="margin: auto; background: none; display: block"
                     width="50px"
                     height="50px"
                     viewBox="0 0 100 100"
@@ -93,7 +105,7 @@
 </template>
 
 <script>
-import GraphQLService from "../../services/graphql.service.js";
+import GraphQLVerificationService from "../../services/graphql/gql.verification.service.js";
 
 export default {
     data() {
@@ -104,7 +116,7 @@ export default {
 
             message: "We have sent you an email with a link to verify your account. Please do so to begin using DevsBunker.",
             type: "verify_account",
-        }
+        };
     },
     methods: {
         open(user_id, message, type) {
@@ -120,32 +132,32 @@ export default {
         async resendEmail() {
             this.isResending = true;
 
-            if (this.type === 'verify_account') {
-                const res = await GraphQLService.resendAccountVerificationEmail(this.user_id);
+            if (this.type === "verify_account") {
+                const res = await GraphQLVerificationService.resendAccountVerificationEmail(this.user_id);
 
                 if (res.data.resendAccountVerificationEmail.success) {
-                    this.$store.dispatch("alertUser", { title: "Success", type: "success", msg: 'Email Resent' });
+                    this.$store.dispatch("alertUser", { title: "Success", type: "success", msg: "Email Resent" });
                     this.isResending = false;
                 } else {
-                    this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: 'Something went wrong' });
+                    this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: "Something went wrong" });
                     this.isResending = false;
                 }
-            } else if (this.type === 'reset_pwd') {
-                const res = await GraphQLService.resendAskForPasswordReset(this.user_id);
-                
+            } else if (this.type === "reset_pwd") {
+                const res = await GraphQLVerificationService.resendAskForPasswordReset(this.user_id);
+
                 if (res.data.resendAskForPasswordReset.success) {
-                    this.$store.dispatch("alertUser", { title: "Success", type: "success", msg: 'Email Resent' });
+                    this.$store.dispatch("alertUser", { title: "Success", type: "success", msg: "Email Resent" });
                     this.isResending = false;
                 } else {
-                    this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: 'Something went wrong' });
+                    this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: "Something went wrong" });
                     this.isResending = false;
                 }
             } else {
                 this.isResending = false;
             }
-        }
+        },
     },
-}
+};
 </script>
 
 <style scoped>
