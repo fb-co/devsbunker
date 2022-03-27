@@ -305,7 +305,7 @@
 
 <script>
 import UserService from "../services/user.service";
-import GraphQLService from "../services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 
 import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
@@ -342,7 +342,7 @@ export default {
     },
     methods: {
         async submitForm() {
-            const response = await GraphQLService.loginUser(this.userID, this.password);
+            const response = await GraphQLUserService.loginUser(this.userID, this.password);
             this.submitted = true;
 
             if (response.errors) {

@@ -1,8 +1,19 @@
 <template>
     <div class="list_container" @click.stop="open()">
         <CreateTag v-for="(tag, index) in tags_to_show" :key="index" tagType="lang" :label="tag.tag" />
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots are_more" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-dots are_more"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="var(--main-font-color)"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <circle cx="5" cy="12" r="1" />
             <circle cx="12" cy="12" r="1" />
             <circle cx="19" cy="12" r="1" />
@@ -12,34 +23,46 @@
             <div @click.stop="" class="popup_container">
                 <div class="popup_header">
                     <div class="close_btn_container" @click="close()">
-                        <svg @click.stop="close()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--main-font-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <svg
+                            @click.stop="close()"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-x"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="var(--main-font-color)"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <line x1="18" y1="6" x2="6" y2="18" />
                             <line x1="6" y1="6" x2="18" y2="18" />
                         </svg>
                     </div>
-                    <p class="vertical_flex_center" style="font-size: 20px;">Tags to Suggest</p>
-                    <div style="width: 50px;" />
+                    <p class="vertical_flex_center" style="font-size: 20px">Tags to Suggest</p>
+                    <div style="width: 50px" />
                 </div>
                 <QueryInput ref="tag_search" searchFor="languages" />
                 <div @click.stop="" class="popup_list">
-                    <div v-for="(tag, index) in tags" :key="index" class="popup_tag_container"> 
-                        <CreateTag  tagType="lang" :label="tag.tag" class="popup_tag" />
+                    <div v-for="(tag, index) in tags" :key="index" class="popup_tag_container">
+                        <CreateTag tagType="lang" :label="tag.tag" class="popup_tag" />
                         <div class="vertical_flex_center">
-                            <svg 
-                                @click="remove_tag(tag.tag)" 
-                                xmlns="http://www.w3.org/2000/svg" 
-                                class="icon icon-tabler icon-tabler-circle-x deleteIcon" 
-                                width="25" 
-                                height="25" 
-                                viewBox="0 0 24 24" 
-                                stroke-width="1.5" 
-                                stroke="var(--main-font-color)" 
-                                fill="none" 
-                                stroke-linecap="round" 
+                            <svg
+                                @click="remove_tag(tag.tag)"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-circle-x deleteIcon"
+                                width="25"
+                                height="25"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="var(--main-font-color)"
+                                fill="none"
+                                stroke-linecap="round"
                                 stroke-linejoin="round"
                             >
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <circle cx="12" cy="12" r="9" />
                                 <path d="M10 10l4 4m0 -4l-4 4" />
                             </svg>
@@ -54,7 +77,7 @@
 <script>
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 import QueryInput from "@/components/QueryInput";
-import GraphQLService from "@/services/graphql.service.js";
+import GraphQLPostsService from "@/services/graphql/gql.user.service";
 
 export default {
     data() {
@@ -63,7 +86,7 @@ export default {
             tags: this.$store.getters.common_tags,
             tags_to_show: [],
             isOpen: false,
-        }
+        };
     },
     created() {
         this.initialTags = [...this.tags]; // creates a shallow copy
@@ -107,7 +130,7 @@ export default {
 
             if (!dup) {
                 this.tags.push({
-                    tag: tag
+                    tag: tag,
                 });
                 this.tags_to_show = this.tags.slice(0, 3);
                 this.$refs.tag_search.clearValue();
@@ -116,26 +139,26 @@ export default {
         async save_changes() {
             // if the tags have not changed at all, don't query the server
             const changesMade = JSON.stringify(this.initialTags) != JSON.stringify(this.tags);
-            
+
             if (changesMade) {
                 let finalTags = [];
-                
+
                 // convert to what graphql understands
                 for (let i = 0; i < this.tags.length; i++) {
                     finalTags.push(this.tags[i].tag);
                 }
 
-                const res = await GraphQLService.setCommonTags(finalTags, this.$store.getters.accessToken);
-                
+                const res = await GraphQLPostsService.setCommonTags(finalTags, this.$store.getters.accessToken);
+
                 if (!res.errors) {
                     this.tags = res.data.setCommonTags;
                 } else {
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong" });
                 }
             }
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style scoped>

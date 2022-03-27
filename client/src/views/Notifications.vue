@@ -5,15 +5,10 @@
         <div v-else-if="notifications" class="notification_card_container">
             <div v-if="notifications.length > 0">
                 <!-- Made the key account for many variables to avoid any duplicate key errors -->
-                <LargeNotificationCard
-                    v-for="(notification, index) in notifications"
-                    :key="index"
-                    :data="notification"
-                    width="100%"
-                />
+                <LargeNotificationCard v-for="(notification, index) in notifications" :key="index" :data="notification" width="100%" />
             </div>
             <div v-else>
-                <p style="padding-top: 30px;">No notifications found</p>
+                <p style="padding-top: 30px">No notifications found</p>
             </div>
         </div>
     </div>
@@ -23,7 +18,7 @@
 // The notification target key, is what the notification is refering to, for example, the post title that was liked, or the username of the person being followed
 
 import LargeNotificationCard from "@/components/Notifications/LargeNotificationCard.vue";
-import GraphQLService from "@/services/graphql.service.js";
+import GraphQLNotificationsService from "@/services/graphql/gql.notifications.service.js";
 import SharedMethods from "@/utils/shared.js";
 import LoadingGif from "@/components/global/LoadingGif.vue";
 
@@ -36,15 +31,13 @@ export default {
     },
     components: {
         LargeNotificationCard,
-        LoadingGif
+        LoadingGif,
     },
     created() {
         if (this.$store.getters.isLoggedIn) {
             SharedMethods.loadPage();
 
-            GraphQLService.getAndReadNotifications(
-                this.$store.getters.accessToken
-            ).then((res) => {
+            GraphQLNotificationsService.getAndReadNotifications(this.$store.getters.accessToken).then((res) => {
                 if (!res.errors) {
                     this.notifications = res.data.getAndReadNotifications;
 
@@ -57,11 +50,11 @@ export default {
                     this.$store.commit("readNotifications");
                 } else {
                     this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: res.errors[0].message });
-                }  
+                }
             });
         } else {
-            this.$store.dispatch("alertUser", { title: "Alert", type: "neutral", msg: 'Login to see your notifications' });
-            this.$router.push('/login');
+            this.$store.dispatch("alertUser", { title: "Alert", type: "neutral", msg: "Login to see your notifications" });
+            this.$router.push("/login");
         }
     },
 };

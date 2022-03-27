@@ -14,7 +14,7 @@
                 </Dropdown>
             </div>
         </div>
-        <div class="setting_section" style="margin-bottom: 10px;" v-if="$store.getters.isLoggedIn">
+        <div class="setting_section" style="margin-bottom: 10px" v-if="$store.getters.isLoggedIn">
             <h4>Privacy</h4>
             <div class="setting_section_item_container">
                 <p class="setting_label vertical_flex_center">Change Password</p>
@@ -39,8 +39,10 @@
 
             <div class="setting_section_item_container">
                 <p class="setting_label vertical_flex_center" style="margin-bottom: 30px; !important">Tags to suggest:</p>
-                <InformativePopup title="Tag Suggestion" style="margin-top: -2px; text-align: center;">
-                    <p style="margin-bottom: 100px; text-align: center;">These include tags that interest you. You will be suggested posts which include them.</p>
+                <InformativePopup title="Tag Suggestion" style="margin-top: -2px; text-align: center">
+                    <p style="margin-bottom: 100px; text-align: center">
+                        These include tags that interest you. You will be suggested posts which include them.
+                    </p>
                 </InformativePopup>
             </div>
             <TagSuggestion />
@@ -54,7 +56,7 @@ import Dropdown from "@/components/global/Dropdown.vue";
 import InputModal from "@/components/global/InputModal.vue";
 import TagSuggestion from "../TagSuggestion.vue";
 import InformativePopup from "@/components/Popups/InformativePopup.vue";
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 
 export default {
     data() {
@@ -79,7 +81,7 @@ export default {
         },
         async resetPwd(pwd, pwdConfirm) {
             if (pwd == pwdConfirm) {
-                const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{ field: "password", newValue: pwd }]);
+                const response = await GraphQLUserService.updateUserDetails(this.$store.getters.accessToken, [{ field: "password", newValue: pwd }]);
 
                 if (/Successfully/.test(response.data.updateUserDetails.message)) {
                     this.$refs.resetPwd.close();

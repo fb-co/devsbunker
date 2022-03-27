@@ -146,7 +146,7 @@
                         <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
                     </svg>
                 </div>
-                <p style="color: var(--error-red);">Logout</p>
+                <p style="color: var(--error-red)">Logout</p>
             </div>
             <div @mousedown.stop="openConfirmation()">
                 <div class="vertical_flex_center">
@@ -167,7 +167,7 @@
                         <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
                     </svg>
                 </div>
-                <p style="color: var(--error-red);">Delete Account</p>
+                <p style="color: var(--error-red)">Delete Account</p>
             </div>
         </MobileMoreOptions>
     </div>
@@ -176,7 +176,7 @@
 <script>
 import ProfileSections from "./ProfileSections/mobile.profile.imports.js";
 //import ProfilePicture from "@/components/User/ProfilePicture.vue";
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 import ProfilePictureBackdrop from "@/components/User/ProfilePictureBackdrop.vue";
 import InputModal from "@/components/global/InputModal.vue";
 import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
@@ -195,9 +195,7 @@ export default {
         searchFilter: String,
         mainUserObject: Object,
     },
-    mixins: [
-        LogoutFunction
-    ],
+    mixins: [LogoutFunction],
     components: {
         ...ProfileSections,
         //ProfilePicture,
@@ -223,7 +221,7 @@ export default {
             this.$refs.download_data_confirmation.open();
         },
         downloadUserData() {
-            GraphQLService.downloadUserData(this.$store.getters.accssToken)
+            GraphQLUserService.downloadUserData(this.$store.getters.accssToken)
                 .then((res) => {
                     if (!res.errors) {
                         const data = res.data.downloadUserData;
@@ -259,7 +257,7 @@ export default {
             const password = payload[0];
 
             if (password) {
-                const res = await GraphQLService.deleteUserAccount(password, this.$store.getters.accessToken);
+                const res = await GraphQLUserService.deleteUserAccount(password, this.$store.getters.accessToken);
                 if (!res.errors) {
                     if (res.data.deleteAccount.success) {
                         this.accountDeleted = true;

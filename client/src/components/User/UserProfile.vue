@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 import ProfileDesktop from "./desktop/Profile.vue";
 import ProfileMobile from "./mobile/Profile.vue";
 import LoadMoreMixin from "@/mixins/load_more.mixin.js";
@@ -33,14 +33,16 @@ export default {
         this.sortingType = SearchUtilities.getSavedPostFilter();
         this.getPosts();
 
-        GraphQLService.fetchUserDetails(this.username, ["tag", "desc", "followerAmt", "followingAmt", "isFollowing"], this.$store.getters.username).then((res) => {
-            if (res.data.user === null) {
-                this.$router.push("/404"); // eventully this should route the user to a search area for users with a message sayin he user they requested does not exist
-            } else {
-                this.userObject = res.data.user;
-                this.userObject.username = this.username; // add the username to the object so the child component has is
+        GraphQLUserService.fetchUserDetails(this.username, ["tag", "desc", "followerAmt", "followingAmt", "isFollowing"], this.$store.getters.username).then(
+            (res) => {
+                if (res.data.user === null) {
+                    this.$router.push("/404"); // eventully this should route the user to a search area for users with a message sayin he user they requested does not exist
+                } else {
+                    this.userObject = res.data.user;
+                    this.userObject.username = this.username; // add the username to the object so the child component has is
+                }
             }
-        });
+        );
     },
     methods: {
         // have this ready for future uses

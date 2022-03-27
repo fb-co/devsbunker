@@ -12,7 +12,7 @@
 <script>
 import ProfileMobile from "./mobile/ProfileOwner.vue";
 import ProfileDesktop from "./desktop/ProfileOwner.vue";
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 import PostFeedMixin from "@/mixins/load_more.mixin.js";
 import SearchUtilities from "@/utils/search_utilities.js";
 
@@ -27,7 +27,7 @@ export default {
     },
     async created() {
         // get the user object, will be given to all children to avoid excessive calls to the server
-        const res = await GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, [
+        const res = await GraphQLUserService.fetchPersonalDetails(this.$store.getters.accessToken, [
             "desc",
             "email",
             "profile_pic",
@@ -37,7 +37,6 @@ export default {
             "tag",
             "username",
         ]);
-
 
         if (!res.errors) {
             this.userObject = res.data.getPersonalDetails;

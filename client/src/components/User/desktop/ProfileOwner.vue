@@ -290,7 +290,7 @@
 </template>
 
 <script>
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import InputModal from "@/components/global/InputModal.vue";
@@ -320,7 +320,7 @@ export default {
             this.$refs.download_data_confirmation.open();
         },
         downloadUserData() {
-            GraphQLService.downloadUserData(this.$store.getters.accessToken)
+            GraphQLUserService.downloadUserData(this.$store.getters.accessToken)
                 .then((res) => {
                     if (!res.errors) {
                         const data = res.data.downloadUserData;
@@ -351,7 +351,7 @@ export default {
                     break;
                 case 1: {
                     // delete account
-                    const res = await GraphQLService.fetchPersonalDetails(this.$store.getters.accessToken, ["isGitHubUser"]);
+                    const res = await GraphQLUserService.fetchPersonalDetails(this.$store.getters.accessToken, ["isGitHubUser"]);
 
                     if (res.errors) {
                         this.$store.dispatch("alertUser", { msg: "Something went wrong, try again later, try again later.", type: "error", title: "Error" });
@@ -370,7 +370,7 @@ export default {
         async deleteProfile(payload) {
             const password = payload[0];
 
-            const res = await GraphQLService.deleteUserAccount(password, this.$store.getters.accessToken);
+            const res = await GraphQLUserService.deleteUserAccount(password, this.$store.getters.accessToken);
             console.log(res);
             if (!res.errors) {
                 if (res.data.deleteAccount.success) {

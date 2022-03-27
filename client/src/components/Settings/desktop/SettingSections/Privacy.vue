@@ -27,7 +27,7 @@
 </template>
 <script>
 import GlobalComponents from "@/components/global/GlobalComponents.js";
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service";
 import InputModal from "@/components/global/InputModal.vue";
 import SuccessPopup from "@/components/Popups/SuccessPopUp.vue";
 
@@ -35,7 +35,7 @@ export default {
     methods: {
         async resetPwd(pwd, pwdConfirm) {
             if (pwd == pwdConfirm) {
-                const response = await GraphQLService.updateUserDetails(this.$store.getters.accessToken, [{ field: "password", newValue: pwd }]);
+                const response = await GraphQLUserService.updateUserDetails(this.$store.getters.accessToken, [{ field: "password", newValue: pwd }]);
 
                 if (/Successfully/.test(response.data.updateUserDetails.message)) {
                     this.$refs.resetPwd.close();
