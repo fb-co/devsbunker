@@ -1,6 +1,6 @@
 // We've been a little messy so far with on page load handling, and I want to try and clean it up to minimize how many queries we give the server
 // per page load. This includes stuff like the users pfp link, unread notifications, etc.
-import GraphQLService from "@/services/graphql.service.js";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 
 const state = {
     pfpLink: undefined,
@@ -33,7 +33,7 @@ const getters = {
     },
     common_tags: (state) => {
         return state.commonTags;
-    }
+    },
 };
 
 const mutations = {
@@ -78,12 +78,12 @@ const actions = {
         const storedLink = localStorage.getItem("profile_pic_link");
 
         let dataToFetch = [
-            "unreadNotificationAmt", 
-            "unreadNotifications { read sender message type target timestamp }", 
-            "postsAmt", 
-            "following", 
-            "common_tags { tag }", 
-            "user_suggestions"
+            "unreadNotificationAmt",
+            "unreadNotifications { read sender message type target timestamp }",
+            "postsAmt",
+            "following",
+            "common_tags { tag }",
+            "user_suggestions",
         ];
         let pfpLink;
 
@@ -99,8 +99,8 @@ const actions = {
             dataToFetch.push("profile_pic");
         }
 
-        const res = await GraphQLService.fetchPersonalDetails(rootState.LoginStateHandler.accessToken, dataToFetch);
-        
+        const res = await GraphQLUserService.fetchPersonalDetails(rootState.LoginStateHandler.accessToken, dataToFetch);
+
         if (!res.errors) {
             if (res.data.getPersonalDetails.profile_pic) {
                 commit(
