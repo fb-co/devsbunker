@@ -1,6 +1,6 @@
 // gql things related to Posts
 const GraphQLPostsService = {
-    fetchPostsByPartial: async function (partial_name, filter, userToFilter, sortingType, lastPostId, lastUniqueField, token) {
+    fetchPostsByPartial: function (partial_name, filter, userToFilter, sortingType, lastPostId, lastUniqueField, token) {
         if (partial_name != "") {
             const query = `
                 query {
@@ -24,19 +24,16 @@ const GraphQLPostsService = {
                 }
             `;
 
-            try {
-                const res = await fetch(URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        authorization: `Bearer ${token}`,
-                    },
-                    body: JSON.stringify({ query }),
-                });
-                return await res.json();
-            } catch (data) {
-                return console.error(data);
-            }
+            return fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ query }),
+            })
+                .then((res) => res.json())
+                .catch(console.error);
         }
     },
     fetchTargetedPosts: function (lastPostId, lastUniqueField, token) {

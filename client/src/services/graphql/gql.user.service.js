@@ -2,7 +2,7 @@
 import { store } from "../../store/store";
 
 const GraphQLUserService = {
-    fetchUserDetails: async function (username, fields, requester) {
+    fetchUserDetails: function (username, fields, requester) {
         const query = `
             query {
                 user(username: "${username}", requester: "${requester}") {
@@ -11,16 +11,13 @@ const GraphQLUserService = {
             }
         `;
 
-        try {
-            const res = await fetch(URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ query }),
-            });
-            return await res.json();
-        } catch (data) {
-            return console.error(data);
-        }
+        return fetch(URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query }),
+        })
+            .then((res) => res.json())
+            .catch(console.error);
     },
     downloadUserData: function (token) {
         const query = `

@@ -163,7 +163,7 @@
 </template>
 
 <script>
-import GraphQLUserService from "@/services/graphql/gql.user.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 
 export default {
     data() {
