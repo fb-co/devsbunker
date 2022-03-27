@@ -26,7 +26,7 @@
 <script>
 import SharedMethods from "../utils/shared";
 import SpicyInput from "@/components/global/SpicyInput.vue";
-import GraphQLService from "@/services/graphql.service.js";
+import GraphQLVerificationService from "@/services/graphql/gql.user.service.js";
 
 export default {
     data() {
@@ -46,7 +46,7 @@ export default {
                 if (this.email0 !== this.email1) {
                     this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: "Email addresses don't match!" });
                 } else {
-                    const res = await GraphQLService.askForPasswordReset(this.email0);
+                    const res = await GraphQLVerificationService.askForPasswordReset(this.email0);
 
                     if (res.data.askForPasswordReset.success) {
                         this.$store.dispatch("alertUser", { msg: "An email has been sent to you", type: "success", title: "Success" });

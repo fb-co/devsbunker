@@ -38,7 +38,7 @@
 
 <script>
 import SharedMethods from "../utils/shared";
-import GraphQLService from "../services/graphql.service";
+import GraphQLVerificationService from "@/services/graphql/gql.user.service.js";
 import LoadingGif from "../components/global/LoadingGif.vue";
 import SpicyInput from "@/components/global/SpicyInput.vue";
 
@@ -65,7 +65,7 @@ export default {
                         this.$store.dispatch("alertUser", { title: "Error", type: "error", msg: "Passwords don't match!" });
                     } else {
                         if (this.pwd0.toString().trim() !== "" && this.pwd0.length > 8) {
-                            const res = await GraphQLService.resetPassword(this.pwd0, this.$route.params.userId, this.$route.params.token);
+                            const res = await GraphQLVerificationService.resetPassword(this.pwd0, this.$route.params.userId, this.$route.params.token);
                             console.log(res);
 
                             this.sent = true;
