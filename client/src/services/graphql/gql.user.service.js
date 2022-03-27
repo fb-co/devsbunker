@@ -11,7 +11,7 @@ const GraphQLUserService = {
             }
         `;
 
-        return fetch(URL, {
+        return fetch(process.env.VUE_APP_GRAPHQL_API, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ query }),
@@ -67,7 +67,7 @@ const GraphQLUserService = {
         `;
 
         try {
-            return fetch(URL, {
+            return fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "content-Type": "application/json",
@@ -90,21 +90,17 @@ const GraphQLUserService = {
                 }
             }
         `;
-        try {
-            return fetch(URL, {
-                method: "POST",
-                headers: {
-                    "content-Type": "application/json",
-                    authorization: `Bearer ${token}`,
-                },
-                credentials: "include",
-                body: JSON.stringify({ query }),
-            })
-                .then((res) => res.json())
-                .catch(console.error);
-        } catch (err) {
-            return console.error(err);
-        }
+        return fetch(process.env.VUE_APP_GRAPHQL_API, {
+            method: "POST",
+            headers: {
+                "content-Type": "application/json",
+                authorization: `Bearer ${token}`,
+            },
+            credentials: "include",
+            body: JSON.stringify({ query }),
+        })
+            .then((res) => res.json())
+            .catch((err) => console.error(err));
     },
     fetchUsers: function (sortMethod, lastUserId, lastUniqueField, fields, token) {
         const query = `
@@ -119,7 +115,7 @@ const GraphQLUserService = {
         `;
 
         try {
-            return fetch(URL, {
+            return fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "content-Type": "application/json",
@@ -151,7 +147,7 @@ const GraphQLUserService = {
             `;
 
             try {
-                return fetch(URL, {
+                return fetch(process.env.VUE_APP_GRAPHQL_API, {
                     method: "POST",
                     headers: {
                         "content-Type": "application/json",
@@ -180,7 +176,7 @@ const GraphQLUserService = {
         `;
 
         try {
-            return fetch(URL, {
+            return fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "content-Type": "application/json",
@@ -207,7 +203,7 @@ const GraphQLUserService = {
         `;
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "content-Type": "application/json",
@@ -234,7 +230,7 @@ const GraphQLUserService = {
         `;
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "content-Type": "application/json",
@@ -269,7 +265,7 @@ const GraphQLUserService = {
         };
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -297,7 +293,7 @@ const GraphQLUserService = {
         `;
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -334,7 +330,7 @@ const GraphQLUserService = {
         }
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -362,7 +358,7 @@ const GraphQLUserService = {
         `;
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -404,7 +400,7 @@ const GraphQLUserService = {
         }
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -431,7 +427,7 @@ const GraphQLUserService = {
         `;
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -15,7 +15,7 @@ const GraphQLNotificationsService = {
         `;
 
         try {
-            return fetch(URL, {
+            return fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "content-Type": "application/json",
@@ -44,7 +44,7 @@ const GraphQLNotificationsService = {
         `;
 
         try {
-            return fetch(URL, {
+            return fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "content-Type": "application/json",
@@ -78,7 +78,7 @@ const GraphQLNotificationsService = {
         `;
 
         try {
-            return fetch(URL, {
+            return fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "content-Type": "application/json",
@@ -106,7 +106,7 @@ const GraphQLNotificationsService = {
         `;
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -130,7 +130,7 @@ const GraphQLNotificationsService = {
         `;
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -155,7 +155,7 @@ const GraphQLNotificationsService = {
             }
         `;
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -179,7 +179,7 @@ const GraphQLNotificationsService = {
         `;
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

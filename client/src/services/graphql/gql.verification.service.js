@@ -10,7 +10,7 @@ const GraphQLVerificationService = {
         `;
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -35,7 +35,7 @@ const GraphQLVerificationService = {
         `;
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -60,7 +60,7 @@ const GraphQLVerificationService = {
         `;
 
         try {
-            const res = await fetch(URL, {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
