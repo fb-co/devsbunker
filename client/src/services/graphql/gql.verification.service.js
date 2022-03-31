@@ -1,29 +1,5 @@
 // gql things related to the Verification process
 const GraphQLVerificationService = {
-    resendAccountVerificationEmail: async function (userId) {
-        const query = `
-            query {
-                resendAccountVerificationEmail(user_id: "${userId}") {
-                    success
-                }
-            }
-        `;
-
-        try {
-            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({ query: query }),
-            });
-
-            return res.json();
-        } catch (err) {
-            return console.error(err);
-        }
-    },
     verifyUser: async function (userId, token) {
         const mutation = `
             mutation {
@@ -70,6 +46,82 @@ const GraphQLVerificationService = {
             const json = await res.json();
 
             return json;
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+    askForPasswordReset: async function (email) {
+        const query = `
+            query {
+                askForPasswordReset(email: "${email}") {
+                    userId
+                    success
+                    message
+                    stacktrace
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+    resendAskForPasswordReset: async function (user_id) {
+        const query = `
+            query {
+                resendAskForPasswordReset(user_id: "${user_id}") {
+                    success
+                    message
+                    stacktrace   
+                }
+            }
+        `;
+        try {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+    resendAccountVerificationEmail: async function (userId) {
+        const query = `
+            query {
+                resendAccountVerificationEmail(user_id: "${userId}") {
+                    success
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(process.env.VUE_APP_GRAPHQL_API, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ query: query }),
+            });
+
+            return res.json();
         } catch (err) {
             return console.error(err);
         }
