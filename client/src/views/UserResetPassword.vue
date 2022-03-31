@@ -26,7 +26,7 @@
 <script>
 import SharedMethods from "../utils/shared";
 import SpicyInput from "@/components/global/SpicyInput.vue";
-import GraphQLVerificationService from "@/services/graphql/gql.user.service.js";
+import GraphQLVerificationService from "@/services/graphql/gql.verification.service.js";
 
 export default {
     data() {
