@@ -210,25 +210,6 @@
                             </svg>
                             <p class="profile_link">Logout</p>
                         </div>
-                        <div @click="openConfirmation(0)" class="option-wrapper special_link_item">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-circle-off"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="#656565"
-                                fill="none"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M20.042 16.045a9 9 0 0 0 -12.087 -12.087m-2.318 1.677a9 9 0 1 0 12.725 12.73" />
-                                <path d="M3 3l18 18" />
-                            </svg>
-                            <p class="profile_link">Disable account</p>
-                        </div>
                         <div @click="openConfirmation(1)" class="option-wrapper special_link_item">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -278,13 +259,6 @@
             msg="This will download all the data associated with your account into a JSON file."
             confirmButton="Download"
             @confirm="downloadUserData()"
-        />
-        <ConfirmationPopup
-            ref="disable_account"
-            title="Disable account"
-            msg="This will temporarily disable your account, in order to enable it again you'd need to contact us at folgoni.co@gmail.com with the email address you provided while signing up."
-            confirmButton="Disable"
-            @confirm="disableAccount()"
         />
     </div>
 </template>
@@ -345,10 +319,6 @@ export default {
         },
         async openConfirmation(action) {
             switch (action) {
-                case 0:
-                    // disable account
-                    this.$refs.disable_account.open();
-                    break;
                 case 1: {
                     // delete account
                     const res = await GraphQLUserService.fetchPersonalDetails(this.$store.getters.accessToken, ["isGitHubUser"]);
@@ -401,10 +371,6 @@ export default {
             } else {
                 this.$store.dispatch("alertUser", { msg: res.errors[0].message, type: "error", title: "Error" });
             }
-        },
-
-        async disableAccount() {
-            alert("todo");
         },
     },
 };
