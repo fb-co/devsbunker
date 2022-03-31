@@ -99,3 +99,5 @@ sudo apt install nginx
 sudo systemctl status nginx
 *edit /etc/hosts to add testing domain names*
 ```
+
+remember to manually add the placeholder png 
