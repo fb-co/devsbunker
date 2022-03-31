@@ -7,7 +7,7 @@
 
 */
 
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 
 const GeneralProfile = {
     data() {
@@ -15,7 +15,7 @@ const GeneralProfile = {
             editing: false,
             invalidEmail: false,
             savingResults: false,
-        }
+        };
     },
     methods: {
         editFields() {
@@ -37,15 +37,15 @@ const GeneralProfile = {
             if (newDesc != this.userObject.desc) {
                 fields.push({
                     field: "desc",
-                    newValue: newDesc
+                    newValue: newDesc,
                 });
             }
             if (newEmail != this.userObject.email) {
                 //if (newEmail.length <= 70) {
-                    fields.push({
-                        field: "email",
-                        newValue: newEmail
-                    });
+                fields.push({
+                    field: "email",
+                    newValue: newEmail,
+                });
                 //}
             } else {
                 this.emailInInput = newEmail; // override vue's value binding
@@ -56,12 +56,12 @@ const GeneralProfile = {
                 // set loading flag to true
                 this.savingResults = true;
 
-                GraphQLService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
+                GraphQLUserService.updateUserDetails(this.$store.getters.accessToken, fields).then((res) => {
                     // set loading flag to false
                     this.savingResults = false;
                     if (!res.errors) {
                         const data = res.data.updateUserDetails.changedData;
-                        
+
                         // hot reload the new data
                         for (let i = 0; i < data.length; i++) {
                             if (data[i].field === "email") {
@@ -86,14 +86,14 @@ const GeneralProfile = {
                         for (let i = 0; i < res.errors.length; i++) {
                             if (res.errors[i].message === "Invalid email") {
                                 this.invalidEmail = true;
-                            } else if (res.errors[i].message.includes('too long')) {
+                            } else if (res.errors[i].message.includes("too long")) {
                                 this.invalidEmail = true;
                                 failedEmailMessage = "Email Is Too Long";
                             }
                         }
 
                         this.emailInInput = editedValue; // override vue's value binding
-                        
+
                         // add failiure feedback here
                         if (this.invalidEmail) {
                             this.$store.dispatch("alertUser", { msg: failedEmailMessage, type: "error", title: "Error" });
@@ -105,7 +105,7 @@ const GeneralProfile = {
             } else {
                 this.cancelFieldsEdit();
             }
-        }
+        },
     },
 };
 

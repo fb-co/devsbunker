@@ -4,7 +4,7 @@
             <div class="row1_placeholder">
                 <div class="row1">
                     <div class="profile_pic_container row_item">
-                        <ProfilePicture :username="userObject.username" style="margin: 0 auto;" />
+                        <ProfilePicture :username="userObject.username" style="margin: 0 auto" />
 
                         <!-- not all users will have the verified tag, this is temp -->
                         <p class="username">
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 
 export default {
@@ -107,7 +107,7 @@ export default {
     },
     methods: {
         followUser() {
-            GraphQLService.followPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
+            GraphQLUserService.followPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
                 if (newFollowers.data.followPerson) {
                     this.userObject.followerAmt = newFollowers.data.followPerson.followerAmt;
                     this.userObject.isFollowing = newFollowers.data.followPerson.isFollowing;
@@ -115,7 +115,7 @@ export default {
             });
         },
         unfollowUser() {
-            GraphQLService.unfollowPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
+            GraphQLUserService.unfollowPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
                 if (newFollowers.data.unfollowPerson) {
                     this.userObject.followerAmt = newFollowers.data.unfollowPerson.followerAmt;
                     this.userObject.isFollowing = newFollowers.data.unfollowPerson.isFollowing;

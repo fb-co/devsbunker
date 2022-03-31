@@ -5,7 +5,6 @@ const verificationSchema = new mongoose.Schema(
         userId: {
             type: String,
             required: true,
-            unique: true,
         },
         token: {
             type: String,
@@ -16,6 +15,22 @@ const verificationSchema = new mongoose.Schema(
             type: Boolean,
             required: true,
             default: true,
+        },
+        corresponding_email: {
+            type: String,
+            required: true,
+        },
+        corresponding_username: {
+            type: String,
+            required: true,
+        },
+        // can be:
+        //  - reset_pwd
+        //  - deletion
+        //  - verify
+        type: {
+            type: String,
+            required: true,
         },
     },
     {

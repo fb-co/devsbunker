@@ -59,7 +59,21 @@ class TokenHandler {
                 expiresIn: "1d",
             });
         } catch (e) {
-            console.log(e);
+            return undefined;
+        }
+    }
+
+    static createPasswordResetToken(user) {
+        const payload = {
+            _id: user._id,
+            type: "reset_pwd",
+        };
+
+        try {
+            return jwt.sign(payload, process.env.VERIFY_TOKEN_SECRET, {
+                expiresIn: "1d",
+            });
+        } catch (e) {
             return undefined;
         }
     }

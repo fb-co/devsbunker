@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
+import GraphQLPostsService from "@/services/graphql/gql.posts.service.js";
 import TextAreaAutoResize from "@/mixins/textarea_autoresize.js";
 
 export default {
@@ -105,11 +106,11 @@ export default {
                         setTimeout(() => {
                             if (this.$refs.general_input.value != "") {
                                 if (this.searchFor === "users") {
-                                    GraphQLService.fetchUserByPartial(this.$refs.general_input.value).then((res) => {
+                                    GraphQLUserService.fetchUserByPartial(this.$refs.general_input.value).then((res) => {
                                         this.documents = res.data.partialUser;
                                     });
                                 } else if (this.searchFor === "posts") {
-                                    GraphQLService.fetchPostByPartial(this.$refs.general_input.value).then((res) => {
+                                    GraphQLPostsService.fetchPostByPartial(this.$refs.general_input.value).then((res) => {
                                         this.documents = res.data.partial_post;
                                     });
                                 }

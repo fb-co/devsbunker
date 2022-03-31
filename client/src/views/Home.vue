@@ -1,17 +1,11 @@
 <template>
     <div>
         <div class="home">
-            <HomeMobile
-                v-if="$store.getters.mobile"
-                @updateFilterDropdown="updateFilterDropdown"
-                :loaded="loaded"
-            />
-            <HomeDesktop
-                v-if="!$store.getters.mobile"
-                @updateFilterDropdown="updateFilterDropdown"
-                :loaded="loaded"
-            />
+            <HomeMobile v-if="$store.getters.mobile" @updateFilterDropdown="updateFilterDropdown" :loaded="loaded" />
+            <HomeDesktop v-if="!$store.getters.mobile" @updateFilterDropdown="updateFilterDropdown" :loaded="loaded" />
             <NewPost ref="newPostMenu" @updateFeed="updateFeed($event)" />
+
+            <EmailVerificationPopup ref="email_verification" />
         </div>
     </div>
 </template>
@@ -27,6 +21,8 @@ import NewPost from "@/components/NewPost/NewPost.vue";
 import LoadMorePosts from "@/mixins/load_more_posts.mixin";
 import LoadMoreMixin from "@/mixins/load_more.mixin";
 
+import EmailVerificationPopup from "@/components/Popups/EmailVerificationPopup.vue";
+
 export default {
     data() {
         return {
@@ -36,11 +32,25 @@ export default {
     computed: {
         loggedInState() {
             return !this.$store.getters.isLoggedIn;
-        }
+        },
     },
     watch: {
-        loggedInState: function() {
+        loggedInState: function () {
             this.changeFeedType("all", "Newest");
+        },
+    },
+    mounted() {
+        // if the redirect came from the signup page and contains a user_id, bring the email verification popup
+        if (this.$route.params.user_id) {
+            let message;
+
+            if (this.$route.params.type === "verify_account") {
+                message = "We have sent you an email with a link to verify your account. Please do so to begin using DevsBunker.";
+            } else if (this.$route.params.type === "reset_pwd") {
+                message = "We have send you an email with a link to reset your password.";
+            }
+
+            this.$refs.email_verification.open(this.$route.params.user_id, message, this.$route.params.type);
         }
     },
     async created() {
@@ -52,17 +62,10 @@ export default {
             this.queryType = "all";
             this.sortingType = "Newest";
         }
-            
+
         this.getPosts();
 
         SharedMethods.loadPage();
-        
-        /*
-        const cache = await caches.open("devsCache");
-        cache.match("http://localhost:5000/graphql").then((result) => {
-            console.log("[CACHE] ", result.json());
-        });
-        */
     },
 
     mixins: [GeneralProperties, LoadMorePosts, LoadMoreMixin],
@@ -70,8 +73,9 @@ export default {
         HomeMobile,
         HomeDesktop,
         NewPost,
+        EmailVerificationPopup,
     },
-    
+
     methods: {
         openPostMenu() {
             this.$refs.newPostMenu.open();

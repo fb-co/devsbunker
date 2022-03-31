@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 
 export default {
     data() {
@@ -49,7 +49,7 @@ export default {
     methods: {
         fetchImageLink() {
             const callAPI = () => {
-                GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
+                GraphQLUserService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
                     if (obj.data.user.profile_pic) {
                         if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
                             this.default_image = true;
@@ -80,7 +80,7 @@ export default {
                     }
                     this.image_link = link;
                 } else {
-                    GraphQLService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
+                    GraphQLUserService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
                         if (obj.data.user.profile_pic) {
                             if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
                                 this.default_image = true;

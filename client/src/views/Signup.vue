@@ -287,7 +287,7 @@ import UserService from "../services/user.service";
 import SharedMethods from "../utils/shared";
 import GeneralProperties from "../mixins/general.mixin";
 // import InformativePopup from "@/components/Popups/InformativePopup.vue";
-import GraphQLService from "../services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 import Loading from "@/components/Loading";
 
 export default {
@@ -333,7 +333,7 @@ export default {
                 if (valid) {
                     this.submitted = true;
 
-                    const response = await GraphQLService.signupUser(this.username, this.email, this.password);
+                    const response = await GraphQLUserService.signupUser(this.username, this.email, this.password);
 
                     if (response.errors) {
                         const message = response.errors[0].message;
@@ -376,12 +376,7 @@ export default {
                             }, 1500);
                         } else {
                             this.errMessage = "";
-                            this.$store.dispatch("alertUser", {
-                                title: "Success",
-                                type: "success",
-                                msg: "We have sent you an email with a link to verify your account.",
-                            });
-                            this.$router.push("/");
+                            this.$router.push({ name: "Home", params: { user_id: result.user_id, type: "verify_account" } });
                         }
                     }
                 } else {

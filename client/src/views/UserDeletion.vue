@@ -25,7 +25,8 @@
 </template>
 
 <script>
-import GraphQLService from "../services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
+import GraphQLVerificationService from "@/services/graphql/gql.user.service.js";
 import LoadingGif from "../components/global/LoadingGif.vue";
 
 export default {
@@ -38,7 +39,7 @@ export default {
     },
     async created() {
         if (this.$route.params.userId && this.$route.params.token) {
-            const res = await GraphQLService.verifyUserDeletion(this.$route.params.userId, this.$route.params.token);
+            const res = await GraphQLVerificationService.verifyUserDeletion(this.$route.params.userId, this.$route.params.token);
             console.log(res);
 
             this.loading = false;
@@ -46,7 +47,7 @@ export default {
                 if (res.data.verifyUserDeletion.success) {
                     this.success = true;
 
-                    const deletion = await GraphQLService.deleteUserAccount(null, this.$store.getters.accessToken);
+                    const deletion = await GraphQLUserService.deleteUserAccount(null, this.$store.getters.accessToken);
                     console.log(deletion);
 
                     if (deletion.data.deleteAccount.success === true) {

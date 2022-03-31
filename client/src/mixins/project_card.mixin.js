@@ -4,7 +4,7 @@
     Precondition: The parent of this mixin needs to contain a post object named projectData
 */
 
-import GraphQLService from "@/services/graphql.service";
+import GraphQLPostsService from "@/services/graphql/gql.posts.service.js";
 
 const projectCard = {
     methods: {
@@ -12,10 +12,10 @@ const projectCard = {
             if (!this.$store.getters.accessToken) {
                 this.$router.push("/login");
             } else {
-                GraphQLService.savePost(this.$store.getters.accessToken, id).then((savedPost) => {
+                GraphQLPostsService.savePost(this.$store.getters.accessToken, id).then((savedPost) => {
                     if (!savedPost.errors) {
                         this.projectData.isSaved = savedPost.data.savePost.isSaved;
-    
+
                         this.$store.dispatch("updatePost", {
                             id: id,
                             fieldsToUpdate: [{ field: "isSaved", newVal: savedPost.data.savePost.isSaved }],
@@ -27,7 +27,7 @@ const projectCard = {
             }
         },
         unsavePost(id) {
-            GraphQLService.unSavePost(this.$store.getters.accessToken, id).then((unSavedPost) => {
+            GraphQLPostsService.unSavePost(this.$store.getters.accessToken, id).then((unSavedPost) => {
                 if (!unSavedPost.errors) {
                     this.projectData.isSaved = false;
                     this.$store.dispatch("updatePost", {
@@ -43,11 +43,11 @@ const projectCard = {
             if (!this.$store.getters.accessToken) {
                 this.$router.push("/login");
             } else {
-                GraphQLService.likePost(this.$store.getters.accessToken, id).then((res) => {
+                GraphQLPostsService.likePost(this.$store.getters.accessToken, id).then((res) => {
                     if (!res.errors) {
                         this.projectData.likeAmt = res.data.likePost.likeAmt;
                         this.projectData.isLiked = res.data.likePost.isLiked;
-    
+
                         this.$store.dispatch("updatePost", {
                             id: id,
                             fieldsToUpdate: [
@@ -62,7 +62,7 @@ const projectCard = {
             }
         },
         unlikePost(id) {
-            GraphQLService.unlikePost(this.$store.getters.accessToken, id).then((res) => {
+            GraphQLPostsService.unlikePost(this.$store.getters.accessToken, id).then((res) => {
                 if (!res.errors) {
                     this.projectData.likeAmt = res.data.unlikePost.likeAmt;
                     this.projectData.isLiked = res.data.unlikePost.isLiked;

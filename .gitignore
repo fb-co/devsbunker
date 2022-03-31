@@ -106,3 +106,4 @@ dist
 ## OUR ADDITION
 # the uploads folder
 server/uploads
+.DS_Store

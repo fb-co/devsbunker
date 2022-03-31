@@ -129,7 +129,7 @@
                     class="icon icon-tabler icon-tabler-share"
                     width="16"
                     height="16"
-                    style="margin-top: 1px;"
+                    style="margin-top: 1px"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="var(--main-font-color)"
@@ -175,7 +175,7 @@
 
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
-import GraphQLService from "../../services/graphql.service";
+import GraphQLPostsService from "../../services/graphql/gql.posts.service.js";
 import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 import TextCopier from "@/mixins/text_copier.js";
 
@@ -255,7 +255,7 @@ export default {
         },
 
         deletePost() {
-            GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
+            GraphQLPostsService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
                 if (res.errors) {
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
                 } else if (!res.data.deletePost.success) {
@@ -273,10 +273,10 @@ export default {
         },
     },
     watch: {
-        projectData: function(newVal) {
+        projectData: function (newVal) {
             this.thumbnail_link = newVal.thumbnail || "@/assets/project_img_placeholder.png";
         },
-        highlight_phrase: function() {
+        highlight_phrase: function () {
             this.highlightPhrases();
         },
     },

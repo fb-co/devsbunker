@@ -4,6 +4,7 @@ const URL = process.env.VUE_APP_GRAPHQL_API;
 
 const GraphQLService = {
     // fields specify which fields you want to receive (requester is username string of who is asking for these details)
+    // TODO: move to gql.user.service.js
     fetchUserDetails: function (username, fields, requester) {
         const query = `
             query {
@@ -22,6 +23,7 @@ const GraphQLService = {
             .catch(console.error);
     },
 
+    // TODO: move to gql.user.service.js
     downloadUserData: function (token) {
         const query = `
             query {
@@ -86,6 +88,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.user.service.js
     fetchPersonalDetails: function (token, fields) {
         const query = `
             query {
@@ -113,6 +116,7 @@ const GraphQLService = {
 
     // filter is required, just put a string of 'none' if you want to search all posts
     // SEE THE MONGO QUERY TO UNDERSTAND WHAT userToFilter is for
+    // TODO: move to gql.posts.service.js
     fetchPostsByPartial: function (partial_name, filter, userToFilter, sortingType, lastPostId, lastUniqueField, token) {
         if (partial_name != "") {
             const query = `
@@ -149,6 +153,7 @@ const GraphQLService = {
                 .catch(console.error);
         }
     },
+    // TODO: move to gql.posts.service.js
     fetchTargetedPosts: function (lastPostId, lastUniqueField, token) {
         const query = `
             query {
@@ -188,6 +193,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.posts.service.js
     fetchPostById: function (postId, commentOffSet, fields, token) {
         const query = `
             query {
@@ -214,6 +220,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.posts.service.js
     fetchUserPost: function (postId, postAuthor) {
         const query = `
             query {
@@ -240,6 +247,7 @@ const GraphQLService = {
     },
 
     // requester token is an optional parameter so that the like button will stay filled if you logged in and the post was liked by you
+    // TODO: move to gql.posts.service.js
     fetchPostsByAuthor: function (author, lastPostId, lastUniqueField, filter, token) {
         // this may cause errors because we are just checking if something called token exists
         const query = `
@@ -281,6 +289,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.posts.service.js
     fetchSavedPosts: function (lastPostId, lastUniqueField, filter, token) {
         const query = `
             query {
@@ -319,6 +328,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.posts.service.js
     setCommonTags: async function (tags, token) {
         //console.log(tags);
         const mutation = `
@@ -355,6 +365,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.notifications.service.js
     getAndReadNotifications: function (token) {
         const mutation = `
             mutation {
@@ -389,6 +400,7 @@ const GraphQLService = {
     },
 
     // This will only return the AMOUNT of unread notifications, the query after it will get the actual data for unread notifications
+    // TODO: move to gql.notifications.service.js
     getUnreadNotifications: function (token) {
         const query = `
             query {
@@ -418,6 +430,7 @@ const GraphQLService = {
     },
 
     // this query will get the actual data for notifications that are unread
+    // TODO: move to gql.notifications.service.js
     getUnreadNotificationsData: function (token) {
         const query = `
             query {
@@ -451,6 +464,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.user.service.js
     fetchUsers: function (sortMethod, lastUserId, lastUniqueField, fields, token) {
         const query = `
             query {
@@ -482,6 +496,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.user.service.js
     fetchUserByPartial: function (partialUsername, sortMethod, lastUserId, lastUniqueField, fields, token) {
         if (partialUsername != "") {
             const query = `
@@ -515,6 +530,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.user.service.js
     fetchUserById: function (id, fields) {
         const query = `
             query {
@@ -542,6 +558,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.posts.service.js
     // enter lastPstId as zero if you havent fetched any yet, and -1 if they have all been fetched
     fetchPosts: function (sortMethod, lastPostId, lastUniqueField, token) {
         let query;
@@ -608,6 +625,7 @@ const GraphQLService = {
     },
 
     //lastPostId is the id of the last fetched post
+    // TODO: move to gql.posts.service.js
     loadMorePosts: function (lastPostId, token) {
         const query = `
             query {
@@ -651,6 +669,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.posts.service.js
     likePost: async function (token, postId) {
         const mutation = `
             mutation {
@@ -677,6 +696,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.posts.service.js
     unlikePost: async function (token, postId) {
         const mutation = `
             mutation {
@@ -703,6 +723,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.posts.service.js
     commentOnPost: async function (postId, comment, token) {
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const timestamp = new Date();
@@ -739,6 +760,7 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    // TODO: move to gql.posts.service.js
     replyToComment: async function (token, commentId, reply) {
         const mutation = `
             mutation {
@@ -765,6 +787,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.posts.service.js
     savePost: async function (token, postId) {
         const mutation = `
             mutation {
@@ -790,6 +813,7 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    // TODO: move to gql.posts.service.js
     unSavePost: async function (token, postId) {
         const mutation = `
             mutation {
@@ -815,6 +839,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.user.service.js
     followPerson: async function (token, person) {
         const mutation = `
             mutation {
@@ -842,6 +867,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.user.service.js
     unfollowPerson: async function (token, person) {
         const mutation = `
             mutation {
@@ -869,6 +895,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.posts.service.js
     createNewPost: async function (token, data) {
         const mutation = `
             mutation Update($data: makePostInput!) {
@@ -923,6 +950,7 @@ const GraphQLService = {
     },
 
     // updates the users db document
+    // TODO: move to gql.user.service.js
     updateUserDetails: async function (token, fields) {
         // solution: we are using a variable (used to pass complex objects as params) of type UpdateUserPayload (same as backend)
         const mutation = `
@@ -961,11 +989,13 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.user.service.js
     signupUser: async function (username, email, password) {
         const mutation = `
             mutation {
                 signupUser(username: "${username}", email: "${email}", password: "${password}") {
                     message
+                    user_id
                 }
             }
         `;
@@ -983,6 +1013,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.notifications.service.js
     // Not sure if we should require the access token for this action
     notifyUser: async function (userToNotify, notification) {
         const mutation = `
@@ -1006,6 +1037,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.user.service.js
     loginUser: async function (id, password) {
         let query;
 
@@ -1050,6 +1082,7 @@ const GraphQLService = {
         }
     },
 
+    // TODO: move to gql.user.service.js
     logoutUser: async function () {
         const query = `
             query {
@@ -1075,6 +1108,7 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    // TODO: move to gql.verification.service.js
     verifyUser: async function (userId, token) {
         const mutation = `
             mutation {
@@ -1100,6 +1134,7 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    // TODO: move to gql.verification.service.js
     verifyUserDeletion: async function (userId, token) {
         const mutation = `
             mutation {
@@ -1125,6 +1160,7 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    // TODO: move to gql.user.service.js
     deleteUserAccount: async function (password, token) {
         let mutation = undefined;
 
@@ -1167,6 +1203,7 @@ const GraphQLService = {
             return console.error(err);
         }
     },
+    // TODO: move to gql.posts.service.js
     deletePostbyId: async function (postId, token) {
         const mutation = `
             mutation {
@@ -1184,6 +1221,112 @@ const GraphQLService = {
                 headers: {
                     "Content-Type": "application/json",
                     authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                body: JSON.stringify({ query: mutation }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+    // TODO: move to gql.verification.service.js
+    askForPasswordReset: async function (email) {
+        const query = `
+            query {
+                askForPasswordReset(email: "${email}") {
+                    userId
+                    success
+                    message
+                    stacktrace
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+    // TODO: move to gql.verification.service.js
+    resendAskForPasswordReset: async function (user_id) {
+        const query = `
+            query {
+                resendAskForPasswordReset(user_id: "${user_id}") {
+                    success
+                    message
+                    stacktrace   
+                }
+            }
+        `;
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ query }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+    // TODO: move to gql.verification.service.js
+    resendAccountVerificationEmail: async function (userId) {
+        const query = `
+            query {
+                resendAccountVerificationEmail(user_id: "${userId}") {
+                    success
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ query: query }),
+            });
+
+            return res.json();
+        } catch (err) {
+            return console.error(err);
+        }
+    },
+    // TODO: move to gql.user.service.js
+    resetPassword: async function (password, userId, token) {
+        const mutation = `
+            mutation {
+                resetPassword(password: "${password}", userId: "${userId}", token: "${token}") {
+                    success
+                    message
+                    stacktrace
+                }
+            }
+        `;
+
+        try {
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
                 },
                 credentials: "include",
                 body: JSON.stringify({ query: mutation }),

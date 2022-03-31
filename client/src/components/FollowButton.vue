@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import GraphQLService from "@/services/graphql.service.js";
+import GraphQLUserService from "@services/graphql/gql.user.service.js";
 
 export default {
     data() {
@@ -17,27 +17,17 @@ export default {
     },
     methods: {
         getData() {
-            GraphQLService.fetchUserDetails(
-                this.username,
-                ["isFollowing"],
-                this.$store.getters.username
-            ).then((res) => {
+            GraphQLUserService.fetchUserDetails(this.username, ["isFollowing"], this.$store.getters.username).then((res) => {
                 this.initialState = res.data.user.isFollowing;
             });
         },
         interact() {
             if (this.state) {
-                GraphQLService.unfollowPerson(
-                    this.$store.getters.accessToken,
-                    this.username
-                ).then((res) => {
+                GraphQLUserService.unfollowPerson(this.$store.getters.accessToken, this.username).then((res) => {
                     this.state = res.data.unfollowPerson.isFollowing;
                 });
             } else {
-                GraphQLService.followPerson(
-                    this.$store.getters.accessToken,
-                    this.username
-                ).then((res) => {
+                GraphQLUserService.followPerson(this.$store.getters.accessToken, this.username).then((res) => {
                     this.state = res.data.followPerson.isFollowing;
                 });
             }

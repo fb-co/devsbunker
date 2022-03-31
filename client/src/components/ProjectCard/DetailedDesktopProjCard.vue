@@ -2,7 +2,7 @@
     <div v-if="!deleted" class="main_container" :class="{ main_container_lock: isSmall }" @click="$router.push({ path: `/post/${projectData.id}` })">
         <div class="top_container">
             <div class="icons_container">
-                <div class="icon_box" style="margin-bottom: 10px;">
+                <div class="icon_box" style="margin-bottom: 10px">
                     <svg
                         v-if="!projectData.isLiked"
                         @click.stop="likePost(projectData.id)"
@@ -97,7 +97,7 @@
                             class="icon icon-tabler icon-tabler-share"
                             width="16"
                             height="16"
-                            style="margin-top: 1px;"
+                            style="margin-top: 1px"
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="var(--main-font-color)"
@@ -172,7 +172,7 @@ import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import Languages from "@/templates/Languages.js";
 import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
-import GraphQLService from "../../services/graphql.service";
+import GraphQLPostsService from "../../services/graphql/gql.posts.service.js";
 
 export default {
     data() {
@@ -231,7 +231,7 @@ export default {
             this.$refs.delete_confirmation.open();
         },
         deletePost() {
-            GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
+            GraphQLPostsService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
                 if (res.errors) {
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
                 } else if (!res.data.deletePost.success) {
@@ -262,10 +262,10 @@ export default {
         },
     },
     watch: {
-        projectData: function(newVal) {
+        projectData: function (newVal) {
             this.thumbnail_link = newVal.thumbnail || "@/assets/project_img_placeholder.png";
         },
-        highlight_phrase: function() {
+        highlight_phrase: function () {
             this.highlightPhrases();
         },
     },

@@ -59,7 +59,7 @@
 <script>
 import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import TimeStampService from "@/services/timestamp.service.js";
-import GraphQLService from "@/services/graphql.service.js";
+import GraphQLPostsService from "@/services/graphql/gql.posts.service.js";
 
 export default {
     data() {
@@ -87,7 +87,7 @@ export default {
                 this.$refs.reply_field_container.style.display = "flex";
                 this.$refs.reply_field.focus();
             } else {
-                this.$store.dispatch("alertUser", { title: "Alert", type: "neutral", msg: 'Login to reply' });
+                this.$store.dispatch("alertUser", { title: "Alert", type: "neutral", msg: "Login to reply" });
             }
         },
         cancelReply() {
@@ -99,7 +99,7 @@ export default {
                 if (this.$refs.reply_field.value.length > 5000) {
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Comment length must be less than 5,000 characters" });
                 } else {
-                    GraphQLService.replyToComment(this.$store.getters.accessToken, this.commentData.id, this.$refs.reply_field.value).then((res) => {
+                    GraphQLPostsService.replyToComment(this.$store.getters.accessToken, this.commentData.id, this.$refs.reply_field.value).then((res) => {
                         if (!res.errors) {
                             const reply = res.data.replyToComment;
                             this.commentData.replies.push(reply);

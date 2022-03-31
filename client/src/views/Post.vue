@@ -1,12 +1,7 @@
 <template>
     <div class="main_post_container">
         <div v-if="postData">
-            <PostMobile 
-                v-if="$store.getters.mobile" 
-                :projectData="postData" 
-                @postComment="postComment" 
-                @loadMoreComments="getMoreComments" 
-            />
+            <PostMobile v-if="$store.getters.mobile" :projectData="postData" @postComment="postComment" @loadMoreComments="getMoreComments" />
             <PostDesktop
                 v-if="!$store.getters.mobile"
                 :projectData="postData"
@@ -22,7 +17,8 @@
 
 <script>
 import SharedMethods from "../utils/shared";
-import GraphQLService from "../services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
+import GraphQLPostsService from "@/services/graphql/gql.posts.service.js";
 
 import PostMobile from "../components/Post/PostMobile.vue";
 import PostDesktop from "../components/Post/PostDesktop.vue";
@@ -75,9 +71,9 @@ export default {
                 }`,
                 "fetchedAllComments",
             ];
-            
+
             // fetch the post data (start with comment offset of 0)
-            const pData = await GraphQLService.fetchPostById(this.$route.params.postid, 0, toFetch, this.$store.getters.accessToken);
+            const pData = await GraphQLPostsService.fetchPostById(this.$route.params.postid, 0, toFetch, this.$store.getters.accessToken);
             this.postData = pData.data.getPostById;
 
             // fetch the author details
@@ -105,10 +101,10 @@ export default {
     },
     methods: {
         async getAuthorData(author) {
-            return await GraphQLService.fetchUserDetails(author, ["followerAmt", "isFollowing"], this.$store.getters.username);
+            return await GraphQLUserService.fetchUserDetails(author, ["followerAmt", "isFollowing"], this.$store.getters.username);
         },
         async postComment(value) {
-            const response = await GraphQLService.commentOnPost(this.postData.id, value, this.$store.getters.accessToken);
+            const response = await GraphQLPostsService.commentOnPost(this.postData.id, value, this.$store.getters.accessToken);
 
             // if it was successfull
             if (!response.errors) {
@@ -121,7 +117,7 @@ export default {
         },
         async getMoreComments() {
             // get the next comments
-            const commentData = await GraphQLService.fetchPostById(
+            const commentData = await GraphQLPostsService.fetchPostById(
                 this.$route.params.postid,
                 this.postData.comments.length || 0,
                 [
@@ -141,8 +137,8 @@ export default {
                 this.postData.fetchedAllComments = commentData.data.getPostById.fetchedAllComments;
                 this.postData.comments = this.postData.comments.concat(commentData.data.getPostById.comments);
             } else {
-                this.$store.dispatch("alertUser", {type: "error", title: "Error", msg: "Something went wrong."});
-            }   
+                this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: "Something went wrong." });
+            }
         },
         openPostMenu() {
             this.$refs.newPostMenu.open();

@@ -5,7 +5,7 @@
                 <router-link @click.native.stop :to="'user/' + projectData.author" class="author highlightable">{{ projectData.author }}</router-link>
             </div>
             <p class="title highlightable">{{ projectData.title }}</p>
-            <div style="position: relative;">
+            <div style="position: relative">
                 <div class="desc_fade"></div>
                 <pre class="preserveText"><p class="desc highlightable">{{ projectData.description }}</p></pre>
             </div>
@@ -77,7 +77,7 @@
 
                 <div
                     class="vertical_flex_center more_options_button"
-                    style="margin-left: 5px;"
+                    style="margin-left: 5px"
                     tabindex="0"
                     @click.stop=""
                     @focus.stop="moreOptions = true"
@@ -101,7 +101,7 @@
                         <circle cx="12" cy="5" r="1" />
                     </svg>
                 </div>
-                <div style="position: relative;">
+                <div style="position: relative">
                     <!-- make a relative wrapper so absolute works better -->
                     <!--More Options -->
                     <div :class="{ darkThemeMore: darkTheme, lightThemeMore: !darkTheme }" class="more_options no_select" v-if="moreOptions">
@@ -112,7 +112,7 @@
                                     class="icon icon-tabler icon-tabler-share"
                                     width="16"
                                     height="16"
-                                    style="margin-top: 1px;"
+                                    style="margin-top: 1px"
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="var(--main-font-color)"
@@ -161,9 +161,7 @@
                 <div class="vertical_flex_center">
                     <p class="language">{{ projectData.tags[0] }}</p>
                 </div>
-                <div class="spacer" v-if="projectData.price != 0 && projectData.price != null">
-                    -
-                </div>
+                <div class="spacer" v-if="projectData.price != 0 && projectData.price != null">-</div>
                 <p class="price_text" v-if="projectData.price != 0 && projectData.price != null">${{ projectData.price }}</p>
             </div>
         </div>
@@ -178,7 +176,7 @@
 <script>
 import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import DynamicPicture from "@/components/DynamicPicture.vue";
-import GraphQLService from "../../services/graphql.service";
+import GraphQLPostsService from "../../services/graphql/gql.posts.service.js";
 import GeneralMixin from "../../mixins/general.mixin.js";
 
 export default {
@@ -236,7 +234,7 @@ export default {
             console.log("post id:", this.projectData.id);
         },
         deletePost() {
-            GraphQLService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
+            GraphQLPostsService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {
                 if (res.errors) {
                     console.error(res.errors);
                     this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
@@ -254,7 +252,7 @@ export default {
         this.highlightPhrases();
     },
     watch: {
-        projectData: function(newVal) {
+        projectData: function (newVal) {
             this.thumbnail_link = newVal.thumbnail || "../../../uploads/profile_pics/profilePlaceholder.png";
         },
     },

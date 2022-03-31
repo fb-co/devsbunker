@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import GraphQLService from "../services/graphql.service";
+import GraphQLVerificationService from "@/services/graphql/gql.user.service.js";
 import LoadingGif from "../components/global/LoadingGif.vue";
 
 export default {
@@ -38,7 +38,7 @@ export default {
     },
     async created() {
         if (this.$route.params.userId && this.$route.params.token) {
-            const res = await GraphQLService.verifyUser(this.$route.params.userId, this.$route.params.token);
+            const res = await GraphQLVerificationService.verifyUser(this.$route.params.userId, this.$route.params.token);
 
             this.loading = false;
             if (res && !res.errors) {

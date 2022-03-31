@@ -1,9 +1,9 @@
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 
 const LogoutFunction = {
     methods: {
         async logout() {
-            GraphQLService.logoutUser().then((response) => {
+            GraphQLUserService.logoutUser().then((response) => {
                 if (response.errors) {
                     alert("Unable to logout");
                     console.error(response.errors);
@@ -28,11 +28,10 @@ const LogoutFunction = {
                 }
             });
         },
-    }
+    },
 };
 
 export default LogoutFunction;
-
 
 /*  OLD LOGOUT FUNCTION
 

@@ -3,6 +3,7 @@ const { gql } = ApolloServer;
 
 export default gql`
     type GeneralActionStatus {
+        userId: String
         success: Boolean!
         message: String
         stacktrace: [String]
@@ -15,6 +16,7 @@ export default gql`
 
     type UserSignup {
         message: String!
+        user_id: String!
     }
 
     type Notification {
@@ -133,6 +135,10 @@ export default gql`
         interactions: Int!
         manuallyAdded: Boolean!
     }
+    type emailResend {
+        success: Boolean!
+        message: String
+    }
 
     input TagRequest {
         tag: String!
@@ -164,6 +170,12 @@ export default gql`
         downloadUserData: downloadableUserData @rateLimit(limit: 2, duration: 86400)
 
         getUserById(id: String!): FetchableUser @rateLimit(limit: 50, duration: 300)
+
+        askForPasswordReset(email: String!): GeneralActionStatus!
+
+        resendAskForPasswordReset(user_id: String!): GeneralActionStatus!
+
+        resendAccountVerificationEmail(user_id: String!): emailResend!
     }
 
     type Mutation {
@@ -183,9 +195,12 @@ export default gql`
 
         setCommonTags(tags: [String]!): [CommonTagsResponse]!
 
-        deleteAccount(password: String): GeneralActionStatus! @rateLimit(limit: 2, duration: 86400)
+        deleteAccount(password: String): GeneralActionStatus! @rateLimit(limit: 10, duration: 86400)
 
         verifyUser(userId: String!, token: String!): GeneralActionStatus!
+
         verifyUserDeletion(userId: String!, token: String!): GeneralActionStatus!
+
+        resetPassword(password: String!, userId: String!, token: String!): GeneralActionStatus! @rateLimit(limit: 2, duration: 86400)
     }
 `;

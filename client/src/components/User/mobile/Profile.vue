@@ -34,7 +34,7 @@
                 <div class="projects_tab_item">
                     <p id="projects_title">PROJECTS</p>
                 </div>
-                <div class="projects_tab_item" style="text-align: right;">
+                <div class="projects_tab_item" style="text-align: right">
                     <router-link to="/" id="view_all_link">VIEW ALL</router-link>
                 </div>
             </div>
@@ -48,7 +48,7 @@
 <script>
 //import ProfilePicture from "@/components/User/ProfilePicture.vue";
 import PostFeed from "@/components/PostFeed.vue";
-import GraphQLService from "@/services/graphql.service";
+import GraphQLUserService from "@/services/graphql/gql.user.service.js";
 import ProfilePictureBackdrop from "@/components/User/ProfilePictureBackdrop.vue";
 
 export default {
@@ -60,7 +60,7 @@ export default {
     components: {
         //ProfilePicture,
         PostFeed,
-        ProfilePictureBackdrop
+        ProfilePictureBackdrop,
     },
     props: {
         mainUserObject: Object,
@@ -70,7 +70,7 @@ export default {
             this.activeSection = elem;
         },
         follow() {
-            GraphQLService.followPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
+            GraphQLUserService.followPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
                 if (newFollowers.data.followPerson) {
                     this.userObject.followerAmt = newFollowers.data.followPerson.followerAmt;
                     this.userObject.isFollowing = newFollowers.data.followPerson.isFollowing;
@@ -78,7 +78,7 @@ export default {
             });
         },
         unfollow() {
-            GraphQLService.unfollowPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
+            GraphQLUserService.unfollowPerson(this.$store.getters.accessToken, this.userObject.username).then((newFollowers) => {
                 if (newFollowers.data.unfollowPerson) {
                     this.userObject.followerAmt = newFollowers.data.unfollowPerson.followerAmt;
                     this.userObject.isFollowing = newFollowers.data.unfollowPerson.isFollowing;

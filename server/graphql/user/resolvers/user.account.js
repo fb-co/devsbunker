@@ -349,6 +349,90 @@ export default {
                 throw new Error("Failed to get user from token");
             }
         },
+        askForPasswordReset: async function (_, args, { req }) {
+            if (!args.email) return { success: false, message: "Please specify an email address", stacktrace: null };
+
+            try {
+                const user = await User.findOne({
+                    email: args.email,
+                });
+
+                if (!user) return { success: false, message: "Couldn't find user", stacktrace: null };
+                if (user.isGitHubUser) return { success: false, message: "Can't reset password of an account created via GitHub signup", stacktrace: null };
+
+                // send reset pwd email
+                const token = TokenHandler.createPasswordResetToken(user);
+
+                if (token) {
+                    const verification = new UserVerification({
+                        userId: user._id,
+                        corresponding_username: user.username,
+                        corresponding_email: user.email,
+                        token,
+                        pending: true,
+                        type: "reset_pwd",
+                    });
+
+                    await verification.save();
+
+                    EmailManager.askForPasswordReset(user, verification);
+
+                    return {
+                        userId: user._id,
+                        success: true,
+                        message: "Successfully sent email for password reset",
+                        stacktrace: null,
+                    };
+                } else {
+                    res.status(422);
+
+                    throw new AuthenticationError("Unable to create token.");
+                }
+            } catch (err) {
+                return {
+                    success: false,
+                    message: /\bduplicate\b/.test(err.message) ? "You have already asked for a password reset!" : "Something went wrong.",
+                    stacktrace: null,
+                };
+            }
+        },
+        resendAskForPasswordReset: async function (_, args, { req }) {
+            try {  
+                const res = await EmailManager.resendAskForPasswordReset(args.user_id);
+                
+                if (res.message === "Queued. Thank you.") {
+                    // TODO think about a better way to do this check in case this phrase ever gets changed by mailgun
+                    return {
+                        success: true,
+                        message: "Email Resent!",
+                    };
+                }
+            } catch (err) {
+                return {
+                    success: false,
+                    message: /\bduplicate\b/.test(err.message) ? "You have already asked for a password reset!" : "Something went wrong.",
+                    stacktrace: null,
+                };
+            }
+        },
+        resendAccountVerificationEmail: async function (_, args, { req }) {
+            try {
+                const res = await EmailManager.resendAccountVerificationEmail(args.user_id);
+
+                if (res.message === "Queued. Thank you.") {
+                    // TODO think about a better way to do this check in case this phrase ever gets changed by mailgun
+                    return {
+                        success: true,
+                        message: "Email Resent!",
+                    };
+                }
+            } catch (err) {
+                return {
+                    success: false,
+                    message: err.message,
+                };
+            }
+        },
     },
 
     Mutation: {
@@ -379,41 +463,19 @@ export default {
                         const verification = new UserVerification({
                             userId: user._id,
                             token: verificationToken,
+                            corresponding_email: user.email,
+                            corresponding_username: user.username,
                             pending: true,
+                            type: "verify",
                         });
 
                         await verification.save();
 
-                        // send verification email
-                        const mail = {
-                            from: "verification@devsbunker.com",
-                            to: user.email,
-                            subject: "Account verification",
-                            html: generateVerificationEmailTemplate(user.username, verification.userId, verification.token),
-                        };
-
-                        EmailManager.sendEmail(mail);
-
-                        /*
-                        const mail = {
-                            from: "Folgoni Borsa Company",
-                            to: user.email,
-                            subject: "Account verification",
-                            html: generateVerificationEmailTemplate(user.username, verification.userId, verification.token),
-                        };
-
-                        // todo: decide what to do if we get an error/success
-                        Transporter.sendMail(mail, function (err, res) {
-                            if (err) {
-                                console.error(err);
-                            } else {
-                                console.log(res);
-                            }
-                        });
-                        */
+                        EmailManager.sendAccountVerificationEmail(user, verification);
 
                         return {
-                            message: "Successfully signed up.",
+                            message: "Success",
+                            user_id: user._id,
                         };
                     } else {
                         res.status(422);
@@ -423,7 +485,7 @@ export default {
                 } catch (err) {
                     console.log(err);
 
-                    res.status(401); // why is it throwing unauthed here?
+                    res.status(401);
 
                     if (/duplicate/.test(err.message)) {
                         throw new AuthenticationError("Credentials are already taken.");
@@ -450,6 +512,7 @@ export default {
                 userId: args.userId,
                 token: args.token,
                 pending: true,
+                type: "verify",
             });
 
             if (match) {
@@ -500,7 +563,6 @@ export default {
             }
         },
         verifyUserDeletion: async function (_, args, { res }) {
-            console.log("called");
             if (!args.userId || !args.token) {
                 return {
                     success: false,
@@ -508,17 +570,15 @@ export default {
                 };
             }
 
-            console.log("match?");
-
             // using all the fields jus to be sure
             const match = await UserVerification.findOne({
                 userId: args.userId,
                 token: args.token,
                 pending: true,
+                type: "deletion",
             });
 
             if (match) {
-                console.log("yes");
                 if (TokenHandler.verifyVerificationToken(match.token)) {
                     match.pending = false;
                     match.save();
@@ -534,7 +594,6 @@ export default {
                     };
                 }
             } else {
-                console.log("NOPE");
                 return {
                     success: false,
                     message: "Failed to verify user.",
@@ -843,6 +902,7 @@ export default {
                     const alreadyDone = await UserVerification.findOne({
                         userId: user._id,
                         pending: false,
+                        type: "deletion",
                     });
 
                     if (alreadyDone) {
@@ -878,12 +938,17 @@ export default {
                         const verification = new UserVerification({
                             userId: user._id,
                             token: deletionToken,
+                            corresponding_email: user.email,
+                            corresponding_username: user.username,
                             pending: true,
+                            type: "deletion",
                         });
 
+                        console.log(verification);
                         try {
                             await verification.save();
                         } catch (err) {
+                            console.log(err);
                             // duplicate key error? --> user has pressed the button even after having requested the deletion
                             return {
                                 success: false,
@@ -962,6 +1027,81 @@ export default {
             } else {
                 res.status(401);
                 throw new Error("Unauthorized");
+            }
+        },
+        resetPassword: async function (_, args, { req }) {
+            if (!args.userId || !args.token) {
+                return {
+                    success: false,
+                    message: "Please provide the necessary arguments: userId and token",
+                };
+            }
+
+            // using all the fields jus to be sure
+            const match = await UserVerification.findOne({
+                userId: args.userId,
+                token: args.token,
+                pending: true,
+                type: "reset_pwd",
+            });
+
+            if (match) {
+                if (TokenHandler.verifyVerificationToken(match.token)) {
+                    // get user
+                    const user = await User.findOne({
+                        _id: match.userId,
+                    });
+
+                    if (user) {
+                        // im lazy so im re-validating everything
+                        if (validateCreds({ username: user.username, email: user.email, password: args.password })) {
+                            try {
+                                // hash password
+                                const hashedPass = await bcrypt.hash(args.password, 10);
+                                user.password = hashedPass;
+
+                                await user.save();
+
+                                match.pending = false;
+                                match.save();
+                                return {
+                                    success: true,
+                                    message: "Successfully reset password",
+                                };
+                            } catch (err) {
+                                console.log(err);
+
+                                return {
+                                    success: false,
+                                    message: err.message,
+                                    stacktrace: null,
+                                };
+                            }
+                        } else {
+                            return {
+                                success: false,
+                                message: "Invalid password!",
+                                stacktrace: null,
+                            };
+                        }
+                    } else {
+                        return {
+                            success: false,
+                            message: "Fatal: couldn't find user!",
+                            stacktrace: null,
+                        };
+                    }
+                } else {
+                    return {
+                        success: false,
+                        message: "Invalid verification token. You must get a new one.",
+                    };
+                }
+            } else {
+                return {
+                    success: false,
+                    message: "Failed to reset password.",
+                };
             }
         },
     },
