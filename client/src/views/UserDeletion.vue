@@ -26,7 +26,7 @@
 
 <script>
 import GraphQLUserService from "@/services/graphql/gql.user.service.js";
-import GraphQLVerificationService from "@/services/graphql/gql.user.service.js";
+import GraphQLVerificationService from "@/services/graphql/gql.verification.service.js";
 import LoadingGif from "../components/global/LoadingGif.vue";
 
 export default {
