@@ -70,9 +70,30 @@ export async function authorize({ query: { code } }, res) {
         if (user) {
             if (!user.enabled) throw new Error("User is banned");
         } else {
+            // could be done better but this is readable and easy to write
+            let user_email = undefined;
+
+            // if user has private email address just hack into their profile and rob it
+            if (!user_json.email) {
+                const user_email_res = await fetch("https://api.github.com/user/emails", {
+                    method: "GET",
+                    headers: {
+                        Authorization: `token ${token}`,
+                        accept: "application/json",
+                    },
+                });
+
+                const user_email_json = await user_email_res.json();
+                user_email = user_email_json.filter((entry) => entry.primary).email;
+
+                if (/noreply/.test(user_email)) throw new Error("Can't find valid email address.");
+            } else {
+                user_email = user_json.email;
+            }
+
             user = new User({
                 username: user_json.login,
-                email: user_json.email,
+                email: user_email,
                 profile_pic: user_json.avatar_url,
                 desc: user_json.bio || "No description",
                 isGitHubUser: true,
@@ -81,6 +102,7 @@ export async function authorize({ query: { code } }, res) {
             await user.save();
         }
     } catch (err) {
+        // TODO: redirect to frontend where we set up an error page
         res.send({ error: err });
         return;
     }
