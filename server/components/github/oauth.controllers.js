@@ -104,7 +104,7 @@ export async function authorize({ query: { code } }, res) {
     } catch (err) {
         // TODO: redirect to frontend where we set up an error page
         res.send({ error: err });
-        reurn;
+        return;
     }
 
     const accessToken = craftUserSession(user, res);
