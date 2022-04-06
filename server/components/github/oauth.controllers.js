@@ -111,5 +111,5 @@ export async function authorize({ query: { code } }, res) {
     }
 
     const accessToken = craftUserSession(user, res);
-    res.redirect(`${process.env.PROTOCOL}://www.${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/get_session?token=${accessToken}&username=${user.username}`);
+    res.redirect(`http://devsbunker.com:8080/get_session?token=${accessToken}&username=${user.username}`);
 }
