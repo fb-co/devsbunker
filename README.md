@@ -1,3 +1,2 @@
-# PROD branch of devsBunker
-
-Commit only approved changes, see deployment directives [here](https://github.com/fb-co/devsBunker/blob/prod/deployment.md)
+<h1 align="center">devsBunker</h1>
+<p align="center">A platform where developers can promote their work for free.</p>
