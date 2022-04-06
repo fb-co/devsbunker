@@ -14,15 +14,14 @@ import methodOverride from "method-override";
 import TokenHandler from "./components/tokens/TokenHandler.js";
 
 import cors from "cors";
-const allowedOrigins = [`http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}`, `http://${process.env.HOST}`, `http://${process.env.HOST}:${process.env.PORT}`];
+const allowedOrigins = [`http://${process.env.HOST}:8080`, "http://localhost:8080"];
 const corsOptions = {
     origin: function (origin, callback) {
         if (process.env.PROD === "true") {
-            // !origin --> to allow REST tools and server-to-server requests (used to grab images)
-            if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            if (allowedOrigins.indexOf(origin) !== -1) {
                 callback(null, true);
             } else {
-                console.log(`[!] An unallowed origin has tried to connect: ${origin} [!]`);
+                console.log("[!] A unallowed origin has tried to connect. [!]");
                 callback(new Error("Not allowed by CORS"));
             }
         } else {
@@ -66,7 +65,6 @@ const server = new ApolloServer({
     schemaDirectives: {
         rateLimit: createRateLimitDirective(),
     },
-    playground: false,
 });
 
 server.applyMiddleware({ app, cors: false });
