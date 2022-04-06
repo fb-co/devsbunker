@@ -84,7 +84,11 @@ export async function authorize({ query: { code } }, res) {
                 });
 
                 const user_email_json = await user_email_res.json();
-                user_email = user_email_json.filter((entry) => entry.primary).email;
+
+                const tmp = user_email_json.filter((entry) => entry.primary);
+                if (!tmp) throw new Error("Can't find valid email address.");
+
+                user_email = tmp[0].email;
 
                 if (/noreply/.test(user_email)) throw new Error("Can't find valid email address.");
             } else {
@@ -102,8 +106,7 @@ export async function authorize({ query: { code } }, res) {
             await user.save();
         }
     } catch (err) {
-        // TODO: redirect to frontend where we set up an error page
-        res.send({ error: err });
+        res.redirect(`${process.env.PROTOCOL}://www.${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/error?type=github&msg=${err.message}`);
         return;
     }
 
