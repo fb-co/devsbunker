@@ -14,8 +14,8 @@ import methodOverride from "method-override";
 import TokenHandler from "./components/tokens/TokenHandler.js";
 
 import cors from "cors";
-const allowedOrigins = [`https://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}`, `https://${process.env.FRONTEND}`, `https://${process.env.HOST}:${process.env.PORT}`];
-console.log(allowedOrigins);
+const allowedOrigins = [`https://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}`, `https://${process.env.FRONTEND}`, `https://${process.env.HOST}:${process.env.PORT}`, `https://www.${process.env.FRONTEND}`];
+
 const corsOptions = {
     origin: function (origin, callback) {
         if (process.env.PROD === "true") {
