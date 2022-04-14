@@ -40,7 +40,7 @@ import express from "express";
 const app = express();
 
 // Middlewares
-app.use(morgan("dev")); // change to common for production
+app.use(morgan("common")); // change to common for production
 app.use(helmet()); // secure headers
 app.use(methodOverride("_method")); // query string in order to make a delete req
 app.use(cors(corsOptions));
