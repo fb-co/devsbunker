@@ -14,14 +14,15 @@ import methodOverride from "method-override";
 import TokenHandler from "./components/tokens/TokenHandler.js";
 
 import cors from "cors";
-const allowedOrigins = [`http://${process.env.FRONTEND}:8080`, "http://localhost:8080"];
+const allowedOrigins = [`https://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}`, `https://${process.env.FRONTEND}`, `https://${process.env.HOST}:${process.env.PORT}`, `https://www.${process.env.FRONTEND}`];
 const corsOptions = {
     origin: function (origin, callback) {
         if (process.env.PROD === "true") {
-            if (allowedOrigins.indexOf(origin) !== -1) {
+            // !origin --> to allow REST tools and server-to-server requests (used to grab images)
+            if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
                 callback(null, true);
             } else {
-                console.log(`[!] A unallowed origin has tried to connect --> ${origin} [!]`);
+                console.log(`[!] An unallowed origin has tried to connect: ${origin} [!]`);
                 callback(new Error("Not allowed by CORS"));
             }
         } else {
@@ -38,7 +39,7 @@ import express from "express";
 const app = express();
 
 // Middlewares
-app.use(morgan("dev")); // change to common for production
+app.use(morgan("common")); // change to common for production
 app.use(helmet()); // secure headers
 app.use(methodOverride("_method")); // query string in order to make a delete req
 app.use(cors(corsOptions));
@@ -65,6 +66,7 @@ const server = new ApolloServer({
     schemaDirectives: {
         rateLimit: createRateLimitDirective(),
     },
+    playground: false,
 });
 
 server.applyMiddleware({ app, cors: false });
