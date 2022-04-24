@@ -142,14 +142,8 @@ export default {
             this.$refs.main_image.style.filter = "brightness(100%)";
         },
         fetchImageLink() {
-            if (this.username == undefined) {
-                console.log(this.username);
-                console.log(this.$parent);
-            }
-
             const callAPI = () => {
                 GraphQLUserService.fetchUserDetails(this.username, ["profile_pic"]).then((obj) => {
-                    console.log(obj.data.user.profile_pic);
                     if (obj.data.user.profile_pic) {
                         if (obj.data.user.profile_pic === "profile_pic_placeholder.png") {
                             this.default_image = true;

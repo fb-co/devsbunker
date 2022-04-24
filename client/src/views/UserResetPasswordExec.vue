@@ -66,7 +66,6 @@ export default {
                     } else {
                         if (this.pwd0.toString().trim() !== "" && this.pwd0.length > 8) {
                             const res = await GraphQLVerificationService.resetPassword(this.pwd0, this.$route.params.userId, this.$route.params.token);
-                            console.log(res);
 
                             this.sent = true;
 

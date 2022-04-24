@@ -40,7 +40,6 @@ export default {
     async created() {
         if (this.$route.params.userId && this.$route.params.token) {
             const res = await GraphQLVerificationService.verifyUserDeletion(this.$route.params.userId, this.$route.params.token);
-            console.log(res);
 
             this.loading = false;
             if (res && !res.errors) {
@@ -48,7 +47,6 @@ export default {
                     this.success = true;
 
                     const deletion = await GraphQLUserService.deleteUserAccount(null, this.$store.getters.accessToken);
-                    console.log(deletion);
 
                     if (deletion.data.deleteAccount.success === true) {
                         this.$store.dispatch("alertUser", { msg: deletion.data.deleteAccount.message, type: "success", title: "Done" });

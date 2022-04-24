@@ -1,3 +1,4 @@
+<!-- UNUSED COMPONENT !!!!!!!!!!!!!!!!!!!!!! -->
 <template>
     <div
         :class="{ hide: deleted }"
@@ -233,7 +234,7 @@ export default {
             }
         },
         sharePost() {
-            console.log("post id:", this.projectData.id);
+            alert("Work in progress");
         },
         deletePost() {
             GraphQLPostsService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {

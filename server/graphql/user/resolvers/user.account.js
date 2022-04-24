@@ -397,9 +397,9 @@ export default {
             }
         },
         resendAskForPasswordReset: async function (_, args, { req }) {
-            try {  
+            try {
                 const res = await EmailManager.resendAskForPasswordReset(args.user_id);
-                
+
                 if (res.message === "Queued. Thank you.") {
                     // TODO think about a better way to do this check in case this phrase ever gets changed by mailgun
                     return {
@@ -944,7 +944,6 @@ export default {
                             type: "deletion",
                         });
 
-                        console.log(verification);
                         try {
                             await verification.save();
                         } catch (err) {
