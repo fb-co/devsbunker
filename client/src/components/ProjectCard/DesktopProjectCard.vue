@@ -1,3 +1,4 @@
+<!-- UNUSED COMPONENT !!!!!!!!!!!!!!!!!!!!!! -->
 <template>
     <div class="proj_card_main_container" :class="{ hide: deleted }" @click="$router.push({ path: `/post/${projectData.id}` })">
         <div class="text_container">
@@ -231,7 +232,7 @@ export default {
             }
         },
         sharePost() {
-            console.log("post id:", this.projectData.id);
+            alert("Work in progress");
         },
         deletePost() {
             GraphQLPostsService.deletePostbyId(this.projectData.id, this.$store.getters.accessToken).then((res) => {

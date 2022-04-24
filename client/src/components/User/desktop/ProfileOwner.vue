@@ -341,7 +341,6 @@ export default {
             const password = payload[0];
 
             const res = await GraphQLUserService.deleteUserAccount(password, this.$store.getters.accessToken);
-            console.log(res);
             if (!res.errors) {
                 if (res.data.deleteAccount.success) {
                     if (res.data.deleteAccount.message === "Waiting for user interaction") {

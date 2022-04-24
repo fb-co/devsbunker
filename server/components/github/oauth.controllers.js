@@ -106,7 +106,7 @@ export async function authorize({ query: { code } }, res) {
             await user.save();
         }
     } catch (err) {
-        res.redirect(`${process.env.PROTOCOL}://www.${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/error?type=github&msg=${err.message}`);
+        res.redirect(`${process.env.PROTOCOL}://www.${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/error?type=github&msg=${err.message}`);
         return;
     }
 

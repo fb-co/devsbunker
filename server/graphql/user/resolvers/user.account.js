@@ -397,9 +397,9 @@ export default {
             }
         },
         resendAskForPasswordReset: async function (_, args, { req }) {
-            try {  
+            try {
                 const res = await EmailManager.resendAskForPasswordReset(args.user_id);
-                
+
                 if (res.message === "Queued. Thank you.") {
                     // TODO think about a better way to do this check in case this phrase ever gets changed by mailgun
                     return {
@@ -944,7 +944,6 @@ export default {
                             type: "deletion",
                         });
 
-                        console.log(verification);
                         try {
                             await verification.save();
                         } catch (err) {
@@ -965,10 +964,10 @@ export default {
                             html: `
                                 <p>To delete your account, follow this link: </p> 
                                 <a
-                                    href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/delete/${verification.userId}/${verification.token}"
+                                    href="${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/delete/${verification.userId}/${verification.token}"
                                     style="color: #067df7; text-decoration: none"
                                     target="_blank"
-                                    >http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/delete/${verification.userId}/${verification.token}</a
+                                    >${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/delete/${verification.userId}/${verification.token}</a
                                 >
                             `,
                         };
