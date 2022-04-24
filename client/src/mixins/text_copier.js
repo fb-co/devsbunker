@@ -7,6 +7,10 @@ const textCopier = {
             elem.select();
             document.execCommand('copy');
             document.body.removeChild(elem);
+        },
+        copyToClipboardWithNotification(text) {
+            this.copyToClipboard(text);
+            this.$store.dispatch("alertUser", { type: "success", title: "Copied link to clipboard" });
         }
     }
 };

@@ -174,6 +174,7 @@ import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import GraphQLPostsService from "../../services/graphql/gql.posts.service.js";
 import MobileMoreOptions from "@/components/Popups/MobileMoreOptions.vue";
 import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
+import TextCopier from "@/mixins/text_copier.js";
 
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 
@@ -185,7 +186,7 @@ export default {
             deleted: false,
         };
     },
-    mixins: [ProjectCardUtils],
+    mixins: [ProjectCardUtils, TextCopier],
     components: {
         MobileMoreOptions,
         ConfirmationPopup,
@@ -252,8 +253,7 @@ export default {
             });
         },
         copyPostLink() {
-            this.closeMoreOptions();
-            this.$store.dispatch("alertUser", { type: "success", title: "Copied link to clipboard" });
+            this.copyToClipboardWithNotification(process.env.VUE_APP_MAIN_URL + "/post/" + this.projectData.id); 
         },
     },
     watch: {

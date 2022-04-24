@@ -268,8 +268,7 @@ export default {
             });
         },
         copyPostLink() {
-            this.copyToClipboard(process.env.VUE_APP_MAIN_URL + "/post/" + this.projectData.id);
-            this.$store.dispatch("alertUser", { type: "success", title: "Copied link to clipboard" });
+            this.copyToClipboardWithNotification(process.env.VUE_APP_MAIN_URL + "/post/" + this.projectData.id); 
         },
     },
     watch: {
