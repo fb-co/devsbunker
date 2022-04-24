@@ -24,7 +24,7 @@ function generateVerificationEmailTemplate(username, userId, token) {
 															<td align="center">
 																<div>
 																	<img
-																		src="${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/img/LOGO.a1787424.svg"
+																		src="http://${process.env.HOST}/img/LOGO.a1787424.svg"
 																		alt="devsBunker logo"
 																		width="400"
 																		height="120"
@@ -91,7 +91,7 @@ function generateVerificationEmailTemplate(username, userId, token) {
 															<td align="center">
 																<div>
 																	<a
-																		href="${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/verify/${userId}/${token}"
+																		href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/verify/${userId}/${token}"
 																		style="
 																			background-color: #8040E9;
 																			border-radius: 5px;
@@ -137,10 +137,10 @@ function generateVerificationEmailTemplate(username, userId, token) {
 													"
 												>
 													<a
-														href="${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/verify/${userId}/${token}"
+														href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/verify/${userId}/${token}"
 														style="color: #067df7; text-decoration: none"
 														target="_blank"
-														>${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/verify/${userId}/${token}</a
+														>http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/verify/${userId}/${token}</a
 													>
 												</p>
 												<br />
