@@ -57,10 +57,10 @@ const EmailManager = {
             html: `
                 <p>To reset your password, follow this link: </p> 
                 <a
-                    href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}"
+                    href="${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}"
                     style="color: #067df7; text-decoration: none"
                     target="_blank"
-                    >http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}</a
+                    >${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}</a
                 >
             `,
         };
@@ -79,10 +79,10 @@ const EmailManager = {
                 html: `
                     <p>To reset your password, follow this link: </p> 
                     <a
-                        href="http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}"
+                        href="${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}"
                         style="color: #067df7; text-decoration: none"
                         target="_blank"
-                        >http://${process.env.HOST}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}</a
+                        >${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}</a
                     >
                 `,
             };
@@ -94,7 +94,7 @@ const EmailManager = {
                 message: "Failed to resend verification",
             };
         }
-    }
+    },
 };
 
 export default EmailManager;
