@@ -173,6 +173,7 @@ import ProjectCardUtils from "@/mixins/project_card.mixin.js";
 import Languages from "@/templates/Languages.js";
 import ConfirmationPopup from "@/components/Popups/ConfirmationPopup.vue";
 import GraphQLPostsService from "../../services/graphql/gql.posts.service.js";
+import TextCopier from "@/mixins/text_copier.js";
 
 export default {
     data() {
@@ -192,7 +193,7 @@ export default {
         highlight_phrase: String,
         search_phrase: String,
     },
-    mixins: [ProjectCardUtils],
+    mixins: [ProjectCardUtils, TextCopier],
     components: {
         DynamicPicture,
         ProfilePicture,
@@ -214,18 +215,7 @@ export default {
             this.moreOptions = false;
         },
         copyPostLink() {
-            // there's also a ClipBoard API but it doesnt work on firefox
-            // ! NOTE: this still doesnt work
-
-            const tmp = document.createElement("input");
-            tmp.value = `${process.env.VUE_APP_MAIN_URL}/post/${this.projectData.id}`;
-
-            tmp.select();
-            tmp.setSelectionRange(0, 99999); // this junk is needed for mobile devices and I dont know why
-
-            document.execCommand("copy");
-
-            this.$store.dispatch("alertUser", { type: "success", title: "Copied link to clipboard" });
+            this.copyToClipboardWithNotification(process.env.VUE_APP_MAIN_URL + "/post/" + this.projectData.id); 
         },
         openDeleteConfirmation() {
             this.$refs.delete_confirmation.open();
