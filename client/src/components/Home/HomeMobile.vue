@@ -23,11 +23,6 @@ export default {
     props: {
         loaded: Boolean,
     },
-    methods: {
-        makeNewPost() {
-            this.$parent.openPostMenu();
-        },
-    },
     components: {
         PostFeed,
         MobileFollowingList,

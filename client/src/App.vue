@@ -21,6 +21,8 @@
                     </p>
                 </template>
             </InteractivePopup>
+
+            <NewPost @updateFeed="updateFeed($event)" />
         </div>
 
         <Loading v-if="isFetching" />
@@ -34,6 +36,7 @@ import BottomNavBar from "./components/Navbars/BottomNavBar.vue";
 import AlertFeed from "./components/Notifications/AlertFeed.vue";
 import InteractivePopup from "./components/Popups/InteractivePopup.vue";
 import CookieIllustration from "./assets/CookieIllustration.vue";
+import NewPost from "@/components/NewPost/NewPost.vue";
 
 export default {
     data() {
@@ -51,6 +54,7 @@ export default {
         AlertFeed,
         InteractivePopup,
         CookieIllustration,
+        NewPost,
     },
 
     destroyed() {
@@ -75,7 +79,9 @@ export default {
 
     methods: {
         updateFeed(post) {
-            this.$refs.page_content.updateFeed(post);
+            if (this.$route.name === "Home") {
+                this.$refs.page_content.updateFeed(post);
+            }
         },
 
         handleFirstVisit() {

@@ -381,7 +381,7 @@ export default {
             }
         },
         close() {
-            this.$parent.close();
+            this.$store.commit("closeNewPostPopup");
         },
         set_contributers(contributers) {
             this.contributers = contributers;

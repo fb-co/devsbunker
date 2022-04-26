@@ -87,12 +87,10 @@
             </div>
         </div>
         <div class="nav_placeholder"></div>
-        <NewPost ref="newPostPopup" @updateFeed="updateFeed($event)" />
     </div>
 </template>
 
 <script>
-import NewPost from "@/components/NewPost/NewPost.vue";
 import NotificationIcon from "@/components/Notifications/NotificationIcon.vue";
 
 export default {
@@ -101,29 +99,13 @@ export default {
             active: "Home",
         };
     },
-
+    components: {
+        NotificationIcon,
+    },
     methods: {
         newPost() {
-            this.$refs.newPostPopup.open();
-        },
-        updateFeed(post) {
-            if (this.$route.name === "Home") {
-                // if your already at the home page dont re-route and just update the feed from the bottom navbar (this requires going through app.vue)
-                this.$emit("updateFeed", post); // this is going to App.vue
-            }
-        },
-    },
-    watch: {
-        $route() {
-            if (this.$refs.newPostPopup.getStatus()) {
-                this.$refs.newPostPopup.close();
-            }
-        },
-    },
-
-    components: {
-        NewPost,
-        NotificationIcon,
+            this.$store.commit("createNewPost");
+        }
     },
 };
 </script>
