@@ -27,16 +27,6 @@ export default {
             loaded: true,
         };
     },
-    computed: {
-        loggedInState() {
-            return !this.$store.getters.isLoggedIn;
-        },
-    },
-    watch: {
-        loggedInState: function () {
-            this.changeFeedType("all", "Newest");
-        },
-    },
     mounted() {
         // if the redirect came from the signup page and contains a user_id, bring the email verification popup
         if (this.$route.params.user_id) {
@@ -51,9 +41,11 @@ export default {
             this.$refs.email_verification.open(this.$route.params.user_id, message, this.$route.params.type);
         }
     },
-    async created() {  
+    created() {  
+        SharedMethods.loadPage();
+
         // show a regular post feed if your not logged in
-        if (this.$store.getters.isLoggedIn) {
+        if (this.$store.getters.accessToken) {
             this.queryType = "targeted";
             this.sortingType = "Newest";
         } else {
@@ -61,9 +53,7 @@ export default {
             this.sortingType = "Newest";
         }
 
-        this.getPosts();
-
-        SharedMethods.loadPage();
+        this.getPosts();  
     },
 
     mixins: [GeneralProperties, LoadMorePosts, LoadMoreMixin],

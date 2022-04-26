@@ -5,6 +5,7 @@
 // 'all' -> gets all posts
 // 'saved' -> gets your saved posts
 // 'myProjects' -> gets your projects, or projects of someone else
+
 import GraphQLPostsService from "@/services/graphql/gql.posts.service.js";
 import SearchUtilities from "../utils/search_utilities.js";
 
