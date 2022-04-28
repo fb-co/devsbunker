@@ -46,7 +46,6 @@ export default {
                         this.isLoggedInUser = "c_1"; // the user is visiting someone else
                     }
                 } else {
-                    this.isLoggedInUser = "c_1"; // the user is not logged in so he/she is visiting someone
                     this.isLoggedInUser = "c_1"; // not logged in and visiting
                 }
             });

@@ -29,16 +29,8 @@ export default {
             fetchedAllSearchResults: true,
         };
     },
-
     props: {
         loaded: Boolean,
-    },
-
-
-    methods: {
-        makeNewPost() {
-            this.$parent.openPostMenu();
-        },
     },
     components: {
         LeftContent,

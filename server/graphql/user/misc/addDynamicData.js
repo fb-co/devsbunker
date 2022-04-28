@@ -4,6 +4,19 @@
 
 // for each function, you can also only add a single user object to achevie same results instead of an array
 const dynamicData = {
+    // adds follwerAmt and followingAmt
+    addGeneralFollowingData: function(users) {
+        if (Array.isArray(users)) {
+            users.forEach(user => {
+                user.followerAmt = user.followers.length;
+                user.followingAmt = user.following.length;
+            });
+        } else {
+            users.followAmt = users.followers.length;
+            users.followingAmt = users.following.length;
+        }
+        return users;
+    },
     addFollowerAmt: function(users) {
         if (Array.isArray(users)) {
             users.forEach(user => {

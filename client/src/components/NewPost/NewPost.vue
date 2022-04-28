@@ -10,30 +10,22 @@
 import NewPostMobile from "@/components/NewPost/NewPostMobile.vue";
 
 export default {
-    data() {
-        return {
-            isOpen: false,
-        };
-    },
     components: {
         NewPostMobile,
     },
 
     methods: {
-        close() {
-            document.body.style.overflow = "auto";
-            this.isOpen = false;
-        },
-        open() {
-            document.body.style.overflow = "hidden";
-            this.isOpen = true;
-        },
         getStatus() {
             return this.isOpen;
         },
         propagateEvent(post) {
             this.$emit("updateFeed", post);
         },
+    },
+    computed: {
+        isOpen() {
+            return this.$store.getters.createPopupOpen;
+        }
     },
 };
 </script>

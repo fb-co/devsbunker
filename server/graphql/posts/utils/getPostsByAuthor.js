@@ -17,7 +17,7 @@ export default async function getPostsByAuthor(author, lastPostId, lastUniqueFie
                 const finalPosts = AddDynamicData.addAll(res, requesterUser);
                 resolve(finalPosts);
             } else {
-                reject(new Error("Unable to find user"));
+                resolve(res);
             }
         });
     });

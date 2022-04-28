@@ -7,6 +7,7 @@ import LocalDataHandler from "./modules/LocalDataHandler";
 import PostsCache from "./modules/PostsCache";
 import PfpCache from "./modules/PfpCache";
 import AlertHandler from "./modules/AlertHandler";
+import CreateNewPost from "./modules/CreateNewPost";
 
 Vue.use(Vuex);
 
@@ -19,5 +20,6 @@ export const store = new Vuex.Store({
         PfpCache,
         PageLoadHandler,
         AlertHandler, 
+        CreateNewPost,
     },
 });

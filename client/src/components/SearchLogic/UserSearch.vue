@@ -203,8 +203,8 @@ export default {
                             GraphQLUserService.fetchUserByPartial(
                                 this.$refs.general_input.value,
                                 this.sortingType,
-                                this.getLastUserId(),
-                                this.getLastUniqueField(),
+                                0,
+                                -1,
                                 ["id", "username", "desc", "followerAmt", "followingAmt", "isFollowing"], // requesting only these fields
                                 this.$store.getters.accessToken
                             ).then((res) => {

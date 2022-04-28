@@ -110,7 +110,7 @@ export default {
     mixins: [LogoutFunction],
     methods: {
         makeNewPost() {
-            this.$parent.$parent.openPostMenu();
+            this.$store.commit("createNewPost");
         },
     },
 };

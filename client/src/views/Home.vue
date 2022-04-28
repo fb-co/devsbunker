@@ -3,7 +3,6 @@
         <div class="home">
             <HomeMobile v-if="$store.getters.mobile" @updateFilterDropdown="updateFilterDropdown" :loaded="loaded" />
             <HomeDesktop v-if="!$store.getters.mobile" @updateFilterDropdown="updateFilterDropdown" :loaded="loaded" />
-            <NewPost ref="newPostMenu" @updateFeed="updateFeed($event)" />
 
             <EmailVerificationPopup ref="email_verification" />
         </div>
@@ -16,7 +15,6 @@ import GeneralProperties from "../mixins/general.mixin";
 
 import HomeMobile from "@/components/Home/HomeMobile.vue";
 import HomeDesktop from "@/components/Home/HomeDesktop.vue";
-import NewPost from "@/components/NewPost/NewPost.vue";
 
 import LoadMorePosts from "@/mixins/load_more_posts.mixin";
 import LoadMoreMixin from "@/mixins/load_more.mixin";
@@ -28,16 +26,6 @@ export default {
         return {
             loaded: true,
         };
-    },
-    computed: {
-        loggedInState() {
-            return !this.$store.getters.isLoggedIn;
-        },
-    },
-    watch: {
-        loggedInState: function () {
-            this.changeFeedType("all", "Newest");
-        },
     },
     mounted() {
         // if the redirect came from the signup page and contains a user_id, bring the email verification popup
@@ -53,9 +41,11 @@ export default {
             this.$refs.email_verification.open(this.$route.params.user_id, message, this.$route.params.type);
         }
     },
-    async created() {
+    created() {  
+        SharedMethods.loadPage();
+
         // show a regular post feed if your not logged in
-        if (this.$store.getters.isLoggedIn) {
+        if (this.$store.getters.accessToken) {
             this.queryType = "targeted";
             this.sortingType = "Newest";
         } else {
@@ -63,27 +53,17 @@ export default {
             this.sortingType = "Newest";
         }
 
-        this.getPosts();
-
-        SharedMethods.loadPage();
+        this.getPosts();  
     },
 
     mixins: [GeneralProperties, LoadMorePosts, LoadMoreMixin],
     components: {
         HomeMobile,
         HomeDesktop,
-        NewPost,
         EmailVerificationPopup,
     },
 
     methods: {
-        openPostMenu() {
-            this.$refs.newPostMenu.open();
-        },
-        closePostMenu() {
-            this.$refs.newPostMenu.close();
-        },
-
         updateFeed(post) {
             /**
              * After creating a new post, we don't want to grab the lastPostId and start fetching from there, we instead want to fetch the latest 3 posts.

@@ -15,7 +15,7 @@
         </div>
         <div style="flex-grow: 1;"></div>
         <div class="user_card_profile_pic">
-            <ProfilePicture class="profile_pic" :username="authorData.username" wrapperSize="20vw" maxWrapper="250px" minWrapper="50px" />
+            <ProfilePicture class="profile_pic" :username="pfp_owner" wrapperSize="20vw" maxWrapper="250px" minWrapper="50px" />
         </div>
     </div>
 </template>
@@ -25,6 +25,11 @@ import CardUtilities from "@/mixins/user_card.mixin.js";
 import ProfilePicture from "./ProfilePicture.vue";
 
 export default {
+    data() {
+        return {
+            pfp_owner: this.authorData.username,
+        }
+    },
     props: {
         authorData: Object,
     },

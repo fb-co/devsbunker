@@ -12,7 +12,7 @@ import UserFeedMixin from "@/mixins/user_feed.mixin.js";
 
 export default {
     async created() {
-        await this.fetchUsers(); // this is from the LoadMore mixin
+        await this.fetchUsers(); // this is from the UserFeedMixin mixin
 
         SharedMethods.loadPage();
     },

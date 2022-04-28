@@ -51,8 +51,14 @@ export default {
                     users.pop();
                 }
 
-                // add the dynamic data if a requester is assigned
-                const finalUsers = requester ? AddDynamicData.addAll(users, req.user.username) : users;
+                // add the dynamic data if a requester is assigned, otherwise just add followingAmt and followerAmt
+                let finalUsers = users;
+
+                if (requester) {
+                    finalUsers = AddDynamicData.addAll(users, req.user.username);
+                } else {
+                    finalUsers = AddDynamicData.addGeneralFollowingData(users);
+                }
 
                 const finalResponse = {
                     users: finalUsers,
