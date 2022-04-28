@@ -35,7 +35,6 @@ export default {
 
         GraphQLUserService.fetchUserDetails(this.username, ["tag", "desc", "followerAmt", "followingAmt", "isFollowing"], this.$store.getters.username).then(
             (res) => {
-                console.log(res.data);
                 if (res.data.user === null) {
                     this.$router.push("/404"); // eventully this should route the user to a search area for users with a message sayin he user they requested does not exist
                 } else {

@@ -63,6 +63,11 @@ const LoadMore = {
                         this.$store.dispatch("alertUser", { type: "error", title: "Error", msg: res.errors[0].message });
                     }
                 } else if (this.queryType === "projects") {
+                    console.log(this.otherData.foreignUserToFilter || this.$store.getters.username,
+                        this.getLastPostId(),
+                        this.getLastPostUniqueField(),
+                        this.filter || this.sortingType,
+                        this.$store.getters.accessToken);
                     const res = await GraphQLPostsService.fetchPostsByAuthor(
                         this.otherData.foreignUserToFilter || this.$store.getters.username,
                         this.getLastPostId(),
@@ -70,7 +75,6 @@ const LoadMore = {
                         this.filter || this.sortingType,
                         this.$store.getters.accessToken
                     );
-
                     if (!res.errors) {
                         this.posts = this.posts.concat(res.data.getPostsByAuthor.posts);
                         this.fetchedAll = res.data.getPostsByAuthor.fetchedAll;
