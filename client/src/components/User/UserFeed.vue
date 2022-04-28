@@ -4,11 +4,11 @@
 
         <div class="users_search_results">
             <div v-if="showSearchResults" class="card_container">
-                <UserCard v-for="(user, index) in searchResults" :key="index" :authorData="user" />
+                <UserCard v-for="user in searchResults" :key="user.id" :authorData="user" />
                 <button v-if="!$refs.user_search_bar.fetchedAllResults" @click="loadNew()" class="load_more_btn">Load More</button>
             </div>
             <div v-else class="card_container">
-                <UserCard v-for="(user, index) in rootComponent.users" :key="index" :authorData="user" />
+                <UserCard v-for="user in rootComponent.users" :key="user.id" :authorData="user" />
                 <button v-if="!rootComponent.fetchedAll" @click="loadNew()" class="load_more_btn">Load More</button>
             </div>
         </div>
