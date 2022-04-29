@@ -201,7 +201,6 @@ const GraphQLPostsService = {
         }
     },
     setCommonTags: async function (tags, token) {
-        //console.log(tags);
         const mutation = `
             mutation Update($tags: [String]!) {
                 setCommonTags(tags: $tags) {

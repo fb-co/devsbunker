@@ -33,7 +33,7 @@ export default {
         this.sortingType = SearchUtilities.getSavedPostFilter();
         this.getPosts();
 
-        GraphQLUserService.fetchUserDetails(this.username, ["tag", "desc", "followerAmt", "followingAmt", "isFollowing"], this.$store.getters.username).then(
+        GraphQLUserService.fetchUserDetails(this.username, ["tag", "desc", "followerAmt", "followingAmt", "isFollowing", "profile_pic"], this.$store.getters.username).then(
             (res) => {
                 if (res.data.user === null) {
                     this.$router.push("/404"); // eventully this should route the user to a search area for users with a message sayin he user they requested does not exist

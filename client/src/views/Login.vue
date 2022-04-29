@@ -411,7 +411,9 @@ export default {
     color: var(--error-red);
     text-align: center;
 }
-
+.login {
+    height: calc(100vh - 25px);
+}
 .loginForm {
     padding: 20px;
     width: 450px;
@@ -420,7 +422,6 @@ export default {
     background-color: var(--secondary-color);
     border-radius: 10px;
     margin: 0;
-    margin-bottom: 20px;
     position: absolute;
     top: 150px;
     left: 50%;

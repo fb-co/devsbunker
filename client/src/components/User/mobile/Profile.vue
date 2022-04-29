@@ -2,7 +2,7 @@
     <div id="otherUserMobile">
         <div class="profileMobile">
             <div>
-                <ProfilePictureBackdrop :username="userObject.username" />
+                <ProfilePictureBackdrop :pfp="userObject.profile_pic" />
             </div>
             <div class="profile_card">
                 <!--

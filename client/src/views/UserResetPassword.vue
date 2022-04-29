@@ -1,24 +1,22 @@
 <template>
-    <div class="wrapper">
-        <div class="box">
-            <h1>Reset Account Password</h1>
-            <p>Enter your email address and an email will be sent to you</p>
+    <div class="box">
+        <h1>Reset Account Password</h1>
+        <p>Enter your email address and an email will be sent to you</p>
 
-            <div class="inputs">
-                <p>Email address:</p>
-                <SpicyInput>
-                    <input type="email" label="Email" placeholder="Email..." ref="email0" v-model="email0" />
-                </SpicyInput>
+        <div class="inputs">
+            <p>Email address:</p>
+            <SpicyInput>
+                <input type="email" label="Email" placeholder="Email..." ref="email0" v-model="email0" />
+            </SpicyInput>
 
-                <p>Confirm email address:</p>
-                <SpicyInput>
-                    <input type="email" label="Confirm email" placeholder="Confirm..." ref="email1" v-model="email1" />
-                </SpicyInput>
-            </div>
+            <p>Confirm email address:</p>
+            <SpicyInput>
+                <input type="email" label="Confirm email" placeholder="Confirm..." ref="email1" v-model="email1" />
+            </SpicyInput>
+        </div>
 
-            <div class="button_container">
-                <button class="button" @click.stop="resetPassword()">Reset</button>
-            </div>
+        <div class="button_container">
+            <button class="button" @click.stop="resetPassword()">Reset</button>
         </div>
     </div>
 </template>
@@ -67,27 +65,27 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
-    width: 100%;
-    padding-top: 75px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 .box {
-    border-radius: 5px;
-    border: 1px solid var(--soft-text);
+    margin: 100px auto 50px auto;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
 
     max-width: 700px;
-    width: 100%;
-    height: 470px;
+    width: 95%;
+    
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .box h1 {
-    font-size: 40px;
-    margin-top: 50px;
-    color: var(--main-accent);
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--main-font-color);
 }
 
 .box p {

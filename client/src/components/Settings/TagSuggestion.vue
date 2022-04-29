@@ -77,7 +77,7 @@
 <script>
 import CreateTag from "@/components/NewPost/CreateTag.vue";
 import QueryInput from "@/components/QueryInput";
-import GraphQLPostsService from "@/services/graphql/gql.user.service";
+import GraphQLPostsService from "@/services/graphql/gql.posts.service";
 
 export default {
     data() {
@@ -147,7 +147,6 @@ export default {
                 for (let i = 0; i < this.tags.length; i++) {
                     finalTags.push(this.tags[i].tag);
                 }
-
                 const res = await GraphQLPostsService.setCommonTags(finalTags, this.$store.getters.accessToken);
 
                 if (!res.errors) {

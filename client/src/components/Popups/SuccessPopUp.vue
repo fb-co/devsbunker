@@ -72,10 +72,10 @@ export default {
 <style scoped>
 @keyframes slide {
     from {
-        right: -400px;
+        transform: translateX(100%);
     }
     to {
-        right: 20px;
+        transform: translateX(0%);
     }
 }
 
