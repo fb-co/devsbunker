@@ -158,6 +158,10 @@ export default {
     from { transform: translateX(100%); }
     to { transform: translateX(0%); }
 }
+@keyframes slide_from_bottom_animation {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0%); }
+}
 
 body {
     background-color: var(--main-color);

@@ -61,15 +61,6 @@ export default {
 </script>
 
 <style scoped>
-@keyframes slideAnimation {
-    from {
-        top: -100%;
-    }
-    to {
-        top: 50%;
-    }
-}
-
 .information_container {
     position: fixed;
     top: 50%;
@@ -80,7 +71,7 @@ export default {
     background-color: var(--secondary-color);
     border-radius: 5px;
     box-shadow: 0px 0px 15px var(--drop-shadow);
-    animation: slideAnimation 0.4s;
+    animation: slide_down_animation 0.4s;
     display: flex;
     flex-direction: column;
 }

@@ -319,14 +319,6 @@ export default {
         width: 100%;
     }
 }
-@keyframes moreOptionsSlider {
-    from {
-        bottom: -100%;
-    }
-    to {
-        bottom: 0px;
-    }
-}
 .input_loading_cont {
     display: flex;
     flex-direction: row;
@@ -393,7 +385,7 @@ export default {
     border-top-right-radius: 10px;
     padding-bottom: 40px;
     z-index: 13;
-    animation: moreOptionsSlider 0.4s;
+    animation: slide_from_bottom_animation 0.4s;
 }
 .more_options_mobile > h4 {
     margin-top: 20px;
