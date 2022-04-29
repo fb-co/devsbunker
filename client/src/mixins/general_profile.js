@@ -59,7 +59,7 @@ const GeneralProfile = {
 
                         this.cancelFieldsEdit();
                     } else {
-                        this.$store.dispatch("alertUser", { msg: failedEmailMessage, type: "error", title: "Error" });
+                        this.$store.dispatch("alertUser", { msg: "Something went wrong", type: "error", title: "Error" });
                     }
                 });
             } else {
