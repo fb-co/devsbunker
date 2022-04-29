@@ -27,16 +27,6 @@ export default {
 </script>
 
 <style scoped>
-    @keyframes moreOptionsSlider {
-        from {
-            transform: translate(50%) translateY(100%);
-        }
-        to {
-            transform: translate(50%) translateY(0%);
-        }
-    }
-
-
     .more_options_mobile {
         position: absolute;
         width: 100vw;
@@ -45,12 +35,11 @@ export default {
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         background-color: var(--main-font-color);
-        animation: moreOptionsSlider 0.5s;
+        right: 0%;
+        animation: slide_from_bottom_animation 0.5s;
         display: flex;
         flex-direction: column;
         color: var(--main-color);
-        right: 50%;
-        transform: translateX(50%);
         padding-bottom: 30px;
         padding-top: 10px;
     }
