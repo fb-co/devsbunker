@@ -63,7 +63,7 @@ export default {
 
 <style scoped>
 .settings_page {
-    height: 100%;
+    height: calc(100vh - var(--header-height));
     overflow: auto;
 }
 .search_input {

@@ -28,14 +28,14 @@ export default {
 
 <style scoped>
     .more_options_mobile {
-        position: absolute;
+        position: fixed;
         width: 100vw;
-        bottom: 0;
+        bottom: 0px;
+        right: 0px;
         min-height: 200px;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         background-color: var(--main-font-color);
-        right: 0%;
         animation: slide_from_bottom_animation 0.5s;
         display: flex;
         flex-direction: column;
