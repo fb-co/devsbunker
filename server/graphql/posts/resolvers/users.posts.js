@@ -19,6 +19,7 @@ import getSavedPosts from "../utils/getSavedPosts.js";
 import deletePost from "../utils/deletePost.js";
 
 import LoadAmounts from "../misc/loadAmounts.js";
+import NotificationSender from "../../user/misc/notificationSender.js";
 
 export default {
     Query: {
@@ -315,58 +316,19 @@ export default {
                     }
 
                     await user.save();
+                    
+                    // send a notification
+                    const notification = {
+                        read: false,
+                        sender: jwtPayload.username,
+                        message: `liked your post!`,
+                        type: "like",
+                        target: post.title,
+                        timestamp: new Date(),
+                    };
 
-                    let userToNotify;
-
-                    // only notify the user if the post is not theirs
-                    if (jwtPayload.username != post.author) {
-                        userToNotify = await User.findOne({
-                            username: post.author,
-                            enabled: true,
-                        });
-                    }
-
-                    if (userToNotify) {
-                        // only notify the user if there is not already an identical notification.
-                        // this is to prevent people from spamming notifications & duplicate key error
-
-                        const notification = {
-                            read: false,
-                            sender: jwtPayload.username,
-                            message: `liked your post!`,
-                            type: "like",
-                            target: post.title,
-                            timestamp: new Date(),
-                        };
-
-                        let shouldNotify = true;
-
-                        // the forEach loop was being stoopid, so im using a regular loop
-                        for (let i = 0; i < userToNotify.notifications.length; i++) {
-                            const oldNotification = userToNotify.notifications[i];
-
-                            if (
-                                oldNotification.sender == jwtPayload.username &&
-                                oldNotification.message == notification.message &&
-                                oldNotification.target == notification.target
-                            ) {
-                                shouldNotify = false;
-                            }
-                        }
-                        if (userToNotify == jwtPayload.username) {
-                            shouldNotify = false;
-                        }
-
-                        if (shouldNotify) {
-                            userToNotify.notifications.unshift(notification);
-                        }
-                        try {
-                            await userToNotify.save();
-                        } catch {
-                            throw new Error("Internal error: Unable to save to database");
-                        }
-                    }
-
+                    await NotificationSender.sendNotification(post.author, false, notification);
+                    
                     return {
                         id: post._id,
                         title: post.title,
@@ -524,6 +486,18 @@ export default {
 
                             await comment.save();
                             await post.save();
+                            
+                            // send a notification
+                            const notification = {
+                                read: false,
+                                sender: jwtPayload.username,
+                                message: `commented on your post!`,
+                                type: "comment",
+                                target: post.title,
+                                timestamp: new Date(),
+                            };
+
+                            await NotificationSender.sendNotification(post.author, false, notification);
 
                             return {
                                 id: comment._id,

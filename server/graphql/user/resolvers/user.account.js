@@ -24,6 +24,8 @@ import getAllPostsByAuthor from "../../posts/utils/getAllPostsByAuthor.js";
 import deletePost from "../../posts/utils/deletePost.js";
 import fetchUsers from "../utils/fetchUsers.js";
 
+import NotificationSender from "../misc/notificationSender.js";
+
 import { InvalidCredentialsError, UnauthorizedError } from "../errors/invalid.credentials.js";
 
 import ApolloServer from "apollo-server-express";
@@ -733,32 +735,7 @@ export default {
                         timestamp: new Date(),
                     };
 
-                    let shouldNotify = true;
-
-                    // the forEach loop was being stoopid, so im using a regular loop
-                    for (let i = 0; i < personToFollow.notifications.length; i++) {
-                        const oldNotification = personToFollow.notifications[i];
-
-                        if (
-                            oldNotification.sender == notification.sender &&
-                            oldNotification.message == notification.message &&
-                            oldNotification.target == notification.target
-                        ) {
-                            shouldNotify = false;
-                        }
-                    }
-                    if (personToFollow == notification.sender) {
-                        shouldNotify = false;
-                    }
-
-                    if (shouldNotify) {
-                        personToFollow.notifications.unshift(notification);
-
-                        // remove a notitcation if the user has to many
-                        if (personToFollow.notifications.length > NotificationData.maxNotifications) {
-                            personToFollow.notifications.pop();
-                        }
-                    }
+                    await NotificationSender.sendNotification(personToFollow, false, notification);
 
                     await personToFollow.save();
 
