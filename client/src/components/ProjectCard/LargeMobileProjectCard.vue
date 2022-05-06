@@ -140,7 +140,7 @@
                 </div>
                 <p>Share</p>
             </div>
-            <div @click.stop="openDeleteConfirmation()">
+            <div v-if="projectData.author === this.$store.getters.username" @click.stop="openDeleteConfirmation()">
                 <div class="vertical_flex_center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
