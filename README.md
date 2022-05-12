@@ -1,6 +1,8 @@
 <h1 align="center">devsBunker</h1>
 <p align="center">A platform where developers can promote their work for free.</p>
 
+![logo](https://devsbunker.com/img/LOGO.a1787424.svg)
+
 ## About
 
 Devsbunker provides developers a way to share and advertise their work in a free and easy way. While it is mainly designed for software developers, it's certainly not limited to that. Graphic design, 3D modeling, photo editing, and game development are a few examples of valid contributions.
