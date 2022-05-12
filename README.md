@@ -1,9 +1,9 @@
 <h1 align="center">devsBunker</h1>
 <p align="center">A platform where developers can promote their work for free.</p>
 
-<div style="margin: 0 auto; width: 100%;">
-<img src="https://devsbunker.com/img/LOGO.a1787424.svg" />
-</div>
+<p align="center">
+  <img src="https://devsbunker.com/img/LOGO.a1787424.svg" />
+</p>
 
 ## About
 
