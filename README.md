@@ -87,3 +87,7 @@ npm run serve (dev environment)
 ```
 
 Of course you need MongoDB on your machine.
+
+## Contributing
+
+Check out our [CONTRIBUTING.md](https://github.com/fb-co/devsBunker/blob/master/CONTRIBUTING.md) file.
