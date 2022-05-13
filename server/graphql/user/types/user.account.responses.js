@@ -74,7 +74,7 @@ export default gql`
         postsAmt: Int
         common_tags: [TagResponse]
         user_suggestions: [String]
-        isGitHubUser: Boolean!
+        isGitHubUser: Boolean
     }
 
     type CommentResponse {
@@ -98,6 +98,7 @@ export default gql`
         likeAmt: Int
         isLiked: Boolean
         isSaved: Boolean
+        isGithubUser: Boolean
         price: Float
         comments: [CommentResponse]
         createdAt: String!

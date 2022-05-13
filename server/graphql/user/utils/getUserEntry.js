@@ -15,6 +15,7 @@ export default async function getUserEntry(name, requester) {
                         followers: user.followers,
                         following: user.following,
                         profile_pic: user.profile_pic,
+                        isGitHubUser: user.isGitHubUser,
                     };
 
                     // if a requester username is given, return whether or not they are following a certain person

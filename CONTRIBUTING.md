@@ -30,8 +30,8 @@ You can also create GitHub Issues to report bugs, plan ideas and ask for new fea
 
 ### ToDo List
 
-- [ ] bug: profile pictures are not correctly displayed in the profile page on mobile clients
-- [ ] bug: some notifications aren't being sent properly (Work In Progress, please ignore)
+- [x] bug: profile pictures are not correctly displayed in the profile page on mobile clients
+- [x] bug: some notifications aren't being sent properly (Work In Progress, please ignore)
 
 
 ## Thanks
