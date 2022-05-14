@@ -11,6 +11,7 @@ const GraphQLPostsService = {
                             description
                             thumbnail
                             likeAmt
+                            views
                             isSaved
                             isLiked
                             tags
@@ -46,6 +47,7 @@ const GraphQLPostsService = {
                         description
                         thumbnail
                         likeAmt
+                        views
                         isLiked
                         isSaved
                         tags
@@ -134,6 +136,7 @@ const GraphQLPostsService = {
                         thumbnail
                         description
                         likeAmt
+                        views
                         isLiked
                         isSaved
                         tags
@@ -173,6 +176,7 @@ const GraphQLPostsService = {
                         description
                         thumbnail
                         likeAmt
+                        views
                         isLiked
                         isSaved
                         tags
@@ -236,49 +240,34 @@ const GraphQLPostsService = {
     },
     // enter lastPstId as zero if you havent fetched any yet, and -1 if they have all been fetched
     fetchPosts: function (sortMethod, lastPostId, lastUniqueField, token) {
-        let query;
+        let fields = [
+            "title",
+            "author",
+            "thumbnail",
+            "description",
+            "likeAmt",
+            "views",
+            "tags",
+            "price",
+            "createdAt",
+            "id",
+        ];
+
         // only request the isLiked and isSaved fields if the user is logged in and passes in the auth token
         if (token) {
-            query = `
-                query {
-                    getPosts(sortingType: "${sortMethod}", lastPostId: "${lastPostId}", lastUniqueField: "${lastUniqueField}") {
-                        posts {
-                            title
-                            author
-                            thumbnail
-                            description
-                            likeAmt
-                            isSaved
-                            isLiked
-                            tags
-                            price
-                            createdAt
-                            id
-                        }
-                        fetchedAll
-                    }
-                }
-            `;
-        } else {
-            query = `
-                query {
-                    getPosts(sortingType: "${sortMethod}", lastPostId: "${lastPostId}", lastUniqueField: "${lastUniqueField}") {
-                        posts {
-                            title
-                            author
-                            thumbnail
-                            description
-                            likeAmt
-                            tags
-                            price
-                            createdAt
-                            id
-                        }
-                        fetchedAll
-                    }
-                }
-            `;
+            fields.push("isSaved", "isLiked");
         }
+
+        const query = `
+                query {
+                    getPosts(sortingType: "${sortMethod}", lastPostId: "${lastPostId}", lastUniqueField: "${lastUniqueField}") {
+                        posts {
+                            ${fields}
+                        }
+                        fetchedAll
+                    }
+                }
+            `;
 
         try {
             return fetch(process.env.VUE_APP_GRAPHQL_API, {
@@ -313,6 +302,7 @@ const GraphQLPostsService = {
                         }
                         description
                         likeAmt
+                        views
                         isSaved
                         isLiked
                         price
@@ -523,6 +513,7 @@ const GraphQLPostsService = {
                     tags
                     likes
                     likeAmt
+                    views
                     createdAt
                     price
                     comments {
