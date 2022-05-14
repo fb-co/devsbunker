@@ -53,6 +53,9 @@ const postSchema = new mongoose.Schema(
         likes: {
             type: Array,
         },
+        views: {
+            type: Number,
+        },
         likeAmt: {
             type: Number,
         },

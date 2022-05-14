@@ -45,6 +45,7 @@ export default gql`
         isFollowing: Boolean
         liked_posts: [String]!
         profile_pic: String!
+        isGitHubUser: Boolean
     }
 
     type LoadUsersResponse {
@@ -98,7 +99,6 @@ export default gql`
         likeAmt: Int
         isLiked: Boolean
         isSaved: Boolean
-        isGithubUser: Boolean
         price: Float
         comments: [CommentResponse]
         createdAt: String!
