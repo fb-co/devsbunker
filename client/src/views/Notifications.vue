@@ -43,7 +43,8 @@ export default {
 
                     // make any like or follow notifications read
                     this.notifications.forEach((item) => {
-                        if (item.type == "like" || item.type == "follow") {
+                        // only read specific ones in case in the future we want to have specific notifications only be read when you actually click on them
+                        if (item.type == "like" || item.type == "follow" || item.type == "comment") {
                             item.read = true;
                         }
                     });

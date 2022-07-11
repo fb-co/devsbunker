@@ -247,6 +247,7 @@ export default {
                 tags: payload.tags,
                 likes: [],
                 likeAmt: 0,
+                views: 0,
                 price: payload.price,
                 comments: [],
             });
@@ -266,6 +267,7 @@ export default {
                     tags: payload.tags,
                     likes: post.likes,
                     likeAmt: post.likeAmt,
+                    views: post.views,
                     price: payload.price,
                     createdAt: post.createdAt,
                     comments: [],

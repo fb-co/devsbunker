@@ -12,6 +12,10 @@ export default {
     },
     props: {
         pfp: String,
+        isGitHubUser: {
+            type: Boolean,
+            default: false,
+        }
     },
     mounted() {
         if (this.pfp != "profile_pic_placeholder.png") {
@@ -22,7 +26,11 @@ export default {
         }
     },
     computed: {
+        // return the correct format of link depending on if the user is a github user or not
         pfpLink() {
+            if (this.isGitHubUser) {
+                return this.pfp;
+            }
             return `${process.env.VUE_APP_PROFILE_PICTURES}${this.pfp}`;
         },
     },
@@ -36,5 +44,7 @@ export default {
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
     background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 </style>

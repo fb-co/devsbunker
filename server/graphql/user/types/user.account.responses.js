@@ -45,6 +45,7 @@ export default gql`
         isFollowing: Boolean
         liked_posts: [String]!
         profile_pic: String!
+        isGitHubUser: Boolean
     }
 
     type LoadUsersResponse {
@@ -74,7 +75,7 @@ export default gql`
         postsAmt: Int
         common_tags: [TagResponse]
         user_suggestions: [String]
-        isGitHubUser: Boolean!
+        isGitHubUser: Boolean
     }
 
     type CommentResponse {

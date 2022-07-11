@@ -36,6 +36,7 @@ export default {
             "liked_posts",
             "tag",
             "username",
+            "isGitHubUser",
         ]);
 
         if (!res.errors) {

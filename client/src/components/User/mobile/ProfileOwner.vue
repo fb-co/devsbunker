@@ -43,7 +43,7 @@
                     </svg>
                 </div>
             </div>
-            <ProfilePictureBackdrop :username="this.$store.getters.username" />
+            <ProfilePictureBackdrop :pfp="userObject.profile_pic" />
         </div>
         <div class="profile_card">
             <!--<ProfilePicture v-if="userObject" :username="userObject.username" wrapperSize="120px" class="profile_pic" />-->

@@ -25,6 +25,7 @@ export default gql`
         tags: [String]
         likes: [String]!
         likeAmt: Int
+        views: Int
         isLiked: Boolean
         isSaved: Boolean
         price: Float
