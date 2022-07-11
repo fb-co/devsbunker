@@ -106,10 +106,10 @@ export async function authorize({ query: { code } }, res) {
             await user.save();
         }
     } catch (err) {
-        res.redirect(`${process.env.PROTOCOL}://www.${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/error?type=github&msg=${err.message}`);
+        res.redirect(`${process.env.PROTOCOL}://www.${process.env.FRONTEND}/error?type=github&msg=${err.message}`);
         return;
     }
 
     const accessToken = craftUserSession(user, res);
-    res.redirect(`http://devsbunker.com:8080/get_session?token=${accessToken}&username=${user.username}`);
+    res.redirect(`${process.env.PROTOCOL}://www.${process.env.FRONTEND}/get_session?token=${accessToken}&username=${user.username}`);
 }
