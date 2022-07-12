@@ -57,10 +57,10 @@ const EmailManager = {
             html: `
                 <p>To reset your password, follow this link: </p> 
                 <a
-                    href="${process.env.PROTOCOL}://${process.env.FRONTEND}/user/reset-password/exec/${verification.userId}/${verification.token}"
+                    href="${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}"
                     style="color: #067df7; text-decoration: none"
                     target="_blank"
-                    >${process.env.PROTOCOL}://${process.env.FRONTEND}/user/reset-password/exec/${verification.userId}/${verification.token}</a
+                    >${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}</a
                 >
             `,
         };
@@ -79,10 +79,10 @@ const EmailManager = {
                 html: `
                     <p>To reset your password, follow this link: </p> 
                     <a
-                        href="${process.env.PROTOCOL}://${process.env.FRONTEND}/user/reset-password/exec/${verification.userId}/${verification.token}"
+                        href="${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}"
                         style="color: #067df7; text-decoration: none"
                         target="_blank"
-                        >${process.env.PROTOCOL}://${process.env.FRONTEND}/user/reset-password/exec/${verification.userId}/${verification.token}</a
+                        >${process.env.PROTOCOL}://${process.env.FRONTEND}:${process.env.CLIENTSIDE_PORT}/user/reset-password/exec/${verification.userId}/${verification.token}</a
                     >
                 `,
             };
