@@ -57,6 +57,7 @@ export default {
                 "links",
                 "collaborators",
                 "tags",
+                "views",
                 "createdAt",
                 `comments {
                     id
