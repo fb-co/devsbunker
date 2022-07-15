@@ -11,8 +11,12 @@ export default async function getUserPost(postId, commentOffSet, commentIncremen
                 },
             })
             .exec()
-            .then((post) => {
+            .then(async (post) => {
                 if (post) {
+                    // add a view to the post
+                    post.views++;
+                    await post.save();
+
                     resolve(post);
                 } else {
                     reject(new Error("Unabled to find post"));

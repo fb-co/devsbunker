@@ -5,7 +5,7 @@ export default async function getUserPost(postId, postAuthor) {
         Posts.findOne({ _id: postId, author: postAuthor, enabled: true })
             .populate("comments")
             .exec()
-            .then((post) => {
+            .then(async (post) => {
                 if (post) {
                     resolve(post);
                 } else {
