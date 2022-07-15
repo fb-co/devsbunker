@@ -115,6 +115,25 @@
                             <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                         </svg>
                     <p class="vertical_flex_center">{{ projectData.likeAmt }}</p>
+
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        class="icon icon-tabler icon-tabler-eye" 
+                        width="30" 
+                        height="30" 
+                        viewBox="0 0 24 24" 
+                        stroke-width="1" 
+                        stroke="currentColor" 
+                        fill="none" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        style="margin-left: 30px"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7"></path>
+                    </svg>
+                    <p class="vertical_flex_center">{{ projectData.views }}</p>
                 </div>
 
                 <AuthorDisplay v-if="authorData" :username="projectData.author" :followerAmt="authorData.followerAmt" :isFollowing="authorData.isFollowing" @followAction="followAuthor" />
@@ -337,7 +356,7 @@ export default {
     display: flex;
 }
 .likeAmt_container p {
-    padding-left: 15px;
+    padding-left: 10px;
 }
 
 #author span {
