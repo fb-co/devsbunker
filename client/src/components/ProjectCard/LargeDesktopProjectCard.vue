@@ -484,6 +484,7 @@ export default {
     margin-left: 8px;
     margin-right: 8px;
     margin-bottom: 5px;
+    margin-top: -1px;
 }
 .like_amount_container p {
     font-size: 12px;

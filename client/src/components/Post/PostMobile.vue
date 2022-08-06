@@ -90,10 +90,36 @@
                     {{ projectData.author }}
                 </p>
                 <div class="like_amount_container">
-                    <svg width="13" height="13" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="#eb4034" xmlns="http://www.w3.org/2000/svg">
+                    <svg 
+                        width="15" 
+                        height="15" 
+                        viewBox="0 0 16 16" 
+                        class="bi bi-heart-fill" 
+                        fill="#eb4034" 
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
                         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                     </svg>
                     <p>{{ projectData.likeAmt }}</p>
+
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        class="icon icon-tabler icon-tabler-eye"
+                        width="20" 
+                        height="20" 
+                        viewBox="0 0 24 24" 
+                        stroke-width="1.3" 
+                        stroke="currentColor" 
+                        fill="none" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        style="margin-left: 20px"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7"></path>
+                    </svg>
+                    <p>{{ projectData.views }}</p>
                 </div>
             </div>
         </div>
