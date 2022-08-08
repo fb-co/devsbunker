@@ -37,7 +37,7 @@ About								  | Home
 
 ## devsbunker.com 👋
 
-devsBunker was taken down on (date) due to inactivity and failure to take off after a deployment period of 4 months. Future plans for the platform included a market section where users could sell and buy software but we decided to abandon the project and focus on something else.
+devsBunker was taken down on August 07, 2022 due to inactivity and failure to take off after a deployment period of 4 months. Future plans for the platform included a market section where users could sell and buy software but we decided to abandon the project and focus on something else.
 
 Many adversting attemps where made on Reddit ([here](https://www.reddit.com/r/vuejs/comments/uo6nos/we_made_a_social_network_for_developers_with/), [here](https://www.reddit.com/r/programming/comments/ujxibo/devsbunker_a_platform_where_developers_can_share/) and [here](https://www.reddit.com/r/node/comments/wcqlv9/how_we_built_a_functional_authentication_and/)) but none of them was successful enough to gain a nice userbase. A total of 12 unique users were registered on the platform. 
 
